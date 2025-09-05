@@ -9,12 +9,12 @@ Upjet creates XRM-conformant managed resources for the OCI APIs based on [OCI Te
 ### Software and Tools
 - [Git](https://git-scm.com/downloads) 2.25 (recommended)
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) 1.4.6 (recommended)
-- [Go](https://go.dev/doc/install) 1.19.x (required)
+- [Go](https://go.dev/doc/install) 1.25.x (required)
 - [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/) 5.0.1 (recommended)
 - [Helm](https://helm.sh/docs/helm/helm_install/) 3.11.2 (recommended)
 - [Docker](https://docs.docker.com/engine/install/) 20.10.20 (recommended)
-- Kubernetes cluster 1.25.3 (recommended)
+- Kubernetes cluster 1.25.3+ (recommended)
    - [OCI Container Engine for Kubernetes](https://www.oracle.com/cloud/cloud-native/container-engine-kubernetes/) (Oracle's Kubernetes offering)
    - [Rancher Desktop](https://rancherdesktop.io/) (for local development)
 - [Crossplane](https://docs.crossplane.io/latest/software/install/) 1.10 (recommended)
@@ -74,6 +74,7 @@ $ mv kubectl-crossplane ~/.rd/bin
 Install and run OCI Crossplane provider locally or on a Kubernetes cluster. Running the Crossplane provider locally gives more flexibility for debugging and development.
 
 ### Install and Run the Provider Locally
+
 Use these commands to set up and configure an OCI Crossplane provider on your local Kubernetes cluster in your tenancy.
 1. Generate the crossplane resource definitions (CRD).
     ```shell
@@ -165,19 +166,8 @@ For the provider to communicate with the Oracle Cloud Infrastructure, we need to
 At this stage, we have our OCI Crossplane provider configured to work with your tenancy.
 
 ### Example: Creating an Object Storage Bucket
-1. Use this command to instruct Crossplane to create the bucket in the OCI tenancy using Terraform.
-    ```shell
-    # Edit examples/objectstorage/bucket.yaml with your compartment and storage name space as documented.
-    # Apply the example that creates an Object Storage bucket
-    $ kubectl apply -f examples/objectstorage/bucket.yaml
-    ```
-2. Verify the status of the resource by running this command (example output is shown).
-    ```shell
-    $ kubectl get managed
-    NAME                                                         READY   SYNCED   EXTERNAL-NAME              AGE
-    bucket.objectstorage.oci.upbound.io/bucket-via-crossplane4   True    True     n/idimd1fghobk/b/bucket1   10m
-    ```
-   The Ready status **True** indicates that the resource creation is successful.
+
+Follow the [QuickStart guide for the OCI provider-family](docs/quickstart.md).
 
 ## Contributing
 This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md).
