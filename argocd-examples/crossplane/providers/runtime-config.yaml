@@ -1,0 +1,34 @@
+# Runtime configuration for OCI providers
+# This configures resource limits and runtime behavior for all OCI providers
+# Debug mode is disabled by default for production use
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: oci-providers-runtime-config
+  namespace: crossplane-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        spec:
+          containers:
+            - name: package-runtime
+              env:
+                - name: GOMAXPROCS
+                  value: "1"
+                # Uncomment the following lines to enable debug mode for troubleshooting
+                # - name: DEBUG
+                #   value: "true"
+              # Uncomment to enable verbose debug logging
+              # args:
+              #   - --debug
+              resources:
+                limits:
+                  cpu: 2
+                  memory: 8Gi
+                requests:
+                  cpu: 200m
+                  memory: 256Mi

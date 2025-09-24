@@ -1,15 +1,15 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-oci-containerengine
+  name: provider-oci-kms
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  package: iad.ocir.io/iddevjmhjw0n/provider-oci-containerengine:v0.0.13-test
+  package: ghcr.io/oracle-samples/provider-oci-kms:v0.0.1-alpha.1-amd64
   packagePullPolicy: IfNotPresent
   revisionActivationPolicy: Automatic
   revisionHistoryLimit: 1
   # This provider depends on the family provider
   skipDependencyResolution: false
   runtimeConfigRef:
-    name: oci-sub-packages-runtime-config
+    name: oci-providers-runtime-config

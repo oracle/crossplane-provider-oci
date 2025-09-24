@@ -3,14 +3,16 @@ kind: Application
 metadata:
   name: oci-providers-suite
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io/background
+    - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
   source:
     repoURL: https://github.com/oracle-samples/crossplane-provider-oci
     targetRevision: sub-package-provider
-    path: argocd-examples/crossplane/providers/oci-sub-packages
+    path: argocd-examples/crossplane/providers
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
@@ -22,10 +24,10 @@ spec:
       labels:
         argocd.argoproj.io/managed-by: argocd
     syncOptions:
-    - CreateNamespace=true
-    - RespectIgnoreDifferences=true
-    - ApplyOutOfSyncOnly=true
-    - Validate=false
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=false
     retry:
       limit: 5
       backoff:

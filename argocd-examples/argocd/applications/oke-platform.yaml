@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "25"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io/foreground
+    - resources-finalizer.argocd.argoproj.io/foreground
 spec:
   project: default
   source:
@@ -20,10 +20,14 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    # ServerSideApply and Validate=false prevent webhook timeout issues
+    # when creating XRDs/Compositions in Crossplane
     syncOptions:
-    - CreateNamespace=true
-    - RespectIgnoreDifferences=true
-    - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
+      - Validate=false
     retry:
       limit: 5
       backoff:
@@ -33,11 +37,11 @@ spec:
   revisionHistoryLimit: 10
   # Ensure OKE providers are healthy before syncing
   ignoreDifferences:
-  - group: apiextensions.crossplane.io
-    kind: CompositeResourceDefinition
-    jsonPointers:
-    - /status
-  - group: apiextensions.crossplane.io
-    kind: Composition
-    jsonPointers:
-    - /status
+    - group: apiextensions.crossplane.io
+      kind: CompositeResourceDefinition
+      jsonPointers:
+        - /status
+    - group: apiextensions.crossplane.io
+      kind: Composition
+      jsonPointers:
+        - /status

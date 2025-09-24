@@ -129,7 +129,15 @@ data:
     jsonPointers:
       - /metadata
       - /subsets
-  
+
+  # Ignore differences for Crossplane Compositions
+  resource.customizations.ignoreDifferences.apiextensions.crossplane.io_Composition: |
+    jqPathExpressions:
+    - .spec.mode
+    - .spec.publishConnectionDetailsWithStoreConfigRef
+    - .spec.resources[].readinessChecks
+    - '.spec.resources[]?.patches[]?.transforms[]?.string.type'
+
   resource.customizations.ignoreResourceUpdates.all: |
     jsonPointers:
       - /status
