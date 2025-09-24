@@ -18,9 +18,55 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
 ```
 
-### 2. Configure OCI Credentials
+### 2. Configure ArgoCD for Crossplane
 
-Create a secret with your OCI credentials. The provider supports multiple authentication methods:
+Apply the Crossplane-specific ArgoCD configuration:
+
+```bash
+kubectl patch configmap argocd-cm -n argocd --patch-file argocd-examples/argocd/config/argocd-crossplane-config.yaml
+kubectl rollout restart deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
+```
+
+### 3. Customize Your Deployment (Optional)
+
+Update the ArgoCD applications to point to your repository (if forked):
+
+```bash
+# Update git repository URLs (macOS: use -i '' for in-place editing)
+sed -i '' 's|repoURL: https://github.com/oracle-samples/crossplane-provider-oci|repoURL: https://github.com/YOUR-USERNAME/YOUR-REPO|g' argocd-examples/argocd/applications/*.yaml
+
+# Update target revision if using a different branch
+sed -i '' 's|targetRevision: main|targetRevision: YOUR-BRANCH|g' argocd-examples/argocd/applications/*.yaml
+```
+
+Customize the OKE cluster configuration:
+
+```bash
+# Edit the cluster claim with your OCI details
+vim argocd-examples/oke-claims/claim-okecluster.yaml
+
+# Required fields to update:
+# - compartmentId: Your OCI compartment OCID
+# - region: Your OCI region (e.g., us-ashburn-1)
+# - availabilityDomain: Your availability domain (e.g., AD-1)
+# - nodeImageId: Appropriate node image for your region
+```
+
+### 4. Deploy Crossplane
+
+Install Crossplane first, which will create the crossplane-system namespace:
+
+```bash
+kubectl apply -f argocd-examples/argocd/applications/crossplane.yaml
+
+# Wait for Crossplane to be ready
+kubectl wait --for=condition=available --timeout=300s deployment/crossplane -n crossplane-system
+```
+
+### 5. Configure OCI Credentials
+
+Now that the crossplane-system namespace exists, create a secret with your OCI credentials. The provider supports multiple authentication methods:
 
 #### Option A: API Key Authentication (most common)
 
@@ -66,60 +112,22 @@ EOF
 
 > **Note**: Instance Principal is recommended when running on OKE or OCI Compute instances with proper IAM policies. API Key is suitable for development and non-OCI environments.
 
-### 3. Configure ArgoCD for Crossplane
+### 6. Deploy OCI Providers and Applications
 
-Apply the Crossplane-specific ArgoCD configuration:
-
-```bash
-kubectl patch configmap argocd-cm -n argocd --patch-file argocd-examples/argocd/config/argocd-crossplane-config.yaml
-kubectl rollout restart deployment/argocd-server -n argocd
-kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
-```
-
-### 4. Customize Your Deployment
-
-Update the ArgoCD applications to point to your repository (if forked):
+Deploy the remaining ArgoCD applications:
 
 ```bash
-# Update git repository URLs (macOS: use -i '' for in-place editing)
-sed -i '' 's|repoURL: https://github.com/oracle-samples/crossplane-provider-oci|repoURL: https://github.com/YOUR-USERNAME/YOUR-REPO|g' argocd-examples/argocd/applications/*.yaml
-
-# Update target revision if using a different branch
-sed -i '' 's|targetRevision: sub-package-provider|targetRevision: YOUR-BRANCH|g' argocd-examples/argocd/applications/*.yaml
-```
-
-Customize the OKE cluster configuration:
-
-```bash
-# Edit the cluster claim with your OCI details
-vim argocd-examples/oke-claims/claim-okecluster.yaml
-
-# Required fields to update:
-# - compartmentId: Your OCI compartment OCID
-# - region: Your OCI region (e.g., us-ashburn-1)
-# - availabilityDomain: Your availability domain (e.g., AD-1)
-# - nodeImageId: Appropriate node image for your region
-```
-
-### 5. Deploy Applications
-
-Deploy the ArgoCD applications in order:
-
-```bash
-# 1. Install Crossplane (sync-wave: 1)
-kubectl apply -f argocd-examples/argocd/applications/crossplane.yaml
-
-# 2. Deploy OCI Provider Sub-packages (sync-wave: 10)
+# 1. Deploy OCI Provider Sub-packages (sync-wave: 10)
 kubectl apply -f argocd-examples/argocd/applications/oci-providers-suite.yaml
 
-# 3. Deploy OKE Platform Compositions (sync-wave: 25)
+# 2. Deploy OKE Platform Compositions (sync-wave: 25)
 kubectl apply -f argocd-examples/argocd/applications/oke-platform.yaml
 
-# 4. Deploy OKE Cluster Claims (sync-wave: 30)
+# 3. Deploy OKE Cluster Claims (sync-wave: 30)
 kubectl apply -f argocd-examples/argocd/applications/oke-claims.yaml
 ```
 
-### 6. Monitor Deployment
+### 7. Monitor Deployment
 
 Monitor the deployment progress:
 
@@ -138,7 +146,7 @@ kubectl describe clusterclaim test-oke-cluster
 kubectl get managed
 ```
 
-### 7. Access ArgoCD UI (Optional)
+### 8. Access ArgoCD UI (Optional)
 
 ```bash
 # Port-forward to access ArgoCD UI
