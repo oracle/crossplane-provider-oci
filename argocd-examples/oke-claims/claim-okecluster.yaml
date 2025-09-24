@@ -5,7 +5,7 @@ metadata:
   # ArgoCD will deploy to default namespace as specified in the app
 spec:
   # OCI Compartment where resources will be created
-  compartmentId: "ocid1.compartment.oc1..aaaaaaaahkmcqkcdnvjxdykdiai4ncm5f4o3n3gmtbpy6cnvey2nspef6k5a"
+  compartmentId: "ocid1.compartment.oc1..aaaaaaaavn2sncyioaydldub5sbu44yolvenr44fcsb57vtu3z6mxhizndva"
 
   # Network configuration
   network:
@@ -31,9 +31,9 @@ spec:
     nodeCount: 1 # Number of worker nodes (minimal for POC)
     memoryInGbs: 16 # Memory per worker node
     ocpus: 2 # OCPUs per worker node
-    availabilityDomain: "ekzo:US-ASHBURN-AD-1" # Update for your region/AD
+    availabilityDomain: "qqZb:US-ASHBURN-AD-1" # Update for your region/AD
     # Get OKE-compatible image OCID from: oci ce node-pool-options get --node-pool-option-id all
-    nodeImageId: "ocid1.image.oc1.iad.aaaaaaaaxknreyk2vq3ftndzpirs3s32s7sviagmyleugk5uu23ug7vrpyrq" # Replace with actual OKE node image OCID
+    nodeImageId: "ocid1.image.oc1.iad.aaaaaaaasnbi4aalhxsv36r32eejjomlzrhsfbbhrcbzwptrbzhlspc2kqqa" # Replace with actual OKE node image OCID
     # SSH public key for node access (optional - commented out for POC)
     # sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC... your-ssh-public-key-here"
 
