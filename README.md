@@ -53,10 +53,10 @@ Crossplane installs on top of Kubernetes. Install Crossplane onto a Kubernetes c
     $ kubectl get all -n crossplane-system
     ```
 
-### Install the Crossplane kubectl Plugin 
+### Install the Crossplane CLI
 ```shell
 $ curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh
-$ mv kubectl-crossplane ~/.rd/bin
+$ mv crossplane ~/.rd/bin
 ```
 
 ## Clone crossplane-provider-oci
@@ -115,9 +115,9 @@ Use these commands to set up and configure an OCI Crossplane provider on your lo
     ```shell
     $ cd $GOPATH/src/github.com/crossplane-providers/crossplane-provider-oci/_output/xpkg/linux_amd64
     ```   
-1. Push the package into OCIR using the Crossplane kubectl plugin.  
+1. Push the package into OCIR using the Crossplane CLI.  
    ```shell
-   $ kubectl crossplane push provider <regionCode>.ocir.io/<tenancy-namespace>/<repositoryName>:<version>
+   $ crossplane xpkg push <regionCode>.ocir.io/<tenancy-namespace>/<repositoryName>:<version>
    ```
 
 #### Create an OCIR Secret
