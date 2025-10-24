@@ -2,13 +2,16 @@
 
 This guide walks through the process to install the OCI official provider-family.
 
-To use OCI official provider-family, install Crossplane into your Kubernetes cluster, install the `Provider`, apply a `ProviderConfig`, and create a managed resource in OCI via Kubernetes.
+To use OCI official provider-family, make sure you have installed Crossplane into your Kubernetes cluster. Follow installation of the `Provider`, applying a `ProviderConfig`, and creating the managed resource in OCI via Kubernetes.
 
 ## Install the official OCI provider-family
 Install the official provider-family into the Kubernetes cluster with a Kubernetes configuration file. For instance, let's install the `provider-oci-objectstorage`
 
-Note: The first provider installed of a family also installs an extra provider-family Provider. The provider-family provider manages the `ProviderConfig` for all other providers in the same family.
+The first provider installed of a family also installs an extra provider-family Provider. The provider-family provider manages the `ProviderConfig` for all other providers in the same family.
 
+> [!NOTE]
+> Always install the family provider first to ensure anticipated/right version of image is pulled. Installing sub-provider first creates a missing dependency issue, which the crossplane package-manager always resolves by pulling latest family provider image. It might lead to unexpected behavior. 
+ 
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
@@ -40,6 +43,43 @@ provider-oci-objectstorage   True        True      ghcr.io/oracle-samples/provid
 ```
 
 It may take up to 5 minutes to report `HEALTHY`.
+
+## Configure family provider for OCI
+
+The official provider-family requires credentials to create and manage OCI resources.
+1. Create a secret by using the following command.
+    ```shell
+    $ kubectl create secret generic oci-creds \
+    --namespace=crossplane-system \
+    --from-literal=credentials='{
+    "tenancy_ocid": "REPLACE_WITH_YOUR_TENANCY_OCID",
+    "user_ocid": "REPLACE_WITH_YOUR_USER_OCID",
+    "private_key": "REPLACE_WITH_YOUR_PRIVATE_KEY",
+    "fingerprint": "REPLACE_WITH_YOUR_FINGERPRINT",
+    "region": "REPLACE_WITH_YOUR_REGION"
+    }'
+    ```
+   **Note:** Refer to `examples/providerconfig/secret.yaml.tmpl` for all available options. Additional reference [SDKConfig](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdkconfig.htm).
+
+2. Register the provider configuration by running this command.
+    ```shell
+    $ cat <<EOF | kubectl apply -f -
+    apiVersion: oci.upbound.io/v1beta1
+    kind: ProviderConfig
+    metadata:
+      name: default
+    spec:
+      credentials:
+        source: Secret
+        secretRef:
+          name: oci-creds
+          namespace: crossplane-system
+          key: credentials
+    EOF
+   
+    ```
+   **Note:** Modify the command, if the secret name registered is different than what is used earlier.
+
 
 ## Create a managed resource
 
@@ -125,3 +165,21 @@ $ kubectl get buckets
 
 No resources found
 ```
+> [!Warning]
+> Never delete providers before deleting managed resources to avoid dangling resource.
+
+## Delete the providers
+
+Remove the installed providers by
+```
+$ kubectl delete providers/provider-oci-objectstorage
+
+$ kubectl delete providers/provider-oci-family
+```
+
+> [!NOTE]
+> The package manager requires that the provider-oci-family image be pulled from the same registry if any sub-provider is installed through pull. Ensure consistency in the image source to avoid conflicts.
+
+> [!Warning]
+> Never delete a family provider before deleting its sub-providers. Deleting a family provider while sub-providers are still installed can lead to unexpected behavior and potential errors.
+  
