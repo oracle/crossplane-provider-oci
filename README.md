@@ -135,7 +135,7 @@ $ cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-name: crossplane-provider-oci
+name: provider-oci-family
 spec:
 package: <regionCode>.ocir.io/<namespace>/<repositoryName>:<version>
 packagePullSecrets:
@@ -146,6 +146,11 @@ EOF
 #### Verify Installation of the Provider
 ```shell
 kubectl get crossplane
+```
+To list only the providers installed and the revisions obtained
+```shell
+kubectl get providers
+kubectl get providerrevisions
 ```
 
 ## Configure the OCI Crossplane Provider
@@ -168,6 +173,25 @@ At this stage, we have our OCI Crossplane provider configured to work with your 
 ### Example: Creating an Object Storage Bucket
 
 Follow the [QuickStart guide for the OCI provider-family](docs/quickstart.md).
+
+## Caution
+
+After installing the Crossplane Provider for OCI, be aware of the following:
+
+* The OCI Crossplane Provider build and registry currently provides two independent packages for AMD and ARM architectures. Be aware of the architecture-specific packages when pushing, configuring and applying the provider to ensure compatibility.
+   * Example: When installing the provider, ensure that you're using the correct image tag for your architecture, such as `provider-family-oci:v0.0.1-alpha.1-amd64` or `provider-family-oci:v0.0.1-alpha.1-arm64`.
+* Never delete a family provider before deleting its sub-providers. Deleting a family provider while sub-providers are still installed can lead to unexpected behavior and potential errors.
+   * Example: If you have a family provider `provider-oci-family` and sub-providers `provider-oci-networking` and `provider-oci-compute`, delete the sub-providers first using 
+    ```shell
+    $ kubectl delete providers/provider-oci-networking
+    $ kubectl delete providers/provider-oci-compute
+    ```
+    and then
+    ```shell
+    $ kubectl delete provider provider-oci-family
+    ```
+* The package manager requires that the provider-oci-family image be pulled from the same registry if any sub-provider is installed through pull. Ensure consistency in the image source to avoid conflicts.
+   * Example: If you have installed `provider-oci-networking` using an image from `regionCode1.ocir.io/namespaceA/<provider-oci-networking>:<tag>`, ensure that `provider-oci-family` is existing and also pulled from the same registry, i.e., `regionCode1.ocir.io/namespaceA/<provider-oci-family>:<tag>`.
 
 ## Contributing
 This project welcomes contributions from the community. Before submitting a pull request, please [review our contribution guide](./CONTRIBUTING.md).
