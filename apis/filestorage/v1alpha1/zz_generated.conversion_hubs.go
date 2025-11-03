@@ -23,3 +23,12 @@ func (tr *Replication) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Snapshot) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *StorageFileSystemQuotaRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *StorageFilesystemSnapshotPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *StorageOutboundConnector) Hub() {}

@@ -1,0 +1,21 @@
+apiVersion: artifacts.oci.upbound.io/v1alpha1
+kind: ContainerImageSignature
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/containerimagesignature
+  labels:
+    testing.upbound.io/example-name: test_container_image_signature
+  name: test-container-image-signature
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    imageId: ${oci_core_image.test_image.id}
+    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+    message: ${var.container_image_signature_message}
+    signature: ${var.container_image_signature_signature}
+    signingAlgorithm: ${var.container_image_signature_signing_algorithm}

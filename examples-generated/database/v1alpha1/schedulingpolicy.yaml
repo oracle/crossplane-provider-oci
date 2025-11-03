@@ -1,0 +1,18 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingpolicy
+  labels:
+    testing.upbound.io/example-name: test_scheduling_policy
+  name: test-scheduling-policy
+spec:
+  forProvider:
+    cadence: ${var.scheduling_policy_cadence}
+    cadenceStartMonth:
+    - name: ${var.scheduling_policy_cadence_start_month_name}
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.scheduling_policy_defined_tags}
+    displayName: ${var.scheduling_policy_display_name}
+    freeformTags:
+      Department: Finance

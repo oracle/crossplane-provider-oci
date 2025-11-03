@@ -60,3 +60,30 @@ func (l *SnapshotList) GetItems() []resource.Managed {
 	}
 	return items
 }
+
+// GetItems of this StorageFileSystemQuotaRuleList.
+func (l *StorageFileSystemQuotaRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this StorageFilesystemSnapshotPolicyList.
+func (l *StorageFilesystemSnapshotPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this StorageOutboundConnectorList.
+func (l *StorageOutboundConnectorList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}

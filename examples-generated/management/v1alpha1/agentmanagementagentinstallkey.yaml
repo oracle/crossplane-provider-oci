@@ -1,0 +1,15 @@
+apiVersion: management.oci.upbound.io/v1alpha1
+kind: AgentManagementAgentInstallKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: management/v1alpha1/agentmanagementagentinstallkey
+  labels:
+    testing.upbound.io/example-name: test_management_agent_install_key
+  name: test-management-agent-install-key
+spec:
+  forProvider:
+    allowedKeyInstallCount: ${var.management_agent_install_key_allowed_key_install_count}
+    compartmentId: ${var.compartment_id}
+    displayName: ${var.management_agent_install_key_display_name}
+    isUnlimited: ${var.management_agent_install_key_is_unlimited}
+    timeExpires: ${var.management_agent_install_key_time_expires}

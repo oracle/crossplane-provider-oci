@@ -1,0 +1,34 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplicationImplementation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplicationimplementation
+  labels:
+    testing.upbound.io/example-name: test_ml_application_implementation
+  name: test-ml-application-implementation
+spec:
+  forProvider:
+    allowedMigrationDestinations: ${var.ml_application_implementation_allowed_migration_destinations}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    logging:
+    - aggregatedInstanceViewLog:
+      - enableLogging: ${var.ml_application_implementation_logging_aggregated_instance_view_log_enable_logging}
+        logGroupId: ${oci_logging_log_group.test_log_group.id}
+        logId: ${oci_logging_log.test_log.id}
+      implementationLog:
+      - enableLogging: ${var.ml_application_implementation_logging_implementation_log_enable_logging}
+        logGroupId: ${oci_logging_log_group.test_log_group.id}
+        logId: ${oci_logging_log.test_log.id}
+      triggerLog:
+      - enableLogging: ${var.ml_application_implementation_logging_trigger_log_enable_logging}
+        logGroupId: ${oci_logging_log_group.test_log_group.id}
+        logId: ${oci_logging_log.test_log.id}
+    mlApplicationId: ${oci_datascience_ml_application.test_ml_application.id}
+    mlApplicationPackage:
+      source_type: ${var.ml_application_package_source_type}
+      uri: ${var.ml_application_package_uri}
+    opcMlAppPackageArgs: ${var.opc_ml_app_package_args}

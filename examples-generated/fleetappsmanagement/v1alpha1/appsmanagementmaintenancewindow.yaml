@@ -1,0 +1,22 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementMaintenanceWindow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementmaintenancewindow
+  labels:
+    testing.upbound.io/example-name: test_maintenance_window
+  name: test-maintenance-window
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.maintenance_window_description}
+    displayName: ${var.maintenance_window_display_name}
+    duration: ${var.maintenance_window_duration}
+    freeformTags:
+      bar-key: value
+    isOutage: ${var.maintenance_window_is_outage}
+    isRecurring: ${var.maintenance_window_is_recurring}
+    recurrences: ${var.maintenance_window_recurrences}
+    timeScheduleStart: ${var.maintenance_window_time_schedule_start}

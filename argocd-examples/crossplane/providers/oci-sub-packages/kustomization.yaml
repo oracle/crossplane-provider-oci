@@ -12,3 +12,4 @@ resources:
   - networkloadbalancer
   - certificatesmanagement
   - kms
+  - database

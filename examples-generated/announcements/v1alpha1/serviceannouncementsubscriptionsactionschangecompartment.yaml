@@ -1,0 +1,12 @@
+apiVersion: announcements.oci.upbound.io/v1alpha1
+kind: ServiceAnnouncementSubscriptionsActionsChangeCompartment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: announcements/v1alpha1/serviceannouncementsubscriptionsactionschangecompartment
+  labels:
+    testing.upbound.io/example-name: test_announcement_subscriptions_actions_change_compartment
+  name: test-announcement-subscriptions-actions-change-compartment
+spec:
+  forProvider:
+    announcementSubscriptionId: ${oci_announcements_service_announcement_subscription.test_announcement_subscription.id}
+    compartmentId: ${var.compartment_id}

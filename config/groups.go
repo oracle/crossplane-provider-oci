@@ -469,10 +469,17 @@ var GroupMap = map[string]GroupKindCalculator{
 }
 
 // GroupKindOverrides applies the GroupMap during provider configuration
+// It uses the merged map that includes both manual and generated mappings
 func GroupKindOverrides() config.ResourceOption {
+	// Merge manual and generated group maps
+	mergedMap := MergeGroupMaps()
+	
 	return func(r *config.Resource) {
-		if f, ok := GroupMap[r.Name]; ok {
+		if f, ok := mergedMap[r.Name]; ok {
 			r.ShortGroup, r.Kind = f(r.Name)
+		} else {
+			// Fallback to automatic detection for any unmapped resources
+			r.ShortGroup, r.Kind = ServiceGroupDetector(r.Name)
 		}
 	}
 }

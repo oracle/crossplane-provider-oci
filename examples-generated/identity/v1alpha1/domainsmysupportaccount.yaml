@@ -1,0 +1,23 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsMySupportAccount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsmysupportaccount
+  labels:
+    testing.upbound.io/example-name: test_my_support_account
+  name: test-my-support-account
+spec:
+  forProvider:
+    authorization: ${var.my_support_account_authorization}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    ocid: ${var.my_support_account_ocid}
+    resourceTypeSchemaVersion: ${var.my_support_account_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:supportAccount
+    tags:
+    - key: ${var.my_support_account_tags_key}
+      value: ${var.my_support_account_tags_value}
+    token: ${var.my_support_account_token}
+    user:
+    - ocid: ${var.my_support_account_user_ocid}
+      value: ${var.my_support_account_user_value}

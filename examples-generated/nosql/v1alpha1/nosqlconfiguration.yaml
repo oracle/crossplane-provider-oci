@@ -1,0 +1,16 @@
+apiVersion: nosql.oci.upbound.io/v1alpha1
+kind: NosqlConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: nosql/v1alpha1/nosqlconfiguration
+  labels:
+    testing.upbound.io/example-name: test_configuration
+  name: test-configuration
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    environment: HOSTED
+    isOpcDryRun: ${var.configuration_is_opc_dry_run}
+    kmsKey:
+    - id: ${var.configuration_kms_key_id}
+      kmsVaultId: ${oci_kms_vault.test_vault.id}

@@ -1,0 +1,34 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsGrant
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsgrant
+  labels:
+    testing.upbound.io/example-name: test_grant
+  name: test-grant
+spec:
+  forProvider:
+    app:
+    - value: ${var.grant_app_value}
+    appEntitlementCollection:
+    - value: ${var.grant_app_entitlement_collection_value}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.grant_authorization}
+    entitlement:
+    - attributeName: appRoles
+      attributeValue: ${var.grant_entitlement_attribute_value}
+    grantMechanism: ${var.grant_grant_mechanism}
+    grantedAttributeValuesJson: ${var.grant_granted_attribute_values_json}
+    grantee:
+    - type: ${var.grant_grantee_type}
+      value: ${var.grant_grantee_value}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    ocid: ${var.grant_ocid}
+    resourceTypeSchemaVersion: ${var.grant_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Grant
+    tags:
+    - key: ${var.grant_tags_key}
+      value: ${var.grant_tags_value}

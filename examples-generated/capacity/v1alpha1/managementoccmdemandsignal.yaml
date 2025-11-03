@@ -1,0 +1,17 @@
+apiVersion: capacity.oci.upbound.io/v1alpha1
+kind: ManagementOccmDemandSignal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacity/v1alpha1/managementoccmdemandsignal
+  labels:
+    testing.upbound.io/example-name: test_occm_demand_signal
+  name: test-occm-demand-signal
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.occm_demand_signal_description}
+    displayName: ${var.occm_demand_signal_display_name}
+    freeformTags:
+      bar-key: value

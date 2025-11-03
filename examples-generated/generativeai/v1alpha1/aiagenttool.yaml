@@ -1,0 +1,60 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AiAgentTool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/aiagenttool
+  labels:
+    testing.upbound.io/example-name: test_tool
+  name: test-tool
+spec:
+  forProvider:
+    agentId: ${oci_generative_ai_agent_agent.test_agent.id}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.tool_description}
+    displayName: ${var.tool_display_name}
+    freeformTags:
+      Department: Finance
+    metadata: ${var.tool_metadata}
+    toolConfig:
+    - api_schema:
+      - api_schema_input_location_type: ${var.tool_tool_config_api_schema_api_schema_input_location_type}
+        bucket: ${var.tool_tool_config_api_schema_bucket}
+        content: ${var.tool_tool_config_api_schema_content}
+        namespace: ${var.tool_tool_config_api_schema_namespace}
+        object: ${var.tool_tool_config_api_schema_object}
+      databaseConnection:
+      - connectionId: ${oci_database_migration_connection.test_connection.id}
+        connectionType: ${var.tool_tool_config_database_connection_connection_type}
+      databaseSchema:
+      - bucket: ${var.tool_tool_config_database_schema_bucket}
+        content: ${var.tool_tool_config_database_schema_content}
+        inputLocationType: ${var.tool_tool_config_database_schema_input_location_type}
+        namespace: ${var.tool_tool_config_database_schema_namespace}
+        prefix: ${var.tool_tool_config_database_schema_prefix}
+      dialect: ${var.tool_tool_config_dialect}
+      function:
+      - description: ${var.tool_tool_config_function_description}
+        name: ${var.tool_tool_config_function_name}
+        parameters: ${var.tool_tool_config_function_parameters}
+      generationLlmCustomization:
+      - instruction: ${var.tool_tool_config_generation_llm_customization_instruction}
+      iclExamples:
+      - bucket: ${var.tool_tool_config_icl_examples_bucket}
+        content: ${var.tool_tool_config_icl_examples_content}
+        inputLocationType: ${var.tool_tool_config_icl_examples_input_location_type}
+        namespace: ${var.tool_tool_config_icl_examples_namespace}
+        prefix: ${var.tool_tool_config_icl_examples_prefix}
+      knowledgeBaseConfigs:
+      - knowledgeBaseId: ${oci_generative_ai_agent_knowledge_base.test_knowledge_base.id}
+      modelSize: ${var.tool_tool_config_model_size}
+      shouldEnableSelfCorrection: ${var.tool_tool_config_should_enable_self_correction}
+      shouldEnableSqlExecution: ${var.tool_tool_config_should_enable_sql_execution}
+      tableAndColumnDescription:
+      - bucket: ${var.tool_tool_config_table_and_column_description_bucket}
+        content: ${var.tool_tool_config_table_and_column_description_content}
+        inputLocationType: ${var.tool_tool_config_table_and_column_description_input_location_type}
+        namespace: ${var.tool_tool_config_table_and_column_description_namespace}
+        prefix: ${var.tool_tool_config_table_and_column_description_prefix}
+      toolConfigType: ${var.tool_tool_config_tool_config_type}

@@ -1,0 +1,86 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementFleet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementfleet
+  labels:
+    testing.upbound.io/example-name: test_fleet
+  name: test-fleet
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    credentials:
+    - compartmentId: ${var.compartment_id}
+      displayName: ${var.fleet_credentials_display_name}
+      entitySpecifics:
+      - credentialLevel: ${var.fleet_credentials_entity_specifics_credential_level}
+        resourceId: ${oci_cloud_guard_resource.test_resource.id}
+        target: ${var.fleet_credentials_entity_specifics_target}
+        variables:
+        - name: ${var.fleet_credentials_entity_specifics_variables_name}
+          value: ${var.fleet_credentials_entity_specifics_variables_value}
+      password:
+      - credentialType: ${var.fleet_credentials_password_credential_type}
+        keyId: ${oci_kms_key.test_key.id}
+        keyVersion: ${var.fleet_credentials_password_key_version}
+        secretId: ${oci_vault_secret.test_secret.id}
+        secretVersion: ${var.fleet_credentials_password_secret_version}
+        value: ${var.fleet_credentials_password_value}
+        vaultId: ${oci_kms_vault.test_vault.id}
+      user:
+      - credentialType: ${var.fleet_credentials_user_credential_type}
+        keyId: ${oci_kms_key.test_key.id}
+        keyVersion: ${var.fleet_credentials_user_key_version}
+        secretId: ${oci_vault_secret.test_secret.id}
+        secretVersion: ${var.fleet_credentials_user_secret_version}
+        value: ${var.fleet_credentials_user_value}
+        vaultId: ${oci_kms_vault.test_vault.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.fleet_description}
+    details:
+    - fleetType: ${var.fleet_details_fleet_type}
+    displayName: ${var.fleet_display_name}
+    environmentType: ${var.fleet_environment_type}
+    freeformTags:
+      bar-key: value
+    isTargetAutoConfirm: ${var.fleet_is_target_auto_confirm}
+    notificationPreferences:
+    - compartmentId: ${var.compartment_id}
+      preferences:
+      - onJobFailure: ${var.fleet_notification_preferences_preferences_on_job_failure}
+        onResourceNonCompliance: ${var.fleet_notification_preferences_preferences_on_resource_non_compliance}
+        onRunbookNewerVersion: ${var.fleet_notification_preferences_preferences_on_runbook_newer_version}
+        onTaskFailure: ${var.fleet_notification_preferences_preferences_on_task_failure}
+        onTaskPause: ${var.fleet_notification_preferences_preferences_on_task_pause}
+        onTaskSuccess: ${var.fleet_notification_preferences_preferences_on_task_success}
+        onTopologyModification: ${var.fleet_notification_preferences_preferences_on_topology_modification}
+        upcomingSchedule:
+        - notifyBefore: ${var.fleet_notification_preferences_preferences_upcoming_schedule_notify_before}
+          onUpcomingSchedule: ${var.fleet_notification_preferences_preferences_upcoming_schedule_on_upcoming_schedule}
+      topicId: ${oci_ons_notification_topic.test_notification_topic.id}
+    parentFleetId: ${oci_fleet_apps_management_fleet.test_fleet.id}
+    products: ${var.fleet_products}
+    properties:
+    - compartmentId: ${var.compartment_id}
+      displayName: ${var.fleet_properties_display_name}
+      fleetPropertyType: ${var.fleet_properties_fleet_property_type}
+      isRequired: ${var.fleet_properties_is_required}
+      value: ${var.fleet_properties_value}
+    resourceSelection:
+    - resourceSelectionType: ${var.fleet_resource_selection_resource_selection_type}
+      ruleSelectionCriteria:
+      - matchCondition: ${var.fleet_resource_selection_rule_selection_criteria_match_condition}
+        rules:
+        - basis: ${var.fleet_resource_selection_rule_selection_criteria_rules_basis}
+          compartmentId: ${var.compartment_id}
+          conditions:
+          - attrGroup: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_group}
+            attrKey: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_key}
+            attrValue: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_value}
+          resourceCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    resources:
+    - compartmentId: ${var.compartment_id}
+      fleetResourceType: ${var.fleet_resources_fleet_resource_type}
+      resourceId: ${oci_cloud_guard_resource.test_resource.id}
+      tenancyId: ${oci_identity_tenancy.test_tenancy.id}

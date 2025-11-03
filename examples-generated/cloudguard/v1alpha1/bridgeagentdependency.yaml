@@ -1,0 +1,23 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: BridgeAgentDependency
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/bridgeagentdependency
+  labels:
+    testing.upbound.io/example-name: test_agent_dependency
+  name: test-agent-dependency
+spec:
+  forProvider:
+    bucket: ${var.agent_dependency_bucket}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    dependencyName: ${var.agent_dependency_dependency_name}
+    dependencyVersion: ${var.agent_dependency_dependency_version}
+    description: ${var.agent_dependency_description}
+    displayName: ${var.agent_dependency_display_name}
+    freeformTags:
+      Department: Finance
+    namespace: ${var.agent_dependency_namespace}
+    object: ${var.agent_dependency_object}
+    systemTags: ${var.agent_dependency_system_tags}

@@ -1,0 +1,12 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: BackupCancelManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/backupcancelmanagement
+  labels:
+    testing.upbound.io/example-name: test_backup_cancel_management
+  name: test-backup-cancel-management
+spec:
+  forProvider:
+    backupId: ${oci_database_backup.test_backup.id}
+    cancelBackupTrigger: 1

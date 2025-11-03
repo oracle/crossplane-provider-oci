@@ -1,0 +1,16 @@
+apiVersion: api.oci.upbound.io/v1alpha1
+kind: PlatformApiPlatformInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: api/v1alpha1/platformapiplatforminstance
+  labels:
+    testing.upbound.io/example-name: test_api_platform_instance
+  name: test-api-platform-instance
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.api_platform_instance_description}
+    freeformTags:
+      bar-key: value

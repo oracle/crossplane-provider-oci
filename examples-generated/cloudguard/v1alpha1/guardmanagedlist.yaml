@@ -1,0 +1,20 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: GuardManagedList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/guardmanagedlist
+  labels:
+    testing.upbound.io/example-name: test_managed_list
+  name: test-managed-list
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.managed_list_description}
+    displayName: ${var.managed_list_display_name}
+    freeformTags:
+      bar-key: value
+    listItems: ${var.managed_list_list_items}
+    listType: ${var.managed_list_list_type}
+    sourceManagedListId: ${oci_cloud_guard_managed_list.test_managed_list.id}

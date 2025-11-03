@@ -1,0 +1,18 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsOauthClientCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsoauthclientcertificate
+  labels:
+    testing.upbound.io/example-name: test_oauth_client_certificate
+  name: test-oauth-client-certificate
+spec:
+  forProvider:
+    authorization: ${var.oauth_client_certificate_authorization}
+    certificateAlias: ${var.oauth_client_certificate_certificate_alias}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    resourceTypeSchemaVersion: ${var.oauth_client_certificate_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:OAuthClientCertificate
+    x509base64certificate: ${var.oauth_client_certificate_x509base64certificate}

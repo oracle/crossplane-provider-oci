@@ -1,0 +1,12 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainReplicationToRegion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainreplicationtoregion
+  labels:
+    testing.upbound.io/example-name: test_domain_replication_to_region
+  name: test-domain-replication-to-region
+spec:
+  forProvider:
+    domainId: ${oci_identity_domain.test_domain.id}
+    replicaRegion: ${var.domain_replication_to_region_replica_region}

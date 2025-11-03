@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExternalcontainerdatabasesStackMonitoring
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externalcontainerdatabasesstackmonitoring
+  labels:
+    testing.upbound.io/example-name: test_externalcontainerdatabases_stack_monitoring
+  name: test-externalcontainerdatabases-stack-monitoring
+spec:
+  forProvider:
+    enableStackMonitoring: true
+    externalContainerDatabaseId: ${oci_database_external_container_database.test_external_container_database.id}
+    externalDatabaseConnectorId: ${oci_database_external_database_connector.test_external_database_connector.id}

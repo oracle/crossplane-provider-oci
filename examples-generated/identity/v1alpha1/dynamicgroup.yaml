@@ -1,0 +1,17 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DynamicGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/dynamicgroup
+  labels:
+    testing.upbound.io/example-name: test_dynamic_group
+  name: test-dynamic-group
+spec:
+  forProvider:
+    compartmentId: ${var.tenancy_ocid}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.dynamic_group_description}
+    freeformTags:
+      Department: Finance
+    matchingRule: ${var.dynamic_group_matching_rule}

@@ -1,0 +1,28 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsSecurityQuestionSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainssecurityquestionsetting
+  labels:
+    testing.upbound.io/example-name: test_security_question_setting
+  name: test-security-question-setting
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.security_question_setting_authorization}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    maxFieldLength: ${var.security_question_setting_max_field_length}
+    minAnswerLength: ${var.security_question_setting_min_answer_length}
+    numQuestionsToAns: ${var.security_question_setting_num_questions_to_ans}
+    numQuestionsToSetup: ${var.security_question_setting_num_questions_to_setup}
+    ocid: ${var.security_question_setting_ocid}
+    resourceTypeSchemaVersion: ${var.security_question_setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:SecurityQuestionSettings
+    securityQuestionSettingId: ${oci_identity_domains_security_question_setting.test_security_question_setting.id}
+    tags:
+    - key: ${var.security_question_setting_tags_key}
+      value: ${var.security_question_setting_tags_value}

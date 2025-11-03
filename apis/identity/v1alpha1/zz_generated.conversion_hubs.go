@@ -7,22 +7,205 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *ApiKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *AuthenticationPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AuthToken) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Compartment) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *CustomerSecretKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DbCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainReplicationToRegion) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsAccountRecoverySetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsApiKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsApp) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsAppRole) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsApprovalWorkflow) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsApprovalWorkflowAssignment) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsApprovalWorkflowStep) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsAuthenticationFactorSetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsAuthToken) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsCloudGate) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsCloudGateMapping) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsCloudGateServer) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsCondition) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsCustomerSecretKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsDynamicResourceGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsGrant) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsIdentityPropagationTrust) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsIdentityProvider) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsIdentitySetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsKmsiSetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyApiKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyAuthToken) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyCustomerSecretKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyOauth2clientCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyRequest) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMySmtpCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMySupportAccount) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsMyUserDbCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsNetworkPerimeter) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsNotificationSetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsOauth2clientCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsOauthClientCertificate) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsOauthPartnerCertificate) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsPasswordPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSecurityQuestion) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSecurityQuestionSetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSelfRegistrationProfile) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSetting) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSmtpCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsSocialIdentityProvider) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsUser) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DomainsUserDbCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DynamicGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Group) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *IdentityDomain) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *IdentityProvider) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *IdpGroupMapping) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ImportStandardTagsManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkSource) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Policy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SmtpCredential) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Tag) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *TagDefault) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *TagNamespace) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *UiPassword) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *User) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *UserCapabilitiesManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *UserGroupMembership) Hub() {}

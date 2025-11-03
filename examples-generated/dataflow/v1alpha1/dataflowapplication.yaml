@@ -1,0 +1,49 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: DataflowApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/dataflowapplication
+  labels:
+    testing.upbound.io/example-name: test_application
+  name: test-application
+spec:
+  forProvider:
+    applicationLogConfig:
+    - logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}
+    archiveUri: ${var.application_archive_uri}
+    arguments: ${var.application_arguments}
+    className: ${var.application_class_name}
+    compartmentId: ${var.compartment_id}
+    configuration: ${var.application_configuration}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.application_description}
+    displayName: ${var.application_display_name}
+    driverShape: ${var.application_driver_shape}
+    driverShapeConfig:
+    - memoryInGbs: ${var.application_driver_shape_config_memory_in_gbs}
+      ocpus: ${var.application_driver_shape_config_ocpus}
+    execute: ${var.application_execute}
+    executorShape: ${var.application_executor_shape}
+    executorShapeConfig:
+    - memoryInGbs: ${var.application_executor_shape_config_memory_in_gbs}
+      ocpus: ${var.application_executor_shape_config_ocpus}
+    fileUri: ${var.application_file_uri}
+    freeformTags:
+      Department: Finance
+    idleTimeoutInMinutes: ${var.application_idle_timeout_in_minutes}
+    language: ${var.application_language}
+    logsBucketUri: ${var.application_logs_bucket_uri}
+    maxDurationInMinutes: ${var.application_max_duration_in_minutes}
+    metastoreId: ${var.metastore_id}
+    numExecutors: ${var.application_num_executors}
+    parameters:
+    - name: ${var.application_parameters_name}
+      value: ${var.application_parameters_value}
+    poolId: ${oci_dataflow_pool.test_pool.id}
+    privateEndpointId: ${oci_dataflow_private_endpoint.test_private_endpoint.id}
+    sparkVersion: ${var.application_spark_version}
+    terminateRunsOnDeletion: true
+    type: ${var.application_type}
+    warehouseBucketUri: ${var.application_warehouse_bucket_uri}

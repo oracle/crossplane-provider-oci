@@ -1,0 +1,16 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceGroupInstallPackagesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstancegroupinstallpackagesmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_install_packages_management
+  name: test-managed-instance-group-install-packages-management
+spec:
+  forProvider:
+    isLatest: ${var.managed_instance_group_install_packages_management_is_latest}
+    managedInstanceGroupId: ${oci_os_management_hub_managed_instance_group.test_managed_instance_group.id}
+    packageNames: ${var.managed_instance_group_install_packages_management_package_names}
+    workRequestDetails:
+    - description: ${var.managed_instance_group_install_packages_management_work_request_details_description}
+      displayName: ${var.managed_instance_group_install_packages_management_work_request_details_display_name}

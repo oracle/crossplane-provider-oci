@@ -1,0 +1,53 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: FleetAdvancedFeatureConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/fleetadvancedfeatureconfiguration
+  labels:
+    testing.upbound.io/example-name: test_fleet_advanced_feature_configuration
+  name: test-fleet-advanced-feature-configuration
+spec:
+  forProvider:
+    advancedUsageTracking:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_advanced_usage_tracking_is_enabled}
+    analyticBucketName: ${var.bucket_name}
+    analyticNamespace: ${var.fleet_advanced_feature_configuration_analytic_namespace}
+    cryptoEventAnalysis:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_crypto_event_analysis_is_enabled}
+      summarizedEventsLog:
+      - logGroupId: ${oci_logging_log_group.test_log_group.id}
+        logId: ${oci_logging_log.test_log.id}
+    fleetId: ${oci_jms_fleet.test_fleet.id}
+    javaMigrationAnalysis:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_java_migration_analysis_is_enabled}
+    jfrRecording:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_jfr_recording_is_enabled}
+    lcm:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_lcm_is_enabled}
+      postInstallationActions:
+      - addLoggingHandler: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_add_logging_handler}
+        disabledTlsVersions: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_disabled_tls_versions}
+        globalLoggingLevel: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_global_logging_level}
+        minimumKeySizeSettings:
+        - certpath:
+          - keySize: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_certpath_key_size}
+            name: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_certpath_name}
+          jar:
+          - keySize: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_jar_key_size}
+            name: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_jar_name}
+          tls:
+          - keySize: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_tls_key_size}
+            name: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_minimum_key_size_settings_tls_name}
+        proxies:
+        - ftpProxyHost: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_ftp_proxy_host}
+          ftpProxyPort: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_ftp_proxy_port}
+          httpProxyHost: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_http_proxy_host}
+          httpProxyPort: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_http_proxy_port}
+          httpsProxyHost: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_https_proxy_host}
+          httpsProxyPort: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_https_proxy_port}
+          socksProxyHost: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_socks_proxy_host}
+          socksProxyPort: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_socks_proxy_port}
+          useSystemProxies: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_proxies_use_system_proxies}
+        shouldReplaceCertificatesOperatingSystem: ${var.fleet_advanced_feature_configuration_lcm_post_installation_actions_should_replace_certificates_operating_system}
+    performanceTuningAnalysis:
+    - isEnabled: ${var.fleet_advanced_feature_configuration_performance_tuning_analysis_is_enabled}

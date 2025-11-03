@@ -1,0 +1,23 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: InstanceIdentityConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/instanceidentityconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_identity_configuration
+  name: test-bds-instance-identity-configuration
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    confidentialApplicationId: ${oci_dataflow_application.test_application.id}
+    displayName: ${var.bds_instance_identity_configuration_display_name}
+    iamUserSyncConfigurationDetails:
+    - isPosixAttributesAdditionRequired: ${var.bds_instance_identity_configuration_iam_user_sync_configuration_details_is_posix_attributes_addition_required}
+    identityDomainId: ${oci_identity_domain.test_domain.id}
+    upstConfigurationDetails:
+    - masterEncryptionKeyId: ${oci_kms_key.test_key.id}
+      vaultId: ${oci_kms_vault.test_vault.id}

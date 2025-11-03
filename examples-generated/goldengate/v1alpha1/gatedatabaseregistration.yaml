@@ -1,0 +1,33 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: GateDatabaseRegistration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/gatedatabaseregistration
+  labels:
+    testing.upbound.io/example-name: test_database_registration
+  name: test-database-registration
+spec:
+  forProvider:
+    aliasName: ${var.database_registration_alias_name}
+    compartmentId: ${var.compartment_id}
+    connectionString: ${var.database_registration_connection_string}
+    databaseId: ${oci_database_database.test_database.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.database_registration_description}
+    displayName: ${var.database_registration_display_name}
+    fqdn: ${var.database_registration_fqdn}
+    freeformTags:
+      bar-key: value
+    ipAddress: ${var.database_registration_ip_address}
+    keyId: ${oci_kms_key.test_key.id}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    secretCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    sessionMode: ${var.database_registration_session_mode}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    username: ${var.database_registration_username}
+    vaultId: ${oci_kms_vault.test_vault.id}
+    wallet: ${var.database_registration_wallet}

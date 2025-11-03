@@ -13,93 +13,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type RouteRulesInitParameters struct {
-
-	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. Required if you provide a destination.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.NatGateway
-	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
-
-	// Reference to a NatGateway in networking to populate networkEntityId.
-	// +kubebuilder:validation:Optional
-	NetworkEntityIDRef *v1.Reference `json:"networkEntityIdRef,omitempty" tf:"-"`
-
-	// Selector for a NatGateway in networking to populate networkEntityId.
-	// +kubebuilder:validation:Optional
-	NetworkEntityIDSelector *v1.Selector `json:"networkEntityIdSelector,omitempty" tf:"-"`
-
-	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
-	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
-}
-
-type RouteRulesObservation struct {
-
-	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. Required if you provide a destination.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
-	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
-
-	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
-	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
-}
-
-type RouteRulesParameters struct {
-
-	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
-	// +kubebuilder:validation:Optional
-	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
-
-	// (Updatable) An optional description of your choice for the rule.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
-	// +kubebuilder:validation:Optional
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. Required if you provide a destination.
-	// +kubebuilder:validation:Optional
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.NatGateway
-	// +kubebuilder:validation:Optional
-	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
-
-	// Reference to a NatGateway in networking to populate networkEntityId.
-	// +kubebuilder:validation:Optional
-	NetworkEntityIDRef *v1.Reference `json:"networkEntityIdRef,omitempty" tf:"-"`
-
-	// Selector for a NatGateway in networking to populate networkEntityId.
-	// +kubebuilder:validation:Optional
-	NetworkEntityIDSelector *v1.Selector `json:"networkEntityIdSelector,omitempty" tf:"-"`
-
-	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
-	// +kubebuilder:validation:Optional
-	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
-}
-
 type RouteTableInitParameters struct {
 
 	// (Updatable) The OCID of the compartment to contain the route table.
@@ -126,7 +39,7 @@ type RouteTableInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The collection of rules used for routing destination IPs to network devices.
-	RouteRules []RouteRulesInitParameters `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
+	RouteRules []RouteTableRouteRulesInitParameters `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
 
 	// The OCID of the VCN the route table belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -161,7 +74,7 @@ type RouteTableObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Updatable) The collection of rules used for routing destination IPs to network devices.
-	RouteRules []RouteRulesObservation `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
+	RouteRules []RouteTableRouteRulesObservation `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
 
 	// The route table's current state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -204,7 +117,7 @@ type RouteTableParameters struct {
 
 	// (Updatable) The collection of rules used for routing destination IPs to network devices.
 	// +kubebuilder:validation:Optional
-	RouteRules []RouteRulesParameters `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
+	RouteRules []RouteTableRouteRulesParameters `json:"routeRules,omitempty" tf:"route_rules,omitempty"`
 
 	// The OCID of the VCN the route table belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -218,6 +131,93 @@ type RouteTableParameters struct {
 	// Selector for a Vcn in networking to populate vcnId.
 	// +kubebuilder:validation:Optional
 	VcnIDSelector *v1.Selector `json:"vcnIdSelector,omitempty" tf:"-"`
+}
+
+type RouteTableRouteRulesInitParameters struct {
+
+	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
+	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
+	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. Required if you provide a destination.
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.NatGateway
+	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
+
+	// Reference to a NatGateway in networking to populate networkEntityId.
+	// +kubebuilder:validation:Optional
+	NetworkEntityIDRef *v1.Reference `json:"networkEntityIdRef,omitempty" tf:"-"`
+
+	// Selector for a NatGateway in networking to populate networkEntityId.
+	// +kubebuilder:validation:Optional
+	NetworkEntityIDSelector *v1.Selector `json:"networkEntityIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
+	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
+}
+
+type RouteTableRouteRulesObservation struct {
+
+	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
+	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
+	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. Required if you provide a destination.
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
+	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
+
+	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
+	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
+}
+
+type RouteTableRouteRulesParameters struct {
+
+	// (Updatable) Deprecated. Instead use destination and destinationType. Requests that include both cidrBlock and destination will be rejected.
+	// +kubebuilder:validation:Optional
+	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
+
+	// (Updatable) An optional description of your choice for the rule.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses used for matching when routing traffic. Required if you provide a destinationType.
+	// +kubebuilder:validation:Optional
+	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. Required if you provide a destination.
+	// +kubebuilder:validation:Optional
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) The OCID for the route rule's target. For information about the type of targets you can specify, see Route Tables.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.NatGateway
+	// +kubebuilder:validation:Optional
+	NetworkEntityID *string `json:"networkEntityId,omitempty" tf:"network_entity_id,omitempty"`
+
+	// Reference to a NatGateway in networking to populate networkEntityId.
+	// +kubebuilder:validation:Optional
+	NetworkEntityIDRef *v1.Reference `json:"networkEntityIdRef,omitempty" tf:"-"`
+
+	// Selector for a NatGateway in networking to populate networkEntityId.
+	// +kubebuilder:validation:Optional
+	NetworkEntityIDSelector *v1.Selector `json:"networkEntityIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) A route rule can be STATIC if manually added to the route table, LOCAL if added by Oracle Cloud Infrastructure to the route table.
+	// +kubebuilder:validation:Optional
+	RouteType *string `json:"routeType,omitempty" tf:"route_type,omitempty"`
 }
 
 // RouteTableSpec defines the desired state of RouteTable

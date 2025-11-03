@@ -1,0 +1,11 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: Migration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_migration
+  name: test-migration
+spec:
+  forProvider:
+    dbSystemId: ${oci_database_db_system.test_db_system.id}

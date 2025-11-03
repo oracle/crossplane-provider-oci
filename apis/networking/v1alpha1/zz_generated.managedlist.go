@@ -7,8 +7,125 @@ package v1alpha1
 
 import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
+// GetItems of this DefaultDhcpOptionsList.
+func (l *DefaultDhcpOptionsList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DefaultRouteTableList.
+func (l *DefaultRouteTableList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DefaultSecurityListList.
+func (l *DefaultSecurityListList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DhcpOptionsList.
 func (l *DhcpOptionsList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyAddressListList.
+func (l *FirewallNetworkFirewallPolicyAddressListList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyApplicationGroupList.
+func (l *FirewallNetworkFirewallPolicyApplicationGroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyApplicationList.
+func (l *FirewallNetworkFirewallPolicyApplicationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyDecryptionProfileList.
+func (l *FirewallNetworkFirewallPolicyDecryptionProfileList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyDecryptionRuleList.
+func (l *FirewallNetworkFirewallPolicyDecryptionRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyMappedSecretList.
+func (l *FirewallNetworkFirewallPolicyMappedSecretList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyNatRuleList.
+func (l *FirewallNetworkFirewallPolicyNatRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicySecurityRuleList.
+func (l *FirewallNetworkFirewallPolicySecurityRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyServiceList.
+func (l *FirewallNetworkFirewallPolicyServiceList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FirewallNetworkFirewallPolicyTunnelInspectionRuleList.
+func (l *FirewallNetworkFirewallPolicyTunnelInspectionRuleList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

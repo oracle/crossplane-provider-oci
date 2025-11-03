@@ -1,0 +1,21 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: DatacatalogConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacatalog/v1alpha1/datacatalogconnection
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    catalogId: ${oci_datacatalog_catalog.test_catalog.id}
+    dataAssetKey: ${var.connection_data_asset_key}
+    description: ${var.connection_description}
+    displayName: ${var.connection_display_name}
+    encPropertiesSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    isDefault: ${var.connection_is_default}
+    properties: ${var.connection_properties}
+    typeKey: ${var.connection_type_key}

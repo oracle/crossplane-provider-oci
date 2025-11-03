@@ -1,0 +1,22 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AiAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/aiagent
+  labels:
+    testing.upbound.io/example-name: test_agent
+  name: test-agent
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.agent_description}
+    displayName: ${var.agent_display_name}
+    freeformTags:
+      Department: Finance
+    knowledgeBaseIds: ${var.agent_knowledge_base_ids}
+    llmConfig:
+    - routingLlmCustomization:
+      - instruction: ${var.agent_llm_config_routing_llm_customization_instruction}
+    welcomeMessage: ${var.agent_welcome_message}

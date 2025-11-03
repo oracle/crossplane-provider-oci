@@ -1,0 +1,125 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: RecoveryDrProtectionGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/recoverydrprotectiongroup
+  labels:
+    testing.upbound.io/example-name: test_dr_protection_group
+  name: test-dr-protection-group
+spec:
+  forProvider:
+    association:
+    - peerId: ${var.dr_protection_group_association_peer_id}
+      peerRegion: ${var.dr_protection_group_association_peer_region}
+      role: ${var.dr_protection_group_association_role}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    disassociateTrigger: ${var.disassociate_trigger}
+    displayName: ${var.dr_protection_group_display_name}
+    freeformTags:
+      Department: Finance
+    logLocation:
+    - bucket: ${var.dr_protection_group_log_location_bucket}
+      namespace: ${var.dr_protection_group_log_location_namespace}
+    members:
+    - autonomousDatabaseStandbyTypeForDrDrills: ${var.dr_protection_group_members_autonomous_database_standby_type_for_dr_drills}
+      backendSetMappings:
+      - destinationBackendSetName: ${var.backend_set_name}
+        isBackendSetForNonMovable: ${var.dr_protection_group_members_backend_set_mappings_is_backend_set_for_non_movable}
+        sourceBackendSetName: ${var.backend_set_name}
+      backupConfig:
+      - backupSchedule: ${var.dr_protection_group_members_backup_config_backup_schedule}
+        imageReplicationVaultSecretId: ${oci_vault_secret.test_secret.id}
+        maxNumberOfBackupsRetained: ${var.dr_protection_group_members_backup_config_max_number_of_backups_retained}
+        namespaces: ${var.dr_protection_group_members_backup_config_namespaces}
+        replicateImages: ${var.dr_protection_group_members_backup_config_replicate_images}
+      backupLocation:
+      - bucket: ${var.dr_protection_group_members_backup_location_bucket}
+        namespace: ${var.dr_protection_group_members_backup_location_namespace}
+      blockVolumeAttachAndMountOperations:
+      - attachments:
+        - blockVolumeId: ${oci_core_volume.test_volume.id}
+          volumeAttachmentReferenceInstanceId: ${oci_core_instance.test_instance.id}
+        mounts:
+        - mountPoint: ${var.dr_protection_group_members_block_volume_attach_and_mount_operations_mounts_mount_point}
+      blockVolumeOperations:
+      - attachmentDetails:
+        - volumeAttachmentReferenceInstanceId: ${oci_core_instance.test_instance.id}
+        blockVolumeId: ${oci_core_volume.test_volume.id}
+        mountDetails:
+        - mountPoint: ${var.dr_protection_group_members_block_volume_operations_mount_details_mount_point}
+      bucket: ${var.dr_protection_group_members_bucket}
+      commonDestinationKey:
+      - encryptionKeyId: ${oci_kms_key.test_key.id}
+        vaultId: ${oci_kms_vault.test_vault.id}
+      connectionStringType: ${var.dr_protection_group_members_connection_string_type}
+      destinationAvailabilityDomain: ${var.dr_protection_group_members_destination_availability_domain}
+      destinationBackupPolicyId: ${oci_identity_policy.test_policy.id}
+      destinationCapacityReservationId: ${var.destination_capacity_reservation_id}
+      destinationCompartmentId: ${oci_identity_compartment.test_compartment.id}
+      destinationDedicatedVmHostId: ${oci_core_dedicated_vm_host.test_dedicated_vm_host.id}
+      destinationEncryptionKey:
+      - encryptionKeyId: ${oci_kms_key.test_key.id}
+        vaultId: ${oci_kms_vault.test_vault.id}
+      destinationLoadBalancerId: ${oci_load_balancer_load_balancer.test_load_balancer.id}
+      destinationNetworkLoadBalancerId: ${oci_network_load_balancer_network_load_balancer.test_network_load_balancer.id}
+      destinationSnapshotPolicyId: ${oci_identity_policy.test_policy.id}
+      exportMappings:
+      - destinationMountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+        exportId: ${oci_file_storage_export.test_export.id}
+      fileSystemOperations:
+      - exportPath: ${var.dr_protection_group_members_file_system_operations_export_path}
+        mountDetails:
+        - mountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+        mountPoint: ${var.dr_protection_group_members_file_system_operations_mount_point}
+        mountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+        unmountDetails:
+        - mountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+      isMovable: ${var.dr_protection_group_members_is_movable}
+      isRetainFaultDomain: ${var.dr_protection_group_members_is_retain_fault_domain}
+      isStartStopEnabled: ${var.dr_protection_group_members_is_start_stop_enabled}
+      jumpHostId: ${oci_disaster_recovery_jump_host.test_jump_host.id}
+      loadBalancerMappings:
+      - destinationLoadBalancerId: ${oci_load_balancer_load_balancer.test_load_balancer.id}
+        sourceLoadBalancerId: ${oci_load_balancer_load_balancer.test_load_balancer.id}
+      managedNodePoolConfigs:
+      - id: ${var.dr_protection_group_members_managed_node_pool_configs_id}
+        maximum: ${var.dr_protection_group_members_managed_node_pool_configs_maximum}
+        minimum: ${var.dr_protection_group_members_managed_node_pool_configs_minimum}
+      memberId: ${var.dr_protection_group_members_member_id}
+      memberType: ${var.dr_protection_group_members_member_type}
+      namespace: ${var.dr_protection_group_members_namespace}
+      networkLoadBalancerMappings:
+      - destinationNetworkLoadBalancerId: ${oci_network_load_balancer_network_load_balancer.test_network_load_balancer.id}
+        sourceNetworkLoadBalancerId: ${oci_network_load_balancer_network_load_balancer.test_network_load_balancer.id}
+      passwordVaultSecretIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      peerClusterId: ${oci_containerengine_cluster.test_cluster.id}
+      sourceVolumeToDestinationEncryptionKeyMappings:
+      - destinationEncryptionKey:
+        - encryptionKeyId: ${oci_kms_key.test_key.id}
+          vaultId: ${oci_kms_vault.test_vault.id}
+        sourceVolumeId: ${oci_core_volume.test_volume.id}
+      vaultMappings:
+      - destinationVaultId: ${oci_kms_vault.test_vault.id}
+        sourceVaultId: ${oci_kms_vault.test_vault.id}
+      virtualNodePoolConfigs:
+      - id: ${var.dr_protection_group_members_virtual_node_pool_configs_id}
+        maximum: ${var.dr_protection_group_members_virtual_node_pool_configs_maximum}
+        minimum: ${var.dr_protection_group_members_virtual_node_pool_configs_minimum}
+      vnicMapping:
+      - destination_primary_private_ip_address: ${var.dr_protection_group_members_vnic_mapping_destination_primary_private_ip_address}
+        destination_primary_private_ip_hostname_label: ${var.dr_protection_group_members_vnic_mapping_destination_primary_private_ip_hostname_label}
+        destinationNsgIdList: ${var.dr_protection_group_members_vnic_mapping_destination_nsg_id_list}
+        destinationSubnetId: ${oci_core_subnet.test_subnet.id}
+        sourceVnicId: ${oci_core_vnic.test_vnic.id}
+      vnicMappings:
+      - destinationNsgIdList: ${var.dr_protection_group_members_vnic_mappings_destination_nsg_id_list}
+        destinationPrimaryPrivateIpAddress: ${var.dr_protection_group_members_vnic_mappings_destination_primary_private_ip_address}
+        destinationPrimaryPrivateIpHostnameLabel: ${var.dr_protection_group_members_vnic_mappings_destination_primary_private_ip_hostname_label}
+        destinationReservedPublicIpId: ${oci_core_public_ip.test_public_ip.id}
+        destinationSubnetId: ${oci_core_subnet.test_subnet.id}
+        sourceVnicId: ${oci_core_vnic.test_vnic.id}

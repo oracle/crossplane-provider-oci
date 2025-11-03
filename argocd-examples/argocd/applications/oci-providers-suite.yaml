@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/oracle-samples/crossplane-provider-oci
-    targetRevision: sub-package-provider
+    targetRevision: main
     path: argocd-examples/crossplane/providers/oci-sub-packages
   destination:
     server: https://kubernetes.default.svc

@@ -1,0 +1,107 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsAuthenticationFactorSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsauthenticationfactorsetting
+  labels:
+    testing.upbound.io/example-name: test_authentication_factor_setting
+  name: test-authentication-factor-setting
+spec:
+  forProvider:
+    attributeSets: []
+    attributes: ""
+    authenticationFactorSettingId: ${oci_identity_domains_authentication_factor_setting.test_authentication_factor_setting.id}
+    authorization: ${var.authentication_factor_setting_authorization}
+    autoEnrollEmailFactorDisabled: ${var.authentication_factor_setting_auto_enroll_email_factor_disabled}
+    bypassCodeEnabled: ${var.authentication_factor_setting_bypass_code_enabled}
+    bypassCodeSettings:
+    - helpDeskCodeExpiryInMins: ${var.authentication_factor_setting_bypass_code_settings_help_desk_code_expiry_in_mins}
+      helpDeskGenerationEnabled: ${var.authentication_factor_setting_bypass_code_settings_help_desk_generation_enabled}
+      helpDeskMaxUsage: ${var.authentication_factor_setting_bypass_code_settings_help_desk_max_usage}
+      length: ${var.authentication_factor_setting_bypass_code_settings_length}
+      maxActive: "6"
+      selfServiceGenerationEnabled: ${var.authentication_factor_setting_bypass_code_settings_self_service_generation_enabled}
+    clientAppSettings:
+    - deviceProtectionPolicy: NONE
+      initialLockoutPeriodInSecs: "30"
+      keyPairLength: "2048"
+      lockoutEscalationPattern: Constant
+      maxFailuresBeforeLockout: "10"
+      maxFailuresBeforeWarning: "5"
+      maxLockoutIntervalInSecs: "86400"
+      minPinLength: "6"
+      policyUpdateFreqInDays: ${var.authentication_factor_setting_client_app_settings_policy_update_freq_in_days}
+      requestSigningAlgo: ${var.authentication_factor_setting_client_app_settings_request_signing_algo}
+      sharedSecretEncoding: ${var.authentication_factor_setting_client_app_settings_shared_secret_encoding}
+      unlockAppForEachRequestEnabled: "false"
+      unlockAppIntervalInSecs: "300"
+      unlockOnAppForegroundEnabled: "false"
+      unlockOnAppStartEnabled: "false"
+    compliancePolicy:
+    - action: Allow
+      name: lockScreenRequired
+      value: "false"
+    emailEnabled: ${var.authentication_factor_setting_email_enabled}
+    emailSettings:
+    - emailLinkCustomUrl: ${var.authentication_factor_setting_email_settings_email_link_custom_url}
+      emailLinkEnabled: ${var.authentication_factor_setting_email_settings_email_link_enabled}
+    endpointRestrictions:
+    - maxEndpointTrustDurationInDays: "180"
+      maxEnrolledDevices: ${var.authentication_factor_setting_endpoint_restrictions_max_enrolled_devices}
+      maxIncorrectAttempts: "20"
+      maxTrustedEndpoints: "20"
+      trustedEndpointsEnabled: ${var.authentication_factor_setting_endpoint_restrictions_trusted_endpoints_enabled}
+    fidoAuthenticatorEnabled: ${var.authentication_factor_setting_fido_authenticator_enabled}
+    hideBackupFactorEnabled: ${var.authentication_factor_setting_hide_backup_factor_enabled}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    identityStoreSettings:
+    - mobileNumberEnabled: ${var.authentication_factor_setting_identity_store_settings_mobile_number_enabled}
+      mobileNumberUpdateEnabled: ${var.authentication_factor_setting_identity_store_settings_mobile_number_update_enabled}
+    mfaEnrollmentType: ${var.authentication_factor_setting_mfa_enrollment_type}
+    notificationSettings:
+    - pullEnabled: ${var.authentication_factor_setting_notification_settings_pull_enabled}
+    ocid: ${var.authentication_factor_setting_ocid}
+    phoneCallEnabled: ${var.authentication_factor_setting_phone_call_enabled}
+    pushEnabled: ${var.authentication_factor_setting_push_enabled}
+    resourceTypeSchemaVersion: ${var.authentication_factor_setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:AuthenticationFactorSettings
+    securityQuestionsEnabled: ${var.authentication_factor_setting_security_questions_enabled}
+    smsEnabled: ${var.authentication_factor_setting_sms_enabled}
+    tags:
+    - key: ${var.authentication_factor_setting_tags_key}
+      value: ${var.authentication_factor_setting_tags_value}
+    thirdPartyFactor:
+    - duoSecurity: ${var.authentication_factor_setting_third_party_factor_duo_security}
+    totpEnabled: ${var.authentication_factor_setting_totp_enabled}
+    totpSettings:
+    - emailOtpValidityDurationInMins: ${var.authentication_factor_setting_totp_settings_email_otp_validity_duration_in_mins}
+      emailPasscodeLength: "6"
+      hashingAlgorithm: ${var.authentication_factor_setting_totp_settings_hashing_algorithm}
+      jwtValidityDurationInSecs: "300"
+      keyRefreshIntervalInDays: "60"
+      passcodeLength: "6"
+      smsOtpValidityDurationInMins: "6"
+      smsPasscodeLength: "6"
+      timeStepInSecs: "30"
+      timeStepTolerance: "3"
+    urnietfparamsscimschemasoracleidcsextensionfidoAuthenticationFactorSettings:
+    - attestation: NONE
+      authenticatorSelectionAttachment: BOTH
+      authenticatorSelectionRequireResidentKey: "false"
+      authenticatorSelectionResidentKey: NONE
+      authenticatorSelectionUserVerification: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionfido_authentication_factor_settings_authenticator_selection_user_verification}
+      domainValidationLevel: "1"
+      excludeCredentials: "false"
+      publicKeyTypes:
+      - RS1
+      timeout: "60000"
+    urnietfparamsscimschemasoracleidcsextensionthirdPartyAuthenticationFactorSettings:
+    - duoSecuritySettings:
+      - apiHostname: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings_duo_security_settings_api_hostname}
+        attestationKey: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings_duo_security_settings_attestation_key}
+        integrationKey: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings_duo_security_settings_integration_key}
+        secretKey: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings_duo_security_settings_secret_key}
+        userMappingAttribute: ${var.authentication_factor_setting_urnietfparamsscimschemasoracleidcsextensionthird_party_authentication_factor_settings_duo_security_settings_user_mapping_attribute}
+    userEnrollmentDisabledFactors: ${var.authentication_factor_setting_user_enrollment_disabled_factors}
+    yubicoOtpEnabled: ${var.authentication_factor_setting_yubico_otp_enabled}

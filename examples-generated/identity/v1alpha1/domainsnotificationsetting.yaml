@@ -1,0 +1,36 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsNotificationSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsnotificationsetting
+  labels:
+    testing.upbound.io/example-name: test_notification_setting
+  name: test-notification-setting
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.notification_setting_authorization}
+    eventSettings:
+    - enabled: ${var.notification_setting_event_settings_enabled}
+      eventId: admin.user.create.success
+    externalId: externalId
+    fromEmailAddress:
+    - displayName: ${var.notification_setting_from_email_address_display_name}
+      validate: ${var.notification_setting_from_email_address_validate}
+      value: ${var.notification_setting_from_email_address_value}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    notificationEnabled: ${var.notification_setting_notification_enabled}
+    notificationSettingId: ${oci_identity_domains_notification_setting.test_notification_setting.id}
+    ocid: ${var.notification_setting_ocid}
+    resourceTypeSchemaVersion: ${var.notification_setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:NotificationSettings
+    sendNotificationToOldAndNewPrimaryEmailsWhenAdminChangesPrimaryEmail: ${var.notification_setting_send_notification_to_old_and_new_primary_emails_when_admin_changes_primary_email}
+    sendNotificationsToSecondaryEmail: ${var.notification_setting_send_notifications_to_secondary_email}
+    tags:
+    - key: ${var.notification_setting_tags_key}
+      value: ${var.notification_setting_tags_value}
+    testModeEnabled: ${var.notification_setting_test_mode_enabled}
+    testRecipients: ${var.notification_setting_test_recipients}

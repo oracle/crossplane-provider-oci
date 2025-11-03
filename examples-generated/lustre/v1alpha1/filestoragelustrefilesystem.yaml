@@ -1,0 +1,30 @@
+apiVersion: lustre.oci.upbound.io/v1alpha1
+kind: FileStorageLustreFileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustre/v1alpha1/filestoragelustrefilesystem
+  labels:
+    testing.upbound.io/example-name: test_lustre_file_system
+  name: test-lustre-file-system
+spec:
+  forProvider:
+    availabilityDomain: ${var.lustre_file_system_availability_domain}
+    capacityInGbs: ${var.lustre_file_system_capacity_in_gbs}
+    clusterPlacementGroupId: ${oci_cluster_placement_groups_cluster_placement_group.test_cluster_placement_group.id}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.lustre_file_system_display_name}
+    fileSystemDescription: ${var.lustre_file_system_file_system_description}
+    fileSystemName: ${oci_file_storage_file_system.test_file_system.name}
+    freeformTags:
+      Department: Finance
+    kmsKeyId: ${oci_kms_key.test_key.id}
+    nsgIds: ${var.lustre_file_system_nsg_ids}
+    performanceTier: ${var.lustre_file_system_performance_tier}
+    rootSquashConfiguration:
+    - clientExceptions: ${var.lustre_file_system_root_squash_configuration_client_exceptions}
+      identitySquash: ${var.lustre_file_system_root_squash_configuration_identity_squash}
+      squashGid: ${var.lustre_file_system_root_squash_configuration_squash_gid}
+      squashUid: ${var.lustre_file_system_root_squash_configuration_squash_uid}
+    subnetId: ${oci_core_subnet.test_subnet.id}

@@ -1,0 +1,305 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: simpledatabases.database.crossplane.io
+spec:
+  group: database.crossplane.io
+  names:
+    kind: SimpleDatabase
+    plural: simpledatabases
+  claimNames:
+    kind: SimpleDatabaseClaim
+    plural: simpledatabaseclaims
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              compartmentId:
+                type: string
+                description: The OCI Compartment OCID to deploy the database into
+              
+              region:
+                type: string
+                description: OCI region for deployment
+                default: "us-ashburn-1"
+              
+              databaseType:
+                type: string
+                description: Type of database to create (dbsystem or autonomous)
+                enum:
+                - dbsystem
+                - autonomous
+                default: "autonomous"
+              
+              # Common database configuration
+              databaseConfig:
+                type: object
+                description: Common database configuration
+                properties:
+                  name:
+                    type: string
+                    description: Database name (max 14 chars for dbsystem, 14 for autonomous)
+                    pattern: "^[a-zA-Z][a-zA-Z0-9]{0,13}$"
+                    default: "POCDB"
+                  displayName:
+                    type: string
+                    description: Display name for the database
+                    default: "POC Database"
+                  version:
+                    type: string
+                    description: Database version
+                    default: "19c"
+                  workload:
+                    type: string
+                    description: Database workload type
+                    enum:
+                    - OLTP
+                    - DW
+                    - AJD
+                    - APEX
+                    default: "OLTP"
+                  adminPassword:
+                    type: object
+                    description: Admin password configuration
+                    properties:
+                      secretName:
+                        type: string
+                        description: Name of Kubernetes secret containing admin password
+                      secretNamespace:
+                        type: string
+                        description: Namespace of the secret
+                        default: "crossplane-system"
+                      secretKey:
+                        type: string
+                        description: Key in the secret containing the password
+                        default: "password"
+                    required:
+                    - secretName
+                  characterSet:
+                    type: string
+                    description: Database character set (not supported in free tier)
+                    # No default - will be set by composition if needed
+                  nCharacterSet:
+                    type: string
+                    description: National character set (not supported in free tier)
+                    # No default - will be set by composition if needed
+                  enableBackup:
+                    type: boolean
+                    description: Enable automatic backups
+                    default: true
+                  backupRetentionDays:
+                    type: integer
+                    description: Backup retention period in days
+                    default: 7
+                required:
+                - name
+                - adminPassword
+              
+              # DB System specific configuration
+              dbSystemConfig:
+                type: object
+                description: Configuration specific to DB System (VM-based)
+                properties:
+                  availabilityDomain:
+                    type: string
+                    description: Availability domain for the DB System
+                  shape:
+                    type: string
+                    description: VM shape for the database
+                    default: "VM.Standard.E4.Flex"
+                  cpuCoreCount:
+                    type: integer
+                    description: Number of CPU cores (for flex shapes)
+                    default: 1
+                  nodeCount:
+                    type: integer
+                    description: Number of database nodes (1 for single instance, 2 for RAC)
+                    default: 1
+                  dataStorageSizeInGBs:
+                    type: integer
+                    description: Data storage size in GB
+                    default: 256
+                  storagePerformance:
+                    type: string
+                    description: Storage performance tier
+                    enum:
+                    - BALANCED
+                    - HIGH_PERFORMANCE
+                    default: "BALANCED"
+                  licenseModel:
+                    type: string
+                    description: License model
+                    enum:
+                    - LICENSE_INCLUDED
+                    - BRING_YOUR_OWN_LICENSE
+                    default: "LICENSE_INCLUDED"
+                  hostname:
+                    type: string
+                    description: Hostname for the database node
+                    default: "pocdb"
+                  domain:
+                    type: string
+                    description: Domain name
+                    default: "subnet.vcn.oraclevcn.com"
+                  subnetId:
+                    type: string
+                    description: Subnet OCID for the database
+                  sshPublicKeys:
+                    type: array
+                    items:
+                      type: string
+                    description: SSH public keys for database node access
+                  timeZone:
+                    type: string
+                    description: Time zone for the database
+                    default: "UTC"
+                  pdbName:
+                    type: string
+                    description: Pluggable database name
+                    default: "PDB1"
+                  databaseEdition:
+                    type: string
+                    description: Database edition
+                    enum:
+                    - STANDARD_EDITION
+                    - ENTERPRISE_EDITION
+                    - ENTERPRISE_EDITION_HIGH_PERFORMANCE
+                    - ENTERPRISE_EDITION_EXTREME_PERFORMANCE
+                    default: "ENTERPRISE_EDITION"
+              
+              # Autonomous Database specific configuration
+              autonomousConfig:
+                type: object
+                description: Configuration specific to Autonomous Database
+                properties:
+                  isFreeTier:
+                    type: boolean
+                    description: Use Always Free tier (limited to 1 OCPU, 20GB storage)
+                    default: false
+                  cpuCoreCount:
+                    type: integer
+                    description: Number of CPU cores (1 for free tier, min 1 for paid)
+                    default: 1
+                  dataStorageSizeInTBs:
+                    type: integer
+                    description: Data storage size in TB (ignored for free tier)
+                    default: 1
+                  computeModel:
+                    type: string
+                    description: Compute model
+                    enum:
+                    - ECPU
+                    - OCPU
+                    default: "OCPU"
+                  isAutoScalingEnabled:
+                    type: boolean
+                    description: Enable auto-scaling
+                    default: false
+                  isAutoScalingForStorageEnabled:
+                    type: boolean
+                    description: Enable auto-scaling for storage
+                    default: false
+                  licenseModel:
+                    type: string
+                    description: License model
+                    enum:
+                    - LICENSE_INCLUDED
+                    - BRING_YOUR_OWN_LICENSE
+                    default: "LICENSE_INCLUDED"
+                  whitelistedIps:
+                    type: array
+                    items:
+                      type: string
+                    description: Whitelisted IP addresses for access
+                  isMtlsConnectionRequired:
+                    type: boolean
+                    description: Require mTLS for connections
+                    default: true
+                  subnetId:
+                    type: string
+                    description: Subnet OCID (optional for private endpoint)
+                  nsgIds:
+                    type: array
+                    items:
+                      type: string
+                    description: Network Security Group IDs
+                  privateEndpointLabel:
+                    type: string
+                    description: Private endpoint label
+                  isDataGuardEnabled:
+                    type: boolean
+                    description: Enable Data Guard
+                    default: false
+                  isDedicated:
+                    type: boolean
+                    description: Use dedicated infrastructure
+                    default: false
+              
+              tags:
+                type: object
+                description: Tags to apply to the database
+                properties:
+                  freeformTags:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: Freeform tags
+                  definedTags:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    description: Defined tags
+                    
+            required:
+            - compartmentId
+            - databaseType
+            - databaseConfig
+          
+          status:
+            type: object
+            properties:
+              databaseId:
+                type: string
+                description: OCID of the created database
+              connectionString:
+                type: string
+                description: Database connection string
+              connectionUrls:
+                type: object
+                description: Various connection URLs
+                properties:
+                  sqlDevWeb:
+                    type: string
+                  apexUrl:
+                    type: string
+                  machineLearningNotebookUrl:
+                    type: string
+                  graphStudioUrl:
+                    type: string
+                  mongoDbUrl:
+                    type: string
+                  ordsUrl:
+                    type: string
+                  databaseTransformsUrl:
+                    type: string
+              state:
+                type: string
+                description: Current state of the database
+              ready:
+                type: boolean
+                description: Whether the database is ready for use
+              privateEndpointIp:
+                type: string
+                description: Private endpoint IP (if applicable)
+              publicEndpoint:
+                type: string
+                description: Public endpoint (if applicable)

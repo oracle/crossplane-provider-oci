@@ -1,0 +1,25 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsMyAuthToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsmyauthtoken
+  labels:
+    testing.upbound.io/example-name: test_my_auth_token
+  name: test-my-auth-token
+spec:
+  forProvider:
+    authorization: ${var.my_auth_token_authorization}
+    description: ${var.my_auth_token_description}
+    expiresOn: ${var.my_auth_token_expires_on}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    ocid: ${var.my_auth_token_ocid}
+    resourceTypeSchemaVersion: ${var.my_auth_token_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:authToken
+    status: ${var.my_auth_token_status}
+    tags:
+    - key: ${var.my_auth_token_tags_key}
+      value: ${var.my_auth_token_tags_value}
+    user:
+    - ocid: ${var.my_auth_token_user_ocid}
+      value: ${var.my_auth_token_user_value}

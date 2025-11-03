@@ -1,0 +1,16 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: BridgeInventory
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/bridgeinventory
+  labels:
+    testing.upbound.io/example-name: test_inventory
+  name: test-inventory
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.inventory_display_name}
+    freeformTags:
+      Department: Finance

@@ -1,0 +1,40 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/cloudexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_cloud_exadata_infrastructure
+  name: test-cloud-exadata-infrastructure
+spec:
+  forProvider:
+    availabilityDomain: ${var.cloud_exadata_infrastructure_availability_domain}
+    clusterPlacementGroupId: ${var.cloud_exadata_infrastructure_cluster_placement_group_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: ${var.cloud_exadata_infrastructure_compute_count}
+    customerContacts:
+    - email: ${var.cloud_exadata_infrastructure_customer_contacts_email}
+    databaseServerType: ${var.cloud_exadata_infrastructure_database_server_type}
+    definedTags: ${var.cloud_exadata_infrastructure_defined_tags}
+    displayName: ${var.cloud_exadata_infrastructure_display_name}
+    freeformTags:
+      Department: Finance
+    maintenanceWindow:
+    - customActionTimeoutInMins: ${var.cloud_exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins}
+      daysOfWeek:
+      - name: ${var.cloud_exadata_infrastructure_maintenance_window_days_of_week_name}
+      hoursOfDay: ${var.cloud_exadata_infrastructure_maintenance_window_hours_of_day}
+      isCustomActionTimeoutEnabled: ${var.cloud_exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+      isMonthlyPatchingEnabled: ${var.cloud_exadata_infrastructure_maintenance_window_is_monthly_patching_enabled}
+      leadTimeInWeeks: ${var.cloud_exadata_infrastructure_maintenance_window_lead_time_in_weeks}
+      months:
+      - name: ${var.cloud_exadata_infrastructure_maintenance_window_months_name}
+      patchingMode: ${var.cloud_exadata_infrastructure_maintenance_window_patching_mode}
+      preference: ${var.cloud_exadata_infrastructure_maintenance_window_preference}
+      weeksOfMonth: ${var.cloud_exadata_infrastructure_maintenance_window_weeks_of_month}
+    shape: ${var.cloud_exadata_infrastructure_shape}
+    storageCount: ${var.cloud_exadata_infrastructure_storage_count}
+    storageServerType: ${var.cloud_exadata_infrastructure_storage_server_type}
+    subscriptionId: ${var.tenant_subscription_id}

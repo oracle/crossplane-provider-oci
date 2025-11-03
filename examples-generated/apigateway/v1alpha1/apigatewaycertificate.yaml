@@ -1,0 +1,22 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: ApigatewayCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/apigatewaycertificate
+  labels:
+    testing.upbound.io/example-name: test_certificate
+  name: test-certificate
+spec:
+  forProvider:
+    certificate: ${var.certificate_certificate}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.certificate_display_name}
+    freeformTags:
+      Department: Finance
+    intermediateCertificates: ${var.certificate_intermediate_certificates}
+    privateKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

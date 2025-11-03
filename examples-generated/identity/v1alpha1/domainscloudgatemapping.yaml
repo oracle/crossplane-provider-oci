@@ -1,0 +1,37 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsCloudGateMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainscloudgatemapping
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_mapping
+  name: test-cloud-gate-mapping
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.cloud_gate_mapping_authorization}
+    cloudGate:
+    - value: ${var.cloud_gate_mapping_cloud_gate_value}
+    description: ${var.cloud_gate_mapping_description}
+    gatewayApp:
+    - name: ${var.cloud_gate_mapping_gateway_app_name}
+      value: ${var.cloud_gate_mapping_gateway_app_value}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    nginxSettings: ${var.cloud_gate_mapping_nginx_settings}
+    ocid: ${var.cloud_gate_mapping_ocid}
+    policyName: ${var.policy_name}
+    proxyPass: ${var.cloud_gate_mapping_proxy_pass}
+    resourcePrefix: ${var.cloud_gate_mapping_resource_prefix}
+    resourceTypeSchemaVersion: ${var.cloud_gate_mapping_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGateMapping
+    server:
+    - value: ${var.cloud_gate_mapping_server_value}
+    tags:
+    - key: ${var.cloud_gate_mapping_tags_key}
+      value: ${var.cloud_gate_mapping_tags_value}
+    upstreamServerGroup:
+    - ssl: ${var.cloud_gate_mapping_upstream_server_group_ssl}
+      value: ${var.cloud_gate_mapping_upstream_server_group_value}

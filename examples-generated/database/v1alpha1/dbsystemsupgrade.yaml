@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbSystemsUpgrade
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbsystemsupgrade
+  labels:
+    testing.upbound.io/example-name: test_db_systems_upgrade
+  name: test-db-systems-upgrade
+spec:
+  forProvider:
+    action: ${var.db_systems_upgrade_action}
+    dbSystemId: ${oci_database_db_system.test_db_system.id}
+    isSnapshotRetentionDaysForceUpdated: ${var.db_systems_upgrade_is_snapshot_retention_days_force_updated}
+    newGiVersion: ${var.db_systems_upgrade_new_gi_version}
+    snapshotRetentionPeriodInDays: ${var.db_systems_upgrade_snapshot_retention_period_in_days}

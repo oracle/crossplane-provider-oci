@@ -1,0 +1,15 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-oci-database
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  package: iad.ocir.io/iddevjmhjw0n/provider-oci-database:v0.0.1-auto-discovery
+  packagePullPolicy: IfNotPresent
+  revisionActivationPolicy: Automatic
+  revisionHistoryLimit: 1
+  # This provider depends on the family provider for authentication
+  skipDependencyResolution: false
+  runtimeConfigRef:
+    name: oci-sub-packages-runtime-config

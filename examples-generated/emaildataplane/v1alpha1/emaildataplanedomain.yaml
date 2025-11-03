@@ -1,0 +1,17 @@
+apiVersion: emaildataplane.oci.upbound.io/v1alpha1
+kind: EmaildataplaneDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emaildataplane/v1alpha1/emaildataplanedomain
+  labels:
+    testing.upbound.io/example-name: test_email_domain
+  name: test-email-domain
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.email_domain_description}
+    domainVerificationId: ${oci_email_domain_verification.test_domain_verification.id}
+    freeformTags:
+      Department: Finance

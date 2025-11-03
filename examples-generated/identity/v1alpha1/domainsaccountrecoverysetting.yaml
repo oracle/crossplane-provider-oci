@@ -1,0 +1,27 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsAccountRecoverySetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsaccountrecoverysetting
+  labels:
+    testing.upbound.io/example-name: test_account_recovery_setting
+  name: test-account-recovery-setting
+spec:
+  forProvider:
+    accountRecoverySettingId: ${oci_identity_domains_account_recovery_setting.test_account_recovery_setting.id}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.account_recovery_setting_authorization}
+    externalId: externalId
+    factors: ${var.account_recovery_setting_factors}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    lockoutDuration: ${var.account_recovery_setting_lockout_duration}
+    maxIncorrectAttempts: ${var.account_recovery_setting_max_incorrect_attempts}
+    ocid: ${var.account_recovery_setting_ocid}
+    resourceTypeSchemaVersion: ${var.account_recovery_setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:AccountRecoverySettings
+    tags:
+    - key: ${var.account_recovery_setting_tags_key}
+      value: ${var.account_recovery_setting_tags_value}

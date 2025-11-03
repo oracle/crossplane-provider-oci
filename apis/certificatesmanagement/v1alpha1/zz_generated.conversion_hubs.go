@@ -8,3 +8,9 @@ package v1alpha1
 
 // Hub marks this type as a conversion hub.
 func (tr *CertificateAuthority) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ManagementCaBundle) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ManagementCertificate) Hub() {}

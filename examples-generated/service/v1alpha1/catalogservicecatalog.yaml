@@ -1,0 +1,16 @@
+apiVersion: service.oci.upbound.io/v1alpha1
+kind: CatalogServiceCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: service/v1alpha1/catalogservicecatalog
+  labels:
+    testing.upbound.io/example-name: test_service_catalog
+  name: test-service-catalog
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.service_catalog_display_name}
+    freeformTags:
+      bar-key: value

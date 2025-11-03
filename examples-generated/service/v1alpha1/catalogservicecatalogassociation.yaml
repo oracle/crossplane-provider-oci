@@ -1,0 +1,13 @@
+apiVersion: service.oci.upbound.io/v1alpha1
+kind: CatalogServiceCatalogAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: service/v1alpha1/catalogservicecatalogassociation
+  labels:
+    testing.upbound.io/example-name: test_service_catalog_association
+  name: test-service-catalog-association
+spec:
+  forProvider:
+    entityId: ${oci_service_catalog_entity.test_entity.id}
+    entityType: ${var.service_catalog_association_entity_type}
+    serviceCatalogId: ${oci_service_catalog_service_catalog.test_service_catalog.id}

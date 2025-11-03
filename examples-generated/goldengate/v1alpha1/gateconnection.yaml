@@ -1,0 +1,206 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: GateConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/gateconnection
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    accessKeyId: ${oci_kms_key.test_key.id}
+    accountKeySecretId: ${oci_vault_secret.test_secret.id}
+    accountKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    accountName: ${var.connection_account_name}
+    additionalAttributes:
+    - name: ${var.connection_additional_attributes_name}
+      value: ${var.connection_additional_attributes_value}
+    authenticationMode: ${var.connection_authentication_mode}
+    authenticationType: ${var.connection_authentication_type}
+    azureTenantId: ${oci_golden_gate_azure_tenant.test_azure_tenant.id}
+    bootstrapServers:
+    - host: ${var.connection_bootstrap_servers_host}
+      port: ${var.connection_bootstrap_servers_port}
+      privateIp: ${var.connection_bootstrap_servers_private_ip}
+    catalog:
+    - branch: ${var.connection_catalog_branch}
+      catalogType: ${var.connection_catalog_catalog_type}
+      clientId: ${oci_golden_gate_client.test_client.id}
+      clientSecretSecretId: ${oci_vault_secret.test_secret.id}
+      glueId: ${oci_golden_gate_glue.test_glue.id}
+      name: ${var.connection_catalog_name}
+      principalRole: ${var.connection_catalog_principal_role}
+      propertiesSecretId: ${oci_vault_secret.test_secret.id}
+      uri: ${var.connection_catalog_uri}
+    clientId: ${oci_golden_gate_client.test_client.id}
+    clientSecretSecretId: ${oci_vault_secret.test_secret.id}
+    clientSecretSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    compartmentId: ${var.compartment_id}
+    connectionFactory: ${var.connection_connection_factory}
+    connectionString: ${var.connection_connection_string}
+    connectionType: ${var.connection_connection_type}
+    connectionUrl: ${var.connection_connection_url}
+    consumerProperties: ${var.connection_consumer_properties}
+    coreSiteXml: ${var.connection_core_site_xml}
+    databaseId: ${oci_database_database.test_database.id}
+    databaseName: ${oci_database_database.test_database.name}
+    dbSystemId: ${oci_database_db_system.test_db_system.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentId: ${oci_golden_gate_deployment.test_deployment.id}
+    description: ${var.connection_description}
+    displayName: ${var.connection_display_name}
+    doesUseSecretIds: ${var.connection_does_use_secret_ids}
+    endpoint: ${var.connection_endpoint}
+    fingerprint: ${var.connection_fingerprint}
+    freeformTags:
+      bar-key: value
+    host: ${var.connection_host}
+    jndiConnectionFactory: ${var.connection_jndi_connection_factory}
+    jndiInitialContextFactory: ${var.connection_jndi_initial_context_factory}
+    jndiProviderUrl: ${var.connection_jndi_provider_url}
+    jndiSecurityCredentialsSecretId: ${oci_vault_secret.test_secret.id}
+    jndiSecurityCredentialsSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    jndiSecurityPrincipal: ${var.connection_jndi_security_principal}
+    keyId: ${oci_kms_key.test_key.id}
+    keyStorePasswordSecretId: ${oci_vault_secret.test_secret.id}
+    keyStorePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    keyStoreSecretId: ${oci_vault_secret.test_secret.id}
+    keyStoreSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    locks:
+    - message: ${var.connection_locks_message}
+      type: ${var.connection_locks_type}
+    nsgIds: ${var.connection_nsg_ids}
+    passwordSecretId: ${oci_vault_secret.test_secret.id}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    port: ${var.connection_port}
+    privateIp: ${var.connection_private_ip}
+    privateKeyFileSecretId: ${oci_vault_secret.test_secret.id}
+    privateKeyFileSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    privateKeyPassphraseSecretId: ${oci_vault_secret.test_secret.id}
+    privateKeyPassphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    producerProperties: ${var.connection_producer_properties}
+    publicKeyFingerprint: ${var.connection_public_key_fingerprint}
+    redisClusterId: ${oci_redis_redis_cluster.test_redis_cluster.id}
+    region: ${var.connection_region}
+    routingMethod: ${var.connection_routing_method}
+    sasTokenSecretId: ${oci_vault_secret.test_secret.id}
+    sasTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    secretAccessKeySecretId: ${oci_vault_secret.test_secret.id}
+    secretAccessKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    securityProtocol: ${var.connection_security_protocol}
+    servers: ${var.connection_servers}
+    serviceAccountKeyFileSecretId: ${oci_vault_secret.test_secret.id}
+    serviceAccountKeyFileSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sessionMode: ${var.connection_session_mode}
+    shouldUseJndi: ${var.connection_should_use_jndi}
+    shouldUseResourcePrincipal: ${var.connection_should_use_resource_principal}
+    shouldValidateServerCertificate: ${var.connection_should_validate_server_certificate}
+    sslCa: ${var.connection_ssl_ca}
+    sslCert: ${var.connection_ssl_cert}
+    sslClientKeystashSecretId: ${oci_vault_secret.test_secret.id}
+    sslClientKeystashSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslClientKeystoredbSecretId: ${oci_vault_secret.test_secret.id}
+    sslClientKeystoredbSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslCrl: ${var.connection_ssl_crl}
+    sslKeyPasswordSecretId: ${oci_vault_secret.test_secret.id}
+    sslKeyPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslKeySecretId: ${oci_vault_secret.test_secret.id}
+    sslKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslMode: ${var.connection_ssl_mode}
+    sslServerCertificate: ${var.connection_ssl_server_certificate}
+    storage:
+    - accessKeyId: ${oci_kms_key.test_key.id}
+      accountKeySecretId: ${oci_vault_secret.test_secret.id}
+      accountName: ${var.connection_storage_account_name}
+      bucket: ${var.connection_storage_bucket}
+      container: ${var.connection_storage_container}
+      endpoint: ${var.connection_storage_endpoint}
+      projectId: ${oci_ai_anomaly_detection_project.test_project.id}
+      region: ${var.connection_storage_region}
+      schemeType: ${var.connection_storage_scheme_type}
+      secretAccessKeySecretId: ${oci_vault_secret.test_secret.id}
+      serviceAccountKeyFileSecretId: ${oci_vault_secret.test_secret.id}
+      storageType: ${var.connection_storage_storage_type}
+    storageCredentialName: ${var.connection_storage_credential_name}
+    streamPoolId: ${oci_streaming_stream_pool.test_stream_pool.id}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    technologyType: ${var.connection_technology_type}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    tenantId: ${oci_golden_gate_tenant.test_tenant.id}
+    tlsCaFile: ${var.connection_tls_ca_file}
+    tlsCertificateKeyFile: ${var.connection_tls_certificate_key_file}
+    tlsCertificateKeyFilePasswordSecretIdSecretRef:
+      key: attribute.id
+      name: example-vault-secret
+      namespace: upbound-system
+    tlsCertificateKeyFilePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    tlsCertificateKeyFileSecretId: ${oci_vault_secret.test_secret.id}
+    triggerRefresh: true
+    trustStorePasswordSecretId: ${oci_vault_secret.test_secret.id}
+    trustStorePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    trustStoreSecretId: ${oci_vault_secret.test_secret.id}
+    trustStoreSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    url: ${var.connection_url}
+    userId: ${oci_identity_user.test_user.id}
+    username: ${var.connection_username}
+    vaultId: ${oci_kms_vault.test_vault.id}
+    walletSecretId: ${oci_vault_secret.test_secret.id}
+    walletSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasebackup
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_backup
+  name: test-autonomous-database-backup
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    displayName: ${var.autonomous_database_backup_display_name}
+    isLongTermBackup: ${var.autonomous_database_backup_is_long_term_backup}
+    retentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}

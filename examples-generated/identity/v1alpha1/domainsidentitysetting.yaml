@@ -1,0 +1,42 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsIdentitySetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsidentitysetting
+  labels:
+    testing.upbound.io/example-name: test_identity_setting
+  name: test-identity-setting
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.identity_setting_authorization}
+    emitLockedMessageWhenUserIsLocked: ${var.identity_setting_emit_locked_message_when_user_is_locked}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    identitySettingId: ${oci_identity_domains_identity_setting.test_identity_setting.id}
+    myProfile:
+    - allowEndUsersToChangeTheirPassword: true
+      allowEndUsersToLinkTheirSupportAccount: true
+      allowEndUsersToManageTheirCapabilities: true
+      allowEndUsersToUpdateTheirSecuritySettings: true
+    ocid: ${var.identity_setting_ocid}
+    posixGid:
+    - manualAssignmentEndsAt: ${var.identity_setting_posix_gid_manual_assignment_ends_at}
+      manualAssignmentStartsFrom: ${var.identity_setting_posix_gid_manual_assignment_starts_from}
+    posixUid:
+    - manualAssignmentEndsAt: ${var.identity_setting_posix_uid_manual_assignment_ends_at}
+      manualAssignmentStartsFrom: ${var.identity_setting_posix_uid_manual_assignment_starts_from}
+    primaryEmailRequired: ${var.identity_setting_primary_email_required}
+    resourceTypeSchemaVersion: ${var.identity_setting_resource_type_schema_version}
+    returnInactiveOverLockedMessage: ${var.identity_setting_return_inactive_over_locked_message}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:IdentitySettings
+    tags:
+    - key: ${var.identity_setting_tags_key}
+      value: ${var.identity_setting_tags_value}
+    tokens:
+    - expiresAfter: ${var.identity_setting_tokens_expires_after}
+      type: ${var.identity_setting_tokens_type}
+    userAllowedToSetRecoveryEmail: ${var.identity_setting_user_allowed_to_set_recovery_email}

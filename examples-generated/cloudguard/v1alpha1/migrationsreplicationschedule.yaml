@@ -1,0 +1,17 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: MigrationsReplicationSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/migrationsreplicationschedule
+  labels:
+    testing.upbound.io/example-name: test_replication_schedule
+  name: test-replication-schedule
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.replication_schedule_display_name}
+    executionRecurrences: ${var.replication_schedule_execution_recurrences}
+    freeformTags:
+      bar-key: value

@@ -1,0 +1,31 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsMyRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsmyrequest
+  labels:
+    testing.upbound.io/example-name: test_my_request
+  name: test-my-request
+spec:
+  forProvider:
+    action: ${var.my_request_action}
+    approvalDetails:
+    - {}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.my_request_authorization}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    justification: ${var.my_request_justification}
+    ocid: ${var.my_request_ocid}
+    requesting:
+    - type: ${var.my_request_requesting_type}
+      value: ${oci_identity_domains_group.group_to_request.id}
+    requestor:
+    - value: ${var.my_request_requestor_value}
+    resourceTypeSchemaVersion: ${var.my_request_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Request
+    tags:
+    - key: ${var.my_request_tags_key}
+      value: ${var.my_request_tags_value}

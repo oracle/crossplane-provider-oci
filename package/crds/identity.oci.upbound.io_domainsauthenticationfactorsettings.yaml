@@ -1,0 +1,1980 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: domainsauthenticationfactorsettings.identity.oci.upbound.io
+spec:
+  group: identity.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DomainsAuthenticationFactorSetting
+    listKind: DomainsAuthenticationFactorSettingList
+    plural: domainsauthenticationfactorsettings
+    singular: domainsauthenticationfactorsetting
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DomainsAuthenticationFactorSetting is the Schema for the DomainsAuthenticationFactorSettings
+          API. Provides the Authentication Factor Setting resource in Oracle Cloud
+          Infrastructure Identity Domains service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DomainsAuthenticationFactorSettingSpec defines the desired
+              state of DomainsAuthenticationFactorSetting
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  attributeSets:
+                    description: (Updatable) A multi-valued list of strings indicating
+                      the return type of attribute definition. The specified set of
+                      attributes can be fetched by the return type of the attribute.
+                      One or more values can be given together to fetch more than
+                      one group of attributes. If 'attributes' query parameter is
+                      also available, union of the two is fetched. Valid values -
+                      all, always, never, request, default. Values are case-insensitive.
+                    items:
+                      type: string
+                    type: array
+                  attributes:
+                    description: (Updatable) A comma-delimited string that specifies
+                      the names of resource attributes that should be returned in
+                      the response. By default, a response that contains resource
+                      attributes contains only attributes that are defined in the
+                      schema for that resource type as returned=always or returned=default.
+                      An attribute that is defined as returned=request is returned
+                      in a response only if the request specifies its name in the
+                      value of this query parameter. If a request specifies this query
+                      parameter, the response contains the attributes that this query
+                      parameter specifies, as well as any attribute that is defined
+                      as returned=always.
+                    type: string
+                  authenticationFactorSettingId:
+                    description: ID of the resource
+                    type: string
+                  authorization:
+                    description: (Updatable) The Authorization field value consists
+                      of credentials containing the authentication information of
+                      the user agent for the realm of the resource being requested.
+                    type: string
+                  autoEnrollEmailFactorDisabled:
+                    description: (Updatable) If true, indicates that email will not
+                      be enrolled as a MFA factor automatically if it a account recovery
+                      factor
+                    type: boolean
+                  bypassCodeEnabled:
+                    description: (Updatable) If true, indicates that Bypass Code is
+                      enabled for authentication
+                    type: boolean
+                  bypassCodeSettings:
+                    description: (Updatable) Settings related to the bypass code,
+                      such as bypass code length, bypass code expiry, max active bypass
+                      codes, and so on
+                    items:
+                      properties:
+                        helpDeskCodeExpiryInMins:
+                          description: (Updatable) Expiry (in minutes) of any bypass
+                            code that is generated by the help desk
+                          type: number
+                        helpDeskGenerationEnabled:
+                          description: (Updatable) If true, indicates that help desk
+                            bypass code generation is enabled
+                          type: boolean
+                        helpDeskMaxUsage:
+                          description: (Updatable) The maximum number of times that
+                            any bypass code that is generated by the help desk can
+                            be used
+                          type: number
+                        length:
+                          description: (Updatable) Exact length of the bypass code
+                            to be generated
+                          type: number
+                        maxActive:
+                          description: (Updatable) The maximum number of bypass codes
+                            that can be issued to any user
+                          type: number
+                        selfServiceGenerationEnabled:
+                          description: (Updatable) If true, indicates that self-service
+                            bypass code generation is enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  clientAppSettings:
+                    description: (Updatable) Settings related to compliance, Personal
+                      Identification Number (PIN) policy, and so on
+                    items:
+                      properties:
+                        deviceProtectionPolicy:
+                          description: (Updatable) Indicates what protection policy
+                            that the system applies on a device. By default, the value
+                            is NONE, which indicates that the system applies no protection
+                            policy. A value of APP_PIN indicates that the system requires
+                            a Personal Identification Number (PIN). A value of DEVICE_BIOMETRIC_OR_APP_PIN
+                            indicates that either a PIN or a biometric authentication
+                            factor is required.
+                          type: string
+                        initialLockoutPeriodInSecs:
+                          description: (Updatable) The period of time in seconds that
+                            the system will lock a user out of the service after that
+                            user exceeds the maximum number of login failures
+                          type: number
+                        keyPairLength:
+                          description: (Updatable) The size of the key that the system
+                            uses to generate the public-private key pair
+                          type: number
+                        lockoutEscalationPattern:
+                          description: (Updatable) The pattern of escalation that
+                            the system follows, in locking a particular user out of
+                            the service.
+                          type: string
+                        maxFailuresBeforeLockout:
+                          description: (Updatable) The maximum number of times that
+                            a particular user can fail to login before the system
+                            locks that user out of the service
+                          type: number
+                        maxFailuresBeforeWarning:
+                          description: (Updatable) The maximum number of login failures
+                            that the system will allow before raising a warning and
+                            sending an alert via email
+                          type: number
+                        maxLockoutIntervalInSecs:
+                          description: (Updatable) The maximum period of time that
+                            the system will lock a particular user out of the service
+                            regardless of what the configured pattern of escalation
+                            would otherwise dictate
+                          type: number
+                        minPinLength:
+                          description: (Updatable) Minimum length of the Personal
+                            Identification Number (PIN)
+                          type: number
+                        policyUpdateFreqInDays:
+                          description: (Updatable) The period of time in days after
+                            which a client should refresh its policy by re-reading
+                            that policy from the server
+                          type: number
+                        requestSigningAlgo:
+                          description: (Updatable) Indicates which algorithm the system
+                            will use to sign requests
+                          type: string
+                        sharedSecretEncoding:
+                          description: (Updatable) Indicates the type of encoding
+                            that the system should use to generate a shared secret
+                          type: string
+                        unlockAppForEachRequestEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client app for each
+                            request. In order to unlock the App, the user must supply
+                            a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockAppIntervalInSecs:
+                          description: (Updatable) Specifies the period of time in
+                            seconds after which the client App should require the
+                            user to unlock the App. In order to unlock the App, the
+                            user must supply a Personal Identification Number (PIN)
+                            or a biometric authentication-factor. A value of zero
+                            means that it is disabled.
+                          type: number
+                        unlockOnAppForegroundEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App, when
+                            the client App comes to the foreground in the display
+                            of the device. In order to unlock the App, the user must
+                            supply a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockOnAppStartEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App whenever
+                            the App is started. In order to unlock the App, the user
+                            must supply a Personal Identification Number (PIN) or
+                            a biometric authentication-factor.
+                          type: boolean
+                      type: object
+                    type: array
+                  compliancePolicy:
+                    description: (Updatable) Compliance Policy that defines actions
+                      to be taken when a condition is violated
+                    items:
+                      properties:
+                        action:
+                          description: (Updatable) The action to be taken if the value
+                            of the attribute is not as expected
+                          type: string
+                        name:
+                          description: (Updatable) The name of the attribute being
+                            evaluated
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  emailEnabled:
+                    description: (Updatable) If true, indicates that the EMAIL channel
+                      is enabled for authentication
+                    type: boolean
+                  emailSettings:
+                    description: (Updatable) Settings related to Email Factor, such
+                      as enabled email magic link factor, custom url for Email Link
+                    items:
+                      properties:
+                        emailLinkCustomUrl:
+                          description: (Updatable) Custom redirect Url which will
+                            be used in email link
+                          type: string
+                        emailLinkEnabled:
+                          description: (Updatable) Specifies whether Email link is
+                            enabled or not.
+                          type: boolean
+                      type: object
+                    type: array
+                  endpointRestrictions:
+                    description: (Updatable) Settings that describe the set of restrictions
+                      that the system should apply to devices and trusted endpoints
+                      of a user
+                    items:
+                      properties:
+                        maxEndpointTrustDurationInDays:
+                          description: (Updatable) Maximum number of days until an
+                            endpoint can be trusted
+                          type: number
+                        maxEnrolledDevices:
+                          description: (Updatable) Maximum number of enrolled devices
+                            per user
+                          type: number
+                        maxIncorrectAttempts:
+                          description: (Updatable) An integer that represents the
+                            maximum number of failed MFA logins before an account
+                            is locked
+                          type: number
+                        maxTrustedEndpoints:
+                          description: (Updatable) Max number of trusted endpoints
+                            per user
+                          type: number
+                        trustedEndpointsEnabled:
+                          description: (Updatable) Specify if trusted endpoints are
+                            enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  fidoAuthenticatorEnabled:
+                    description: (Updatable) If true, indicates that the Fido Authenticator
+                      channels are enabled for authentication
+                    type: boolean
+                  hideBackupFactorEnabled:
+                    description: (Updatable) If true, indicates that 'Show backup
+                      factor(s)' button will be hidden during authentication
+                    type: boolean
+                  idcsEndpoint:
+                    description: The basic endpoint for the identity domain
+                    type: string
+                  identityStoreSettings:
+                    description: (Updatable) Settings related to the use of a user's
+                      profile details from the identity store
+                    items:
+                      properties:
+                        mobileNumberEnabled:
+                          description: (Updatable) If true, indicates that Multi-Factor
+                            Authentication should use the mobile number in the identity
+                            store
+                          type: boolean
+                        mobileNumberUpdateEnabled:
+                          description: (Updatable) If true, indicates that the user
+                            can update the mobile number in the user's Multi-Factor
+                            Authentication profile
+                          type: boolean
+                      type: object
+                    type: array
+                  mfaEnrollmentType:
+                    description: (Updatable) Specifies if Multi-Factor Authentication
+                      enrollment is mandatory or optional for a user
+                    type: string
+                  notificationSettings:
+                    description: (Updatable) Settings related to the Mobile App Notification
+                      channel, such as pull
+                    items:
+                      properties:
+                        pullEnabled:
+                          description: (Updatable) If true, indicates that the Mobile
+                            App Pull Notification channel is enabled for authentication
+                          type: boolean
+                      type: object
+                    type: array
+                  ocid:
+                    description: (Updatable) The OCID of the SCIM resource that represents
+                      the User or App who created this Resource
+                    type: string
+                  phoneCallEnabled:
+                    description: (Updatable) If true, indicates that the phone (PHONE_CALL)
+                      channel is enabled for authentication
+                    type: boolean
+                  pushEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      Push Notification channel is enabled for authentication
+                    type: boolean
+                  resourceTypeSchemaVersion:
+                    description: (Updatable) An endpoint-specific schema version number
+                      to use in the Request. Allowed version values are Earliest Version
+                      or Latest Version as specified in each REST API endpoint description,
+                      or any sequential number inbetween. All schema attributes/body
+                      parameters are a part of version 1. After version 1, any attributes
+                      added or deprecated will be tagged with the version that they
+                      were added to or deprecated in. If no version is provided, the
+                      latest schema version is returned.
+                    type: string
+                  schemas:
+                    description: (Updatable) REQUIRED. The schemas attribute is an
+                      array of Strings which allows introspection of the supported
+                      schema version for a SCIM representation as well any schema
+                      extensions supported by that representation. Each String value
+                      must be a unique URI. This specification defines URIs for User,
+                      Group, and a standard "enterprise" extension. All representations
+                      of SCIM schema MUST include a non-zero value array with value(s)
+                      of the URIs supported by that representation. Duplicate values
+                      MUST NOT be included. Value order is not specified and MUST
+                      not impact behavior.
+                    items:
+                      type: string
+                    type: array
+                  securityQuestionsEnabled:
+                    description: (Updatable) If true, indicates that Security Questions
+                      are enabled for authentication
+                    type: boolean
+                  smsEnabled:
+                    description: (Updatable) If true, indicates that the Short Message
+                      Service (SMS) channel is enabled for authentication
+                    type: boolean
+                  tags:
+                    description: (Updatable) A list of tags on this resource.
+                    items:
+                      properties:
+                        key:
+                          description: (Updatable) Key or name of the tag.
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  thirdPartyFactor:
+                    description: (Updatable) Settings related to third-party factor
+                    items:
+                      properties:
+                        duoSecurity:
+                          description: (Updatable) To enable Duo Security factor
+                          type: boolean
+                      type: object
+                    type: array
+                  totpEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      One Time Passcode channel is enabled for authentication
+                    type: boolean
+                  totpSettings:
+                    description: (Updatable) Settings related to Time-Based One-Time
+                      Passcodes (TOTP), such as hashing algo, totp time step, passcode
+                      length, and so on
+                    items:
+                      properties:
+                        emailOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            that a one-time passcode remains valid that the system
+                            sends by email.
+                          type: number
+                        emailPasscodeLength:
+                          description: (Updatable) Exact length of the email one-time
+                            passcode.
+                          type: number
+                        hashingAlgorithm:
+                          description: (Updatable) The hashing algorithm to be used
+                            to calculate a One-Time Passcode. By default, the system
+                            uses SHA1.
+                          type: string
+                        jwtValidityDurationInSecs:
+                          description: (Updatable) The period of time (in seconds)
+                            that a JSON Web Token (JWT) is valid
+                          type: number
+                        keyRefreshIntervalInDays:
+                          description: (Updatable) The duration of time (in days)
+                            after which the shared secret has to be refreshed
+                          type: number
+                        passcodeLength:
+                          description: (Updatable) Exact length of the One-Time Passcode
+                            that the system should generate
+                          type: number
+                        smsOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            for which a One-Time Passcode that the system sends by
+                            Short Message Service (SMS) or by voice remains valid
+                          type: number
+                        smsPasscodeLength:
+                          description: (Updatable) Exact length of the Short Message
+                            Service (SMS) One-Time Passcode
+                          type: number
+                        timeStepInSecs:
+                          description: (Updatable) Time (in secs) to be used as the
+                            time step
+                          type: number
+                        timeStepTolerance:
+                          description: (Updatable) The tolerance/step-size that the
+                            system should use when validating a One-Time Passcode
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionfidoAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of fido authentication
+                    items:
+                      properties:
+                        attestation:
+                          description: (Updatable) Attribute used to define the type
+                            of attestation required.
+                          type: string
+                        authenticatorSelectionAttachment:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection attachment.
+                          type: string
+                        authenticatorSelectionRequireResidentKey:
+                          description: (Updatable) Flag used to indicate authenticator
+                            selection is required or not
+                          type: boolean
+                        authenticatorSelectionResidentKey:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection resident key requirement.
+                          type: string
+                        authenticatorSelectionUserVerification:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection verification.
+                          type: string
+                        domainValidationLevel:
+                          description: (Updatable) Number of domain levels Oracle
+                            Identity Cloud Service should use for origin comparision
+                          type: number
+                        excludeCredentials:
+                          description: (Updatable) Flag used to indicate whether we
+                            need to restrict creation of multiple credentials in same
+                            authenticator
+                          type: boolean
+                        publicKeyTypes:
+                          description: (Updatable) List of server supported public
+                            key algorithms
+                          items:
+                            type: string
+                          type: array
+                        timeout:
+                          description: (Updatable) Timeout for the fido authentication
+                            to complete
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionthirdPartyAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of third party
+                      provider
+                    items:
+                      properties:
+                        duoSecuritySettings:
+                          description: (Updatable) Settings related to Duo Security
+                          items:
+                            properties:
+                              apiHostname:
+                                description: (Updatable) Hostname to access the Duo
+                                  security account
+                                type: string
+                              attestationKey:
+                                description: (Updatable) Attestation key to attest
+                                  the request and response between Duo Security
+                                type: string
+                              integrationKey:
+                                description: (Updatable) Integration key from Duo
+                                  Security authenticator
+                                type: string
+                              secretKey:
+                                description: (Updatable) Secret key from Duo Security
+                                  authenticator
+                                type: string
+                              userMappingAttribute:
+                                description: (Updatable) User attribute mapping value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  userEnrollmentDisabledFactors:
+                    description: (Updatable) Factors for which enrollment should be
+                      blocked for End User
+                    items:
+                      type: string
+                    type: array
+                  yubicoOtpEnabled:
+                    description: (Updatable) If true, indicates that the Yubico OTP
+                      is enabled for authentication
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  attributeSets:
+                    description: (Updatable) A multi-valued list of strings indicating
+                      the return type of attribute definition. The specified set of
+                      attributes can be fetched by the return type of the attribute.
+                      One or more values can be given together to fetch more than
+                      one group of attributes. If 'attributes' query parameter is
+                      also available, union of the two is fetched. Valid values -
+                      all, always, never, request, default. Values are case-insensitive.
+                    items:
+                      type: string
+                    type: array
+                  attributes:
+                    description: (Updatable) A comma-delimited string that specifies
+                      the names of resource attributes that should be returned in
+                      the response. By default, a response that contains resource
+                      attributes contains only attributes that are defined in the
+                      schema for that resource type as returned=always or returned=default.
+                      An attribute that is defined as returned=request is returned
+                      in a response only if the request specifies its name in the
+                      value of this query parameter. If a request specifies this query
+                      parameter, the response contains the attributes that this query
+                      parameter specifies, as well as any attribute that is defined
+                      as returned=always.
+                    type: string
+                  authenticationFactorSettingId:
+                    description: ID of the resource
+                    type: string
+                  authorization:
+                    description: (Updatable) The Authorization field value consists
+                      of credentials containing the authentication information of
+                      the user agent for the realm of the resource being requested.
+                    type: string
+                  autoEnrollEmailFactorDisabled:
+                    description: (Updatable) If true, indicates that email will not
+                      be enrolled as a MFA factor automatically if it a account recovery
+                      factor
+                    type: boolean
+                  bypassCodeEnabled:
+                    description: (Updatable) If true, indicates that Bypass Code is
+                      enabled for authentication
+                    type: boolean
+                  bypassCodeSettings:
+                    description: (Updatable) Settings related to the bypass code,
+                      such as bypass code length, bypass code expiry, max active bypass
+                      codes, and so on
+                    items:
+                      properties:
+                        helpDeskCodeExpiryInMins:
+                          description: (Updatable) Expiry (in minutes) of any bypass
+                            code that is generated by the help desk
+                          type: number
+                        helpDeskGenerationEnabled:
+                          description: (Updatable) If true, indicates that help desk
+                            bypass code generation is enabled
+                          type: boolean
+                        helpDeskMaxUsage:
+                          description: (Updatable) The maximum number of times that
+                            any bypass code that is generated by the help desk can
+                            be used
+                          type: number
+                        length:
+                          description: (Updatable) Exact length of the bypass code
+                            to be generated
+                          type: number
+                        maxActive:
+                          description: (Updatable) The maximum number of bypass codes
+                            that can be issued to any user
+                          type: number
+                        selfServiceGenerationEnabled:
+                          description: (Updatable) If true, indicates that self-service
+                            bypass code generation is enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  clientAppSettings:
+                    description: (Updatable) Settings related to compliance, Personal
+                      Identification Number (PIN) policy, and so on
+                    items:
+                      properties:
+                        deviceProtectionPolicy:
+                          description: (Updatable) Indicates what protection policy
+                            that the system applies on a device. By default, the value
+                            is NONE, which indicates that the system applies no protection
+                            policy. A value of APP_PIN indicates that the system requires
+                            a Personal Identification Number (PIN). A value of DEVICE_BIOMETRIC_OR_APP_PIN
+                            indicates that either a PIN or a biometric authentication
+                            factor is required.
+                          type: string
+                        initialLockoutPeriodInSecs:
+                          description: (Updatable) The period of time in seconds that
+                            the system will lock a user out of the service after that
+                            user exceeds the maximum number of login failures
+                          type: number
+                        keyPairLength:
+                          description: (Updatable) The size of the key that the system
+                            uses to generate the public-private key pair
+                          type: number
+                        lockoutEscalationPattern:
+                          description: (Updatable) The pattern of escalation that
+                            the system follows, in locking a particular user out of
+                            the service.
+                          type: string
+                        maxFailuresBeforeLockout:
+                          description: (Updatable) The maximum number of times that
+                            a particular user can fail to login before the system
+                            locks that user out of the service
+                          type: number
+                        maxFailuresBeforeWarning:
+                          description: (Updatable) The maximum number of login failures
+                            that the system will allow before raising a warning and
+                            sending an alert via email
+                          type: number
+                        maxLockoutIntervalInSecs:
+                          description: (Updatable) The maximum period of time that
+                            the system will lock a particular user out of the service
+                            regardless of what the configured pattern of escalation
+                            would otherwise dictate
+                          type: number
+                        minPinLength:
+                          description: (Updatable) Minimum length of the Personal
+                            Identification Number (PIN)
+                          type: number
+                        policyUpdateFreqInDays:
+                          description: (Updatable) The period of time in days after
+                            which a client should refresh its policy by re-reading
+                            that policy from the server
+                          type: number
+                        requestSigningAlgo:
+                          description: (Updatable) Indicates which algorithm the system
+                            will use to sign requests
+                          type: string
+                        sharedSecretEncoding:
+                          description: (Updatable) Indicates the type of encoding
+                            that the system should use to generate a shared secret
+                          type: string
+                        unlockAppForEachRequestEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client app for each
+                            request. In order to unlock the App, the user must supply
+                            a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockAppIntervalInSecs:
+                          description: (Updatable) Specifies the period of time in
+                            seconds after which the client App should require the
+                            user to unlock the App. In order to unlock the App, the
+                            user must supply a Personal Identification Number (PIN)
+                            or a biometric authentication-factor. A value of zero
+                            means that it is disabled.
+                          type: number
+                        unlockOnAppForegroundEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App, when
+                            the client App comes to the foreground in the display
+                            of the device. In order to unlock the App, the user must
+                            supply a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockOnAppStartEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App whenever
+                            the App is started. In order to unlock the App, the user
+                            must supply a Personal Identification Number (PIN) or
+                            a biometric authentication-factor.
+                          type: boolean
+                      type: object
+                    type: array
+                  compliancePolicy:
+                    description: (Updatable) Compliance Policy that defines actions
+                      to be taken when a condition is violated
+                    items:
+                      properties:
+                        action:
+                          description: (Updatable) The action to be taken if the value
+                            of the attribute is not as expected
+                          type: string
+                        name:
+                          description: (Updatable) The name of the attribute being
+                            evaluated
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  emailEnabled:
+                    description: (Updatable) If true, indicates that the EMAIL channel
+                      is enabled for authentication
+                    type: boolean
+                  emailSettings:
+                    description: (Updatable) Settings related to Email Factor, such
+                      as enabled email magic link factor, custom url for Email Link
+                    items:
+                      properties:
+                        emailLinkCustomUrl:
+                          description: (Updatable) Custom redirect Url which will
+                            be used in email link
+                          type: string
+                        emailLinkEnabled:
+                          description: (Updatable) Specifies whether Email link is
+                            enabled or not.
+                          type: boolean
+                      type: object
+                    type: array
+                  endpointRestrictions:
+                    description: (Updatable) Settings that describe the set of restrictions
+                      that the system should apply to devices and trusted endpoints
+                      of a user
+                    items:
+                      properties:
+                        maxEndpointTrustDurationInDays:
+                          description: (Updatable) Maximum number of days until an
+                            endpoint can be trusted
+                          type: number
+                        maxEnrolledDevices:
+                          description: (Updatable) Maximum number of enrolled devices
+                            per user
+                          type: number
+                        maxIncorrectAttempts:
+                          description: (Updatable) An integer that represents the
+                            maximum number of failed MFA logins before an account
+                            is locked
+                          type: number
+                        maxTrustedEndpoints:
+                          description: (Updatable) Max number of trusted endpoints
+                            per user
+                          type: number
+                        trustedEndpointsEnabled:
+                          description: (Updatable) Specify if trusted endpoints are
+                            enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  fidoAuthenticatorEnabled:
+                    description: (Updatable) If true, indicates that the Fido Authenticator
+                      channels are enabled for authentication
+                    type: boolean
+                  hideBackupFactorEnabled:
+                    description: (Updatable) If true, indicates that 'Show backup
+                      factor(s)' button will be hidden during authentication
+                    type: boolean
+                  idcsEndpoint:
+                    description: The basic endpoint for the identity domain
+                    type: string
+                  identityStoreSettings:
+                    description: (Updatable) Settings related to the use of a user's
+                      profile details from the identity store
+                    items:
+                      properties:
+                        mobileNumberEnabled:
+                          description: (Updatable) If true, indicates that Multi-Factor
+                            Authentication should use the mobile number in the identity
+                            store
+                          type: boolean
+                        mobileNumberUpdateEnabled:
+                          description: (Updatable) If true, indicates that the user
+                            can update the mobile number in the user's Multi-Factor
+                            Authentication profile
+                          type: boolean
+                      type: object
+                    type: array
+                  mfaEnrollmentType:
+                    description: (Updatable) Specifies if Multi-Factor Authentication
+                      enrollment is mandatory or optional for a user
+                    type: string
+                  notificationSettings:
+                    description: (Updatable) Settings related to the Mobile App Notification
+                      channel, such as pull
+                    items:
+                      properties:
+                        pullEnabled:
+                          description: (Updatable) If true, indicates that the Mobile
+                            App Pull Notification channel is enabled for authentication
+                          type: boolean
+                      type: object
+                    type: array
+                  ocid:
+                    description: (Updatable) The OCID of the SCIM resource that represents
+                      the User or App who created this Resource
+                    type: string
+                  phoneCallEnabled:
+                    description: (Updatable) If true, indicates that the phone (PHONE_CALL)
+                      channel is enabled for authentication
+                    type: boolean
+                  pushEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      Push Notification channel is enabled for authentication
+                    type: boolean
+                  resourceTypeSchemaVersion:
+                    description: (Updatable) An endpoint-specific schema version number
+                      to use in the Request. Allowed version values are Earliest Version
+                      or Latest Version as specified in each REST API endpoint description,
+                      or any sequential number inbetween. All schema attributes/body
+                      parameters are a part of version 1. After version 1, any attributes
+                      added or deprecated will be tagged with the version that they
+                      were added to or deprecated in. If no version is provided, the
+                      latest schema version is returned.
+                    type: string
+                  schemas:
+                    description: (Updatable) REQUIRED. The schemas attribute is an
+                      array of Strings which allows introspection of the supported
+                      schema version for a SCIM representation as well any schema
+                      extensions supported by that representation. Each String value
+                      must be a unique URI. This specification defines URIs for User,
+                      Group, and a standard "enterprise" extension. All representations
+                      of SCIM schema MUST include a non-zero value array with value(s)
+                      of the URIs supported by that representation. Duplicate values
+                      MUST NOT be included. Value order is not specified and MUST
+                      not impact behavior.
+                    items:
+                      type: string
+                    type: array
+                  securityQuestionsEnabled:
+                    description: (Updatable) If true, indicates that Security Questions
+                      are enabled for authentication
+                    type: boolean
+                  smsEnabled:
+                    description: (Updatable) If true, indicates that the Short Message
+                      Service (SMS) channel is enabled for authentication
+                    type: boolean
+                  tags:
+                    description: (Updatable) A list of tags on this resource.
+                    items:
+                      properties:
+                        key:
+                          description: (Updatable) Key or name of the tag.
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  thirdPartyFactor:
+                    description: (Updatable) Settings related to third-party factor
+                    items:
+                      properties:
+                        duoSecurity:
+                          description: (Updatable) To enable Duo Security factor
+                          type: boolean
+                      type: object
+                    type: array
+                  totpEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      One Time Passcode channel is enabled for authentication
+                    type: boolean
+                  totpSettings:
+                    description: (Updatable) Settings related to Time-Based One-Time
+                      Passcodes (TOTP), such as hashing algo, totp time step, passcode
+                      length, and so on
+                    items:
+                      properties:
+                        emailOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            that a one-time passcode remains valid that the system
+                            sends by email.
+                          type: number
+                        emailPasscodeLength:
+                          description: (Updatable) Exact length of the email one-time
+                            passcode.
+                          type: number
+                        hashingAlgorithm:
+                          description: (Updatable) The hashing algorithm to be used
+                            to calculate a One-Time Passcode. By default, the system
+                            uses SHA1.
+                          type: string
+                        jwtValidityDurationInSecs:
+                          description: (Updatable) The period of time (in seconds)
+                            that a JSON Web Token (JWT) is valid
+                          type: number
+                        keyRefreshIntervalInDays:
+                          description: (Updatable) The duration of time (in days)
+                            after which the shared secret has to be refreshed
+                          type: number
+                        passcodeLength:
+                          description: (Updatable) Exact length of the One-Time Passcode
+                            that the system should generate
+                          type: number
+                        smsOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            for which a One-Time Passcode that the system sends by
+                            Short Message Service (SMS) or by voice remains valid
+                          type: number
+                        smsPasscodeLength:
+                          description: (Updatable) Exact length of the Short Message
+                            Service (SMS) One-Time Passcode
+                          type: number
+                        timeStepInSecs:
+                          description: (Updatable) Time (in secs) to be used as the
+                            time step
+                          type: number
+                        timeStepTolerance:
+                          description: (Updatable) The tolerance/step-size that the
+                            system should use when validating a One-Time Passcode
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionfidoAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of fido authentication
+                    items:
+                      properties:
+                        attestation:
+                          description: (Updatable) Attribute used to define the type
+                            of attestation required.
+                          type: string
+                        authenticatorSelectionAttachment:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection attachment.
+                          type: string
+                        authenticatorSelectionRequireResidentKey:
+                          description: (Updatable) Flag used to indicate authenticator
+                            selection is required or not
+                          type: boolean
+                        authenticatorSelectionResidentKey:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection resident key requirement.
+                          type: string
+                        authenticatorSelectionUserVerification:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection verification.
+                          type: string
+                        domainValidationLevel:
+                          description: (Updatable) Number of domain levels Oracle
+                            Identity Cloud Service should use for origin comparision
+                          type: number
+                        excludeCredentials:
+                          description: (Updatable) Flag used to indicate whether we
+                            need to restrict creation of multiple credentials in same
+                            authenticator
+                          type: boolean
+                        publicKeyTypes:
+                          description: (Updatable) List of server supported public
+                            key algorithms
+                          items:
+                            type: string
+                          type: array
+                        timeout:
+                          description: (Updatable) Timeout for the fido authentication
+                            to complete
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionthirdPartyAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of third party
+                      provider
+                    items:
+                      properties:
+                        duoSecuritySettings:
+                          description: (Updatable) Settings related to Duo Security
+                          items:
+                            properties:
+                              apiHostname:
+                                description: (Updatable) Hostname to access the Duo
+                                  security account
+                                type: string
+                              attestationKey:
+                                description: (Updatable) Attestation key to attest
+                                  the request and response between Duo Security
+                                type: string
+                              integrationKey:
+                                description: (Updatable) Integration key from Duo
+                                  Security authenticator
+                                type: string
+                              secretKey:
+                                description: (Updatable) Secret key from Duo Security
+                                  authenticator
+                                type: string
+                              userMappingAttribute:
+                                description: (Updatable) User attribute mapping value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  userEnrollmentDisabledFactors:
+                    description: (Updatable) Factors for which enrollment should be
+                      blocked for End User
+                    items:
+                      type: string
+                    type: array
+                  yubicoOtpEnabled:
+                    description: (Updatable) If true, indicates that the Yubico OTP
+                      is enabled for authentication
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.authenticationFactorSettingId is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.authenticationFactorSettingId)
+                || (has(self.initProvider) && has(self.initProvider.authenticationFactorSettingId))'
+            - message: spec.forProvider.bypassCodeEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.bypassCodeEnabled)
+                || (has(self.initProvider) && has(self.initProvider.bypassCodeEnabled))'
+            - message: spec.forProvider.bypassCodeSettings is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.bypassCodeSettings)
+                || (has(self.initProvider) && has(self.initProvider.bypassCodeSettings))'
+            - message: spec.forProvider.clientAppSettings is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clientAppSettings)
+                || (has(self.initProvider) && has(self.initProvider.clientAppSettings))'
+            - message: spec.forProvider.compliancePolicy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.compliancePolicy)
+                || (has(self.initProvider) && has(self.initProvider.compliancePolicy))'
+            - message: spec.forProvider.endpointRestrictions is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.endpointRestrictions)
+                || (has(self.initProvider) && has(self.initProvider.endpointRestrictions))'
+            - message: spec.forProvider.idcsEndpoint is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.idcsEndpoint)
+                || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))'
+            - message: spec.forProvider.mfaEnrollmentType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.mfaEnrollmentType)
+                || (has(self.initProvider) && has(self.initProvider.mfaEnrollmentType))'
+            - message: spec.forProvider.notificationSettings is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.notificationSettings)
+                || (has(self.initProvider) && has(self.initProvider.notificationSettings))'
+            - message: spec.forProvider.pushEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.pushEnabled)
+                || (has(self.initProvider) && has(self.initProvider.pushEnabled))'
+            - message: spec.forProvider.schemas is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.schemas)
+                || (has(self.initProvider) && has(self.initProvider.schemas))'
+            - message: spec.forProvider.securityQuestionsEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.securityQuestionsEnabled)
+                || (has(self.initProvider) && has(self.initProvider.securityQuestionsEnabled))'
+            - message: spec.forProvider.smsEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.smsEnabled)
+                || (has(self.initProvider) && has(self.initProvider.smsEnabled))'
+            - message: spec.forProvider.totpEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.totpEnabled)
+                || (has(self.initProvider) && has(self.initProvider.totpEnabled))'
+            - message: spec.forProvider.totpSettings is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.totpSettings)
+                || (has(self.initProvider) && has(self.initProvider.totpSettings))'
+          status:
+            description: DomainsAuthenticationFactorSettingStatus defines the observed
+              state of DomainsAuthenticationFactorSetting.
+            properties:
+              atProvider:
+                properties:
+                  attributeSets:
+                    description: (Updatable) A multi-valued list of strings indicating
+                      the return type of attribute definition. The specified set of
+                      attributes can be fetched by the return type of the attribute.
+                      One or more values can be given together to fetch more than
+                      one group of attributes. If 'attributes' query parameter is
+                      also available, union of the two is fetched. Valid values -
+                      all, always, never, request, default. Values are case-insensitive.
+                    items:
+                      type: string
+                    type: array
+                  attributes:
+                    description: (Updatable) A comma-delimited string that specifies
+                      the names of resource attributes that should be returned in
+                      the response. By default, a response that contains resource
+                      attributes contains only attributes that are defined in the
+                      schema for that resource type as returned=always or returned=default.
+                      An attribute that is defined as returned=request is returned
+                      in a response only if the request specifies its name in the
+                      value of this query parameter. If a request specifies this query
+                      parameter, the response contains the attributes that this query
+                      parameter specifies, as well as any attribute that is defined
+                      as returned=always.
+                    type: string
+                  authenticationFactorSettingId:
+                    description: ID of the resource
+                    type: string
+                  authorization:
+                    description: (Updatable) The Authorization field value consists
+                      of credentials containing the authentication information of
+                      the user agent for the realm of the resource being requested.
+                    type: string
+                  autoEnrollEmailFactorDisabled:
+                    description: (Updatable) If true, indicates that email will not
+                      be enrolled as a MFA factor automatically if it a account recovery
+                      factor
+                    type: boolean
+                  bypassCodeEnabled:
+                    description: (Updatable) If true, indicates that Bypass Code is
+                      enabled for authentication
+                    type: boolean
+                  bypassCodeSettings:
+                    description: (Updatable) Settings related to the bypass code,
+                      such as bypass code length, bypass code expiry, max active bypass
+                      codes, and so on
+                    items:
+                      properties:
+                        helpDeskCodeExpiryInMins:
+                          description: (Updatable) Expiry (in minutes) of any bypass
+                            code that is generated by the help desk
+                          type: number
+                        helpDeskGenerationEnabled:
+                          description: (Updatable) If true, indicates that help desk
+                            bypass code generation is enabled
+                          type: boolean
+                        helpDeskMaxUsage:
+                          description: (Updatable) The maximum number of times that
+                            any bypass code that is generated by the help desk can
+                            be used
+                          type: number
+                        length:
+                          description: (Updatable) Exact length of the bypass code
+                            to be generated
+                          type: number
+                        maxActive:
+                          description: (Updatable) The maximum number of bypass codes
+                            that can be issued to any user
+                          type: number
+                        selfServiceGenerationEnabled:
+                          description: (Updatable) If true, indicates that self-service
+                            bypass code generation is enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  clientAppSettings:
+                    description: (Updatable) Settings related to compliance, Personal
+                      Identification Number (PIN) policy, and so on
+                    items:
+                      properties:
+                        deviceProtectionPolicy:
+                          description: (Updatable) Indicates what protection policy
+                            that the system applies on a device. By default, the value
+                            is NONE, which indicates that the system applies no protection
+                            policy. A value of APP_PIN indicates that the system requires
+                            a Personal Identification Number (PIN). A value of DEVICE_BIOMETRIC_OR_APP_PIN
+                            indicates that either a PIN or a biometric authentication
+                            factor is required.
+                          type: string
+                        initialLockoutPeriodInSecs:
+                          description: (Updatable) The period of time in seconds that
+                            the system will lock a user out of the service after that
+                            user exceeds the maximum number of login failures
+                          type: number
+                        keyPairLength:
+                          description: (Updatable) The size of the key that the system
+                            uses to generate the public-private key pair
+                          type: number
+                        lockoutEscalationPattern:
+                          description: (Updatable) The pattern of escalation that
+                            the system follows, in locking a particular user out of
+                            the service.
+                          type: string
+                        maxFailuresBeforeLockout:
+                          description: (Updatable) The maximum number of times that
+                            a particular user can fail to login before the system
+                            locks that user out of the service
+                          type: number
+                        maxFailuresBeforeWarning:
+                          description: (Updatable) The maximum number of login failures
+                            that the system will allow before raising a warning and
+                            sending an alert via email
+                          type: number
+                        maxLockoutIntervalInSecs:
+                          description: (Updatable) The maximum period of time that
+                            the system will lock a particular user out of the service
+                            regardless of what the configured pattern of escalation
+                            would otherwise dictate
+                          type: number
+                        minPinLength:
+                          description: (Updatable) Minimum length of the Personal
+                            Identification Number (PIN)
+                          type: number
+                        policyUpdateFreqInDays:
+                          description: (Updatable) The period of time in days after
+                            which a client should refresh its policy by re-reading
+                            that policy from the server
+                          type: number
+                        requestSigningAlgo:
+                          description: (Updatable) Indicates which algorithm the system
+                            will use to sign requests
+                          type: string
+                        sharedSecretEncoding:
+                          description: (Updatable) Indicates the type of encoding
+                            that the system should use to generate a shared secret
+                          type: string
+                        unlockAppForEachRequestEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client app for each
+                            request. In order to unlock the App, the user must supply
+                            a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockAppIntervalInSecs:
+                          description: (Updatable) Specifies the period of time in
+                            seconds after which the client App should require the
+                            user to unlock the App. In order to unlock the App, the
+                            user must supply a Personal Identification Number (PIN)
+                            or a biometric authentication-factor. A value of zero
+                            means that it is disabled.
+                          type: number
+                        unlockOnAppForegroundEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App, when
+                            the client App comes to the foreground in the display
+                            of the device. In order to unlock the App, the user must
+                            supply a Personal Identification Number (PIN) or a biometric
+                            authentication-factor.
+                          type: boolean
+                        unlockOnAppStartEnabled:
+                          description: (Updatable) If true, indicates that the system
+                            should require the user to unlock the client App whenever
+                            the App is started. In order to unlock the App, the user
+                            must supply a Personal Identification Number (PIN) or
+                            a biometric authentication-factor.
+                          type: boolean
+                      type: object
+                    type: array
+                  compartmentOcid:
+                    description: (Updatable) Oracle Cloud Infrastructure Compartment
+                      Id (ocid) in which the resource lives.
+                    type: string
+                  compliancePolicy:
+                    description: (Updatable) Compliance Policy that defines actions
+                      to be taken when a condition is violated
+                    items:
+                      properties:
+                        action:
+                          description: (Updatable) The action to be taken if the value
+                            of the attribute is not as expected
+                          type: string
+                        name:
+                          description: (Updatable) The name of the attribute being
+                            evaluated
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  deleteInProgress:
+                    description: (Updatable) A boolean flag indicating this resource
+                      in the process of being deleted. Usually set to true when synchronous
+                      deletion of the resource would take too long.
+                    type: boolean
+                  domainOcid:
+                    description: (Updatable) Oracle Cloud Infrastructure Domain Id
+                      (ocid) in which the resource lives.
+                    type: string
+                  emailEnabled:
+                    description: (Updatable) If true, indicates that the EMAIL channel
+                      is enabled for authentication
+                    type: boolean
+                  emailSettings:
+                    description: (Updatable) Settings related to Email Factor, such
+                      as enabled email magic link factor, custom url for Email Link
+                    items:
+                      properties:
+                        emailLinkCustomUrl:
+                          description: (Updatable) Custom redirect Url which will
+                            be used in email link
+                          type: string
+                        emailLinkEnabled:
+                          description: (Updatable) Specifies whether Email link is
+                            enabled or not.
+                          type: boolean
+                      type: object
+                    type: array
+                  endpointRestrictions:
+                    description: (Updatable) Settings that describe the set of restrictions
+                      that the system should apply to devices and trusted endpoints
+                      of a user
+                    items:
+                      properties:
+                        maxEndpointTrustDurationInDays:
+                          description: (Updatable) Maximum number of days until an
+                            endpoint can be trusted
+                          type: number
+                        maxEnrolledDevices:
+                          description: (Updatable) Maximum number of enrolled devices
+                            per user
+                          type: number
+                        maxIncorrectAttempts:
+                          description: (Updatable) An integer that represents the
+                            maximum number of failed MFA logins before an account
+                            is locked
+                          type: number
+                        maxTrustedEndpoints:
+                          description: (Updatable) Max number of trusted endpoints
+                            per user
+                          type: number
+                        trustedEndpointsEnabled:
+                          description: (Updatable) Specify if trusted endpoints are
+                            enabled
+                          type: boolean
+                      type: object
+                    type: array
+                  fidoAuthenticatorEnabled:
+                    description: (Updatable) If true, indicates that the Fido Authenticator
+                      channels are enabled for authentication
+                    type: boolean
+                  hideBackupFactorEnabled:
+                    description: (Updatable) If true, indicates that 'Show backup
+                      factor(s)' button will be hidden during authentication
+                    type: boolean
+                  id:
+                    description: '(Updatable) Unique identifier for the SCIM Resource
+                      as defined by the Service Provider. Each representation of the
+                      Resource MUST include a non-empty id value. This identifier
+                      MUST be unique across the Service Provider''s entire set of
+                      Resources. It MUST be a stable, non-reassignable identifier
+                      that does not change when the same Resource is returned in subsequent
+                      requests. The value of the id attribute is always issued by
+                      the Service Provider and MUST never be specified by the Service
+                      Consumer. bulkId: is a reserved keyword and MUST NOT be used
+                      in the unique identifier.'
+                    type: string
+                  idcsCreatedBy:
+                    description: (Updatable) The User or App who created the Resource
+                    items:
+                      properties:
+                        display:
+                          description: (Updatable) The displayName of the User or
+                            App who created this Resource
+                          type: string
+                        ocid:
+                          description: (Updatable) The OCID of the SCIM resource that
+                            represents the User or App who created this Resource
+                          type: string
+                        ref:
+                          description: (Updatable) The URI of the SCIM resource that
+                            represents the User or App who created this Resource
+                          type: string
+                        type:
+                          description: (Updatable) The type of resource, User or App,
+                            that created this Resource
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  idcsEndpoint:
+                    description: The basic endpoint for the identity domain
+                    type: string
+                  idcsLastModifiedBy:
+                    description: (Updatable) The User or App who modified the Resource
+                    items:
+                      properties:
+                        display:
+                          description: (Updatable) The displayName of the User or
+                            App who created this Resource
+                          type: string
+                        ocid:
+                          description: (Updatable) The OCID of the SCIM resource that
+                            represents the User or App who created this Resource
+                          type: string
+                        ref:
+                          description: (Updatable) The URI of the SCIM resource that
+                            represents the User or App who created this Resource
+                          type: string
+                        type:
+                          description: (Updatable) The type of resource, User or App,
+                            that created this Resource
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  idcsLastUpgradedInRelease:
+                    description: (Updatable) The release number when the resource
+                      was upgraded.
+                    type: string
+                  idcsPreventedOperations:
+                    description: (Updatable) Each value of this attribute specifies
+                      an operation that only an internal client may perform on this
+                      particular resource.
+                    items:
+                      type: string
+                    type: array
+                  identityStoreSettings:
+                    description: (Updatable) Settings related to the use of a user's
+                      profile details from the identity store
+                    items:
+                      properties:
+                        mobileNumberEnabled:
+                          description: (Updatable) If true, indicates that Multi-Factor
+                            Authentication should use the mobile number in the identity
+                            store
+                          type: boolean
+                        mobileNumberUpdateEnabled:
+                          description: (Updatable) If true, indicates that the user
+                            can update the mobile number in the user's Multi-Factor
+                            Authentication profile
+                          type: boolean
+                      type: object
+                    type: array
+                  meta:
+                    description: (Updatable) A complex attribute that contains resource
+                      metadata. All sub-attributes are OPTIONAL.
+                    items:
+                      properties:
+                        created:
+                          description: (Updatable) The DateTime the Resource was added
+                            to the Service Provider
+                          type: string
+                        lastModified:
+                          description: (Updatable) The most recent DateTime that the
+                            details of this Resource were updated at the Service Provider.
+                            If this Resource has never been modified since its initial
+                            creation, the value MUST be the same as the value of created.
+                            The attribute MUST be a DateTime.
+                          type: string
+                        location:
+                          description: (Updatable) The URI of the Resource being returned.
+                            This value MUST be the same as the Location HTTP response
+                            header.
+                          type: string
+                        resourceType:
+                          description: (Updatable) Name of the resource type of the
+                            resource--for example, Users or Groups
+                          type: string
+                        version:
+                          description: (Updatable) The version of the Resource being
+                            returned. This value must be the same as the ETag HTTP
+                            response header.
+                          type: string
+                      type: object
+                    type: array
+                  mfaEnabledCategory:
+                    description: (Updatable) Specifies the category of people for
+                      whom Multi-Factor Authentication is enabled. This is a readOnly
+                      attribute which reflects the value of mfaEnabledCategory attribute
+                      in SsoSettings
+                    type: string
+                  mfaEnrollmentType:
+                    description: (Updatable) Specifies if Multi-Factor Authentication
+                      enrollment is mandatory or optional for a user
+                    type: string
+                  notificationSettings:
+                    description: (Updatable) Settings related to the Mobile App Notification
+                      channel, such as pull
+                    items:
+                      properties:
+                        pullEnabled:
+                          description: (Updatable) If true, indicates that the Mobile
+                            App Pull Notification channel is enabled for authentication
+                          type: boolean
+                      type: object
+                    type: array
+                  ocid:
+                    description: (Updatable) The OCID of the SCIM resource that represents
+                      the User or App who created this Resource
+                    type: string
+                  phoneCallEnabled:
+                    description: (Updatable) If true, indicates that the phone (PHONE_CALL)
+                      channel is enabled for authentication
+                    type: boolean
+                  pushEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      Push Notification channel is enabled for authentication
+                    type: boolean
+                  resourceTypeSchemaVersion:
+                    description: (Updatable) An endpoint-specific schema version number
+                      to use in the Request. Allowed version values are Earliest Version
+                      or Latest Version as specified in each REST API endpoint description,
+                      or any sequential number inbetween. All schema attributes/body
+                      parameters are a part of version 1. After version 1, any attributes
+                      added or deprecated will be tagged with the version that they
+                      were added to or deprecated in. If no version is provided, the
+                      latest schema version is returned.
+                    type: string
+                  schemas:
+                    description: (Updatable) REQUIRED. The schemas attribute is an
+                      array of Strings which allows introspection of the supported
+                      schema version for a SCIM representation as well any schema
+                      extensions supported by that representation. Each String value
+                      must be a unique URI. This specification defines URIs for User,
+                      Group, and a standard "enterprise" extension. All representations
+                      of SCIM schema MUST include a non-zero value array with value(s)
+                      of the URIs supported by that representation. Duplicate values
+                      MUST NOT be included. Value order is not specified and MUST
+                      not impact behavior.
+                    items:
+                      type: string
+                    type: array
+                  securityQuestionsEnabled:
+                    description: (Updatable) If true, indicates that Security Questions
+                      are enabled for authentication
+                    type: boolean
+                  smsEnabled:
+                    description: (Updatable) If true, indicates that the Short Message
+                      Service (SMS) channel is enabled for authentication
+                    type: boolean
+                  tags:
+                    description: (Updatable) A list of tags on this resource.
+                    items:
+                      properties:
+                        key:
+                          description: (Updatable) Key or name of the tag.
+                          type: string
+                        value:
+                          description: (Updatable) The value of the attribute to be
+                            evaluated
+                          type: string
+                      type: object
+                    type: array
+                  tenancyOcid:
+                    description: (Updatable) Oracle Cloud Infrastructure Tenant Id
+                      (ocid) in which the resource lives.
+                    type: string
+                  thirdPartyFactor:
+                    description: (Updatable) Settings related to third-party factor
+                    items:
+                      properties:
+                        duoSecurity:
+                          description: (Updatable) To enable Duo Security factor
+                          type: boolean
+                      type: object
+                    type: array
+                  totpEnabled:
+                    description: (Updatable) If true, indicates that the Mobile App
+                      One Time Passcode channel is enabled for authentication
+                    type: boolean
+                  totpSettings:
+                    description: (Updatable) Settings related to Time-Based One-Time
+                      Passcodes (TOTP), such as hashing algo, totp time step, passcode
+                      length, and so on
+                    items:
+                      properties:
+                        emailOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            that a one-time passcode remains valid that the system
+                            sends by email.
+                          type: number
+                        emailPasscodeLength:
+                          description: (Updatable) Exact length of the email one-time
+                            passcode.
+                          type: number
+                        hashingAlgorithm:
+                          description: (Updatable) The hashing algorithm to be used
+                            to calculate a One-Time Passcode. By default, the system
+                            uses SHA1.
+                          type: string
+                        jwtValidityDurationInSecs:
+                          description: (Updatable) The period of time (in seconds)
+                            that a JSON Web Token (JWT) is valid
+                          type: number
+                        keyRefreshIntervalInDays:
+                          description: (Updatable) The duration of time (in days)
+                            after which the shared secret has to be refreshed
+                          type: number
+                        passcodeLength:
+                          description: (Updatable) Exact length of the One-Time Passcode
+                            that the system should generate
+                          type: number
+                        smsOtpValidityDurationInMins:
+                          description: (Updatable) The period of time (in minutes)
+                            for which a One-Time Passcode that the system sends by
+                            Short Message Service (SMS) or by voice remains valid
+                          type: number
+                        smsPasscodeLength:
+                          description: (Updatable) Exact length of the Short Message
+                            Service (SMS) One-Time Passcode
+                          type: number
+                        timeStepInSecs:
+                          description: (Updatable) Time (in secs) to be used as the
+                            time step
+                          type: number
+                        timeStepTolerance:
+                          description: (Updatable) The tolerance/step-size that the
+                            system should use when validating a One-Time Passcode
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionfidoAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of fido authentication
+                    items:
+                      properties:
+                        attestation:
+                          description: (Updatable) Attribute used to define the type
+                            of attestation required.
+                          type: string
+                        authenticatorSelectionAttachment:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection attachment.
+                          type: string
+                        authenticatorSelectionRequireResidentKey:
+                          description: (Updatable) Flag used to indicate authenticator
+                            selection is required or not
+                          type: boolean
+                        authenticatorSelectionResidentKey:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection resident key requirement.
+                          type: string
+                        authenticatorSelectionUserVerification:
+                          description: (Updatable) Attribute used to define authenticator
+                            selection verification.
+                          type: string
+                        domainValidationLevel:
+                          description: (Updatable) Number of domain levels Oracle
+                            Identity Cloud Service should use for origin comparision
+                          type: number
+                        excludeCredentials:
+                          description: (Updatable) Flag used to indicate whether we
+                            need to restrict creation of multiple credentials in same
+                            authenticator
+                          type: boolean
+                        publicKeyTypes:
+                          description: (Updatable) List of server supported public
+                            key algorithms
+                          items:
+                            type: string
+                          type: array
+                        timeout:
+                          description: (Updatable) Timeout for the fido authentication
+                            to complete
+                          type: number
+                      type: object
+                    type: array
+                  urnietfparamsscimschemasoracleidcsextensionthirdPartyAuthenticationFactorSettings:
+                    description: (Updatable) This extension defines attributes used
+                      to manage Multi-Factor Authentication settings of third party
+                      provider
+                    items:
+                      properties:
+                        duoSecuritySettings:
+                          description: (Updatable) Settings related to Duo Security
+                          items:
+                            properties:
+                              apiHostname:
+                                description: (Updatable) Hostname to access the Duo
+                                  security account
+                                type: string
+                              attestationKey:
+                                description: (Updatable) Attestation key to attest
+                                  the request and response between Duo Security
+                                type: string
+                              integrationKey:
+                                description: (Updatable) Integration key from Duo
+                                  Security authenticator
+                                type: string
+                              secretKey:
+                                description: (Updatable) Secret key from Duo Security
+                                  authenticator
+                                type: string
+                              userMappingAttribute:
+                                description: (Updatable) User attribute mapping value
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  userEnrollmentDisabledFactors:
+                    description: (Updatable) Factors for which enrollment should be
+                      blocked for End User
+                    items:
+                      type: string
+                    type: array
+                  yubicoOtpEnabled:
+                    description: (Updatable) If true, indicates that the Yubico OTP
+                      is enabled for authentication
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

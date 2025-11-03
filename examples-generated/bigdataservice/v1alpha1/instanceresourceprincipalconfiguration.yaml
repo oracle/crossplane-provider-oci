@@ -1,0 +1,17 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: InstanceResourcePrincipalConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/instanceresourceprincipalconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_resource_principal_configuration
+  name: test-bds-instance-resource-principal-configuration
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    displayName: ${var.bds_instance_resource_principal_configuration_display_name}
+    sessionTokenLifeSpanDurationInHours: ${var.bds_instance_resource_principal_configuration_session_token_life_span_duration_in_hours}

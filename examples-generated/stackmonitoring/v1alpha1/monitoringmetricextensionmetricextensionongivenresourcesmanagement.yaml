@@ -1,0 +1,13 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringMetricExtensionMetricExtensionOnGivenResourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringmetricextensionmetricextensionongivenresourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_metric_extension_metric_extension_on_given_resources_management
+  name: test-metric-extension-metric-extension-on-given-resources-management
+spec:
+  forProvider:
+    enableMetricExtensionOnGivenResources: ${var.enable_metric_extension_on_given_resources}
+    metricExtensionId: ${oci_stack_monitoring_metric_extension.test_metric_extension.id}
+    resourceIds: ${var.metric_extension_metric_extension_on_given_resources_management_resource_ids}

@@ -1,0 +1,39 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: GuardTarget
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/guardtarget
+  labels:
+    testing.upbound.io/example-name: test_target
+  name: test-target
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.target_description}
+    displayName: ${var.target_display_name}
+    freeformTags:
+      bar-key: value
+    state: ${var.target_state}
+    targetDetectorRecipes:
+    - detectorRecipeId: ${oci_cloud_guard_detector_recipe.test_detector_recipe.id}
+      detectorRules:
+      - details:
+        - conditionGroups:
+          - compartmentId: ${var.compartment_id}
+            condition: ${var.target_target_detector_recipes_detector_rules_details_condition_groups_condition}
+        detectorRuleId: ${oci_events_rule.test_rule.id}
+    targetResourceId: ${oci_cloud_guard_resource.test_resource.id}
+    targetResourceType: ${var.target_target_resource_type}
+    targetResponderRecipes:
+    - responderRecipeId: ${oci_cloud_guard_responder_recipe.test_responder_recipe.id}
+      responderRules:
+      - details:
+        - condition: ${var.target_target_responder_recipes_responder_rules_details_condition}
+          configurations:
+          - configKey: ${var.target_target_responder_recipes_responder_rules_details_configurations_config_key}
+            name: ${var.target_target_responder_recipes_responder_rules_details_configurations_name}
+            value: ${var.target_target_responder_recipes_responder_rules_details_configurations_value}
+          mode: ${var.target_target_responder_recipes_responder_rules_details_mode}
+        responderRuleId: ${oci_events_rule.test_rule.id}

@@ -1,0 +1,42 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: GuardDetectorRecipe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/guarddetectorrecipe
+  labels:
+    testing.upbound.io/example-name: test_detector_recipe
+  name: test-detector-recipe
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.detector_recipe_description}
+    detector: ${var.detector_recipe_detector}
+    detectorRules:
+    - details:
+      - condition: ${var.detector_recipe_detector_rules_details_condition}
+        configurations:
+        - configKey: ${var.detector_recipe_detector_rules_details_configurations_config_key}
+          dataType: ${var.detector_recipe_detector_rules_details_configurations_data_type}
+          name: ${var.detector_recipe_detector_rules_details_configurations_name}
+          value: ${var.detector_recipe_detector_rules_details_configurations_value}
+          values:
+          - listType: ${var.detector_recipe_detector_rules_details_configurations_values_list_type}
+            managedListType: ${var.detector_recipe_detector_rules_details_configurations_values_managed_list_type}
+            value: ${var.detector_recipe_detector_rules_details_configurations_values_value}
+        dataSourceId: ${oci_cloud_guard_data_source.test_data_source.id}
+        description: ${var.detector_recipe_detector_rules_details_description}
+        entitiesMappings:
+        - displayName: ${var.detector_recipe_detector_rules_details_entities_mappings_display_name}
+          entityType: ${var.detector_recipe_detector_rules_details_entities_mappings_entity_type}
+          queryField: ${var.detector_recipe_detector_rules_details_entities_mappings_query_field}
+        isEnabled: ${var.detector_recipe_detector_rules_details_is_enabled}
+        labels: ${var.detector_recipe_detector_rules_details_labels}
+        recommendation: ${var.detector_recipe_detector_rules_details_recommendation}
+        riskLevel: ${var.detector_recipe_detector_rules_details_risk_level}
+      detectorRuleId: ${oci_events_rule.test_rule.id}
+    displayName: ${var.detector_recipe_display_name}
+    freeformTags:
+      bar-key: value
+    sourceDetectorRecipeId: ${oci_cloud_guard_detector_recipe.test_detector_recipe.id}

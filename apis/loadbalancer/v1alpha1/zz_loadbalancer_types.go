@@ -13,10 +13,22 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type IPAddressDetailsInitParameters struct {
+type IPAddressDetailsReservedIPInitParameters struct {
 }
 
-type IPAddressDetailsObservation struct {
+type IPAddressDetailsReservedIPObservation struct {
+
+	// Ocid of the Reserved IP/Public Ip created with VCN.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type IPAddressDetailsReservedIPParameters struct {
+}
+
+type LoadBalancerIPAddressDetailsInitParameters struct {
+}
+
+type LoadBalancerIPAddressDetailsObservation struct {
 
 	// An IP address.  Example: 192.168.0.3
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
@@ -24,10 +36,10 @@ type IPAddressDetailsObservation struct {
 	// Whether the IP address is public or private.
 	IsPublic *bool `json:"isPublic,omitempty" tf:"is_public,omitempty"`
 
-	ReservedIP []ReservedIPObservation `json:"reservedIp,omitempty" tf:"reserved_ip,omitempty"`
+	ReservedIP []IPAddressDetailsReservedIPObservation `json:"reservedIp,omitempty" tf:"reserved_ip,omitempty"`
 }
 
-type IPAddressDetailsParameters struct {
+type LoadBalancerIPAddressDetailsParameters struct {
 }
 
 type LoadBalancerInitParameters struct {
@@ -78,7 +90,7 @@ type LoadBalancerInitParameters struct {
 	RequestIDHeader *string `json:"requestIdHeader,omitempty" tf:"request_id_header,omitempty"`
 
 	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
-	ReservedIps []ReservedIpsInitParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
+	ReservedIps []LoadBalancerReservedIpsInitParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
 	// (Updatable) Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value":"42","mode":"audit", "usagetype" : "zpr"}}}
 	// +mapType=granular
@@ -88,7 +100,7 @@ type LoadBalancerInitParameters struct {
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
 
 	// (Updatable) The configuration details to create load balancer using Flexible shape. This is required only if shapeName is Flexible.
-	ShapeDetails []ShapeDetailsInitParameters `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
+	ShapeDetails []LoadBalancerShapeDetailsInitParameters `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
 
 	// An array of subnet OCIDs.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
@@ -123,7 +135,7 @@ type LoadBalancerObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// An array of IP addresses.
-	IPAddressDetails []IPAddressDetailsObservation `json:"ipAddressDetails,omitempty" tf:"ip_address_details,omitempty"`
+	IPAddressDetails []LoadBalancerIPAddressDetailsObservation `json:"ipAddressDetails,omitempty" tf:"ip_address_details,omitempty"`
 
 	// An array of IP addresses. Deprecated: use ip_address_details instead
 	IPAddresses []*string `json:"ipAddresses,omitempty" tf:"ip_addresses,omitempty"`
@@ -151,7 +163,7 @@ type LoadBalancerObservation struct {
 	RequestIDHeader *string `json:"requestIdHeader,omitempty" tf:"request_id_header,omitempty"`
 
 	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
-	ReservedIps []ReservedIpsObservation `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
+	ReservedIps []LoadBalancerReservedIpsObservation `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
 	// (Updatable) Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value":"42","mode":"audit", "usagetype" : "zpr"}}}
 	// +mapType=granular
@@ -161,7 +173,7 @@ type LoadBalancerObservation struct {
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
 
 	// (Updatable) The configuration details to create load balancer using Flexible shape. This is required only if shapeName is Flexible.
-	ShapeDetails []ShapeDetailsObservation `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
+	ShapeDetails []LoadBalancerShapeDetailsObservation `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
 
 	// The current state of the load balancer.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -237,7 +249,7 @@ type LoadBalancerParameters struct {
 
 	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
 	// +kubebuilder:validation:Optional
-	ReservedIps []ReservedIpsParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
+	ReservedIps []LoadBalancerReservedIpsParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
 	// (Updatable) Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value":"42","mode":"audit", "usagetype" : "zpr"}}}
 	// +kubebuilder:validation:Optional
@@ -250,7 +262,7 @@ type LoadBalancerParameters struct {
 
 	// (Updatable) The configuration details to create load balancer using Flexible shape. This is required only if shapeName is Flexible.
 	// +kubebuilder:validation:Optional
-	ShapeDetails []ShapeDetailsParameters `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
+	ShapeDetails []LoadBalancerShapeDetailsParameters `json:"shapeDetails,omitempty" tf:"shape_details,omitempty"`
 
 	// An array of subnet OCIDs.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
@@ -266,38 +278,26 @@ type LoadBalancerParameters struct {
 	SubnetIdsSelector *v1.Selector `json:"subnetIdsSelector,omitempty" tf:"-"`
 }
 
-type ReservedIPInitParameters struct {
-}
-
-type ReservedIPObservation struct {
+type LoadBalancerReservedIpsInitParameters struct {
 
 	// Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ReservedIPParameters struct {
-}
-
-type ReservedIpsInitParameters struct {
+type LoadBalancerReservedIpsObservation struct {
 
 	// Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ReservedIpsObservation struct {
-
-	// Ocid of the Reserved IP/Public Ip created with VCN.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-}
-
-type ReservedIpsParameters struct {
+type LoadBalancerReservedIpsParameters struct {
 
 	// Ocid of the Reserved IP/Public Ip created with VCN.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ShapeDetailsInitParameters struct {
+type LoadBalancerShapeDetailsInitParameters struct {
 
 	// (Updatable) Bandwidth in Mbps that determines the maximum bandwidth (ingress plus egress) that the load balancer can achieve. This bandwidth cannot be always guaranteed. For a guaranteed bandwidth use the minimumBandwidthInMbps parameter.
 	MaximumBandwidthInMbps *float64 `json:"maximumBandwidthInMbps,omitempty" tf:"maximum_bandwidth_in_mbps,omitempty"`
@@ -306,7 +306,7 @@ type ShapeDetailsInitParameters struct {
 	MinimumBandwidthInMbps *float64 `json:"minimumBandwidthInMbps,omitempty" tf:"minimum_bandwidth_in_mbps,omitempty"`
 }
 
-type ShapeDetailsObservation struct {
+type LoadBalancerShapeDetailsObservation struct {
 
 	// (Updatable) Bandwidth in Mbps that determines the maximum bandwidth (ingress plus egress) that the load balancer can achieve. This bandwidth cannot be always guaranteed. For a guaranteed bandwidth use the minimumBandwidthInMbps parameter.
 	MaximumBandwidthInMbps *float64 `json:"maximumBandwidthInMbps,omitempty" tf:"maximum_bandwidth_in_mbps,omitempty"`
@@ -315,7 +315,7 @@ type ShapeDetailsObservation struct {
 	MinimumBandwidthInMbps *float64 `json:"minimumBandwidthInMbps,omitempty" tf:"minimum_bandwidth_in_mbps,omitempty"`
 }
 
-type ShapeDetailsParameters struct {
+type LoadBalancerShapeDetailsParameters struct {
 
 	// (Updatable) Bandwidth in Mbps that determines the maximum bandwidth (ingress plus egress) that the load balancer can achieve. This bandwidth cannot be always guaranteed. For a guaranteed bandwidth use the minimumBandwidthInMbps parameter.
 	// +kubebuilder:validation:Optional

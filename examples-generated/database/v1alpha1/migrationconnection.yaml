@@ -1,0 +1,52 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MigrationConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migrationconnection
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    additionalAttributes:
+    - name: ${var.connection_additional_attributes_name}
+      value: ${var.connection_additional_attributes_value}
+    compartmentId: ${var.compartment_id}
+    connectionString: ${var.connection_connection_string}
+    connectionType: ${var.connection_connection_type}
+    databaseId: ${oci_database_database.test_database.id}
+    databaseName: ${oci_database_database.test_database.name}
+    dbSystemId: ${oci_database_db_system.test_db_system.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.connection_description}
+    displayName: ${var.connection_display_name}
+    freeformTags: ${var.connection_freeform_tags}
+    host: ${var.connection_host}
+    keyId: ${oci_kms_key.test_key.id}
+    nsgIds: ${var.connection_nsg_ids}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    port: ${var.connection_port}
+    replicationPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    replicationUsername: ${var.connection_replication_username}
+    securityProtocol: ${var.connection_security_protocol}
+    sshHost: ${var.connection_ssh_host}
+    sshKey: ${var.connection_ssh_key}
+    sshSudoLocation: ${var.connection_ssh_sudo_location}
+    sshUser: ${var.connection_ssh_user}
+    sslCa: ${var.connection_ssl_ca}
+    sslCert: ${var.connection_ssl_cert}
+    sslCrl: ${var.connection_ssl_crl}
+    sslKey: ${var.connection_ssl_key}
+    sslMode: ${var.connection_ssl_mode}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    technologyType: ${var.connection_technology_type}
+    username: ${var.connection_username}
+    vaultId: ${oci_kms_vault.test_vault.id}
+    wallet: ${var.connection_wallet}

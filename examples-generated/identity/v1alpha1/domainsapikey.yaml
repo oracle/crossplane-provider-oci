@@ -1,0 +1,28 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsApiKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsapikey
+  labels:
+    testing.upbound.io/example-name: test_api_key
+  name: test-api-key
+spec:
+  forProvider:
+    attributeSets: []
+    attributes: ""
+    authorization: ${var.api_key_authorization}
+    description: ${var.api_key_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    key: ${var.api_key_key}
+    ocid: ${var.api_key_ocid}
+    resourceTypeSchemaVersion: ${var.api_key_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:apikey
+    tags:
+    - key: ${var.api_key_tags_key}
+      value: ${var.api_key_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionselfChangeUser:
+    - allowSelfChange: ${var.api_key_urnietfparamsscimschemasoracleidcsextensionself_change_user_allow_self_change}
+    user:
+    - ocid: ${var.user_ocid}
+      value: ${oci_identity_domains_user.test_user.id}

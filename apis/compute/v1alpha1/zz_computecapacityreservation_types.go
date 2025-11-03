@@ -160,10 +160,39 @@ type InstanceReservationConfigsInitParameters struct {
 	InstanceShape *string `json:"instanceShape,omitempty" tf:"instance_shape,omitempty"`
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
-	InstanceShapeConfig []InstanceShapeConfigInitParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigInitParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	ReservedCount *string `json:"reservedCount,omitempty" tf:"reserved_count,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigInitParameters struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigObservation struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigParameters struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	// +kubebuilder:validation:Optional
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	// +kubebuilder:validation:Optional
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 }
 
 type InstanceReservationConfigsObservation struct {
@@ -181,7 +210,7 @@ type InstanceReservationConfigsObservation struct {
 	InstanceShape *string `json:"instanceShape,omitempty" tf:"instance_shape,omitempty"`
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
-	InstanceShapeConfig []InstanceShapeConfigObservation `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigObservation `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	ReservedCount *string `json:"reservedCount,omitempty" tf:"reserved_count,omitempty"`
@@ -210,40 +239,11 @@ type InstanceReservationConfigsParameters struct {
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
 	// +kubebuilder:validation:Optional
-	InstanceShapeConfig []InstanceShapeConfigParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	// +kubebuilder:validation:Optional
 	ReservedCount *string `json:"reservedCount" tf:"reserved_count,omitempty"`
-}
-
-type InstanceShapeConfigInitParameters struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
-}
-
-type InstanceShapeConfigObservation struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
-}
-
-type InstanceShapeConfigParameters struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	// +kubebuilder:validation:Optional
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	// +kubebuilder:validation:Optional
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 }
 
 // ComputeCapacityReservationSpec defines the desired state of ComputeCapacityReservation

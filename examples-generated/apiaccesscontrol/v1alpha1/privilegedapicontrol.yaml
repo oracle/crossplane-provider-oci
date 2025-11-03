@@ -1,0 +1,26 @@
+apiVersion: apiaccesscontrol.oci.upbound.io/v1alpha1
+kind: PrivilegedApiControl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apiaccesscontrol/v1alpha1/privilegedapicontrol
+  labels:
+    testing.upbound.io/example-name: test_privileged_api_control
+  name: test-privileged-api-control
+spec:
+  forProvider:
+    approverGroupIdList: ${var.privileged_api_control_approver_group_id_list}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.privileged_api_control_description}
+    displayName: ${var.privileged_api_control_display_name}
+    freeformTags:
+      Department: Finance
+    notificationTopicId: ${oci_ons_notification_topic.test_notification_topic.id}
+    numberOfApprovers: ${var.privileged_api_control_number_of_approvers}
+    privilegedOperationList:
+    - apiName: ${oci_apigateway_api.test_api.name}
+      attributeNames: ${var.privileged_api_control_privileged_operation_list_attribute_names}
+      entityType: ${var.privileged_api_control_privileged_operation_list_entity_type}
+    resourceType: ${var.privileged_api_control_resource_type}
+    resources: ${var.privileged_api_control_resources}

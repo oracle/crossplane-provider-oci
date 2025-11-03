@@ -1,0 +1,11 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubLifecycleStageDetachManagedInstancesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhublifecyclestagedetachmanagedinstancesmanagement
+  labels:
+    testing.upbound.io/example-name: test_lifecycle_stage_detach_managed_instances_management
+  name: test-lifecycle-stage-detach-managed-instances-management
+spec:
+  forProvider:
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}

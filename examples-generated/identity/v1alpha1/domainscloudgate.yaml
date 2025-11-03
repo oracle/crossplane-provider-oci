@@ -1,0 +1,27 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsCloudGate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainscloudgate
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate
+  name: test-cloud-gate
+spec:
+  forProvider:
+    active: ${var.cloud_gate_active}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.cloud_gate_authorization}
+    description: ${var.cloud_gate_description}
+    displayName: ${var.cloud_gate_display_name}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    lastModifiedTime: "2000-01-01T00:00:00Z"
+    ocid: ${var.cloud_gate_ocid}
+    resourceTypeSchemaVersion: ${var.cloud_gate_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGate
+    tags:
+    - key: ${var.cloud_gate_tags_key}
+      value: ${var.cloud_gate_tags_value}
+    type: ${var.cloud_gate_type}

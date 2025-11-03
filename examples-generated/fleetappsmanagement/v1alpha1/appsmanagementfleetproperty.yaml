@@ -1,0 +1,13 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementFleetProperty
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementfleetproperty
+  labels:
+    testing.upbound.io/example-name: test_fleet_property
+  name: test-fleet-property
+spec:
+  forProvider:
+    fleetId: ${oci_fleet_apps_management_fleet.test_fleet.id}
+    propertyId: ${oci_fleet_apps_management_property.test_property.id}
+    value: ${var.fleet_property_value}

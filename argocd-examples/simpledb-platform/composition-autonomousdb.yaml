@@ -1,0 +1,230 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: simpledatabase-autonomous
+  labels:
+    provider: oci
+    service: database
+    type: autonomous
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: database.crossplane.io/v1alpha1
+    kind: SimpleDatabase
+  patchSets:
+  - name: common-fields
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.compartmentId
+      toFieldPath: spec.forProvider.compartmentId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.freeformTags
+      toFieldPath: spec.forProvider.freeformTags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.definedTags
+      toFieldPath: spec.forProvider.definedTags
+
+  resources:
+  # AutonomousDatabase - Serverless Oracle Database
+  - name: autonomous-database
+    base:
+      apiVersion: database.oci.upbound.io/v1alpha1
+      kind: AutonomousDatabase
+      spec:
+        forProvider:
+          # Default configuration
+          dbName: "POCDB"
+          displayName: "POC Autonomous Database"
+          dbWorkload: "OLTP"
+          dbVersion: "19c"
+          
+          # Compute configuration
+          # computeCount will be set via patches when using computeModel
+          computeModel: "OCPU"
+          # dataStorageSizeInTbs will be set via patches for non-free tier
+          
+          # Features
+          isAutoScalingEnabled: false
+          isAutoScalingForStorageEnabled: false
+          isFreeTier: false
+          licenseModel: "LICENSE_INCLUDED"
+          
+          # Security
+          isMtlsConnectionRequired: true
+          
+          # Backup
+          backupRetentionPeriodInDays: 7
+          
+          # Character sets are not supported in free tier
+          # Will be set via patches if not free tier
+          
+          # Data Safe
+          dataSafeStatus: "NOT_REGISTERED"
+        
+        providerConfigRef:
+          name: default
+    
+    patches:
+    - type: PatchSet
+      patchSetName: common-fields
+    
+    # Database configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.name
+      toFieldPath: spec.forProvider.dbName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.displayName
+      toFieldPath: spec.forProvider.displayName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.version
+      toFieldPath: spec.forProvider.dbVersion
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.workload
+      toFieldPath: spec.forProvider.dbWorkload
+      transforms:
+      - type: map
+        map:
+          "OLTP": "OLTP"  # Transaction Processing
+          "DW": "DW"      # Data Warehouse
+          "AJD": "AJD"    # JSON Database
+          "APEX": "APEX"  # APEX Service
+    # Character sets - optional (not supported in free tier)
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.characterSet
+      toFieldPath: spec.forProvider.characterSet
+      policy:
+        fromFieldPath: Optional
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.nCharacterSet
+      toFieldPath: spec.forProvider.ncharacterSet
+      policy:
+        fromFieldPath: Optional
+    
+    # Admin password from secret
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretName
+      toFieldPath: spec.forProvider.adminPasswordSecretRef.name
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretNamespace
+      toFieldPath: spec.forProvider.adminPasswordSecretRef.namespace
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretKey
+      toFieldPath: spec.forProvider.adminPasswordSecretRef.key
+    
+    # Backup configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.backupRetentionDays
+      toFieldPath: spec.forProvider.backupRetentionPeriodInDays
+    
+    # Autonomous-specific configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isFreeTier
+      toFieldPath: spec.forProvider.isFreeTier
+    # Compute count - use computeCount when computeModel is specified
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.cpuCoreCount
+      toFieldPath: spec.forProvider.computeCount
+    # Storage size - only for paid tier (not supported in free tier)
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.dataStorageSizeInTBs
+      toFieldPath: spec.forProvider.dataStorageSizeInTbs
+      policy:
+        fromFieldPath: Optional
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.computeModel
+      toFieldPath: spec.forProvider.computeModel
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isAutoScalingEnabled
+      toFieldPath: spec.forProvider.isAutoScalingEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isAutoScalingForStorageEnabled
+      toFieldPath: spec.forProvider.isAutoScalingForStorageEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.licenseModel
+      toFieldPath: spec.forProvider.licenseModel
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.whitelistedIps
+      toFieldPath: spec.forProvider.whitelistedIps
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isMtlsConnectionRequired
+      toFieldPath: spec.forProvider.isMtlsConnectionRequired
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isDataGuardEnabled
+      toFieldPath: spec.forProvider.isDataGuardEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.isDedicated
+      toFieldPath: spec.forProvider.isDedicated
+    
+    # Private endpoint configuration (optional)
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.subnetId
+      toFieldPath: spec.forProvider.subnetId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.nsgIds
+      toFieldPath: spec.forProvider.nsgIds
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.autonomousConfig.privateEndpointLabel
+      toFieldPath: spec.forProvider.privateEndpointLabel
+    
+    # Export database information to status
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.id
+      toFieldPath: status.databaseId
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionStrings[0].high
+      toFieldPath: status.connectionString
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].sqlDevWebUrl
+      toFieldPath: status.connectionUrls.sqlDevWeb
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].apexUrl
+      toFieldPath: status.connectionUrls.apexUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].machineLearningNotebookUrl
+      toFieldPath: status.connectionUrls.machineLearningNotebookUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].graphStudioUrl
+      toFieldPath: status.connectionUrls.graphStudioUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].mongoDbUrl
+      toFieldPath: status.connectionUrls.mongoDbUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].ordsUrl
+      toFieldPath: status.connectionUrls.ordsUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.connectionUrls[0].databaseTransformsUrl
+      toFieldPath: status.connectionUrls.databaseTransformsUrl
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.state
+      toFieldPath: status.state
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.privateEndpointIp
+      toFieldPath: status.privateEndpointIp
+    # Set ready status based on database state
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.state
+      toFieldPath: status.ready
+      transforms:
+      - type: map
+        map:
+          AVAILABLE: true
+          PROVISIONING: false
+          STOPPING: false
+          STOPPED: false
+          STARTING: false
+          TERMINATING: false
+          TERMINATED: false
+          UNAVAILABLE: false
+          RESTORE_IN_PROGRESS: false
+          RESTORE_FAILED: false
+          BACKUP_IN_PROGRESS: false
+          SCALE_IN_PROGRESS: false
+          AVAILABLE_NEEDS_ATTENTION: true
+          UPDATING: false
+          MAINTENANCE_IN_PROGRESS: false
+          RESTARTING: false
+          RECREATING: false
+          ROLE_CHANGE_IN_PROGRESS: false
+          UPGRADING: false
+          INACCESSIBLE: false
+          STANDBY: false

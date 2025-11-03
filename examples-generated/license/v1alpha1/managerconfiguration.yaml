@@ -1,0 +1,12 @@
+apiVersion: license.oci.upbound.io/v1alpha1
+kind: ManagerConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: license/v1alpha1/managerconfiguration
+  labels:
+    testing.upbound.io/example-name: test_configuration
+  name: test-configuration
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    emailIds: ${var.configuration_email_ids}

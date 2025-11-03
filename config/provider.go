@@ -27,6 +27,7 @@ import (
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
+	"github.com/oracle/provider-oci/config/database"
 	"github.com/oracle/provider-oci/config/dns"
 	"github.com/oracle/provider-oci/config/events"
 	"github.com/oracle/provider-oci/config/filestorage"
@@ -60,10 +61,14 @@ var providerMetadata string
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithRootGroup("oci.upbound.io"),
-		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		// Enable automatic discovery of ALL resources from Terraform provider
+		// This will include all 853+ resources instead of just the manually configured ones
+		ujconfig.WithIncludeList([]string{".+"}), // Include all resources by default
+		ujconfig.WithSkipList(ProblematicResources()), // Skip known problematic resources
 		ujconfig.WithDefaultResourceOptions(
 			GroupKindOverrides(),
 			ExternalNameConfigurations(),
+			AutoExternalNameConfiguration(), // Automatic external name for unconfigured resources
 		),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithMainTemplate(hack.MainTemplate),
@@ -74,6 +79,7 @@ func GetProvider() *ujconfig.Provider {
 		objectstorage.Configure,
 		identity.Configure,
 		core.Configure,
+		database.Configure, // NEW: Database service with 122 resources
 		kms.Configure,
 		containerengine.Configure,
 		artifacts.Configure,

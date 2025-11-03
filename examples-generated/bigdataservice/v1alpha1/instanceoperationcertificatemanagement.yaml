@@ -1,0 +1,30 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: InstanceOperationCertificateManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/instanceoperationcertificatemanagement
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_operation_certificate_managements_management
+  name: test-bds-instance-operation-certificate-managements-management
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    enableOperationCertificateManagement: ${var.enable_operation_certificate_management}
+    hostCertDetails:
+    - certificate: ${var.bds_instance_operation_certificate_managements_management_host_cert_details_certificate}
+      hostName: ${var.bds_instance_operation_certificate_managements_management_host_cert_details_host_name}
+      privateKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    renewOperationCertificateManagement: ${var.renew_operation_certificate_management}
+    rootCertificate: ${var.bds_instance_operation_certificate_managements_management_root_certificate}
+    serverKeyPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    services: ${var.bds_instance_operation_certificate_managements_management_services}

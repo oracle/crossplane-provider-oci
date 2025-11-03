@@ -1,0 +1,708 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: dbsystemsupgrades.database.oci.upbound.io
+spec:
+  group: database.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DbSystemsUpgrade
+    listKind: DbSystemsUpgradeList
+    plural: dbsystemsupgrades
+    singular: dbsystemsupgrade
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DbSystemsUpgrade is the Schema for the DbSystemsUpgrades API.
+          Provides the Db Systems Upgrade resource in Oracle Cloud Infrastructure
+          Database service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DbSystemsUpgradeSpec defines the desired state of DbSystemsUpgrade
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  action:
+                    description: The operating system upgrade action.
+                    type: string
+                  dbSystemId:
+                    description: The DB system OCID.
+                    type: string
+                  isSnapshotRetentionDaysForceUpdated:
+                    description: If true, rollback time is updated even if operating
+                      system upgrade history contains errors.
+                    type: boolean
+                  newGiVersion:
+                    description: A valid Oracle Grid Infrastructure (GI) software
+                      version.
+                    type: string
+                  newOsVersion:
+                    description: The Oracle Database version of the DB system.
+                    type: string
+                  snapshotRetentionPeriodInDays:
+                    description: The retention period, in days, for the snapshot that
+                      allows you to perform a rollback of the upgrade operation. After
+                      this number of days passes, you cannot roll back the upgrade.
+                    type: number
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  action:
+                    description: The operating system upgrade action.
+                    type: string
+                  dbSystemId:
+                    description: The DB system OCID.
+                    type: string
+                  isSnapshotRetentionDaysForceUpdated:
+                    description: If true, rollback time is updated even if operating
+                      system upgrade history contains errors.
+                    type: boolean
+                  newGiVersion:
+                    description: A valid Oracle Grid Infrastructure (GI) software
+                      version.
+                    type: string
+                  newOsVersion:
+                    description: The Oracle Database version of the DB system.
+                    type: string
+                  snapshotRetentionPeriodInDays:
+                    description: The retention period, in days, for the snapshot that
+                      allows you to perform a rollback of the upgrade operation. After
+                      this number of days passes, you cannot roll back the upgrade.
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.action is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.action)
+                || (has(self.initProvider) && has(self.initProvider.action))'
+            - message: spec.forProvider.dbSystemId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbSystemId)
+                || (has(self.initProvider) && has(self.initProvider.dbSystemId))'
+          status:
+            description: DbSystemsUpgradeStatus defines the observed state of DbSystemsUpgrade.
+            properties:
+              atProvider:
+                properties:
+                  action:
+                    description: The operating system upgrade action.
+                    type: string
+                  availabilityDomain:
+                    description: The name of the availability domain that the DB system
+                      is located in.
+                    type: string
+                  backupNetworkNsgIds:
+                    description: A list of the OCIDs of the network security groups
+                      (NSGs) that the backup network of this DB system belongs to.
+                      Setting this to an empty array after the list is created removes
+                      the resource from all NSGs. For more information about NSGs,
+                      see Security Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  backupSubnetId:
+                    description: The OCID of the backup network subnet the DB system
+                      is associated with. Applicable only to Exadata DB systems.
+                    type: string
+                  clusterName:
+                    description: The cluster name for Exadata and 2-node RAC virtual
+                      machine DB systems. The cluster name must begin with an alphabetic
+                      character, and may contain hyphens (-). Underscores (_) are
+                      not permitted. The cluster name can be no longer than 11 characters
+                      and is not case sensitive.
+                    type: string
+                  compartmentId:
+                    description: The OCID of the compartment.
+                    type: string
+                  cpuCoreCount:
+                    description: The number of CPU cores enabled on the DB system.
+                    type: number
+                  dataStoragePercentage:
+                    description: The percentage assigned to DATA storage (user data
+                      and database files). The remaining percentage is assigned to
+                      RECO storage (database redo logs, archive logs, and recovery
+                      manager backups). Accepted values are 40 and 80. The default
+                      is 80 percent assigned to DATA storage. Not applicable for virtual
+                      machine DB systems.
+                    type: number
+                  dataStorageSizeInGb:
+                    description: The data storage size, in gigabytes, that is currently
+                      available to the DB system. Applies only for virtual machine
+                      DB systems.
+                    type: number
+                  databaseEdition:
+                    description: The Oracle Database edition that applies to all the
+                      databases on the DB system.
+                    type: string
+                  dbSystemId:
+                    description: The DB system OCID.
+                    type: string
+                  dbSystemOptions:
+                    description: The DB system options.
+                    items:
+                      properties:
+                        storageManagement:
+                          description: The storage option used in DB system. ASM -
+                            Automatic storage management LVM - Logical Volume management
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diskRedundancy:
+                    description: The type of redundancy configured for the DB system.
+                      NORMAL is 2-way redundancy. HIGH is 3-way redundancy.
+                    type: string
+                  displayName:
+                    description: The user-friendly name for the DB system. The name
+                      does not have to be unique.
+                    type: string
+                  domain:
+                    description: The domain name for the DB system.
+                    type: string
+                  faultDomains:
+                    description: List of the Fault Domains in which this DB system
+                      is provisioned.
+                    items:
+                      type: string
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Free-form tags for this resource. Each tag is a
+                      simple key-value pair with no predefined name, type, or namespace.
+                      For more information, see Resource Tags.  Example: {"Department":
+                      "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  hostname:
+                    description: The hostname for the DB system.
+                    type: string
+                  id:
+                    description: The OCID of the DB system.
+                    type: string
+                  iormConfigCache:
+                    description: The IORM settings of the Exadata DB system.
+                    items:
+                      properties:
+                        dbPlans:
+                          description: An array of IORM settings for all the database
+                            in the Exadata DB system.
+                          items:
+                            properties:
+                              dbName:
+                                description: The database name. For the default DbPlan,
+                                  the dbName is default.
+                                type: string
+                              flashCacheLimit:
+                                description: The flash cache limit for this database.
+                                  This value is internally configured based on the
+                                  share value assigned to the database.
+                                type: string
+                              share:
+                                description: The relative priority of this database.
+                                type: number
+                            type: object
+                          type: array
+                        lifecycleDetails:
+                          description: Additional information about the current lifecycleState.
+                          type: string
+                        objective:
+                          description: The current value for the IORM objective. The
+                            default is AUTO.
+                          type: string
+                        state:
+                          description: The current state of IORM configuration for
+                            the Exadata DB system.
+                          type: string
+                      type: object
+                    type: array
+                  isSnapshotRetentionDaysForceUpdated:
+                    description: If true, rollback time is updated even if operating
+                      system upgrade history contains errors.
+                    type: boolean
+                  kmsKeyId:
+                    description: The OCID of the key container that is used as the
+                      master encryption key in database transparent data encryption
+                      (TDE) operations.
+                    type: string
+                  lastMaintenanceRunId:
+                    description: The OCID of the last maintenance run.
+                    type: string
+                  lastPatchHistoryEntryId:
+                    description: The OCID of the last patch history. This value is
+                      updated as soon as a patch operation starts.
+                    type: string
+                  licenseModel:
+                    description: The Oracle license model that applies to all the
+                      databases on the DB system. The default is LICENSE_INCLUDED.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycleState.
+                    type: string
+                  listenerPort:
+                    description: The port number configured for the listener on the
+                      DB system.
+                    type: number
+                  maintenanceWindow:
+                    description: The scheduling details for the quarterly maintenance
+                      window. Patching and system updates take place during the maintenance
+                      window.
+                    items:
+                      properties:
+                        daysOfWeek:
+                          description: Days during the week when maintenance should
+                            be performed.
+                          items:
+                            properties:
+                              name:
+                                description: Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        hoursOfDay:
+                          description: The window of hours during the day when maintenance
+                            should be performed. The window is a 4 hour slot. Valid
+                            values are
+                          items:
+                            type: number
+                          type: array
+                        leadTimeInWeeks:
+                          description: Lead time window allows user to set a lead
+                            time to prepare for a down time. The lead time is in weeks
+                            and valid value is between 1 to 4.
+                          type: number
+                        months:
+                          description: Months during the year when maintenance should
+                            be performed.
+                          items:
+                            properties:
+                              name:
+                                description: Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        preference:
+                          description: The maintenance window scheduling preference.
+                          type: string
+                        weeksOfMonth:
+                          description: Weeks during the month when maintenance should
+                            be performed. Weeks start on the 1st, 8th, 15th, and 22nd
+                            days of the month, and have a duration of 7 days. Weeks
+                            start and end based on calendar dates, not days of the
+                            week. For example, to allow maintenance during the 2nd
+                            week of the month (from the 8th day to the 14th day of
+                            the month), use the value 2. Maintenance cannot be scheduled
+                            for the fifth week of months that contain more than 28
+                            days. Note that this parameter works in conjunction with
+                            the  daysOfWeek and hoursOfDay parameters to allow you
+                            to specify specific days of the week and hours that maintenance
+                            will be performed.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  newGiVersion:
+                    description: A valid Oracle Grid Infrastructure (GI) software
+                      version.
+                    type: string
+                  newOsVersion:
+                    description: The Oracle Database version of the DB system.
+                    type: string
+                  nextMaintenanceRunId:
+                    description: The OCID of the next maintenance run.
+                    type: string
+                  nodeCount:
+                    description: The number of nodes in the DB system. For RAC DB
+                      systems, the value is greater than 1.
+                    type: number
+                  nsgIds:
+                    description: 'A list of the OCIDs of the network security groups
+                      (NSGs) that this resource belongs to. Setting this to an empty
+                      array after the list is created removes the resource from all
+                      NSGs. For more information about NSGs, see Security Rules. NsgIds
+                      restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  pointInTimeDataDiskCloneTimestamp:
+                    description: The point in time for a cloned database system when
+                      the data disks were cloned from the source database system,
+                      as described in RFC 3339.
+                    type: string
+                  recoStorageSizeInGb:
+                    description: The RECO/REDO storage size, in gigabytes, that is
+                      currently allocated to the DB system. Applies only for virtual
+                      machine DB systems.
+                    type: number
+                  scanDnsName:
+                    description: The FQDN of the DNS record for the SCAN IP addresses
+                      that are associated with the DB system.
+                    type: string
+                  scanDnsRecordId:
+                    description: The OCID of the DNS record for the SCAN IP addresses
+                      that are associated with the DB system.
+                    type: string
+                  scanIpIds:
+                    description: The OCID of the Single Client Access Name (SCAN)
+                      IP addresses associated with the DB system. SCAN IP addresses
+                      are typically used for load balancing and are not assigned to
+                      any interface. Oracle Clusterware directs the requests to the
+                      appropriate nodes in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  shape:
+                    description: The shape of the DB system. The shape determines
+                      resources to allocate to the DB system.
+                    type: string
+                  snapshotRetentionPeriodInDays:
+                    description: The retention period, in days, for the snapshot that
+                      allows you to perform a rollback of the upgrade operation. After
+                      this number of days passes, you cannot roll back the upgrade.
+                    type: number
+                  sourceDbSystemId:
+                    description: The OCID of the DB system.
+                    type: string
+                  sparseDiskgroup:
+                    description: True, if Sparse Diskgroup is configured for Exadata
+                      dbsystem, False, if Sparse diskgroup was not configured.
+                    type: boolean
+                  sshPublicKeys:
+                    description: The public key portion of one or more key pairs used
+                      for SSH access to the DB system.
+                    items:
+                      type: string
+                    type: array
+                  state:
+                    description: The current state of IORM configuration for the Exadata
+                      DB system.
+                    type: string
+                  subnetId:
+                    description: The OCID of the subnet the DB system is associated
+                      with.
+                    type: string
+                  timeCreated:
+                    description: The date and time the DB system was created.
+                    type: string
+                  timeZone:
+                    description: The time zone of the DB system. For details, see
+                      DB System Time Zones.
+                    type: string
+                  version:
+                    description: The Oracle Database version of the DB system.
+                    type: string
+                  vipIds:
+                    description: The OCID of the virtual IP (VIP) addresses associated
+                      with the DB system. The Cluster Ready Services (CRS) creates
+                      and maintains one VIP address for each node in the DB system
+                      to enable failover. If one node fails, the VIP is reassigned
+                      to another active node in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  zoneId:
+                    description: The OCID of the zone the DB system is associated
+                      with.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

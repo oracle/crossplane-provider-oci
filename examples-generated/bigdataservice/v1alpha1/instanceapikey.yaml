@@ -1,0 +1,19 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: InstanceApiKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/instanceapikey
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_api_key
+  name: test-bds-instance-api-key
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    defaultRegion: ${var.bds_instance_api_key_default_region}
+    domainOcid: ${var.bds_instance_api_key_domain_ocid}
+    keyAlias: ${var.bds_instance_api_key_key_alias}
+    passphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    userId: ${oci_identity_user.test_user.id}

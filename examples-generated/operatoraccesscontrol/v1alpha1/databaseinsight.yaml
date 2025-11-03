@@ -1,0 +1,62 @@
+apiVersion: operatoraccesscontrol.oci.upbound.io/v1alpha1
+kind: DatabaseInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/databaseinsight
+  labels:
+    testing.upbound.io/example-name: test_database_insight
+  name: test-database-insight
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    connectionCredentialDetails:
+    - credentialSourceName: ${var.database_insight_connection_credential_details_credential_source_name}
+      credentialType: ${var.database_insight_connection_credential_details_credential_type}
+      namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      role: ${var.database_insight_connection_credential_details_role}
+      userName: ${oci_identity_user.test_user.name}
+      wallet_secret_id: ${oci_vault_secret.test_secret.id}
+    connectionDetails:
+    - hostName: ${var.database_insight_connection_details_host_name}
+      hosts:
+      - hostIp: ${var.database_insight_connection_details_hosts_host_ip}
+        port: ${var.database_insight_connection_details_hosts_port}
+      port: ${var.database_insight_connection_details_port}
+      protocol: ${var.database_insight_connection_details_protocol}
+      serviceName: ${oci_core_service.test_service.name}
+    credentialDetails:
+    - credentialSourceName: ${var.database_insight_credential_details_credential_source_name}
+      credentialType: ${var.database_insight_credential_details_credential_type}
+      namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      role: ${var.database_insight_credential_details_role}
+      userName: ${oci_identity_user.test_user.name}
+      walletSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+    databaseConnectorId: ${oci_opsi_database_connector.test_database_connector.id}
+    databaseId: ${oci_database_database.test_database.id}
+    databaseResourceType: ${var.database_insight_database_resource_type}
+    dbmPrivateEndpointId: ${oci_dataflow_private_endpoint.test_private_endpoint.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentType: ${var.database_insight_deployment_type}
+    enterpriseManagerBridgeId: ${oci_opsi_enterprise_manager_bridge.test_enterprise_manager_bridge.id}
+    enterpriseManagerEntityIdentifier: ${var.database_insight_enterprise_manager_entity_identifier}
+    enterpriseManagerIdentifier: ${var.database_insight_enterprise_manager_identifier}
+    entitySource: ${var.database_insight_entity_source}
+    exadataInsightId: ${oci_opsi_exadata_insight.test_exadata_insight.id}
+    freeformTags:
+      bar-key: value
+    managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+    opsiPrivateEndpointId: ${oci_dataflow_private_endpoint.test_private_endpoint.id}
+    serviceName: ${oci_core_service.test_service.name}
+    systemTags: ${var.database_insight_system_tags}

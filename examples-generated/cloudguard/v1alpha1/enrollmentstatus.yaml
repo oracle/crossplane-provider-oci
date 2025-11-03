@@ -1,0 +1,12 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: EnrollmentStatus
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/enrollmentstatus
+  labels:
+    testing.upbound.io/example-name: test_enrollment_status
+  name: test-enrollment-status
+spec:
+  forProvider:
+    enrollmentStatusId: ${oci_optimizer_enrollment_status.test_enrollment_status.id}
+    status: ${var.enrollment_status_status}

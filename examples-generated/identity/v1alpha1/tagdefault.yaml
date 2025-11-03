@@ -1,0 +1,14 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: TagDefault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/tagdefault
+  labels:
+    testing.upbound.io/example-name: test_tag_default
+  name: test-tag-default
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    isRequired: ${var.tag_default_is_required}
+    tagDefinitionId: ${oci_identity_tag_definition.test_tag_definition.id}
+    value: ${var.tag_default_value}

@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  package: iad.ocir.io/iddevjmhjw0n/provider-oci-kms:v0.0.13-test
+  package: iad.ocir.io/iddevjmhjw0n/provider-oci-kms:v0.0.1-auto-discovery
   packagePullPolicy: IfNotPresent
   revisionActivationPolicy: Automatic
   revisionHistoryLimit: 1

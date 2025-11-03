@@ -1,0 +1,12 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceAttachProfileManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstanceattachprofilemanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_attach_profile_management
+  name: test-managed-instance-attach-profile-management
+spec:
+  forProvider:
+    managedInstanceId: ${oci_os_management_hub_managed_instance.test_managed_instance.id}
+    profileId: ${oci_os_management_hub_profile.test_profile.id}

@@ -1,0 +1,13 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: GateConnectionAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/gateconnectionassignment
+  labels:
+    testing.upbound.io/example-name: test_connection_assignment
+  name: test-connection-assignment
+spec:
+  forProvider:
+    connectionId: ${oci_golden_gate_connection.test_connection.id}
+    deploymentId: ${oci_golden_gate_deployment.test_deployment.id}
+    isLockOverride: ${var.connection_assignment_is_lock_override}

@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousContainerDatabaseDataguardAssociationOperation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabasedataguardassociationoperation
+  labels:
+    testing.upbound.io/example-name: switchover
+  name: switchover
+spec:
+  forProvider:
+    autonomousContainerDatabaseDataguardAssociationId: ${data.oci_database_autonomous_container_database_dataguard_associations.dataguard_associations.autonomous_container_database_dataguard_associations[0]["id"]}
+    autonomousContainerDatabaseId: ${data.oci_database_autonomous_container_database_dataguard_associations.dataguard_associations.autonomous_container_database_dataguard_associations[0]["autonomous_container_database_id"]}
+    operation: switchover

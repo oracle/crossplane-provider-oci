@@ -1,0 +1,23 @@
+apiVersion: service.oci.upbound.io/v1alpha1
+kind: CatalogPrivateApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: service/v1alpha1/catalogprivateapplication
+  labels:
+    testing.upbound.io/example-name: test_private_application
+  name: test-private-application
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.private_application_display_name}
+    freeformTags:
+      bar-key: value
+    logoFileBase64Encoded: ${var.private_application_logo_file_base64encoded}
+    longDescription: ${var.private_application_long_description}
+    packageDetails:
+    - packageType: ${var.private_application_package_details_package_type}
+      version: ${var.private_application_package_details_version}
+      zipFileBase64Encoded: ${var.private_application_package_details_zip_file_base64encoded}
+    shortDescription: ${var.private_application_short_description}

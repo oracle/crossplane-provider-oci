@@ -1,0 +1,12 @@
+apiVersion: emaildataplane.oci.upbound.io/v1alpha1
+kind: Suppression
+metadata:
+  annotations:
+    meta.upbound.io/example-id: emaildataplane/v1alpha1/suppression
+  labels:
+    testing.upbound.io/example-name: test_suppression
+  name: test-suppression
+spec:
+  forProvider:
+    compartmentId: ${var.tenancy_ocid}
+    emailAddress: ${var.suppression_email_address}

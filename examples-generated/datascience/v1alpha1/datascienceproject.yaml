@@ -1,0 +1,17 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: DatascienceProject
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/datascienceproject
+  labels:
+    testing.upbound.io/example-name: test_project
+  name: test-project
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.project_description}
+    displayName: ${var.project_display_name}
+    freeformTags:
+      Department: Finance

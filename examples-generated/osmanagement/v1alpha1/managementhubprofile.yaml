@@ -1,0 +1,27 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubProfile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubprofile
+  labels:
+    testing.upbound.io/example-name: test_profile
+  name: test-profile
+spec:
+  forProvider:
+    archType: ${var.profile_arch_type}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.profile_description}
+    displayName: ${var.profile_display_name}
+    freeformTags:
+      Department: Finance
+    isDefaultProfile: ${var.profile_is_default_profile}
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}
+    managedInstanceGroupId: ${oci_os_management_hub_managed_instance_group.test_managed_instance_group.id}
+    managementStationId: ${oci_os_management_hub_management_station.test_management_station.id}
+    osFamily: ${var.profile_os_family}
+    profileType: ${var.profile_profile_type}
+    registrationType: ${var.profile_registration_type}
+    softwareSourceIds: ${var.profile_software_source_ids}
+    vendorName: ${var.profile_vendor_name}

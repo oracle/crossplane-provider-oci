@@ -1,0 +1,26 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: IdentityDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/identitydomain
+  labels:
+    testing.upbound.io/example-name: test_domain
+  name: test-domain
+spec:
+  forProvider:
+    adminEmail: ${var.domain_admin_email}
+    adminFirstName: ${var.domain_admin_first_name}
+    adminLastName: ${var.domain_admin_last_name}
+    adminUserName: ${oci_identity_user.test_user.name}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.domain_description}
+    displayName: ${var.domain_display_name}
+    freeformTags:
+      Department: Finance
+    homeRegion: ${var.domain_home_region}
+    isHiddenOnLogin: ${var.domain_is_hidden_on_login}
+    isNotificationBypassed: ${var.domain_is_notification_bypassed}
+    isPrimaryEmailRequired: ${var.domain_is_primary_email_required}
+    licenseType: ${var.domain_license_type}

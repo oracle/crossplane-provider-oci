@@ -1,0 +1,14 @@
+apiVersion: announcements.oci.upbound.io/v1alpha1
+kind: ServiceAnnouncementSubscriptionsFilterGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: announcements/v1alpha1/serviceannouncementsubscriptionsfiltergroup
+  labels:
+    testing.upbound.io/example-name: test_announcement_subscriptions_filter_group
+  name: test-announcement-subscriptions-filter-group
+spec:
+  forProvider:
+    announcementSubscriptionId: ${oci_announcements_service_announcement_subscription.test_announcement_subscription.id}
+    filters:
+    - type: ${var.announcement_subscriptions_filter_group_filters_type}
+      value: ${var.announcement_subscriptions_filter_group_filters_value}

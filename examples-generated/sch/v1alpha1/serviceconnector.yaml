@@ -1,0 +1,67 @@
+apiVersion: sch.oci.upbound.io/v1alpha1
+kind: ServiceConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sch/v1alpha1/serviceconnector
+  labels:
+    testing.upbound.io/example-name: test_service_connector
+  name: test-service-connector
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.service_connector_description}
+    displayName: ${var.service_connector_display_name}
+    freeformTags:
+      bar-key: value
+    source:
+    - configMap: ${var.service_connector_source_config_map}
+      cursor:
+      - kind: ${var.service_connector_source_cursor_kind}
+      kind: ${var.service_connector_source_kind}
+      logSources:
+      - compartmentId: ${var.compartment_id}
+        logGroupId: ${oci_logging_log_group.test_log_group.id}
+        logId: ${oci_logging_log.test_log.id}
+      monitoringSources:
+      - compartmentId: ${var.compartment_id}
+        namespaceDetails:
+        - kind: ${var.service_connector_source_monitoring_sources_namespace_details_kind}
+          namespaces:
+          - metrics:
+            - kind: ${var.service_connector_source_monitoring_sources_namespace_details_namespaces_metrics_kind}
+            namespace: ${var.service_connector_source_monitoring_sources_namespace_details_namespaces_namespace}
+      pluginName: ${var.service_connector_source_plugin_name}
+      streamId: ${oci_streaming_stream.test_stream.id}
+    target:
+    - batchRolloverSizeInMbs: ${var.service_connector_target_batch_rollover_size_in_mbs}
+      batchRolloverTimeInMs: ${var.service_connector_target_batch_rollover_time_in_ms}
+      batchSizeInKbs: ${var.service_connector_target_batch_size_in_kbs}
+      batchSizeInNum: ${var.service_connector_target_batch_size_in_num}
+      batchTimeInSec: ${var.service_connector_target_batch_time_in_sec}
+      bucket: ${var.service_connector_target_bucket}
+      compartmentId: ${var.compartment_id}
+      dimensions:
+      - dimensionValue:
+        - kind: ${var.service_connector_target_dimensions_dimension_value_kind}
+          path: ${var.service_connector_target_dimensions_dimension_value_path}
+          value: ${var.service_connector_target_dimensions_dimension_value_value}
+        name: ${var.service_connector_target_dimensions_name}
+      enableFormattedMessaging: ${var.service_connector_target_enable_formatted_messaging}
+      functionId: ${oci_functions_function.test_function.id}
+      kind: ${var.service_connector_target_kind}
+      logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logSourceIdentifier: ${var.service_connector_target_log_source_identifier}
+      metric: ${var.service_connector_target_metric}
+      metricNamespace: ${var.service_connector_target_metric_namespace}
+      namespace: ${var.service_connector_target_namespace}
+      objectNamePrefix: ${var.service_connector_target_object_name_prefix}
+      streamId: ${oci_streaming_stream.test_stream.id}
+      topicId: ${oci_ons_notification_topic.test_notification_topic.id}
+    tasks:
+    - batchSizeInKbs: ${var.service_connector_tasks_batch_size_in_kbs}
+      batchTimeInSec: ${var.service_connector_tasks_batch_time_in_sec}
+      condition: ${var.service_connector_tasks_condition}
+      functionId: ${oci_functions_function.test_function.id}
+      kind: ${var.service_connector_tasks_kind}

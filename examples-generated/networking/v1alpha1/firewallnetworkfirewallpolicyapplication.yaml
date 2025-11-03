@@ -1,0 +1,14 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: FirewallNetworkFirewallPolicyApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/firewallnetworkfirewallpolicyapplication
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_application
+  name: test-network-firewall-policy-application
+spec:
+  forProvider:
+    icmpCode: ${var.network_firewall_policy_application_icmp_code}
+    icmpType: ${var.network_firewall_policy_application_icmp_type}
+    networkFirewallPolicyId: ${oci_network_firewall_network_firewall_policy.test_network_firewall_policy.id}
+    type: ${var.network_firewall_policy_application_type}

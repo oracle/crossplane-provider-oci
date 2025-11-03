@@ -1,0 +1,14 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringMonitoredResourcesAssociateMonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringmonitoredresourcesassociatemonitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_associate_monitored_resource
+  name: test-monitored-resources-associate-monitored-resource
+spec:
+  forProvider:
+    associationType: ${var.monitored_resources_associate_monitored_resource_association_type}
+    compartmentId: ${var.compartment_id}
+    destinationResourceId: ${oci_stack_monitoring_destination_resource.test_destination_resource.id}
+    sourceResourceId: ${oci_stack_monitoring_source_resource.test_source_resource.id}

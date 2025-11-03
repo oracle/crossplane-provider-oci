@@ -1,0 +1,12 @@
+apiVersion: digitalassistant.oci.upbound.io/v1alpha1
+kind: PrivateEndpointAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: digitalassistant/v1alpha1/privateendpointattachment
+  labels:
+    testing.upbound.io/example-name: test_oda_private_endpoint_attachment
+  name: test-oda-private-endpoint-attachment
+spec:
+  forProvider:
+    odaInstanceId: ${oci_oda_oda_instance.test_oda_instance.id}
+    odaPrivateEndpointId: ${oci_oda_oda_private_endpoint.test_oda_private_endpoint.id}

@@ -1,0 +1,14 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: GateDeploymentCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/gatedeploymentcertificate
+  labels:
+    testing.upbound.io/example-name: test_deployment_certificate
+  name: test-deployment-certificate
+spec:
+  forProvider:
+    certificateContent: ${var.deployment_certificate_certificate_content}
+    deploymentId: ${oci_golden_gate_deployment.test_deployment.id}
+    isLockOverride: ${var.deployment_certificate_is_lock_override}
+    key: ${var.deployment_certificate_key}

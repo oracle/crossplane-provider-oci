@@ -42,95 +42,6 @@ type EgressSecurityRulesIcmpOptionsParameters struct {
 	Type *float64 `json:"type" tf:"type,omitempty"`
 }
 
-type EgressSecurityRulesInitParameters struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	IcmpOptions []EgressSecurityRulesIcmpOptionsInitParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	TCPOptions []EgressSecurityRulesTCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	UDPOptions []EgressSecurityRulesUDPOptionsInitParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
-type EgressSecurityRulesObservation struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
-	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	IcmpOptions []EgressSecurityRulesIcmpOptionsObservation `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	TCPOptions []EgressSecurityRulesTCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	UDPOptions []EgressSecurityRulesUDPOptionsObservation `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
-type EgressSecurityRulesParameters struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
-	// +kubebuilder:validation:Optional
-	Destination *string `json:"destination" tf:"destination,omitempty"`
-
-	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
-	// +kubebuilder:validation:Optional
-	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	// +kubebuilder:validation:Optional
-	IcmpOptions []EgressSecurityRulesIcmpOptionsParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	// +kubebuilder:validation:Optional
-	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	// +kubebuilder:validation:Optional
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	// +kubebuilder:validation:Optional
-	TCPOptions []EgressSecurityRulesTCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	// +kubebuilder:validation:Optional
-	UDPOptions []EgressSecurityRulesUDPOptionsParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
 type EgressSecurityRulesTCPOptionsInitParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
@@ -140,7 +51,7 @@ type EgressSecurityRulesTCPOptionsInitParameters struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 
 	// (Updatable)
-	SourcePortRange []TCPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []EgressSecurityRulesTCPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
 }
 
 type EgressSecurityRulesTCPOptionsObservation struct {
@@ -152,7 +63,7 @@ type EgressSecurityRulesTCPOptionsObservation struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 
 	// (Updatable)
-	SourcePortRange []TCPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []EgressSecurityRulesTCPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
 }
 
 type EgressSecurityRulesTCPOptionsParameters struct {
@@ -167,7 +78,36 @@ type EgressSecurityRulesTCPOptionsParameters struct {
 
 	// (Updatable)
 	// +kubebuilder:validation:Optional
-	SourcePortRange []TCPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []EgressSecurityRulesTCPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+}
+
+type EgressSecurityRulesTCPOptionsSourcePortRangeInitParameters struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
+}
+
+type EgressSecurityRulesTCPOptionsSourcePortRangeObservation struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
+}
+
+type EgressSecurityRulesTCPOptionsSourcePortRangeParameters struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	// +kubebuilder:validation:Optional
+	Max *float64 `json:"max" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	// +kubebuilder:validation:Optional
+	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
 type EgressSecurityRulesUDPOptionsInitParameters struct {
@@ -238,163 +178,6 @@ type EgressSecurityRulesUDPOptionsSourcePortRangeParameters struct {
 	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
-type IngressSecurityRulesIcmpOptionsInitParameters struct {
-
-	// (Updatable) The ICMP code .
-	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (Updatable) The ICMP type.
-	Type *float64 `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type IngressSecurityRulesIcmpOptionsObservation struct {
-
-	// (Updatable) The ICMP code .
-	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (Updatable) The ICMP type.
-	Type *float64 `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type IngressSecurityRulesIcmpOptionsParameters struct {
-
-	// (Updatable) The ICMP code .
-	// +kubebuilder:validation:Optional
-	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
-
-	// (Updatable) The ICMP type.
-	// +kubebuilder:validation:Optional
-	Type *float64 `json:"type" tf:"type,omitempty"`
-}
-
-type IngressSecurityRulesInitParameters struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	IcmpOptions []IngressSecurityRulesIcmpOptionsInitParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-
-	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
-	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	TCPOptions []IngressSecurityRulesTCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	UDPOptions []IngressSecurityRulesUDPOptionsInitParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
-type IngressSecurityRulesObservation struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	IcmpOptions []IngressSecurityRulesIcmpOptionsObservation `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-
-	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
-	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	TCPOptions []IngressSecurityRulesTCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	UDPOptions []IngressSecurityRulesUDPOptionsObservation `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
-type IngressSecurityRulesParameters struct {
-
-	// (Updatable) An optional description of your choice for the rule.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
-	// +kubebuilder:validation:Optional
-	IcmpOptions []IngressSecurityRulesIcmpOptionsParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
-
-	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
-	// +kubebuilder:validation:Optional
-	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
-
-	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
-	// +kubebuilder:validation:Optional
-	Source *string `json:"source" tf:"source,omitempty"`
-
-	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
-	// +kubebuilder:validation:Optional
-	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
-
-	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
-	// +kubebuilder:validation:Optional
-	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
-
-	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
-	// +kubebuilder:validation:Optional
-	TCPOptions []IngressSecurityRulesTCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
-
-	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
-	// +kubebuilder:validation:Optional
-	UDPOptions []IngressSecurityRulesUDPOptionsParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
-}
-
-type IngressSecurityRulesTCPOptionsInitParameters struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
-
-	// (Updatable)
-	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
-}
-
-type IngressSecurityRulesTCPOptionsObservation struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
-
-	// (Updatable)
-	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
-}
-
-type IngressSecurityRulesTCPOptionsParameters struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	// +kubebuilder:validation:Optional
-	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	// +kubebuilder:validation:Optional
-	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
-
-	// (Updatable)
-	// +kubebuilder:validation:Optional
-	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
-}
-
 type IngressSecurityRulesTCPOptionsSourcePortRangeInitParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
@@ -424,7 +207,214 @@ type IngressSecurityRulesTCPOptionsSourcePortRangeParameters struct {
 	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsInitParameters struct {
+type SecurityListEgressSecurityRulesInitParameters struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
+	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	IcmpOptions []EgressSecurityRulesIcmpOptionsInitParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	TCPOptions []EgressSecurityRulesTCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	UDPOptions []EgressSecurityRulesUDPOptionsInitParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListEgressSecurityRulesObservation struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
+	Destination *string `json:"destination,omitempty" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	IcmpOptions []EgressSecurityRulesIcmpOptionsObservation `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	TCPOptions []EgressSecurityRulesTCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	UDPOptions []EgressSecurityRulesUDPOptionsObservation `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListEgressSecurityRulesParameters struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet originating from the instance can go to.
+	// +kubebuilder:validation:Optional
+	Destination *string `json:"destination" tf:"destination,omitempty"`
+
+	// (Updatable) Type of destination for the rule. The default is CIDR_BLOCK.
+	// +kubebuilder:validation:Optional
+	DestinationType *string `json:"destinationType,omitempty" tf:"destination_type,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	// +kubebuilder:validation:Optional
+	IcmpOptions []EgressSecurityRulesIcmpOptionsParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	// +kubebuilder:validation:Optional
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	// +kubebuilder:validation:Optional
+	TCPOptions []EgressSecurityRulesTCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	// +kubebuilder:validation:Optional
+	UDPOptions []EgressSecurityRulesUDPOptionsParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesIcmpOptionsInitParameters struct {
+
+	// (Updatable) The ICMP code .
+	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
+
+	// (Updatable) The ICMP type.
+	Type *float64 `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesIcmpOptionsObservation struct {
+
+	// (Updatable) The ICMP code .
+	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
+
+	// (Updatable) The ICMP type.
+	Type *float64 `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesIcmpOptionsParameters struct {
+
+	// (Updatable) The ICMP code .
+	// +kubebuilder:validation:Optional
+	Code *float64 `json:"code,omitempty" tf:"code,omitempty"`
+
+	// (Updatable) The ICMP type.
+	// +kubebuilder:validation:Optional
+	Type *float64 `json:"type" tf:"type,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesInitParameters struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	IcmpOptions []SecurityListIngressSecurityRulesIcmpOptionsInitParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	TCPOptions []SecurityListIngressSecurityRulesTCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	UDPOptions []SecurityListIngressSecurityRulesUDPOptionsInitParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesObservation struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	IcmpOptions []SecurityListIngressSecurityRulesIcmpOptionsObservation `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	TCPOptions []SecurityListIngressSecurityRulesTCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	UDPOptions []SecurityListIngressSecurityRulesUDPOptionsObservation `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesParameters struct {
+
+	// (Updatable) An optional description of your choice for the rule.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (Updatable) Optional and valid only for ICMP and ICMPv6. Use to specify a particular ICMP type and code as defined in:
+	// +kubebuilder:validation:Optional
+	IcmpOptions []SecurityListIngressSecurityRulesIcmpOptionsParameters `json:"icmpOptions,omitempty" tf:"icmp_options,omitempty"`
+
+	// (Updatable) The transport protocol. Specify either all or an IPv4 protocol number as defined in Protocol Numbers. Options are supported only for ICMP ("1"), TCP ("6"), UDP ("17"), and ICMPv6 ("58").
+	// +kubebuilder:validation:Optional
+	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
+
+	// (Updatable) Conceptually, this is the range of IP addresses that a packet coming into the instance can come from.
+	// +kubebuilder:validation:Optional
+	Source *string `json:"source" tf:"source,omitempty"`
+
+	// (Updatable) Type of source for the rule. The default is CIDR_BLOCK.
+	// +kubebuilder:validation:Optional
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// (Updatable) A stateless rule allows traffic in one direction. Remember to add a corresponding stateless rule in the other direction if you need to support bidirectional traffic. For example, if egress traffic allows TCP destination port 80, there should be an ingress rule to allow TCP source port 80. Defaults to false, which means the rule is stateful and a corresponding rule is not necessary for bidirectional traffic.
+	// +kubebuilder:validation:Optional
+	Stateless *bool `json:"stateless,omitempty" tf:"stateless,omitempty"`
+
+	// (Updatable) Optional and valid only for TCP. Use to specify particular destination ports for TCP rules. If you specify TCP as the protocol but omit this object, then all destination ports are allowed.
+	// +kubebuilder:validation:Optional
+	TCPOptions []SecurityListIngressSecurityRulesTCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
+
+	// (Updatable) Optional and valid only for UDP. Use to specify particular destination ports for UDP rules. If you specify UDP as the protocol but omit this object, then all destination ports are allowed.
+	// +kubebuilder:validation:Optional
+	UDPOptions []SecurityListIngressSecurityRulesUDPOptionsParameters `json:"udpOptions,omitempty" tf:"udp_options,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesTCPOptionsInitParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
@@ -433,10 +423,10 @@ type IngressSecurityRulesUDPOptionsInitParameters struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 
 	// (Updatable)
-	SourcePortRange []IngressSecurityRulesUDPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsObservation struct {
+type SecurityListIngressSecurityRulesTCPOptionsObservation struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
@@ -445,10 +435,10 @@ type IngressSecurityRulesUDPOptionsObservation struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 
 	// (Updatable)
-	SourcePortRange []IngressSecurityRulesUDPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsParameters struct {
+type SecurityListIngressSecurityRulesTCPOptionsParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	// +kubebuilder:validation:Optional
@@ -460,10 +450,49 @@ type IngressSecurityRulesUDPOptionsParameters struct {
 
 	// (Updatable)
 	// +kubebuilder:validation:Optional
-	SourcePortRange []IngressSecurityRulesUDPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+	SourcePortRange []IngressSecurityRulesTCPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsSourcePortRangeInitParameters struct {
+type SecurityListIngressSecurityRulesUDPOptionsInitParameters struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
+
+	// (Updatable)
+	SourcePortRange []SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeInitParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesUDPOptionsObservation struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
+
+	// (Updatable)
+	SourcePortRange []SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeObservation `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesUDPOptionsParameters struct {
+
+	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
+	// +kubebuilder:validation:Optional
+	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
+
+	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
+	// +kubebuilder:validation:Optional
+	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
+
+	// (Updatable)
+	// +kubebuilder:validation:Optional
+	SourcePortRange []SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeParameters `json:"sourcePortRange,omitempty" tf:"source_port_range,omitempty"`
+}
+
+type SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeInitParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
@@ -472,7 +501,7 @@ type IngressSecurityRulesUDPOptionsSourcePortRangeInitParameters struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsSourcePortRangeObservation struct {
+type SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeObservation struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
@@ -481,7 +510,7 @@ type IngressSecurityRulesUDPOptionsSourcePortRangeObservation struct {
 	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
 }
 
-type IngressSecurityRulesUDPOptionsSourcePortRangeParameters struct {
+type SecurityListIngressSecurityRulesUDPOptionsSourcePortRangeParameters struct {
 
 	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
 	// +kubebuilder:validation:Optional
@@ -514,14 +543,14 @@ type SecurityListInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) Rules for allowing egress IP packets.
-	EgressSecurityRules []EgressSecurityRulesInitParameters `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
+	EgressSecurityRules []SecurityListEgressSecurityRulesInitParameters `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) Rules for allowing ingress IP packets.
-	IngressSecurityRules []IngressSecurityRulesInitParameters `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
+	IngressSecurityRules []SecurityListIngressSecurityRulesInitParameters `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
 
 	// The OCID of the VCN the security list belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -549,7 +578,7 @@ type SecurityListObservation struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) Rules for allowing egress IP packets.
-	EgressSecurityRules []EgressSecurityRulesObservation `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
+	EgressSecurityRules []SecurityListEgressSecurityRulesObservation `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -559,7 +588,7 @@ type SecurityListObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Updatable) Rules for allowing ingress IP packets.
-	IngressSecurityRules []IngressSecurityRulesObservation `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
+	IngressSecurityRules []SecurityListIngressSecurityRulesObservation `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
 
 	// The security list's current state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -597,7 +626,7 @@ type SecurityListParameters struct {
 
 	// (Updatable) Rules for allowing egress IP packets.
 	// +kubebuilder:validation:Optional
-	EgressSecurityRules []EgressSecurityRulesParameters `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
+	EgressSecurityRules []SecurityListEgressSecurityRulesParameters `json:"egressSecurityRules,omitempty" tf:"egress_security_rules,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -606,7 +635,7 @@ type SecurityListParameters struct {
 
 	// (Updatable) Rules for allowing ingress IP packets.
 	// +kubebuilder:validation:Optional
-	IngressSecurityRules []IngressSecurityRulesParameters `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
+	IngressSecurityRules []SecurityListIngressSecurityRulesParameters `json:"ingressSecurityRules,omitempty" tf:"ingress_security_rules,omitempty"`
 
 	// The OCID of the VCN the security list belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -620,35 +649,6 @@ type SecurityListParameters struct {
 	// Selector for a Vcn in networking to populate vcnId.
 	// +kubebuilder:validation:Optional
 	VcnIDSelector *v1.Selector `json:"vcnIdSelector,omitempty" tf:"-"`
-}
-
-type TCPOptionsSourcePortRangeInitParameters struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
-}
-
-type TCPOptionsSourcePortRangeObservation struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	Max *float64 `json:"max,omitempty" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	Min *float64 `json:"min,omitempty" tf:"min,omitempty"`
-}
-
-type TCPOptionsSourcePortRangeParameters struct {
-
-	// (Updatable) The maximum port number. Must not be lower than the minimum port number. To specify a single port number, set both the min and max to the same value.
-	// +kubebuilder:validation:Optional
-	Max *float64 `json:"max" tf:"max,omitempty"`
-
-	// (Updatable) The minimum port number. Must not be greater than the maximum port number.
-	// +kubebuilder:validation:Optional
-	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
 // SecurityListSpec defines the desired state of SecurityList

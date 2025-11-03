@@ -1,0 +1,30 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsKmsiSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainskmsisetting
+  labels:
+    testing.upbound.io/example-name: test_kmsi_setting
+  name: test-kmsi-setting
+spec:
+  forProvider:
+    attributeSets: []
+    attributes: ""
+    authorization: ${var.kmsi_setting_authorization}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    kmsiFeatureEnabled: ${var.kmsi_setting_kmsi_feature_enabled}
+    kmsiPromptEnabled: ${var.kmsi_setting_kmsi_prompt_enabled}
+    kmsiSettingId: ${oci_identity_domains_kmsi_setting.test_kmsi_setting.id}
+    lastEnabledOn: ${var.kmsi_setting_last_enabled_on}
+    lastUsedValidityInDays: ${var.kmsi_setting_last_used_validity_in_days}
+    maxAllowedSessions: ${var.kmsi_setting_max_allowed_sessions}
+    ocid: ${var.kmsi_setting_ocid}
+    resourceTypeSchemaVersion: ${var.kmsi_setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:KmsiSettings
+    tags:
+    - key: ${var.kmsi_setting_tags_key}
+      value: ${var.kmsi_setting_tags_value}
+    tokenValidityInDays: ${var.kmsi_setting_token_validity_in_days}
+    touPromptDisabled: ${var.kmsi_setting_tou_prompt_disabled}

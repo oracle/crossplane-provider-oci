@@ -1,0 +1,29 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: Profile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/profile
+  labels:
+    testing.upbound.io/example-name: test_profile
+  name: test-profile
+spec:
+  forProvider:
+    aggregationIntervalInDays: ${var.profile_aggregation_interval_in_days}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.profile_description}
+    freeformTags:
+      bar-key: value
+    levelsConfiguration:
+    - items:
+      - level: ${var.profile_levels_configuration_items_level}
+        recommendationId: ${oci_optimizer_recommendation.test_recommendation.id}
+    targetCompartments:
+    - items: ${var.profile_target_compartments_items}
+    targetTags:
+    - items:
+      - tagDefinitionName: ${var.profile_target_tags_items_tag_definition_name}
+        tagNamespaceName: ${var.tag_namespace_name}
+        tagValueType: ${var.profile_target_tags_items_tag_value_type}
+        tagValues: ${var.profile_target_tags_items_tag_values}

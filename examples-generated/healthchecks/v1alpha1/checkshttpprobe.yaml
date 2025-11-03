@@ -1,0 +1,19 @@
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: ChecksHttpProbe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: healthchecks/v1alpha1/checkshttpprobe
+  labels:
+    testing.upbound.io/example-name: test_http_probe
+  name: test-http-probe
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    headers: ${var.http_probe_headers}
+    method: ${var.http_probe_method}
+    path: ${var.http_probe_path}
+    port: ${var.http_probe_port}
+    protocol: ${var.http_probe_protocol}
+    targets: ${var.http_probe_targets}
+    timeoutInSeconds: ${var.http_probe_timeout_in_seconds}
+    vantagePointNames: ${var.http_probe_vantage_point_names}

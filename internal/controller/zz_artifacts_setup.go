@@ -10,6 +10,7 @@ import (
 	"github.com/crossplane/upjet/pkg/controller"
 
 	containerconfiguration "github.com/oracle/provider-oci/internal/controller/artifacts/containerconfiguration"
+	containerimagesignature "github.com/oracle/provider-oci/internal/controller/artifacts/containerimagesignature"
 	containerrepository "github.com/oracle/provider-oci/internal/controller/artifacts/containerrepository"
 	genericartifact "github.com/oracle/provider-oci/internal/controller/artifacts/genericartifact"
 	repository "github.com/oracle/provider-oci/internal/controller/artifacts/repository"
@@ -20,6 +21,7 @@ import (
 func Setup_artifacts(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		containerconfiguration.Setup,
+		containerimagesignature.Setup,
 		containerrepository.Setup,
 		genericartifact.Setup,
 		repository.Setup,

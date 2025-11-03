@@ -1,0 +1,75 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: GateDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/gatedeployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+spec:
+  forProvider:
+    availabilityDomain: ${var.deployment_availability_domain}
+    backupSchedule:
+    - bucket: ${var.deployment_backup_schedule_bucket}
+      compartmentId: ${var.compartment_id}
+      frequencyBackupScheduled: ${var.deployment_backup_schedule_frequency_backup_scheduled}
+      isMetadataOnly: ${var.deployment_backup_schedule_is_metadata_only}
+      namespace: ${var.deployment_backup_schedule_namespace}
+      timeBackupScheduled: ${var.deployment_backup_schedule_time_backup_scheduled}
+    compartmentId: ${var.compartment_id}
+    cpuCoreCount: ${var.deployment_cpu_core_count}
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentBackupId: ${oci_golden_gate_deployment_backup.test_deployment_backup.id}
+    deploymentType: ${var.deployment_deployment_type}
+    description: ${var.deployment_description}
+    displayName: ${var.deployment_display_name}
+    environmentType: ${var.deployment_environment_type}
+    faultDomain: ${var.deployment_fault_domain}
+    fqdn: ${var.deployment_fqdn}
+    freeformTags:
+      bar-key: value
+    isAutoScalingEnabled: ${var.deployment_is_auto_scaling_enabled}
+    isPublic: ${var.deployment_is_public}
+    licenseModel: ${var.deployment_license_model}
+    loadBalancerSubnetId: ${oci_core_subnet.test_subnet.id}
+    locks:
+    - message: ${var.deployment_locks_message}
+      type: ${var.deployment_locks_type}
+    maintenanceConfiguration:
+    - bundleReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_bundle_release_upgrade_period_in_days}
+      interimReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_interim_release_upgrade_period_in_days}
+      isInterimReleaseAutoUpgradeEnabled: ${var.deployment_maintenance_configuration_is_interim_release_auto_upgrade_enabled}
+      majorReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_major_release_upgrade_period_in_days}
+      securityPatchUpgradePeriodInDays: ${var.deployment_maintenance_configuration_security_patch_upgrade_period_in_days}
+    maintenanceWindow:
+    - day: ${var.deployment_maintenance_window_day}
+      startHour: ${var.deployment_maintenance_window_start_hour}
+    nsgIds: ${var.deployment_nsg_ids}
+    oggData:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      adminUsername: ${var.deployment_ogg_data_admin_username}
+      certificate: ${var.deployment_ogg_data_certificate}
+      credentialStore: ${var.deployment_ogg_data_credential_store}
+      deploymentName: ${oci_golden_gate_deployment.test_deployment.name}
+      groupToRolesMapping:
+      - administratorGroupId: ${oci_identity_group.test_group.id}
+        operatorGroupId: ${oci_identity_group.test_group.id}
+        securityGroupId: ${oci_identity_group.test_group.id}
+        userGroupId: ${oci_identity_group.test_group.id}
+      identityDomainId: ${oci_identity_domain.test_domain.id}
+      key: ${var.deployment_ogg_data_key}
+      oggVersion: ${var.deployment_ogg_data_ogg_version}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+    placements:
+    - availabilityDomain: ${var.deployment_placements_availability_domain}
+      faultDomain: ${var.deployment_placements_fault_domain}
+    sourceDeploymentId: ${oci_golden_gate_deployment.test_deployment.id}
+    state: ${var.deployment_state}
+    subnetId: ${oci_core_subnet.test_subnet.id}

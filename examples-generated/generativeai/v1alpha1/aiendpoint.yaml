@@ -1,0 +1,21 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AiEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/aiendpoint
+  labels:
+    testing.upbound.io/example-name: test_endpoint
+  name: test-endpoint
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    contentModerationConfig:
+    - isEnabled: ${var.endpoint_content_moderation_config_is_enabled}
+    dedicatedAiClusterId: ${oci_generative_ai_dedicated_ai_cluster.test_dedicated_ai_cluster.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.endpoint_description}
+    displayName: ${var.endpoint_display_name}
+    freeformTags:
+      Department: Finance
+    modelId: ${oci_generative_ai_model.test_model.id}

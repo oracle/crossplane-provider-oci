@@ -1,0 +1,103 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsSetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainssetting
+  labels:
+    testing.upbound.io/example-name: test_setting
+  name: test-setting
+spec:
+  forProvider:
+    accountAlwaysTrustScope: ${var.setting_account_always_trust_scope}
+    allowedDomains:
+    - test.com
+    allowedForgotPasswordFlowReturnUrlsSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    allowedNotificationRedirectUrls: ${var.setting_allowed_notification_redirect_urls}
+    attributeSets:
+    - all
+    attributes: ""
+    auditEventRetentionPeriod: ${var.setting_audit_event_retention_period}
+    authorization: ${var.setting_authorization}
+    certificateValidation:
+    - crlCheckOnOcspFailureEnabled: ${var.setting_certificate_validation_crl_check_on_ocsp_failure_enabled}
+      crlEnabled: ${var.setting_certificate_validation_crl_enabled}
+      crlLocation: ${var.setting_certificate_validation_crl_location}
+      crlRefreshInterval: ${var.setting_certificate_validation_crl_refresh_interval}
+      ocspEnabled: ${var.setting_certificate_validation_ocsp_enabled}
+      ocspResponderUrl: ${var.setting_certificate_validation_ocsp_responder_url}
+      ocspSettingsResponderUrlPreferred: ${var.setting_certificate_validation_ocsp_settings_responder_url_preferred}
+      ocspSigningCertificateAlias: ${var.setting_certificate_validation_ocsp_signing_certificate_alias}
+      ocspTimeoutDuration: ${var.setting_certificate_validation_ocsp_timeout_duration}
+      ocspUnknownResponseStatusAllowed: ${var.setting_certificate_validation_ocsp_unknown_response_status_allowed}
+    cloudGateCorsSettings:
+    - cloudGateCorsAllowNullOrigin: ${var.setting_cloud_gate_cors_settings_cloud_gate_cors_allow_null_origin}
+      cloudGateCorsAllowedOrigins:
+      - https://test.com
+      cloudGateCorsEnabled: ${var.setting_cloud_gate_cors_settings_cloud_gate_cors_enabled}
+      cloudGateCorsExposedHeaders: ${var.setting_cloud_gate_cors_settings_cloud_gate_cors_exposed_headers}
+      cloudGateCorsMaxAge: ${var.setting_cloud_gate_cors_settings_cloud_gate_cors_max_age}
+    cloudMigrationCustomUrl: ${var.setting_cloud_migration_custom_url}
+    cloudMigrationUrlEnabled: ${var.setting_cloud_migration_url_enabled}
+    companyNames:
+    - locale: ${var.setting_company_names_locale}
+      value: ${var.setting_company_names_value}
+    contactEmails:
+    - contactEmails@test.com
+    csrAccess: ${var.setting_csr_access}
+    customBranding: ${var.setting_custom_branding}
+    customCssLocation: ${var.setting_custom_css_location}
+    customHtmlLocation: ${var.setting_custom_html_location}
+    customTranslation: ${var.setting_custom_translation}
+    defaultTrustScope: ${var.setting_default_trust_scope}
+    diagnosticLevel: ${var.setting_diagnostic_level}
+    diagnosticRecordForSearchIdentifiesReturnedResources: ${var.setting_diagnostic_record_for_search_identifies_returned_resources}
+    enableTermsOfUse: ${var.setting_enable_terms_of_use}
+    externalId: externalId
+    iamUpstSessionExpiry: ${var.setting_iam_upst_session_expiry}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    images:
+    - display: ${var.setting_images_display}
+      type: ${var.setting_images_type}
+      value: ${var.setting_images_value}
+    isHostedPage: ${var.setting_is_hosted_page}
+    issuer: ${var.setting_issuer}
+    locale: ${var.setting_locale}
+    loginTexts:
+    - locale: ${var.setting_login_texts_locale}
+      value: ${var.setting_login_texts_value}
+    maxNoOfAppCmvaToReturn: ${var.setting_max_no_of_app_cmva_to_return}
+    maxNoOfAppRoleMembersToReturn: ${var.setting_max_no_of_app_role_members_to_return}
+    ocid: ${var.setting_ocid}
+    preferredLanguage: ${var.setting_preferred_language}
+    prevIssuer: ${var.setting_prev_issuer}
+    privacyPolicyUrl: ${var.setting_privacy_policy_url}
+    purgeConfigs:
+    - resourceName: resourceName
+      retentionPeriod: ${var.setting_purge_configs_retention_period}
+    reAuthFactor:
+    - password
+    reAuthWhenChangingMyAuthenticationFactors: ${var.setting_re_auth_when_changing_my_authentication_factors}
+    resourceTypeSchemaVersion: ${var.setting_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Settings
+    serviceAdminCannotListOtherUsers: ${var.setting_service_admin_cannot_list_other_users}
+    settingId: Settings
+    signingCertPublicAccess: ${var.setting_signing_cert_public_access}
+    subMappingAttr: ${var.setting_sub_mapping_attr}
+    tags:
+    - key: ${var.setting_tags_key}
+      value: ${var.setting_tags_value}
+    tenantCustomClaims:
+    - allScopes: ${var.setting_tenant_custom_claims_all_scopes}
+      expression: ${var.setting_tenant_custom_claims_expression}
+      mode: ${var.setting_tenant_custom_claims_mode}
+      name: ${var.setting_tenant_custom_claims_name}
+      scopes:
+      - scopes
+      tokenType: ${var.setting_tenant_custom_claims_token_type}
+      value: ${var.setting_tenant_custom_claims_value}
+    termsOfUseUrl: ${var.setting_terms_of_use_url}
+    timezone: ${var.setting_timezone}

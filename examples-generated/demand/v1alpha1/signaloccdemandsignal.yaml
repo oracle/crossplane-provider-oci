@@ -1,0 +1,33 @@
+apiVersion: demand.oci.upbound.io/v1alpha1
+kind: SignalOccDemandSignal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: demand/v1alpha1/signaloccdemandsignal
+  labels:
+    testing.upbound.io/example-name: test_occ_demand_signal
+  name: test-occ-demand-signal
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.occ_demand_signal_display_name}
+    freeformTags:
+      Department: Finance
+    isActive: ${var.occ_demand_signal_is_active}
+    occDemandSignalId: ${var.occ_demand_signal_occ_demand_signal_id}
+    occDemandSignals:
+    - resourceType: ${var.occ_demand_signal_occ_demand_signals_resource_type}
+      units: ${var.occ_demand_signal_occ_demand_signals_units}
+      values:
+      - comments: ${var.occ_demand_signal_occ_demand_signals_values_comments}
+        timeExpected: ${var.occ_demand_signal_occ_demand_signals_values_time_expected}
+        value: ${var.occ_demand_signal_occ_demand_signals_values_value}
+    patchOperations:
+    - from: ${var.occ_demand_signal_patch_operations_from}
+      operation: ${var.occ_demand_signal_patch_operations_operation}
+      position: ${var.occ_demand_signal_patch_operations_position}
+      selectedItem: ${var.occ_demand_signal_patch_operations_selected_item}
+      selection: ${var.occ_demand_signal_patch_operations_selection}
+      value: ${var.occ_demand_signal_patch_operations_value}
+      values: ${var.occ_demand_signal_patch_operations_values}

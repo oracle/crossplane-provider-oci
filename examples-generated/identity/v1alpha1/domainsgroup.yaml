@@ -1,0 +1,50 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsgroup
+  labels:
+    testing.upbound.io/example-name: test_group
+  name: test-group
+spec:
+  forProvider:
+    attributeSets: []
+    attributes: ""
+    authorization: ${var.group_authorization}
+    displayName: ${var.group_display_name}
+    externalId: externalId
+    forceDelete: ${var.group_force_delete}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    members:
+    - ocid: ${var.group_members_ocid}
+      type: ${var.group_members_type}
+      value: ${var.group_members_value}
+    nonUniqueDisplayName: ${var.group_non_unique_display_name}
+    ocid: ${var.group_ocid}
+    resourceTypeSchemaVersion: ${var.group_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:Group
+    tags:
+    - key: ${var.group_tags_key}
+      value: ${var.group_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionOciTags:
+    - definedTags:
+      - key: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_defined_tags_key}
+        namespace: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_defined_tags_namespace}
+        value: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_defined_tags_value}
+      freeformTags:
+      - key: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_key}
+        value: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_value}
+    urnietfparamsscimschemasoracleidcsextensiondynamicGroup:
+    - membershipRule: ${var.group_urnietfparamsscimschemasoracleidcsextensiondynamic_group_membership_rule}
+      membershipType: ${var.group_urnietfparamsscimschemasoracleidcsextensiondynamic_group_membership_type}
+    urnietfparamsscimschemasoracleidcsextensiongroupGroup:
+    - creationMechanism: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_creation_mechanism}
+      description: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_description}
+      owners:
+      - type: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_owners_type}
+        value: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_owners_value}
+    urnietfparamsscimschemasoracleidcsextensionposixGroup:
+    - gidNumber: ${var.group_urnietfparamsscimschemasoracleidcsextensionposix_group_gid_number}
+    urnietfparamsscimschemasoracleidcsextensionrequestableGroup:
+    - requestable: ${var.group_urnietfparamsscimschemasoracleidcsextensionrequestable_group_requestable}

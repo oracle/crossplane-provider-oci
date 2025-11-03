@@ -1,0 +1,12 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubSoftwareSourceRemovePackagesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubsoftwaresourceremovepackagesmanagement
+  labels:
+    testing.upbound.io/example-name: test_software_source_remove_packages_management
+  name: test-software-source-remove-packages-management
+spec:
+  forProvider:
+    packages: ${var.software_source_remove_packages_management_packages}
+    softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}

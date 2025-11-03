@@ -1,0 +1,18 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: JavaDownloadsJavaDownloadReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/javadownloadsjavadownloadreport
+  labels:
+    testing.upbound.io/example-name: test_java_download_report
+  name: test-java-download-report
+spec:
+  forProvider:
+    compartmentId: ${var.tenancy_ocid}
+    definedTags:
+      foo-namespace.bar-key: value
+    format: ${var.java_download_report_format}
+    freeformTags:
+      bar-key: value
+    timeEnd: ${var.java_download_report_time_end}
+    timeStart: ${var.java_download_report_time_start}

@@ -1,0 +1,14 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: ReplicationPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/replicationpolicy
+  labels:
+    testing.upbound.io/example-name: test_replication_policy
+  name: test-replication-policy
+spec:
+  forProvider:
+    bucket: ${var.replication_policy_bucket}
+    destinationBucketName: ${var.bucket_name}
+    destinationRegionName: ${oci_identity_region.test_region.name}
+    namespace: ${var.replication_policy_namespace}

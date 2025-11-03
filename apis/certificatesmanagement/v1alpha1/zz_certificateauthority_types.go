@@ -13,6 +13,35 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CertificateAuthorityCertificateRevocationListDetailsInitParameters struct {
+
+	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
+	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
+
+	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
+	ObjectStorageConfig []CertificateRevocationListDetailsObjectStorageConfigInitParameters `json:"objectStorageConfig,omitempty" tf:"object_storage_config,omitempty"`
+}
+
+type CertificateAuthorityCertificateRevocationListDetailsObservation struct {
+
+	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
+	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
+
+	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
+	ObjectStorageConfig []CertificateRevocationListDetailsObjectStorageConfigObservation `json:"objectStorageConfig,omitempty" tf:"object_storage_config,omitempty"`
+}
+
+type CertificateAuthorityCertificateRevocationListDetailsParameters struct {
+
+	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
+	// +kubebuilder:validation:Optional
+	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
+
+	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
+	// +kubebuilder:validation:Optional
+	ObjectStorageConfig []CertificateRevocationListDetailsObjectStorageConfigParameters `json:"objectStorageConfig" tf:"object_storage_config,omitempty"`
+}
+
 type CertificateAuthorityConfigInitParameters struct {
 
 	// (Updatable) The origin of the CA.
@@ -25,10 +54,10 @@ type CertificateAuthorityConfigInitParameters struct {
 	SigningAlgorithm *string `json:"signingAlgorithm,omitempty" tf:"signing_algorithm,omitempty"`
 
 	// The subject of the certificate, which is a distinguished name that identifies the entity that owns the public key in the certificate.
-	Subject []SubjectInitParameters `json:"subject,omitempty" tf:"subject,omitempty"`
+	Subject []CertificateAuthorityConfigSubjectInitParameters `json:"subject,omitempty" tf:"subject,omitempty"`
 
 	// (Updatable) An object that describes a period of time during which an entity is valid. If this is not provided when you create a certificate, the validity of the issuing CA is used.
-	Validity []ValidityInitParameters `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity []CertificateAuthorityConfigValidityInitParameters `json:"validity,omitempty" tf:"validity,omitempty"`
 
 	// (Updatable) The name of the CA version. When the value is not null, a name is unique across versions of a given CA.
 	VersionName *string `json:"versionName,omitempty" tf:"version_name,omitempty"`
@@ -46,10 +75,10 @@ type CertificateAuthorityConfigObservation struct {
 	SigningAlgorithm *string `json:"signingAlgorithm,omitempty" tf:"signing_algorithm,omitempty"`
 
 	// The subject of the certificate, which is a distinguished name that identifies the entity that owns the public key in the certificate.
-	Subject []SubjectObservation `json:"subject,omitempty" tf:"subject,omitempty"`
+	Subject []CertificateAuthorityConfigSubjectObservation `json:"subject,omitempty" tf:"subject,omitempty"`
 
 	// (Updatable) An object that describes a period of time during which an entity is valid. If this is not provided when you create a certificate, the validity of the issuing CA is used.
-	Validity []ValidityObservation `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity []CertificateAuthorityConfigValidityObservation `json:"validity,omitempty" tf:"validity,omitempty"`
 
 	// (Updatable) The name of the CA version. When the value is not null, a name is unique across versions of a given CA.
 	VersionName *string `json:"versionName,omitempty" tf:"version_name,omitempty"`
@@ -71,15 +100,277 @@ type CertificateAuthorityConfigParameters struct {
 
 	// The subject of the certificate, which is a distinguished name that identifies the entity that owns the public key in the certificate.
 	// +kubebuilder:validation:Optional
-	Subject []SubjectParameters `json:"subject" tf:"subject,omitempty"`
+	Subject []CertificateAuthorityConfigSubjectParameters `json:"subject" tf:"subject,omitempty"`
 
 	// (Updatable) An object that describes a period of time during which an entity is valid. If this is not provided when you create a certificate, the validity of the issuing CA is used.
 	// +kubebuilder:validation:Optional
-	Validity []ValidityParameters `json:"validity,omitempty" tf:"validity,omitempty"`
+	Validity []CertificateAuthorityConfigValidityParameters `json:"validity,omitempty" tf:"validity,omitempty"`
 
 	// (Updatable) The name of the CA version. When the value is not null, a name is unique across versions of a given CA.
 	// +kubebuilder:validation:Optional
 	VersionName *string `json:"versionName,omitempty" tf:"version_name,omitempty"`
+}
+
+type CertificateAuthorityConfigSubjectInitParameters struct {
+
+	// Common name or fully-qualified domain name (RDN CN).
+	CommonName *string `json:"commonName,omitempty" tf:"common_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
+	Country *string `json:"country,omitempty" tf:"country,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
+	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
+	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
+	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
+	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
+	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
+	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
+	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
+	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
+	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
+	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
+	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
+	Street *string `json:"street,omitempty" tf:"street,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
+	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+}
+
+type CertificateAuthorityConfigSubjectObservation struct {
+
+	// Common name or fully-qualified domain name (RDN CN).
+	CommonName *string `json:"commonName,omitempty" tf:"common_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
+	Country *string `json:"country,omitempty" tf:"country,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
+	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
+	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
+	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
+	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
+	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
+	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
+	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
+	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
+	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
+	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
+	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
+	Street *string `json:"street,omitempty" tf:"street,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
+	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+}
+
+type CertificateAuthorityConfigSubjectParameters struct {
+
+	// Common name or fully-qualified domain name (RDN CN).
+	// +kubebuilder:validation:Optional
+	CommonName *string `json:"commonName" tf:"common_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
+	// +kubebuilder:validation:Optional
+	Country *string `json:"country,omitempty" tf:"country,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
+	// +kubebuilder:validation:Optional
+	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
+	// +kubebuilder:validation:Optional
+	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
+	// +kubebuilder:validation:Optional
+	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
+	// +kubebuilder:validation:Optional
+	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
+	// +kubebuilder:validation:Optional
+	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
+	// +kubebuilder:validation:Optional
+	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
+	// +kubebuilder:validation:Optional
+	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
+	// +kubebuilder:validation:Optional
+	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
+	// +kubebuilder:validation:Optional
+	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
+	// +kubebuilder:validation:Optional
+	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
+	// +kubebuilder:validation:Optional
+	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
+	// +kubebuilder:validation:Optional
+	Street *string `json:"street,omitempty" tf:"street,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
+	// +kubebuilder:validation:Optional
+	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
+	// +kubebuilder:validation:Optional
+	Title *string `json:"title,omitempty" tf:"title,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
+	// +kubebuilder:validation:Optional
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+}
+
+type CertificateAuthorityConfigValidityInitParameters struct {
+
+	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
+}
+
+type CertificateAuthorityConfigValidityObservation struct {
+
+	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
+}
+
+type CertificateAuthorityConfigValidityParameters struct {
+
+	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	// +kubebuilder:validation:Optional
+	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter" tf:"time_of_validity_not_after,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	// +kubebuilder:validation:Optional
+	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
+}
+
+type CertificateAuthorityCurrentVersionInitParameters struct {
+}
+
+type CertificateAuthorityCurrentVersionObservation struct {
+
+	// The OCID of the CA.
+	CertificateAuthorityID *string `json:"certificateAuthorityId,omitempty" tf:"certificate_authority_id,omitempty"`
+
+	// The version number of the issuing CA.
+	IssuerCAVersionNumber *string `json:"issuerCaVersionNumber,omitempty" tf:"issuer_ca_version_number,omitempty"`
+
+	// The current revocation status of the entity.
+	RevocationStatus []CurrentVersionRevocationStatusObservation `json:"revocationStatus,omitempty" tf:"revocation_status,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
+	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
+
+	// A list of rotation states for this CA version.
+	Stages []*string `json:"stages,omitempty" tf:"stages,omitempty"`
+
+	// A optional property indicating when the CA version was created, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
+
+	// An optional property indicating when to delete the CA version, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfDeletion *string `json:"timeOfDeletion,omitempty" tf:"time_of_deletion,omitempty"`
+
+	// (Updatable) An object that describes a period of time during which an entity is valid. If this is not provided when you create a certificate, the validity of the issuing CA is used.
+	Validity []CertificateAuthorityCurrentVersionValidityObservation `json:"validity,omitempty" tf:"validity,omitempty"`
+
+	// (Updatable) The name of the CA version. When the value is not null, a name is unique across versions of a given CA.
+	VersionName *string `json:"versionName,omitempty" tf:"version_name,omitempty"`
+
+	// The version number of the CA.
+	VersionNumber *string `json:"versionNumber,omitempty" tf:"version_number,omitempty"`
+}
+
+type CertificateAuthorityCurrentVersionParameters struct {
+}
+
+type CertificateAuthorityCurrentVersionValidityInitParameters struct {
+}
+
+type CertificateAuthorityCurrentVersionValidityObservation struct {
+
+	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
+
+	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
+	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
+}
+
+type CertificateAuthorityCurrentVersionValidityParameters struct {
 }
 
 type CertificateAuthorityInitParameters struct {
@@ -91,7 +382,7 @@ type CertificateAuthorityInitParameters struct {
 	CertificateAuthorityRules []CertificateAuthorityRulesInitParameters `json:"certificateAuthorityRules,omitempty" tf:"certificate_authority_rules,omitempty"`
 
 	// (Updatable) The details of the certificate revocation list (CRL).
-	CertificateRevocationListDetails []CertificateRevocationListDetailsInitParameters `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
+	CertificateRevocationListDetails []CertificateAuthorityCertificateRevocationListDetailsInitParameters `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
 
 	// (Updatable) The compartment in which you want to create the CA.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -141,7 +432,7 @@ type CertificateAuthorityObservation struct {
 	CertificateAuthorityRules []CertificateAuthorityRulesObservation `json:"certificateAuthorityRules,omitempty" tf:"certificate_authority_rules,omitempty"`
 
 	// (Updatable) The details of the certificate revocation list (CRL).
-	CertificateRevocationListDetails []CertificateRevocationListDetailsObservation `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
+	CertificateRevocationListDetails []CertificateAuthorityCertificateRevocationListDetailsObservation `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
 
 	// (Updatable) The compartment in which you want to create the CA.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -150,7 +441,7 @@ type CertificateAuthorityObservation struct {
 	ConfigType *string `json:"configType,omitempty" tf:"config_type,omitempty"`
 
 	// The metadata details of the certificate authority (CA) version. This summary object does not contain the CA contents.
-	CurrentVersion []CurrentVersionObservation `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
+	CurrentVersion []CertificateAuthorityCurrentVersionObservation `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
 
 	// (Updatable) Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: {"foo-namespace.bar-key": "value"}
 	// +mapType=granular
@@ -206,7 +497,7 @@ type CertificateAuthorityParameters struct {
 
 	// (Updatable) The details of the certificate revocation list (CRL).
 	// +kubebuilder:validation:Optional
-	CertificateRevocationListDetails []CertificateRevocationListDetailsParameters `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
+	CertificateRevocationListDetails []CertificateAuthorityCertificateRevocationListDetailsParameters `json:"certificateRevocationListDetails,omitempty" tf:"certificate_revocation_list_details,omitempty"`
 
 	// (Updatable) The compartment in which you want to create the CA.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -352,90 +643,7 @@ type CertificateAuthoritySubjectObservation struct {
 type CertificateAuthoritySubjectParameters struct {
 }
 
-type CertificateRevocationListDetailsInitParameters struct {
-
-	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
-	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
-
-	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
-	ObjectStorageConfig []ObjectStorageConfigInitParameters `json:"objectStorageConfig,omitempty" tf:"object_storage_config,omitempty"`
-}
-
-type CertificateRevocationListDetailsObservation struct {
-
-	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
-	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
-
-	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
-	ObjectStorageConfig []ObjectStorageConfigObservation `json:"objectStorageConfig,omitempty" tf:"object_storage_config,omitempty"`
-}
-
-type CertificateRevocationListDetailsParameters struct {
-
-	// (Updatable) Optional CRL access points, expressed using a format where the version number of the issuing CA is inserted wherever you include a pair of curly braces. This versioning scheme helps avoid collisions when new CA versions are created. For example, myCrlFileIssuedFromCAVersion{}.crl becomes myCrlFileIssuedFromCAVersion2.crl for CA version 2.
-	// +kubebuilder:validation:Optional
-	CustomFormattedUrls []*string `json:"customFormattedUrls,omitempty" tf:"custom_formatted_urls,omitempty"`
-
-	// (Updatable) The details of the Object Storage bucket configured to store the certificate revocation list (CRL).
-	// +kubebuilder:validation:Optional
-	ObjectStorageConfig []ObjectStorageConfigParameters `json:"objectStorageConfig" tf:"object_storage_config,omitempty"`
-}
-
-type CurrentVersionInitParameters struct {
-}
-
-type CurrentVersionObservation struct {
-
-	// The OCID of the CA.
-	CertificateAuthorityID *string `json:"certificateAuthorityId,omitempty" tf:"certificate_authority_id,omitempty"`
-
-	// The version number of the issuing CA.
-	IssuerCAVersionNumber *string `json:"issuerCaVersionNumber,omitempty" tf:"issuer_ca_version_number,omitempty"`
-
-	// The current revocation status of the entity.
-	RevocationStatus []RevocationStatusObservation `json:"revocationStatus,omitempty" tf:"revocation_status,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
-	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
-
-	// A list of rotation states for this CA version.
-	Stages []*string `json:"stages,omitempty" tf:"stages,omitempty"`
-
-	// A optional property indicating when the CA version was created, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
-
-	// An optional property indicating when to delete the CA version, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfDeletion *string `json:"timeOfDeletion,omitempty" tf:"time_of_deletion,omitempty"`
-
-	// (Updatable) An object that describes a period of time during which an entity is valid. If this is not provided when you create a certificate, the validity of the issuing CA is used.
-	Validity []CurrentVersionValidityObservation `json:"validity,omitempty" tf:"validity,omitempty"`
-
-	// (Updatable) The name of the CA version. When the value is not null, a name is unique across versions of a given CA.
-	VersionName *string `json:"versionName,omitempty" tf:"version_name,omitempty"`
-
-	// The version number of the CA.
-	VersionNumber *string `json:"versionNumber,omitempty" tf:"version_number,omitempty"`
-}
-
-type CurrentVersionParameters struct {
-}
-
-type CurrentVersionValidityInitParameters struct {
-}
-
-type CurrentVersionValidityObservation struct {
-
-	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
-}
-
-type CurrentVersionValidityParameters struct {
-}
-
-type ObjectStorageConfigInitParameters struct {
+type CertificateRevocationListDetailsObjectStorageConfigInitParameters struct {
 
 	// (Updatable) The name of the bucket where the CRL is stored.
 	ObjectStorageBucketName *string `json:"objectStorageBucketName,omitempty" tf:"object_storage_bucket_name,omitempty"`
@@ -447,7 +655,7 @@ type ObjectStorageConfigInitParameters struct {
 	ObjectStorageObjectNameFormat *string `json:"objectStorageObjectNameFormat,omitempty" tf:"object_storage_object_name_format,omitempty"`
 }
 
-type ObjectStorageConfigObservation struct {
+type CertificateRevocationListDetailsObjectStorageConfigObservation struct {
 
 	// (Updatable) The name of the bucket where the CRL is stored.
 	ObjectStorageBucketName *string `json:"objectStorageBucketName,omitempty" tf:"object_storage_bucket_name,omitempty"`
@@ -459,7 +667,7 @@ type ObjectStorageConfigObservation struct {
 	ObjectStorageObjectNameFormat *string `json:"objectStorageObjectNameFormat,omitempty" tf:"object_storage_object_name_format,omitempty"`
 }
 
-type ObjectStorageConfigParameters struct {
+type CertificateRevocationListDetailsObjectStorageConfigParameters struct {
 
 	// (Updatable) The name of the bucket where the CRL is stored.
 	// +kubebuilder:validation:Optional
@@ -474,10 +682,10 @@ type ObjectStorageConfigParameters struct {
 	ObjectStorageObjectNameFormat *string `json:"objectStorageObjectNameFormat" tf:"object_storage_object_name_format,omitempty"`
 }
 
-type RevocationStatusInitParameters struct {
+type CurrentVersionRevocationStatusInitParameters struct {
 }
 
-type RevocationStatusObservation struct {
+type CurrentVersionRevocationStatusObservation struct {
 
 	// The reason the certificate or certificate authority (CA) was revoked.
 	RevocationReason *string `json:"revocationReason,omitempty" tf:"revocation_reason,omitempty"`
@@ -486,215 +694,7 @@ type RevocationStatusObservation struct {
 	TimeOfRevocation *string `json:"timeOfRevocation,omitempty" tf:"time_of_revocation,omitempty"`
 }
 
-type RevocationStatusParameters struct {
-}
-
-type SubjectInitParameters struct {
-
-	// Common name or fully-qualified domain name (RDN CN).
-	CommonName *string `json:"commonName,omitempty" tf:"common_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
-	Country *string `json:"country,omitempty" tf:"country,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
-	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
-	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
-	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
-	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
-	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
-	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
-	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
-	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
-	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
-	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
-	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
-	Street *string `json:"street,omitempty" tf:"street,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
-	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
-	Title *string `json:"title,omitempty" tf:"title,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
-	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
-}
-
-type SubjectObservation struct {
-
-	// Common name or fully-qualified domain name (RDN CN).
-	CommonName *string `json:"commonName,omitempty" tf:"common_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
-	Country *string `json:"country,omitempty" tf:"country,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
-	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
-	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
-	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
-	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
-	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
-	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
-	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
-	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
-	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
-	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
-	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
-	Street *string `json:"street,omitempty" tf:"street,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
-	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
-	Title *string `json:"title,omitempty" tf:"title,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
-	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
-}
-
-type SubjectParameters struct {
-
-	// Common name or fully-qualified domain name (RDN CN).
-	// +kubebuilder:validation:Optional
-	CommonName *string `json:"commonName" tf:"common_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Country name (RDN C).
-	// +kubebuilder:validation:Optional
-	Country *string `json:"country,omitempty" tf:"country,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Distinguished name qualifier(RDN DNQ).
-	// +kubebuilder:validation:Optional
-	DistinguishedNameQualifier *string `json:"distinguishedNameQualifier,omitempty" tf:"distinguished_name_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Domain component (RDN DC).
-	// +kubebuilder:validation:Optional
-	DomainComponent *string `json:"domainComponent,omitempty" tf:"domain_component,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal generational qualifier (for example, Sr., Jr. 3rd, or IV).
-	// +kubebuilder:validation:Optional
-	GenerationQualifier *string `json:"generationQualifier,omitempty" tf:"generation_qualifier,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal given name (RDN G or GN).
-	// +kubebuilder:validation:Optional
-	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal initials.
-	// +kubebuilder:validation:Optional
-	Initials *string `json:"initials,omitempty" tf:"initials,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Locality (RDN L).
-	// +kubebuilder:validation:Optional
-	LocalityName *string `json:"localityName,omitempty" tf:"locality_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organization (RDN O).
-	// +kubebuilder:validation:Optional
-	Organization *string `json:"organization,omitempty" tf:"organization,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Organizational unit (RDN OU).
-	// +kubebuilder:validation:Optional
-	OrganizationalUnit *string `json:"organizationalUnit,omitempty" tf:"organizational_unit,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Subject pseudonym.
-	// +kubebuilder:validation:Optional
-	Pseudonym *string `json:"pseudonym,omitempty" tf:"pseudonym,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Unique subject identifier, which is not the same as the certificate serial number (RDN SERIALNUMBER).
-	// +kubebuilder:validation:Optional
-	SerialNumber *string `json:"serialNumber,omitempty" tf:"serial_number,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) State or province name (RDN ST or S).
-	// +kubebuilder:validation:Optional
-	StateOrProvinceName *string `json:"stateOrProvinceName,omitempty" tf:"state_or_province_name,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Street address (RDN STREET).
-	// +kubebuilder:validation:Optional
-	Street *string `json:"street,omitempty" tf:"street,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Personal surname (RDN SN).
-	// +kubebuilder:validation:Optional
-	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) Title (RDN T or TITLE).
-	// +kubebuilder:validation:Optional
-	Title *string `json:"title,omitempty" tf:"title,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
-	// +kubebuilder:validation:Optional
-	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
-}
-
-type ValidityInitParameters struct {
-
-	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
-}
-
-type ValidityObservation struct {
-
-	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter,omitempty" tf:"time_of_validity_not_after,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
-}
-
-type ValidityParameters struct {
-
-	// (Updatable) The date on which the certificate validity period ends, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	// +kubebuilder:validation:Optional
-	TimeOfValidityNotAfter *string `json:"timeOfValidityNotAfter" tf:"time_of_validity_not_after,omitempty"`
-
-	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) (Updatable) The date on which the certificate validity period begins, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
-	// +kubebuilder:validation:Optional
-	TimeOfValidityNotBefore *string `json:"timeOfValidityNotBefore,omitempty" tf:"time_of_validity_not_before,omitempty"`
+type CurrentVersionRevocationStatusParameters struct {
 }
 
 // CertificateAuthoritySpec defines the desired state of CertificateAuthority

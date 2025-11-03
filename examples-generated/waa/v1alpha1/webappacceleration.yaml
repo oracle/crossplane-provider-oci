@@ -1,0 +1,20 @@
+apiVersion: waa.oci.upbound.io/v1alpha1
+kind: WebAppAcceleration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_web_app_acceleration
+  name: test-web-app-acceleration
+spec:
+  forProvider:
+    backendType: ${var.web_app_acceleration_backend_type}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.web_app_acceleration_display_name}
+    freeformTags:
+      bar-key: value
+    loadBalancerId: ${oci_load_balancer_load_balancer.test_load_balancer.id}
+    systemTags: ${var.web_app_acceleration_system_tags}
+    webAppAccelerationPolicyId: ${oci_waa_web_app_acceleration_policy.test_web_app_acceleration_policy.id}

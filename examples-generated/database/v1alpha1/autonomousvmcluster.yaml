@@ -1,0 +1,39 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_autonomous_vm_cluster
+  name: test-autonomous-vm-cluster
+spec:
+  forProvider:
+    autonomousDataStorageSizeInTbs: ${var.autonomous_vm_cluster_autonomous_data_storage_size_in_tbs}
+    compartmentId: ${var.compartment_id}
+    computeModel: ${var.autonomous_vm_cluster_compute_model}
+    cpuCoreCountPerNode: ${var.autonomous_vm_cluster_cpu_core_count_per_node}
+    dbServers: ${var.autonomous_vm_cluster_db_servers}
+    definedTags: ${var.autonomous_vm_cluster_defined_tags}
+    displayName: ${var.autonomous_vm_cluster_display_name}
+    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
+    freeformTags:
+      Department: Finance
+    isLocalBackupEnabled: ${var.autonomous_vm_cluster_is_local_backup_enabled}
+    isMtlsEnabled: ${var.autonomous_vm_cluster_is_mtls_enabled}
+    licenseModel: ${var.autonomous_vm_cluster_license_model}
+    maintenanceWindowDetails:
+    - daysOfWeek:
+      - name: ${var.autonomous_vm_cluster_maintenance_window_details_days_of_week_name}
+      hoursOfDay: ${var.autonomous_vm_cluster_maintenance_window_details_hours_of_day}
+      leadTimeInWeeks: ${var.autonomous_vm_cluster_maintenance_window_details_lead_time_in_weeks}
+      months:
+      - name: ${var.autonomous_vm_cluster_maintenance_window_details_months_name}
+      patchingMode: ${var.autonomous_vm_cluster_maintenance_window_details_patching_mode}
+      preference: ${var.autonomous_vm_cluster_maintenance_window_details_preference}
+      weeksOfMonth: ${var.autonomous_vm_cluster_maintenance_window_details_weeks_of_month}
+    memoryPerOracleComputeUnitInGbs: ${var.autonomous_vm_cluster_memory_per_oracle_compute_unit_in_gbs}
+    scanListenerPortNonTls: ${var.autonomous_vm_cluster_scan_listener_port_non_tls}
+    scanListenerPortTls: ${var.autonomous_vm_cluster_scan_listener_port_tls}
+    timeZone: ${var.autonomous_vm_cluster_time_zone}
+    totalContainerDatabases: ${var.autonomous_vm_cluster_total_container_databases}
+    vmClusterNetworkId: ${oci_database_vm_cluster_network.test_vm_cluster_network.id}

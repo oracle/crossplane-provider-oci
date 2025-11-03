@@ -1,0 +1,285 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: exadbclusters.database.crossplane.io
+spec:
+  group: database.crossplane.io
+  names:
+    kind: ExaDBCluster
+    plural: exadbclusters
+  claimNames:
+    kind: ExaDBClusterClaim
+    plural: exadbclusterclaims
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              compartmentId:
+                type: string
+                description: The OCI Compartment OCID to deploy ExaDB-D resources into
+              
+              availabilityDomain:
+                type: string
+                description: The availability domain for the ExaDB-D infrastructure
+                
+              region:
+                type: string
+                description: OCI region for deployment
+                default: "us-ashburn-1"
+              
+              infrastructure:
+                type: object
+                description: Exadata infrastructure configuration
+                properties:
+                  displayName:
+                    type: string
+                    description: Display name for the Exadata infrastructure
+                    default: "exadb-infrastructure"
+                  shape:
+                    type: string
+                    description: The shape of the Exadata infrastructure (e.g., Exadata.X8M, Exadata.X9M)
+                    default: "Exadata.X9M"
+                  computeCount:
+                    type: integer
+                    description: Number of compute nodes (minimum 2)
+                    default: 2
+                  storageCount:
+                    type: integer
+                    description: Number of storage servers (minimum 3)
+                    default: 3
+                  maintenanceWindow:
+                    type: object
+                    properties:
+                      preference:
+                        type: string
+                        description: Maintenance window preference
+                        default: "NO_PREFERENCE"
+                      patchingMode:
+                        type: string
+                        description: Patching mode (ROLLING or NONROLLING)
+                        default: "ROLLING"
+                      leadTimeInWeeks:
+                        type: integer
+                        description: Lead time in weeks for maintenance
+                        default: 1
+                      daysOfWeek:
+                        type: array
+                        items:
+                          type: string
+                        description: Days of week for maintenance (e.g., ["SUNDAY"])
+                        default: ["SUNDAY"]
+                      hoursOfDay:
+                        type: array
+                        items:
+                          type: integer
+                        description: Hours of day for maintenance (0-23)
+                        default: [2]
+                required:
+                - shape
+              
+              vmCluster:
+                type: object
+                description: VM Cluster configuration
+                properties:
+                  displayName:
+                    type: string
+                    description: Display name for the VM cluster
+                    default: "exadb-vmcluster"
+                  clusterName:
+                    type: string
+                    description: Cluster name (must be unique within infrastructure)
+                    default: "exacluster"
+                  cpuCoreCount:
+                    type: integer
+                    description: Number of CPU cores for the VM cluster
+                    default: 4
+                  dataStorageSizeInTbs:
+                    type: number
+                    description: Data storage size in TBs
+                    default: 2
+                  dbNodeStorageSizeInGbs:
+                    type: integer
+                    description: DB node storage size in GBs
+                    default: 180
+                  memorySizeInGbs:
+                    type: integer
+                    description: Memory size in GBs
+                    default: 60
+                  giVersion:
+                    type: string
+                    description: Grid Infrastructure version
+                    default: "19.0.0.0"
+                  hostname:
+                    type: string
+                    description: Hostname prefix for DB nodes
+                    default: "exadb"
+                  domain:
+                    type: string
+                    description: Domain name for the cluster
+                    default: "subnet.vcn.oraclevcn.com"
+                  sshPublicKeys:
+                    type: array
+                    items:
+                      type: string
+                    description: SSH public keys for VM access
+                  licenseModel:
+                    type: string
+                    description: License model (LICENSE_INCLUDED or BRING_YOUR_OWN_LICENSE)
+                    default: "LICENSE_INCLUDED"
+                  isLocalBackupEnabled:
+                    type: boolean
+                    description: Enable local backups
+                    default: true
+                  isSparseDiskgroupEnabled:
+                    type: boolean
+                    description: Enable sparse disk groups
+                    default: false
+                  timeZone:
+                    type: string
+                    description: Time zone for the VM cluster
+                    default: "UTC"
+                required:
+                - cpuCoreCount
+                - sshPublicKeys
+              
+              networking:
+                type: object
+                description: Network configuration for ExaDB-D
+                properties:
+                  subnetId:
+                    type: string
+                    description: Client subnet OCID for VM cluster
+                  backupSubnetId:
+                    type: string
+                    description: Backup subnet OCID for VM cluster
+                  nsgIds:
+                    type: array
+                    items:
+                      type: string
+                    description: Network Security Group IDs
+                  backupNetworkNsgIds:
+                    type: array
+                    items:
+                      type: string
+                    description: Backup network NSG IDs
+                required:
+                - subnetId
+              
+              database:
+                type: object
+                description: Database configuration
+                properties:
+                  dbName:
+                    type: string
+                    description: Database name (up to 8 characters)
+                    default: "ORCL"
+                  dbVersion:
+                    type: string
+                    description: Database version
+                    default: "19.0.0.0"
+                  dbWorkload:
+                    type: string
+                    description: Database workload type (OLTP, DW, DSS, or MIXED)
+                    default: "OLTP"
+                  adminPassword:
+                    type: object
+                    description: Admin password configuration
+                    properties:
+                      secretName:
+                        type: string
+                        description: Name of Kubernetes secret containing admin password
+                      secretNamespace:
+                        type: string
+                        description: Namespace of the secret
+                        default: "crossplane-system"
+                      secretKey:
+                        type: string
+                        description: Key in the secret containing the password
+                        default: "password"
+                    required:
+                    - secretName
+                  characterSet:
+                    type: string
+                    description: Database character set
+                    default: "AL32UTF8"
+                  nCharacterSet:
+                    type: string
+                    description: National character set
+                    default: "AL16UTF16"
+                  pdbName:
+                    type: string
+                    description: Pluggable database name
+                    default: "PDB1"
+                  autoBackupEnabled:
+                    type: boolean
+                    description: Enable automatic backups
+                    default: true
+                  recoveryWindowInDays:
+                    type: integer
+                    description: Backup recovery window in days
+                    default: 30
+                required:
+                - dbName
+                - adminPassword
+              
+              tags:
+                type: object
+                description: Tags to apply to all resources
+                properties:
+                  freeformTags:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: Freeform tags
+                  definedTags:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      additionalProperties:
+                        type: string
+                    description: Defined tags
+                    
+            required:
+            - compartmentId
+            - availabilityDomain
+            - infrastructure
+            - vmCluster
+            - networking
+            - database
+          
+          status:
+            type: object
+            properties:
+              infrastructureId:
+                type: string
+                description: OCID of the created Exadata infrastructure
+              vmClusterId:
+                type: string
+                description: OCID of the created VM cluster
+              dbHomeId:
+                type: string
+                description: OCID of the created database home
+              databaseId:
+                type: string
+                description: OCID of the created database
+              connectionStrings:
+                type: object
+                description: Database connection strings
+                properties:
+                  cdbDefault:
+                    type: string
+                  pdbDefault:
+                    type: string
+              state:
+                type: string
+                description: Current state of the ExaDB-D cluster
+              ready:
+                type: boolean
+                description: Whether the cluster is ready for use

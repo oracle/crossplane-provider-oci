@@ -1,0 +1,17 @@
+apiVersion: digitalassistant.oci.upbound.io/v1alpha1
+kind: PrivateEndpointScanProxy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: digitalassistant/v1alpha1/privateendpointscanproxy
+  labels:
+    testing.upbound.io/example-name: test_oda_private_endpoint_scan_proxy
+  name: test-oda-private-endpoint-scan-proxy
+spec:
+  forProvider:
+    odaPrivateEndpointId: ${oci_oda_oda_private_endpoint.test_oda_private_endpoint.id}
+    protocol: ${var.oda_private_endpoint_scan_proxy_protocol}
+    scanListenerInfos:
+    - scanListenerFqdn: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_fqdn}
+      scanListenerIp: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_ip}
+      scanListenerPort: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_port}
+    scanListenerType: ${var.oda_private_endpoint_scan_proxy_scan_listener_type}

@@ -1,0 +1,15 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceRebootManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstancerebootmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_reboot_management
+  name: test-managed-instance-reboot-management
+spec:
+  forProvider:
+    managedInstanceId: ${oci_os_management_hub_managed_instance.test_managed_instance.id}
+    rebootTimeoutInMins: ${var.managed_instance_reboot_management_reboot_timeout_in_mins}
+    workRequestDetails:
+    - description: ${var.managed_instance_reboot_management_work_request_details_description}
+      displayName: ${var.managed_instance_reboot_management_work_request_details_display_name}

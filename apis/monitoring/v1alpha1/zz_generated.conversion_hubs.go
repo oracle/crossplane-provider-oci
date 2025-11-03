@@ -10,6 +10,9 @@ package v1alpha1
 func (tr *Alarm) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *AlarmSuppression) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *CaptureFilter) Hub() {}
 
 // Hub marks this type as a conversion hub.

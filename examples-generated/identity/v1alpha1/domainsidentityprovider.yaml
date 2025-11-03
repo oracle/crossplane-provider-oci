@@ -1,0 +1,112 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsIdentityProvider
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsidentityprovider
+  labels:
+    testing.upbound.io/example-name: test_identity_provider
+  name: test-identity-provider
+spec:
+  forProvider:
+    assertionAttribute: ${var.identity_provider_assertion_attribute}
+    attributeSets: []
+    attributes: ""
+    authnRequestBinding: ${var.identity_provider_authn_request_binding}
+    authorization: ${var.identity_provider_authorization}
+    correlationPolicy:
+    - display: ${var.identity_provider_correlation_policy_display}
+      type: ${var.identity_provider_correlation_policy_type}
+      value: ${var.identity_provider_correlation_policy_value}
+    description: ${var.identity_provider_description}
+    enabled: false
+    encryptionCertificate: ${var.identity_provider_encryption_certificate}
+    externalId: externalId
+    iconUrl: ${var.identity_provider_icon_url}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    idpSsoUrl: ${var.identity_provider_idp_sso_url}
+    includeSigningCertInSignature: ${var.identity_provider_include_signing_cert_in_signature}
+    jitUserProvAssignedGroups:
+    - value: ${var.identity_provider_jit_user_prov_assigned_groups_value}
+    jitUserProvAttributeUpdateEnabled: ${var.identity_provider_jit_user_prov_attribute_update_enabled}
+    jitUserProvAttributes:
+    - value: ${var.identity_provider_jit_user_prov_attributes_value}
+    jitUserProvCreateUserEnabled: ${var.identity_provider_jit_user_prov_create_user_enabled}
+    jitUserProvEnabled: ${var.identity_provider_jit_user_prov_enabled}
+    jitUserProvGroupAssertionAttributeEnabled: ${var.identity_provider_jit_user_prov_group_assertion_attribute_enabled}
+    jitUserProvGroupAssignmentMethod: ${var.identity_provider_jit_user_prov_group_assignment_method}
+    jitUserProvGroupMappingMode: ${var.identity_provider_jit_user_prov_group_mapping_mode}
+    jitUserProvGroupMappings:
+    - idpGroup: ${var.identity_provider_jit_user_prov_group_mappings_idp_group}
+      value: ${var.identity_provider_jit_user_prov_group_mappings_value}
+    jitUserProvGroupSamlAttributeName: ${var.identity_provider_jit_user_prov_group_saml_attribute_name}
+    jitUserProvGroupStaticListEnabled: ${var.identity_provider_jit_user_prov_group_static_list_enabled}
+    jitUserProvIgnoreErrorOnAbsentGroups: ${var.identity_provider_jit_user_prov_ignore_error_on_absent_groups}
+    logoutBinding: ${var.identity_provider_logout_binding}
+    logoutEnabled: ${var.identity_provider_logout_enabled}
+    logoutRequestUrl: ${var.identity_provider_logout_request_url}
+    logoutResponseUrl: ${var.identity_provider_logout_response_url}
+    metadata: ${var.identity_provider_metadata}
+    nameIdFormat: ${var.identity_provider_name_id_format}
+    ocid: ${var.identity_provider_ocid}
+    partnerName: ${var.identity_provider_partner_name}
+    partnerProviderId: ${var.identity_provider_partner_provider_id}
+    requestedAuthenticationContext: ${var.identity_provider_requested_authentication_context}
+    requireForceAuthn: ${var.identity_provider_require_force_authn}
+    requiresEncryptedAssertion: ${var.identity_provider_requires_encrypted_assertion}
+    resourceTypeSchemaVersion: ${var.identity_provider_resource_type_schema_version}
+    samlHoKrequired: ${var.identity_provider_saml_ho_krequired}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:IdentityProvider
+    serviceInstanceIdentifier: ${var.identity_provider_service_instance_identifier}
+    shownOnLoginPage: ${var.identity_provider_shown_on_login_page}
+    signatureHashAlgorithm: ${var.identity_provider_signature_hash_algorithm}
+    signingCertificate: ${var.identity_provider_signing_certificate}
+    succinctId: succinctId
+    tags:
+    - key: ${var.identity_provider_tags_key}
+      value: ${var.identity_provider_tags_value}
+    type: ${var.identity_provider_type}
+    urnietfparamsscimschemasoracleidcsextensionsocialIdentityProvider:
+    - accessTokenUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_access_token_url}
+      accountLinkingEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_account_linking_enabled}
+      adminScope: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_admin_scope}
+      authzUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_authz_url}
+      autoRedirectEnabled: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_auto_redirect_enabled}
+      clientCredentialInPayload: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_client_credential_in_payload}
+      clockSkewInSeconds: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_clock_skew_in_seconds}
+      consumerKey: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_consumer_key}
+      consumerSecret: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_consumer_secret}
+      discoveryUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_discovery_url}
+      idAttribute: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_id_attribute}
+      jitProvAssignedGroups:
+      - display: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_jit_prov_assigned_groups_display}
+        value: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_jit_prov_assigned_groups_value}
+      jitProvGroupStaticListEnabled: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_jit_prov_group_static_list_enabled}
+      profileUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_profile_url}
+      redirectUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_redirect_url}
+      registrationEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_registration_enabled}
+      scope: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_scope}
+      serviceProviderName: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_service_provider_name}
+      socialJitProvisioningEnabled: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_social_jit_provisioning_enabled}
+      status: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_status}
+    urnietfparamsscimschemasoracleidcsextensionx509identityProvider:
+    - certMatchAttribute: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_cert_match_attribute}
+      crlCheckOnOcspFailureEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_crl_check_on_ocsp_failure_enabled}
+      crlEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_crl_enabled}
+      crlLocation: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_crl_location}
+      crlReloadDuration: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_crl_reload_duration}
+      ekuValidationEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_eku_validation_enabled}
+      ekuValues: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_eku_values}
+      ocspAllowUnknownResponseStatus: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_allow_unknown_response_status}
+      ocspEnableSignedResponse: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_enable_signed_response}
+      ocspEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_enabled}
+      ocspResponderUrl: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_responder_url}
+      ocspRevalidateTime: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_revalidate_time}
+      ocspServerName: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_server_name}
+      ocspTrustCertChain: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_ocsp_trust_cert_chain}
+      otherCertMatchAttribute: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_other_cert_match_attribute}
+      signingCertificateChain:
+      - signingCertificateChain
+      userMatchAttribute: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionx509identity_provider_user_match_attribute}
+    userMappingMethod: ${var.identity_provider_user_mapping_method}
+    userMappingStoreAttribute: ${var.identity_provider_user_mapping_store_attribute}

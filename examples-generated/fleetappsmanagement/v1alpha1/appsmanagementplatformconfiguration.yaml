@@ -1,0 +1,41 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementPlatformConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementplatformconfiguration
+  labels:
+    testing.upbound.io/example-name: test_platform_configuration
+  name: test-platform-configuration
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    configCategoryDetails:
+    - compatibleProducts:
+      - displayName: ${var.platform_configuration_config_category_details_compatible_products_display_name}
+        id: ${var.platform_configuration_config_category_details_compatible_products_id}
+      components: ${var.platform_configuration_config_category_details_components}
+      configCategory: ${var.platform_configuration_config_category_details_config_category}
+      credentials:
+      - displayName: ${var.platform_configuration_config_category_details_credentials_display_name}
+        id: ${var.platform_configuration_config_category_details_credentials_id}
+      instanceId: ${oci_core_instance.test_instance.id}
+      instanceName: ${oci_core_instance.test_instance.name}
+      patchTypes:
+      - displayName: ${var.platform_configuration_config_category_details_patch_types_display_name}
+        id: ${var.platform_configuration_config_category_details_patch_types_id}
+      products:
+      - displayName: ${var.platform_configuration_config_category_details_products_display_name}
+        id: ${var.platform_configuration_config_category_details_products_id}
+      subCategoryDetails:
+      - components: ${var.platform_configuration_config_category_details_sub_category_details_components}
+        credentials:
+        - displayName: ${var.platform_configuration_config_category_details_sub_category_details_credentials_display_name}
+          id: ${var.platform_configuration_config_category_details_sub_category_details_credentials_id}
+        patchTypes:
+        - displayName: ${var.platform_configuration_config_category_details_sub_category_details_patch_types_display_name}
+          id: ${var.platform_configuration_config_category_details_sub_category_details_patch_types_id}
+        subCategory: ${var.platform_configuration_config_category_details_sub_category_details_sub_category}
+        versions: ${var.platform_configuration_config_category_details_sub_category_details_versions}
+      versions: ${var.platform_configuration_config_category_details_versions}
+    description: ${var.platform_configuration_description}
+    displayName: ${var.platform_configuration_display_name}

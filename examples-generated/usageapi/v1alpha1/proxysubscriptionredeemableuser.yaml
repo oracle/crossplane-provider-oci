@@ -1,0 +1,17 @@
+apiVersion: usageapi.oci.upbound.io/v1alpha1
+kind: ProxySubscriptionRedeemableUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: usageapi/v1alpha1/proxysubscriptionredeemableuser
+  labels:
+    testing.upbound.io/example-name: test_subscription_redeemable_user
+  name: test-subscription-redeemable-user
+spec:
+  forProvider:
+    items:
+    - emailId: ${oci_usage_proxy_email.test_email.id}
+      firstName: ${var.subscription_redeemable_user_items_first_name}
+      lastName: ${var.subscription_redeemable_user_items_last_name}
+    subscriptionId: ${oci_ons_subscription.test_subscription.id}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    userId: ${oci_identity_user.test_user.id}

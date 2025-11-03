@@ -1,0 +1,15 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceGroupAttachSoftwareSourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstancegroupattachsoftwaresourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_attach_software_sources_management
+  name: test-managed-instance-group-attach-software-sources-management
+spec:
+  forProvider:
+    managedInstanceGroupId: ${oci_os_management_hub_managed_instance_group.test_managed_instance_group.id}
+    softwareSources: ${var.managed_instance_group_attach_software_sources_management_software_sources}
+    workRequestDetails:
+    - description: ${var.managed_instance_group_attach_software_sources_management_work_request_details_description}
+      displayName: ${var.managed_instance_group_attach_software_sources_management_work_request_details_display_name}

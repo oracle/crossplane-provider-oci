@@ -1,0 +1,17 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: CapacityReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/capacityreport
+  labels:
+    testing.upbound.io/example-name: test_bds_capacity_report
+  name: test-bds-capacity-report
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    shapeAvailabilities:
+    - shape: ${var.bds_capacity_report_shape_availabilities_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_capacity_report_shape_availabilities_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_capacity_report_shape_availabilities_shape_config_nvmes}
+        ocpus: ${var.bds_capacity_report_shape_availabilities_shape_config_ocpus}

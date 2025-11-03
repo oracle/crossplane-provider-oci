@@ -13,6 +13,12 @@ func (tr *Backend) Hub() {}
 func (tr *BackendSet) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *Balancer) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *BalancerBackendset) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Certificate) Hub() {}
 
 // Hub marks this type as a conversion hub.

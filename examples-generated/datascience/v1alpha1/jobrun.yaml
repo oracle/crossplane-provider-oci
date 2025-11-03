@@ -1,0 +1,37 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: JobRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/jobrun
+  labels:
+    testing.upbound.io/example-name: test_job_run
+  name: test-job-run
+spec:
+  forProvider:
+    asynchronous: ${var.asynchronous}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.job_run_display_name}
+    freeformTags:
+      Department: Finance
+    jobConfigurationOverrideDetails:
+    - commandLineArguments: ${var.job_run_job_configuration_override_details_command_line_arguments}
+      environmentVariables: ${var.job_run_job_configuration_override_details_environment_variables}
+      jobType: ${var.job_run_job_configuration_override_details_job_type}
+      maximumRuntimeInMinutes: ${var.job_run_job_configuration_override_details_maximum_runtime_in_minutes}
+    jobEnvironmentConfigurationOverrideDetails:
+    - cmd: ${var.job_run_job_environment_configuration_override_details_cmd}
+      entrypoint: ${var.job_run_job_environment_configuration_override_details_entrypoint}
+      image: ${var.job_run_job_environment_configuration_override_details_image}
+      imageDigest: ${var.job_run_job_environment_configuration_override_details_image_digest}
+      imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      jobEnvironmentType: ${var.job_run_job_environment_configuration_override_details_job_environment_type}
+    jobId: ${oci_datascience_job.test_job.id}
+    jobLogConfigurationOverrideDetails:
+    - enableAutoLogCreation: ${var.job_run_job_log_configuration_override_details_enable_auto_log_creation}
+      enableLogging: ${var.job_run_job_log_configuration_override_details_enable_logging}
+      logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}
+    opcParentRptUrl: ${var.job_run_opc_parent_rpt_url}
+    projectId: ${oci_datascience_project.test_project.id}

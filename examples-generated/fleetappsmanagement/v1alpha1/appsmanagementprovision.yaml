@@ -1,0 +1,24 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementProvision
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementprovision
+  labels:
+    testing.upbound.io/example-name: test_provision
+  name: test-provision
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    configCatalogItemId: ${oci_fleet_apps_management_catalog_item.test_catalog_item.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.provision_display_name}
+    fleetId: ${oci_fleet_apps_management_fleet.test_fleet.id}
+    freeformTags:
+      bar-key: value
+    packageCatalogItemId: ${oci_fleet_apps_management_catalog_item.test_catalog_item.id}
+    provisionDescription: ${var.provision_provision_description}
+    tfVariableCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    tfVariableCurrentUserId: ${oci_identity_user.test_user.id}
+    tfVariableRegionId: ${oci_identity_region.test_region.id}
+    tfVariableTenancyId: ${oci_identity_tenancy.test_tenancy.id}

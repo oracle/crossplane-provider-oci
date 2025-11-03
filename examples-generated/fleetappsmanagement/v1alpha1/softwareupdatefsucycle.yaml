@@ -1,0 +1,45 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: SoftwareUpdateFsuCycle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/softwareupdatefsucycle
+  labels:
+    testing.upbound.io/example-name: test_fsu_cycle
+  name: test-fsu-cycle
+spec:
+  forProvider:
+    applyActionSchedule:
+    - timeToStart: ${var.fsu_cycle_apply_action_schedule_time_to_start}
+      type: ${var.fsu_cycle_apply_action_schedule_type}
+    batchingStrategy:
+    - isForceRolling: ${var.fsu_cycle_batching_strategy_is_force_rolling}
+      isWaitForBatchResume: ${var.fsu_cycle_batching_strategy_is_wait_for_batch_resume}
+      percentage: ${var.fsu_cycle_batching_strategy_percentage}
+      type: ${var.fsu_cycle_batching_strategy_type}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    diagnosticsCollection:
+    - logCollectionMode: ${var.fsu_cycle_diagnostics_collection_log_collection_mode}
+    displayName: ${var.fsu_cycle_display_name}
+    freeformTags:
+      bar-key: value
+    fsuCollectionId: ${oci_fleet_software_update_fsu_collection.test_fsu_collection.id}
+    goalVersionDetails:
+    - homePolicy: ${var.fsu_cycle_goal_version_details_home_policy}
+      newHomePrefix: ${var.fsu_cycle_goal_version_details_new_home_prefix}
+      softwareImageId: ${oci_core_image.test_image.id}
+      type: ${var.fsu_cycle_goal_version_details_type}
+      version: ${var.fsu_cycle_goal_version_details_version}
+    isIgnoreMissingPatches: ${var.fsu_cycle_is_ignore_missing_patches}
+    isIgnorePatches: ${var.fsu_cycle_is_ignore_patches}
+    isKeepPlacement: ${var.fsu_cycle_is_keep_placement}
+    maxDrainTimeoutInSeconds: ${var.fsu_cycle_max_drain_timeout_in_seconds}
+    stageActionSchedule:
+    - timeToStart: ${var.fsu_cycle_stage_action_schedule_time_to_start}
+      type: ${var.fsu_cycle_stage_action_schedule_type}
+    type: ${var.fsu_cycle_type}
+    upgradeDetails:
+    - collectionType: ${var.fsu_cycle_upgrade_details_collection_type}
+      isRecompileInvalidObjects: ${var.fsu_cycle_upgrade_details_is_recompile_invalid_objects}
+      isTimeZoneUpgrade: ${var.fsu_cycle_upgrade_details_is_time_zone_upgrade}

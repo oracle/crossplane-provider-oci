@@ -1,0 +1,18 @@
+apiVersion: log.oci.upbound.io/v1alpha1
+kind: AnalyticsLogAnalyticsLogGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: log/v1alpha1/analyticsloganalyticsloggroup
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_log_group
+  name: test-log-analytics-log-group
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.log_analytics_log_group_description}
+    displayName: ${var.log_analytics_log_group_display_name}
+    freeformTags:
+      bar-key: value
+    namespace: ${var.log_analytics_log_group_namespace}

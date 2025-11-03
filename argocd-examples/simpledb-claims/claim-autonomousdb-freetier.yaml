@@ -1,0 +1,113 @@
+apiVersion: database.crossplane.io/v1alpha1
+kind: SimpleDatabaseClaim
+metadata:
+  name: poc-autonomousdb-free
+  annotations:
+    crossplane.io/external-name: poc-autonomousdb-free
+spec:
+  # OCI Compartment where the database will be created
+  compartmentId: "ocid1.compartment.oc1..aaaaaaaahkmcqkcdnvjxdykdiai4ncm5f4o3n3gmtbpy6cnvey2nspef6k5a"
+  
+  # OCI region
+  region: "us-ashburn-1"
+  
+  # Database type - using Autonomous Database (serverless)
+  databaseType: "autonomous"
+  
+  # Common database configuration
+  databaseConfig:
+    name: "POCFREEDB"       # Database name (max 14 characters)
+    displayName: "POC Free Tier Autonomous Database"
+    version: "19c"          # Oracle Database 19c
+    workload: "OLTP"        # ATP - Autonomous Transaction Processing
+    adminPassword:
+      # Create this secret first with:
+      # kubectl create secret generic adb-free-admin-password \
+      #   --from-literal=password='YourPassword#123_' \
+      #   -n crossplane-system
+      secretName: "adb-free-admin-password"
+      secretNamespace: "crossplane-system"
+      secretKey: "password"
+    # Character sets not supported in free tier - using defaults
+    # characterSet: "AL32UTF8"
+    # nCharacterSet: "AL16UTF16"
+    enableBackup: true
+    backupRetentionDays: 7  # Limited in free tier
+  
+  # Autonomous Database specific configuration - FREE TIER
+  autonomousConfig:
+    # FREE TIER CONFIGURATION
+    isFreeTier: true        # IMPORTANT: Enables Always Free tier
+    
+    # Free tier limits (these are fixed for free tier)
+    cpuCoreCount: 1         # Free tier: 1 OCPU only
+    # Storage is automatically set to ~20GB for free tier
+    # dataStorageSizeInTBs is ignored for free tier
+    
+    computeModel: "OCPU"    # Free tier uses OCPU model
+    
+    # Auto-scaling is not available in free tier
+    isAutoScalingEnabled: false
+    isAutoScalingForStorageEnabled: false
+    
+    # Licensing - always included in free tier
+    licenseModel: "LICENSE_INCLUDED"
+    
+    # Access control
+    # Leave empty to allow access from anywhere
+    whitelistedIps: []
+    
+    # Security
+    isMtlsConnectionRequired: true  # Recommended for security
+    
+    # Features not available in free tier:
+    isDataGuardEnabled: false      # Not available in free tier
+    isDedicated: false              # Not available in free tier
+  
+  # Resource tags
+  tags:
+    freeformTags:
+      Environment: "POC"
+      Type: "AutonomousDatabase"
+      Tier: "AlwaysFree"
+      ManagedBy: "Crossplane"
+      Workload: "ATP"
+      Note: "Limited to 2 free instances per tenancy"
+  
+  # Select the composition to use
+  compositionSelector:
+    matchLabels:
+      type: autonomous
+
+---
+# Important Notes for Free Tier:
+# 
+# 1. LIMITS:
+#    - Maximum 2 Always Free Autonomous Databases per tenancy
+#    - 1 OCPU (2 ECPUs)
+#    - ~20 GB storage
+#    - 1 TB monthly data transfer
+#    - No auto-scaling
+#    - No Data Guard
+#
+# 2. WORKLOAD TYPES:
+#    - OLTP: Autonomous Transaction Processing (ATP)
+#    - DW: Autonomous Data Warehouse (ADW)
+#    - AJD: Autonomous JSON Database
+#    - APEX: APEX Application Development
+#
+# 3. AUTO-STOP/DELETE:
+#    - Databases stop after 7 days of inactivity
+#    - Databases are deleted after 90 days if stopped
+#    - Set up monitoring to prevent auto-deletion
+#
+# 4. CONNECTIVITY:
+#    - Public endpoint only (no private endpoint in free tier)
+#    - mTLS recommended for security
+#    - Wallet download required for connections
+#
+# 5. PERFECT FOR:
+#    - Development and testing
+#    - Learning and training
+#    - Small applications
+#    - Proof of concepts

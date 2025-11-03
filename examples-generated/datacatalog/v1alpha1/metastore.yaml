@@ -1,0 +1,18 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: Metastore
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacatalog/v1alpha1/metastore
+  labels:
+    testing.upbound.io/example-name: test_metastore
+  name: test-metastore
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    defaultExternalTableLocation: ${var.metastore_default_external_table_location}
+    defaultManagedTableLocation: ${var.metastore_default_managed_table_location}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.metastore_display_name}
+    freeformTags:
+      bar-key: value

@@ -1,0 +1,33 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceGroupManageModuleStreamsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstancegroupmanagemodulestreamsmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_manage_module_streams_management
+  name: test-managed-instance-group-manage-module-streams-management
+spec:
+  forProvider:
+    disable:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_disable_module_name}
+      softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}
+      streamName: ${var.stream_name}
+    enable:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_enable_module_name}
+      softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}
+      streamName: ${var.stream_name}
+    install:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_install_module_name}
+      profileName: ${oci_os_management_hub_profile.test_profile.name}
+      softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}
+      streamName: ${var.stream_name}
+    isDryRun: ${var.managed_instance_group_manage_module_streams_management_is_dry_run}
+    managedInstanceGroupId: ${oci_os_management_hub_managed_instance_group.test_managed_instance_group.id}
+    remove:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_remove_module_name}
+      profileName: ${oci_os_management_hub_profile.test_profile.name}
+      softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}
+      streamName: ${var.stream_name}
+    workRequestDetails:
+    - description: ${var.managed_instance_group_manage_module_streams_management_work_request_details_description}
+      displayName: ${var.managed_instance_group_manage_module_streams_management_work_request_details_display_name}

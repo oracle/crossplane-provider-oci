@@ -1,0 +1,14 @@
+apiVersion: generic.oci.upbound.io/v1alpha1
+kind: ArtifactsContentArtifactByPath
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generic/v1alpha1/artifactscontentartifactbypath
+  labels:
+    testing.upbound.io/example-name: test_artifact_by_path
+  name: test-artifact-by-path
+spec:
+  forProvider:
+    artifactPath: ${var.artifact_path}
+    repositoryId: ${oci_artifacts_repository.test_repository.id}
+    source: ${var.source}
+    version: ${var.version}

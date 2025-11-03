@@ -154,7 +154,7 @@ type KeyInitParameters struct {
 	IsAutoRotationEnabled *bool `json:"isAutoRotationEnabled,omitempty" tf:"is_auto_rotation_enabled,omitempty"`
 
 	// The cryptographic properties of a key.
-	KeyShape []KeyShapeInitParameters `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
+	KeyShape []KeyKeyShapeInitParameters `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
 
 	// The service endpoint to perform management operations against. Management operations include 'Create,' 'Update,' 'List,' 'Get,' and 'Delete' operations. See Vault Management endpoint.
 	ManagementEndpoint *string `json:"managementEndpoint,omitempty" tf:"management_endpoint,omitempty"`
@@ -173,6 +173,45 @@ type KeyInitParameters struct {
 
 	// (Updatable) An optional property for the deletion time of the key, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
 	TimeOfDeletion *string `json:"timeOfDeletion,omitempty" tf:"time_of_deletion,omitempty"`
+}
+
+type KeyKeyShapeInitParameters struct {
+
+	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
+	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
+
+	// Supported curve IDs for ECDSA keys.
+	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
+
+	// The length of the key in bytes, expressed as an integer. Supported values include the following:
+	Length *float64 `json:"length,omitempty" tf:"length,omitempty"`
+}
+
+type KeyKeyShapeObservation struct {
+
+	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
+	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
+
+	// Supported curve IDs for ECDSA keys.
+	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
+
+	// The length of the key in bytes, expressed as an integer. Supported values include the following:
+	Length *float64 `json:"length,omitempty" tf:"length,omitempty"`
+}
+
+type KeyKeyShapeParameters struct {
+
+	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
+	// +kubebuilder:validation:Optional
+	Algorithm *string `json:"algorithm" tf:"algorithm,omitempty"`
+
+	// Supported curve IDs for ECDSA keys.
+	// +kubebuilder:validation:Optional
+	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
+
+	// The length of the key in bytes, expressed as an integer. Supported values include the following:
+	// +kubebuilder:validation:Optional
+	Length *float64 `json:"length" tf:"length,omitempty"`
 }
 
 type KeyObservation struct {
@@ -216,7 +255,7 @@ type KeyObservation struct {
 	IsPrimary *bool `json:"isPrimary,omitempty" tf:"is_primary,omitempty"`
 
 	// The cryptographic properties of a key.
-	KeyShape []KeyShapeObservation `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
+	KeyShape []KeyKeyShapeObservation `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
 
 	// The service endpoint to perform management operations against. Management operations include 'Create,' 'Update,' 'List,' 'Get,' and 'Delete' operations. See Vault Management endpoint.
 	ManagementEndpoint *string `json:"managementEndpoint,omitempty" tf:"management_endpoint,omitempty"`
@@ -299,7 +338,7 @@ type KeyParameters struct {
 
 	// The cryptographic properties of a key.
 	// +kubebuilder:validation:Optional
-	KeyShape []KeyShapeParameters `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
+	KeyShape []KeyKeyShapeParameters `json:"keyShape,omitempty" tf:"key_shape,omitempty"`
 
 	// The service endpoint to perform management operations against. Management operations include 'Create,' 'Update,' 'List,' 'Get,' and 'Delete' operations. See Vault Management endpoint.
 	// +kubebuilder:validation:Optional
@@ -324,45 +363,6 @@ type KeyParameters struct {
 	// (Updatable) An optional property for the deletion time of the key, expressed in RFC 3339 timestamp format. Example: 2019-04-03T21:10:29.600Z
 	// +kubebuilder:validation:Optional
 	TimeOfDeletion *string `json:"timeOfDeletion,omitempty" tf:"time_of_deletion,omitempty"`
-}
-
-type KeyShapeInitParameters struct {
-
-	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
-	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
-
-	// Supported curve IDs for ECDSA keys.
-	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
-
-	// The length of the key in bytes, expressed as an integer. Supported values include the following:
-	Length *float64 `json:"length,omitempty" tf:"length,omitempty"`
-}
-
-type KeyShapeObservation struct {
-
-	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
-	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
-
-	// Supported curve IDs for ECDSA keys.
-	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
-
-	// The length of the key in bytes, expressed as an integer. Supported values include the following:
-	Length *float64 `json:"length,omitempty" tf:"length,omitempty"`
-}
-
-type KeyShapeParameters struct {
-
-	// The algorithm used by a key's key versions to encrypt or decrypt. Only AES algorithm is supported for External keys.
-	// +kubebuilder:validation:Optional
-	Algorithm *string `json:"algorithm" tf:"algorithm,omitempty"`
-
-	// Supported curve IDs for ECDSA keys.
-	// +kubebuilder:validation:Optional
-	CurveID *string `json:"curveId,omitempty" tf:"curve_id,omitempty"`
-
-	// The length of the key in bytes, expressed as an integer. Supported values include the following:
-	// +kubebuilder:validation:Optional
-	Length *float64 `json:"length" tf:"length,omitempty"`
 }
 
 type ReplicaDetailsInitParameters struct {

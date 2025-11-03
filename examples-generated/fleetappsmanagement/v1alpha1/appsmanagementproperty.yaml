@@ -1,0 +1,15 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: AppsManagementProperty
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/appsmanagementproperty
+  labels:
+    testing.upbound.io/example-name: test_property
+  name: test-property
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    displayName: ${var.property_display_name}
+    selection: ${var.property_selection}
+    valueType: ${var.property_value_type}
+    values: ${var.property_values}

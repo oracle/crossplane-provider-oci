@@ -1,0 +1,21 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeGpuMemoryCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computegpumemorycluster
+  labels:
+    testing.upbound.io/example-name: test_compute_gpu_memory_cluster
+  name: test-compute-gpu-memory-cluster
+spec:
+  forProvider:
+    availabilityDomain: ${var.compute_gpu_memory_cluster_availability_domain}
+    compartmentId: ${var.compartment_id}
+    computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.compute_gpu_memory_cluster_display_name}
+    freeformTags:
+      Department: Finance
+    gpuMemoryFabricId: ${oci_core_gpu_memory_fabric.test_gpu_memory_fabric.id}
+    instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration.id}
+    size: ${var.compute_gpu_memory_cluster_size}

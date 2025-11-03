@@ -1,0 +1,18 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DevopsProject
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/devopsproject
+  labels:
+    testing.upbound.io/example-name: test_project
+  name: test-project
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.project_description}
+    freeformTags:
+      bar-key: value
+    notificationConfig:
+    - topicId: ${oci_ons_notification_topic.test_notification_topic.id}

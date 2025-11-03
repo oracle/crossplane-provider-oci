@@ -1,0 +1,63 @@
+apiVersion: opensearch.oci.upbound.io/v1alpha1
+kind: OpensearchCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchcluster
+  labels:
+    testing.upbound.io/example-name: test_opensearch_cluster
+  name: test-opensearch-cluster
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    dataNodeCount: ${var.opensearch_cluster_data_node_count}
+    dataNodeHostBareMetalShape: ${var.opensearch_cluster_data_node_host_bare_metal_shape}
+    dataNodeHostMemoryGb: ${var.opensearch_cluster_data_node_host_memory_gb}
+    dataNodeHostOcpuCount: ${var.opensearch_cluster_data_node_host_ocpu_count}
+    dataNodeHostShape: ${var.opensearch_cluster_data_node_host_shape}
+    dataNodeHostType: ${var.opensearch_cluster_data_node_host_type}
+    dataNodeStorageGb: ${var.opensearch_cluster_data_node_storage_gb}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.opensearch_cluster_display_name}
+    freeformTags:
+      bar-key: value
+    inboundClusterIds: ${var.opensearch_cluster_inbound_cluster_ids}
+    maintenanceDetails:
+    - notificationEmailIds: ${var.opensearch_cluster_maintenance_details_notification_email_ids}
+    masterNodeCount: ${var.opensearch_cluster_master_node_count}
+    masterNodeHostBareMetalShape: ${var.opensearch_cluster_master_node_host_bare_metal_shape}
+    masterNodeHostMemoryGb: ${var.opensearch_cluster_master_node_host_memory_gb}
+    masterNodeHostOcpuCount: ${var.opensearch_cluster_master_node_host_ocpu_count}
+    masterNodeHostShape: ${var.opensearch_cluster_master_node_host_shape}
+    masterNodeHostType: ${var.opensearch_cluster_master_node_host_type}
+    opendashboardNodeCount: ${var.opensearch_cluster_opendashboard_node_count}
+    opendashboardNodeHostMemoryGb: ${var.opensearch_cluster_opendashboard_node_host_memory_gb}
+    opendashboardNodeHostOcpuCount: ${var.opensearch_cluster_opendashboard_node_host_ocpu_count}
+    opendashboardNodeHostShape: ${var.opensearch_cluster_opendashboard_node_host_shape}
+    outboundClusterConfig:
+    - isEnabled: ${var.opensearch_cluster_outbound_cluster_config_is_enabled}
+      outboundClusters:
+      - displayName: ${var.opensearch_cluster_outbound_cluster_config_outbound_clusters_display_name}
+        isSkipUnavailable: ${var.opensearch_cluster_outbound_cluster_config_outbound_clusters_is_skip_unavailable}
+        mode: ${var.opensearch_cluster_outbound_cluster_config_outbound_clusters_mode}
+        pingSchedule: ${var.opensearch_cluster_outbound_cluster_config_outbound_clusters_ping_schedule}
+        seedClusterId: ${oci_opensearch_opensearch_cluster.test_opensearch_cluster.id}
+    reverseConnectionEndpointCustomerIps: ${var.opensearch_cluster_reverse_connection_endpoint_customer_ips}
+    searchNodeCount: ${var.opensearch_cluster_search_node_count}
+    searchNodeHostMemoryGb: ${var.opensearch_cluster_search_node_host_memory_gb}
+    searchNodeHostOcpuCount: ${var.opensearch_cluster_search_node_host_ocpu_count}
+    searchNodeHostShape: ${var.opensearch_cluster_search_node_host_shape}
+    searchNodeHostType: ${var.opensearch_cluster_search_node_host_type}
+    searchNodeStorageGb: ${var.opensearch_cluster_search_node_storage_gb}
+    securityMasterUserName: ${oci_identity_user.test_user.name}
+    securityMasterUserPasswordHashSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    securityMode: ${var.opensearch_cluster_security_mode}
+    softwareVersion: ${var.opensearch_cluster_software_version}
+    subnetCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    systemTags: ${var.opensearch_cluster_system_tags}
+    vcnCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    vcnId: ${oci_core_vcn.test_vcn.id}

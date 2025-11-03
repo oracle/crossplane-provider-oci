@@ -1,0 +1,58 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: PipelineRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/pipelinerun
+  labels:
+    testing.upbound.io/example-name: test_pipeline_run
+  name: test-pipeline-run
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    configurationOverrideDetails:
+    - commandLineArguments: ${var.pipeline_run_configuration_override_details_command_line_arguments}
+      environmentVariables: ${var.pipeline_run_configuration_override_details_environment_variables}
+      maximumRuntimeInMinutes: ${var.pipeline_run_configuration_override_details_maximum_runtime_in_minutes}
+      type: ${var.pipeline_run_configuration_override_details_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.pipeline_run_display_name}
+    freeformTags:
+      Department: Finance
+    logConfigurationOverrideDetails:
+    - enableAutoLogCreation: ${var.pipeline_run_log_configuration_override_details_enable_auto_log_creation}
+      enableLogging: ${var.pipeline_run_log_configuration_override_details_enable_logging}
+      logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}
+    opcParentRptUrl: ${var.pipeline_run_opc_parent_rpt_url}
+    pipelineId: ${oci_datascience_pipeline.test_pipeline.id}
+    projectId: ${oci_datascience_project.test_project.id}
+    stepOverrideDetails:
+    - stepConfigurationDetails:
+      - commandLineArguments: ${var.pipeline_run_step_override_details_step_configuration_details_command_line_arguments}
+        environmentVariables: ${var.pipeline_run_step_override_details_step_configuration_details_environment_variables}
+        maximumRuntimeInMinutes: ${var.pipeline_run_step_override_details_step_configuration_details_maximum_runtime_in_minutes}
+      stepContainerConfigurationDetails:
+      - cmd: ${var.pipeline_run_step_override_details_step_container_configuration_details_cmd}
+        containerType: ${var.pipeline_run_step_override_details_step_container_configuration_details_container_type}
+        entrypoint: ${var.pipeline_run_step_override_details_step_container_configuration_details_entrypoint}
+        image: ${var.pipeline_run_step_override_details_step_container_configuration_details_image}
+        imageDigest: ${var.pipeline_run_step_override_details_step_container_configuration_details_image_digest}
+        imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      stepDataflowConfigurationDetails:
+      - configuration: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_configuration}
+        driverShape: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape}
+        driverShapeConfigDetails:
+        - cpuBaseline: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_memory_in_gbs}
+          ocpus: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_ocpus}
+        executorShape: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape}
+        executorShapeConfigDetails:
+        - cpuBaseline: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_memory_in_gbs}
+          ocpus: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_ocpus}
+        logsBucketUri: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_logs_bucket_uri}
+        numExecutors: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_num_executors}
+        warehouseBucketUri: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_warehouse_bucket_uri}
+      stepName: ${var.pipeline_run_step_override_details_step_name}
+    systemTags: ${var.pipeline_run_system_tags}

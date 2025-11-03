@@ -1,0 +1,16 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Preauthrequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/preauthrequest
+  labels:
+    testing.upbound.io/example-name: test_preauthenticated_request
+  name: test-preauthenticated-request
+spec:
+  forProvider:
+    accessType: ${var.preauthenticated_request_access_type}
+    bucket: ${var.preauthenticated_request_bucket}
+    bucketListingAction: ${var.preauthenticated_request_bucket_listing_action}
+    namespace: ${var.preauthenticated_request_namespace}
+    object: ${var.preauthenticated_request_object}
+    timeExpires: ${var.preauthenticated_request_time_expires}

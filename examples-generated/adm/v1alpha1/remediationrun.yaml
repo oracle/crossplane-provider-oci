@@ -1,0 +1,16 @@
+apiVersion: adm.oci.upbound.io/v1alpha1
+kind: RemediationRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: adm/v1alpha1/remediationrun
+  labels:
+    testing.upbound.io/example-name: test_remediation_run
+  name: test-remediation-run
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.remediation_run_display_name}
+    freeformTags:
+      bar-key: value
+    remediationRecipeId: ${oci_adm_remediation_recipe.test_remediation_recipe.id}

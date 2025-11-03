@@ -7,7 +7,46 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *DefaultDhcpOptions) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DefaultRouteTable) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DefaultSecurityList) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DhcpOptions) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyAddressList) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyApplication) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyApplicationGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyDecryptionProfile) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyDecryptionRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyMappedSecret) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyNatRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicySecurityRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyService) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FirewallNetworkFirewallPolicyTunnelInspectionRule) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *InternetGateway) Hub() {}

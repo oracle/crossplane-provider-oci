@@ -7,6 +7,12 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *ChecksHttpProbe) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ChecksPingProbe) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *HTTPMonitor) Hub() {}
 
 // Hub marks this type as a conversion hub.

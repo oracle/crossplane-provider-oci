@@ -1,0 +1,15 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubManagedInstanceGroupAttachManagedInstancesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubmanagedinstancegroupattachmanagedinstancesmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_attach_managed_instances_management
+  name: test-managed-instance-group-attach-managed-instances-management
+spec:
+  forProvider:
+    managedInstanceGroupId: ${oci_os_management_hub_managed_instance_group.test_managed_instance_group.id}
+    managedInstances: ${var.managed_instance_group_attach_managed_instances_management_managed_instances}
+    workRequestDetails:
+    - description: ${var.managed_instance_group_attach_managed_instances_management_work_request_details_description}
+      displayName: ${var.managed_instance_group_attach_managed_instances_management_work_request_details_display_name}

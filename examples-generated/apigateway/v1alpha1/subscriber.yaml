@@ -1,0 +1,20 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Subscriber
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/subscriber
+  labels:
+    testing.upbound.io/example-name: test_subscriber
+  name: test-subscriber
+spec:
+  forProvider:
+    clients:
+    - name: ${var.subscriber_clients_name}
+      token: ${var.subscriber_clients_token}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.subscriber_display_name}
+    freeformTags:
+      Department: Finance
+    usagePlans: ${var.subscriber_usage_plans}

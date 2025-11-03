@@ -1,0 +1,19 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: NetworkSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/networksource
+  labels:
+    testing.upbound.io/example-name: test_network_source
+  name: test-network-source
+spec:
+  forProvider:
+    compartmentId: ${var.tenancy_ocid}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.network_source_description}
+    freeformTags:
+      Department: Finance
+    publicSourceList: ${var.network_source_public_source_list}
+    services: ${var.network_source_services}
+    virtualSourceList: ${var.network_source_virtual_source_list}

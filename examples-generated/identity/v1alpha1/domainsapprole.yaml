@@ -1,0 +1,32 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsAppRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsapprole
+  labels:
+    testing.upbound.io/example-name: test_app_role
+  name: test-app-role
+spec:
+  forProvider:
+    adminRole: ${var.app_role_admin_role}
+    app:
+    - value: ${oci_identity_domains_app.test_app.id}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.app_role_authorization}
+    availableToClients: ${var.app_role_available_to_clients}
+    availableToGroups: ${var.app_role_available_to_groups}
+    availableToUsers: ${var.app_role_available_to_users}
+    description: ${var.app_role_description}
+    displayName: ${var.app_role_display_name}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    legacyGroupName: legacyGroupName
+    ocid: ${var.app_role_ocid}
+    public: ${var.app_role_public}
+    resourceTypeSchemaVersion: ${var.app_role_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:AppRole
+    tags:
+    - key: ${var.app_role_tags_key}
+      value: ${var.app_role_tags_value}

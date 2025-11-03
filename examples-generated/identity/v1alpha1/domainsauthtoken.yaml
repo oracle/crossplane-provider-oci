@@ -1,0 +1,29 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsAuthToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsauthtoken
+  labels:
+    testing.upbound.io/example-name: test_auth_token
+  name: test-auth-token
+spec:
+  forProvider:
+    attributeSets: []
+    attributes: ""
+    authorization: ${var.auth_token_authorization}
+    description: ${var.auth_token_description}
+    expiresOn: ${var.auth_token_expires_on}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    ocid: ${var.auth_token_ocid}
+    resourceTypeSchemaVersion: ${var.auth_token_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:authToken
+    status: ${var.auth_token_status}
+    tags:
+    - key: ${var.auth_token_tags_key}
+      value: ${var.auth_token_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionselfChangeUser:
+    - allowSelfChange: ${var.auth_token_urnietfparamsscimschemasoracleidcsextensionself_change_user_allow_self_change}
+    user:
+    - ocid: ${var.user_ocid}
+      value: ${oci_identity_domains_user.test_user.id}

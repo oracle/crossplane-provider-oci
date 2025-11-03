@@ -1,0 +1,50 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: BuildPipelineStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline_stage
+  name: test-build-pipeline-stage
+spec:
+  forProvider:
+    buildPipelineId: ${oci_devops_build_pipeline.test_build_pipeline.id}
+    buildPipelineStagePredecessorCollection:
+    - items:
+      - id: ${var.build_pipeline_stage_build_pipeline_stage_predecessor_collection_items_id}
+    buildPipelineStageType: ${var.build_pipeline_stage_build_pipeline_stage_type}
+    buildRunnerShapeConfig:
+    - buildRunnerType: ${var.build_pipeline_stage_build_runner_shape_config_build_runner_type}
+      memoryInGbs: ${var.build_pipeline_stage_build_runner_shape_config_memory_in_gbs}
+      ocpus: ${var.build_pipeline_stage_build_runner_shape_config_ocpus}
+    buildSourceCollection:
+    - items:
+      - branch: ${var.build_pipeline_stage_build_source_collection_items_branch}
+        connectionId: ${oci_devops_connection.test_connection.id}
+        connectionType: ${var.build_pipeline_stage_build_source_collection_items_connection_type}
+        name: ${var.build_pipeline_stage_build_source_collection_items_name}
+        repositoryId: ${oci_artifacts_repository.test_repository.id}
+        repositoryUrl: ${var.build_pipeline_stage_build_source_collection_items_repository_url}
+    buildSpecFile: ${var.build_pipeline_stage_build_spec_file}
+    definedTags:
+      foo-namespace.bar-key: value
+    deliverArtifactCollection:
+    - items:
+      - artifactId: ${oci_devops_artifact.test_artifact.id}
+        artifactName: ${var.build_pipeline_stage_deliver_artifact_collection_items_artifact_name}
+    deployPipelineId: ${oci_devops_deploy_pipeline.test_deploy_pipeline.id}
+    description: ${var.build_pipeline_stage_description}
+    displayName: ${var.build_pipeline_stage_display_name}
+    freeformTags:
+      bar-key: value
+    image: ${var.build_pipeline_stage_image}
+    isPassAllParametersEnabled: ${var.build_pipeline_stage_is_pass_all_parameters_enabled}
+    primaryBuildSource: ${var.build_pipeline_stage_primary_build_source}
+    privateAccessConfig:
+    - networkChannelType: ${var.build_pipeline_stage_private_access_config_network_channel_type}
+      nsgIds: ${var.build_pipeline_stage_private_access_config_nsg_ids}
+      subnetId: ${oci_core_subnet.test_subnet.id}
+    stageExecutionTimeoutInSeconds: ${var.build_pipeline_stage_stage_execution_timeout_in_seconds}
+    waitCriteria:
+    - waitDuration: ${var.build_pipeline_stage_wait_criteria_wait_duration}
+      waitType: ${var.build_pipeline_stage_wait_criteria_wait_type}

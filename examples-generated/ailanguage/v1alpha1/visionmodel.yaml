@@ -1,0 +1,40 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: VisionModel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/visionmodel
+  labels:
+    testing.upbound.io/example-name: test_model
+  name: test-model
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.model_description}
+    displayName: ${var.model_display_name}
+    freeformTags:
+      bar-key: value
+    isQuickMode: ${var.model_is_quick_mode}
+    maxTrainingDurationInHours: ${var.model_max_training_duration_in_hours}
+    modelType: ${var.model_model_type}
+    modelVersion: ${var.model_model_version}
+    projectId: ${oci_ai_vision_project.test_project.id}
+    testingDataset:
+    - bucket: ${var.model_testing_dataset_bucket}
+      datasetId: ${oci_data_labeling_service_dataset.test_dataset.id}
+      datasetType: ${var.model_testing_dataset_dataset_type}
+      namespaceName: ${var.model_testing_dataset_namespace}
+      object: ${var.model_testing_dataset_object}
+    trainingDataset:
+    - bucket: ${var.model_training_dataset_bucket}
+      datasetId: ${oci_data_labeling_service_dataset.test_dataset.id}
+      datasetType: ${var.model_training_dataset_dataset_type}
+      namespaceName: ${var.model_training_dataset_namespace}
+      object: ${var.model_training_dataset_object}
+    validationDataset:
+    - bucket: ${var.model_validation_dataset_bucket}
+      datasetId: ${oci_data_labeling_service_dataset.test_dataset.id}
+      datasetType: ${var.model_validation_dataset_dataset_type}
+      namespaceName: ${var.model_validation_dataset_namespace}
+      object: ${var.model_validation_dataset_object}

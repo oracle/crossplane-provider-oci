@@ -1,0 +1,10 @@
+apiVersion: resource.oci.upbound.io/v1alpha1
+kind: SchedulerSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resource/v1alpha1/schedulerschedule
+  labels:
+    testing.upbound.io/example-name: test_schedule
+  name: test-schedule
+spec:
+  forProvider: {}

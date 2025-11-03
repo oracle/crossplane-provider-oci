@@ -1,0 +1,36 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: SoftwareUpdateFsuCollection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/softwareupdatefsucollection
+  labels:
+    testing.upbound.io/example-name: test_fsu_collection
+  name: test-fsu-collection
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.fsu_collection_display_name}
+    fleetDiscovery:
+    - filters:
+      - entityType: ${var.fsu_collection_fleet_discovery_filters_entity_type}
+        identifiers: ${var.fsu_collection_fleet_discovery_filters_identifiers}
+        mode: ${var.fsu_collection_fleet_discovery_filters_mode}
+        names: ${var.fsu_collection_fleet_discovery_filters_names}
+        operator: ${var.fsu_collection_fleet_discovery_filters_operator}
+        tags:
+        - key: ${var.fsu_collection_fleet_discovery_filters_tags_key}
+          namespace: ${var.fsu_collection_fleet_discovery_filters_tags_namespace}
+          value: ${var.fsu_collection_fleet_discovery_filters_tags_value}
+        type: ${var.fsu_collection_fleet_discovery_filters_type}
+        versions: ${var.fsu_collection_fleet_discovery_filters_versions}
+      fsuDiscoveryId: ${oci_fleet_software_update_fsu_discovery.test_fsu_discovery.id}
+      query: ${var.fsu_collection_fleet_discovery_query}
+      strategy: ${var.fsu_collection_fleet_discovery_strategy}
+      targets: ${var.fsu_collection_fleet_discovery_targets}
+    freeformTags:
+      bar-key: value
+    serviceType: ${var.fsu_collection_service_type}
+    sourceMajorVersion: ${var.fsu_collection_source_major_version}
+    type: ${var.fsu_collection_type}

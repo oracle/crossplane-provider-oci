@@ -1,0 +1,13 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: BridgeAgentPlugin
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/bridgeagentplugin
+  labels:
+    testing.upbound.io/example-name: test_agent_plugin
+  name: test-agent-plugin
+spec:
+  forProvider:
+    agentId: ${oci_cloud_bridge_agent.test_agent.id}
+    desiredState: ${var.agent_plugin_desired_state}
+    pluginName: ${var.agent_plugin_plugin_name}

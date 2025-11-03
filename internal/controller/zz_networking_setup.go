@@ -9,7 +9,20 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	defaultdhcpoptions "github.com/oracle/provider-oci/internal/controller/networking/defaultdhcpoptions"
+	defaultroutetable "github.com/oracle/provider-oci/internal/controller/networking/defaultroutetable"
+	defaultsecuritylist "github.com/oracle/provider-oci/internal/controller/networking/defaultsecuritylist"
 	dhcpoptions "github.com/oracle/provider-oci/internal/controller/networking/dhcpoptions"
+	firewallnetworkfirewallpolicyaddresslist "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicyaddresslist"
+	firewallnetworkfirewallpolicyapplication "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicyapplication"
+	firewallnetworkfirewallpolicyapplicationgroup "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicyapplicationgroup"
+	firewallnetworkfirewallpolicydecryptionprofile "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicydecryptionprofile"
+	firewallnetworkfirewallpolicydecryptionrule "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicydecryptionrule"
+	firewallnetworkfirewallpolicymappedsecret "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicymappedsecret"
+	firewallnetworkfirewallpolicynatrule "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicynatrule"
+	firewallnetworkfirewallpolicysecurityrule "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicysecurityrule"
+	firewallnetworkfirewallpolicyservice "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicyservice"
+	firewallnetworkfirewallpolicytunnelinspectionrule "github.com/oracle/provider-oci/internal/controller/networking/firewallnetworkfirewallpolicytunnelinspectionrule"
 	internetgateway "github.com/oracle/provider-oci/internal/controller/networking/internetgateway"
 	ipv6 "github.com/oracle/provider-oci/internal/controller/networking/ipv6"
 	localpeeringgateway "github.com/oracle/provider-oci/internal/controller/networking/localpeeringgateway"
@@ -35,7 +48,20 @@ import (
 // the supplied manager.
 func Setup_networking(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		defaultdhcpoptions.Setup,
+		defaultroutetable.Setup,
+		defaultsecuritylist.Setup,
 		dhcpoptions.Setup,
+		firewallnetworkfirewallpolicyaddresslist.Setup,
+		firewallnetworkfirewallpolicyapplication.Setup,
+		firewallnetworkfirewallpolicyapplicationgroup.Setup,
+		firewallnetworkfirewallpolicydecryptionprofile.Setup,
+		firewallnetworkfirewallpolicydecryptionrule.Setup,
+		firewallnetworkfirewallpolicymappedsecret.Setup,
+		firewallnetworkfirewallpolicynatrule.Setup,
+		firewallnetworkfirewallpolicysecurityrule.Setup,
+		firewallnetworkfirewallpolicyservice.Setup,
+		firewallnetworkfirewallpolicytunnelinspectionrule.Setup,
 		internetgateway.Setup,
 		ipv6.Setup,
 		localpeeringgateway.Setup,

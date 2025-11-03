@@ -10,6 +10,9 @@ package v1alpha1
 func (tr *ContainerConfiguration) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ContainerImageSignature) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ContainerRepository) Hub() {}
 
 // Hub marks this type as a conversion hub.

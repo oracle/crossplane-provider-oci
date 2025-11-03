@@ -1,0 +1,27 @@
+apiVersion: operatoraccesscontrol.oci.upbound.io/v1alpha1
+kind: OperatoraccesscontrolConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/operatoraccesscontrolconfiguration
+  labels:
+    testing.upbound.io/example-name: test_opsi_configuration
+  name: test-opsi-configuration
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    configItemCustomStatus: ${var.opsi_configuration_config_item_custom_status}
+    configItemField: ${var.opsi_configuration_config_item_field}
+    configItems:
+    - configItemType: ${var.opsi_configuration_config_items_config_item_type}
+      name: ${var.opsi_configuration_config_items_name}
+      value: ${var.opsi_configuration_config_items_value}
+    configItemsApplicableContext: ${var.opsi_configuration_config_items_applicable_context}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.opsi_configuration_description}
+    displayName: ${var.opsi_configuration_display_name}
+    freeformTags:
+      bar-key: value
+    opsiConfigField: ${var.opsi_configuration_opsi_config_field}
+    opsiConfigType: ${var.opsi_configuration_opsi_config_type}
+    systemTags: ${var.opsi_configuration_system_tags}

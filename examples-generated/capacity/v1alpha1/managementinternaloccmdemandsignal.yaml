@@ -1,0 +1,12 @@
+apiVersion: capacity.oci.upbound.io/v1alpha1
+kind: ManagementInternalOccmDemandSignal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacity/v1alpha1/managementinternaloccmdemandsignal
+  labels:
+    testing.upbound.io/example-name: test_internal_occm_demand_signal
+  name: test-internal-occm-demand-signal
+spec:
+  forProvider:
+    lifecycleDetails: ${var.internal_occm_demand_signal_lifecycle_details}
+    occmDemandSignalId: ${oci_capacity_management_occm_demand_signal.test_occm_demand_signal.id}

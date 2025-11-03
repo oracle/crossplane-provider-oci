@@ -1,0 +1,16 @@
+apiVersion: bigdataservice.oci.upbound.io/v1alpha1
+kind: InstanceNodeBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bigdataservice/v1alpha1/instancenodebackup
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_backup
+  name: test-bds-instance-node-backup
+spec:
+  forProvider:
+    backupType: ${var.bds_instance_node_backup_backup_type}
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    levelTypeDetails:
+    - levelType: ${var.bds_instance_node_backup_level_type_details_level_type}
+      nodeHostName: ${var.bds_instance_node_backup_level_type_details_node_host_name}
+      nodeType: ${var.bds_instance_node_backup_level_type_details_node_type}

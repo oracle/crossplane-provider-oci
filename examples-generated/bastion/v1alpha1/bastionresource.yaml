@@ -1,0 +1,22 @@
+apiVersion: bastion.oci.upbound.io/v1alpha1
+kind: BastionResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bastion/v1alpha1/bastionresource
+  labels:
+    testing.upbound.io/example-name: test_bastion
+  name: test-bastion
+spec:
+  forProvider:
+    bastionType: ${var.bastion_bastion_type}
+    clientCidrBlockAllowList: ${var.bastion_client_cidr_block_allow_list}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    dnsProxyStatus: ${var.bastion_dns_proxy_status}
+    freeformTags:
+      bar-key: value
+    maxSessionTtlInSeconds: ${var.bastion_max_session_ttl_in_seconds}
+    phoneBookEntry: ${var.bastion_phone_book_entry}
+    staticJumpHostIpAddresses: ${var.bastion_static_jump_host_ip_addresses}
+    targetSubnetId: ${oci_core_subnet.test_subnet.id}

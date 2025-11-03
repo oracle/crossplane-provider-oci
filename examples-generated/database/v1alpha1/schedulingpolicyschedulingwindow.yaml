@@ -1,0 +1,24 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPolicySchedulingWindow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingpolicyschedulingwindow
+  labels:
+    testing.upbound.io/example-name: test_scheduling_policy_scheduling_window
+  name: test-scheduling-policy-scheduling-window
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.scheduling_policy_scheduling_window_defined_tags}
+    freeformTags:
+      Department: Finance
+    schedulingPolicyId: ${oci_database_scheduling_policy.test_scheduling_policy.id}
+    windowPreference:
+    - daysOfWeek:
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_days_of_week_name}
+      duration: ${var.scheduling_policy_scheduling_window_window_preference_duration}
+      isEnforcedDuration: ${var.scheduling_policy_scheduling_window_window_preference_is_enforced_duration}
+      months:
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_months_name}
+      startTime: ${var.scheduling_policy_scheduling_window_window_preference_start_time}
+      weeksOfMonth: ${var.scheduling_policy_scheduling_window_window_preference_weeks_of_month}

@@ -1,0 +1,12 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubSoftwareSourceManifest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubsoftwaresourcemanifest
+  labels:
+    testing.upbound.io/example-name: test_software_source_manifest
+  name: test-software-source-manifest
+spec:
+  forProvider:
+    content: ${var.content}
+    softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}

@@ -1,0 +1,53 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/job
+  labels:
+    testing.upbound.io/example-name: test_job
+  name: test-job
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.job_description}
+    displayName: ${var.job_display_name}
+    freeformTags:
+      Department: Finance
+    jobConfigurationDetails:
+    - commandLineArguments: ${var.job_job_configuration_details_command_line_arguments}
+      environmentVariables: ${var.job_job_configuration_details_environment_variables}
+      jobType: ${var.job_job_configuration_details_job_type}
+      maximumRuntimeInMinutes: ${var.job_job_configuration_details_maximum_runtime_in_minutes}
+    jobEnvironmentConfigurationDetails:
+    - cmd: ${var.job_job_environment_configuration_details_cmd}
+      entrypoint: ${var.job_job_environment_configuration_details_entrypoint}
+      image: ${var.job_job_environment_configuration_details_image}
+      imageDigest: ${var.job_job_environment_configuration_details_image_digest}
+      imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      jobEnvironmentType: ${var.job_job_environment_configuration_details_job_environment_type}
+    jobInfrastructureConfigurationDetails:
+    - blockStorageSizeInGbs: ${var.job_job_infrastructure_configuration_details_block_storage_size_in_gbs}
+      jobInfrastructureType: ${var.job_job_infrastructure_configuration_details_job_infrastructure_type}
+      jobShapeConfigDetails:
+      - cpuBaseline: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_cpu_baseline}
+        memoryInGbs: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_memory_in_gbs}
+        ocpus: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_ocpus}
+      shapeName: ${oci_core_shape.test_shape.name}
+      subnetId: ${oci_core_subnet.test_subnet.id}
+    jobLogConfigurationDetails:
+    - enableAutoLogCreation: ${var.job_job_log_configuration_details_enable_auto_log_creation}
+      enableLogging: ${var.job_job_log_configuration_details_enable_logging}
+      logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}
+    jobStorageMountConfigurationDetailsList:
+    - bucket: ${var.job_job_storage_mount_configuration_details_list_bucket}
+      destinationDirectoryName: ${var.job_job_storage_mount_configuration_details_list_destination_directory_name}
+      destinationPath: ${var.job_job_storage_mount_configuration_details_list_destination_path}
+      exportId: ${oci_file_storage_export.test_export.id}
+      mountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+      namespace: ${var.job_job_storage_mount_configuration_details_list_namespace}
+      prefix: ${var.job_job_storage_mount_configuration_details_list_prefix}
+      storageType: ${var.job_job_storage_mount_configuration_details_list_storage_type}
+    projectId: ${oci_datascience_project.test_project.id}

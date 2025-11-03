@@ -1,0 +1,14 @@
+apiVersion: osmanagement.oci.upbound.io/v1alpha1
+kind: ManagementHubSoftwareSourceChangeAvailabilityManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagement/v1alpha1/managementhubsoftwaresourcechangeavailabilitymanagement
+  labels:
+    testing.upbound.io/example-name: test_software_source_change_availability_management
+  name: test-software-source-change-availability-management
+spec:
+  forProvider:
+    softwareSourceAvailabilities:
+    - availability: ${var.software_source_change_availability_management_software_source_availabilities_availability}
+      availabilityAtOci: ${var.software_source_change_availability_management_software_source_availabilities_availability_at_oci}
+      softwareSourceId: ${oci_os_management_hub_software_source.test_software_source.id}

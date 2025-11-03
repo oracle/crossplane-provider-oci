@@ -1,0 +1,34 @@
+apiVersion: visualbuilder.oci.upbound.io/v1alpha1
+kind: BuilderVbInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: visualbuilder/v1alpha1/buildervbinstance
+  labels:
+    testing.upbound.io/example-name: test_vb_instance
+  name: test-vb-instance
+spec:
+  forProvider:
+    alternateCustomEndpoints:
+    - certificateSecretId: ${oci_vault_secret.test_secret.id}
+      hostname: ${var.vb_instance_alternate_custom_endpoints_hostname}
+    compartmentId: ${var.compartment_id}
+    consumptionModel: ${var.vb_instance_consumption_model}
+    customEndpoint:
+    - certificateSecretId: ${oci_vault_secret.test_secret.id}
+      hostname: ${var.vb_instance_custom_endpoint_hostname}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.vb_instance_display_name}
+    freeformTags:
+      bar-key: value
+    idcsOpenIdSecretRef:
+      key: attribute.id
+      name: example-visual-builder-idcs-open
+      namespace: upbound-system
+    isVisualBuilderEnabled: ${var.vb_instance_is_visual_builder_enabled}
+    networkEndpointDetails:
+    - networkEndpointType: ${var.vb_instance_network_endpoint_details_network_endpoint_type}
+      networkSecurityGroupIds: ${var.vb_instance_network_endpoint_details_network_security_group_ids}
+      privateEndpointIp: ${var.vb_instance_network_endpoint_details_private_endpoint_ip}
+      subnetId: ${oci_core_subnet.test_subnet.id}
+    nodeCount: ${var.vb_instance_node_count}

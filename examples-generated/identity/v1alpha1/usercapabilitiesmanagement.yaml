@@ -1,0 +1,16 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: UserCapabilitiesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/usercapabilitiesmanagement
+  labels:
+    testing.upbound.io/example-name: test_user_capabilities_management
+  name: test-user-capabilities-management
+spec:
+  forProvider:
+    canUseApiKeys: "true"
+    canUseAuthTokens: "true"
+    canUseConsolePassword: "false"
+    canUseCustomerSecretKeys: "true"
+    canUseSmtpCredentials: "true"
+    userId: ${oci_identity_user.user1.id}

@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudVmClusterIormConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/cloudvmclusteriormconfig
+  labels:
+    testing.upbound.io/example-name: test_cloud_vm_cluster_iorm_config
+  name: test-cloud-vm-cluster-iorm-config
+spec:
+  forProvider:
+    cloudVmClusterId: ${oci_database_cloud_vm_cluster.test_cloud_vm_cluster.id}
+    dbPlans:
+    - dbName: ${var.cloud_vm_cluster_iorm_config_db_plans_db_name}
+      share: ${var.cloud_vm_cluster_iorm_config_db_plans_share}
+    objective: AUTO

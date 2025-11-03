@@ -1,0 +1,39 @@
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: VirtualNodePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/virtualnodepool
+  labels:
+    testing.upbound.io/example-name: test_virtual_node_pool
+  name: test-virtual-node-pool
+spec:
+  forProvider:
+    clusterId: ${oci_containerengine_cluster.test_cluster.id}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.virtual_node_pool_display_name}
+    freeformTags:
+      Department: Finance
+    initialVirtualNodeLabels:
+    - key: ${var.virtual_node_pool_initial_virtual_node_labels_key}
+      value: ${var.virtual_node_pool_initial_virtual_node_labels_value}
+    nsgIds: ${var.virtual_node_pool_nsg_ids}
+    placementConfigurations:
+    - availabilityDomain: ${var.virtual_node_pool_placement_configurations_availability_domain}
+      faultDomain: ${var.virtual_node_pool_placement_configurations_fault_domain}
+      subnetId: ${oci_core_subnet.test_subnet.id}
+    podConfiguration:
+    - nsgIds: ${var.virtual_node_pool_pod_configuration_nsg_ids}
+      shape: ${var.virtual_node_pool_pod_configuration_shape}
+      subnetId: ${oci_core_subnet.test_subnet.id}
+    size: ${var.virtual_node_pool_size}
+    taints:
+    - effect: ${var.virtual_node_pool_taints_effect}
+      key: ${var.virtual_node_pool_taints_key}
+      value: ${var.virtual_node_pool_taints_value}
+    virtualNodeTags:
+    - definedTags:
+        Operations.CostCenter: "42"
+      freeformTags:
+        Department: Finance

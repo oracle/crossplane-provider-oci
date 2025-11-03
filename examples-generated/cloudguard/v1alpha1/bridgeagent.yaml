@@ -1,0 +1,20 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: BridgeAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/bridgeagent
+  labels:
+    testing.upbound.io/example-name: test_agent
+  name: test-agent
+spec:
+  forProvider:
+    agentType: ${var.agent_agent_type}
+    agentVersion: ${var.agent_agent_version}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.agent_display_name}
+    environmentId: ${oci_cloud_bridge_environment.test_environment.id}
+    freeformTags:
+      Department: Finance
+    osVersion: ${var.agent_os_version}

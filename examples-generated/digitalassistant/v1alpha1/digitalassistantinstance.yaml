@@ -1,0 +1,20 @@
+apiVersion: digitalassistant.oci.upbound.io/v1alpha1
+kind: DigitalassistantInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: digitalassistant/v1alpha1/digitalassistantinstance
+  labels:
+    testing.upbound.io/example-name: test_oda_instance
+  name: test-oda-instance
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.oda_instance_description}
+    displayName: ${var.oda_instance_display_name}
+    freeformTags:
+      bar-key: value
+    identityDomain: ${var.oda_instance_identity_domain}
+    isRoleBasedAccess: ${var.oda_instance_is_role_based_access}
+    shapeName: DEVELOPMENT

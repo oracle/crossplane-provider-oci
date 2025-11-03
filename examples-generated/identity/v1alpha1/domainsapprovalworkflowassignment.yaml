@@ -1,0 +1,31 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: DomainsApprovalWorkflowAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/domainsapprovalworkflowassignment
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow_assignment
+  name: test-approval-workflow-assignment
+spec:
+  forProvider:
+    approvalWorkflow:
+    - ocid: ${var.approval_workflow_assignment_approval_workflow_ocid}
+      type: ${var.approval_workflow_assignment_approval_workflow_type}
+      value: ${var.approval_workflow_assignment_approval_workflow_value}
+    assignedTo:
+    - ocid: ${var.approval_workflow_assignment_assigned_to_ocid}
+      type: ${var.approval_workflow_assignment_assigned_to_type}
+      value: ${var.approval_workflow_assignment_assigned_to_value}
+    assignmentType: ${var.approval_workflow_assignment_assignment_type}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.approval_workflow_assignment_authorization}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    ocid: ${var.approval_workflow_assignment_ocid}
+    resourceTypeSchemaVersion: ${var.approval_workflow_assignment_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:ApprovalWorkflowAssignment
+    tags:
+    - key: ${var.approval_workflow_assignment_tags_key}
+      value: ${var.approval_workflow_assignment_tags_value}

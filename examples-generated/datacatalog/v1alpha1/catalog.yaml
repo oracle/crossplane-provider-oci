@@ -1,0 +1,16 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: Catalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacatalog/v1alpha1/catalog
+  labels:
+    testing.upbound.io/example-name: test_catalog
+  name: test-catalog
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.catalog_display_name}
+    freeformTags:
+      bar-key: value

@@ -1,0 +1,12 @@
+apiVersion: operatoraccesscontrol.oci.upbound.io/v1alpha1
+kind: AwrHubSourceAwrhubsourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/awrhubsourceawrhubsourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_awr_hub_source_awrhubsources_management
+  name: test-awr-hub-source-awrhubsources-management
+spec:
+  forProvider:
+    awrHubSourceId: ${oci_opsi_awr_hub_source.test_awr_hub_source.id}
+    enableAwrhubsource: ${var.enable_awrhubsource}

@@ -1,0 +1,13 @@
+apiVersion: log.oci.upbound.io/v1alpha1
+kind: AnalyticsNamespaceIngestTimeRulesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: log/v1alpha1/analyticsnamespaceingesttimerulesmanagement
+  labels:
+    testing.upbound.io/example-name: test_namespace_ingest_time_rules_management
+  name: test-namespace-ingest-time-rules-management
+spec:
+  forProvider:
+    enableIngestTimeRule: ${var.enable_ingest_time_rule}
+    ingestTimeRuleId: ${oci_events_rule.test_rule.id}
+    namespace: ${var.namespace_ingest_time_rules_management_namespace}

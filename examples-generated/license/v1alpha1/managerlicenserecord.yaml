@@ -1,0 +1,22 @@
+apiVersion: license.oci.upbound.io/v1alpha1
+kind: ManagerLicenseRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: license/v1alpha1/managerlicenserecord
+  labels:
+    testing.upbound.io/example-name: test_license_record
+  name: test-license-record
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.license_record_display_name}
+    expirationDate: ${var.license_record_expiration_date}
+    freeformTags:
+      bar-key: value
+    isPerpetual: ${var.license_record_is_perpetual}
+    isUnlimited: ${var.license_record_is_unlimited}
+    licenseCount: ${var.license_record_license_count}
+    productId: ${oci_license_manager_product.test_product.id}
+    productLicenseId: ${oci_license_manager_product_license.test_product_license.id}
+    supportEndDate: ${var.license_record_support_end_date}

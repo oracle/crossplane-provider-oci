@@ -1,0 +1,18 @@
+apiVersion: operatoraccesscontrol.oci.upbound.io/v1alpha1
+kind: EnterpriseManagerBridge
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/enterprisemanagerbridge
+  labels:
+    testing.upbound.io/example-name: test_enterprise_manager_bridge
+  name: test-enterprise-manager-bridge
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.enterprise_manager_bridge_description}
+    displayName: ${var.enterprise_manager_bridge_display_name}
+    freeformTags:
+      bar-key: value
+    objectStorageBucketName: ${var.bucket_name}

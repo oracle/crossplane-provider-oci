@@ -15,6 +15,9 @@ import (
 	mounttarget "github.com/oracle/provider-oci/internal/controller/filestorage/mounttarget"
 	replication "github.com/oracle/provider-oci/internal/controller/filestorage/replication"
 	snapshot "github.com/oracle/provider-oci/internal/controller/filestorage/snapshot"
+	storagefilesystemquotarule "github.com/oracle/provider-oci/internal/controller/filestorage/storagefilesystemquotarule"
+	storagefilesystemsnapshotpolicy "github.com/oracle/provider-oci/internal/controller/filestorage/storagefilesystemsnapshotpolicy"
+	storageoutboundconnector "github.com/oracle/provider-oci/internal/controller/filestorage/storageoutboundconnector"
 )
 
 // Setup_filestorage creates all controllers with the supplied logger and adds them to
@@ -27,6 +30,9 @@ func Setup_filestorage(mgr ctrl.Manager, o controller.Options) error {
 		mounttarget.Setup,
 		replication.Setup,
 		snapshot.Setup,
+		storagefilesystemquotarule.Setup,
+		storagefilesystemsnapshotpolicy.Setup,
+		storageoutboundconnector.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

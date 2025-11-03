@@ -1,0 +1,12 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: UserGroupMembership
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/usergroupmembership
+  labels:
+    testing.upbound.io/example-name: test_user_group_membership
+  name: test-user-group-membership
+spec:
+  forProvider:
+    groupId: ${oci_identity_group.test_group.id}
+    userId: ${oci_identity_user.test_user.id}

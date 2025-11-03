@@ -1,0 +1,12 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: RunStatement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/runstatement
+  labels:
+    testing.upbound.io/example-name: test_run_statement
+  name: test-run-statement
+spec:
+  forProvider:
+    code: ${var.run_statement_code}
+    runId: ${oci_dataflow_run.test_run.id}

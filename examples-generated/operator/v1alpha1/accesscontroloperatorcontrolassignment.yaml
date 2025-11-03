@@ -1,0 +1,28 @@
+apiVersion: operator.oci.upbound.io/v1alpha1
+kind: AccessControlOperatorControlAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operator/v1alpha1/accesscontroloperatorcontrolassignment
+  labels:
+    testing.upbound.io/example-name: test_operator_control_assignment
+  name: test-operator-control-assignment
+spec:
+  forProvider:
+    comment: ${var.operator_control_assignment_comment}
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.operator_control_assignment_defined_tags}
+    freeformTags: ${var.operator_control_assignment_freeform_tags}
+    isAutoApproveDuringMaintenance: ${var.operator_control_assignment_is_auto_approve_during_maintenance}
+    isEnforcedAlways: ${var.operator_control_assignment_is_enforced_always}
+    isHypervisorLogForwarded: ${var.operator_control_assignment_is_hypervisor_log_forwarded}
+    isLogForwarded: ${var.operator_control_assignment_is_log_forwarded}
+    operatorControlId: ${oci_operator_access_control_operator_control.test_operator_control.id}
+    remoteSyslogServerAddress: ${var.operator_control_assignment_remote_syslog_server_address}
+    remoteSyslogServerCaCert: ${var.operator_control_assignment_remote_syslog_server_ca_cert}
+    remoteSyslogServerPort: ${var.operator_control_assignment_remote_syslog_server_port}
+    resourceCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    resourceId: ${oci_operator_access_control_resource.test_resource.id}
+    resourceName: ${var.operator_control_assignment_resource_name}
+    resourceType: ${var.operator_control_assignment_resource_type}
+    timeAssignmentFrom: ${var.operator_control_assignment_time_assignment_from}
+    timeAssignmentTo: ${var.operator_control_assignment_time_assignment_to}

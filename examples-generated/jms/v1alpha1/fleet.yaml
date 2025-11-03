@@ -1,0 +1,24 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: Fleet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/fleet
+  labels:
+    testing.upbound.io/example-name: test_fleet
+  name: test-fleet
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.fleet_description}
+    displayName: ${var.fleet_display_name}
+    freeformTags:
+      bar-key: value
+    inventoryLog:
+    - logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}
+    isAdvancedFeaturesEnabled: ${var.fleet_is_advanced_features_enabled}
+    operationLog:
+    - logGroupId: ${oci_logging_log_group.test_log_group.id}
+      logId: ${oci_logging_log.test_log.id}

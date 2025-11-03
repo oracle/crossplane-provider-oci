@@ -1,0 +1,27 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: ServicesStreamPackagingConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/servicesstreampackagingconfig
+  labels:
+    testing.upbound.io/example-name: test_stream_packaging_config
+  name: test-stream-packaging-config
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.stream_packaging_config_display_name}
+    distributionChannelId: ${oci_mysql_channel.test_channel.id}
+    encryption:
+    - algorithm: ${var.stream_packaging_config_encryption_algorithm}
+      kmsKeyId: ${oci_kms_key.test_key.id}
+    freeformTags:
+      bar-key: value
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.stream_packaging_config_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.stream_packaging_config_locks_time_created}
+      type: ${var.stream_packaging_config_locks_type}
+    segmentTimeInSeconds: ${var.stream_packaging_config_segment_time_in_seconds}
+    streamPackagingFormat: ${var.stream_packaging_config_stream_packaging_format}
