@@ -63,9 +63,7 @@ spec:
       timeStampForPointInTimeRecovery: ${var.db_home_database_time_stamp_for_point_in_time_recovery}
       vaultId: ${oci_kms_vault.test_vault.id}
     databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
-    dbSystemIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_db_system
+    dbSystemId: ${oci_database_db_system.test_db_system.id}
     dbVersion:
     - {}
     definedTags: ${var.db_home_defined_tags}

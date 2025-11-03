@@ -58,16 +58,7 @@ type AutonomousContainerDatabaseInitParameters struct {
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
 	AutonomousExadataInfrastructureID *string `json:"autonomousExadataInfrastructureId,omitempty" tf:"autonomous_exadata_infrastructure_id,omitempty"`
-
-	// Reference to a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	AutonomousExadataInfrastructureIDRef *v1.Reference `json:"autonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
-
-	// Selector for a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	AutonomousExadataInfrastructureIDSelector *v1.Selector `json:"autonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Autonomous VM Cluster.
 	AutonomousVMClusterID *string `json:"autonomousVmClusterId,omitempty" tf:"autonomous_vm_cluster_id,omitempty"`
@@ -79,16 +70,7 @@ type AutonomousContainerDatabaseInitParameters struct {
 	CloudAutonomousVMClusterID *string `json:"cloudAutonomousVmClusterId,omitempty" tf:"cloud_autonomous_vm_cluster_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the Autonomous Container Database.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Customer Contacts. Setting this to an empty list removes all customer contacts.
 	CustomerContacts []CustomerContactsInitParameters `json:"customerContacts,omitempty" tf:"customer_contacts,omitempty"`
@@ -455,17 +437,8 @@ type AutonomousContainerDatabaseParameters struct {
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
 	// +kubebuilder:validation:Optional
 	AutonomousExadataInfrastructureID *string `json:"autonomousExadataInfrastructureId,omitempty" tf:"autonomous_exadata_infrastructure_id,omitempty"`
-
-	// Reference to a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	AutonomousExadataInfrastructureIDRef *v1.Reference `json:"autonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
-
-	// Selector for a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	AutonomousExadataInfrastructureIDSelector *v1.Selector `json:"autonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Autonomous VM Cluster.
 	// +kubebuilder:validation:Optional
@@ -480,17 +453,8 @@ type AutonomousContainerDatabaseParameters struct {
 	CloudAutonomousVMClusterID *string `json:"cloudAutonomousVmClusterId,omitempty" tf:"cloud_autonomous_vm_cluster_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the Autonomous Container Database.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Customer Contacts. Setting this to an empty list removes all customer contacts.
 	// +kubebuilder:validation:Optional

@@ -27,8 +27,6 @@ spec:
     connectorType: ${var.external_database_connector_connector_type}
     definedTags: ${var.external_database_connector_defined_tags}
     displayName: ${var.external_database_connector_display_name}
-    externalDatabaseIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_database
+    externalDatabaseId: ${oci_database_database.test_database.id}
     freeformTags:
       Department: Finance

@@ -193,89 +193,43 @@ type DataGuardGroupObservation struct {
 type DataGuardGroupParameters struct {
 }
 
-type DatabaseConnectionStringsInitParameters struct {
+type DatabaseEncryptionKeyLocationDetailsInitParameters struct {
+
+	// Provide the key OCID of a registered Azure key.
+	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
+
+	// Provide the HSM password as you would in RDBMS for External HSM.
+	HSMPasswordSecretRef *v1.SecretKeySelector `json:"hsmPasswordSecretRef,omitempty" tf:"-"`
+
+	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
+	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
 }
 
-type DatabaseConnectionStringsObservation struct {
+type DatabaseEncryptionKeyLocationDetailsObservation struct {
 
-	// All connection strings to use to connect to the Database.
-	// +mapType=granular
-	AllConnectionStrings map[string]*string `json:"allConnectionStrings,omitempty" tf:"all_connection_strings,omitempty"`
+	// Provide the key OCID of a registered Azure key.
+	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
-	// Host name based CDB Connection String.
-	CdbDefault *string `json:"cdbDefault,omitempty" tf:"cdb_default,omitempty"`
-
-	// IP based CDB Connection String.
-	CdbIPDefault *string `json:"cdbIpDefault,omitempty" tf:"cdb_ip_default,omitempty"`
+	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
+	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
 }
 
-type DatabaseConnectionStringsParameters struct {
+type DatabaseEncryptionKeyLocationDetailsParameters struct {
+
+	// Provide the key OCID of a registered Azure key.
+	// +kubebuilder:validation:Optional
+	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
+
+	// Provide the HSM password as you would in RDBMS for External HSM.
+	// +kubebuilder:validation:Optional
+	HSMPasswordSecretRef *v1.SecretKeySelector `json:"hsmPasswordSecretRef,omitempty" tf:"-"`
+
+	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
+	// +kubebuilder:validation:Optional
+	ProviderType *string `json:"providerType" tf:"provider_type,omitempty"`
 }
 
-type DatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
-}
-
-type DatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
-
-	// (Applicable when source=NONE) The OCID of the DBRS policy used for backup.
-	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
-
-	// (Applicable when source=NONE) The OCID of the backup destination.
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (Applicable when source=NONE) Indicates whether the backup destination is cross-region or local region.
-	IsRemote *bool `json:"isRemote,omitempty" tf:"is_remote,omitempty"`
-
-	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.
-	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
-
-	// Type of the database backup destination.
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-
-	// For a RECOVERY_APPLIANCE backup destination, the password for the VPC user that is used to access the Recovery Appliance.
-	VPCPassword *string `json:"vpcPassword,omitempty" tf:"vpc_password,omitempty"`
-
-	// For a RECOVERY_APPLIANCE backup destination, the Virtual Private Catalog (VPC) user that is used to access the Recovery Appliance.
-	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
-}
-
-type DatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
-}
-
-type DatabaseDBBackupConfigInitParameters struct {
-}
-
-type DatabaseDBBackupConfigObservation struct {
-
-	// (Applicable when source=NONE) (Updatable) If set to true, configures automatic backups. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
-	AutoBackupEnabled *bool `json:"autoBackupEnabled,omitempty" tf:"auto_backup_enabled,omitempty"`
-
-	// (Applicable when source=NONE) (Updatable) Time window selected for initiating automatic backup for the database system. There are twelve available two-hour time windows. If no option is selected, a start time between 12:00 AM to 7:00 AM in the region of the database is automatically chosen. For example, if the user selects SLOT_TWO from the enum list, the automatic backup job will start in between 2:00 AM (inclusive) to 4:00 AM (exclusive).  Example: SLOT_TWO
-	AutoBackupWindow *string `json:"autoBackupWindow,omitempty" tf:"auto_backup_window,omitempty"`
-
-	// (Applicable when source=NONE) Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.
-	AutoFullBackupDay *string `json:"autoFullBackupDay,omitempty" tf:"auto_full_backup_day,omitempty"`
-
-	// (Applicable when source=NONE) Time window selected for initiating full backup for the database system. There are twelve available two-hour time windows. If no option is selected, the value is null and a start time between 12:00 AM to 7:00 AM in the region of the database is automatically chosen. For example, if the user selects SLOT_TWO from the enum list, the automatic backup job will start in between 2:00 AM (inclusive) to 4:00 AM (exclusive).  Example: SLOT_TWO
-	AutoFullBackupWindow *string `json:"autoFullBackupWindow,omitempty" tf:"auto_full_backup_window,omitempty"`
-
-	// (Applicable when source=NONE) This defines when the backups will be deleted. - IMMEDIATE option keep the backup for predefined time i.e 72 hours and then delete permanently... - RETAIN will keep the backups as per the policy defined for database backups.
-	BackupDeletionPolicy *string `json:"backupDeletionPolicy,omitempty" tf:"backup_deletion_policy,omitempty"`
-
-	// (Applicable when source=NONE) Backup destination details.
-	BackupDestinationDetails []DatabaseDBBackupConfigBackupDestinationDetailsObservation `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
-
-	// (Applicable when source=NONE) (Updatable) Number of days between the current and the earliest point of recoverability covered by automatic backups. This value applies to automatic backups only. After a new automatic backup has been created, Oracle removes old automatic backups that are created before the window. When the value is updated, it is applied to all existing automatic backups.
-	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
-
-	// (Applicable when source=NONE) If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.
-	RunImmediateFullBackup *bool `json:"runImmediateFullBackup,omitempty" tf:"run_immediate_full_backup,omitempty"`
-}
-
-type DatabaseDBBackupConfigParameters struct {
-}
-
-type DatabaseDatabaseInitParameters struct {
+type DatabaseInitParameters struct {
 
 	// A strong password for SYS, SYSTEM, PDB Admin and TDE Wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	AdminPasswordSecretRef *v1.SecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
@@ -361,7 +315,22 @@ type DatabaseDatabaseInitParameters struct {
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
 }
 
-type DatabaseDatabaseObservation struct {
+type DatabaseManagementConfigInitParameters struct {
+}
+
+type DatabaseManagementConfigObservation struct {
+
+	// The status of the Database Management service.
+	ManagementStatus *string `json:"managementStatus,omitempty" tf:"management_status,omitempty"`
+
+	// The Database Management type.
+	ManagementType *string `json:"managementType,omitempty" tf:"management_type,omitempty"`
+}
+
+type DatabaseManagementConfigParameters struct {
+}
+
+type DatabaseObservation struct {
 
 	// The backup OCID.
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
@@ -432,7 +401,7 @@ type DatabaseDatabaseObservation struct {
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
 }
 
-type DatabaseDatabaseParameters struct {
+type DatabaseParameters struct {
 
 	// A strong password for SYS, SYSTEM, PDB Admin and TDE Wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	// +kubebuilder:validation:Optional
@@ -545,58 +514,95 @@ type DatabaseDatabaseParameters struct {
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
 }
 
-type DatabaseEncryptionKeyLocationDetailsInitParameters struct {
-
-	// Provide the key OCID of a registered Azure key.
-	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
-
-	// Provide the HSM password as you would in RDBMS for External HSM.
-	HSMPasswordSecretRef *v1.SecretKeySelector `json:"hsmPasswordSecretRef,omitempty" tf:"-"`
-
-	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
-	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
+type DatabaseResourceConnectionStringsInitParameters struct {
 }
 
-type DatabaseEncryptionKeyLocationDetailsObservation struct {
+type DatabaseResourceConnectionStringsObservation struct {
 
-	// Provide the key OCID of a registered Azure key.
-	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
+	// All connection strings to use to connect to the Database.
+	// +mapType=granular
+	AllConnectionStrings map[string]*string `json:"allConnectionStrings,omitempty" tf:"all_connection_strings,omitempty"`
 
-	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
-	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
+	// Host name based CDB Connection String.
+	CdbDefault *string `json:"cdbDefault,omitempty" tf:"cdb_default,omitempty"`
+
+	// IP based CDB Connection String.
+	CdbIPDefault *string `json:"cdbIpDefault,omitempty" tf:"cdb_ip_default,omitempty"`
 }
 
-type DatabaseEncryptionKeyLocationDetailsParameters struct {
-
-	// Provide the key OCID of a registered Azure key.
-	// +kubebuilder:validation:Optional
-	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
-
-	// Provide the HSM password as you would in RDBMS for External HSM.
-	// +kubebuilder:validation:Optional
-	HSMPasswordSecretRef *v1.SecretKeySelector `json:"hsmPasswordSecretRef,omitempty" tf:"-"`
-
-	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure.
-	// +kubebuilder:validation:Optional
-	ProviderType *string `json:"providerType" tf:"provider_type,omitempty"`
+type DatabaseResourceConnectionStringsParameters struct {
 }
 
-type DatabaseInitParameters struct {
+type DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters struct {
+}
+
+type DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation struct {
+
+	// (Applicable when source=NONE) The OCID of the DBRS policy used for backup.
+	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// (Applicable when source=NONE) The OCID of the backup destination.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Applicable when source=NONE) Indicates whether the backup destination is cross-region or local region.
+	IsRemote *bool `json:"isRemote,omitempty" tf:"is_remote,omitempty"`
+
+	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.
+	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
+
+	// Type of the database backup destination.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// For a RECOVERY_APPLIANCE backup destination, the password for the VPC user that is used to access the Recovery Appliance.
+	VPCPassword *string `json:"vpcPassword,omitempty" tf:"vpc_password,omitempty"`
+
+	// For a RECOVERY_APPLIANCE backup destination, the Virtual Private Catalog (VPC) user that is used to access the Recovery Appliance.
+	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
+}
+
+type DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters struct {
+}
+
+type DatabaseResourceDBBackupConfigInitParameters struct {
+}
+
+type DatabaseResourceDBBackupConfigObservation struct {
+
+	// (Applicable when source=NONE) (Updatable) If set to true, configures automatic backups. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
+	AutoBackupEnabled *bool `json:"autoBackupEnabled,omitempty" tf:"auto_backup_enabled,omitempty"`
+
+	// (Applicable when source=NONE) (Updatable) Time window selected for initiating automatic backup for the database system. There are twelve available two-hour time windows. If no option is selected, a start time between 12:00 AM to 7:00 AM in the region of the database is automatically chosen. For example, if the user selects SLOT_TWO from the enum list, the automatic backup job will start in between 2:00 AM (inclusive) to 4:00 AM (exclusive).  Example: SLOT_TWO
+	AutoBackupWindow *string `json:"autoBackupWindow,omitempty" tf:"auto_backup_window,omitempty"`
+
+	// (Applicable when source=NONE) Day of the week the full backup should be applied on the database system. If no option is selected, the value is null and we will default to Sunday.
+	AutoFullBackupDay *string `json:"autoFullBackupDay,omitempty" tf:"auto_full_backup_day,omitempty"`
+
+	// (Applicable when source=NONE) Time window selected for initiating full backup for the database system. There are twelve available two-hour time windows. If no option is selected, the value is null and a start time between 12:00 AM to 7:00 AM in the region of the database is automatically chosen. For example, if the user selects SLOT_TWO from the enum list, the automatic backup job will start in between 2:00 AM (inclusive) to 4:00 AM (exclusive).  Example: SLOT_TWO
+	AutoFullBackupWindow *string `json:"autoFullBackupWindow,omitempty" tf:"auto_full_backup_window,omitempty"`
+
+	// (Applicable when source=NONE) This defines when the backups will be deleted. - IMMEDIATE option keep the backup for predefined time i.e 72 hours and then delete permanently... - RETAIN will keep the backups as per the policy defined for database backups.
+	BackupDeletionPolicy *string `json:"backupDeletionPolicy,omitempty" tf:"backup_deletion_policy,omitempty"`
+
+	// (Applicable when source=NONE) Backup destination details.
+	BackupDestinationDetails []DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
+
+	// (Applicable when source=NONE) (Updatable) Number of days between the current and the earliest point of recoverability covered by automatic backups. This value applies to automatic backups only. After a new automatic backup has been created, Oracle removes old automatic backups that are created before the window. When the value is updated, it is applied to all existing automatic backups.
+	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
+
+	// (Applicable when source=NONE) If set to true, configures automatic full backups in the local region (the region of the DB system) for the first backup run immediately.
+	RunImmediateFullBackup *bool `json:"runImmediateFullBackup,omitempty" tf:"run_immediate_full_backup,omitempty"`
+}
+
+type DatabaseResourceDBBackupConfigParameters struct {
+}
+
+type DatabaseResourceInitParameters struct {
 
 	// (Applicable when source=DATAGUARD)  An optional property when incremented triggers Data Guard operations such as Failover, Switchover, Reinstate, Data Guard Configuration Update and Convert Standby Database to Standalone . Could be set to any integer value.
 	ActionTrigger *float64 `json:"actionTrigger,omitempty" tf:"action_trigger,omitempty"`
 
 	// The OCID of the Database Home.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
 	DBHomeID *string `json:"dbHomeId,omitempty" tf:"db_home_id,omitempty"`
-
-	// Reference to a DbHome in database to populate dbHomeId.
-	// +kubebuilder:validation:Optional
-	DBHomeIDRef *v1.Reference `json:"dbHomeIdRef,omitempty" tf:"-"`
-
-	// Selector for a DbHome in database to populate dbHomeId.
-	// +kubebuilder:validation:Optional
-	DBHomeIDSelector *v1.Selector `json:"dbHomeIdSelector,omitempty" tf:"-"`
 
 	// A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
@@ -605,7 +611,7 @@ type DatabaseInitParameters struct {
 	DataGuardAction *string `json:"dataGuardAction,omitempty" tf:"data_guard_action,omitempty"`
 
 	// (Updatable) Details for creating a database.
-	Database []DatabaseDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
+	Database []DatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
@@ -629,22 +635,7 @@ type DatabaseInitParameters struct {
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
 }
 
-type DatabaseManagementConfigInitParameters struct {
-}
-
-type DatabaseManagementConfigObservation struct {
-
-	// The status of the Database Management service.
-	ManagementStatus *string `json:"managementStatus,omitempty" tf:"management_status,omitempty"`
-
-	// The Database Management type.
-	ManagementType *string `json:"managementType,omitempty" tf:"management_type,omitempty"`
-}
-
-type DatabaseManagementConfigParameters struct {
-}
-
-type DatabaseObservation struct {
+type DatabaseResourceObservation struct {
 
 	// (Applicable when source=DATAGUARD)  An optional property when incremented triggers Data Guard operations such as Failover, Switchover, Reinstate, Data Guard Configuration Update and Convert Standby Database to Standalone . Could be set to any integer value.
 	ActionTrigger *float64 `json:"actionTrigger,omitempty" tf:"action_trigger,omitempty"`
@@ -656,10 +647,10 @@ type DatabaseObservation struct {
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
 	// The Connection strings used to connect to the Oracle Database.
-	ConnectionStrings []DatabaseConnectionStringsObservation `json:"connectionStrings,omitempty" tf:"connection_strings,omitempty"`
+	ConnectionStrings []DatabaseResourceConnectionStringsObservation `json:"connectionStrings,omitempty" tf:"connection_strings,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Backup Options To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see Getting Started with Policies.
-	DBBackupConfig []DatabaseDBBackupConfigObservation `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
+	DBBackupConfig []DatabaseResourceDBBackupConfigObservation `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
 
 	// The OCID of the Database Home.
 	DBHomeID *string `json:"dbHomeId,omitempty" tf:"db_home_id,omitempty"`
@@ -686,7 +677,7 @@ type DatabaseObservation struct {
 	DataGuardGroup []DataGuardGroupObservation `json:"dataGuardGroup,omitempty" tf:"data_guard_group,omitempty"`
 
 	// (Updatable) Details for creating a database.
-	Database []DatabaseDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
+	Database []DatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
 	// The configuration of the Database Management service.
 	DatabaseManagementConfig []DatabaseManagementConfigObservation `json:"databaseManagementConfig,omitempty" tf:"database_management_config,omitempty"`
@@ -770,24 +761,15 @@ type DatabaseObservation struct {
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
 }
 
-type DatabaseParameters struct {
+type DatabaseResourceParameters struct {
 
 	// (Applicable when source=DATAGUARD)  An optional property when incremented triggers Data Guard operations such as Failover, Switchover, Reinstate, Data Guard Configuration Update and Convert Standby Database to Standalone . Could be set to any integer value.
 	// +kubebuilder:validation:Optional
 	ActionTrigger *float64 `json:"actionTrigger,omitempty" tf:"action_trigger,omitempty"`
 
 	// The OCID of the Database Home.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
 	// +kubebuilder:validation:Optional
 	DBHomeID *string `json:"dbHomeId,omitempty" tf:"db_home_id,omitempty"`
-
-	// Reference to a DbHome in database to populate dbHomeId.
-	// +kubebuilder:validation:Optional
-	DBHomeIDRef *v1.Reference `json:"dbHomeIdRef,omitempty" tf:"-"`
-
-	// Selector for a DbHome in database to populate dbHomeId.
-	// +kubebuilder:validation:Optional
-	DBHomeIDSelector *v1.Selector `json:"dbHomeIdSelector,omitempty" tf:"-"`
 
 	// A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	// +kubebuilder:validation:Optional
@@ -799,7 +781,7 @@ type DatabaseParameters struct {
 
 	// (Updatable) Details for creating a database.
 	// +kubebuilder:validation:Optional
-	Database []DatabaseDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
+	Database []DatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
 	// +kubebuilder:validation:Optional
@@ -892,10 +874,10 @@ type SourceEncryptionKeyLocationDetailsParameters struct {
 	ProviderType *string `json:"providerType" tf:"provider_type,omitempty"`
 }
 
-// DatabaseSpec defines the desired state of Database
-type DatabaseSpec struct {
+// DatabaseResourceSpec defines the desired state of DatabaseResource
+type DatabaseResourceSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     DatabaseParameters `json:"forProvider"`
+	ForProvider     DatabaseResourceParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -906,51 +888,52 @@ type DatabaseSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider DatabaseInitParameters `json:"initProvider,omitempty"`
+	InitProvider DatabaseResourceInitParameters `json:"initProvider,omitempty"`
 }
 
-// DatabaseStatus defines the observed state of Database.
-type DatabaseStatus struct {
+// DatabaseResourceStatus defines the observed state of DatabaseResource.
+type DatabaseResourceStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        DatabaseObservation `json:"atProvider,omitempty"`
+	AtProvider        DatabaseResourceObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Database is the Schema for the Databases API. Provides the Database resource in Oracle Cloud Infrastructure Database service
+// DatabaseResource is the Schema for the DatabaseResources API. Provides the Database resource in Oracle Cloud Infrastructure Database service
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,oci}
-type Database struct {
+type DatabaseResource struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.database) || (has(self.initProvider) && has(self.initProvider.database))",message="spec.forProvider.database is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbHomeId) || (has(self.initProvider) && has(self.initProvider.dbHomeId))",message="spec.forProvider.dbHomeId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.source) || (has(self.initProvider) && has(self.initProvider.source))",message="spec.forProvider.source is a required parameter"
-	Spec   DatabaseSpec   `json:"spec"`
-	Status DatabaseStatus `json:"status,omitempty"`
+	Spec   DatabaseResourceSpec   `json:"spec"`
+	Status DatabaseResourceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// DatabaseList contains a list of Databases
-type DatabaseList struct {
+// DatabaseResourceList contains a list of DatabaseResources
+type DatabaseResourceList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Database `json:"items"`
+	Items           []DatabaseResource `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Database_Kind             = "Database"
-	Database_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Database_Kind}.String()
-	Database_KindAPIVersion   = Database_Kind + "." + CRDGroupVersion.String()
-	Database_GroupVersionKind = CRDGroupVersion.WithKind(Database_Kind)
+	DatabaseResource_Kind             = "DatabaseResource"
+	DatabaseResource_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: DatabaseResource_Kind}.String()
+	DatabaseResource_KindAPIVersion   = DatabaseResource_Kind + "." + CRDGroupVersion.String()
+	DatabaseResource_GroupVersionKind = CRDGroupVersion.WithKind(DatabaseResource_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Database{}, &DatabaseList{})
+	SchemeBuilder.Register(&DatabaseResource{}, &DatabaseResourceList{})
 }

@@ -13,10 +13,10 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DbHomeDatabaseConnectionStringsInitParameters struct {
+type DatabaseConnectionStringsInitParameters struct {
 }
 
-type DbHomeDatabaseConnectionStringsObservation struct {
+type DatabaseConnectionStringsObservation struct {
 
 	// +mapType=granular
 	AllConnectionStrings map[string]*string `json:"allConnectionStrings,omitempty" tf:"all_connection_strings,omitempty"`
@@ -26,10 +26,10 @@ type DbHomeDatabaseConnectionStringsObservation struct {
 	CdbIPDefault *string `json:"cdbIpDefault,omitempty" tf:"cdb_ip_default,omitempty"`
 }
 
-type DbHomeDatabaseConnectionStringsParameters struct {
+type DatabaseConnectionStringsParameters struct {
 }
 
-type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
+type DatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the DBRS policy used for backup.
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
@@ -51,7 +51,7 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
 	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
 }
 
-type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
+type DatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the DBRS policy used for backup.
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
@@ -71,7 +71,7 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
 }
 
-type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
+type DatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the DBRS policy used for backup.
 	// +kubebuilder:validation:Optional
@@ -100,7 +100,7 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
 	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
 }
 
-type DbHomeDatabaseDBBackupConfigInitParameters struct {
+type DatabaseDBBackupConfigInitParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) If set to true, configures automatic backups. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
 	AutoBackupEnabled *bool `json:"autoBackupEnabled,omitempty" tf:"auto_backup_enabled,omitempty"`
@@ -118,7 +118,7 @@ type DbHomeDatabaseDBBackupConfigInitParameters struct {
 	BackupDeletionPolicy *string `json:"backupDeletionPolicy,omitempty" tf:"backup_deletion_policy,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination details.
-	BackupDestinationDetails []DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
+	BackupDestinationDetails []DatabaseDBBackupConfigBackupDestinationDetailsInitParameters `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Number of days between the current and the earliest point of recoverability covered by automatic backups. This value applies to automatic backups only. After a new automatic backup has been created, Oracle removes old automatic backups that are created before the window. When the value is updated, it is applied to all existing automatic backups.
 	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
@@ -127,7 +127,7 @@ type DbHomeDatabaseDBBackupConfigInitParameters struct {
 	RunImmediateFullBackup *bool `json:"runImmediateFullBackup,omitempty" tf:"run_immediate_full_backup,omitempty"`
 }
 
-type DbHomeDatabaseDBBackupConfigObservation struct {
+type DatabaseDBBackupConfigObservation struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) If set to true, configures automatic backups. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
 	AutoBackupEnabled *bool `json:"autoBackupEnabled,omitempty" tf:"auto_backup_enabled,omitempty"`
@@ -145,7 +145,7 @@ type DbHomeDatabaseDBBackupConfigObservation struct {
 	BackupDeletionPolicy *string `json:"backupDeletionPolicy,omitempty" tf:"backup_deletion_policy,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination details.
-	BackupDestinationDetails []DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
+	BackupDestinationDetails []DatabaseDBBackupConfigBackupDestinationDetailsObservation `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Number of days between the current and the earliest point of recoverability covered by automatic backups. This value applies to automatic backups only. After a new automatic backup has been created, Oracle removes old automatic backups that are created before the window. When the value is updated, it is applied to all existing automatic backups.
 	RecoveryWindowInDays *float64 `json:"recoveryWindowInDays,omitempty" tf:"recovery_window_in_days,omitempty"`
@@ -154,7 +154,7 @@ type DbHomeDatabaseDBBackupConfigObservation struct {
 	RunImmediateFullBackup *bool `json:"runImmediateFullBackup,omitempty" tf:"run_immediate_full_backup,omitempty"`
 }
 
-type DbHomeDatabaseDBBackupConfigParameters struct {
+type DatabaseDBBackupConfigParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) If set to true, configures automatic backups. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
 	// +kubebuilder:validation:Optional
@@ -178,7 +178,7 @@ type DbHomeDatabaseDBBackupConfigParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination details.
 	// +kubebuilder:validation:Optional
-	BackupDestinationDetails []DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
+	BackupDestinationDetails []DatabaseDBBackupConfigBackupDestinationDetailsParameters `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Number of days between the current and the earliest point of recoverability covered by automatic backups. This value applies to automatic backups only. After a new automatic backup has been created, Oracle removes old automatic backups that are created before the window. When the value is updated, it is applied to all existing automatic backups.
 	// +kubebuilder:validation:Optional
@@ -240,7 +240,7 @@ type DbHomeDatabaseInitParameters struct {
 	CharacterSet *string `json:"characterSet,omitempty" tf:"character_set,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Backup Options To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see Getting Started with Policies.
-	DBBackupConfig []DbHomeDatabaseDBBackupConfigInitParameters `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
+	DBBackupConfig []DatabaseDBBackupConfigInitParameters `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
 
 	// The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.
 	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
@@ -301,10 +301,10 @@ type DbHomeDatabaseObservation struct {
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The character set for the database.  The default is AL32UTF8. Allowed values are:
 	CharacterSet *string `json:"characterSet,omitempty" tf:"character_set,omitempty"`
 
-	ConnectionStrings []DbHomeDatabaseConnectionStringsObservation `json:"connectionStrings,omitempty" tf:"connection_strings,omitempty"`
+	ConnectionStrings []DatabaseConnectionStringsObservation `json:"connectionStrings,omitempty" tf:"connection_strings,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Backup Options To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see Getting Started with Policies.
-	DBBackupConfig []DbHomeDatabaseDBBackupConfigObservation `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
+	DBBackupConfig []DatabaseDBBackupConfigObservation `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
 
 	// The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.
 	DBName *string `json:"dbName,omitempty" tf:"db_name,omitempty"`
@@ -394,7 +394,7 @@ type DbHomeDatabaseParameters struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) (Updatable) Backup Options To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see Getting Started with Policies.
 	// +kubebuilder:validation:Optional
-	DBBackupConfig []DbHomeDatabaseDBBackupConfigParameters `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
+	DBBackupConfig []DatabaseDBBackupConfigParameters `json:"dbBackupConfig,omitempty" tf:"db_backup_config,omitempty"`
 
 	// The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.
 	// +kubebuilder:validation:Optional
@@ -466,16 +466,7 @@ type DbHomeDatabaseParameters struct {
 type DbHomeInitParameters struct {
 
 	// The OCID of the DB system.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
-
-	// Reference to a DbSystem in database to populate dbSystemId.
-	// +kubebuilder:validation:Optional
-	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
-
-	// Selector for a DbSystem in database to populate dbSystemId.
-	// +kubebuilder:validation:Optional
-	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
@@ -594,17 +585,8 @@ type DbHomeObservation struct {
 type DbHomeParameters struct {
 
 	// The OCID of the DB system.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
 	// +kubebuilder:validation:Optional
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
-
-	// Reference to a DbSystem in database to populate dbSystemId.
-	// +kubebuilder:validation:Optional
-	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
-
-	// Selector for a DbSystem in database to populate dbSystemId.
-	// +kubebuilder:validation:Optional
-	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	// +kubebuilder:validation:Optional

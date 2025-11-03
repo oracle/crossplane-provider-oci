@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
-  name: migrations.database.oci.upbound.io
+  name: databasebackups.database.oci.upbound.io
 spec:
   group: database.oci.upbound.io
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - oci
-    kind: Migration
-    listKind: MigrationList
-    plural: migrations
-    singular: migration
+    kind: DatabaseBackup
+    listKind: DatabaseBackupList
+    plural: databasebackups
+    singular: databasebackup
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Migration is the Schema for the Migrations API. Provides the
-          Migration resource in Oracle Cloud Infrastructure Database service
+        description: DatabaseBackup is the Schema for the DatabaseBackups API. Provides
+          the Backup resource in Oracle Cloud Infrastructure Database service
         properties:
           apiVersion:
             description: |-
@@ -55,7 +55,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: MigrationSpec defines the desired state of Migration
+            description: DatabaseBackupSpec defines the desired state of DatabaseBackup
             properties:
               deletionPolicy:
                 default: Delete
@@ -73,9 +73,17 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  dbSystemId:
-                    description: The DB system OCID.
+                  databaseId:
+                    description: The OCID of the database.
                     type: string
+                  displayName:
+                    description: The user-friendly name for the backup. The name does
+                      not have to be unique.
+                    type: string
+                  retentionPeriodInDays:
+                    type: number
+                  retentionPeriodInYears:
+                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -90,9 +98,17 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  dbSystemId:
-                    description: The DB system OCID.
+                  databaseId:
+                    description: The OCID of the database.
                     type: string
+                  displayName:
+                    description: The user-friendly name for the backup. The name does
+                      not have to be unique.
+                    type: string
+                  retentionPeriodInDays:
+                    type: number
+                  retentionPeriodInYears:
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -262,41 +278,125 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.dbSystemId is a required parameter
+            - message: spec.forProvider.databaseId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbSystemId)
-                || (has(self.initProvider) && has(self.initProvider.dbSystemId))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.databaseId)
+                || (has(self.initProvider) && has(self.initProvider.databaseId))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
           status:
-            description: MigrationStatus defines the observed state of Migration.
+            description: DatabaseBackupStatus defines the observed state of DatabaseBackup.
             properties:
               atProvider:
                 properties:
-                  additionalMigrations:
-                    description: The details of addtional resources related to the
-                      migration.
+                  availabilityDomain:
+                    description: The name of the availability domain where the database
+                      backup is stored.
+                    type: string
+                  backupDestinationType:
+                    description: The type of backup.
+                    type: string
+                  compartmentId:
+                    description: The OCID of the compartment.
+                    type: string
+                  databaseEdition:
+                    description: The Oracle Database Edition that applies to all the
+                      databases on the DB system. Exadata DB systems and 2-node RAC
+                      DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
+                    type: string
+                  databaseId:
+                    description: The OCID of the database.
+                    type: string
+                  databaseSizeInGbs:
+                    description: The size of the database in gigabytes at the time
+                      the backup was taken.
+                    type: number
+                  displayName:
+                    description: The user-friendly name for the backup. The name does
+                      not have to be unique.
+                    type: string
+                  encryptionKeyLocationDetails:
+                    description: Types of providers supported for managing database
+                      encryption keys
                     items:
                       properties:
-                        cloudExadataInfrastructureId:
-                          description: The OCID of the cloud Exadata infrastructure.
+                        azureEncryptionKeyId:
+                          description: The key OCID of a registered Azure key.
                           type: string
-                        cloudVmClusterId:
-                          description: The OCID of the cloud VM cluster.
+                        hsmPassword:
+                          description: Provide the HSM password as you would in RDBMS
+                            for External HSM.
                           type: string
-                        dbSystemId:
-                          description: The DB system OCID.
+                        providerType:
+                          description: Use 'EXTERNAL' for creating a new database
+                            or migrating a database key to an External HSM. Use 'AZURE'
+                            for creating a new database or migrating a database key
+                            to Azure.
                           type: string
                       type: object
                     type: array
-                  cloudExadataInfrastructureId:
-                    description: The OCID of the cloud Exadata infrastructure.
-                    type: string
-                  cloudVmClusterId:
-                    description: The OCID of the cloud VM cluster.
-                    type: string
-                  dbSystemId:
-                    description: The DB system OCID.
-                    type: string
                   id:
+                    description: The OCID of the backup.
+                    type: string
+                  isUsingOracleManagedKeys:
+                    type: boolean
+                  keyStoreId:
+                    description: The OCID of the key store of Oracle Vault.
+                    type: string
+                  keyStoreWalletName:
+                    description: The wallet name for Oracle Key Vault.
+                    type: string
+                  kmsKeyId:
+                    description: The OCID of the key container that is used as the
+                      master encryption key in database transparent data encryption
+                      (TDE) operations.
+                    type: string
+                  kmsKeyVersionId:
+                    description: The OCID of the key container version that is used
+                      in database transparent data encryption (TDE) operations KMS
+                      Key can have multiple key versions. If none is specified, the
+                      current key version (latest) of the Key Id is used for the operation.
+                      Autonomous Database Serverless does not use key versions, hence
+                      is not applicable for Autonomous Database Serverless instances.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycle
+                      state.
+                    type: string
+                  retentionPeriodInDays:
+                    type: number
+                  retentionPeriodInYears:
+                    type: number
+                  secondaryKmsKeyIds:
+                    items:
+                      type: string
+                    type: array
+                  shape:
+                    description: Shape of the backup's source database.
+                    type: string
+                  state:
+                    description: The current state of the backup.
+                    type: string
+                  timeEnded:
+                    description: The date and time the backup was completed.
+                    type: string
+                  timeExpiryScheduled:
+                    type: string
+                  timeStarted:
+                    description: The date and time the backup started.
+                    type: string
+                  type:
+                    description: The type of backup.
+                    type: string
+                  vaultId:
+                    description: The OCID of the Oracle Cloud Infrastructure vault.
+                      This parameter and secretId are required for Customer Managed
+                      Keys.
+                    type: string
+                  version:
+                    description: Version of the backup's source database
                     type: string
                 type: object
               conditions:

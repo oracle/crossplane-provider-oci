@@ -31,13 +31,13 @@ type AdditionalMigrationsObservation struct {
 type AdditionalMigrationsParameters struct {
 }
 
-type MigrationInitParameters struct {
+type DatabaseMigrationInitParameters struct {
 
 	// The DB system OCID.
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
 }
 
-type MigrationObservation struct {
+type DatabaseMigrationObservation struct {
 
 	// The details of addtional resources related to the migration.
 	AdditionalMigrations []AdditionalMigrationsObservation `json:"additionalMigrations,omitempty" tf:"additional_migrations,omitempty"`
@@ -54,17 +54,17 @@ type MigrationObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type MigrationParameters struct {
+type DatabaseMigrationParameters struct {
 
 	// The DB system OCID.
 	// +kubebuilder:validation:Optional
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
 }
 
-// MigrationSpec defines the desired state of Migration
-type MigrationSpec struct {
+// DatabaseMigrationSpec defines the desired state of DatabaseMigration
+type DatabaseMigrationSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     MigrationParameters `json:"forProvider"`
+	ForProvider     DatabaseMigrationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -75,50 +75,50 @@ type MigrationSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider MigrationInitParameters `json:"initProvider,omitempty"`
+	InitProvider DatabaseMigrationInitParameters `json:"initProvider,omitempty"`
 }
 
-// MigrationStatus defines the observed state of Migration.
-type MigrationStatus struct {
+// DatabaseMigrationStatus defines the observed state of DatabaseMigration.
+type DatabaseMigrationStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        MigrationObservation `json:"atProvider,omitempty"`
+	AtProvider        DatabaseMigrationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Migration is the Schema for the Migrations API. Provides the Migration resource in Oracle Cloud Infrastructure Database service
+// DatabaseMigration is the Schema for the DatabaseMigrations API. Provides the Migration resource in Oracle Cloud Infrastructure Database service
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,oci}
-type Migration struct {
+type DatabaseMigration struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbSystemId) || (has(self.initProvider) && has(self.initProvider.dbSystemId))",message="spec.forProvider.dbSystemId is a required parameter"
-	Spec   MigrationSpec   `json:"spec"`
-	Status MigrationStatus `json:"status,omitempty"`
+	Spec   DatabaseMigrationSpec   `json:"spec"`
+	Status DatabaseMigrationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// MigrationList contains a list of Migrations
-type MigrationList struct {
+// DatabaseMigrationList contains a list of DatabaseMigrations
+type DatabaseMigrationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Migration `json:"items"`
+	Items           []DatabaseMigration `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	Migration_Kind             = "Migration"
-	Migration_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Migration_Kind}.String()
-	Migration_KindAPIVersion   = Migration_Kind + "." + CRDGroupVersion.String()
-	Migration_GroupVersionKind = CRDGroupVersion.WithKind(Migration_Kind)
+	DatabaseMigration_Kind             = "DatabaseMigration"
+	DatabaseMigration_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: DatabaseMigration_Kind}.String()
+	DatabaseMigration_KindAPIVersion   = DatabaseMigration_Kind + "." + CRDGroupVersion.String()
+	DatabaseMigration_GroupVersionKind = CRDGroupVersion.WithKind(DatabaseMigration_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&Migration{}, &MigrationList{})
+	SchemeBuilder.Register(&DatabaseMigration{}, &DatabaseMigrationList{})
 }

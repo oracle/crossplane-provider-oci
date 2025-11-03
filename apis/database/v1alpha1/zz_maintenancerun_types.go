@@ -37,16 +37,7 @@ type EstimatedPatchingTimeParameters struct {
 type MaintenanceRunInitParameters struct {
 
 	// The OCID of the compartment containing the Maintenance Run.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The Autonomous Database Software Image OCID
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
@@ -179,17 +170,8 @@ type MaintenanceRunObservation struct {
 type MaintenanceRunParameters struct {
 
 	// The OCID of the compartment containing the Maintenance Run.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The Autonomous Database Software Image OCID
 	// +kubebuilder:validation:Optional

@@ -1,8 +1,8 @@
 apiVersion: database.oci.upbound.io/v1alpha1
-kind: DbSystem
+kind: DatabaseDbSystem
 metadata:
   annotations:
-    meta.upbound.io/example-id: database/v1alpha1/dbsystem
+    meta.upbound.io/example-id: database/v1alpha1/databasedbsystem
   labels:
     testing.upbound.io/example-name: test_db_system
   name: test-db-system
@@ -10,13 +10,9 @@ spec:
   forProvider:
     availabilityDomain: ${var.db_system_availability_domain}
     backupNetworkNsgIds: ${var.db_system_backup_network_nsg_ids}
-    backupSubnetIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_subnet
+    backupSubnetId: ${oci_core_subnet.test_subnet.id}
     clusterName: ${var.db_system_cluster_name}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     cpuCoreCount: ${var.db_system_cpu_core_count}
     dataCollectionOptions:
     - isDiagnosticsEventsEnabled: ${var.db_system_data_collection_options_is_diagnostics_events_enabled}
@@ -121,7 +117,5 @@ spec:
     sparseDiskgroup: ${var.db_system_sparse_diskgroup}
     sshPublicKeys: ${var.db_system_ssh_public_keys}
     storageVolumePerformanceMode: ${var.db_system_storage_volume_performance_mode}
-    subnetIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_subnet
+    subnetId: ${oci_core_subnet.test_subnet.id}
     timeZone: ${var.db_system_time_zone}

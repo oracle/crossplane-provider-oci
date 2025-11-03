@@ -14,18 +14,18 @@ import (
 	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this Migration
-func (mg *Migration) GetTerraformResourceType() string {
-	return "oci_database_migration"
+// GetTerraformResourceType returns Terraform resource type for this SoftwareImage
+func (mg *SoftwareImage) GetTerraformResourceType() string {
+	return "oci_database_database_software_image"
 }
 
-// GetConnectionDetailsMapping for this Migration
-func (tr *Migration) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this SoftwareImage
+func (tr *SoftwareImage) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this Migration
-func (tr *Migration) GetObservation() (map[string]any, error) {
+// GetObservation of this SoftwareImage
+func (tr *SoftwareImage) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -34,8 +34,8 @@ func (tr *Migration) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this Migration
-func (tr *Migration) SetObservation(obs map[string]any) error {
+// SetObservation for this SoftwareImage
+func (tr *SoftwareImage) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -43,16 +43,16 @@ func (tr *Migration) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this Migration
-func (tr *Migration) GetID() string {
+// GetID returns ID of underlying Terraform resource of this SoftwareImage
+func (tr *SoftwareImage) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this Migration
-func (tr *Migration) GetParameters() (map[string]any, error) {
+// GetParameters of this SoftwareImage
+func (tr *SoftwareImage) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (tr *Migration) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this Migration
-func (tr *Migration) SetParameters(params map[string]any) error {
+// SetParameters for this SoftwareImage
+func (tr *SoftwareImage) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -70,8 +70,8 @@ func (tr *Migration) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this Migration
-func (tr *Migration) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this SoftwareImage
+func (tr *SoftwareImage) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (tr *Migration) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this Migration
-func (tr *Migration) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this SoftwareImage
+func (tr *SoftwareImage) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
@@ -110,10 +110,10 @@ func (tr *Migration) GetMergedParameters(shouldMergeInitProvider bool) (map[stri
 	return params, nil
 }
 
-// LateInitialize this Migration using its observed tfState.
+// LateInitialize this SoftwareImage using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *Migration) LateInitialize(attrs []byte) (bool, error) {
-	params := &MigrationParameters{}
+func (tr *SoftwareImage) LateInitialize(attrs []byte) (bool, error) {
+	params := &SoftwareImageParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -124,6 +124,6 @@ func (tr *Migration) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *Migration) GetTerraformSchemaVersion() int {
+func (tr *SoftwareImage) GetTerraformSchemaVersion() int {
 	return 0
 }

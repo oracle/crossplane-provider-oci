@@ -1,8 +1,8 @@
 apiVersion: database.oci.upbound.io/v1alpha1
-kind: Database
+kind: DatabaseResource
 metadata:
   annotations:
-    meta.upbound.io/example-id: database/v1alpha1/database
+    meta.upbound.io/example-id: database/v1alpha1/databaseresource
   labels:
     testing.upbound.io/example-name: test_database
   name: test-database
@@ -73,9 +73,7 @@ spec:
         namespace: upbound-system
       transportType: ${var.database_database_transport_type}
       vaultId: ${oci_kms_vault.test_vault.id}
-    dbHomeIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_db_home
+    dbHomeId: ${oci_database_db_home.test_db_home.id}
     dbVersion: ${var.database_db_version}
     kmsKeyId: ${oci_kms_key.test_key.id}
     kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}

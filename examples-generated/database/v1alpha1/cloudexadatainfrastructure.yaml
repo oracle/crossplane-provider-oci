@@ -10,9 +10,7 @@ spec:
   forProvider:
     availabilityDomain: ${var.cloud_exadata_infrastructure_availability_domain}
     clusterPlacementGroupId: ${var.cloud_exadata_infrastructure_cluster_placement_group_id}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     computeCount: ${var.cloud_exadata_infrastructure_compute_count}
     customerContacts:
     - email: ${var.cloud_exadata_infrastructure_customer_contacts_email}

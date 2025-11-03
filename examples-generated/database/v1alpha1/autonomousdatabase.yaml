@@ -24,9 +24,7 @@ spec:
     characterSet: ${var.autonomous_database_character_set}
     cloneTableSpaceList: ${var.autonomous_database_clone_table_space_list}
     cloneType: ${var.autonomous_database_clone_type}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     computeCount: ${var.autonomous_database_compute_count}
     computeModel: ${var.autonomous_database_compute_model}
     cpuCoreCount: ${var.autonomous_database_cpu_core_count}
@@ -102,9 +100,7 @@ spec:
     source: ${var.autonomous_database_source}
     sourceId: ${oci_database_source.test_source.id}
     standbyWhitelistedIps: ${var.autonomous_database_standby_whitelisted_ips}
-    subnetIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_subnet
+    subnetId: ${oci_core_subnet.test_subnet.id}
     subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
     timeOfAutoRefreshStart: ${var.autonomous_database_time_of_auto_refresh_start}
     timestamp: ${var.autonomous_database_timestamp}

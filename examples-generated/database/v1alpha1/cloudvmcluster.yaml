@@ -9,9 +9,7 @@ metadata:
 spec:
   forProvider:
     backupNetworkNsgIds: ${var.cloud_vm_cluster_backup_network_nsg_ids}
-    backupSubnetIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_subnet
+    backupSubnetId: ${oci_core_subnet.test_subnet.id}
     cloudAutomationUpdateDetails:
     - applyUpdateTimePreference:
       - applyUpdatePreferredEndTime: ${var.cloud_vm_cluster_cloud_automation_update_details_apply_update_time_preference_apply_update_preferred_end_time}
@@ -21,13 +19,9 @@ spec:
         freezePeriodStartTime: ${var.cloud_vm_cluster_cloud_automation_update_details_freeze_period_freeze_period_start_time}
       isEarlyAdoptionEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_early_adoption_enabled}
       isFreezePeriodEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_freeze_period_enabled}
-    cloudExadataInfrastructureIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_cloud_exadata_infrastructure
+    cloudExadataInfrastructureId: ${oci_database_cloud_exadata_infrastructure.test_cloud_exadata_infrastructure.id}
     clusterName: ${var.cloud_vm_cluster_cluster_name}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     cpuCoreCount: ${var.cloud_vm_cluster_cpu_core_count}
     dataCollectionOptions:
     - isDiagnosticsEventsEnabled: ${var.cloud_vm_cluster_data_collection_options_is_diagnostics_events_enabled}
@@ -58,9 +52,7 @@ spec:
     scanListenerPortTcpSsl: ${var.cloud_vm_cluster_scan_listener_port_tcp_ssl}
     securityAttributes: ${var.cloud_vm_cluster_security_attributes}
     sshPublicKeys: ${var.cloud_vm_cluster_ssh_public_keys}
-    subnetIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_subnet
+    subnetId: ${oci_core_subnet.test_subnet.id}
     subscriptionId: ${var.tenant_subscription_id}
     systemVersion: ${var.cloud_vm_cluster_system_version}
     timeZone: ${var.cloud_vm_cluster_time_zone}

@@ -12,9 +12,7 @@ spec:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    containerDatabaseIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_database
+    containerDatabaseId: ${oci_database_database.test_database.id}
     definedTags: ${var.pluggable_database_defined_tags}
     freeformTags:
       Department: Finance

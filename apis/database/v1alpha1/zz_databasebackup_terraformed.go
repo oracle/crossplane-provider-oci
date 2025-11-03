@@ -14,18 +14,18 @@ import (
 	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this Backup
-func (mg *Backup) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this DatabaseBackup
+func (mg *DatabaseBackup) GetTerraformResourceType() string {
 	return "oci_database_backup"
 }
 
-// GetConnectionDetailsMapping for this Backup
-func (tr *Backup) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this DatabaseBackup
+func (tr *DatabaseBackup) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this Backup
-func (tr *Backup) GetObservation() (map[string]any, error) {
+// GetObservation of this DatabaseBackup
+func (tr *DatabaseBackup) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -34,8 +34,8 @@ func (tr *Backup) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this Backup
-func (tr *Backup) SetObservation(obs map[string]any) error {
+// SetObservation for this DatabaseBackup
+func (tr *DatabaseBackup) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -43,16 +43,16 @@ func (tr *Backup) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this Backup
-func (tr *Backup) GetID() string {
+// GetID returns ID of underlying Terraform resource of this DatabaseBackup
+func (tr *DatabaseBackup) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this Backup
-func (tr *Backup) GetParameters() (map[string]any, error) {
+// GetParameters of this DatabaseBackup
+func (tr *DatabaseBackup) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (tr *Backup) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this Backup
-func (tr *Backup) SetParameters(params map[string]any) error {
+// SetParameters for this DatabaseBackup
+func (tr *DatabaseBackup) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -70,8 +70,8 @@ func (tr *Backup) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this Backup
-func (tr *Backup) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this DatabaseBackup
+func (tr *DatabaseBackup) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (tr *Backup) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this Backup
-func (tr *Backup) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this DatabaseBackup
+func (tr *DatabaseBackup) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
@@ -110,10 +110,10 @@ func (tr *Backup) GetMergedParameters(shouldMergeInitProvider bool) (map[string]
 	return params, nil
 }
 
-// LateInitialize this Backup using its observed tfState.
+// LateInitialize this DatabaseBackup using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *Backup) LateInitialize(attrs []byte) (bool, error) {
-	params := &BackupParameters{}
+func (tr *DatabaseBackup) LateInitialize(attrs []byte) (bool, error) {
+	params := &DatabaseBackupParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -124,6 +124,6 @@ func (tr *Backup) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *Backup) GetTerraformSchemaVersion() int {
+func (tr *DatabaseBackup) GetTerraformSchemaVersion() int {
 	return 0
 }

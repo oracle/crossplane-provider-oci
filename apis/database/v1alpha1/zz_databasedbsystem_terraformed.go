@@ -14,18 +14,18 @@ import (
 	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this DbSystem
-func (mg *DbSystem) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this DatabaseDbSystem
+func (mg *DatabaseDbSystem) GetTerraformResourceType() string {
 	return "oci_database_db_system"
 }
 
-// GetConnectionDetailsMapping for this DbSystem
-func (tr *DbSystem) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetConnectionDetailsMapping() map[string]string {
 	return map[string]string{"db_home[*].database[*].admin_password": "dbHome[*].database[*].adminPasswordSecretRef", "db_home[*].database[*].backup_tde_password": "dbHome[*].database[*].backupTdePasswordSecretRef", "db_home[*].database[*].tde_wallet_password": "dbHome[*].database[*].tdeWalletPasswordSecretRef"}
 }
 
-// GetObservation of this DbSystem
-func (tr *DbSystem) GetObservation() (map[string]any, error) {
+// GetObservation of this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -34,8 +34,8 @@ func (tr *DbSystem) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this DbSystem
-func (tr *DbSystem) SetObservation(obs map[string]any) error {
+// SetObservation for this DatabaseDbSystem
+func (tr *DatabaseDbSystem) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -43,16 +43,16 @@ func (tr *DbSystem) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this DbSystem
-func (tr *DbSystem) GetID() string {
+// GetID returns ID of underlying Terraform resource of this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this DbSystem
-func (tr *DbSystem) GetParameters() (map[string]any, error) {
+// GetParameters of this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (tr *DbSystem) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this DbSystem
-func (tr *DbSystem) SetParameters(params map[string]any) error {
+// SetParameters for this DatabaseDbSystem
+func (tr *DatabaseDbSystem) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -70,8 +70,8 @@ func (tr *DbSystem) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this DbSystem
-func (tr *DbSystem) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (tr *DbSystem) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this DbSystem
-func (tr *DbSystem) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this DatabaseDbSystem
+func (tr *DatabaseDbSystem) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
@@ -110,10 +110,10 @@ func (tr *DbSystem) GetMergedParameters(shouldMergeInitProvider bool) (map[strin
 	return params, nil
 }
 
-// LateInitialize this DbSystem using its observed tfState.
+// LateInitialize this DatabaseDbSystem using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *DbSystem) LateInitialize(attrs []byte) (bool, error) {
-	params := &DbSystemParameters{}
+func (tr *DatabaseDbSystem) LateInitialize(attrs []byte) (bool, error) {
+	params := &DatabaseDbSystemParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -124,6 +124,6 @@ func (tr *DbSystem) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *DbSystem) GetTerraformSchemaVersion() int {
+func (tr *DatabaseDbSystem) GetTerraformSchemaVersion() int {
 	return 0
 }

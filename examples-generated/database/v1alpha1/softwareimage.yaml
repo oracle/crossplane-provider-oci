@@ -1,16 +1,14 @@
 apiVersion: database.oci.upbound.io/v1alpha1
-kind: DatabaseSoftwareImage
+kind: SoftwareImage
 metadata:
   annotations:
-    meta.upbound.io/example-id: database/v1alpha1/databasesoftwareimage
+    meta.upbound.io/example-id: database/v1alpha1/softwareimage
   labels:
     testing.upbound.io/example-name: test_database_software_image
   name: test-database-software-image
 spec:
   forProvider:
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     databaseSoftwareImageOneOffPatches: ${var.database_software_image_database_software_image_one_off_patches}
     databaseVersion: ${var.database_software_image_database_version}
     definedTags: ${var.database_software_image_defined_tags}

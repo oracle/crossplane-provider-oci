@@ -8,9 +8,7 @@ metadata:
   name: test-autonomous-database-backup
 spec:
   forProvider:
-    autonomousDatabaseIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_autonomous_database
+    autonomousDatabaseId: ${oci_database_autonomous_database.test_autonomous_database.id}
     displayName: ${var.autonomous_database_backup_display_name}
     isLongTermBackup: ${var.autonomous_database_backup_is_long_term_backup}
     retentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}

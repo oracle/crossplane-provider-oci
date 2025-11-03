@@ -64,9 +64,6 @@ func (tr *AutonomousVmClusterOrdsCertificateManagement) Hub() {}
 func (tr *AutonomousVmClusterSslCertificateManagement) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *Backup) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *BackupCancelManagement) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -124,13 +121,19 @@ func (tr *CloudVmCluster) Hub() {}
 func (tr *CloudVmClusterIormConfig) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *Database) Hub() {}
+func (tr *DatabaseBackup) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *DatabaseDbmFeatMgmt) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *DatabaseSoftwareImage) Hub() {}
+func (tr *DatabaseDbSystem) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DatabaseMigration) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DatabaseResource) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *DbHome) Hub() {}
@@ -146,9 +149,6 @@ func (tr *DbNodeConsoleConnection) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *DbNodeConsoleHistory) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *DbSystem) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *DbSystemsUpgrade) Hub() {}
@@ -304,9 +304,6 @@ func (tr *ManagedDatabasesChangeDatabaseParameter) Hub() {}
 func (tr *ManagedDatabasesResetDatabaseParameter) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *Migration) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *MigrationConnection) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -347,6 +344,9 @@ func (tr *SchedulingPolicy) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *SchedulingPolicySchedulingWindow) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SoftwareImage) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ToolsDatabaseToolsConnection) Hub() {}

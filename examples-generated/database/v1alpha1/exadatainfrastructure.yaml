@@ -12,9 +12,7 @@ spec:
     adminNetworkCidr: ${var.exadata_infrastructure_admin_network_cidr}
     cloudControlPlaneServer1: ${var.exadata_infrastructure_cloud_control_plane_server1}
     cloudControlPlaneServer2: ${var.exadata_infrastructure_cloud_control_plane_server2}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     computeCount: ${var.exadata_infrastructure_compute_count}
     contacts:
     - email: ${var.exadata_infrastructure_contacts_email}

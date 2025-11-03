@@ -28,7 +28,6 @@ import (
 	autonomousvmcluster "github.com/oracle/provider-oci/internal/controller/database/autonomousvmcluster"
 	autonomousvmclusterordscertificatemanagement "github.com/oracle/provider-oci/internal/controller/database/autonomousvmclusterordscertificatemanagement"
 	autonomousvmclustersslcertificatemanagement "github.com/oracle/provider-oci/internal/controller/database/autonomousvmclustersslcertificatemanagement"
-	backup "github.com/oracle/provider-oci/internal/controller/database/backup"
 	backupcancelmanagement "github.com/oracle/provider-oci/internal/controller/database/backupcancelmanagement"
 	backupdestination "github.com/oracle/provider-oci/internal/controller/database/backupdestination"
 	cloudasm "github.com/oracle/provider-oci/internal/controller/database/cloudasm"
@@ -48,15 +47,16 @@ import (
 	cloudlistener "github.com/oracle/provider-oci/internal/controller/database/cloudlistener"
 	cloudvmcluster "github.com/oracle/provider-oci/internal/controller/database/cloudvmcluster"
 	cloudvmclusteriormconfig "github.com/oracle/provider-oci/internal/controller/database/cloudvmclusteriormconfig"
-	database "github.com/oracle/provider-oci/internal/controller/database/database"
+	databasebackup "github.com/oracle/provider-oci/internal/controller/database/databasebackup"
 	databasedbmfeatmgmt "github.com/oracle/provider-oci/internal/controller/database/databasedbmfeatmgmt"
-	databasesoftwareimage "github.com/oracle/provider-oci/internal/controller/database/databasesoftwareimage"
+	databasedbsystem "github.com/oracle/provider-oci/internal/controller/database/databasedbsystem"
+	databasemigration "github.com/oracle/provider-oci/internal/controller/database/databasemigration"
+	databaseresource "github.com/oracle/provider-oci/internal/controller/database/databaseresource"
 	dbhome "github.com/oracle/provider-oci/internal/controller/database/dbhome"
 	dbmgmtprivateendpoint "github.com/oracle/provider-oci/internal/controller/database/dbmgmtprivateendpoint"
 	dbnode "github.com/oracle/provider-oci/internal/controller/database/dbnode"
 	dbnodeconsoleconnection "github.com/oracle/provider-oci/internal/controller/database/dbnodeconsoleconnection"
 	dbnodeconsolehistory "github.com/oracle/provider-oci/internal/controller/database/dbnodeconsolehistory"
-	dbsystem "github.com/oracle/provider-oci/internal/controller/database/dbsystem"
 	dbsystemsupgrade "github.com/oracle/provider-oci/internal/controller/database/dbsystemsupgrade"
 	exadatainfrastructure "github.com/oracle/provider-oci/internal/controller/database/exadatainfrastructure"
 	exadatainfrastructurecompute "github.com/oracle/provider-oci/internal/controller/database/exadatainfrastructurecompute"
@@ -108,7 +108,6 @@ import (
 	manageddatabasegroup "github.com/oracle/provider-oci/internal/controller/database/manageddatabasegroup"
 	manageddatabaseschangedatabaseparameter "github.com/oracle/provider-oci/internal/controller/database/manageddatabaseschangedatabaseparameter"
 	manageddatabasesresetdatabaseparameter "github.com/oracle/provider-oci/internal/controller/database/manageddatabasesresetdatabaseparameter"
-	migration "github.com/oracle/provider-oci/internal/controller/database/migration"
 	migrationconnection "github.com/oracle/provider-oci/internal/controller/database/migrationconnection"
 	migrationjob "github.com/oracle/provider-oci/internal/controller/database/migrationjob"
 	migrationmigration "github.com/oracle/provider-oci/internal/controller/database/migrationmigration"
@@ -123,6 +122,7 @@ import (
 	schedulingplan "github.com/oracle/provider-oci/internal/controller/database/schedulingplan"
 	schedulingpolicy "github.com/oracle/provider-oci/internal/controller/database/schedulingpolicy"
 	schedulingpolicyschedulingwindow "github.com/oracle/provider-oci/internal/controller/database/schedulingpolicyschedulingwindow"
+	softwareimage "github.com/oracle/provider-oci/internal/controller/database/softwareimage"
 	toolsdatabasetoolsconnection "github.com/oracle/provider-oci/internal/controller/database/toolsdatabasetoolsconnection"
 	toolsdatabasetoolsprivateendpoint "github.com/oracle/provider-oci/internal/controller/database/toolsdatabasetoolsprivateendpoint"
 	upgrade "github.com/oracle/provider-oci/internal/controller/database/upgrade"
@@ -155,7 +155,6 @@ func Setup_database(mgr ctrl.Manager, o controller.Options) error {
 		autonomousvmcluster.Setup,
 		autonomousvmclusterordscertificatemanagement.Setup,
 		autonomousvmclustersslcertificatemanagement.Setup,
-		backup.Setup,
 		backupcancelmanagement.Setup,
 		backupdestination.Setup,
 		cloudasm.Setup,
@@ -175,15 +174,16 @@ func Setup_database(mgr ctrl.Manager, o controller.Options) error {
 		cloudlistener.Setup,
 		cloudvmcluster.Setup,
 		cloudvmclusteriormconfig.Setup,
-		database.Setup,
+		databasebackup.Setup,
 		databasedbmfeatmgmt.Setup,
-		databasesoftwareimage.Setup,
+		databasedbsystem.Setup,
+		databasemigration.Setup,
+		databaseresource.Setup,
 		dbhome.Setup,
 		dbmgmtprivateendpoint.Setup,
 		dbnode.Setup,
 		dbnodeconsoleconnection.Setup,
 		dbnodeconsolehistory.Setup,
-		dbsystem.Setup,
 		dbsystemsupgrade.Setup,
 		exadatainfrastructure.Setup,
 		exadatainfrastructurecompute.Setup,
@@ -235,7 +235,6 @@ func Setup_database(mgr ctrl.Manager, o controller.Options) error {
 		manageddatabasegroup.Setup,
 		manageddatabaseschangedatabaseparameter.Setup,
 		manageddatabasesresetdatabaseparameter.Setup,
-		migration.Setup,
 		migrationconnection.Setup,
 		migrationjob.Setup,
 		migrationmigration.Setup,
@@ -250,6 +249,7 @@ func Setup_database(mgr ctrl.Manager, o controller.Options) error {
 		schedulingplan.Setup,
 		schedulingpolicy.Setup,
 		schedulingpolicyschedulingwindow.Setup,
+		softwareimage.Setup,
 		toolsdatabasetoolsconnection.Setup,
 		toolsdatabasetoolsprivateendpoint.Setup,
 		upgrade.Setup,

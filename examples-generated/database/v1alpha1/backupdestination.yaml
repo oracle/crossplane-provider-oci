@@ -8,9 +8,7 @@ metadata:
   name: test-backup-destination
 spec:
   forProvider:
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     connectionString: ${var.backup_destination_connection_string}
     definedTags: ${var.backup_destination_defined_tags}
     displayName: ${var.backup_destination_display_name}

@@ -196,15 +196,6 @@ func (l *BackupDestinationList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this BackupList.
-func (l *BackupList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
 // GetItems of this CloudAsmInstanceList.
 func (l *CloudAsmInstanceList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -358,6 +349,24 @@ func (l *CloudVmClusterList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this DatabaseBackupList.
+func (l *DatabaseBackupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DatabaseDbSystemList.
+func (l *DatabaseDbSystemList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DatabaseDbmFeatMgmtList.
 func (l *DatabaseDbmFeatMgmtList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -367,8 +376,8 @@ func (l *DatabaseDbmFeatMgmtList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this DatabaseList.
-func (l *DatabaseList) GetItems() []resource.Managed {
+// GetItems of this DatabaseMigrationList.
+func (l *DatabaseMigrationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -376,8 +385,8 @@ func (l *DatabaseList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this DatabaseSoftwareImageList.
-func (l *DatabaseSoftwareImageList) GetItems() []resource.Managed {
+// GetItems of this DatabaseResourceList.
+func (l *DatabaseResourceList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -423,15 +432,6 @@ func (l *DbNodeConsoleHistoryList) GetItems() []resource.Managed {
 
 // GetItems of this DbNodeList.
 func (l *DbNodeList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
-// GetItems of this DbSystemList.
-func (l *DbSystemList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -916,15 +916,6 @@ func (l *MigrationJobList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this MigrationList.
-func (l *MigrationList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
 // GetItems of this MigrationMigrationList.
 func (l *MigrationMigrationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -1026,6 +1017,15 @@ func (l *SchedulingPolicyList) GetItems() []resource.Managed {
 
 // GetItems of this SchedulingPolicySchedulingWindowList.
 func (l *SchedulingPolicySchedulingWindowList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this SoftwareImageList.
+func (l *SoftwareImageList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

@@ -98,16 +98,7 @@ type CloudVmClusterInitParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet associated with the cloud VM cluster.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of ECPUs (X11M and higher) or number of OCPUs (X10M and earlier) to enable for the VM cluster.
 	CPUCoreCount *float64 `json:"cpuCoreCount,omitempty" tf:"cpu_core_count,omitempty"`
@@ -116,31 +107,13 @@ type CloudVmClusterInitParameters struct {
 	CloudAutomationUpdateDetails []CloudAutomationUpdateDetailsInitParameters `json:"cloudAutomationUpdateDetails,omitempty" tf:"cloud_automation_update_details,omitempty"`
 
 	// The OCID of the cloud Exadata infrastructure resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudExadataInfrastructure
 	CloudExadataInfrastructureID *string `json:"cloudExadataInfrastructureId,omitempty" tf:"cloud_exadata_infrastructure_id,omitempty"`
-
-	// Reference to a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	CloudExadataInfrastructureIDRef *v1.Reference `json:"cloudExadataInfrastructureIdRef,omitempty" tf:"-"`
-
-	// Selector for a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	CloudExadataInfrastructureIDSelector *v1.Selector `json:"cloudExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	CreateAsync *bool `json:"createAsync,omitempty" tf:"create_async,omitempty"`
 
@@ -218,16 +191,7 @@ type CloudVmClusterInitParameters struct {
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The OCID of the subnet associated with the cloud VM cluster.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the subscription with which resource needs to be associated with.
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
@@ -438,17 +402,8 @@ type CloudVmClusterParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet associated with the cloud VM cluster.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of ECPUs (X11M and higher) or number of OCPUs (X10M and earlier) to enable for the VM cluster.
 	// +kubebuilder:validation:Optional
@@ -459,34 +414,16 @@ type CloudVmClusterParameters struct {
 	CloudAutomationUpdateDetails []CloudAutomationUpdateDetailsParameters `json:"cloudAutomationUpdateDetails,omitempty" tf:"cloud_automation_update_details,omitempty"`
 
 	// The OCID of the cloud Exadata infrastructure resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudExadataInfrastructure
 	// +kubebuilder:validation:Optional
 	CloudExadataInfrastructureID *string `json:"cloudExadataInfrastructureId,omitempty" tf:"cloud_exadata_infrastructure_id,omitempty"`
-
-	// Reference to a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	CloudExadataInfrastructureIDRef *v1.Reference `json:"cloudExadataInfrastructureIdRef,omitempty" tf:"-"`
-
-	// Selector for a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
-	// +kubebuilder:validation:Optional
-	CloudExadataInfrastructureIDSelector *v1.Selector `json:"cloudExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The cluster name for cloud VM cluster. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	CreateAsync *bool `json:"createAsync,omitempty" tf:"create_async,omitempty"`
@@ -588,17 +525,8 @@ type CloudVmClusterParameters struct {
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The OCID of the subnet associated with the cloud VM cluster.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the subscription with which resource needs to be associated with.
 	// +kubebuilder:validation:Optional
@@ -808,11 +736,15 @@ type CloudVmClusterStatus struct {
 type CloudVmCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.backupSubnetId) || (has(self.initProvider) && has(self.initProvider.backupSubnetId))",message="spec.forProvider.backupSubnetId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudExadataInfrastructureId) || (has(self.initProvider) && has(self.initProvider.cloudExadataInfrastructureId))",message="spec.forProvider.cloudExadataInfrastructureId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cpuCoreCount) || (has(self.initProvider) && has(self.initProvider.cpuCoreCount))",message="spec.forProvider.cpuCoreCount is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.giVersion) || (has(self.initProvider) && has(self.initProvider.giVersion))",message="spec.forProvider.giVersion is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sshPublicKeys) || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))",message="spec.forProvider.sshPublicKeys is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
 	Spec   CloudVmClusterSpec   `json:"spec"`
 	Status CloudVmClusterStatus `json:"status,omitempty"`
 }

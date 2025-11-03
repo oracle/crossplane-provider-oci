@@ -41,16 +41,7 @@ type CloudExadataInfrastructureInitParameters struct {
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of compute servers for the cloud Exadata infrastructure.
 	ComputeCount *float64 `json:"computeCount,omitempty" tf:"compute_count,omitempty"`
@@ -379,17 +370,8 @@ type CloudExadataInfrastructureParameters struct {
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of compute servers for the cloud Exadata infrastructure.
 	// +kubebuilder:validation:Optional
@@ -496,6 +478,7 @@ type CloudExadataInfrastructure struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.availabilityDomain) || (has(self.initProvider) && has(self.initProvider.availabilityDomain))",message="spec.forProvider.availabilityDomain is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.shape) || (has(self.initProvider) && has(self.initProvider.shape))",message="spec.forProvider.shape is a required parameter"
 	Spec   CloudExadataInfrastructureSpec   `json:"spec"`

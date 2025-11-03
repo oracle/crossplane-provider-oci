@@ -92,16 +92,7 @@ type AutonomousDatabaseBackupBackupDestinationDetailsParameters struct {
 type AutonomousDatabaseBackupInitParameters struct {
 
 	// The OCID of the Autonomous Database backup.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousDatabase
 	AutonomousDatabaseID *string `json:"autonomousDatabaseId,omitempty" tf:"autonomous_database_id,omitempty"`
-
-	// Reference to a AutonomousDatabase in database to populate autonomousDatabaseId.
-	// +kubebuilder:validation:Optional
-	AutonomousDatabaseIDRef *v1.Reference `json:"autonomousDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a AutonomousDatabase in database to populate autonomousDatabaseId.
-	// +kubebuilder:validation:Optional
-	AutonomousDatabaseIDSelector *v1.Selector `json:"autonomousDatabaseIdSelector,omitempty" tf:"-"`
 
 	// Backup destination details
 	BackupDestinationDetails []AutonomousDatabaseBackupBackupDestinationDetailsInitParameters `json:"backupDestinationDetails,omitempty" tf:"backup_destination_details,omitempty"`
@@ -191,17 +182,8 @@ type AutonomousDatabaseBackupObservation struct {
 type AutonomousDatabaseBackupParameters struct {
 
 	// The OCID of the Autonomous Database backup.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousDatabase
 	// +kubebuilder:validation:Optional
 	AutonomousDatabaseID *string `json:"autonomousDatabaseId,omitempty" tf:"autonomous_database_id,omitempty"`
-
-	// Reference to a AutonomousDatabase in database to populate autonomousDatabaseId.
-	// +kubebuilder:validation:Optional
-	AutonomousDatabaseIDRef *v1.Reference `json:"autonomousDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a AutonomousDatabase in database to populate autonomousDatabaseId.
-	// +kubebuilder:validation:Optional
-	AutonomousDatabaseIDSelector *v1.Selector `json:"autonomousDatabaseIdSelector,omitempty" tf:"-"`
 
 	// Backup destination details
 	// +kubebuilder:validation:Optional
@@ -256,8 +238,9 @@ type AutonomousDatabaseBackupStatus struct {
 type AutonomousDatabaseBackup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              AutonomousDatabaseBackupSpec   `json:"spec"`
-	Status            AutonomousDatabaseBackupStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.autonomousDatabaseId) || (has(self.initProvider) && has(self.initProvider.autonomousDatabaseId))",message="spec.forProvider.autonomousDatabaseId is a required parameter"
+	Spec   AutonomousDatabaseBackupSpec   `json:"spec"`
+	Status AutonomousDatabaseBackupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

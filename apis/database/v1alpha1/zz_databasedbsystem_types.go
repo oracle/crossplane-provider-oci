@@ -533,7 +533,7 @@ type DBSystemOptionsParameters struct {
 	StorageManagement *string `json:"storageManagement,omitempty" tf:"storage_management,omitempty"`
 }
 
-type DbSystemDataCollectionOptionsInitParameters struct {
+type DatabaseDbSystemDataCollectionOptionsInitParameters struct {
 
 	// (Updatable) Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic collection allows you to receive Events service notifications for guest VM issues. Diagnostic collection also allows Oracle to provide enhanced service and proactive support for your Exadata system. You can enable diagnostic collection during VM cluster/Cloud VM cluster provisioning. You can also disable or enable it at any time using the UpdateVmCluster or updateCloudVmCluster API.
 	IsDiagnosticsEventsEnabled *bool `json:"isDiagnosticsEventsEnabled,omitempty" tf:"is_diagnostics_events_enabled,omitempty"`
@@ -545,7 +545,7 @@ type DbSystemDataCollectionOptionsInitParameters struct {
 	IsIncidentLogsEnabled *bool `json:"isIncidentLogsEnabled,omitempty" tf:"is_incident_logs_enabled,omitempty"`
 }
 
-type DbSystemDataCollectionOptionsObservation struct {
+type DatabaseDbSystemDataCollectionOptionsObservation struct {
 
 	// (Updatable) Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic collection allows you to receive Events service notifications for guest VM issues. Diagnostic collection also allows Oracle to provide enhanced service and proactive support for your Exadata system. You can enable diagnostic collection during VM cluster/Cloud VM cluster provisioning. You can also disable or enable it at any time using the UpdateVmCluster or updateCloudVmCluster API.
 	IsDiagnosticsEventsEnabled *bool `json:"isDiagnosticsEventsEnabled,omitempty" tf:"is_diagnostics_events_enabled,omitempty"`
@@ -557,7 +557,7 @@ type DbSystemDataCollectionOptionsObservation struct {
 	IsIncidentLogsEnabled *bool `json:"isIncidentLogsEnabled,omitempty" tf:"is_incident_logs_enabled,omitempty"`
 }
 
-type DbSystemDataCollectionOptionsParameters struct {
+type DatabaseDbSystemDataCollectionOptionsParameters struct {
 
 	// (Updatable) Indicates whether diagnostic collection is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic collection allows you to receive Events service notifications for guest VM issues. Diagnostic collection also allows Oracle to provide enhanced service and proactive support for your Exadata system. You can enable diagnostic collection during VM cluster/Cloud VM cluster provisioning. You can also disable or enable it at any time using the UpdateVmCluster or updateCloudVmCluster API.
 	// +kubebuilder:validation:Optional
@@ -572,7 +572,7 @@ type DbSystemDataCollectionOptionsParameters struct {
 	IsIncidentLogsEnabled *bool `json:"isIncidentLogsEnabled,omitempty" tf:"is_incident_logs_enabled,omitempty"`
 }
 
-type DbSystemInitParameters struct {
+type DatabaseDbSystemInitParameters struct {
 
 	// The availability domain where the DB system is located.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
@@ -582,16 +582,7 @@ type DbSystemInitParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 	CPUCoreCount *float64 `json:"cpuCoreCount,omitempty" tf:"cpu_core_count,omitempty"`
@@ -600,16 +591,7 @@ type DbSystemInitParameters struct {
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment the DB system  belongs in.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details for creating a Database Home if you are creating a database by restoring from a database backup.
 	DBHome []DBHomeInitParameters `json:"dbHome,omitempty" tf:"db_home,omitempty"`
@@ -618,7 +600,7 @@ type DbSystemInitParameters struct {
 	DBSystemOptions []DBSystemOptionsInitParameters `json:"dbSystemOptions,omitempty" tf:"db_system_options,omitempty"`
 
 	// (Updatable) Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
-	DataCollectionOptions []DbSystemDataCollectionOptionsInitParameters `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
+	DataCollectionOptions []DatabaseDbSystemDataCollectionOptionsInitParameters `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
 
 	// The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems. Required for BMDBs.
 	DataStoragePercentage *float64 `json:"dataStoragePercentage,omitempty" tf:"data_storage_percentage,omitempty"`
@@ -662,7 +644,7 @@ type DbSystemInitParameters struct {
 	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
-	MaintenanceWindowDetails []DbSystemMaintenanceWindowDetailsInitParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
+	MaintenanceWindowDetails []DatabaseDbSystemMaintenanceWindowDetailsInitParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
 	// The number of nodes to launch for a 2-node RAC virtual machine DB system. Specify either 1 or 2.
 	NodeCount *float64 `json:"nodeCount,omitempty" tf:"node_count,omitempty"`
@@ -704,25 +686,16 @@ type DbSystemInitParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// The OCID of the subnet the DB system is associated with.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The time zone to use for the DB system. For details, see DB System Time Zones.
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 }
 
-type DbSystemIormConfigCacheInitParameters struct {
+type DatabaseDbSystemIormConfigCacheInitParameters struct {
 }
 
-type DbSystemIormConfigCacheObservation struct {
+type DatabaseDbSystemIormConfigCacheObservation struct {
 
 	// An array of IORM settings for all the database in the Exadata DB system.
 	DBPlans []IormConfigCacheDBPlansObservation `json:"dbPlans,omitempty" tf:"db_plans,omitempty"`
@@ -740,47 +713,47 @@ type DbSystemIormConfigCacheObservation struct {
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
-type DbSystemIormConfigCacheParameters struct {
+type DatabaseDbSystemIormConfigCacheParameters struct {
 }
 
-type DbSystemMaintenanceWindowDaysOfWeekInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters struct {
 }
 
-type DbSystemMaintenanceWindowDaysOfWeekObservation struct {
+type DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDaysOfWeekParameters struct {
+type DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters struct {
 }
 
-type DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsDaysOfWeekObservation struct {
+type DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsDaysOfWeekParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters struct {
 
 	// (Updatable) Name of the day of the week.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsInitParameters struct {
 
 	// (Applicable when source=NONE) (Updatable) Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120 (inclusive).
 	CustomActionTimeoutInMins *float64 `json:"customActionTimeoutInMins,omitempty" tf:"custom_action_timeout_in_mins,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Days during the week when maintenance should be performed.
-	DaysOfWeek []DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
+	DaysOfWeek []DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The window of hours during the day when maintenance should be performed. The window is a 4 hour slot. Valid values are
 	HoursOfDay []*float64 `json:"hoursOfDay,omitempty" tf:"hours_of_day,omitempty"`
@@ -795,7 +768,7 @@ type DbSystemMaintenanceWindowDetailsInitParameters struct {
 	LeadTimeInWeeks *float64 `json:"leadTimeInWeeks,omitempty" tf:"lead_time_in_weeks,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Months during the year when maintenance should be performed.
-	Months []DbSystemMaintenanceWindowDetailsMonthsInitParameters `json:"months,omitempty" tf:"months,omitempty"`
+	Months []DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters `json:"months,omitempty" tf:"months,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Cloud Exadata infrastructure node patching method, either "ROLLING" or "NONROLLING". Default value is ROLLING.
 	PatchingMode *string `json:"patchingMode,omitempty" tf:"patching_mode,omitempty"`
@@ -809,32 +782,32 @@ type DbSystemMaintenanceWindowDetailsInitParameters struct {
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsMonthsInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsMonthsObservation struct {
+type DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsMonthsParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters struct {
 
 	// (Updatable) Name of the day of the week.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsObservation struct {
+type DatabaseDbSystemMaintenanceWindowDetailsObservation struct {
 
 	// (Applicable when source=NONE) (Updatable) Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120 (inclusive).
 	CustomActionTimeoutInMins *float64 `json:"customActionTimeoutInMins,omitempty" tf:"custom_action_timeout_in_mins,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Days during the week when maintenance should be performed.
-	DaysOfWeek []DbSystemMaintenanceWindowDetailsDaysOfWeekObservation `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
+	DaysOfWeek []DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The window of hours during the day when maintenance should be performed. The window is a 4 hour slot. Valid values are
 	HoursOfDay []*float64 `json:"hoursOfDay,omitempty" tf:"hours_of_day,omitempty"`
@@ -849,7 +822,7 @@ type DbSystemMaintenanceWindowDetailsObservation struct {
 	LeadTimeInWeeks *float64 `json:"leadTimeInWeeks,omitempty" tf:"lead_time_in_weeks,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Months during the year when maintenance should be performed.
-	Months []DbSystemMaintenanceWindowDetailsMonthsObservation `json:"months,omitempty" tf:"months,omitempty"`
+	Months []DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation `json:"months,omitempty" tf:"months,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Cloud Exadata infrastructure node patching method, either "ROLLING" or "NONROLLING". Default value is ROLLING.
 	PatchingMode *string `json:"patchingMode,omitempty" tf:"patching_mode,omitempty"`
@@ -863,7 +836,7 @@ type DbSystemMaintenanceWindowDetailsObservation struct {
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
-type DbSystemMaintenanceWindowDetailsParameters struct {
+type DatabaseDbSystemMaintenanceWindowDetailsParameters struct {
 
 	// (Applicable when source=NONE) (Updatable) Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120 (inclusive).
 	// +kubebuilder:validation:Optional
@@ -871,7 +844,7 @@ type DbSystemMaintenanceWindowDetailsParameters struct {
 
 	// (Applicable when source=NONE) (Updatable) Days during the week when maintenance should be performed.
 	// +kubebuilder:validation:Optional
-	DaysOfWeek []DbSystemMaintenanceWindowDetailsDaysOfWeekParameters `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
+	DaysOfWeek []DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The window of hours during the day when maintenance should be performed. The window is a 4 hour slot. Valid values are
 	// +kubebuilder:validation:Optional
@@ -891,7 +864,7 @@ type DbSystemMaintenanceWindowDetailsParameters struct {
 
 	// (Applicable when source=NONE) (Updatable) Months during the year when maintenance should be performed.
 	// +kubebuilder:validation:Optional
-	Months []DbSystemMaintenanceWindowDetailsMonthsParameters `json:"months,omitempty" tf:"months,omitempty"`
+	Months []DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters `json:"months,omitempty" tf:"months,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Cloud Exadata infrastructure node patching method, either "ROLLING" or "NONROLLING". Default value is ROLLING.
 	// +kubebuilder:validation:Optional
@@ -909,28 +882,28 @@ type DbSystemMaintenanceWindowDetailsParameters struct {
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
-type DbSystemMaintenanceWindowInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowInitParameters struct {
 }
 
-type DbSystemMaintenanceWindowMonthsInitParameters struct {
+type DatabaseDbSystemMaintenanceWindowMonthsInitParameters struct {
 }
 
-type DbSystemMaintenanceWindowMonthsObservation struct {
+type DatabaseDbSystemMaintenanceWindowMonthsObservation struct {
 
 	// (Updatable) Name of the day of the week.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DbSystemMaintenanceWindowMonthsParameters struct {
+type DatabaseDbSystemMaintenanceWindowMonthsParameters struct {
 }
 
-type DbSystemMaintenanceWindowObservation struct {
+type DatabaseDbSystemMaintenanceWindowObservation struct {
 
 	// (Applicable when source=NONE) (Updatable) Determines the amount of time the system will wait before the start of each database server patching operation. Custom action timeout is in minutes and valid value is between 15 to 120 (inclusive).
 	CustomActionTimeoutInMins *float64 `json:"customActionTimeoutInMins,omitempty" tf:"custom_action_timeout_in_mins,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Days during the week when maintenance should be performed.
-	DaysOfWeek []DbSystemMaintenanceWindowDaysOfWeekObservation `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
+	DaysOfWeek []DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation `json:"daysOfWeek,omitempty" tf:"days_of_week,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The window of hours during the day when maintenance should be performed. The window is a 4 hour slot. Valid values are
 	HoursOfDay []*float64 `json:"hoursOfDay,omitempty" tf:"hours_of_day,omitempty"`
@@ -945,7 +918,7 @@ type DbSystemMaintenanceWindowObservation struct {
 	LeadTimeInWeeks *float64 `json:"leadTimeInWeeks,omitempty" tf:"lead_time_in_weeks,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Months during the year when maintenance should be performed.
-	Months []DbSystemMaintenanceWindowMonthsObservation `json:"months,omitempty" tf:"months,omitempty"`
+	Months []DatabaseDbSystemMaintenanceWindowMonthsObservation `json:"months,omitempty" tf:"months,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) Cloud Exadata infrastructure node patching method, either "ROLLING" or "NONROLLING". Default value is ROLLING.
 	PatchingMode *string `json:"patchingMode,omitempty" tf:"patching_mode,omitempty"`
@@ -959,10 +932,10 @@ type DbSystemMaintenanceWindowObservation struct {
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
-type DbSystemMaintenanceWindowParameters struct {
+type DatabaseDbSystemMaintenanceWindowParameters struct {
 }
 
-type DbSystemObservation struct {
+type DatabaseDbSystemObservation struct {
 
 	// The availability domain where the DB system is located.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
@@ -990,7 +963,7 @@ type DbSystemObservation struct {
 	DBSystemOptions []DBSystemOptionsObservation `json:"dbSystemOptions,omitempty" tf:"db_system_options,omitempty"`
 
 	// (Updatable) Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
-	DataCollectionOptions []DbSystemDataCollectionOptionsObservation `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
+	DataCollectionOptions []DatabaseDbSystemDataCollectionOptionsObservation `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
 
 	// The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems. Required for BMDBs.
 	DataStoragePercentage *float64 `json:"dataStoragePercentage,omitempty" tf:"data_storage_percentage,omitempty"`
@@ -1028,7 +1001,7 @@ type DbSystemObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The IORM settings of the Exadata DB system.
-	IormConfigCache []DbSystemIormConfigCacheObservation `json:"iormConfigCache,omitempty" tf:"iorm_config_cache,omitempty"`
+	IormConfigCache []DatabaseDbSystemIormConfigCacheObservation `json:"iormConfigCache,omitempty" tf:"iorm_config_cache,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
@@ -1052,10 +1025,10 @@ type DbSystemObservation struct {
 	ListenerPort *float64 `json:"listenerPort,omitempty" tf:"listener_port,omitempty"`
 
 	// The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
-	MaintenanceWindow []DbSystemMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+	MaintenanceWindow []DatabaseDbSystemMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// (Applicable when source=NONE) (Updatable) The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
-	MaintenanceWindowDetails []DbSystemMaintenanceWindowDetailsObservation `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
+	MaintenanceWindowDetails []DatabaseDbSystemMaintenanceWindowDetailsObservation `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
 	// Memory allocated to the DB system, in gigabytes.
 	MemorySizeInGbs *float64 `json:"memorySizeInGbs,omitempty" tf:"memory_size_in_gbs,omitempty"`
@@ -1149,7 +1122,7 @@ type DbSystemObservation struct {
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
-type DbSystemParameters struct {
+type DatabaseDbSystemParameters struct {
 
 	// The availability domain where the DB system is located.
 	// +kubebuilder:validation:Optional
@@ -1161,17 +1134,8 @@ type DbSystemParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate backupSubnetId.
-	// +kubebuilder:validation:Optional
-	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 	// +kubebuilder:validation:Optional
@@ -1182,17 +1146,8 @@ type DbSystemParameters struct {
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment the DB system  belongs in.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details for creating a Database Home if you are creating a database by restoring from a database backup.
 	// +kubebuilder:validation:Optional
@@ -1204,7 +1159,7 @@ type DbSystemParameters struct {
 
 	// (Updatable) Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
 	// +kubebuilder:validation:Optional
-	DataCollectionOptions []DbSystemDataCollectionOptionsParameters `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
+	DataCollectionOptions []DatabaseDbSystemDataCollectionOptionsParameters `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
 
 	// The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems. Required for BMDBs.
 	// +kubebuilder:validation:Optional
@@ -1262,7 +1217,7 @@ type DbSystemParameters struct {
 
 	// (Applicable when source=NONE) (Updatable) The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
 	// +kubebuilder:validation:Optional
-	MaintenanceWindowDetails []DbSystemMaintenanceWindowDetailsParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
+	MaintenanceWindowDetails []DatabaseDbSystemMaintenanceWindowDetailsParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
 	// The number of nodes to launch for a 2-node RAC virtual machine DB system. Specify either 1 or 2.
 	// +kubebuilder:validation:Optional
@@ -1316,17 +1271,8 @@ type DbSystemParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// The OCID of the subnet the DB system is associated with.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
-
-	// Reference to a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
-
-	// Selector for a Subnet in networking to populate subnetId.
-	// +kubebuilder:validation:Optional
-	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The time zone to use for the DB system. For details, see DB System Time Zones.
 	// +kubebuilder:validation:Optional
@@ -1351,10 +1297,10 @@ type IormConfigCacheDBPlansObservation struct {
 type IormConfigCacheDBPlansParameters struct {
 }
 
-// DbSystemSpec defines the desired state of DbSystem
-type DbSystemSpec struct {
+// DatabaseDbSystemSpec defines the desired state of DatabaseDbSystem
+type DatabaseDbSystemSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     DbSystemParameters `json:"forProvider"`
+	ForProvider     DatabaseDbSystemParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1365,54 +1311,56 @@ type DbSystemSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider DbSystemInitParameters `json:"initProvider,omitempty"`
+	InitProvider DatabaseDbSystemInitParameters `json:"initProvider,omitempty"`
 }
 
-// DbSystemStatus defines the observed state of DbSystem.
-type DbSystemStatus struct {
+// DatabaseDbSystemStatus defines the observed state of DatabaseDbSystem.
+type DatabaseDbSystemStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        DbSystemObservation `json:"atProvider,omitempty"`
+	AtProvider        DatabaseDbSystemObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// DbSystem is the Schema for the DbSystems API. Provides the Db System resource in Oracle Cloud Infrastructure Database service
+// DatabaseDbSystem is the Schema for the DatabaseDbSystems API. Provides the Db System resource in Oracle Cloud Infrastructure Database service
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,oci}
-type DbSystem struct {
+type DatabaseDbSystem struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.availabilityDomain) || (has(self.initProvider) && has(self.initProvider.availabilityDomain))",message="spec.forProvider.availabilityDomain is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbHome) || (has(self.initProvider) && has(self.initProvider.dbHome))",message="spec.forProvider.dbHome is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.shape) || (has(self.initProvider) && has(self.initProvider.shape))",message="spec.forProvider.shape is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sshPublicKeys) || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))",message="spec.forProvider.sshPublicKeys is a required parameter"
-	Spec   DbSystemSpec   `json:"spec"`
-	Status DbSystemStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
+	Spec   DatabaseDbSystemSpec   `json:"spec"`
+	Status DatabaseDbSystemStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// DbSystemList contains a list of DbSystems
-type DbSystemList struct {
+// DatabaseDbSystemList contains a list of DatabaseDbSystems
+type DatabaseDbSystemList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []DbSystem `json:"items"`
+	Items           []DatabaseDbSystem `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	DbSystem_Kind             = "DbSystem"
-	DbSystem_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: DbSystem_Kind}.String()
-	DbSystem_KindAPIVersion   = DbSystem_Kind + "." + CRDGroupVersion.String()
-	DbSystem_GroupVersionKind = CRDGroupVersion.WithKind(DbSystem_Kind)
+	DatabaseDbSystem_Kind             = "DatabaseDbSystem"
+	DatabaseDbSystem_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: DatabaseDbSystem_Kind}.String()
+	DatabaseDbSystem_KindAPIVersion   = DatabaseDbSystem_Kind + "." + CRDGroupVersion.String()
+	DatabaseDbSystem_GroupVersionKind = CRDGroupVersion.WithKind(DatabaseDbSystem_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&DbSystem{}, &DbSystemList{})
+	SchemeBuilder.Register(&DatabaseDbSystem{}, &DatabaseDbSystemList{})
 }

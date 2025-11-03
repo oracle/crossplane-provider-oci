@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
-  name: backups.database.oci.upbound.io
+  name: databasemigrations.database.oci.upbound.io
 spec:
   group: database.oci.upbound.io
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - oci
-    kind: Backup
-    listKind: BackupList
-    plural: backups
-    singular: backup
+    kind: DatabaseMigration
+    listKind: DatabaseMigrationList
+    plural: databasemigrations
+    singular: databasemigration
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Backup is the Schema for the Backups API. Provides the Backup
-          resource in Oracle Cloud Infrastructure Database service
+        description: DatabaseMigration is the Schema for the DatabaseMigrations API.
+          Provides the Migration resource in Oracle Cloud Infrastructure Database
+          service
         properties:
           apiVersion:
             description: |-
@@ -55,7 +56,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: BackupSpec defines the desired state of Backup
+            description: DatabaseMigrationSpec defines the desired state of DatabaseMigration
             properties:
               deletionPolicy:
                 default: Delete
@@ -73,91 +74,9 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  databaseId:
-                    description: The OCID of the database.
+                  dbSystemId:
+                    description: The DB system OCID.
                     type: string
-                  databaseIdRef:
-                    description: Reference to a Database in database to populate databaseId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  databaseIdSelector:
-                    description: Selector for a Database in database to populate databaseId.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  displayName:
-                    description: The user-friendly name for the backup. The name does
-                      not have to be unique.
-                    type: string
-                  retentionPeriodInDays:
-                    type: number
-                  retentionPeriodInYears:
-                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -172,91 +91,9 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  databaseId:
-                    description: The OCID of the database.
+                  dbSystemId:
+                    description: The DB system OCID.
                     type: string
-                  databaseIdRef:
-                    description: Reference to a Database in database to populate databaseId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  databaseIdSelector:
-                    description: Selector for a Database in database to populate databaseId.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  displayName:
-                    description: The user-friendly name for the backup. The name does
-                      not have to be unique.
-                    type: string
-                  retentionPeriodInDays:
-                    type: number
-                  retentionPeriodInYears:
-                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -426,121 +263,41 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
-            - message: spec.forProvider.displayName is a required parameter
+            - message: spec.forProvider.dbSystemId is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
-                || (has(self.initProvider) && has(self.initProvider.displayName))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbSystemId)
+                || (has(self.initProvider) && has(self.initProvider.dbSystemId))'
           status:
-            description: BackupStatus defines the observed state of Backup.
+            description: DatabaseMigrationStatus defines the observed state of DatabaseMigration.
             properties:
               atProvider:
                 properties:
-                  availabilityDomain:
-                    description: The name of the availability domain where the database
-                      backup is stored.
-                    type: string
-                  backupDestinationType:
-                    description: The type of backup.
-                    type: string
-                  compartmentId:
-                    description: The OCID of the compartment.
-                    type: string
-                  databaseEdition:
-                    description: The Oracle Database Edition that applies to all the
-                      databases on the DB system. Exadata DB systems and 2-node RAC
-                      DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
-                    type: string
-                  databaseId:
-                    description: The OCID of the database.
-                    type: string
-                  databaseSizeInGbs:
-                    description: The size of the database in gigabytes at the time
-                      the backup was taken.
-                    type: number
-                  displayName:
-                    description: The user-friendly name for the backup. The name does
-                      not have to be unique.
-                    type: string
-                  encryptionKeyLocationDetails:
-                    description: Types of providers supported for managing database
-                      encryption keys
+                  additionalMigrations:
+                    description: The details of addtional resources related to the
+                      migration.
                     items:
                       properties:
-                        azureEncryptionKeyId:
-                          description: The key OCID of a registered Azure key.
+                        cloudExadataInfrastructureId:
+                          description: The OCID of the cloud Exadata infrastructure.
                           type: string
-                        hsmPassword:
-                          description: Provide the HSM password as you would in RDBMS
-                            for External HSM.
+                        cloudVmClusterId:
+                          description: The OCID of the cloud VM cluster.
                           type: string
-                        providerType:
-                          description: Use 'EXTERNAL' for creating a new database
-                            or migrating a database key to an External HSM. Use 'AZURE'
-                            for creating a new database or migrating a database key
-                            to Azure.
+                        dbSystemId:
+                          description: The DB system OCID.
                           type: string
                       type: object
                     type: array
+                  cloudExadataInfrastructureId:
+                    description: The OCID of the cloud Exadata infrastructure.
+                    type: string
+                  cloudVmClusterId:
+                    description: The OCID of the cloud VM cluster.
+                    type: string
+                  dbSystemId:
+                    description: The DB system OCID.
+                    type: string
                   id:
-                    description: The OCID of the backup.
-                    type: string
-                  isUsingOracleManagedKeys:
-                    type: boolean
-                  keyStoreId:
-                    description: The OCID of the key store of Oracle Vault.
-                    type: string
-                  keyStoreWalletName:
-                    description: The wallet name for Oracle Key Vault.
-                    type: string
-                  kmsKeyId:
-                    description: The OCID of the key container that is used as the
-                      master encryption key in database transparent data encryption
-                      (TDE) operations.
-                    type: string
-                  kmsKeyVersionId:
-                    description: The OCID of the key container version that is used
-                      in database transparent data encryption (TDE) operations KMS
-                      Key can have multiple key versions. If none is specified, the
-                      current key version (latest) of the Key Id is used for the operation.
-                      Autonomous Database Serverless does not use key versions, hence
-                      is not applicable for Autonomous Database Serverless instances.
-                    type: string
-                  lifecycleDetails:
-                    description: Additional information about the current lifecycle
-                      state.
-                    type: string
-                  retentionPeriodInDays:
-                    type: number
-                  retentionPeriodInYears:
-                    type: number
-                  secondaryKmsKeyIds:
-                    items:
-                      type: string
-                    type: array
-                  shape:
-                    description: Shape of the backup's source database.
-                    type: string
-                  state:
-                    description: The current state of the backup.
-                    type: string
-                  timeEnded:
-                    description: The date and time the backup was completed.
-                    type: string
-                  timeExpiryScheduled:
-                    type: string
-                  timeStarted:
-                    description: The date and time the backup started.
-                    type: string
-                  type:
-                    description: The type of backup.
-                    type: string
-                  vaultId:
-                    description: The OCID of the Oracle Cloud Infrastructure vault.
-                      This parameter and secretId are required for Customer Managed
-                      Keys.
-                    type: string
-                  version:
-                    description: Version of the backup's source database
                     type: string
                 type: object
               conditions:

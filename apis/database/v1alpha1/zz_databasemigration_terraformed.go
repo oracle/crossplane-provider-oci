@@ -14,18 +14,18 @@ import (
 	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this DatabaseSoftwareImage
-func (mg *DatabaseSoftwareImage) GetTerraformResourceType() string {
-	return "oci_database_database_software_image"
+// GetTerraformResourceType returns Terraform resource type for this DatabaseMigration
+func (mg *DatabaseMigration) GetTerraformResourceType() string {
+	return "oci_database_migration"
 }
 
-// GetConnectionDetailsMapping for this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this DatabaseMigration
+func (tr *DatabaseMigration) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetObservation() (map[string]any, error) {
+// GetObservation of this DatabaseMigration
+func (tr *DatabaseMigration) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -34,8 +34,8 @@ func (tr *DatabaseSoftwareImage) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) SetObservation(obs map[string]any) error {
+// SetObservation for this DatabaseMigration
+func (tr *DatabaseMigration) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -43,16 +43,16 @@ func (tr *DatabaseSoftwareImage) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetID() string {
+// GetID returns ID of underlying Terraform resource of this DatabaseMigration
+func (tr *DatabaseMigration) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetParameters() (map[string]any, error) {
+// GetParameters of this DatabaseMigration
+func (tr *DatabaseMigration) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (tr *DatabaseSoftwareImage) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) SetParameters(params map[string]any) error {
+// SetParameters for this DatabaseMigration
+func (tr *DatabaseMigration) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -70,8 +70,8 @@ func (tr *DatabaseSoftwareImage) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this DatabaseMigration
+func (tr *DatabaseMigration) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -80,8 +80,8 @@ func (tr *DatabaseSoftwareImage) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this DatabaseSoftwareImage
-func (tr *DatabaseSoftwareImage) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this DatabaseMigration
+func (tr *DatabaseMigration) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
@@ -110,10 +110,10 @@ func (tr *DatabaseSoftwareImage) GetMergedParameters(shouldMergeInitProvider boo
 	return params, nil
 }
 
-// LateInitialize this DatabaseSoftwareImage using its observed tfState.
+// LateInitialize this DatabaseMigration using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *DatabaseSoftwareImage) LateInitialize(attrs []byte) (bool, error) {
-	params := &DatabaseSoftwareImageParameters{}
+func (tr *DatabaseMigration) LateInitialize(attrs []byte) (bool, error) {
+	params := &DatabaseMigrationParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -124,6 +124,6 @@ func (tr *DatabaseSoftwareImage) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *DatabaseSoftwareImage) GetTerraformSchemaVersion() int {
+func (tr *DatabaseMigration) GetTerraformSchemaVersion() int {
 	return 0
 }

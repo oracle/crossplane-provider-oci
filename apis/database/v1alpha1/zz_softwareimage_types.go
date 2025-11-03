@@ -13,19 +13,10 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DatabaseSoftwareImageInitParameters struct {
+type SoftwareImageInitParameters struct {
 
 	// (Updatable) The OCID of the compartment the database software image  belongs in.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// List of one-off patches for Database Homes.
 	DatabaseSoftwareImageOneOffPatches []*string `json:"databaseSoftwareImageOneOffPatches,omitempty" tf:"database_software_image_one_off_patches,omitempty"`
@@ -60,7 +51,7 @@ type DatabaseSoftwareImageInitParameters struct {
 	SourceDBHomeID *string `json:"sourceDbHomeId,omitempty" tf:"source_db_home_id,omitempty"`
 }
 
-type DatabaseSoftwareImageObservation struct {
+type SoftwareImageObservation struct {
 
 	// (Updatable) The OCID of the compartment the database software image  belongs in.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -123,20 +114,11 @@ type DatabaseSoftwareImageObservation struct {
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 }
 
-type DatabaseSoftwareImageParameters struct {
+type SoftwareImageParameters struct {
 
 	// (Updatable) The OCID of the compartment the database software image  belongs in.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
-
-	// Reference to a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
-
-	// Selector for a Compartment in identity to populate compartmentId.
-	// +kubebuilder:validation:Optional
-	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// List of one-off patches for Database Homes.
 	// +kubebuilder:validation:Optional
@@ -181,10 +163,10 @@ type DatabaseSoftwareImageParameters struct {
 	SourceDBHomeID *string `json:"sourceDbHomeId,omitempty" tf:"source_db_home_id,omitempty"`
 }
 
-// DatabaseSoftwareImageSpec defines the desired state of DatabaseSoftwareImage
-type DatabaseSoftwareImageSpec struct {
+// SoftwareImageSpec defines the desired state of SoftwareImage
+type SoftwareImageSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     DatabaseSoftwareImageParameters `json:"forProvider"`
+	ForProvider     SoftwareImageParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -195,50 +177,51 @@ type DatabaseSoftwareImageSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider DatabaseSoftwareImageInitParameters `json:"initProvider,omitempty"`
+	InitProvider SoftwareImageInitParameters `json:"initProvider,omitempty"`
 }
 
-// DatabaseSoftwareImageStatus defines the observed state of DatabaseSoftwareImage.
-type DatabaseSoftwareImageStatus struct {
+// SoftwareImageStatus defines the observed state of SoftwareImage.
+type SoftwareImageStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        DatabaseSoftwareImageObservation `json:"atProvider,omitempty"`
+	AtProvider        SoftwareImageObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// DatabaseSoftwareImage is the Schema for the DatabaseSoftwareImages API. Provides the Database Software Image resource in Oracle Cloud Infrastructure Database service
+// SoftwareImage is the Schema for the SoftwareImages API. Provides the Database Software Image resource in Oracle Cloud Infrastructure Database service
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,oci}
-type DatabaseSoftwareImage struct {
+type SoftwareImage struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
-	Spec   DatabaseSoftwareImageSpec   `json:"spec"`
-	Status DatabaseSoftwareImageStatus `json:"status,omitempty"`
+	Spec   SoftwareImageSpec   `json:"spec"`
+	Status SoftwareImageStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// DatabaseSoftwareImageList contains a list of DatabaseSoftwareImages
-type DatabaseSoftwareImageList struct {
+// SoftwareImageList contains a list of SoftwareImages
+type SoftwareImageList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []DatabaseSoftwareImage `json:"items"`
+	Items           []SoftwareImage `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	DatabaseSoftwareImage_Kind             = "DatabaseSoftwareImage"
-	DatabaseSoftwareImage_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: DatabaseSoftwareImage_Kind}.String()
-	DatabaseSoftwareImage_KindAPIVersion   = DatabaseSoftwareImage_Kind + "." + CRDGroupVersion.String()
-	DatabaseSoftwareImage_GroupVersionKind = CRDGroupVersion.WithKind(DatabaseSoftwareImage_Kind)
+	SoftwareImage_Kind             = "SoftwareImage"
+	SoftwareImage_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: SoftwareImage_Kind}.String()
+	SoftwareImage_KindAPIVersion   = SoftwareImage_Kind + "." + CRDGroupVersion.String()
+	SoftwareImage_GroupVersionKind = CRDGroupVersion.WithKind(SoftwareImage_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&DatabaseSoftwareImage{}, &DatabaseSoftwareImageList{})
+	SchemeBuilder.Register(&SoftwareImage{}, &SoftwareImageList{})
 }

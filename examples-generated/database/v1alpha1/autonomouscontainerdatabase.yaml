@@ -25,9 +25,7 @@ spec:
         vpcUser: ${var.autonomous_container_database_backup_config_backup_destination_details_vpc_user}
       recoveryWindowInDays: ${var.autonomous_container_database_backup_config_recovery_window_in_days}
     cloudAutonomousVmClusterId: ${oci_database_cloud_autonomous_vm_cluster.test_cloud_autonomous_vm_cluster.id}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     customerContacts:
     - email: ${var.autonomous_container_database_customer_contacts_email}
     databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}

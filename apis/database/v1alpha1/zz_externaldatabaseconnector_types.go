@@ -150,16 +150,7 @@ type ExternalDatabaseConnectorInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external database resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalNonContainerDatabase
 	ExternalDatabaseID *string `json:"externalDatabaseId,omitempty" tf:"external_database_id,omitempty"`
-
-	// Reference to a ExternalNonContainerDatabase in database to populate externalDatabaseId.
-	// +kubebuilder:validation:Optional
-	ExternalDatabaseIDRef *v1.Reference `json:"externalDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a ExternalNonContainerDatabase in database to populate externalDatabaseId.
-	// +kubebuilder:validation:Optional
-	ExternalDatabaseIDSelector *v1.Selector `json:"externalDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -248,17 +239,8 @@ type ExternalDatabaseConnectorParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external database resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalNonContainerDatabase
 	// +kubebuilder:validation:Optional
 	ExternalDatabaseID *string `json:"externalDatabaseId,omitempty" tf:"external_database_id,omitempty"`
-
-	// Reference to a ExternalNonContainerDatabase in database to populate externalDatabaseId.
-	// +kubebuilder:validation:Optional
-	ExternalDatabaseIDRef *v1.Reference `json:"externalDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a ExternalNonContainerDatabase in database to populate externalDatabaseId.
-	// +kubebuilder:validation:Optional
-	ExternalDatabaseIDSelector *v1.Selector `json:"externalDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -306,6 +288,7 @@ type ExternalDatabaseConnector struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectionString) || (has(self.initProvider) && has(self.initProvider.connectionString))",message="spec.forProvider.connectionString is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorAgentId) || (has(self.initProvider) && has(self.initProvider.connectorAgentId))",message="spec.forProvider.connectorAgentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalDatabaseId))",message="spec.forProvider.externalDatabaseId is a required parameter"
 	Spec   ExternalDatabaseConnectorSpec   `json:"spec"`
 	Status ExternalDatabaseConnectorStatus `json:"status,omitempty"`
 }

@@ -3548,16 +3548,6 @@ func (in *AutonomousContainerDatabaseInitParameters) DeepCopyInto(out *Autonomou
 		*out = new(string)
 		**out = **in
 	}
-	if in.AutonomousExadataInfrastructureIDRef != nil {
-		in, out := &in.AutonomousExadataInfrastructureIDRef, &out.AutonomousExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AutonomousExadataInfrastructureIDSelector != nil {
-		in, out := &in.AutonomousExadataInfrastructureIDSelector, &out.AutonomousExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.AutonomousVMClusterID != nil {
 		in, out := &in.AutonomousVMClusterID, &out.AutonomousVMClusterID
 		*out = new(string)
@@ -3579,16 +3569,6 @@ func (in *AutonomousContainerDatabaseInitParameters) DeepCopyInto(out *Autonomou
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.CustomerContacts != nil {
 		in, out := &in.CustomerContacts, &out.CustomerContacts
@@ -4342,16 +4322,6 @@ func (in *AutonomousContainerDatabaseParameters) DeepCopyInto(out *AutonomousCon
 		*out = new(string)
 		**out = **in
 	}
-	if in.AutonomousExadataInfrastructureIDRef != nil {
-		in, out := &in.AutonomousExadataInfrastructureIDRef, &out.AutonomousExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AutonomousExadataInfrastructureIDSelector != nil {
-		in, out := &in.AutonomousExadataInfrastructureIDSelector, &out.AutonomousExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.AutonomousVMClusterID != nil {
 		in, out := &in.AutonomousVMClusterID, &out.AutonomousVMClusterID
 		*out = new(string)
@@ -4373,16 +4343,6 @@ func (in *AutonomousContainerDatabaseParameters) DeepCopyInto(out *AutonomousCon
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.CustomerContacts != nil {
 		in, out := &in.CustomerContacts, &out.CustomerContacts
@@ -5100,16 +5060,6 @@ func (in *AutonomousDatabaseBackupInitParameters) DeepCopyInto(out *AutonomousDa
 		*out = new(string)
 		**out = **in
 	}
-	if in.AutonomousDatabaseIDRef != nil {
-		in, out := &in.AutonomousDatabaseIDRef, &out.AutonomousDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AutonomousDatabaseIDSelector != nil {
-		in, out := &in.AutonomousDatabaseIDSelector, &out.AutonomousDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.BackupDestinationDetails != nil {
 		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
 		*out = make([]AutonomousDatabaseBackupBackupDestinationDetailsInitParameters, len(*in))
@@ -5315,16 +5265,6 @@ func (in *AutonomousDatabaseBackupParameters) DeepCopyInto(out *AutonomousDataba
 		in, out := &in.AutonomousDatabaseID, &out.AutonomousDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.AutonomousDatabaseIDRef != nil {
-		in, out := &in.AutonomousDatabaseIDRef, &out.AutonomousDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AutonomousDatabaseIDSelector != nil {
-		in, out := &in.AutonomousDatabaseIDSelector, &out.AutonomousDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.BackupDestinationDetails != nil {
 		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
@@ -5734,16 +5674,6 @@ func (in *AutonomousDatabaseInitParameters) DeepCopyInto(out *AutonomousDatabase
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
 		*out = new(float64)
@@ -6130,16 +6060,6 @@ func (in *AutonomousDatabaseInitParameters) DeepCopyInto(out *AutonomousDatabase
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.SubscriptionID != nil {
 		in, out := &in.SubscriptionID, &out.SubscriptionID
@@ -7488,16 +7408,6 @@ func (in *AutonomousDatabaseParameters) DeepCopyInto(out *AutonomousDatabasePara
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
 		*out = new(float64)
@@ -7884,16 +7794,6 @@ func (in *AutonomousDatabaseParameters) DeepCopyInto(out *AutonomousDatabasePara
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.SubscriptionID != nil {
 		in, out := &in.SubscriptionID, &out.SubscriptionID
@@ -11812,33 +11712,6 @@ func (in *AutonomousVmClusterStatus) DeepCopy() *AutonomousVmClusterStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *Backup) DeepCopyInto(out *Backup) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	in.Spec.DeepCopyInto(&out.Spec)
-	in.Status.DeepCopyInto(&out.Status)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new Backup.
-func (in *Backup) DeepCopy() *Backup {
-	if in == nil {
-		return nil
-	}
-	out := new(Backup)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *Backup) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *BackupCancelManagement) DeepCopyInto(out *BackupCancelManagement) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
@@ -12348,16 +12221,6 @@ func (in *BackupDestinationInitParameters) DeepCopyInto(out *BackupDestinationIn
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ConnectionString != nil {
 		in, out := &in.ConnectionString, &out.ConnectionString
 		*out = new(string)
@@ -12649,16 +12512,6 @@ func (in *BackupDestinationParameters) DeepCopyInto(out *BackupDestinationParame
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ConnectionString != nil {
 		in, out := &in.ConnectionString, &out.ConnectionString
 		*out = new(string)
@@ -12838,316 +12691,6 @@ func (in *BackupDestinationStatus) DeepCopy() *BackupDestinationStatus {
 		return nil
 	}
 	out := new(BackupDestinationStatus)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupInitParameters) DeepCopyInto(out *BackupInitParameters) {
-	*out = *in
-	if in.DatabaseID != nil {
-		in, out := &in.DatabaseID, &out.DatabaseID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseIDRef != nil {
-		in, out := &in.DatabaseIDRef, &out.DatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatabaseIDSelector != nil {
-		in, out := &in.DatabaseIDSelector, &out.DatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.RetentionPeriodInDays != nil {
-		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RetentionPeriodInYears != nil {
-		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
-		*out = new(float64)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupInitParameters.
-func (in *BackupInitParameters) DeepCopy() *BackupInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupList) DeepCopyInto(out *BackupList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ListMeta.DeepCopyInto(&out.ListMeta)
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]Backup, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupList.
-func (in *BackupList) DeepCopy() *BackupList {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *BackupList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupObservation) DeepCopyInto(out *BackupObservation) {
-	*out = *in
-	if in.AvailabilityDomain != nil {
-		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDestinationType != nil {
-		in, out := &in.BackupDestinationType, &out.BackupDestinationType
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseEdition != nil {
-		in, out := &in.DatabaseEdition, &out.DatabaseEdition
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseID != nil {
-		in, out := &in.DatabaseID, &out.DatabaseID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseSizeInGbs != nil {
-		in, out := &in.DatabaseSizeInGbs, &out.DatabaseSizeInGbs
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.EncryptionKeyLocationDetails != nil {
-		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
-		*out = make([]EncryptionKeyLocationDetailsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.IsUsingOracleManagedKeys != nil {
-		in, out := &in.IsUsingOracleManagedKeys, &out.IsUsingOracleManagedKeys
-		*out = new(bool)
-		**out = **in
-	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KeyStoreID != nil {
-		in, out := &in.KeyStoreID, &out.KeyStoreID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KeyStoreWalletName != nil {
-		in, out := &in.KeyStoreWalletName, &out.KeyStoreWalletName
-		*out = new(string)
-		**out = **in
-	}
-	if in.LifecycleDetails != nil {
-		in, out := &in.LifecycleDetails, &out.LifecycleDetails
-		*out = new(string)
-		**out = **in
-	}
-	if in.RetentionPeriodInDays != nil {
-		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RetentionPeriodInYears != nil {
-		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
-		*out = new(float64)
-		**out = **in
-	}
-	if in.SecondaryKMSKeyIds != nil {
-		in, out := &in.SecondaryKMSKeyIds, &out.SecondaryKMSKeyIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.Shape != nil {
-		in, out := &in.Shape, &out.Shape
-		*out = new(string)
-		**out = **in
-	}
-	if in.State != nil {
-		in, out := &in.State, &out.State
-		*out = new(string)
-		**out = **in
-	}
-	if in.TimeEnded != nil {
-		in, out := &in.TimeEnded, &out.TimeEnded
-		*out = new(string)
-		**out = **in
-	}
-	if in.TimeExpiryScheduled != nil {
-		in, out := &in.TimeExpiryScheduled, &out.TimeExpiryScheduled
-		*out = new(string)
-		**out = **in
-	}
-	if in.TimeStarted != nil {
-		in, out := &in.TimeStarted, &out.TimeStarted
-		*out = new(string)
-		**out = **in
-	}
-	if in.Type != nil {
-		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.VaultID != nil {
-		in, out := &in.VaultID, &out.VaultID
-		*out = new(string)
-		**out = **in
-	}
-	if in.Version != nil {
-		in, out := &in.Version, &out.Version
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupObservation.
-func (in *BackupObservation) DeepCopy() *BackupObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupParameters) DeepCopyInto(out *BackupParameters) {
-	*out = *in
-	if in.DatabaseID != nil {
-		in, out := &in.DatabaseID, &out.DatabaseID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseIDRef != nil {
-		in, out := &in.DatabaseIDRef, &out.DatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatabaseIDSelector != nil {
-		in, out := &in.DatabaseIDSelector, &out.DatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.RetentionPeriodInDays != nil {
-		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RetentionPeriodInYears != nil {
-		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
-		*out = new(float64)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupParameters.
-func (in *BackupParameters) DeepCopy() *BackupParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupSpec) DeepCopyInto(out *BackupSpec) {
-	*out = *in
-	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
-	in.ForProvider.DeepCopyInto(&out.ForProvider)
-	in.InitProvider.DeepCopyInto(&out.InitProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupSpec.
-func (in *BackupSpec) DeepCopy() *BackupSpec {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupSpec)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *BackupStatus) DeepCopyInto(out *BackupStatus) {
-	*out = *in
-	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
-	in.AtProvider.DeepCopyInto(&out.AtProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new BackupStatus.
-func (in *BackupStatus) DeepCopy() *BackupStatus {
-	if in == nil {
-		return nil
-	}
-	out := new(BackupStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -19225,16 +18768,6 @@ func (in *CloudExadataInfrastructureInitParameters) DeepCopyInto(out *CloudExada
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
 		*out = new(float64)
@@ -20028,16 +19561,6 @@ func (in *CloudExadataInfrastructureParameters) DeepCopyInto(out *CloudExadataIn
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
 		*out = new(float64)
@@ -20796,16 +20319,6 @@ func (in *CloudVmClusterInitParameters) DeepCopyInto(out *CloudVmClusterInitPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.BackupSubnetIDRef != nil {
-		in, out := &in.BackupSubnetIDRef, &out.BackupSubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.BackupSubnetIDSelector != nil {
-		in, out := &in.BackupSubnetIDSelector, &out.BackupSubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.CPUCoreCount != nil {
 		in, out := &in.CPUCoreCount, &out.CPUCoreCount
 		*out = new(float64)
@@ -20823,16 +20336,6 @@ func (in *CloudVmClusterInitParameters) DeepCopyInto(out *CloudVmClusterInitPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.CloudExadataInfrastructureIDRef != nil {
-		in, out := &in.CloudExadataInfrastructureIDRef, &out.CloudExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CloudExadataInfrastructureIDSelector != nil {
-		in, out := &in.CloudExadataInfrastructureIDSelector, &out.CloudExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ClusterName != nil {
 		in, out := &in.ClusterName, &out.ClusterName
 		*out = new(string)
@@ -20842,16 +20345,6 @@ func (in *CloudVmClusterInitParameters) DeepCopyInto(out *CloudVmClusterInitPara
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.CreateAsync != nil {
 		in, out := &in.CreateAsync, &out.CreateAsync
@@ -21032,16 +20525,6 @@ func (in *CloudVmClusterInitParameters) DeepCopyInto(out *CloudVmClusterInitPara
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.SubscriptionID != nil {
 		in, out := &in.SubscriptionID, &out.SubscriptionID
@@ -21828,16 +21311,6 @@ func (in *CloudVmClusterParameters) DeepCopyInto(out *CloudVmClusterParameters) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.BackupSubnetIDRef != nil {
-		in, out := &in.BackupSubnetIDRef, &out.BackupSubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.BackupSubnetIDSelector != nil {
-		in, out := &in.BackupSubnetIDSelector, &out.BackupSubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.CPUCoreCount != nil {
 		in, out := &in.CPUCoreCount, &out.CPUCoreCount
 		*out = new(float64)
@@ -21855,16 +21328,6 @@ func (in *CloudVmClusterParameters) DeepCopyInto(out *CloudVmClusterParameters) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.CloudExadataInfrastructureIDRef != nil {
-		in, out := &in.CloudExadataInfrastructureIDRef, &out.CloudExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CloudExadataInfrastructureIDSelector != nil {
-		in, out := &in.CloudExadataInfrastructureIDSelector, &out.CloudExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ClusterName != nil {
 		in, out := &in.ClusterName, &out.ClusterName
 		*out = new(string)
@@ -21874,16 +21337,6 @@ func (in *CloudVmClusterParameters) DeepCopyInto(out *CloudVmClusterParameters) 
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.CreateAsync != nil {
 		in, out := &in.CreateAsync, &out.CreateAsync
@@ -22064,16 +21517,6 @@ func (in *CloudVmClusterParameters) DeepCopyInto(out *CloudVmClusterParameters) 
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.SubscriptionID != nil {
 		in, out := &in.SubscriptionID, &out.SubscriptionID
@@ -26894,7 +26337,7 @@ func (in *DataTransferMediumDetailsParameters) DeepCopy() *DataTransferMediumDet
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *Database) DeepCopyInto(out *Database) {
+func (in *DatabaseBackup) DeepCopyInto(out *DatabaseBackup) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
 	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
@@ -26902,22 +26345,312 @@ func (in *Database) DeepCopyInto(out *Database) {
 	in.Status.DeepCopyInto(&out.Status)
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new Database.
-func (in *Database) DeepCopy() *Database {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackup.
+func (in *DatabaseBackup) DeepCopy() *DatabaseBackup {
 	if in == nil {
 		return nil
 	}
-	out := new(Database)
+	out := new(DatabaseBackup)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *Database) DeepCopyObject() runtime.Object {
+func (in *DatabaseBackup) DeepCopyObject() runtime.Object {
 	if c := in.DeepCopy(); c != nil {
 		return c
 	}
 	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupInitParameters) DeepCopyInto(out *DatabaseBackupInitParameters) {
+	*out = *in
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.RetentionPeriodInDays != nil {
+		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RetentionPeriodInYears != nil {
+		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupInitParameters.
+func (in *DatabaseBackupInitParameters) DeepCopy() *DatabaseBackupInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupList) DeepCopyInto(out *DatabaseBackupList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DatabaseBackup, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupList.
+func (in *DatabaseBackupList) DeepCopy() *DatabaseBackupList {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseBackupList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupObservation) DeepCopyInto(out *DatabaseBackupObservation) {
+	*out = *in
+	if in.AvailabilityDomain != nil {
+		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDestinationType != nil {
+		in, out := &in.BackupDestinationType, &out.BackupDestinationType
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseEdition != nil {
+		in, out := &in.DatabaseEdition, &out.DatabaseEdition
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseSizeInGbs != nil {
+		in, out := &in.DatabaseSizeInGbs, &out.DatabaseSizeInGbs
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.EncryptionKeyLocationDetails != nil {
+		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
+		*out = make([]EncryptionKeyLocationDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsUsingOracleManagedKeys != nil {
+		in, out := &in.IsUsingOracleManagedKeys, &out.IsUsingOracleManagedKeys
+		*out = new(bool)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeyStoreID != nil {
+		in, out := &in.KeyStoreID, &out.KeyStoreID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeyStoreWalletName != nil {
+		in, out := &in.KeyStoreWalletName, &out.KeyStoreWalletName
+		*out = new(string)
+		**out = **in
+	}
+	if in.LifecycleDetails != nil {
+		in, out := &in.LifecycleDetails, &out.LifecycleDetails
+		*out = new(string)
+		**out = **in
+	}
+	if in.RetentionPeriodInDays != nil {
+		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RetentionPeriodInYears != nil {
+		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SecondaryKMSKeyIds != nil {
+		in, out := &in.SecondaryKMSKeyIds, &out.SecondaryKMSKeyIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.Shape != nil {
+		in, out := &in.Shape, &out.Shape
+		*out = new(string)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeEnded != nil {
+		in, out := &in.TimeEnded, &out.TimeEnded
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeExpiryScheduled != nil {
+		in, out := &in.TimeExpiryScheduled, &out.TimeExpiryScheduled
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeStarted != nil {
+		in, out := &in.TimeStarted, &out.TimeStarted
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+	if in.VaultID != nil {
+		in, out := &in.VaultID, &out.VaultID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Version != nil {
+		in, out := &in.Version, &out.Version
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupObservation.
+func (in *DatabaseBackupObservation) DeepCopy() *DatabaseBackupObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupParameters) DeepCopyInto(out *DatabaseBackupParameters) {
+	*out = *in
+	if in.DatabaseID != nil {
+		in, out := &in.DatabaseID, &out.DatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.RetentionPeriodInDays != nil {
+		in, out := &in.RetentionPeriodInDays, &out.RetentionPeriodInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RetentionPeriodInYears != nil {
+		in, out := &in.RetentionPeriodInYears, &out.RetentionPeriodInYears
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupParameters.
+func (in *DatabaseBackupParameters) DeepCopy() *DatabaseBackupParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupSpec) DeepCopyInto(out *DatabaseBackupSpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupSpec.
+func (in *DatabaseBackupSpec) DeepCopy() *DatabaseBackupSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseBackupStatus) DeepCopyInto(out *DatabaseBackupStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseBackupStatus.
+func (in *DatabaseBackupStatus) DeepCopy() *DatabaseBackupStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseBackupStatus)
+	in.DeepCopyInto(out)
+	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
@@ -27391,6 +27124,41 @@ func (in *DatabaseCredentialParameters) DeepCopy() *DatabaseCredentialParameters
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseDBBackupConfigBackupDestinationDetailsInitParameters) DeepCopyInto(out *DatabaseDBBackupConfigBackupDestinationDetailsInitParameters) {
 	*out = *in
+	if in.DbrsPolicyID != nil {
+		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsRemote != nil {
+		in, out := &in.IsRemote, &out.IsRemote
+		*out = new(bool)
+		**out = **in
+	}
+	if in.RemoteRegion != nil {
+		in, out := &in.RemoteRegion, &out.RemoteRegion
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCPasswordSecretRef != nil {
+		in, out := &in.VPCPasswordSecretRef, &out.VPCPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.VPCUser != nil {
+		in, out := &in.VPCUser, &out.VPCUser
+		*out = new(string)
+		**out = **in
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDBBackupConfigBackupDestinationDetailsInitParameters.
@@ -27431,11 +27199,6 @@ func (in *DatabaseDBBackupConfigBackupDestinationDetailsObservation) DeepCopyInt
 		*out = new(string)
 		**out = **in
 	}
-	if in.VPCPassword != nil {
-		in, out := &in.VPCPassword, &out.VPCPassword
-		*out = new(string)
-		**out = **in
-	}
 	if in.VPCUser != nil {
 		in, out := &in.VPCUser, &out.VPCUser
 		*out = new(string)
@@ -27456,6 +27219,41 @@ func (in *DatabaseDBBackupConfigBackupDestinationDetailsObservation) DeepCopy() 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseDBBackupConfigBackupDestinationDetailsParameters) DeepCopyInto(out *DatabaseDBBackupConfigBackupDestinationDetailsParameters) {
 	*out = *in
+	if in.DbrsPolicyID != nil {
+		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsRemote != nil {
+		in, out := &in.IsRemote, &out.IsRemote
+		*out = new(bool)
+		**out = **in
+	}
+	if in.RemoteRegion != nil {
+		in, out := &in.RemoteRegion, &out.RemoteRegion
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCPasswordSecretRef != nil {
+		in, out := &in.VPCPasswordSecretRef, &out.VPCPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.VPCUser != nil {
+		in, out := &in.VPCUser, &out.VPCUser
+		*out = new(string)
+		**out = **in
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDBBackupConfigBackupDestinationDetailsParameters.
@@ -27471,6 +27269,48 @@ func (in *DatabaseDBBackupConfigBackupDestinationDetailsParameters) DeepCopy() *
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseDBBackupConfigInitParameters) DeepCopyInto(out *DatabaseDBBackupConfigInitParameters) {
 	*out = *in
+	if in.AutoBackupEnabled != nil {
+		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.AutoBackupWindow != nil {
+		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupDay != nil {
+		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupWindow != nil {
+		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDeletionPolicy != nil {
+		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDestinationDetails != nil {
+		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
+		*out = make([]DatabaseDBBackupConfigBackupDestinationDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RecoveryWindowInDays != nil {
+		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RunImmediateFullBackup != nil {
+		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
+		*out = new(bool)
+		**out = **in
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDBBackupConfigInitParameters.
@@ -27543,6 +27383,48 @@ func (in *DatabaseDBBackupConfigObservation) DeepCopy() *DatabaseDBBackupConfigO
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseDBBackupConfigParameters) DeepCopyInto(out *DatabaseDBBackupConfigParameters) {
 	*out = *in
+	if in.AutoBackupEnabled != nil {
+		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.AutoBackupWindow != nil {
+		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupDay != nil {
+		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupWindow != nil {
+		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDeletionPolicy != nil {
+		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDestinationDetails != nil {
+		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
+		*out = make([]DatabaseDBBackupConfigBackupDestinationDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RecoveryWindowInDays != nil {
+		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RunImmediateFullBackup != nil {
+		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
+		*out = new(bool)
+		**out = **in
+	}
 }
 
 // DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDBBackupConfigParameters.
@@ -27556,400 +27438,194 @@ func (in *DatabaseDBBackupConfigParameters) DeepCopy() *DatabaseDBBackupConfigPa
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseDatabaseInitParameters) DeepCopyInto(out *DatabaseDatabaseInitParameters) {
+func (in *DatabaseDbSystem) DeepCopyInto(out *DatabaseDbSystem) {
 	*out = *in
-	if in.AdminPasswordSecretRef != nil {
-		in, out := &in.AdminPasswordSecretRef, &out.AdminPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystem.
+func (in *DatabaseDbSystem) DeepCopy() *DatabaseDbSystem {
+	if in == nil {
+		return nil
 	}
-	if in.BackupID != nil {
-		in, out := &in.BackupID, &out.BackupID
-		*out = new(string)
-		**out = **in
+	out := new(DatabaseDbSystem)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseDbSystem) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
 	}
-	if in.BackupTdePasswordSecretRef != nil {
-		in, out := &in.BackupTdePasswordSecretRef, &out.BackupTdePasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.CharacterSet != nil {
-		in, out := &in.CharacterSet, &out.CharacterSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBBackupConfig != nil {
-		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DBBackupConfigInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBName != nil {
-		in, out := &in.DBName, &out.DBName
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBUniqueName != nil {
-		in, out := &in.DBUniqueName, &out.DBUniqueName
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBWorkload != nil {
-		in, out := &in.DBWorkload, &out.DBWorkload
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseAdminPasswordSecretRef != nil {
-		in, out := &in.DatabaseAdminPasswordSecretRef, &out.DatabaseAdminPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.DatabaseSoftwareImageID != nil {
-		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.EncryptionKeyLocationDetails != nil {
-		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
-		*out = make([]DatabaseEncryptionKeyLocationDetailsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.IsActiveDataGuardEnabled != nil {
-		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemDataCollectionOptionsInitParameters) DeepCopyInto(out *DatabaseDbSystemDataCollectionOptionsInitParameters) {
+	*out = *in
+	if in.IsDiagnosticsEventsEnabled != nil {
+		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
 		*out = new(bool)
 		**out = **in
 	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
+	if in.IsHealthMonitoringEnabled != nil {
+		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
+		*out = new(bool)
 		**out = **in
 	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.NcharacterSet != nil {
-		in, out := &in.NcharacterSet, &out.NcharacterSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.PdbName != nil {
-		in, out := &in.PdbName, &out.PdbName
-		*out = new(string)
-		**out = **in
-	}
-	if in.PluggableDatabases != nil {
-		in, out := &in.PluggableDatabases, &out.PluggableDatabases
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.ProtectionMode != nil {
-		in, out := &in.ProtectionMode, &out.ProtectionMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.SidPrefix != nil {
-		in, out := &in.SidPrefix, &out.SidPrefix
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDatabaseID != nil {
-		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceEncryptionKeyLocationDetails != nil {
-		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
-		*out = make([]SourceEncryptionKeyLocationDetailsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.SourceTdeWalletPasswordSecretRef != nil {
-		in, out := &in.SourceTdeWalletPasswordSecretRef, &out.SourceTdeWalletPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.TdeWalletPasswordSecretRef != nil {
-		in, out := &in.TdeWalletPasswordSecretRef, &out.TdeWalletPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.TransportType != nil {
-		in, out := &in.TransportType, &out.TransportType
-		*out = new(string)
-		**out = **in
-	}
-	if in.VaultID != nil {
-		in, out := &in.VaultID, &out.VaultID
-		*out = new(string)
+	if in.IsIncidentLogsEnabled != nil {
+		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
+		*out = new(bool)
 		**out = **in
 	}
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDatabaseInitParameters.
-func (in *DatabaseDatabaseInitParameters) DeepCopy() *DatabaseDatabaseInitParameters {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemDataCollectionOptionsInitParameters.
+func (in *DatabaseDbSystemDataCollectionOptionsInitParameters) DeepCopy() *DatabaseDbSystemDataCollectionOptionsInitParameters {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseDatabaseInitParameters)
+	out := new(DatabaseDbSystemDataCollectionOptionsInitParameters)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseDatabaseObservation) DeepCopyInto(out *DatabaseDatabaseObservation) {
+func (in *DatabaseDbSystemDataCollectionOptionsObservation) DeepCopyInto(out *DatabaseDbSystemDataCollectionOptionsObservation) {
 	*out = *in
-	if in.BackupID != nil {
-		in, out := &in.BackupID, &out.BackupID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CharacterSet != nil {
-		in, out := &in.CharacterSet, &out.CharacterSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBBackupConfig != nil {
-		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DBBackupConfigObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBName != nil {
-		in, out := &in.DBName, &out.DBName
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBUniqueName != nil {
-		in, out := &in.DBUniqueName, &out.DBUniqueName
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBWorkload != nil {
-		in, out := &in.DBWorkload, &out.DBWorkload
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseSoftwareImageID != nil {
-		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.EncryptionKeyLocationDetails != nil {
-		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
-		*out = make([]DatabaseEncryptionKeyLocationDetailsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.IsActiveDataGuardEnabled != nil {
-		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
+	if in.IsDiagnosticsEventsEnabled != nil {
+		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
 		*out = new(bool)
 		**out = **in
 	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
+	if in.IsHealthMonitoringEnabled != nil {
+		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
+		*out = new(bool)
 		**out = **in
 	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.NcharacterSet != nil {
-		in, out := &in.NcharacterSet, &out.NcharacterSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.PdbName != nil {
-		in, out := &in.PdbName, &out.PdbName
-		*out = new(string)
-		**out = **in
-	}
-	if in.PluggableDatabases != nil {
-		in, out := &in.PluggableDatabases, &out.PluggableDatabases
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.ProtectionMode != nil {
-		in, out := &in.ProtectionMode, &out.ProtectionMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.SidPrefix != nil {
-		in, out := &in.SidPrefix, &out.SidPrefix
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDatabaseID != nil {
-		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceEncryptionKeyLocationDetails != nil {
-		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
-		*out = make([]SourceEncryptionKeyLocationDetailsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.TransportType != nil {
-		in, out := &in.TransportType, &out.TransportType
-		*out = new(string)
-		**out = **in
-	}
-	if in.VaultID != nil {
-		in, out := &in.VaultID, &out.VaultID
-		*out = new(string)
+	if in.IsIncidentLogsEnabled != nil {
+		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
+		*out = new(bool)
 		**out = **in
 	}
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDatabaseObservation.
-func (in *DatabaseDatabaseObservation) DeepCopy() *DatabaseDatabaseObservation {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemDataCollectionOptionsObservation.
+func (in *DatabaseDbSystemDataCollectionOptionsObservation) DeepCopy() *DatabaseDbSystemDataCollectionOptionsObservation {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseDatabaseObservation)
+	out := new(DatabaseDbSystemDataCollectionOptionsObservation)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseDatabaseParameters) DeepCopyInto(out *DatabaseDatabaseParameters) {
+func (in *DatabaseDbSystemDataCollectionOptionsParameters) DeepCopyInto(out *DatabaseDbSystemDataCollectionOptionsParameters) {
 	*out = *in
-	if in.AdminPasswordSecretRef != nil {
-		in, out := &in.AdminPasswordSecretRef, &out.AdminPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
+	if in.IsDiagnosticsEventsEnabled != nil {
+		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
+		*out = new(bool)
 		**out = **in
 	}
-	if in.BackupID != nil {
-		in, out := &in.BackupID, &out.BackupID
+	if in.IsHealthMonitoringEnabled != nil {
+		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsIncidentLogsEnabled != nil {
+		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
+		*out = new(bool)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemDataCollectionOptionsParameters.
+func (in *DatabaseDbSystemDataCollectionOptionsParameters) DeepCopy() *DatabaseDbSystemDataCollectionOptionsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemDataCollectionOptionsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemInitParameters) DeepCopyInto(out *DatabaseDbSystemInitParameters) {
+	*out = *in
+	if in.AvailabilityDomain != nil {
+		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
 		*out = new(string)
 		**out = **in
 	}
-	if in.BackupTdePasswordSecretRef != nil {
-		in, out := &in.BackupTdePasswordSecretRef, &out.BackupTdePasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
+	if in.BackupNetworkNsgIds != nil {
+		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
-	if in.CharacterSet != nil {
-		in, out := &in.CharacterSet, &out.CharacterSet
+	if in.BackupSubnetID != nil {
+		in, out := &in.BackupSubnetID, &out.BackupSubnetID
 		*out = new(string)
 		**out = **in
 	}
-	if in.DBBackupConfig != nil {
-		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DBBackupConfigParameters, len(*in))
+	if in.CPUCoreCount != nil {
+		in, out := &in.CPUCoreCount, &out.CPUCoreCount
+		*out = new(float64)
+		**out = **in
+	}
+	if in.ClusterName != nil {
+		in, out := &in.ClusterName, &out.ClusterName
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBHome != nil {
+		in, out := &in.DBHome, &out.DBHome
+		*out = make([]DBHomeInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.DBName != nil {
-		in, out := &in.DBName, &out.DBName
-		*out = new(string)
+	if in.DBSystemOptions != nil {
+		in, out := &in.DBSystemOptions, &out.DBSystemOptions
+		*out = make([]DBSystemOptionsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataCollectionOptions != nil {
+		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
+		*out = make([]DatabaseDbSystemDataCollectionOptionsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataStoragePercentage != nil {
+		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
+		*out = new(float64)
 		**out = **in
 	}
-	if in.DBUniqueName != nil {
-		in, out := &in.DBUniqueName, &out.DBUniqueName
-		*out = new(string)
+	if in.DataStorageSizeInGb != nil {
+		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
+		*out = new(float64)
 		**out = **in
 	}
-	if in.DBWorkload != nil {
-		in, out := &in.DBWorkload, &out.DBWorkload
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseAdminPasswordSecretRef != nil {
-		in, out := &in.DatabaseAdminPasswordSecretRef, &out.DatabaseAdminPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.DatabaseSoftwareImageID != nil {
-		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
+	if in.DatabaseEdition != nil {
+		in, out := &in.DatabaseEdition, &out.DatabaseEdition
 		*out = new(string)
 		**out = **in
 	}
@@ -27969,11 +27645,30 @@ func (in *DatabaseDatabaseParameters) DeepCopyInto(out *DatabaseDatabaseParamete
 			(*out)[key] = outVal
 		}
 	}
-	if in.EncryptionKeyLocationDetails != nil {
-		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
-		*out = make([]DatabaseEncryptionKeyLocationDetailsParameters, len(*in))
+	if in.DiskRedundancy != nil {
+		in, out := &in.DiskRedundancy, &out.DiskRedundancy
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
+	}
+	if in.FaultDomains != nil {
+		in, out := &in.FaultDomains, &out.FaultDomains
+		*out = make([]*string, len(*in))
 		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
 		}
 	}
 	if in.FreeformTags != nil {
@@ -27992,9 +27687,9 @@ func (in *DatabaseDatabaseParameters) DeepCopyInto(out *DatabaseDatabaseParamete
 			(*out)[key] = outVal
 		}
 	}
-	if in.IsActiveDataGuardEnabled != nil {
-		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
-		*out = new(bool)
+	if in.Hostname != nil {
+		in, out := &in.Hostname, &out.Hostname
+		*out = new(string)
 		**out = **in
 	}
 	if in.KMSKeyID != nil {
@@ -28007,18 +27702,25 @@ func (in *DatabaseDatabaseParameters) DeepCopyInto(out *DatabaseDatabaseParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.NcharacterSet != nil {
-		in, out := &in.NcharacterSet, &out.NcharacterSet
+	if in.LicenseModel != nil {
+		in, out := &in.LicenseModel, &out.LicenseModel
 		*out = new(string)
 		**out = **in
 	}
-	if in.PdbName != nil {
-		in, out := &in.PdbName, &out.PdbName
-		*out = new(string)
+	if in.MaintenanceWindowDetails != nil {
+		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.NodeCount != nil {
+		in, out := &in.NodeCount, &out.NodeCount
+		*out = new(float64)
 		**out = **in
 	}
-	if in.PluggableDatabases != nil {
-		in, out := &in.PluggableDatabases, &out.PluggableDatabases
+	if in.NsgIds != nil {
+		in, out := &in.NsgIds, &out.NsgIds
 		*out = make([]*string, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -28028,56 +27730,1527 @@ func (in *DatabaseDatabaseParameters) DeepCopyInto(out *DatabaseDatabaseParamete
 			}
 		}
 	}
-	if in.ProtectionMode != nil {
-		in, out := &in.ProtectionMode, &out.ProtectionMode
+	if in.PrivateIP != nil {
+		in, out := &in.PrivateIP, &out.PrivateIP
 		*out = new(string)
 		**out = **in
 	}
-	if in.SidPrefix != nil {
-		in, out := &in.SidPrefix, &out.SidPrefix
+	if in.PrivateIPV6 != nil {
+		in, out := &in.PrivateIPV6, &out.PrivateIPV6
 		*out = new(string)
 		**out = **in
 	}
-	if in.SourceDatabaseID != nil {
-		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
-		*out = new(string)
+	if in.RecoStorageSizeInGb != nil {
+		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
+		*out = new(float64)
 		**out = **in
 	}
-	if in.SourceEncryptionKeyLocationDetails != nil {
-		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
-		*out = make([]SourceEncryptionKeyLocationDetailsParameters, len(*in))
+	if in.SSHPublicKeys != nil {
+		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
+		*out = make([]*string, len(*in))
 		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
 		}
 	}
-	if in.SourceTdeWalletPasswordSecretRef != nil {
-		in, out := &in.SourceTdeWalletPasswordSecretRef, &out.SourceTdeWalletPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
 	}
-	if in.TdeWalletPasswordSecretRef != nil {
-		in, out := &in.TdeWalletPasswordSecretRef, &out.TdeWalletPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.TransportType != nil {
-		in, out := &in.TransportType, &out.TransportType
+	if in.Shape != nil {
+		in, out := &in.Shape, &out.Shape
 		*out = new(string)
 		**out = **in
 	}
-	if in.VaultID != nil {
-		in, out := &in.VaultID, &out.VaultID
+	if in.Source != nil {
+		in, out := &in.Source, &out.Source
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBSystemID != nil {
+		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SparseDiskgroup != nil {
+		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
+		*out = new(bool)
+		**out = **in
+	}
+	if in.StorageVolumePerformanceMode != nil {
+		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
 		*out = new(string)
 		**out = **in
 	}
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDatabaseParameters.
-func (in *DatabaseDatabaseParameters) DeepCopy() *DatabaseDatabaseParameters {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemInitParameters.
+func (in *DatabaseDbSystemInitParameters) DeepCopy() *DatabaseDbSystemInitParameters {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseDatabaseParameters)
+	out := new(DatabaseDbSystemInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemIormConfigCacheInitParameters) DeepCopyInto(out *DatabaseDbSystemIormConfigCacheInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemIormConfigCacheInitParameters.
+func (in *DatabaseDbSystemIormConfigCacheInitParameters) DeepCopy() *DatabaseDbSystemIormConfigCacheInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemIormConfigCacheInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemIormConfigCacheObservation) DeepCopyInto(out *DatabaseDbSystemIormConfigCacheObservation) {
+	*out = *in
+	if in.DBPlans != nil {
+		in, out := &in.DBPlans, &out.DBPlans
+		*out = make([]IormConfigCacheDBPlansObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DBSystemID != nil {
+		in, out := &in.DBSystemID, &out.DBSystemID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LifecycleDetails != nil {
+		in, out := &in.LifecycleDetails, &out.LifecycleDetails
+		*out = new(string)
+		**out = **in
+	}
+	if in.Objective != nil {
+		in, out := &in.Objective, &out.Objective
+		*out = new(string)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemIormConfigCacheObservation.
+func (in *DatabaseDbSystemIormConfigCacheObservation) DeepCopy() *DatabaseDbSystemIormConfigCacheObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemIormConfigCacheObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemIormConfigCacheParameters) DeepCopyInto(out *DatabaseDbSystemIormConfigCacheParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemIormConfigCacheParameters.
+func (in *DatabaseDbSystemIormConfigCacheParameters) DeepCopy() *DatabaseDbSystemIormConfigCacheParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemIormConfigCacheParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemList) DeepCopyInto(out *DatabaseDbSystemList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DatabaseDbSystem, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemList.
+func (in *DatabaseDbSystemList) DeepCopy() *DatabaseDbSystemList {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseDbSystemList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDaysOfWeekInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDaysOfWeekParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsInitParameters) {
+	*out = *in
+	if in.CustomActionTimeoutInMins != nil {
+		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DaysOfWeek != nil {
+		in, out := &in.DaysOfWeek, &out.DaysOfWeek
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.HoursOfDay != nil {
+		in, out := &in.HoursOfDay, &out.HoursOfDay
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+	if in.IsCustomActionTimeoutEnabled != nil {
+		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsMonthlyPatchingEnabled != nil {
+		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LeadTimeInWeeks != nil {
+		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Months != nil {
+		in, out := &in.Months, &out.Months
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.PatchingMode != nil {
+		in, out := &in.PatchingMode, &out.PatchingMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.Preference != nil {
+		in, out := &in.Preference, &out.Preference
+		*out = new(string)
+		**out = **in
+	}
+	if in.SkipRu != nil {
+		in, out := &in.SkipRu, &out.SkipRu
+		*out = make([]*bool, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(bool)
+				**out = **in
+			}
+		}
+	}
+	if in.WeeksOfMonth != nil {
+		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsMonthsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsObservation) {
+	*out = *in
+	if in.CustomActionTimeoutInMins != nil {
+		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DaysOfWeek != nil {
+		in, out := &in.DaysOfWeek, &out.DaysOfWeek
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.HoursOfDay != nil {
+		in, out := &in.HoursOfDay, &out.HoursOfDay
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+	if in.IsCustomActionTimeoutEnabled != nil {
+		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsMonthlyPatchingEnabled != nil {
+		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LeadTimeInWeeks != nil {
+		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Months != nil {
+		in, out := &in.Months, &out.Months
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsMonthsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.PatchingMode != nil {
+		in, out := &in.PatchingMode, &out.PatchingMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.Preference != nil {
+		in, out := &in.Preference, &out.Preference
+		*out = new(string)
+		**out = **in
+	}
+	if in.SkipRu != nil {
+		in, out := &in.SkipRu, &out.SkipRu
+		*out = make([]*bool, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(bool)
+				**out = **in
+			}
+		}
+	}
+	if in.WeeksOfMonth != nil {
+		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsObservation.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowDetailsParameters) {
+	*out = *in
+	if in.CustomActionTimeoutInMins != nil {
+		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DaysOfWeek != nil {
+		in, out := &in.DaysOfWeek, &out.DaysOfWeek
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsDaysOfWeekParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.HoursOfDay != nil {
+		in, out := &in.HoursOfDay, &out.HoursOfDay
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+	if in.IsCustomActionTimeoutEnabled != nil {
+		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsMonthlyPatchingEnabled != nil {
+		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LeadTimeInWeeks != nil {
+		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Months != nil {
+		in, out := &in.Months, &out.Months
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsMonthsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.PatchingMode != nil {
+		in, out := &in.PatchingMode, &out.PatchingMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.Preference != nil {
+		in, out := &in.Preference, &out.Preference
+		*out = new(string)
+		**out = **in
+	}
+	if in.SkipRu != nil {
+		in, out := &in.SkipRu, &out.SkipRu
+		*out = make([]*bool, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(bool)
+				**out = **in
+			}
+		}
+	}
+	if in.WeeksOfMonth != nil {
+		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowDetailsParameters.
+func (in *DatabaseDbSystemMaintenanceWindowDetailsParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowDetailsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowDetailsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsInitParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowMonthsInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowMonthsInitParameters.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsInitParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowMonthsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowMonthsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowMonthsObservation) {
+	*out = *in
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowMonthsObservation.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowMonthsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowMonthsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowMonthsParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowMonthsParameters.
+func (in *DatabaseDbSystemMaintenanceWindowMonthsParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowMonthsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowMonthsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowObservation) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowObservation) {
+	*out = *in
+	if in.CustomActionTimeoutInMins != nil {
+		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DaysOfWeek != nil {
+		in, out := &in.DaysOfWeek, &out.DaysOfWeek
+		*out = make([]DatabaseDbSystemMaintenanceWindowDaysOfWeekObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.HoursOfDay != nil {
+		in, out := &in.HoursOfDay, &out.HoursOfDay
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+	if in.IsCustomActionTimeoutEnabled != nil {
+		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsMonthlyPatchingEnabled != nil {
+		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LeadTimeInWeeks != nil {
+		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
+		*out = new(float64)
+		**out = **in
+	}
+	if in.Months != nil {
+		in, out := &in.Months, &out.Months
+		*out = make([]DatabaseDbSystemMaintenanceWindowMonthsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.PatchingMode != nil {
+		in, out := &in.PatchingMode, &out.PatchingMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.Preference != nil {
+		in, out := &in.Preference, &out.Preference
+		*out = new(string)
+		**out = **in
+	}
+	if in.SkipRu != nil {
+		in, out := &in.SkipRu, &out.SkipRu
+		*out = make([]*bool, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(bool)
+				**out = **in
+			}
+		}
+	}
+	if in.WeeksOfMonth != nil {
+		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
+		*out = make([]*float64, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(float64)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowObservation.
+func (in *DatabaseDbSystemMaintenanceWindowObservation) DeepCopy() *DatabaseDbSystemMaintenanceWindowObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemMaintenanceWindowParameters) DeepCopyInto(out *DatabaseDbSystemMaintenanceWindowParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemMaintenanceWindowParameters.
+func (in *DatabaseDbSystemMaintenanceWindowParameters) DeepCopy() *DatabaseDbSystemMaintenanceWindowParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemMaintenanceWindowParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemObservation) DeepCopyInto(out *DatabaseDbSystemObservation) {
+	*out = *in
+	if in.AvailabilityDomain != nil {
+		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupNetworkNsgIds != nil {
+		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.BackupSubnetID != nil {
+		in, out := &in.BackupSubnetID, &out.BackupSubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CPUCoreCount != nil {
+		in, out := &in.CPUCoreCount, &out.CPUCoreCount
+		*out = new(float64)
+		**out = **in
+	}
+	if in.ClusterName != nil {
+		in, out := &in.ClusterName, &out.ClusterName
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBHome != nil {
+		in, out := &in.DBHome, &out.DBHome
+		*out = make([]DBHomeObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DBSystemOptions != nil {
+		in, out := &in.DBSystemOptions, &out.DBSystemOptions
+		*out = make([]DBSystemOptionsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataCollectionOptions != nil {
+		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
+		*out = make([]DatabaseDbSystemDataCollectionOptionsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataStoragePercentage != nil {
+		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DataStorageSizeInGb != nil {
+		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DatabaseEdition != nil {
+		in, out := &in.DatabaseEdition, &out.DatabaseEdition
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DiskRedundancy != nil {
+		in, out := &in.DiskRedundancy, &out.DiskRedundancy
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
+	}
+	if in.FaultDomains != nil {
+		in, out := &in.FaultDomains, &out.FaultDomains
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.Hostname != nil {
+		in, out := &in.Hostname, &out.Hostname
+		*out = new(string)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IormConfigCache != nil {
+		in, out := &in.IormConfigCache, &out.IormConfigCache
+		*out = make([]DatabaseDbSystemIormConfigCacheObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LastMaintenanceRunID != nil {
+		in, out := &in.LastMaintenanceRunID, &out.LastMaintenanceRunID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LastPatchHistoryEntryID != nil {
+		in, out := &in.LastPatchHistoryEntryID, &out.LastPatchHistoryEntryID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LicenseModel != nil {
+		in, out := &in.LicenseModel, &out.LicenseModel
+		*out = new(string)
+		**out = **in
+	}
+	if in.LifecycleDetails != nil {
+		in, out := &in.LifecycleDetails, &out.LifecycleDetails
+		*out = new(string)
+		**out = **in
+	}
+	if in.ListenerPort != nil {
+		in, out := &in.ListenerPort, &out.ListenerPort
+		*out = new(float64)
+		**out = **in
+	}
+	if in.MaintenanceWindow != nil {
+		in, out := &in.MaintenanceWindow, &out.MaintenanceWindow
+		*out = make([]DatabaseDbSystemMaintenanceWindowObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.MaintenanceWindowDetails != nil {
+		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.MemorySizeInGbs != nil {
+		in, out := &in.MemorySizeInGbs, &out.MemorySizeInGbs
+		*out = new(float64)
+		**out = **in
+	}
+	if in.NextMaintenanceRunID != nil {
+		in, out := &in.NextMaintenanceRunID, &out.NextMaintenanceRunID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NodeCount != nil {
+		in, out := &in.NodeCount, &out.NodeCount
+		*out = new(float64)
+		**out = **in
+	}
+	if in.NsgIds != nil {
+		in, out := &in.NsgIds, &out.NsgIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.OsVersion != nil {
+		in, out := &in.OsVersion, &out.OsVersion
+		*out = new(string)
+		**out = **in
+	}
+	if in.PointInTimeDataDiskCloneTimestamp != nil {
+		in, out := &in.PointInTimeDataDiskCloneTimestamp, &out.PointInTimeDataDiskCloneTimestamp
+		*out = new(string)
+		**out = **in
+	}
+	if in.PrivateIP != nil {
+		in, out := &in.PrivateIP, &out.PrivateIP
+		*out = new(string)
+		**out = **in
+	}
+	if in.PrivateIPV6 != nil {
+		in, out := &in.PrivateIPV6, &out.PrivateIPV6
+		*out = new(string)
+		**out = **in
+	}
+	if in.RecoStorageSizeInGb != nil {
+		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SSHPublicKeys != nil {
+		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ScanDNSName != nil {
+		in, out := &in.ScanDNSName, &out.ScanDNSName
+		*out = new(string)
+		**out = **in
+	}
+	if in.ScanDNSRecordID != nil {
+		in, out := &in.ScanDNSRecordID, &out.ScanDNSRecordID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ScanIPIds != nil {
+		in, out := &in.ScanIPIds, &out.ScanIPIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ScanIpv6Ids != nil {
+		in, out := &in.ScanIpv6Ids, &out.ScanIpv6Ids
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.Shape != nil {
+		in, out := &in.Shape, &out.Shape
+		*out = new(string)
+		**out = **in
+	}
+	if in.Source != nil {
+		in, out := &in.Source, &out.Source
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBSystemID != nil {
+		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SparseDiskgroup != nil {
+		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
+		*out = new(bool)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.StorageVolumePerformanceMode != nil {
+		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SystemTags != nil {
+		in, out := &in.SystemTags, &out.SystemTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.TimeCreated != nil {
+		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
+		*out = new(string)
+		**out = **in
+	}
+	if in.Version != nil {
+		in, out := &in.Version, &out.Version
+		*out = new(string)
+		**out = **in
+	}
+	if in.VipIds != nil {
+		in, out := &in.VipIds, &out.VipIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.Vipv6Ids != nil {
+		in, out := &in.Vipv6Ids, &out.Vipv6Ids
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ZoneID != nil {
+		in, out := &in.ZoneID, &out.ZoneID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemObservation.
+func (in *DatabaseDbSystemObservation) DeepCopy() *DatabaseDbSystemObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemParameters) DeepCopyInto(out *DatabaseDbSystemParameters) {
+	*out = *in
+	if in.AvailabilityDomain != nil {
+		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupNetworkNsgIds != nil {
+		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.BackupSubnetID != nil {
+		in, out := &in.BackupSubnetID, &out.BackupSubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CPUCoreCount != nil {
+		in, out := &in.CPUCoreCount, &out.CPUCoreCount
+		*out = new(float64)
+		**out = **in
+	}
+	if in.ClusterName != nil {
+		in, out := &in.ClusterName, &out.ClusterName
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBHome != nil {
+		in, out := &in.DBHome, &out.DBHome
+		*out = make([]DBHomeParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DBSystemOptions != nil {
+		in, out := &in.DBSystemOptions, &out.DBSystemOptions
+		*out = make([]DBSystemOptionsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataCollectionOptions != nil {
+		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
+		*out = make([]DatabaseDbSystemDataCollectionOptionsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DataStoragePercentage != nil {
+		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DataStorageSizeInGb != nil {
+		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DatabaseEdition != nil {
+		in, out := &in.DatabaseEdition, &out.DatabaseEdition
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DiskRedundancy != nil {
+		in, out := &in.DiskRedundancy, &out.DiskRedundancy
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.Domain != nil {
+		in, out := &in.Domain, &out.Domain
+		*out = new(string)
+		**out = **in
+	}
+	if in.FaultDomains != nil {
+		in, out := &in.FaultDomains, &out.FaultDomains
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.Hostname != nil {
+		in, out := &in.Hostname, &out.Hostname
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.LicenseModel != nil {
+		in, out := &in.LicenseModel, &out.LicenseModel
+		*out = new(string)
+		**out = **in
+	}
+	if in.MaintenanceWindowDetails != nil {
+		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
+		*out = make([]DatabaseDbSystemMaintenanceWindowDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.NodeCount != nil {
+		in, out := &in.NodeCount, &out.NodeCount
+		*out = new(float64)
+		**out = **in
+	}
+	if in.NsgIds != nil {
+		in, out := &in.NsgIds, &out.NsgIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.PrivateIP != nil {
+		in, out := &in.PrivateIP, &out.PrivateIP
+		*out = new(string)
+		**out = **in
+	}
+	if in.PrivateIPV6 != nil {
+		in, out := &in.PrivateIPV6, &out.PrivateIPV6
+		*out = new(string)
+		**out = **in
+	}
+	if in.RecoStorageSizeInGb != nil {
+		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
+		*out = new(float64)
+		**out = **in
+	}
+	if in.SSHPublicKeys != nil {
+		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.Shape != nil {
+		in, out := &in.Shape, &out.Shape
+		*out = new(string)
+		**out = **in
+	}
+	if in.Source != nil {
+		in, out := &in.Source, &out.Source
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBSystemID != nil {
+		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SparseDiskgroup != nil {
+		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
+		*out = new(bool)
+		**out = **in
+	}
+	if in.StorageVolumePerformanceMode != nil {
+		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SubnetID != nil {
+		in, out := &in.SubnetID, &out.SubnetID
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeZone != nil {
+		in, out := &in.TimeZone, &out.TimeZone
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemParameters.
+func (in *DatabaseDbSystemParameters) DeepCopy() *DatabaseDbSystemParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemSpec) DeepCopyInto(out *DatabaseDbSystemSpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemSpec.
+func (in *DatabaseDbSystemSpec) DeepCopy() *DatabaseDbSystemSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseDbSystemStatus) DeepCopyInto(out *DatabaseDbSystemStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseDbSystemStatus.
+func (in *DatabaseDbSystemStatus) DeepCopy() *DatabaseDbSystemStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseDbSystemStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -28557,56 +29730,105 @@ func (in *DatabaseEncryptionKeyLocationDetailsParameters) DeepCopy() *DatabaseEn
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseInitParameters) DeepCopyInto(out *DatabaseInitParameters) {
 	*out = *in
-	if in.ActionTrigger != nil {
-		in, out := &in.ActionTrigger, &out.ActionTrigger
-		*out = new(float64)
+	if in.AdminPasswordSecretRef != nil {
+		in, out := &in.AdminPasswordSecretRef, &out.AdminPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
-	if in.DBHomeID != nil {
-		in, out := &in.DBHomeID, &out.DBHomeID
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
 		*out = new(string)
 		**out = **in
 	}
-	if in.DBHomeIDRef != nil {
-		in, out := &in.DBHomeIDRef, &out.DBHomeIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
+	if in.BackupTdePasswordSecretRef != nil {
+		in, out := &in.BackupTdePasswordSecretRef, &out.BackupTdePasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
 	}
-	if in.DBHomeIDSelector != nil {
-		in, out := &in.DBHomeIDSelector, &out.DBHomeIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBVersion != nil {
-		in, out := &in.DBVersion, &out.DBVersion
+	if in.CharacterSet != nil {
+		in, out := &in.CharacterSet, &out.CharacterSet
 		*out = new(string)
 		**out = **in
 	}
-	if in.DataGuardAction != nil {
-		in, out := &in.DataGuardAction, &out.DataGuardAction
-		*out = new(string)
-		**out = **in
-	}
-	if in.Database != nil {
-		in, out := &in.Database, &out.Database
-		*out = make([]DatabaseDatabaseInitParameters, len(*in))
+	if in.DBBackupConfig != nil {
+		in, out := &in.DBBackupConfig, &out.DBBackupConfig
+		*out = make([]DBBackupConfigInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
+	if in.DBName != nil {
+		in, out := &in.DBName, &out.DBName
 		*out = new(string)
 		**out = **in
 	}
-	if in.KMSKeyMigration != nil {
-		in, out := &in.KMSKeyMigration, &out.KMSKeyMigration
+	if in.DBUniqueName != nil {
+		in, out := &in.DBUniqueName, &out.DBUniqueName
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBWorkload != nil {
+		in, out := &in.DBWorkload, &out.DBWorkload
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseAdminPasswordSecretRef != nil {
+		in, out := &in.DatabaseAdminPasswordSecretRef, &out.DatabaseAdminPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageID != nil {
+		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.EncryptionKeyLocationDetails != nil {
+		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
+		*out = make([]DatabaseEncryptionKeyLocationDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.IsActiveDataGuardEnabled != nil {
+		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
 		*out = new(bool)
 		**out = **in
 	}
-	if in.KMSKeyRotation != nil {
-		in, out := &in.KMSKeyRotation, &out.KMSKeyRotation
-		*out = new(float64)
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
 		**out = **in
 	}
 	if in.KMSKeyVersionID != nil {
@@ -28614,13 +29836,61 @@ func (in *DatabaseInitParameters) DeepCopyInto(out *DatabaseInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.KeyStoreID != nil {
-		in, out := &in.KeyStoreID, &out.KeyStoreID
+	if in.NcharacterSet != nil {
+		in, out := &in.NcharacterSet, &out.NcharacterSet
 		*out = new(string)
 		**out = **in
 	}
-	if in.Source != nil {
-		in, out := &in.Source, &out.Source
+	if in.PdbName != nil {
+		in, out := &in.PdbName, &out.PdbName
+		*out = new(string)
+		**out = **in
+	}
+	if in.PluggableDatabases != nil {
+		in, out := &in.PluggableDatabases, &out.PluggableDatabases
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ProtectionMode != nil {
+		in, out := &in.ProtectionMode, &out.ProtectionMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SidPrefix != nil {
+		in, out := &in.SidPrefix, &out.SidPrefix
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDatabaseID != nil {
+		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceEncryptionKeyLocationDetails != nil {
+		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
+		*out = make([]SourceEncryptionKeyLocationDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SourceTdeWalletPasswordSecretRef != nil {
+		in, out := &in.SourceTdeWalletPasswordSecretRef, &out.SourceTdeWalletPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.TdeWalletPasswordSecretRef != nil {
+		in, out := &in.TdeWalletPasswordSecretRef, &out.TdeWalletPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.TransportType != nil {
+		in, out := &in.TransportType, &out.TransportType
 		*out = new(string)
 		**out = **in
 	}
@@ -28639,38 +29909,6 @@ func (in *DatabaseInitParameters) DeepCopy() *DatabaseInitParameters {
 	out := new(DatabaseInitParameters)
 	in.DeepCopyInto(out)
 	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseList) DeepCopyInto(out *DatabaseList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ListMeta.DeepCopyInto(&out.ListMeta)
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]Database, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseList.
-func (in *DatabaseList) DeepCopy() *DatabaseList {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *DatabaseList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
@@ -28729,7 +29967,900 @@ func (in *DatabaseManagementConfigParameters) DeepCopy() *DatabaseManagementConf
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigration) DeepCopyInto(out *DatabaseMigration) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigration.
+func (in *DatabaseMigration) DeepCopy() *DatabaseMigration {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigration)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseMigration) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationInitParameters) DeepCopyInto(out *DatabaseMigrationInitParameters) {
+	*out = *in
+	if in.DBSystemID != nil {
+		in, out := &in.DBSystemID, &out.DBSystemID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationInitParameters.
+func (in *DatabaseMigrationInitParameters) DeepCopy() *DatabaseMigrationInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationList) DeepCopyInto(out *DatabaseMigrationList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DatabaseMigration, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationList.
+func (in *DatabaseMigrationList) DeepCopy() *DatabaseMigrationList {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseMigrationList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationObservation) DeepCopyInto(out *DatabaseMigrationObservation) {
+	*out = *in
+	if in.AdditionalMigrations != nil {
+		in, out := &in.AdditionalMigrations, &out.AdditionalMigrations
+		*out = make([]AdditionalMigrationsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.CloudExadataInfrastructureID != nil {
+		in, out := &in.CloudExadataInfrastructureID, &out.CloudExadataInfrastructureID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CloudVMClusterID != nil {
+		in, out := &in.CloudVMClusterID, &out.CloudVMClusterID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBSystemID != nil {
+		in, out := &in.DBSystemID, &out.DBSystemID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationObservation.
+func (in *DatabaseMigrationObservation) DeepCopy() *DatabaseMigrationObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationParameters) DeepCopyInto(out *DatabaseMigrationParameters) {
+	*out = *in
+	if in.DBSystemID != nil {
+		in, out := &in.DBSystemID, &out.DBSystemID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationParameters.
+func (in *DatabaseMigrationParameters) DeepCopy() *DatabaseMigrationParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationSpec) DeepCopyInto(out *DatabaseMigrationSpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationSpec.
+func (in *DatabaseMigrationSpec) DeepCopy() *DatabaseMigrationSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseMigrationStatus) DeepCopyInto(out *DatabaseMigrationStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseMigrationStatus.
+func (in *DatabaseMigrationStatus) DeepCopy() *DatabaseMigrationStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseMigrationStatus)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DatabaseObservation) DeepCopyInto(out *DatabaseObservation) {
+	*out = *in
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CharacterSet != nil {
+		in, out := &in.CharacterSet, &out.CharacterSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBBackupConfig != nil {
+		in, out := &in.DBBackupConfig, &out.DBBackupConfig
+		*out = make([]DBBackupConfigObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DBName != nil {
+		in, out := &in.DBName, &out.DBName
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBUniqueName != nil {
+		in, out := &in.DBUniqueName, &out.DBUniqueName
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBWorkload != nil {
+		in, out := &in.DBWorkload, &out.DBWorkload
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageID != nil {
+		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.EncryptionKeyLocationDetails != nil {
+		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
+		*out = make([]DatabaseEncryptionKeyLocationDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.IsActiveDataGuardEnabled != nil {
+		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NcharacterSet != nil {
+		in, out := &in.NcharacterSet, &out.NcharacterSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.PdbName != nil {
+		in, out := &in.PdbName, &out.PdbName
+		*out = new(string)
+		**out = **in
+	}
+	if in.PluggableDatabases != nil {
+		in, out := &in.PluggableDatabases, &out.PluggableDatabases
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ProtectionMode != nil {
+		in, out := &in.ProtectionMode, &out.ProtectionMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SidPrefix != nil {
+		in, out := &in.SidPrefix, &out.SidPrefix
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDatabaseID != nil {
+		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceEncryptionKeyLocationDetails != nil {
+		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
+		*out = make([]SourceEncryptionKeyLocationDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.TransportType != nil {
+		in, out := &in.TransportType, &out.TransportType
+		*out = new(string)
+		**out = **in
+	}
+	if in.VaultID != nil {
+		in, out := &in.VaultID, &out.VaultID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseObservation.
+func (in *DatabaseObservation) DeepCopy() *DatabaseObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
+	*out = *in
+	if in.AdminPasswordSecretRef != nil {
+		in, out := &in.AdminPasswordSecretRef, &out.AdminPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.BackupID != nil {
+		in, out := &in.BackupID, &out.BackupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupTdePasswordSecretRef != nil {
+		in, out := &in.BackupTdePasswordSecretRef, &out.BackupTdePasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.CharacterSet != nil {
+		in, out := &in.CharacterSet, &out.CharacterSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBBackupConfig != nil {
+		in, out := &in.DBBackupConfig, &out.DBBackupConfig
+		*out = make([]DBBackupConfigParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DBName != nil {
+		in, out := &in.DBName, &out.DBName
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBUniqueName != nil {
+		in, out := &in.DBUniqueName, &out.DBUniqueName
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBWorkload != nil {
+		in, out := &in.DBWorkload, &out.DBWorkload
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseAdminPasswordSecretRef != nil {
+		in, out := &in.DatabaseAdminPasswordSecretRef, &out.DatabaseAdminPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageID != nil {
+		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.EncryptionKeyLocationDetails != nil {
+		in, out := &in.EncryptionKeyLocationDetails, &out.EncryptionKeyLocationDetails
+		*out = make([]DatabaseEncryptionKeyLocationDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.IsActiveDataGuardEnabled != nil {
+		in, out := &in.IsActiveDataGuardEnabled, &out.IsActiveDataGuardEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.NcharacterSet != nil {
+		in, out := &in.NcharacterSet, &out.NcharacterSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.PdbName != nil {
+		in, out := &in.PdbName, &out.PdbName
+		*out = new(string)
+		**out = **in
+	}
+	if in.PluggableDatabases != nil {
+		in, out := &in.PluggableDatabases, &out.PluggableDatabases
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.ProtectionMode != nil {
+		in, out := &in.ProtectionMode, &out.ProtectionMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.SidPrefix != nil {
+		in, out := &in.SidPrefix, &out.SidPrefix
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDatabaseID != nil {
+		in, out := &in.SourceDatabaseID, &out.SourceDatabaseID
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceEncryptionKeyLocationDetails != nil {
+		in, out := &in.SourceEncryptionKeyLocationDetails, &out.SourceEncryptionKeyLocationDetails
+		*out = make([]SourceEncryptionKeyLocationDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SourceTdeWalletPasswordSecretRef != nil {
+		in, out := &in.SourceTdeWalletPasswordSecretRef, &out.SourceTdeWalletPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.TdeWalletPasswordSecretRef != nil {
+		in, out := &in.TdeWalletPasswordSecretRef, &out.TdeWalletPasswordSecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.TransportType != nil {
+		in, out := &in.TransportType, &out.TransportType
+		*out = new(string)
+		**out = **in
+	}
+	if in.VaultID != nil {
+		in, out := &in.VaultID, &out.VaultID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseParameters.
+func (in *DatabaseParameters) DeepCopy() *DatabaseParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResource) DeepCopyInto(out *DatabaseResource) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResource.
+func (in *DatabaseResource) DeepCopy() *DatabaseResource {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResource)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseResource) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceConnectionStringsInitParameters) DeepCopyInto(out *DatabaseResourceConnectionStringsInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceConnectionStringsInitParameters.
+func (in *DatabaseResourceConnectionStringsInitParameters) DeepCopy() *DatabaseResourceConnectionStringsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceConnectionStringsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceConnectionStringsObservation) DeepCopyInto(out *DatabaseResourceConnectionStringsObservation) {
+	*out = *in
+	if in.AllConnectionStrings != nil {
+		in, out := &in.AllConnectionStrings, &out.AllConnectionStrings
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.CdbDefault != nil {
+		in, out := &in.CdbDefault, &out.CdbDefault
+		*out = new(string)
+		**out = **in
+	}
+	if in.CdbIPDefault != nil {
+		in, out := &in.CdbIPDefault, &out.CdbIPDefault
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceConnectionStringsObservation.
+func (in *DatabaseResourceConnectionStringsObservation) DeepCopy() *DatabaseResourceConnectionStringsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceConnectionStringsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceConnectionStringsParameters) DeepCopyInto(out *DatabaseResourceConnectionStringsParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceConnectionStringsParameters.
+func (in *DatabaseResourceConnectionStringsParameters) DeepCopy() *DatabaseResourceConnectionStringsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceConnectionStringsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters) DeepCopyInto(out *DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters) DeepCopy() *DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigBackupDestinationDetailsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation) DeepCopyInto(out *DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation) {
+	*out = *in
+	if in.DbrsPolicyID != nil {
+		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsRemote != nil {
+		in, out := &in.IsRemote, &out.IsRemote
+		*out = new(bool)
+		**out = **in
+	}
+	if in.RemoteRegion != nil {
+		in, out := &in.RemoteRegion, &out.RemoteRegion
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCPassword != nil {
+		in, out := &in.VPCPassword, &out.VPCPassword
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCUser != nil {
+		in, out := &in.VPCUser, &out.VPCUser
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation) DeepCopy() *DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters) DeepCopyInto(out *DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters.
+func (in *DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters) DeepCopy() *DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigBackupDestinationDetailsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigInitParameters) DeepCopyInto(out *DatabaseResourceDBBackupConfigInitParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigInitParameters.
+func (in *DatabaseResourceDBBackupConfigInitParameters) DeepCopy() *DatabaseResourceDBBackupConfigInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigObservation) DeepCopyInto(out *DatabaseResourceDBBackupConfigObservation) {
+	*out = *in
+	if in.AutoBackupEnabled != nil {
+		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.AutoBackupWindow != nil {
+		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupDay != nil {
+		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
+		*out = new(string)
+		**out = **in
+	}
+	if in.AutoFullBackupWindow != nil {
+		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDeletionPolicy != nil {
+		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
+		*out = new(string)
+		**out = **in
+	}
+	if in.BackupDestinationDetails != nil {
+		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
+		*out = make([]DatabaseResourceDBBackupConfigBackupDestinationDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.RecoveryWindowInDays != nil {
+		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
+		*out = new(float64)
+		**out = **in
+	}
+	if in.RunImmediateFullBackup != nil {
+		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
+		*out = new(bool)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigObservation.
+func (in *DatabaseResourceDBBackupConfigObservation) DeepCopy() *DatabaseResourceDBBackupConfigObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceDBBackupConfigParameters) DeepCopyInto(out *DatabaseResourceDBBackupConfigParameters) {
+	*out = *in
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceDBBackupConfigParameters.
+func (in *DatabaseResourceDBBackupConfigParameters) DeepCopy() *DatabaseResourceDBBackupConfigParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceDBBackupConfigParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceInitParameters) DeepCopyInto(out *DatabaseResourceInitParameters) {
+	*out = *in
+	if in.ActionTrigger != nil {
+		in, out := &in.ActionTrigger, &out.ActionTrigger
+		*out = new(float64)
+		**out = **in
+	}
+	if in.DBHomeID != nil {
+		in, out := &in.DBHomeID, &out.DBHomeID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DBVersion != nil {
+		in, out := &in.DBVersion, &out.DBVersion
+		*out = new(string)
+		**out = **in
+	}
+	if in.DataGuardAction != nil {
+		in, out := &in.DataGuardAction, &out.DataGuardAction
+		*out = new(string)
+		**out = **in
+	}
+	if in.Database != nil {
+		in, out := &in.Database, &out.Database
+		*out = make([]DatabaseInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyMigration != nil {
+		in, out := &in.KMSKeyMigration, &out.KMSKeyMigration
+		*out = new(bool)
+		**out = **in
+	}
+	if in.KMSKeyRotation != nil {
+		in, out := &in.KMSKeyRotation, &out.KMSKeyRotation
+		*out = new(float64)
+		**out = **in
+	}
+	if in.KMSKeyVersionID != nil {
+		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KeyStoreID != nil {
+		in, out := &in.KeyStoreID, &out.KeyStoreID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Source != nil {
+		in, out := &in.Source, &out.Source
+		*out = new(string)
+		**out = **in
+	}
+	if in.VaultID != nil {
+		in, out := &in.VaultID, &out.VaultID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceInitParameters.
+func (in *DatabaseResourceInitParameters) DeepCopy() *DatabaseResourceInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceList) DeepCopyInto(out *DatabaseResourceList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DatabaseResource, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceList.
+func (in *DatabaseResourceList) DeepCopy() *DatabaseResourceList {
+	if in == nil {
+		return nil
+	}
+	out := new(DatabaseResourceList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DatabaseResourceList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DatabaseResourceObservation) DeepCopyInto(out *DatabaseResourceObservation) {
 	*out = *in
 	if in.ActionTrigger != nil {
 		in, out := &in.ActionTrigger, &out.ActionTrigger
@@ -28748,14 +30879,14 @@ func (in *DatabaseObservation) DeepCopyInto(out *DatabaseObservation) {
 	}
 	if in.ConnectionStrings != nil {
 		in, out := &in.ConnectionStrings, &out.ConnectionStrings
-		*out = make([]DatabaseConnectionStringsObservation, len(*in))
+		*out = make([]DatabaseResourceConnectionStringsObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.DBBackupConfig != nil {
 		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DatabaseDBBackupConfigObservation, len(*in))
+		*out = make([]DatabaseResourceDBBackupConfigObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -28804,7 +30935,7 @@ func (in *DatabaseObservation) DeepCopyInto(out *DatabaseObservation) {
 	}
 	if in.Database != nil {
 		in, out := &in.Database, &out.Database
-		*out = make([]DatabaseDatabaseObservation, len(*in))
+		*out = make([]DatabaseObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -28976,18 +31107,18 @@ func (in *DatabaseObservation) DeepCopyInto(out *DatabaseObservation) {
 	}
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseObservation.
-func (in *DatabaseObservation) DeepCopy() *DatabaseObservation {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceObservation.
+func (in *DatabaseResourceObservation) DeepCopy() *DatabaseResourceObservation {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseObservation)
+	out := new(DatabaseResourceObservation)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
+func (in *DatabaseResourceParameters) DeepCopyInto(out *DatabaseResourceParameters) {
 	*out = *in
 	if in.ActionTrigger != nil {
 		in, out := &in.ActionTrigger, &out.ActionTrigger
@@ -28998,16 +31129,6 @@ func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
 		in, out := &in.DBHomeID, &out.DBHomeID
 		*out = new(string)
 		**out = **in
-	}
-	if in.DBHomeIDRef != nil {
-		in, out := &in.DBHomeIDRef, &out.DBHomeIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBHomeIDSelector != nil {
-		in, out := &in.DBHomeIDSelector, &out.DBHomeIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.DBVersion != nil {
 		in, out := &in.DBVersion, &out.DBVersion
@@ -29021,7 +31142,7 @@ func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
 	}
 	if in.Database != nil {
 		in, out := &in.Database, &out.Database
-		*out = make([]DatabaseDatabaseParameters, len(*in))
+		*out = make([]DatabaseParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -29063,512 +31184,47 @@ func (in *DatabaseParameters) DeepCopyInto(out *DatabaseParameters) {
 	}
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseParameters.
-func (in *DatabaseParameters) DeepCopy() *DatabaseParameters {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceParameters.
+func (in *DatabaseResourceParameters) DeepCopy() *DatabaseResourceParameters {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseParameters)
+	out := new(DatabaseResourceParameters)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImage) DeepCopyInto(out *DatabaseSoftwareImage) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	in.Spec.DeepCopyInto(&out.Spec)
-	in.Status.DeepCopyInto(&out.Status)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImage.
-func (in *DatabaseSoftwareImage) DeepCopy() *DatabaseSoftwareImage {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSoftwareImage)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *DatabaseSoftwareImage) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageInitParameters) DeepCopyInto(out *DatabaseSoftwareImageInitParameters) {
-	*out = *in
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatabaseSoftwareImageOneOffPatches != nil {
-		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.DatabaseVersion != nil {
-		in, out := &in.DatabaseVersion, &out.DatabaseVersion
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.ImageShapeFamily != nil {
-		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
-		*out = new(string)
-		**out = **in
-	}
-	if in.ImageType != nil {
-		in, out := &in.ImageType, &out.ImageType
-		*out = new(string)
-		**out = **in
-	}
-	if in.LsInventory != nil {
-		in, out := &in.LsInventory, &out.LsInventory
-		*out = new(string)
-		**out = **in
-	}
-	if in.PatchSet != nil {
-		in, out := &in.PatchSet, &out.PatchSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBHomeID != nil {
-		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageInitParameters.
-func (in *DatabaseSoftwareImageInitParameters) DeepCopy() *DatabaseSoftwareImageInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSoftwareImageInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageList) DeepCopyInto(out *DatabaseSoftwareImageList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ListMeta.DeepCopyInto(&out.ListMeta)
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]DatabaseSoftwareImage, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageList.
-func (in *DatabaseSoftwareImageList) DeepCopy() *DatabaseSoftwareImageList {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSoftwareImageList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *DatabaseSoftwareImageList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageObservation) DeepCopyInto(out *DatabaseSoftwareImageObservation) {
-	*out = *in
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatabaseSoftwareImageIncludedPatches != nil {
-		in, out := &in.DatabaseSoftwareImageIncludedPatches, &out.DatabaseSoftwareImageIncludedPatches
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.DatabaseSoftwareImageOneOffPatches != nil {
-		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.DatabaseVersion != nil {
-		in, out := &in.DatabaseVersion, &out.DatabaseVersion
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ImageShapeFamily != nil {
-		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
-		*out = new(string)
-		**out = **in
-	}
-	if in.ImageType != nil {
-		in, out := &in.ImageType, &out.ImageType
-		*out = new(string)
-		**out = **in
-	}
-	if in.IncludedPatchesSummary != nil {
-		in, out := &in.IncludedPatchesSummary, &out.IncludedPatchesSummary
-		*out = new(string)
-		**out = **in
-	}
-	if in.IsUpgradeSupported != nil {
-		in, out := &in.IsUpgradeSupported, &out.IsUpgradeSupported
-		*out = new(bool)
-		**out = **in
-	}
-	if in.LifecycleDetails != nil {
-		in, out := &in.LifecycleDetails, &out.LifecycleDetails
-		*out = new(string)
-		**out = **in
-	}
-	if in.LsInventory != nil {
-		in, out := &in.LsInventory, &out.LsInventory
-		*out = new(string)
-		**out = **in
-	}
-	if in.PatchSet != nil {
-		in, out := &in.PatchSet, &out.PatchSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBHomeID != nil {
-		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
-		*out = new(string)
-		**out = **in
-	}
-	if in.State != nil {
-		in, out := &in.State, &out.State
-		*out = new(string)
-		**out = **in
-	}
-	if in.SystemTags != nil {
-		in, out := &in.SystemTags, &out.SystemTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TimeCreated != nil {
-		in, out := &in.TimeCreated, &out.TimeCreated
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageObservation.
-func (in *DatabaseSoftwareImageObservation) DeepCopy() *DatabaseSoftwareImageObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSoftwareImageObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageParameters) DeepCopyInto(out *DatabaseSoftwareImageParameters) {
-	*out = *in
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatabaseSoftwareImageOneOffPatches != nil {
-		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.DatabaseVersion != nil {
-		in, out := &in.DatabaseVersion, &out.DatabaseVersion
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.ImageShapeFamily != nil {
-		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
-		*out = new(string)
-		**out = **in
-	}
-	if in.ImageType != nil {
-		in, out := &in.ImageType, &out.ImageType
-		*out = new(string)
-		**out = **in
-	}
-	if in.LsInventory != nil {
-		in, out := &in.LsInventory, &out.LsInventory
-		*out = new(string)
-		**out = **in
-	}
-	if in.PatchSet != nil {
-		in, out := &in.PatchSet, &out.PatchSet
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBHomeID != nil {
-		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageParameters.
-func (in *DatabaseSoftwareImageParameters) DeepCopy() *DatabaseSoftwareImageParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSoftwareImageParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageSpec) DeepCopyInto(out *DatabaseSoftwareImageSpec) {
+func (in *DatabaseResourceSpec) DeepCopyInto(out *DatabaseResourceSpec) {
 	*out = *in
 	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
 	in.ForProvider.DeepCopyInto(&out.ForProvider)
 	in.InitProvider.DeepCopyInto(&out.InitProvider)
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageSpec.
-func (in *DatabaseSoftwareImageSpec) DeepCopy() *DatabaseSoftwareImageSpec {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceSpec.
+func (in *DatabaseResourceSpec) DeepCopy() *DatabaseResourceSpec {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseSoftwareImageSpec)
+	out := new(DatabaseResourceSpec)
 	in.DeepCopyInto(out)
 	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSoftwareImageStatus) DeepCopyInto(out *DatabaseSoftwareImageStatus) {
+func (in *DatabaseResourceStatus) DeepCopyInto(out *DatabaseResourceStatus) {
 	*out = *in
 	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
 	in.AtProvider.DeepCopyInto(&out.AtProvider)
 }
 
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSoftwareImageStatus.
-func (in *DatabaseSoftwareImageStatus) DeepCopy() *DatabaseSoftwareImageStatus {
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseResourceStatus.
+func (in *DatabaseResourceStatus) DeepCopy() *DatabaseResourceStatus {
 	if in == nil {
 		return nil
 	}
-	out := new(DatabaseSoftwareImageStatus)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseSpec) DeepCopyInto(out *DatabaseSpec) {
-	*out = *in
-	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
-	in.ForProvider.DeepCopyInto(&out.ForProvider)
-	in.InitProvider.DeepCopyInto(&out.InitProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseSpec.
-func (in *DatabaseSpec) DeepCopy() *DatabaseSpec {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseSpec)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DatabaseStatus) DeepCopyInto(out *DatabaseStatus) {
-	*out = *in
-	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
-	in.AtProvider.DeepCopyInto(&out.AtProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatabaseStatus.
-func (in *DatabaseStatus) DeepCopy() *DatabaseStatus {
-	if in == nil {
-		return nil
-	}
-	out := new(DatabaseStatus)
+	out := new(DatabaseResourceStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -30192,393 +31848,6 @@ func (in *DbHome) DeepCopyObject() runtime.Object {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseConnectionStringsInitParameters) DeepCopyInto(out *DbHomeDatabaseConnectionStringsInitParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseConnectionStringsInitParameters.
-func (in *DbHomeDatabaseConnectionStringsInitParameters) DeepCopy() *DbHomeDatabaseConnectionStringsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseConnectionStringsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseConnectionStringsObservation) DeepCopyInto(out *DbHomeDatabaseConnectionStringsObservation) {
-	*out = *in
-	if in.AllConnectionStrings != nil {
-		in, out := &in.AllConnectionStrings, &out.AllConnectionStrings
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.CdbDefault != nil {
-		in, out := &in.CdbDefault, &out.CdbDefault
-		*out = new(string)
-		**out = **in
-	}
-	if in.CdbIPDefault != nil {
-		in, out := &in.CdbIPDefault, &out.CdbIPDefault
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseConnectionStringsObservation.
-func (in *DbHomeDatabaseConnectionStringsObservation) DeepCopy() *DbHomeDatabaseConnectionStringsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseConnectionStringsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseConnectionStringsParameters) DeepCopyInto(out *DbHomeDatabaseConnectionStringsParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseConnectionStringsParameters.
-func (in *DbHomeDatabaseConnectionStringsParameters) DeepCopy() *DbHomeDatabaseConnectionStringsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseConnectionStringsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters) {
-	*out = *in
-	if in.DbrsPolicyID != nil {
-		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.IsRemote != nil {
-		in, out := &in.IsRemote, &out.IsRemote
-		*out = new(bool)
-		**out = **in
-	}
-	if in.RemoteRegion != nil {
-		in, out := &in.RemoteRegion, &out.RemoteRegion
-		*out = new(string)
-		**out = **in
-	}
-	if in.Type != nil {
-		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.VPCPasswordSecretRef != nil {
-		in, out := &in.VPCPasswordSecretRef, &out.VPCPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.VPCUser != nil {
-		in, out := &in.VPCUser, &out.VPCUser
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters) DeepCopy() *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation) {
-	*out = *in
-	if in.DbrsPolicyID != nil {
-		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.IsRemote != nil {
-		in, out := &in.IsRemote, &out.IsRemote
-		*out = new(bool)
-		**out = **in
-	}
-	if in.RemoteRegion != nil {
-		in, out := &in.RemoteRegion, &out.RemoteRegion
-		*out = new(string)
-		**out = **in
-	}
-	if in.Type != nil {
-		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.VPCUser != nil {
-		in, out := &in.VPCUser, &out.VPCUser
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation) DeepCopy() *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters) {
-	*out = *in
-	if in.DbrsPolicyID != nil {
-		in, out := &in.DbrsPolicyID, &out.DbrsPolicyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.IsRemote != nil {
-		in, out := &in.IsRemote, &out.IsRemote
-		*out = new(bool)
-		**out = **in
-	}
-	if in.RemoteRegion != nil {
-		in, out := &in.RemoteRegion, &out.RemoteRegion
-		*out = new(string)
-		**out = **in
-	}
-	if in.Type != nil {
-		in, out := &in.Type, &out.Type
-		*out = new(string)
-		**out = **in
-	}
-	if in.VPCPasswordSecretRef != nil {
-		in, out := &in.VPCPasswordSecretRef, &out.VPCPasswordSecretRef
-		*out = new(v1.SecretKeySelector)
-		**out = **in
-	}
-	if in.VPCUser != nil {
-		in, out := &in.VPCUser, &out.VPCUser
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters.
-func (in *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters) DeepCopy() *DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigInitParameters) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigInitParameters) {
-	*out = *in
-	if in.AutoBackupEnabled != nil {
-		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.AutoBackupWindow != nil {
-		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupDay != nil {
-		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupWindow != nil {
-		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDeletionPolicy != nil {
-		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDestinationDetails != nil {
-		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
-		*out = make([]DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.RecoveryWindowInDays != nil {
-		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RunImmediateFullBackup != nil {
-		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigInitParameters.
-func (in *DbHomeDatabaseDBBackupConfigInitParameters) DeepCopy() *DbHomeDatabaseDBBackupConfigInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigObservation) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigObservation) {
-	*out = *in
-	if in.AutoBackupEnabled != nil {
-		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.AutoBackupWindow != nil {
-		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupDay != nil {
-		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupWindow != nil {
-		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDeletionPolicy != nil {
-		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDestinationDetails != nil {
-		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
-		*out = make([]DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.RecoveryWindowInDays != nil {
-		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RunImmediateFullBackup != nil {
-		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigObservation.
-func (in *DbHomeDatabaseDBBackupConfigObservation) DeepCopy() *DbHomeDatabaseDBBackupConfigObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbHomeDatabaseDBBackupConfigParameters) DeepCopyInto(out *DbHomeDatabaseDBBackupConfigParameters) {
-	*out = *in
-	if in.AutoBackupEnabled != nil {
-		in, out := &in.AutoBackupEnabled, &out.AutoBackupEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.AutoBackupWindow != nil {
-		in, out := &in.AutoBackupWindow, &out.AutoBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupDay != nil {
-		in, out := &in.AutoFullBackupDay, &out.AutoFullBackupDay
-		*out = new(string)
-		**out = **in
-	}
-	if in.AutoFullBackupWindow != nil {
-		in, out := &in.AutoFullBackupWindow, &out.AutoFullBackupWindow
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDeletionPolicy != nil {
-		in, out := &in.BackupDeletionPolicy, &out.BackupDeletionPolicy
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupDestinationDetails != nil {
-		in, out := &in.BackupDestinationDetails, &out.BackupDestinationDetails
-		*out = make([]DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.RecoveryWindowInDays != nil {
-		in, out := &in.RecoveryWindowInDays, &out.RecoveryWindowInDays
-		*out = new(float64)
-		**out = **in
-	}
-	if in.RunImmediateFullBackup != nil {
-		in, out := &in.RunImmediateFullBackup, &out.RunImmediateFullBackup
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbHomeDatabaseDBBackupConfigParameters.
-func (in *DbHomeDatabaseDBBackupConfigParameters) DeepCopy() *DbHomeDatabaseDBBackupConfigParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbHomeDatabaseDBBackupConfigParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters) DeepCopyInto(out *DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters) {
 	*out = *in
 	if in.AzureEncryptionKeyID != nil {
@@ -30684,7 +31953,7 @@ func (in *DbHomeDatabaseInitParameters) DeepCopyInto(out *DbHomeDatabaseInitPara
 	}
 	if in.DBBackupConfig != nil {
 		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DbHomeDatabaseDBBackupConfigInitParameters, len(*in))
+		*out = make([]DatabaseDBBackupConfigInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -30826,14 +32095,14 @@ func (in *DbHomeDatabaseObservation) DeepCopyInto(out *DbHomeDatabaseObservation
 	}
 	if in.ConnectionStrings != nil {
 		in, out := &in.ConnectionStrings, &out.ConnectionStrings
-		*out = make([]DbHomeDatabaseConnectionStringsObservation, len(*in))
+		*out = make([]DatabaseConnectionStringsObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.DBBackupConfig != nil {
 		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DbHomeDatabaseDBBackupConfigObservation, len(*in))
+		*out = make([]DatabaseDBBackupConfigObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -31017,7 +32286,7 @@ func (in *DbHomeDatabaseParameters) DeepCopyInto(out *DbHomeDatabaseParameters) 
 	}
 	if in.DBBackupConfig != nil {
 		in, out := &in.DBBackupConfig, &out.DBBackupConfig
-		*out = make([]DbHomeDatabaseDBBackupConfigParameters, len(*in))
+		*out = make([]DatabaseDBBackupConfigParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -31151,16 +32420,6 @@ func (in *DbHomeInitParameters) DeepCopyInto(out *DbHomeInitParameters) {
 		in, out := &in.DBSystemID, &out.DBSystemID
 		*out = new(string)
 		**out = **in
-	}
-	if in.DBSystemIDRef != nil {
-		in, out := &in.DBSystemIDRef, &out.DBSystemIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBSystemIDSelector != nil {
-		in, out := &in.DBSystemIDSelector, &out.DBSystemIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.DBVersion != nil {
 		in, out := &in.DBVersion, &out.DBVersion
@@ -31462,16 +32721,6 @@ func (in *DbHomeParameters) DeepCopyInto(out *DbHomeParameters) {
 		in, out := &in.DBSystemID, &out.DBSystemID
 		*out = new(string)
 		**out = **in
-	}
-	if in.DBSystemIDRef != nil {
-		in, out := &in.DBSystemIDRef, &out.DBSystemIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBSystemIDSelector != nil {
-		in, out := &in.DBSystemIDSelector, &out.DBSystemIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.DBVersion != nil {
 		in, out := &in.DBVersion, &out.DBVersion
@@ -32970,1884 +34219,6 @@ func (in *DbNodeStatus) DeepCopy() *DbNodeStatus {
 		return nil
 	}
 	out := new(DbNodeStatus)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystem) DeepCopyInto(out *DbSystem) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	in.Spec.DeepCopyInto(&out.Spec)
-	in.Status.DeepCopyInto(&out.Status)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystem.
-func (in *DbSystem) DeepCopy() *DbSystem {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystem)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *DbSystem) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemDataCollectionOptionsInitParameters) DeepCopyInto(out *DbSystemDataCollectionOptionsInitParameters) {
-	*out = *in
-	if in.IsDiagnosticsEventsEnabled != nil {
-		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsHealthMonitoringEnabled != nil {
-		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsIncidentLogsEnabled != nil {
-		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemDataCollectionOptionsInitParameters.
-func (in *DbSystemDataCollectionOptionsInitParameters) DeepCopy() *DbSystemDataCollectionOptionsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemDataCollectionOptionsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemDataCollectionOptionsObservation) DeepCopyInto(out *DbSystemDataCollectionOptionsObservation) {
-	*out = *in
-	if in.IsDiagnosticsEventsEnabled != nil {
-		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsHealthMonitoringEnabled != nil {
-		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsIncidentLogsEnabled != nil {
-		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemDataCollectionOptionsObservation.
-func (in *DbSystemDataCollectionOptionsObservation) DeepCopy() *DbSystemDataCollectionOptionsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemDataCollectionOptionsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemDataCollectionOptionsParameters) DeepCopyInto(out *DbSystemDataCollectionOptionsParameters) {
-	*out = *in
-	if in.IsDiagnosticsEventsEnabled != nil {
-		in, out := &in.IsDiagnosticsEventsEnabled, &out.IsDiagnosticsEventsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsHealthMonitoringEnabled != nil {
-		in, out := &in.IsHealthMonitoringEnabled, &out.IsHealthMonitoringEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsIncidentLogsEnabled != nil {
-		in, out := &in.IsIncidentLogsEnabled, &out.IsIncidentLogsEnabled
-		*out = new(bool)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemDataCollectionOptionsParameters.
-func (in *DbSystemDataCollectionOptionsParameters) DeepCopy() *DbSystemDataCollectionOptionsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemDataCollectionOptionsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemInitParameters) DeepCopyInto(out *DbSystemInitParameters) {
-	*out = *in
-	if in.AvailabilityDomain != nil {
-		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupNetworkNsgIds != nil {
-		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.BackupSubnetID != nil {
-		in, out := &in.BackupSubnetID, &out.BackupSubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupSubnetIDRef != nil {
-		in, out := &in.BackupSubnetIDRef, &out.BackupSubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.BackupSubnetIDSelector != nil {
-		in, out := &in.BackupSubnetIDSelector, &out.BackupSubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CPUCoreCount != nil {
-		in, out := &in.CPUCoreCount, &out.CPUCoreCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.ClusterName != nil {
-		in, out := &in.ClusterName, &out.ClusterName
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBHome != nil {
-		in, out := &in.DBHome, &out.DBHome
-		*out = make([]DBHomeInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBSystemOptions != nil {
-		in, out := &in.DBSystemOptions, &out.DBSystemOptions
-		*out = make([]DBSystemOptionsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataCollectionOptions != nil {
-		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
-		*out = make([]DbSystemDataCollectionOptionsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataStoragePercentage != nil {
-		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DataStorageSizeInGb != nil {
-		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DatabaseEdition != nil {
-		in, out := &in.DatabaseEdition, &out.DatabaseEdition
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DiskRedundancy != nil {
-		in, out := &in.DiskRedundancy, &out.DiskRedundancy
-		*out = new(string)
-		**out = **in
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.Domain != nil {
-		in, out := &in.Domain, &out.Domain
-		*out = new(string)
-		**out = **in
-	}
-	if in.FaultDomains != nil {
-		in, out := &in.FaultDomains, &out.FaultDomains
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Hostname != nil {
-		in, out := &in.Hostname, &out.Hostname
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LicenseModel != nil {
-		in, out := &in.LicenseModel, &out.LicenseModel
-		*out = new(string)
-		**out = **in
-	}
-	if in.MaintenanceWindowDetails != nil {
-		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
-		*out = make([]DbSystemMaintenanceWindowDetailsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.NodeCount != nil {
-		in, out := &in.NodeCount, &out.NodeCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.NsgIds != nil {
-		in, out := &in.NsgIds, &out.NsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.PrivateIP != nil {
-		in, out := &in.PrivateIP, &out.PrivateIP
-		*out = new(string)
-		**out = **in
-	}
-	if in.PrivateIPV6 != nil {
-		in, out := &in.PrivateIPV6, &out.PrivateIPV6
-		*out = new(string)
-		**out = **in
-	}
-	if in.RecoStorageSizeInGb != nil {
-		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.SSHPublicKeys != nil {
-		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.SecurityAttributes != nil {
-		in, out := &in.SecurityAttributes, &out.SecurityAttributes
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Shape != nil {
-		in, out := &in.Shape, &out.Shape
-		*out = new(string)
-		**out = **in
-	}
-	if in.Source != nil {
-		in, out := &in.Source, &out.Source
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBSystemID != nil {
-		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SparseDiskgroup != nil {
-		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
-		*out = new(bool)
-		**out = **in
-	}
-	if in.StorageVolumePerformanceMode != nil {
-		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.SubnetID != nil {
-		in, out := &in.SubnetID, &out.SubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.TimeZone != nil {
-		in, out := &in.TimeZone, &out.TimeZone
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemInitParameters.
-func (in *DbSystemInitParameters) DeepCopy() *DbSystemInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemIormConfigCacheInitParameters) DeepCopyInto(out *DbSystemIormConfigCacheInitParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemIormConfigCacheInitParameters.
-func (in *DbSystemIormConfigCacheInitParameters) DeepCopy() *DbSystemIormConfigCacheInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemIormConfigCacheInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemIormConfigCacheObservation) DeepCopyInto(out *DbSystemIormConfigCacheObservation) {
-	*out = *in
-	if in.DBPlans != nil {
-		in, out := &in.DBPlans, &out.DBPlans
-		*out = make([]IormConfigCacheDBPlansObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBSystemID != nil {
-		in, out := &in.DBSystemID, &out.DBSystemID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LifecycleDetails != nil {
-		in, out := &in.LifecycleDetails, &out.LifecycleDetails
-		*out = new(string)
-		**out = **in
-	}
-	if in.Objective != nil {
-		in, out := &in.Objective, &out.Objective
-		*out = new(string)
-		**out = **in
-	}
-	if in.State != nil {
-		in, out := &in.State, &out.State
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemIormConfigCacheObservation.
-func (in *DbSystemIormConfigCacheObservation) DeepCopy() *DbSystemIormConfigCacheObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemIormConfigCacheObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemIormConfigCacheParameters) DeepCopyInto(out *DbSystemIormConfigCacheParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemIormConfigCacheParameters.
-func (in *DbSystemIormConfigCacheParameters) DeepCopy() *DbSystemIormConfigCacheParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemIormConfigCacheParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemList) DeepCopyInto(out *DbSystemList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ListMeta.DeepCopyInto(&out.ListMeta)
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]DbSystem, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemList.
-func (in *DbSystemList) DeepCopy() *DbSystemList {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *DbSystemList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDaysOfWeekInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDaysOfWeekInitParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDaysOfWeekInitParameters.
-func (in *DbSystemMaintenanceWindowDaysOfWeekInitParameters) DeepCopy() *DbSystemMaintenanceWindowDaysOfWeekInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDaysOfWeekInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDaysOfWeekObservation) DeepCopyInto(out *DbSystemMaintenanceWindowDaysOfWeekObservation) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDaysOfWeekObservation.
-func (in *DbSystemMaintenanceWindowDaysOfWeekObservation) DeepCopy() *DbSystemMaintenanceWindowDaysOfWeekObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDaysOfWeekObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDaysOfWeekParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDaysOfWeekParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDaysOfWeekParameters.
-func (in *DbSystemMaintenanceWindowDaysOfWeekParameters) DeepCopy() *DbSystemMaintenanceWindowDaysOfWeekParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDaysOfWeekParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekObservation) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsDaysOfWeekObservation) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsDaysOfWeekObservation.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekObservation) DeepCopy() *DbSystemMaintenanceWindowDetailsDaysOfWeekObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsDaysOfWeekObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsDaysOfWeekParameters) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsDaysOfWeekParameters.
-func (in *DbSystemMaintenanceWindowDetailsDaysOfWeekParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsDaysOfWeekParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsDaysOfWeekParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsInitParameters) {
-	*out = *in
-	if in.CustomActionTimeoutInMins != nil {
-		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DaysOfWeek != nil {
-		in, out := &in.DaysOfWeek, &out.DaysOfWeek
-		*out = make([]DbSystemMaintenanceWindowDetailsDaysOfWeekInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.HoursOfDay != nil {
-		in, out := &in.HoursOfDay, &out.HoursOfDay
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-	if in.IsCustomActionTimeoutEnabled != nil {
-		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsMonthlyPatchingEnabled != nil {
-		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.LeadTimeInWeeks != nil {
-		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
-		*out = new(float64)
-		**out = **in
-	}
-	if in.Months != nil {
-		in, out := &in.Months, &out.Months
-		*out = make([]DbSystemMaintenanceWindowDetailsMonthsInitParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.PatchingMode != nil {
-		in, out := &in.PatchingMode, &out.PatchingMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.Preference != nil {
-		in, out := &in.Preference, &out.Preference
-		*out = new(string)
-		**out = **in
-	}
-	if in.SkipRu != nil {
-		in, out := &in.SkipRu, &out.SkipRu
-		*out = make([]*bool, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(bool)
-				**out = **in
-			}
-		}
-	}
-	if in.WeeksOfMonth != nil {
-		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsInitParameters.
-func (in *DbSystemMaintenanceWindowDetailsInitParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsMonthsInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsMonthsInitParameters) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsMonthsInitParameters.
-func (in *DbSystemMaintenanceWindowDetailsMonthsInitParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsMonthsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsMonthsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsMonthsObservation) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsMonthsObservation) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsMonthsObservation.
-func (in *DbSystemMaintenanceWindowDetailsMonthsObservation) DeepCopy() *DbSystemMaintenanceWindowDetailsMonthsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsMonthsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsMonthsParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsMonthsParameters) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsMonthsParameters.
-func (in *DbSystemMaintenanceWindowDetailsMonthsParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsMonthsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsMonthsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsObservation) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsObservation) {
-	*out = *in
-	if in.CustomActionTimeoutInMins != nil {
-		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DaysOfWeek != nil {
-		in, out := &in.DaysOfWeek, &out.DaysOfWeek
-		*out = make([]DbSystemMaintenanceWindowDetailsDaysOfWeekObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.HoursOfDay != nil {
-		in, out := &in.HoursOfDay, &out.HoursOfDay
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-	if in.IsCustomActionTimeoutEnabled != nil {
-		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsMonthlyPatchingEnabled != nil {
-		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.LeadTimeInWeeks != nil {
-		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
-		*out = new(float64)
-		**out = **in
-	}
-	if in.Months != nil {
-		in, out := &in.Months, &out.Months
-		*out = make([]DbSystemMaintenanceWindowDetailsMonthsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.PatchingMode != nil {
-		in, out := &in.PatchingMode, &out.PatchingMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.Preference != nil {
-		in, out := &in.Preference, &out.Preference
-		*out = new(string)
-		**out = **in
-	}
-	if in.SkipRu != nil {
-		in, out := &in.SkipRu, &out.SkipRu
-		*out = make([]*bool, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(bool)
-				**out = **in
-			}
-		}
-	}
-	if in.WeeksOfMonth != nil {
-		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsObservation.
-func (in *DbSystemMaintenanceWindowDetailsObservation) DeepCopy() *DbSystemMaintenanceWindowDetailsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowDetailsParameters) DeepCopyInto(out *DbSystemMaintenanceWindowDetailsParameters) {
-	*out = *in
-	if in.CustomActionTimeoutInMins != nil {
-		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DaysOfWeek != nil {
-		in, out := &in.DaysOfWeek, &out.DaysOfWeek
-		*out = make([]DbSystemMaintenanceWindowDetailsDaysOfWeekParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.HoursOfDay != nil {
-		in, out := &in.HoursOfDay, &out.HoursOfDay
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-	if in.IsCustomActionTimeoutEnabled != nil {
-		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsMonthlyPatchingEnabled != nil {
-		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.LeadTimeInWeeks != nil {
-		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
-		*out = new(float64)
-		**out = **in
-	}
-	if in.Months != nil {
-		in, out := &in.Months, &out.Months
-		*out = make([]DbSystemMaintenanceWindowDetailsMonthsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.PatchingMode != nil {
-		in, out := &in.PatchingMode, &out.PatchingMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.Preference != nil {
-		in, out := &in.Preference, &out.Preference
-		*out = new(string)
-		**out = **in
-	}
-	if in.SkipRu != nil {
-		in, out := &in.SkipRu, &out.SkipRu
-		*out = make([]*bool, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(bool)
-				**out = **in
-			}
-		}
-	}
-	if in.WeeksOfMonth != nil {
-		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowDetailsParameters.
-func (in *DbSystemMaintenanceWindowDetailsParameters) DeepCopy() *DbSystemMaintenanceWindowDetailsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowDetailsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowInitParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowInitParameters.
-func (in *DbSystemMaintenanceWindowInitParameters) DeepCopy() *DbSystemMaintenanceWindowInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowMonthsInitParameters) DeepCopyInto(out *DbSystemMaintenanceWindowMonthsInitParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowMonthsInitParameters.
-func (in *DbSystemMaintenanceWindowMonthsInitParameters) DeepCopy() *DbSystemMaintenanceWindowMonthsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowMonthsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowMonthsObservation) DeepCopyInto(out *DbSystemMaintenanceWindowMonthsObservation) {
-	*out = *in
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowMonthsObservation.
-func (in *DbSystemMaintenanceWindowMonthsObservation) DeepCopy() *DbSystemMaintenanceWindowMonthsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowMonthsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowMonthsParameters) DeepCopyInto(out *DbSystemMaintenanceWindowMonthsParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowMonthsParameters.
-func (in *DbSystemMaintenanceWindowMonthsParameters) DeepCopy() *DbSystemMaintenanceWindowMonthsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowMonthsParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowObservation) DeepCopyInto(out *DbSystemMaintenanceWindowObservation) {
-	*out = *in
-	if in.CustomActionTimeoutInMins != nil {
-		in, out := &in.CustomActionTimeoutInMins, &out.CustomActionTimeoutInMins
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DaysOfWeek != nil {
-		in, out := &in.DaysOfWeek, &out.DaysOfWeek
-		*out = make([]DbSystemMaintenanceWindowDaysOfWeekObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.HoursOfDay != nil {
-		in, out := &in.HoursOfDay, &out.HoursOfDay
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-	if in.IsCustomActionTimeoutEnabled != nil {
-		in, out := &in.IsCustomActionTimeoutEnabled, &out.IsCustomActionTimeoutEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.IsMonthlyPatchingEnabled != nil {
-		in, out := &in.IsMonthlyPatchingEnabled, &out.IsMonthlyPatchingEnabled
-		*out = new(bool)
-		**out = **in
-	}
-	if in.LeadTimeInWeeks != nil {
-		in, out := &in.LeadTimeInWeeks, &out.LeadTimeInWeeks
-		*out = new(float64)
-		**out = **in
-	}
-	if in.Months != nil {
-		in, out := &in.Months, &out.Months
-		*out = make([]DbSystemMaintenanceWindowMonthsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.PatchingMode != nil {
-		in, out := &in.PatchingMode, &out.PatchingMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.Preference != nil {
-		in, out := &in.Preference, &out.Preference
-		*out = new(string)
-		**out = **in
-	}
-	if in.SkipRu != nil {
-		in, out := &in.SkipRu, &out.SkipRu
-		*out = make([]*bool, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(bool)
-				**out = **in
-			}
-		}
-	}
-	if in.WeeksOfMonth != nil {
-		in, out := &in.WeeksOfMonth, &out.WeeksOfMonth
-		*out = make([]*float64, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(float64)
-				**out = **in
-			}
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowObservation.
-func (in *DbSystemMaintenanceWindowObservation) DeepCopy() *DbSystemMaintenanceWindowObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemMaintenanceWindowParameters) DeepCopyInto(out *DbSystemMaintenanceWindowParameters) {
-	*out = *in
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemMaintenanceWindowParameters.
-func (in *DbSystemMaintenanceWindowParameters) DeepCopy() *DbSystemMaintenanceWindowParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemMaintenanceWindowParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemObservation) DeepCopyInto(out *DbSystemObservation) {
-	*out = *in
-	if in.AvailabilityDomain != nil {
-		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupNetworkNsgIds != nil {
-		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.BackupSubnetID != nil {
-		in, out := &in.BackupSubnetID, &out.BackupSubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CPUCoreCount != nil {
-		in, out := &in.CPUCoreCount, &out.CPUCoreCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.ClusterName != nil {
-		in, out := &in.ClusterName, &out.ClusterName
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBHome != nil {
-		in, out := &in.DBHome, &out.DBHome
-		*out = make([]DBHomeObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBSystemOptions != nil {
-		in, out := &in.DBSystemOptions, &out.DBSystemOptions
-		*out = make([]DBSystemOptionsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataCollectionOptions != nil {
-		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
-		*out = make([]DbSystemDataCollectionOptionsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataStoragePercentage != nil {
-		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DataStorageSizeInGb != nil {
-		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DatabaseEdition != nil {
-		in, out := &in.DatabaseEdition, &out.DatabaseEdition
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DiskRedundancy != nil {
-		in, out := &in.DiskRedundancy, &out.DiskRedundancy
-		*out = new(string)
-		**out = **in
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.Domain != nil {
-		in, out := &in.Domain, &out.Domain
-		*out = new(string)
-		**out = **in
-	}
-	if in.FaultDomains != nil {
-		in, out := &in.FaultDomains, &out.FaultDomains
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Hostname != nil {
-		in, out := &in.Hostname, &out.Hostname
-		*out = new(string)
-		**out = **in
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-	if in.IormConfigCache != nil {
-		in, out := &in.IormConfigCache, &out.IormConfigCache
-		*out = make([]DbSystemIormConfigCacheObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LastMaintenanceRunID != nil {
-		in, out := &in.LastMaintenanceRunID, &out.LastMaintenanceRunID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LastPatchHistoryEntryID != nil {
-		in, out := &in.LastPatchHistoryEntryID, &out.LastPatchHistoryEntryID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LicenseModel != nil {
-		in, out := &in.LicenseModel, &out.LicenseModel
-		*out = new(string)
-		**out = **in
-	}
-	if in.LifecycleDetails != nil {
-		in, out := &in.LifecycleDetails, &out.LifecycleDetails
-		*out = new(string)
-		**out = **in
-	}
-	if in.ListenerPort != nil {
-		in, out := &in.ListenerPort, &out.ListenerPort
-		*out = new(float64)
-		**out = **in
-	}
-	if in.MaintenanceWindow != nil {
-		in, out := &in.MaintenanceWindow, &out.MaintenanceWindow
-		*out = make([]DbSystemMaintenanceWindowObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.MaintenanceWindowDetails != nil {
-		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
-		*out = make([]DbSystemMaintenanceWindowDetailsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.MemorySizeInGbs != nil {
-		in, out := &in.MemorySizeInGbs, &out.MemorySizeInGbs
-		*out = new(float64)
-		**out = **in
-	}
-	if in.NextMaintenanceRunID != nil {
-		in, out := &in.NextMaintenanceRunID, &out.NextMaintenanceRunID
-		*out = new(string)
-		**out = **in
-	}
-	if in.NodeCount != nil {
-		in, out := &in.NodeCount, &out.NodeCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.NsgIds != nil {
-		in, out := &in.NsgIds, &out.NsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.OsVersion != nil {
-		in, out := &in.OsVersion, &out.OsVersion
-		*out = new(string)
-		**out = **in
-	}
-	if in.PointInTimeDataDiskCloneTimestamp != nil {
-		in, out := &in.PointInTimeDataDiskCloneTimestamp, &out.PointInTimeDataDiskCloneTimestamp
-		*out = new(string)
-		**out = **in
-	}
-	if in.PrivateIP != nil {
-		in, out := &in.PrivateIP, &out.PrivateIP
-		*out = new(string)
-		**out = **in
-	}
-	if in.PrivateIPV6 != nil {
-		in, out := &in.PrivateIPV6, &out.PrivateIPV6
-		*out = new(string)
-		**out = **in
-	}
-	if in.RecoStorageSizeInGb != nil {
-		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.SSHPublicKeys != nil {
-		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.ScanDNSName != nil {
-		in, out := &in.ScanDNSName, &out.ScanDNSName
-		*out = new(string)
-		**out = **in
-	}
-	if in.ScanDNSRecordID != nil {
-		in, out := &in.ScanDNSRecordID, &out.ScanDNSRecordID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ScanIPIds != nil {
-		in, out := &in.ScanIPIds, &out.ScanIPIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.ScanIpv6Ids != nil {
-		in, out := &in.ScanIpv6Ids, &out.ScanIpv6Ids
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.SecurityAttributes != nil {
-		in, out := &in.SecurityAttributes, &out.SecurityAttributes
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Shape != nil {
-		in, out := &in.Shape, &out.Shape
-		*out = new(string)
-		**out = **in
-	}
-	if in.Source != nil {
-		in, out := &in.Source, &out.Source
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBSystemID != nil {
-		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SparseDiskgroup != nil {
-		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
-		*out = new(bool)
-		**out = **in
-	}
-	if in.State != nil {
-		in, out := &in.State, &out.State
-		*out = new(string)
-		**out = **in
-	}
-	if in.StorageVolumePerformanceMode != nil {
-		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.SubnetID != nil {
-		in, out := &in.SubnetID, &out.SubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SystemTags != nil {
-		in, out := &in.SystemTags, &out.SystemTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.TimeCreated != nil {
-		in, out := &in.TimeCreated, &out.TimeCreated
-		*out = new(string)
-		**out = **in
-	}
-	if in.TimeZone != nil {
-		in, out := &in.TimeZone, &out.TimeZone
-		*out = new(string)
-		**out = **in
-	}
-	if in.Version != nil {
-		in, out := &in.Version, &out.Version
-		*out = new(string)
-		**out = **in
-	}
-	if in.VipIds != nil {
-		in, out := &in.VipIds, &out.VipIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.Vipv6Ids != nil {
-		in, out := &in.Vipv6Ids, &out.Vipv6Ids
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.ZoneID != nil {
-		in, out := &in.ZoneID, &out.ZoneID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemObservation.
-func (in *DbSystemObservation) DeepCopy() *DbSystemObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemParameters) DeepCopyInto(out *DbSystemParameters) {
-	*out = *in
-	if in.AvailabilityDomain != nil {
-		in, out := &in.AvailabilityDomain, &out.AvailabilityDomain
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupNetworkNsgIds != nil {
-		in, out := &in.BackupNetworkNsgIds, &out.BackupNetworkNsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.BackupSubnetID != nil {
-		in, out := &in.BackupSubnetID, &out.BackupSubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.BackupSubnetIDRef != nil {
-		in, out := &in.BackupSubnetIDRef, &out.BackupSubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.BackupSubnetIDSelector != nil {
-		in, out := &in.BackupSubnetIDSelector, &out.BackupSubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CPUCoreCount != nil {
-		in, out := &in.CPUCoreCount, &out.CPUCoreCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.ClusterName != nil {
-		in, out := &in.ClusterName, &out.ClusterName
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentID != nil {
-		in, out := &in.CompartmentID, &out.CompartmentID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DBHome != nil {
-		in, out := &in.DBHome, &out.DBHome
-		*out = make([]DBHomeParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DBSystemOptions != nil {
-		in, out := &in.DBSystemOptions, &out.DBSystemOptions
-		*out = make([]DBSystemOptionsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataCollectionOptions != nil {
-		in, out := &in.DataCollectionOptions, &out.DataCollectionOptions
-		*out = make([]DbSystemDataCollectionOptionsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.DataStoragePercentage != nil {
-		in, out := &in.DataStoragePercentage, &out.DataStoragePercentage
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DataStorageSizeInGb != nil {
-		in, out := &in.DataStorageSizeInGb, &out.DataStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.DatabaseEdition != nil {
-		in, out := &in.DatabaseEdition, &out.DatabaseEdition
-		*out = new(string)
-		**out = **in
-	}
-	if in.DefinedTags != nil {
-		in, out := &in.DefinedTags, &out.DefinedTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.DiskRedundancy != nil {
-		in, out := &in.DiskRedundancy, &out.DiskRedundancy
-		*out = new(string)
-		**out = **in
-	}
-	if in.DisplayName != nil {
-		in, out := &in.DisplayName, &out.DisplayName
-		*out = new(string)
-		**out = **in
-	}
-	if in.Domain != nil {
-		in, out := &in.Domain, &out.Domain
-		*out = new(string)
-		**out = **in
-	}
-	if in.FaultDomains != nil {
-		in, out := &in.FaultDomains, &out.FaultDomains
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.FreeformTags != nil {
-		in, out := &in.FreeformTags, &out.FreeformTags
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Hostname != nil {
-		in, out := &in.Hostname, &out.Hostname
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyID != nil {
-		in, out := &in.KMSKeyID, &out.KMSKeyID
-		*out = new(string)
-		**out = **in
-	}
-	if in.KMSKeyVersionID != nil {
-		in, out := &in.KMSKeyVersionID, &out.KMSKeyVersionID
-		*out = new(string)
-		**out = **in
-	}
-	if in.LicenseModel != nil {
-		in, out := &in.LicenseModel, &out.LicenseModel
-		*out = new(string)
-		**out = **in
-	}
-	if in.MaintenanceWindowDetails != nil {
-		in, out := &in.MaintenanceWindowDetails, &out.MaintenanceWindowDetails
-		*out = make([]DbSystemMaintenanceWindowDetailsParameters, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.NodeCount != nil {
-		in, out := &in.NodeCount, &out.NodeCount
-		*out = new(float64)
-		**out = **in
-	}
-	if in.NsgIds != nil {
-		in, out := &in.NsgIds, &out.NsgIds
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.PrivateIP != nil {
-		in, out := &in.PrivateIP, &out.PrivateIP
-		*out = new(string)
-		**out = **in
-	}
-	if in.PrivateIPV6 != nil {
-		in, out := &in.PrivateIPV6, &out.PrivateIPV6
-		*out = new(string)
-		**out = **in
-	}
-	if in.RecoStorageSizeInGb != nil {
-		in, out := &in.RecoStorageSizeInGb, &out.RecoStorageSizeInGb
-		*out = new(float64)
-		**out = **in
-	}
-	if in.SSHPublicKeys != nil {
-		in, out := &in.SSHPublicKeys, &out.SSHPublicKeys
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
-	}
-	if in.SecurityAttributes != nil {
-		in, out := &in.SecurityAttributes, &out.SecurityAttributes
-		*out = make(map[string]*string, len(*in))
-		for key, val := range *in {
-			var outVal *string
-			if val == nil {
-				(*out)[key] = nil
-			} else {
-				inVal := (*in)[key]
-				in, out := &inVal, &outVal
-				*out = new(string)
-				**out = **in
-			}
-			(*out)[key] = outVal
-		}
-	}
-	if in.Shape != nil {
-		in, out := &in.Shape, &out.Shape
-		*out = new(string)
-		**out = **in
-	}
-	if in.Source != nil {
-		in, out := &in.Source, &out.Source
-		*out = new(string)
-		**out = **in
-	}
-	if in.SourceDBSystemID != nil {
-		in, out := &in.SourceDBSystemID, &out.SourceDBSystemID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SparseDiskgroup != nil {
-		in, out := &in.SparseDiskgroup, &out.SparseDiskgroup
-		*out = new(bool)
-		**out = **in
-	}
-	if in.StorageVolumePerformanceMode != nil {
-		in, out := &in.StorageVolumePerformanceMode, &out.StorageVolumePerformanceMode
-		*out = new(string)
-		**out = **in
-	}
-	if in.SubnetID != nil {
-		in, out := &in.SubnetID, &out.SubnetID
-		*out = new(string)
-		**out = **in
-	}
-	if in.SubnetIDRef != nil {
-		in, out := &in.SubnetIDRef, &out.SubnetIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SubnetIDSelector != nil {
-		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.TimeZone != nil {
-		in, out := &in.TimeZone, &out.TimeZone
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemParameters.
-func (in *DbSystemParameters) DeepCopy() *DbSystemParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemSpec) DeepCopyInto(out *DbSystemSpec) {
-	*out = *in
-	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
-	in.ForProvider.DeepCopyInto(&out.ForProvider)
-	in.InitProvider.DeepCopyInto(&out.InitProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemSpec.
-func (in *DbSystemSpec) DeepCopy() *DbSystemSpec {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemSpec)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *DbSystemStatus) DeepCopyInto(out *DbSystemStatus) {
-	*out = *in
-	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
-	in.AtProvider.DeepCopyInto(&out.AtProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DbSystemStatus.
-func (in *DbSystemStatus) DeepCopy() *DbSystemStatus {
-	if in == nil {
-		return nil
-	}
-	out := new(DbSystemStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -40196,16 +39567,6 @@ func (in *ExadataInfrastructureInitParameters) DeepCopyInto(out *ExadataInfrastr
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
 		*out = new(float64)
@@ -41173,16 +40534,6 @@ func (in *ExadataInfrastructureParameters) DeepCopyInto(out *ExadataInfrastructu
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ComputeCount != nil {
 		in, out := &in.ComputeCount, &out.ComputeCount
@@ -47653,16 +47004,6 @@ func (in *ExternalContainerDatabaseInitParameters) DeepCopyInto(out *ExternalCon
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -47904,16 +47245,6 @@ func (in *ExternalContainerDatabaseParameters) DeepCopyInto(out *ExternalContain
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -48077,16 +47408,6 @@ func (in *ExternalDatabaseConnectorInitParameters) DeepCopyInto(out *ExternalDat
 		in, out := &in.ExternalDatabaseID, &out.ExternalDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExternalDatabaseIDRef != nil {
-		in, out := &in.ExternalDatabaseIDRef, &out.ExternalDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExternalDatabaseIDSelector != nil {
-		in, out := &in.ExternalDatabaseIDSelector, &out.ExternalDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -48332,16 +47653,6 @@ func (in *ExternalDatabaseConnectorParameters) DeepCopyInto(out *ExternalDatabas
 		in, out := &in.ExternalDatabaseID, &out.ExternalDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExternalDatabaseIDRef != nil {
-		in, out := &in.ExternalDatabaseIDRef, &out.ExternalDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExternalDatabaseIDSelector != nil {
-		in, out := &in.ExternalDatabaseIDSelector, &out.ExternalDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -55563,16 +54874,6 @@ func (in *ExternalNonContainerDatabaseInitParameters) DeepCopyInto(out *External
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -56010,16 +55311,6 @@ func (in *ExternalNonContainerDatabaseParameters) DeepCopyInto(out *ExternalNonC
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -56254,16 +55545,6 @@ func (in *ExternalPluggableDatabaseInitParameters) DeepCopyInto(out *ExternalPlu
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -56289,16 +55570,6 @@ func (in *ExternalPluggableDatabaseInitParameters) DeepCopyInto(out *ExternalPlu
 		in, out := &in.ExternalContainerDatabaseID, &out.ExternalContainerDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExternalContainerDatabaseIDRef != nil {
-		in, out := &in.ExternalContainerDatabaseIDRef, &out.ExternalContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExternalContainerDatabaseIDSelector != nil {
-		in, out := &in.ExternalContainerDatabaseIDSelector, &out.ExternalContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -56786,16 +56057,6 @@ func (in *ExternalPluggableDatabaseParameters) DeepCopyInto(out *ExternalPluggab
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -56821,16 +56082,6 @@ func (in *ExternalPluggableDatabaseParameters) DeepCopyInto(out *ExternalPluggab
 		in, out := &in.ExternalContainerDatabaseID, &out.ExternalContainerDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExternalContainerDatabaseIDRef != nil {
-		in, out := &in.ExternalContainerDatabaseIDRef, &out.ExternalContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExternalContainerDatabaseIDSelector != nil {
-		in, out := &in.ExternalContainerDatabaseIDSelector, &out.ExternalContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -61051,16 +60302,6 @@ func (in *KeyStoreInitParameters) DeepCopyInto(out *KeyStoreInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ConfirmDetailsTrigger != nil {
 		in, out := &in.ConfirmDetailsTrigger, &out.ConfirmDetailsTrigger
 		*out = new(float64)
@@ -61273,16 +60514,6 @@ func (in *KeyStoreParameters) DeepCopyInto(out *KeyStoreParameters) {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ConfirmDetailsTrigger != nil {
 		in, out := &in.ConfirmDetailsTrigger, &out.ConfirmDetailsTrigger
@@ -61952,16 +61183,6 @@ func (in *MaintenanceRunInitParameters) DeepCopyInto(out *MaintenanceRunInitPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DatabaseSoftwareImageID != nil {
 		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
 		*out = new(string)
@@ -62252,16 +61473,6 @@ func (in *MaintenanceRunParameters) DeepCopyInto(out *MaintenanceRunParameters) 
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
-	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.DatabaseSoftwareImageID != nil {
 		in, out := &in.DatabaseSoftwareImageID, &out.DatabaseSoftwareImageID
@@ -64881,33 +64092,6 @@ func (in *MetadataRemapsParameters) DeepCopy() *MetadataRemapsParameters {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *Migration) DeepCopyInto(out *Migration) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
-	in.Spec.DeepCopyInto(&out.Spec)
-	in.Status.DeepCopyInto(&out.Status)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new Migration.
-func (in *Migration) DeepCopy() *Migration {
-	if in == nil {
-		return nil
-	}
-	out := new(Migration)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *Migration) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *MigrationConnection) DeepCopyInto(out *MigrationConnection) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
@@ -65672,26 +64856,6 @@ func (in *MigrationConnectionStatus) DeepCopy() *MigrationConnectionStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationInitParameters) DeepCopyInto(out *MigrationInitParameters) {
-	*out = *in
-	if in.DBSystemID != nil {
-		in, out := &in.DBSystemID, &out.DBSystemID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationInitParameters.
-func (in *MigrationInitParameters) DeepCopy() *MigrationInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *MigrationJob) DeepCopyInto(out *MigrationJob) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
@@ -66048,38 +65212,6 @@ func (in *MigrationJobStatus) DeepCopy() *MigrationJobStatus {
 	out := new(MigrationJobStatus)
 	in.DeepCopyInto(out)
 	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationList) DeepCopyInto(out *MigrationList) {
-	*out = *in
-	out.TypeMeta = in.TypeMeta
-	in.ListMeta.DeepCopyInto(&out.ListMeta)
-	if in.Items != nil {
-		in, out := &in.Items, &out.Items
-		*out = make([]Migration, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationList.
-func (in *MigrationList) DeepCopy() *MigrationList {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationList)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
-func (in *MigrationList) DeepCopyObject() runtime.Object {
-	if c := in.DeepCopy(); c != nil {
-		return c
-	}
-	return nil
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
@@ -66687,103 +65819,6 @@ func (in *MigrationMigrationStatus) DeepCopy() *MigrationMigrationStatus {
 		return nil
 	}
 	out := new(MigrationMigrationStatus)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationObservation) DeepCopyInto(out *MigrationObservation) {
-	*out = *in
-	if in.AdditionalMigrations != nil {
-		in, out := &in.AdditionalMigrations, &out.AdditionalMigrations
-		*out = make([]AdditionalMigrationsObservation, len(*in))
-		for i := range *in {
-			(*in)[i].DeepCopyInto(&(*out)[i])
-		}
-	}
-	if in.CloudExadataInfrastructureID != nil {
-		in, out := &in.CloudExadataInfrastructureID, &out.CloudExadataInfrastructureID
-		*out = new(string)
-		**out = **in
-	}
-	if in.CloudVMClusterID != nil {
-		in, out := &in.CloudVMClusterID, &out.CloudVMClusterID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DBSystemID != nil {
-		in, out := &in.DBSystemID, &out.DBSystemID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ID != nil {
-		in, out := &in.ID, &out.ID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationObservation.
-func (in *MigrationObservation) DeepCopy() *MigrationObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationParameters) DeepCopyInto(out *MigrationParameters) {
-	*out = *in
-	if in.DBSystemID != nil {
-		in, out := &in.DBSystemID, &out.DBSystemID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationParameters.
-func (in *MigrationParameters) DeepCopy() *MigrationParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationSpec) DeepCopyInto(out *MigrationSpec) {
-	*out = *in
-	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
-	in.ForProvider.DeepCopyInto(&out.ForProvider)
-	in.InitProvider.DeepCopyInto(&out.InitProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationSpec.
-func (in *MigrationSpec) DeepCopy() *MigrationSpec {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationSpec)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MigrationStatus) DeepCopyInto(out *MigrationStatus) {
-	*out = *in
-	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
-	in.AtProvider.DeepCopyInto(&out.AtProvider)
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MigrationStatus.
-func (in *MigrationStatus) DeepCopy() *MigrationStatus {
-	if in == nil {
-		return nil
-	}
-	out := new(MigrationStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -69936,16 +68971,6 @@ func (in *PluggableDatabaseInitParameters) DeepCopyInto(out *PluggableDatabaseIn
 		*out = new(string)
 		**out = **in
 	}
-	if in.ContainerDatabaseIDRef != nil {
-		in, out := &in.ContainerDatabaseIDRef, &out.ContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ContainerDatabaseIDSelector != nil {
-		in, out := &in.ContainerDatabaseIDSelector, &out.ContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ConvertToRegularTrigger != nil {
 		in, out := &in.ConvertToRegularTrigger, &out.ConvertToRegularTrigger
 		*out = new(float64)
@@ -70309,16 +69334,6 @@ func (in *PluggableDatabaseParameters) DeepCopyInto(out *PluggableDatabaseParame
 		in, out := &in.ContainerDatabaseID, &out.ContainerDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ContainerDatabaseIDRef != nil {
-		in, out := &in.ContainerDatabaseIDRef, &out.ContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ContainerDatabaseIDSelector != nil {
-		in, out := &in.ContainerDatabaseIDSelector, &out.ContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ConvertToRegularTrigger != nil {
 		in, out := &in.ConvertToRegularTrigger, &out.ConvertToRegularTrigger
@@ -72064,16 +71079,6 @@ func (in *PluggableDatabasesRemoteCloneInitParameters) DeepCopyInto(out *Pluggab
 		*out = new(string)
 		**out = **in
 	}
-	if in.PluggableDatabaseIDRef != nil {
-		in, out := &in.PluggableDatabaseIDRef, &out.PluggableDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.PluggableDatabaseIDSelector != nil {
-		in, out := &in.PluggableDatabaseIDSelector, &out.PluggableDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ShouldPdbAdminAccountBeLocked != nil {
 		in, out := &in.ShouldPdbAdminAccountBeLocked, &out.ShouldPdbAdminAccountBeLocked
 		*out = new(bool)
@@ -72084,16 +71089,6 @@ func (in *PluggableDatabasesRemoteCloneInitParameters) DeepCopyInto(out *Pluggab
 		in, out := &in.TargetContainerDatabaseID, &out.TargetContainerDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.TargetContainerDatabaseIDRef != nil {
-		in, out := &in.TargetContainerDatabaseIDRef, &out.TargetContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.TargetContainerDatabaseIDSelector != nil {
-		in, out := &in.TargetContainerDatabaseIDSelector, &out.TargetContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.TargetTdeWalletPasswordSecretRef != nil {
 		in, out := &in.TargetTdeWalletPasswordSecretRef, &out.TargetTdeWalletPasswordSecretRef
@@ -72318,16 +71313,6 @@ func (in *PluggableDatabasesRemoteCloneParameters) DeepCopyInto(out *PluggableDa
 		*out = new(string)
 		**out = **in
 	}
-	if in.PluggableDatabaseIDRef != nil {
-		in, out := &in.PluggableDatabaseIDRef, &out.PluggableDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.PluggableDatabaseIDSelector != nil {
-		in, out := &in.PluggableDatabaseIDSelector, &out.PluggableDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ShouldPdbAdminAccountBeLocked != nil {
 		in, out := &in.ShouldPdbAdminAccountBeLocked, &out.ShouldPdbAdminAccountBeLocked
 		*out = new(bool)
@@ -72338,16 +71323,6 @@ func (in *PluggableDatabasesRemoteCloneParameters) DeepCopyInto(out *PluggableDa
 		in, out := &in.TargetContainerDatabaseID, &out.TargetContainerDatabaseID
 		*out = new(string)
 		**out = **in
-	}
-	if in.TargetContainerDatabaseIDRef != nil {
-		in, out := &in.TargetContainerDatabaseIDRef, &out.TargetContainerDatabaseIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.TargetContainerDatabaseIDSelector != nil {
-		in, out := &in.TargetContainerDatabaseIDSelector, &out.TargetContainerDatabaseIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.TargetTdeWalletPasswordSecretRef != nil {
 		in, out := &in.TargetTdeWalletPasswordSecretRef, &out.TargetTdeWalletPasswordSecretRef
@@ -76319,6 +75294,451 @@ func (in *ServicedDatabasesParameters) DeepCopy() *ServicedDatabasesParameters {
 		return nil
 	}
 	out := new(ServicedDatabasesParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImage) DeepCopyInto(out *SoftwareImage) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImage.
+func (in *SoftwareImage) DeepCopy() *SoftwareImage {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImage)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *SoftwareImage) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageInitParameters) DeepCopyInto(out *SoftwareImageInitParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageOneOffPatches != nil {
+		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.DatabaseVersion != nil {
+		in, out := &in.DatabaseVersion, &out.DatabaseVersion
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ImageShapeFamily != nil {
+		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageType != nil {
+		in, out := &in.ImageType, &out.ImageType
+		*out = new(string)
+		**out = **in
+	}
+	if in.LsInventory != nil {
+		in, out := &in.LsInventory, &out.LsInventory
+		*out = new(string)
+		**out = **in
+	}
+	if in.PatchSet != nil {
+		in, out := &in.PatchSet, &out.PatchSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBHomeID != nil {
+		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageInitParameters.
+func (in *SoftwareImageInitParameters) DeepCopy() *SoftwareImageInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageList) DeepCopyInto(out *SoftwareImageList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]SoftwareImage, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageList.
+func (in *SoftwareImageList) DeepCopy() *SoftwareImageList {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *SoftwareImageList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageObservation) DeepCopyInto(out *SoftwareImageObservation) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageIncludedPatches != nil {
+		in, out := &in.DatabaseSoftwareImageIncludedPatches, &out.DatabaseSoftwareImageIncludedPatches
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.DatabaseSoftwareImageOneOffPatches != nil {
+		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.DatabaseVersion != nil {
+		in, out := &in.DatabaseVersion, &out.DatabaseVersion
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageShapeFamily != nil {
+		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageType != nil {
+		in, out := &in.ImageType, &out.ImageType
+		*out = new(string)
+		**out = **in
+	}
+	if in.IncludedPatchesSummary != nil {
+		in, out := &in.IncludedPatchesSummary, &out.IncludedPatchesSummary
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsUpgradeSupported != nil {
+		in, out := &in.IsUpgradeSupported, &out.IsUpgradeSupported
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LifecycleDetails != nil {
+		in, out := &in.LifecycleDetails, &out.LifecycleDetails
+		*out = new(string)
+		**out = **in
+	}
+	if in.LsInventory != nil {
+		in, out := &in.LsInventory, &out.LsInventory
+		*out = new(string)
+		**out = **in
+	}
+	if in.PatchSet != nil {
+		in, out := &in.PatchSet, &out.PatchSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBHomeID != nil {
+		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
+		*out = new(string)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.SystemTags != nil {
+		in, out := &in.SystemTags, &out.SystemTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.TimeCreated != nil {
+		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageObservation.
+func (in *SoftwareImageObservation) DeepCopy() *SoftwareImageObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageParameters) DeepCopyInto(out *SoftwareImageParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatabaseSoftwareImageOneOffPatches != nil {
+		in, out := &in.DatabaseSoftwareImageOneOffPatches, &out.DatabaseSoftwareImageOneOffPatches
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.DatabaseVersion != nil {
+		in, out := &in.DatabaseVersion, &out.DatabaseVersion
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ImageShapeFamily != nil {
+		in, out := &in.ImageShapeFamily, &out.ImageShapeFamily
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImageType != nil {
+		in, out := &in.ImageType, &out.ImageType
+		*out = new(string)
+		**out = **in
+	}
+	if in.LsInventory != nil {
+		in, out := &in.LsInventory, &out.LsInventory
+		*out = new(string)
+		**out = **in
+	}
+	if in.PatchSet != nil {
+		in, out := &in.PatchSet, &out.PatchSet
+		*out = new(string)
+		**out = **in
+	}
+	if in.SourceDBHomeID != nil {
+		in, out := &in.SourceDBHomeID, &out.SourceDBHomeID
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageParameters.
+func (in *SoftwareImageParameters) DeepCopy() *SoftwareImageParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageSpec) DeepCopyInto(out *SoftwareImageSpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageSpec.
+func (in *SoftwareImageSpec) DeepCopy() *SoftwareImageSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *SoftwareImageStatus) DeepCopyInto(out *SoftwareImageStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new SoftwareImageStatus.
+func (in *SoftwareImageStatus) DeepCopy() *SoftwareImageStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(SoftwareImageStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -81099,16 +80519,6 @@ func (in *VmClusterInitParameters) DeepCopyInto(out *VmClusterInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DBNodeStorageSizeInGbs != nil {
 		in, out := &in.DBNodeStorageSizeInGbs, &out.DBNodeStorageSizeInGbs
 		*out = new(float64)
@@ -81167,16 +80577,6 @@ func (in *VmClusterInitParameters) DeepCopyInto(out *VmClusterInitParameters) {
 		in, out := &in.ExadataInfrastructureID, &out.ExadataInfrastructureID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExadataInfrastructureIDRef != nil {
-		in, out := &in.ExadataInfrastructureIDRef, &out.ExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExadataInfrastructureIDSelector != nil {
-		in, out := &in.ExadataInfrastructureIDSelector, &out.ExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ExascaleDBStorageVaultID != nil {
 		in, out := &in.ExascaleDBStorageVaultID, &out.ExascaleDBStorageVaultID
@@ -81351,16 +80751,6 @@ func (in *VmClusterNetworkInitParameters) DeepCopyInto(out *VmClusterNetworkInit
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DNS != nil {
 		in, out := &in.DNS, &out.DNS
 		*out = make([]*string, len(*in))
@@ -81404,16 +80794,6 @@ func (in *VmClusterNetworkInitParameters) DeepCopyInto(out *VmClusterNetworkInit
 		in, out := &in.ExadataInfrastructureID, &out.ExadataInfrastructureID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExadataInfrastructureIDRef != nil {
-		in, out := &in.ExadataInfrastructureIDRef, &out.ExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExadataInfrastructureIDSelector != nil {
-		in, out := &in.ExadataInfrastructureIDSelector, &out.ExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -81674,16 +81054,6 @@ func (in *VmClusterNetworkParameters) DeepCopyInto(out *VmClusterNetworkParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DNS != nil {
 		in, out := &in.DNS, &out.DNS
 		*out = make([]*string, len(*in))
@@ -81727,16 +81097,6 @@ func (in *VmClusterNetworkParameters) DeepCopyInto(out *VmClusterNetworkParamete
 		in, out := &in.ExadataInfrastructureID, &out.ExadataInfrastructureID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExadataInfrastructureIDRef != nil {
-		in, out := &in.ExadataInfrastructureIDRef, &out.ExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExadataInfrastructureIDSelector != nil {
-		in, out := &in.ExadataInfrastructureIDSelector, &out.ExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -82102,16 +81462,6 @@ func (in *VmClusterParameters) DeepCopyInto(out *VmClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.CompartmentIDRef != nil {
-		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.CompartmentIDSelector != nil {
-		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DBNodeStorageSizeInGbs != nil {
 		in, out := &in.DBNodeStorageSizeInGbs, &out.DBNodeStorageSizeInGbs
 		*out = new(float64)
@@ -82170,16 +81520,6 @@ func (in *VmClusterParameters) DeepCopyInto(out *VmClusterParameters) {
 		in, out := &in.ExadataInfrastructureID, &out.ExadataInfrastructureID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ExadataInfrastructureIDRef != nil {
-		in, out := &in.ExadataInfrastructureIDRef, &out.ExadataInfrastructureIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ExadataInfrastructureIDSelector != nil {
-		in, out := &in.ExadataInfrastructureIDSelector, &out.ExadataInfrastructureIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ExascaleDBStorageVaultID != nil {
 		in, out := &in.ExascaleDBStorageVaultID, &out.ExascaleDBStorageVaultID

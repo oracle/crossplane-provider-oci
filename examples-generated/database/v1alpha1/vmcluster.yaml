@@ -17,9 +17,7 @@ spec:
         freezePeriodStartTime: ${var.vm_cluster_cloud_automation_update_details_freeze_period_freeze_period_start_time}
       isEarlyAdoptionEnabled: ${var.vm_cluster_cloud_automation_update_details_is_early_adoption_enabled}
       isFreezePeriodEnabled: ${var.vm_cluster_cloud_automation_update_details_is_freeze_period_enabled}
-    compartmentIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    compartmentId: ${var.compartment_id}
     cpuCoreCount: ${var.vm_cluster_cpu_core_count}
     dataCollectionOptions:
     - isDiagnosticsEventsEnabled: ${var.vm_cluster_data_collection_options_is_diagnostics_events_enabled}
@@ -30,9 +28,7 @@ spec:
     dbServers: ${var.vm_cluster_db_servers}
     definedTags: ${var.vm_cluster_defined_tags}
     displayName: ${var.vm_cluster_display_name}
-    exadataInfrastructureIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_exadata_infrastructure
+    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
     exascaleDbStorageVaultId: ${oci_database_exascale_db_storage_vault.test_exascale_db_storage_vault.id}
     fileSystemConfigurationDetails:
     - fileSystemSizeGb: ${var.vm_cluster_file_system_configuration_details_file_system_size_gb}

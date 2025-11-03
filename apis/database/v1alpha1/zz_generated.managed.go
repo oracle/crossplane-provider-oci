@@ -1147,66 +1147,6 @@ func (mg *AutonomousVmClusterSslCertificateManagement) SetWriteConnectionSecretT
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this Backup.
-func (mg *Backup) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this Backup.
-func (mg *Backup) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetManagementPolicies of this Backup.
-func (mg *Backup) GetManagementPolicies() xpv1.ManagementPolicies {
-	return mg.Spec.ManagementPolicies
-}
-
-// GetProviderConfigReference of this Backup.
-func (mg *Backup) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Backup.
-func (mg *Backup) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
-// GetWriteConnectionSecretToReference of this Backup.
-func (mg *Backup) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this Backup.
-func (mg *Backup) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this Backup.
-func (mg *Backup) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetManagementPolicies of this Backup.
-func (mg *Backup) SetManagementPolicies(r xpv1.ManagementPolicies) {
-	mg.Spec.ManagementPolicies = r
-}
-
-// SetProviderConfigReference of this Backup.
-func (mg *Backup) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Backup.
-func (mg *Backup) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
-// SetWriteConnectionSecretToReference of this Backup.
-func (mg *Backup) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
 // GetCondition of this BackupCancelManagement.
 func (mg *BackupCancelManagement) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -2347,63 +2287,123 @@ func (mg *CloudVmClusterIormConfig) SetWriteConnectionSecretToReference(r *xpv1.
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this Database.
-func (mg *Database) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this DatabaseBackup.
+func (mg *DatabaseBackup) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this Database.
-func (mg *Database) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this DatabaseBackup.
+func (mg *DatabaseBackup) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicies of this Database.
-func (mg *Database) GetManagementPolicies() xpv1.ManagementPolicies {
+// GetManagementPolicies of this DatabaseBackup.
+func (mg *DatabaseBackup) GetManagementPolicies() xpv1.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
-// GetProviderConfigReference of this Database.
-func (mg *Database) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this DatabaseBackup.
+func (mg *DatabaseBackup) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this Database.
-func (mg *Database) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this DatabaseBackup.
+func (mg *DatabaseBackup) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this Database.
-func (mg *Database) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this DatabaseBackup.
+func (mg *DatabaseBackup) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this Database.
-func (mg *Database) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this DatabaseBackup.
+func (mg *DatabaseBackup) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this Database.
-func (mg *Database) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this DatabaseBackup.
+func (mg *DatabaseBackup) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicies of this Database.
-func (mg *Database) SetManagementPolicies(r xpv1.ManagementPolicies) {
+// SetManagementPolicies of this DatabaseBackup.
+func (mg *DatabaseBackup) SetManagementPolicies(r xpv1.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
-// SetProviderConfigReference of this Database.
-func (mg *Database) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this DatabaseBackup.
+func (mg *DatabaseBackup) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this Database.
-func (mg *Database) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this DatabaseBackup.
+func (mg *DatabaseBackup) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this Database.
-func (mg *Database) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this DatabaseBackup.
+func (mg *DatabaseBackup) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this DatabaseDbSystem.
+func (mg *DatabaseDbSystem) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -2467,63 +2467,123 @@ func (mg *DatabaseDbmFeatMgmt) SetWriteConnectionSecretToReference(r *xpv1.Secre
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this DatabaseMigration.
+func (mg *DatabaseMigration) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this DatabaseMigration.
+func (mg *DatabaseMigration) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicies of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetManagementPolicies() xpv1.ManagementPolicies {
+// GetManagementPolicies of this DatabaseMigration.
+func (mg *DatabaseMigration) GetManagementPolicies() xpv1.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
-// GetProviderConfigReference of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this DatabaseMigration.
+func (mg *DatabaseMigration) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+// GetPublishConnectionDetailsTo of this DatabaseMigration.
+func (mg *DatabaseMigration) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
 }
 
-// GetWriteConnectionSecretToReference of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this DatabaseMigration.
+func (mg *DatabaseMigration) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this DatabaseMigration.
+func (mg *DatabaseMigration) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this DatabaseMigration.
+func (mg *DatabaseMigration) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicies of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetManagementPolicies(r xpv1.ManagementPolicies) {
+// SetManagementPolicies of this DatabaseMigration.
+func (mg *DatabaseMigration) SetManagementPolicies(r xpv1.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
-// SetProviderConfigReference of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this DatabaseMigration.
+func (mg *DatabaseMigration) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+// SetPublishConnectionDetailsTo of this DatabaseMigration.
+func (mg *DatabaseMigration) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
 	mg.Spec.PublishConnectionDetailsTo = r
 }
 
-// SetWriteConnectionSecretToReference of this DatabaseSoftwareImage.
-func (mg *DatabaseSoftwareImage) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this DatabaseMigration.
+func (mg *DatabaseMigration) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this DatabaseResource.
+func (mg *DatabaseResource) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this DatabaseResource.
+func (mg *DatabaseResource) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this DatabaseResource.
+func (mg *DatabaseResource) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this DatabaseResource.
+func (mg *DatabaseResource) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this DatabaseResource.
+func (mg *DatabaseResource) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this DatabaseResource.
+func (mg *DatabaseResource) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this DatabaseResource.
+func (mg *DatabaseResource) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this DatabaseResource.
+func (mg *DatabaseResource) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this DatabaseResource.
+func (mg *DatabaseResource) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this DatabaseResource.
+func (mg *DatabaseResource) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this DatabaseResource.
+func (mg *DatabaseResource) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this DatabaseResource.
+func (mg *DatabaseResource) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -2824,66 +2884,6 @@ func (mg *DbNodeConsoleHistory) SetPublishConnectionDetailsTo(r *xpv1.PublishCon
 
 // SetWriteConnectionSecretToReference of this DbNodeConsoleHistory.
 func (mg *DbNodeConsoleHistory) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
-// GetCondition of this DbSystem.
-func (mg *DbSystem) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this DbSystem.
-func (mg *DbSystem) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetManagementPolicies of this DbSystem.
-func (mg *DbSystem) GetManagementPolicies() xpv1.ManagementPolicies {
-	return mg.Spec.ManagementPolicies
-}
-
-// GetProviderConfigReference of this DbSystem.
-func (mg *DbSystem) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this DbSystem.
-func (mg *DbSystem) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
-// GetWriteConnectionSecretToReference of this DbSystem.
-func (mg *DbSystem) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this DbSystem.
-func (mg *DbSystem) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this DbSystem.
-func (mg *DbSystem) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetManagementPolicies of this DbSystem.
-func (mg *DbSystem) SetManagementPolicies(r xpv1.ManagementPolicies) {
-	mg.Spec.ManagementPolicies = r
-}
-
-// SetProviderConfigReference of this DbSystem.
-func (mg *DbSystem) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this DbSystem.
-func (mg *DbSystem) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
-// SetWriteConnectionSecretToReference of this DbSystem.
-func (mg *DbSystem) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -5947,66 +5947,6 @@ func (mg *ManagedDatabasesResetDatabaseParameter) SetWriteConnectionSecretToRefe
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this Migration.
-func (mg *Migration) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this Migration.
-func (mg *Migration) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetManagementPolicies of this Migration.
-func (mg *Migration) GetManagementPolicies() xpv1.ManagementPolicies {
-	return mg.Spec.ManagementPolicies
-}
-
-// GetProviderConfigReference of this Migration.
-func (mg *Migration) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Migration.
-func (mg *Migration) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
-// GetWriteConnectionSecretToReference of this Migration.
-func (mg *Migration) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this Migration.
-func (mg *Migration) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this Migration.
-func (mg *Migration) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetManagementPolicies of this Migration.
-func (mg *Migration) SetManagementPolicies(r xpv1.ManagementPolicies) {
-	mg.Spec.ManagementPolicies = r
-}
-
-// SetProviderConfigReference of this Migration.
-func (mg *Migration) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Migration.
-func (mg *Migration) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
-// SetWriteConnectionSecretToReference of this Migration.
-func (mg *Migration) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
 // GetCondition of this MigrationConnection.
 func (mg *MigrationConnection) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -6844,6 +6784,66 @@ func (mg *SchedulingPolicySchedulingWindow) SetPublishConnectionDetailsTo(r *xpv
 
 // SetWriteConnectionSecretToReference of this SchedulingPolicySchedulingWindow.
 func (mg *SchedulingPolicySchedulingWindow) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SoftwareImage.
+func (mg *SoftwareImage) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SoftwareImage.
+func (mg *SoftwareImage) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SoftwareImage.
+func (mg *SoftwareImage) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SoftwareImage.
+func (mg *SoftwareImage) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this SoftwareImage.
+func (mg *SoftwareImage) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this SoftwareImage.
+func (mg *SoftwareImage) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SoftwareImage.
+func (mg *SoftwareImage) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SoftwareImage.
+func (mg *SoftwareImage) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SoftwareImage.
+func (mg *SoftwareImage) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SoftwareImage.
+func (mg *SoftwareImage) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this SoftwareImage.
+func (mg *SoftwareImage) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this SoftwareImage.
+func (mg *SoftwareImage) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

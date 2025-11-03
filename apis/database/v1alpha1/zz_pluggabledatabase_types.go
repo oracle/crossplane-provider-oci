@@ -126,16 +126,7 @@ type PluggableDatabaseInitParameters struct {
 	ContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"containerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the CDB
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
 	ContainerDatabaseID *string `json:"containerDatabaseId,omitempty" tf:"container_database_id,omitempty"`
-
-	// Reference to a Database in database to populate containerDatabaseId.
-	// +kubebuilder:validation:Optional
-	ContainerDatabaseIDRef *v1.Reference `json:"containerDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a Database in database to populate containerDatabaseId.
-	// +kubebuilder:validation:Optional
-	ContainerDatabaseIDSelector *v1.Selector `json:"containerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Convert To Regular. Could be set to any integer value.
 	ConvertToRegularTrigger *float64 `json:"convertToRegularTrigger,omitempty" tf:"convert_to_regular_trigger,omitempty"`
@@ -270,17 +261,8 @@ type PluggableDatabaseParameters struct {
 	ContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"containerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the CDB
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
 	// +kubebuilder:validation:Optional
 	ContainerDatabaseID *string `json:"containerDatabaseId,omitempty" tf:"container_database_id,omitempty"`
-
-	// Reference to a Database in database to populate containerDatabaseId.
-	// +kubebuilder:validation:Optional
-	ContainerDatabaseIDRef *v1.Reference `json:"containerDatabaseIdRef,omitempty" tf:"-"`
-
-	// Selector for a Database in database to populate containerDatabaseId.
-	// +kubebuilder:validation:Optional
-	ContainerDatabaseIDSelector *v1.Selector `json:"containerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Convert To Regular. Could be set to any integer value.
 	// +kubebuilder:validation:Optional
@@ -400,6 +382,7 @@ type PluggableDatabaseStatus struct {
 type PluggableDatabase struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.containerDatabaseId) || (has(self.initProvider) && has(self.initProvider.containerDatabaseId))",message="spec.forProvider.containerDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pdbName) || (has(self.initProvider) && has(self.initProvider.pdbName))",message="spec.forProvider.pdbName is a required parameter"
 	Spec   PluggableDatabaseSpec   `json:"spec"`
 	Status PluggableDatabaseStatus `json:"status,omitempty"`
