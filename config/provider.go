@@ -27,7 +27,6 @@ import (
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
-	"github.com/oracle/provider-oci/config/database"
 	"github.com/oracle/provider-oci/config/dns"
 	"github.com/oracle/provider-oci/config/events"
 	"github.com/oracle/provider-oci/config/filestorage"
@@ -79,7 +78,6 @@ func GetProvider() *ujconfig.Provider {
 		objectstorage.Configure,
 		identity.Configure,
 		core.Configure,
-		database.Configure, // NEW: Database service with 122 resources
 		kms.Configure,
 		containerengine.Configure,
 		artifacts.Configure,
