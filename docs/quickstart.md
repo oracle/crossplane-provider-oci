@@ -12,16 +12,17 @@ The first provider installed of a family also installs an extra provider-family 
 > [!NOTE]
 > Always install the family provider first to ensure anticipated/right version of image is pulled. Installing sub-provider first creates a missing dependency issue, which the crossplane package-manager always resolves by pulling latest family provider image. It might lead to unexpected behavior. 
  
+> [!IMPORTANT]
+> Adhere to the following naming format for providers as: `(organization)-(provider-name)`, eg: oracle-samples-provider-family-oci. 
+> When pulling the image from a registry, crossplane formats the name as `registry.io/organization/provider-name:tags`, eg: ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64.
+> Crossplane behavior and corresponding steps to resolve conflict detailed in section: [Owner references conflict](#owner-references-conflict)
 ```
 cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  # Adhere to the following naming format <organization>-<provider-name>
-  # Details on the naming format requirement in section: Owner references conflict
   name: oracle-samples-provider-family-oci
 spec:
-  # Crossplane package manager matches the following as <registry>/<organization>/<provider-name>:<tags>
   package: ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64
 ---
 apiVersion: pkg.crossplane.io/v1
@@ -48,12 +49,10 @@ provider-oci-objectstorage   True        True      ghcr.io/oracle-samples/provid
 It may take up to 5 minutes to report `HEALTHY`.
 
 ### Optional: Pulling images from private registry
-If you are required to pull images from private registries instead of `ghcr.io`. Mirror the images into `registry.io`, then utilize the following `ImageConfig` sample to rewrite image paths and configure a pull secret. 
+If you are required to pull images from private registries instead of `ghcr.io`. Mirror the images into, for example `registry1.io`, then utilize the following `ImageConfig` sample to rewrite image paths and configure a pull secret. 
 
-Ref: https://docs.crossplane.io/latest/packages/image-configs/#rewriting-image-paths
-
+[The official crossplane documents](https://docs.crossplane.io/latest/packages/image-configs/#rewriting-image-paths) covers the rewrite image paths in more details.
 ```
-# Rewrite ghcr.io -> registry1.io
 ---
 apiVersion: pkg.crossplane.io/v1beta1
 kind: ImageConfig
@@ -243,3 +242,17 @@ Typical symptoms
 - An unexpected Provider with name - appears after you delete or rename your family Provider.
 - providerrevisions stuck in Unhealthy/Inactive with messages about conflicting ownership or multiple controlling owners.
 - Repeated reconcile loops pulling a family image you did not specify explicitly.
+
+### Resolving duplicate family providers 
+
+Proceed with clean up of managed resource(s) and providers in order. Refer to the sections: [Delete the managed resource](#delete-the-managed-resource) and [Delete the providers](#delete-the-providers).
+
+After deletion, check for the existence of duplicate family provider by 
+```
+$ kubectl get providers
+```
+
+If exists, delete the duplicated family provider by
+```
+$ kubectl delete providers/<duplicate-provider-name>
+```
