@@ -28,7 +28,7 @@ kubectl apply -f crossplane/cluster/crds
 ### Install OCI Provider
 1. Clone the Crossplane repository.
 ```
-git clone https://github.com/oracle-samples/crossplane-provider-oci.git
+git clone https://github.com/oracle/crossplane-provider-oci.git
 cd crossplane-provider-oci
 ```
 1. Copy `examples/providerconfig/secret.yaml.tmpl` to `secret.yaml` and modify its contents for your environment.

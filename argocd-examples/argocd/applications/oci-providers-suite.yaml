@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/oracle-samples/crossplane-provider-oci
+    repoURL: https://github.com/oracle/crossplane-provider-oci
     targetRevision: main
     path: argocd-examples/crossplane/providers
   destination:
