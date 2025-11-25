@@ -15,14 +15,15 @@ on:
       platform:
         type: choice
         description: "Platform string to use while building and publishing the packages (e.g. linux_amd64 linux_arm64)"
-        default: 'linux_amd64'
-        options: 
+        default: linux_amd64 linux_arm64
+        options:
+        - linux_amd64 linux_arm64
         - linux_amd64
         - linux_arm64
         required: true
       go-version:
         description: 'Go version to use if building needs to be done'
-        default: '1.24'
+        default: '1.25'
         required: false
       size:
         description: "Number of smaller provider packages to build and push with each build job"
@@ -117,7 +118,7 @@ jobs:
         run: |
           go install golang.org/x/tools/cmd/goimports@latest
           make generate
-          make SUBPACKAGES="${{ inputs.subpackages }}" PLATFORMS=${{ inputs.platform }} build
+          make SUBPACKAGES="${{ inputs.subpackages }}" PLATFORMS="${{ inputs.platform }}" build
         env:
           # We're using docker buildx, which doesn't actually load the images it
           # builds by default. Specifying --load does so.
@@ -125,4 +126,4 @@ jobs:
 
       - name: Publish Artifacts
         run: |
-          make SUBPACKAGES_FOR_BATCH="${{ inputs.subpackages }}" XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" VERSION=${{ inputs.version }} BATCH_PLATFORMS=${{ inputs.platform }} publish-subpackages
+          make SUBPACKAGES_FOR_BATCH="${{ inputs.subpackages }}" XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" VERSION=${{ inputs.version }} BATCH_PLATFORMS="$(echo ${{ inputs.platform }} | tr ' ' ',')" publish-subpackages
