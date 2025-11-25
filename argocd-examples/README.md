@@ -179,7 +179,7 @@ This example deploys:
 This example uses prebuilt provider packages hosted in GitHub Container Registry:
 
 - Registry: `ghcr.io/oracle/`
-- Version: `v0.0.1-alpha.1-amd64`
+- Version: `v0.0.2`
 
 The provider configurations in `argocd-examples/crossplane/providers/*/provider.yaml` reference these prebuilt images.
 

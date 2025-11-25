@@ -14,7 +14,7 @@ The first provider installed of a family also installs an extra provider-family 
  
 > [!IMPORTANT]
 > Adhere to the following naming format for family provider as: `(organization)-(provider-name)`, eg: oracle-provider-family-oci. 
-> When pulling the image from a registry, crossplane refers to the name as `registry.io/organization/provider-name:tags`, eg: ghcr.io/oracle/provider-family-oci:v0.0.1-alpha.1-amd64.
+> When pulling the image from a registry, crossplane refers to the name as `registry.io/organization/provider-name:tags`, eg: ghcr.io/oracle/provider-family-oci:v0.0.2.
 > Crossplane behavior and corresponding steps to resolve conflict detailed in section: [Owner references conflict](#owner-references-conflict)
 
 ```bash
@@ -24,14 +24,14 @@ kind: Provider
 metadata:
   name: oracle-provider-family-oci
 spec:
-  package: ghcr.io/oracle/provider-family-oci:v0.0.1-alpha.1-amd64
+  package: ghcr.io/oracle/provider-family-oci:v0.0.2
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-oci-objectstorage
 spec:
-  package: ghcr.io/oracle/provider-oci-objectstorage:v0.0.1-alpha.1-amd64
+  package: ghcr.io/oracle/provider-oci-objectstorage:v0.0.2
 EOF
 ```
 
@@ -45,8 +45,8 @@ kubectl get providers
 ```        
 # Sample output
 NAME                                INSTALLED   HEALTHY   PACKAGE                                                          AGE
-oracle-provider-oci-family          True        True      ghcr.io/oracle/provider-family-oci:v0.0.1-alpha.1-amd64          3m3s
-provider-oci-objectstorage          True        True      ghcr.io/oracle/provider-oci-objectstorage:v0.0.1-alpha.1-amd64   3m2s
+oracle-provider-oci-family          True        True      ghcr.io/oracle/provider-family-oci:v0.0.2          3m3s
+provider-oci-objectstorage          True        True      ghcr.io/oracle/provider-oci-objectstorage:v0.0.2   3m2s
 ```
 
 It may take up to 5 minutes to report `HEALTHY`.
