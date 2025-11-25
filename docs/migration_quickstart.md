@@ -15,6 +15,11 @@ These steps are based on tested migration scenarios and incorporate best practic
 - Always **verify naming conventions** before migration.
 - **Test in a non-production environment** before making changes in production.
 
+### Approaches to Avoid
+
+**Do not change sub provider metadata names during migration.**  
+If you change sub provider metadata names (for example, from `oracle-samples-provider-oci-objectstorage` to `oracle-provider-oci-objectstorage`), existing managed objects will no longer be tracked, and you may orphan resources in Oracle Cloud.
+
 ## Migration Scenarios
 
  > ### Important:
@@ -245,11 +250,5 @@ You may assign a new metadata name to the family provider, but you **must** keep
     bucket.objectstorage.oci.upbound.io/bucket-via-crossplane4   True    True    n/iddevjmhjw0n/b/bucket-via-crossplane   17m
     ```
 
----
-
-## Approaches to Avoid
-
-**Do not change sub provider metadata names during migration.**  
-If you change sub provider metadata names (for example, from `oracle-samples-provider-oci-objectstorage` to `oracle-provider-oci-objectstorage`), existing managed objects will no longer be tracked, and you may orphan resources in Oracle Cloud.
 
 For advanced migration or troubleshooting, please refer to the [official documentation](https://docs.crossplane.io/latest/) and thoroughly test your process before using it in production.
