@@ -3,6 +3,17 @@
 
 This guide provides step-by-step instructions for migrating your Crossplane provider packages from `ghcr.io/oracle-samples` to the official `ghcr.io/oracle` image registry. Follow these instructions to ensure a safe, reliable migration with minimal disruption.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Points and Best Practices](#key-points-and-best-practices)
+- [Backup and Rollback Guidance](#backup-and-rollback-guidance)
+- [Approaches to Avoid](#approaches-to-avoid)
+- [Migration Scenarios](#migration-scenarios)
+  - [1. Migration: Keep the Same Metadata Name for Both Family and Sub Providers (Required for Sub Providers)](#1-migration-keep-the-same-metadata-name-for-both-family-and-sub-providers-required-for-sub-providers)
+  - [2. Migration: Use a New Family Provider Name, but Keep Sub Provider Names the Same (Required for Sub Providers)](#2-migration-use-a-new-family-provider-name-but-keep-sub-provider-names-the-same-required-for-sub-providers)
+
+
 ## Overview
 
 These steps are based on tested migration scenarios and incorporate best practices to avoid resource orphaning or management loss during migration.
@@ -14,6 +25,24 @@ These steps are based on tested migration scenarios and incorporate best practic
 - If you are changing the family provider's metadata name while migrating, you must **delete and re-create the ProviderConfig**.
 - Always **verify naming conventions** before migration.
 - **Test in a non-production environment** before making changes in production.
+  
+## Backup and Rollback Guidance
+
+### Backup Before Migration:
+A backup is strongly recommended before starting migration. Before making any changes:
+
+- **Export** all Crossplane and Kubernetes provider manifests (Providers, ProviderConfigs, Secrets, ManagedResources, etc.).
+  For example:, `kubectl get provider,pkg,providerconfig,secret,managed -A -o yaml > crossplane-backup.yaml`
+  This command saves all relevant resources to a YAML file, which you can later use to restore your environment if needed.
+- Back up relevant **secrets** (such as credentials referenced in ProviderConfig).
+- Record current versions and metadata names for all providers.
+- If possible, **back up** the underlying **managed resources** or ensure you have a **recovery plan** in place.
+- Consider using additional backup tools or scripts specific to your organization.
+
+Taking these steps will help ensure you can recover or restore your environment to its pre-migration state if needed.
+
+### Rollback Considerations:
+A rollback may be possible by reapplying previous provider images and restoring configuration manifests with the original metadata names, following similar migration steps as detailed below. However, rollback is not guaranteed to be seamless, as resource states may have changed or drifted. Always test rollback procedures in a non-production environment. For critical workloads, consider engaging your cloud or operations team before making changes.
 
 ### Approaches to Avoid
 
@@ -45,7 +74,7 @@ This approach simply updates the image source while keeping all metadata names u
     ```
 
 2. **Pause Crossplane and RBAC Manager:**
-> This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
+    > This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
 
     ```sh
     kubectl -n crossplane-system scale --replicas=0 deployment/crossplane-rbac-manager
@@ -129,7 +158,8 @@ You may assign a new metadata name to the family provider, but you **must** keep
 
 2. **Pause Crossplane and RBAC Manager:**
 
-> This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
+   > This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
+
    ```sh
     kubectl -n crossplane-system scale --replicas=0 deployment/crossplane-rbac-manager
     kubectl -n crossplane-system scale --replicas=0 deployment/crossplane
@@ -160,12 +190,12 @@ You may assign a new metadata name to the family provider, but you **must** keep
   ```sh
   kubectl patch providerconfig/default -p '{"metadata":{"finalizers":[]}}' --type=merge
   ```
-    Verify Deletion:
+  Verify Deletion:
 
-    ```sh
-    kubectl get providerconfig
-     No resources found
-    ```
+  ```sh
+  kubectl get providerconfig
+   No resources found
+  ```
    
 4. **Deploy new provider images:**
 
