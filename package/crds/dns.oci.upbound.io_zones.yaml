@@ -230,7 +230,7 @@ spec:
                       publicly resolvable and not part of a private view.
                     type: string
                   viewIdRef:
-                    description: Reference to a View to populate viewId.
+                    description: Reference to a View in dns to populate viewId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -264,7 +264,7 @@ spec:
                     - name
                     type: object
                   viewIdSelector:
-                    description: Selector for a View to populate viewId.
+                    description: Selector for a View in dns to populate viewId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -478,7 +478,7 @@ spec:
                       publicly resolvable and not part of a private view.
                     type: string
                   viewIdRef:
-                    description: Reference to a View to populate viewId.
+                    description: Reference to a View in dns to populate viewId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -512,7 +512,7 @@ spec:
                     - name
                     type: object
                   viewIdSelector:
-                    description: Selector for a View to populate viewId.
+                    description: Selector for a View in dns to populate viewId.
                     properties:
                       matchControllerRef:
                         description: |-
