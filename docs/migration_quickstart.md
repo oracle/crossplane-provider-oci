@@ -51,10 +51,12 @@ If you change sub provider metadata names (for example, from `oracle-samples-pro
 
 ## Migration Scenarios
 
- > ### Important:
- - *Retaining the same metadata name for sub providers is mandatory to ensure a smooth migration and continued resource management.*
- - *Changing sub provider metadata names will orphan existing resources and must be avoided during migration.*  
- - *Keep the existing metadata name for sub providers (e.g., `oracle-samples-provider-oci-objectstorage`).*
+> [!IMPORTANT]
+  > _Retaining the same metadata name for sub providers is mandatory to ensure a smooth migration and continued resource management._
+  > 
+  > _Changing sub provider metadata names will orphan existing resources and must be avoided during migration._
+  > 
+  > _Keep the existing metadata name for sub providers (e.g.,_ `oracle-samples-provider-oci-objectstorage`_)._
 
 ---
 
@@ -74,7 +76,7 @@ This approach simply updates the image source while keeping all metadata names u
     ```
 
 2. **Pause Crossplane and RBAC Manager:**
-    > This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
+    This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
 
     ```sh
     kubectl -n crossplane-system scale --replicas=0 deployment/crossplane-rbac-manager
@@ -158,7 +160,7 @@ You may assign a new metadata name to the family provider, but you **must** keep
 
 2. **Pause Crossplane and RBAC Manager:**
 
-   > This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
+   This prevents the controllers from reconciling resources during provider migration, which could lead to resource deletion or orphaning.
 
    ```sh
     kubectl -n crossplane-system scale --replicas=0 deployment/crossplane-rbac-manager
@@ -184,8 +186,10 @@ You may assign a new metadata name to the family provider, but you **must** keep
 
   If the deletion hangs due to finalizers, you can force removal in a separate command:
 
-  > ⚠️ **WARNING**: Force-removing finalizers bypasses Kubernetes safety mechanisms.
-  > Only use this if the deletion is stuck and you've verified no other resources depend on this ProviderConfig.
+  > [!WARNING] 
+  > _Force-removing finalizers bypasses Kubernetes safety mechanisms._
+> 
+  > _Only use this if the deletion is stuck and you've verified no other resources depend on this ProviderConfig._
 
   ```sh
   kubectl patch providerconfig/default -p '{"metadata":{"finalizers":[]}}' --type=merge
