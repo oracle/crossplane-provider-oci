@@ -19,7 +19,7 @@ $ mv crossplane ~/.rd/bin
 1. Clone the repository to `$GOPATH/src/github.com/crossplane-providers/crossplane-provider-oci`.
     ```shell
     $ mkdir -p $GOPATH/src/github.com/crossplane-providers; cd $GOPATH/src/github.com/crossplane-providers
-    $ git clone git@github.com:oracle-samples/crossplane-provider-oci.git
+    $ git clone git@github.com:oracle/crossplane-provider-oci.git
     ```
 1. Change to the provider directory.
     ```shell

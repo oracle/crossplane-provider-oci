@@ -13,8 +13,8 @@ The first provider installed of a family also installs an extra provider-family 
 > Always install the family provider first to ensure anticipated/right version of image is pulled. Installing sub-provider first creates a missing dependency issue, which the crossplane package-manager always resolves by pulling latest family provider image. It might lead to unexpected behavior. 
  
 > [!IMPORTANT]
-> Adhere to the following naming format for providers as: `(organization)-(provider-name)`, eg: oracle-samples-provider-family-oci. 
-> When pulling the image from a registry, crossplane formats the name as `registry.io/organization/provider-name:tags`, eg: ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64.
+> Adhere to the following naming format for family provider as: `(organization)-(provider-name)`, eg: oracle-provider-family-oci. 
+> When pulling the image from a registry, crossplane refers to the name as `registry.io/organization/provider-name:tags`, eg: ghcr.io/oracle/provider-family-oci:v0.0.2.
 > Crossplane behavior and corresponding steps to resolve conflict detailed in section: [Owner references conflict](#owner-references-conflict)
 
 ```bash
@@ -22,16 +22,16 @@ cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: oracle-samples-provider-family-oci
+  name: oracle-provider-family-oci
 spec:
-  package: ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64
+  package: ghcr.io/oracle/provider-family-oci:v0.0.2
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: oracle-samples-provider-oci-objectstorage
+  name: provider-oci-objectstorage
 spec:
-  package: ghcr.io/oracle-samples/provider-oci-objectstorage:v0.0.1-alpha.1-amd64
+  package: ghcr.io/oracle/provider-oci-objectstorage:v0.0.2
 EOF
 ```
 
@@ -42,11 +42,11 @@ After installing the provider, verify the install with `kubectl get providers`.
 ```bash
 kubectl get providers
 ```         
-```
+```        
 # Sample output
-NAME                         INSTALLED   HEALTHY   PACKAGE                                                                  AGE
-provider-oci-family          True        True      ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64          3m3s
-provider-oci-objectstorage   True        True      ghcr.io/oracle-samples/provider-oci-objectstorage:v0.0.1-alpha.1-amd64   3m2s
+NAME                                INSTALLED   HEALTHY   PACKAGE                                                          AGE
+oracle-provider-oci-family          True        True      ghcr.io/oracle/provider-family-oci:v0.0.2          3m3s
+provider-oci-objectstorage          True        True      ghcr.io/oracle/provider-oci-objectstorage:v0.0.2   3m2s
 ```
 
 It may take up to 5 minutes to report `HEALTHY`.
@@ -138,7 +138,7 @@ kubectl get managed
 ```
 ```
 # Sample output
-NAME                                                                             READY   SYNCED   EXTERNAL-NAME                                 AGE
+NAME                                                         READY   SYNCED   EXTERNAL-NAME                            AGE
 bucket.objectstorage.oci.upbound.io/bucket-via-crossplane4   True    True     n/idimd1fghobk/b/bucket-via-crossplane   10m
 ```
 Upbound created the bucket when the values `READY` and `SYNCED` are True. This may take up to 5 minutes.
@@ -223,11 +223,13 @@ Remove the installed providers by
 ```bash
 kubectl delete providers/provider-oci-objectstorage
 
-kubectl delete providers/provider-oci-family
+kubectl delete providerconfig/default
+
+kubectl delete providers/oracle-provider-oci-family
 ```
 
 > [!NOTE]
-> The package manager requires that the provider-oci-family image be pulled from the same registry if any sub-provider is installed through pull. Ensure consistency in the image source to avoid conflicts.
+> The package manager requires that the `oracle-provider-oci-family` image be pulled from the same registry if any sub-provider is installed through pull. Ensure consistency in the image source to avoid conflicts.
 
 > [!Warning]
 > Never delete a family provider before deleting its sub-providers. Deleting a family provider while sub-providers are still installed can lead to unexpected behavior and potential errors.
@@ -235,16 +237,18 @@ kubectl delete providers/provider-oci-family
 ## Owner references conflict
 Crossplane’s package manager establishes an ownership chain between a family Provider (parent) and each sub‑provider (child) using metadata.ownerReferences on the child’s ProviderRevision. The owner reference encodes the parent Provider’s “package identity” as a name that the package manager expects to persist:
 
+```bash
+kubectl describe providerrevisions/oracle-provider-family-oci...
 ```
-$ kubectl describe providerrevisions/provider-family-oci...
-
+```
+# Sample output
   <TRUNCATED OUTPUT>
   Owner References:
     API Version:           pkg.crossplane.io/v1
     Block Owner Deletion:  true
     Controller:            true
     Kind:                  Provider
-    Name:                  oracle-samples-provider-family-oci
+    Name:                  oracle-provider-family-oci
     UID:                   ...
 ```
 
@@ -262,11 +266,11 @@ Typical symptoms
 Proceed with clean up of managed resource(s) and providers in order. Refer to the sections: [Delete the managed resource](#delete-the-managed-resource) and [Delete the providers](#delete-the-providers).
 
 After deletion, check for the existence of duplicate family provider by 
-```
-$ kubectl get providers
+```bash
+kubectl get providers
 ```
 
 If exists, delete the duplicated family provider by
-```
-$ kubectl delete providers/<duplicate-provider-name>
+```bash
+kubectl delete providers/<duplicate-provider-name>
 ```

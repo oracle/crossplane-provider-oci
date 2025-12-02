@@ -34,7 +34,7 @@ Update the ArgoCD applications to point to your repository (if forked):
 
 ```bash
 # Update git repository URLs (macOS: use -i '' for in-place editing)
-sed -i '' 's|repoURL: https://github.com/oracle-samples/crossplane-provider-oci|repoURL: https://github.com/YOUR-USERNAME/YOUR-REPO|g' argocd-examples/argocd/applications/*.yaml
+sed -i '' 's|repoURL: https://github.com/oracle/crossplane-provider-oci|repoURL: https://github.com/YOUR-USERNAME/YOUR-REPO|g' argocd-examples/argocd/applications/*.yaml
 
 # Update target revision if using a different branch
 sed -i '' 's|targetRevision: main|targetRevision: YOUR-BRANCH|g' argocd-examples/argocd/applications/*.yaml
@@ -178,8 +178,8 @@ This example deploys:
 
 This example uses prebuilt provider packages hosted in GitHub Container Registry:
 
-- Registry: `ghcr.io/oracle-samples/`
-- Version: `v0.0.1-alpha.1-amd64`
+- Registry: `ghcr.io/oracle/`
+- Version: `v0.0.2`
 
 The provider configurations in `argocd-examples/crossplane/providers/*/provider.yaml` reference these prebuilt images.
 
@@ -244,5 +244,5 @@ kubectl delete namespace argocd
 ## Additional Resources
 
 - [Crossplane Documentation](https://docs.crossplane.io/)
-- [OCI Provider Documentation](https://github.com/oracle-samples/crossplane-provider-oci)
+- [OCI Provider Documentation](https://github.com/oracle/crossplane-provider-oci)
 - [ArgoCD Documentation](https://argo-cd.readthedocs.io/)

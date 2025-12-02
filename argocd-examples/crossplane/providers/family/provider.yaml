@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  package: ghcr.io/oracle-samples/provider-family-oci:v0.0.1-alpha.1-amd64
+  package: ghcr.io/oracle/provider-family-oci:v0.0.2
   packagePullPolicy: IfNotPresent
   revisionActivationPolicy: Automatic
   revisionHistoryLimit: 1

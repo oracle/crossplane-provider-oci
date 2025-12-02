@@ -1,5 +1,5 @@
 <!--
-Please read through https://github.com/oracle-samples/crossplane-provider-oci/blob/main/CONTRIBUTING.md if this is your first time opening a
+Please read through https://github.com/oracle/crossplane-provider-oci/blob/main/CONTRIBUTING.md if this is your first time opening a
 pull request to this repo. Find us in https://crossplane.slack.com
 if you need any help contributing.
 -->
@@ -31,4 +31,4 @@ needs to tested and shown to be correct. Briefly describe the testing that has
 already been done or which is planned for this change.
 -->
 
-[contribution process]: https://github.com/oracle-samples/crossplane-provider-oci/blob/main/CONTRIBUTING.md
+[contribution process]: https://github.com/oracle/crossplane-provider-oci/blob/main/CONTRIBUTING.md

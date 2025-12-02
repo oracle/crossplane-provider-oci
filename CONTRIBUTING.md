@@ -6,7 +6,7 @@ We welcome your contributions! There are multiple ways to contribute.
 
 ## Opening issues
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/oracle-samples/crossplane-provider-oci/issues).
+open an [issue](https://github.com/oracle/crossplane-provider-oci/issues).
 
 ## Contributing code
 
