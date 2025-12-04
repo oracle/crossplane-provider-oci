@@ -13,6 +13,7 @@ export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-oci
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-oci_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-oci/$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_DOCS_PATH := website/docs/r
+export TERRAFORM_EXAMPLES_PATH := examples
 
 export CROSSPLANE_PROVIDER_VERSION := 1.0
 # Insert Oracle-CrossplaneProvider/<version> to terraform oci User-Agent using
@@ -195,14 +196,20 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(TERRAFORM) -chdir=$(TERRAFORM_WORKDIR) providers schema -json=true > $(TERRAFORM_PROVIDER_SCHEMA) 2>> $(TERRAFORM_WORKDIR)/terraform-logs.txt
 	@$(OK) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
 
-pull-docs:
+pull-init:
 	@if [ ! -d "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" ]; then \
   		mkdir -p "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" && \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)"; \
 	fi
-	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
+	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout init --cone
 
-generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
+pull-docs: pull-init
+	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout add "$(TERRAFORM_DOCS_PATH)"
+
+pull-examples: pull-init
+	@git -C "$(WORK_DIR)/$(TERRAFORM_PROVIDER_SOURCE)" sparse-checkout add "$(TERRAFORM_EXAMPLES_PATH)"
+
+generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs pull-examples
 
 # Transform resolver references to use scheme-based resolution for sub-package architecture
 generate.resolve: generate
@@ -215,7 +222,7 @@ build.complete: generate.resolve build
 	@$(INFO) complete build workflow finished
 	@$(OK) complete build workflow finished
 
-.PHONY: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs generate.resolve build.complete
+.PHONY: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs pull-examples generate.resolve build.complete
 # ====================================================================================
 # Targets
 
