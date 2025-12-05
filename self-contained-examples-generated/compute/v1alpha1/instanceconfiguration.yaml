@@ -1,0 +1,63 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instanceconfiguration
+  labels:
+    testing.upbound.io/example-name: test_instance_configuration_platform_config
+  name: test-instance-configuration-platform-config
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    count: '${length(data.oci_core_images.instance_config_supported_platform_config_shape_images.images)
+      == 0 ? 0 : 1}'
+    displayName: TestInstanceConfigurationPlatformConfig
+    instanceDetails:
+    - blockVolumes:
+      - attachDetails:
+        - device: TestDeviceName
+          displayName: TestAttachVolumeDetails
+          isPvEncryptionInTransitEnabled: true
+          isReadOnly: true
+          isShareable: true
+          type: paravirtualized
+        createDetails:
+        - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+          compartmentId: ${var.compartment_ocid}
+          displayName: TestCreateVolumeDetails
+          sizeInGbs: 50
+          vpusPerGb: 2
+      instanceType: compute
+      launchDetails:
+      - agentConfig:
+        - isManagementDisabled: false
+          isMonitoringDisabled: false
+        compartmentId: ${var.compartment_ocid}
+        createVnicDetails:
+        - assignPublicIp: true
+          displayName: TestInstanceConfigurationPlatformConfigVNIC
+          skipSourceDestCheck: false
+        displayName: TestInstanceConfigurationPlatformConfigLaunchDetails
+        extendedMetadata:
+          nested_object: '{"some_string": "stringB", "object": {"some_string": "stringC"}}'
+          some_string: stringA
+        instanceOptions:
+        - areLegacyImdsEndpointsDisabled: false
+        ipxeScript: ipxeScript
+        isPvEncryptionInTransitEnabled: false
+        launchMode: NATIVE
+        launchOptions:
+        - networkType: PARAVIRTUALIZED
+        platformConfig:
+        - isMeasuredBootEnabled: true
+          isSecureBootEnabled: true
+          isTrustedPlatformModuleEnabled: true
+          numaNodesPerSocket: ${var.instance_configuration_platform_config_numa_nodes_per_socket}
+          type: ${var.instance_configuration_platform_config_type}
+        preferredMaintenanceAction: LIVE_MIGRATE
+        shape: ${var.instance_configuration_platform_config_instance_shape}
+        sourceDetails:
+        - imageId: ${data.oci_core_images.instance_config_supported_platform_config_shape_images.images[0]["id"]}
+          sourceType: image

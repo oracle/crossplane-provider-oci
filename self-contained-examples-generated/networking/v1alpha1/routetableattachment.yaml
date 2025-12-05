@@ -1,0 +1,149 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTableAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_route_table_attachment
+  name: example-route-table-attachment
+spec:
+  forProvider:
+    routeTableId: ${oci_core_route_table.example_route_table.id}
+    subnetId: ${oci_core_subnet.example_subnet.id}
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_instance
+  name: example-instance
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createVnicDetails:
+    - assignPublicIp: true
+      hostnameLabel: instance
+      skipSourceDestCheck: true
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example_subnet
+    displayName: testInstance
+    shape: ${var.instance_shape}
+    sourceDetails:
+    - sourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: instance_image_ocid[var
+      sourceType: image
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: PrivateIp
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: private_ip
+  name: private-ip
+spec:
+  forProvider:
+    displayName: someDisplayName
+    hostnameLabel: somehostnamelabel
+    vnicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vnic_attachment
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_route_table
+  name: example-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleRouteTable
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: private_ip
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_subnet
+  name: example-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleSubnet
+    dnsLabel: tfexamplesubnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_vcn
+  name: example-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: VnicAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetableattachment
+  labels:
+    testing.upbound.io/example-name: example_vnic_attachment
+  name: example-vnic-attachment
+spec:
+  forProvider:
+    createVnicDetails:
+    - assignPublicIp: true
+      skipSourceDestCheck: true
+      subnetId: ${oci_core_subnet.example_subnet.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_instance

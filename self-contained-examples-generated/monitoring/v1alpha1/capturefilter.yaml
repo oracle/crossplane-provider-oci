@@ -1,0 +1,17 @@
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: CaptureFilter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/capturefilter
+  labels:
+    testing.upbound.io/example-name: example_capture_filter
+  name: example-capture-filter
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleCaptureFilter
+    filterType: VTAP
+    vtapCaptureFilterRules:
+    - trafficDirection: INGRESS

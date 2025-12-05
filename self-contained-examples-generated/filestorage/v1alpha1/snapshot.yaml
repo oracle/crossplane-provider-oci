@@ -1,0 +1,44 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: Snapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/snapshot
+  labels:
+    testing.upbound.io/example-name: my_snapshot
+  name: my-snapshot
+spec:
+  forProvider:
+    fileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_fs_1
+    freeformTags:
+      Department: Finance
+    isLockOverride: ${var.is_lock_override}
+    locks:
+    - message: ${var.locks_message}
+      type: ${var.locks_type}
+    name: ${var.snapshot_name}
+
+---
+
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: FileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/snapshot
+  labels:
+    testing.upbound.io/example-name: my_fs_1
+  name: my-fs-1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.file_system_1_display_name}
+    freeformTags:
+      Department: Finance
+    isLockOverride: ${var.is_lock_override}
+    locks:
+    - message: ${var.locks_message}
+      type: ${var.locks_type}

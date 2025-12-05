@@ -1,0 +1,102 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: VnicAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vnicattachment
+  labels:
+    testing.upbound.io/example-name: vnicatt
+  name: vnicatt
+spec:
+  forProvider:
+    createVnicDetails:
+    - subnetId: ${oci_core_subnet.example_subnet.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance1
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vnicattachment
+  labels:
+    testing.upbound.io/example-name: test_instance1
+  name: test-instance1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createVnicDetails:
+    - hostnameLabel: instance
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example_subnet
+    displayName: testInstance
+    shape: ${var.instance_shape}
+    shapeConfig:
+    - memoryInGbs: ${var.instance_shape_config_memory_in_gbs}
+      ocpus: ${var.instance_ocpus}
+    sourceDetails:
+    - sourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: oci_core_images
+      sourceType: image
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vnicattachment
+  labels:
+    testing.upbound.io/example-name: example_subnet
+  name: example-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+    displayName: exampleSubnet
+    dnsLabel: tfexamplesubnet
+    ipv6cidrBlocks:
+    - fc00::/64
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+    securityListIdRefs:
+    - name: example_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vnicattachment
+  labels:
+    testing.upbound.io/example-name: example_vcn
+  name: example-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn
+    ipv6privateCidrBlocks:
+    - fc00::/48
+    isIpv6Enabled: true

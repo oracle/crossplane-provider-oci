@@ -1,0 +1,15 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Vault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/vault
+  labels:
+    testing.upbound.io/example-name: private-vault-kms
+  name: private-vault-kms
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.vault_display_name}
+    vaultType: ${var.vault_type[0]}

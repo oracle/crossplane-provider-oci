@@ -1,0 +1,21 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: IdentityProvider
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/identityprovider
+  labels:
+    testing.upbound.io/example-name: test_identity_provider
+  name: test-identity-provider
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.identity_provider_description}
+    freeformTags: ${var.identity_provider_freeform_tags}
+    metadata: '${var.identity_provider_metadata != "" ? var.identity_provider_metadata
+      : file(var.identity_provider_metadata_file)}'
+    metadataUrl: ${var.identity_provider_metadata_url}
+    name: ${var.identity_provider_name}
+    productType: ${var.identity_provider_product_type}
+    protocol: ${var.identity_provider_protocol}

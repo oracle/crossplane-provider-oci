@@ -1,0 +1,20 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: Policy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/policy
+  labels:
+    testing.upbound.io/example-name: policy1
+  name: policy1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: oci_identity_compartments
+    description: policy created by terraform
+    name: tf-example-policy
+    statements:
+    - Allow group ${oci_identity_group.group1.name} to read instances in compartment
+      ${data.oci_identity_compartments.compartments1.compartments[0].name}
+    - Allow group ${oci_identity_group.group1.name} to inspect instances in compartment
+      ${data.oci_identity_compartments.compartments1.compartments[0].name}

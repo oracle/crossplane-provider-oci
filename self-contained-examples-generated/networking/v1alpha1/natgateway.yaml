@@ -1,0 +1,19 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NatGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/natgateway
+  labels:
+    testing.upbound.io/example-name: test_nat_gateway
+  name: test-nat-gateway
+spec:
+  forProvider:
+    blockTraffic: "false"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: displayName
+    publicIpId: ${oci_core_public_ip.test_public_ip.id}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn

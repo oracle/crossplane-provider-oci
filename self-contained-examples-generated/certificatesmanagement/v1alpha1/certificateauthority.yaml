@@ -1,0 +1,57 @@
+apiVersion: certificatesmanagement.oci.upbound.io/v1alpha1
+kind: CertificateAuthority
+metadata:
+  annotations:
+    meta.upbound.io/example-id: certificatesmanagement/v1alpha1/certificateauthority
+  labels:
+    testing.upbound.io/example-name: test_certificate_authority
+  name: test-certificate-authority
+spec:
+  forProvider:
+    certificateAuthorityConfig:
+    - configType: ${var.certificate_authority_certificate_authority_config_config_type}
+      issuerCertificateAuthorityId: ${oci_certificates_management_certificate_authority.test_certificate_authority.id}
+      signingAlgorithm: ${var.certificate_authority_certificate_authority_config_signing_algorithm}
+      subject:
+      - commonName: ${var.certificate_authority_certificate_authority_config_subject_common_name}
+        country: ${var.certificate_authority_certificate_authority_config_subject_country}
+        distinguishedNameQualifier: ${var.certificate_authority_certificate_authority_config_subject_distinguished_name_qualifier}
+        domainComponent: ${var.certificate_authority_certificate_authority_config_subject_domain_component}
+        generationQualifier: ${var.certificate_authority_certificate_authority_config_subject_generation_qualifier}
+        givenName: ${var.certificate_authority_certificate_authority_config_subject_given_name}
+        initials: ${var.certificate_authority_certificate_authority_config_subject_initials}
+        localityName: ${var.certificate_authority_certificate_authority_config_subject_locality_name}
+        organization: ${var.certificate_authority_certificate_authority_config_subject_organization}
+        organizationalUnit: ${var.certificate_authority_certificate_authority_config_subject_organizational_unit}
+        pseudonym: ${var.certificate_authority_certificate_authority_config_subject_pseudonym}
+        serialNumber: ${var.certificate_authority_certificate_authority_config_subject_serial_number}
+        stateOrProvinceName: ${var.certificate_authority_certificate_authority_config_subject_state_or_province_name}
+        street: ${var.certificate_authority_certificate_authority_config_subject_street}
+        surname: ${var.certificate_authority_certificate_authority_config_subject_surname}
+        title: ${var.certificate_authority_certificate_authority_config_subject_title}
+        userId: ${oci_identity_user.test_user.id}
+      validity:
+      - timeOfValidityNotAfter: ${var.certificate_authority_certificate_authority_config_validity_time_of_validity_not_after}
+        timeOfValidityNotBefore: ${var.certificate_authority_certificate_authority_config_validity_time_of_validity_not_before}
+      versionName: ${var.certificate_authority_certificate_authority_config_version_name}
+    certificateAuthorityRules:
+    - certificateAuthorityMaxValidityDuration: ${var.certificate_authority_certificate_authority_rules_certificate_authority_max_validity_duration}
+      leafCertificateMaxValidityDuration: ${var.certificate_authority_certificate_authority_rules_leaf_certificate_max_validity_duration}
+      ruleType: ${var.certificate_authority_certificate_authority_rules_rule_type}
+    certificateRevocationListDetails:
+    - customFormattedUrls: ${var.certificate_authority_certificate_revocation_list_details_custom_formatted_urls}
+      objectStorageConfig:
+      - objectStorageBucketName: tf-example-bucket-with-retention-rule
+        objectStorageNamespace: ${data.oci_objectstorage_namespace.ns.namespace}
+        objectStorageObjectNameFormat: ${var.certificate_authority_certificate_revocation_list_details_object_storage_config_object_storage_object_name_format}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.certificate_authority_defined_tags_value)}
+    description: ${var.certificate_authority_description}
+    freeformTags: ${var.certificate_authority_freeform_tags}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    name: ${var.certificate_authority_name}

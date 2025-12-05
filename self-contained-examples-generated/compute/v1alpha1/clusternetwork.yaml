@@ -1,0 +1,159 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ClusterNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/clusternetwork
+  labels:
+    testing.upbound.io/example-name: test_cluster_network_ipv6
+  name: test-cluster-network-ipv6
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_ocid}
+    displayName: hpc-cluster-network
+    instancePools:
+    - displayName: hpc-cluster-network
+      instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration_ipv6.id}
+      size: "1"
+    placementConfiguration:
+    - availabilityDomain: ${data.oci_identity_availability_domains.test_availability_domains.availability_domains[1].name}
+      primaryVnicSubnets:
+      - ipv6addressIpv6SubnetCidrPairDetails:
+        - ipv6subnetCidr: ${oci_core_subnet.test_subnet_ipv6.ipv6cidr_blocks[0]}
+        isAssignIpv6Ip: true
+        subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+      secondaryVnicSubnets:
+      - displayName: TestClusterNetworkSecondaryVNIC
+        ipv6addressIpv6SubnetCidrPairDetails:
+        - ipv6subnetCidr: ${oci_core_subnet.test_subnet_ipv6.ipv6cidr_blocks[0]}
+        isAssignIpv6Ip: true
+        subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/clusternetwork
+  labels:
+    testing.upbound.io/example-name: test_instance_configuration_ipv6
+  name: test-instance-configuration-ipv6
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInstanceConfiguration
+    instanceDetails:
+    - instanceType: compute
+      launchDetails:
+      - availabilityDomain: ${data.oci_identity_availability_domains.test_availability_domains.availability_domains[1].name}
+        compartmentId: ${var.compartment_ocid}
+        createVnicDetails:
+        - assignPublicIp: "false"
+          displayName: backend-servers
+          hostnameLabel: hostnameLabel
+          ipv6addressIpv6SubnetCidrPairDetails:
+          - ipv6subnetCidr: ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0],
+              0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0]) - 2)}64
+          privateIp: privateIp
+          skipSourceDestCheck: "false"
+          subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+        displayName: backend-servers
+        extendedMetadata:
+          extendedMetadata: extendedMetadata
+        ipxeScript: ipxeScript
+        metadata:
+          metadata: metadata
+        shape: BM.HPC2.36
+        sourceDetails:
+        - bootVolumeSizeInGbs: "55"
+          imageId: ${var.InstanceImageOCID[var.region]}
+          sourceType: image
+      secondaryVnics:
+      - createVnicDetails:
+        - assignIpv6Ip: true
+          displayName: TestClusterNetworkSecondaryVNIC
+          ipv6addressIpv6SubnetCidrPairDetails:
+          - ipv6subnetCidr: ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0],
+              0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0]) - 2)}64
+          subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+        displayName: TestClusterNetworkSecondaryVNIC
+    source: NONE
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/clusternetwork
+  labels:
+    testing.upbound.io/example-name: test_route_table_ipv6
+  name: test-route-table-ipv6
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestRouteTable
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/clusternetwork
+  labels:
+    testing.upbound.io/example-name: test_subnet_ipv6
+  name: test-subnet-ipv6
+spec:
+  forProvider:
+    availabilityDomain: |-
+      ${lower(
+          data.oci_identity_availability_domains.test_availability_domains.availability_domains[1].name,
+        )}
+    cidrBlock: 10.0.2.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+    displayName: TestSubnet
+    dnsLabel: dnslabel
+    ipv6cidrBlocks:
+    - ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0], 0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0])
+      - 2)}64
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table_ipv6
+    securityListIdRefs:
+    - name: test_vcn_ipv6
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/clusternetwork
+  labels:
+    testing.upbound.io/example-name: test_vcn_ipv6
+  name: test-vcn-ipv6
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: dnslabel
+    isIpv6Enabled: true

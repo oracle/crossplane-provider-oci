@@ -1,0 +1,14 @@
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: Volume
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volume
+  labels:
+    testing.upbound.io/example-name: test_volume_with_required_parameter
+  name: test-volume-with-required-parameter
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

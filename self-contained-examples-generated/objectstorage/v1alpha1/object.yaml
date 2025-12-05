@@ -1,0 +1,40 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Object
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/object
+  labels:
+    testing.upbound.io/example-name: object1
+  name: object1
+spec:
+  forProvider:
+    bucket: tf-example-bucket-with-retention-rule
+    content: ${file("index.html")}
+    contentDisposition: attachment; filename="filename.html"
+    contentLanguage: en-US
+    contentType: text/html
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    object: index.html
+    opcSseKmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    storageTier: InfrequentAccess
+
+---
+
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/object
+  labels:
+    testing.upbound.io/example-name: bucket1
+  name: bucket1
+spec:
+  forProvider:
+    accessType: NoPublicAccess
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tf-example-source-bucket
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

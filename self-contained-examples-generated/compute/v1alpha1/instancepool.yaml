@@ -1,0 +1,242 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstancePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_instance_pool_ipv6
+  name: test-instance-pool-ipv6
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_ocid}
+    displayName: TestInstancePool
+    instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration_ipv6.id}
+    loadBalancers:
+    - backendSetName: lb-bes1
+      loadBalancerId: ${oci_load_balancer.test_load_balancer_ipv6.id}
+      port: 80
+      vnicSelection: primaryvnic
+    placementConfigurations:
+    - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+      faultDomains:
+      - FAULT-DOMAIN-1
+      primaryVnicSubnets:
+      - ipv6addressIpv6SubnetCidrPairDetails:
+        - ipv6subnetCidr: ${oci_core_subnet.test_subnet_ipv6.ipv6cidr_blocks[0]}
+        isAssignIpv6Ip: true
+        subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+      secondaryVnicSubnets:
+      - displayName: TestInstancePoolSecondaryVNIC
+        ipv6addressIpv6SubnetCidrPairDetails:
+        - ipv6subnetCidr: ${oci_core_subnet.test_subnet_ipv6.ipv6cidr_blocks[0]}
+        isAssignIpv6Ip: true
+        subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+    size: 2
+    state: RUNNING
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_instance_configuration_ipv6
+  name: test-instance-configuration-ipv6
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInstanceConfiguration
+    instanceDetails:
+    - blockVolumes:
+      - attachDetails:
+        - displayName: TestAttachVolumeDetails-1
+          isReadOnly: true
+          isShareable: true
+          type: paravirtualized
+        createDetails:
+        - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+          compartmentId: ${var.compartment_ocid}
+          displayName: TestCreateVolumeDetails-1
+          sizeInGbs: 50
+          vpusPerGb: 20
+      - attachDetails:
+        - displayName: TestAttachVolumeDetails-2
+          isReadOnly: true
+          isShareable: true
+          type: paravirtualized
+        createDetails:
+        - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+          compartmentId: ${var.compartment_ocid}
+          displayName: TestCreateVolumeDetails-2
+          sizeInGbs: 50
+          vpusPerGb: 20
+      instanceType: compute
+      launchDetails:
+      - agentConfig:
+        - isManagementDisabled: false
+          isMonitoringDisabled: false
+        compartmentId: ${var.compartment_ocid}
+        createVnicDetails:
+        - assignIpv6Ip: true
+          assignPublicIp: true
+          displayName: TestInstanceConfigurationVNIC
+          ipv6addressIpv6SubnetCidrPairDetails:
+          - ipv6subnetCidr: ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0],
+              0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0]) - 2)}64
+          skipSourceDestCheck: false
+          subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+        displayName: TestInstanceConfigurationLaunchDetails
+        extendedMetadata:
+          nested_object: '{"some_string": "stringB", "object": {"some_string": "stringC"}}'
+          some_string: stringA
+        instanceOptions:
+        - areLegacyImdsEndpointsDisabled: false
+        ipxeScript: ipxeScript
+        isPvEncryptionInTransitEnabled: false
+        launchMode: NATIVE
+        launchOptions:
+        - networkType: PARAVIRTUALIZED
+        preferredMaintenanceAction: LIVE_MIGRATE
+        shape: ${var.instance_shape}
+        shapeConfig:
+        - memoryInGbs: ${var.instance_shape_config_memory_in_gbs}
+          ocpus: ${var.instance_ocpus}
+        sourceDetails:
+        - imageId: ${var.flex_instance_image_ocid[var.region]}
+          sourceType: image
+      secondaryVnics:
+      - createVnicDetails:
+        - assignIpv6Ip: true
+          displayName: TestInstancePoolSecondaryVNIC
+          ipv6addressIpv6SubnetCidrPairDetails:
+          - ipv6subnetCidr: ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0],
+              0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0]) - 2)}64
+          subnetId: ${oci_core_subnet.test_subnet_ipv6.id}
+        displayName: TestInstancePoolSecondaryVNIC
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_internet_gateway_ipv6
+  name: test-internet-gateway-ipv6
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInternetGateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_route_table_ipv6
+  name: test-route-table-ipv6
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestRouteTable
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_internet_gateway_ipv6
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_subnet_ipv6
+  name: test-subnet-ipv6
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+    displayName: TestSubnet
+    dnsLabel: testsubnet
+    ipv6cidrBlocks:
+    - ${substr(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0], 0, length(oci_core_vcn.test_vcn_ipv6.ipv6cidr_blocks[0])
+      - 2)}64
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table_ipv6
+    securityListIdRefs:
+    - name: test_vcn_ipv6
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ipv6
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_vcn_ipv6
+  name: test-vcn-ipv6
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: testvcn
+    isIpv6Enabled: true
+
+---
+
+apiVersion: loadbalancer.oci.upbound.io/v1alpha1
+kind: BackendSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepool
+  labels:
+    testing.upbound.io/example-name: test_backend_set_ipv6
+  name: test-backend-set-ipv6
+spec:
+  forProvider:
+    healthChecker:
+    - port: "80"
+      protocol: HTTP
+      responseBodyRegex: .*
+      urlPath: /
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_load_balancer_ipv6
+    name: lb-bes1
+    policy: ROUND_ROBIN

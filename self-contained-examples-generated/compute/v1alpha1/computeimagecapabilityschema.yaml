@@ -1,0 +1,16 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeImageCapabilitySchema
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computeimagecapabilityschema
+  labels:
+    testing.upbound.io/example-name: test_compute_image_capability_schema
+  name: test-compute-image-capability-schema
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_ocid}
+    computeGlobalImageCapabilitySchemaVersionName: ${data.oci_core_compute_global_image_capability_schemas_versions.test_compute_global_image_capability_schemas_versions_datasource.compute_global_image_capability_schema_versions[0].name}
+    displayName: displayName
+    imageId: ${var.custom_image_id}
+    schemaData:
+      ${(var.schema_data_key)}: ${var.schema_data_value}

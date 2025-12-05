@@ -1,0 +1,22 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/bucket
+  labels:
+    testing.upbound.io/example-name: retention_rule_bucket
+  name: retention-rule-bucket
+spec:
+  forProvider:
+    accessType: NoPublicAccess
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tf-example-bucket-with-retention-rule
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    retentionRules:
+    - displayName: tf-example-retention-rule
+      duration:
+      - timeAmount: "10"
+        timeUnit: DAYS
+      timeRuleLocked: "2120-05-04T17:23:46Z"

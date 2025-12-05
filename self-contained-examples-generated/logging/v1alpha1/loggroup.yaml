@@ -1,0 +1,16 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: LogGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logging/v1alpha1/loggroup
+  labels:
+    testing.upbound.io/example-name: test_log_group
+  name: test-log-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: description
+    displayName: ${var.log_group_name}
+    freeformTags: ${var.freeform_tags_value}

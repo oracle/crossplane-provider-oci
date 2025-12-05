@@ -1,0 +1,85 @@
+apiVersion: streaming.oci.upbound.io/v1alpha1
+kind: StreamPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: streaming/v1alpha1/streampool
+  labels:
+    testing.upbound.io/example-name: test_stream_pool
+  name: test-stream-pool
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    kafkaSettings:
+    - autoCreateTopicsEnable: true
+      logRetentionHours: 24
+      numPartitions: 1
+    name: TFStreamPool
+    privateEndpointSettings:
+    - nsgIdsRefs:
+      - name: test_nsg
+      privateEndpointIpSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: streaming/v1alpha1/streampool
+  labels:
+    testing.upbound.io/example-name: test_nsg
+  name: test-nsg
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: streaming/v1alpha1/streampool
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: streaming/v1alpha1/streampool
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testvcn
+    dnsLabel: dnslabel

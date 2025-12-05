@@ -1,0 +1,52 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: UnifiedAgentConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logging/v1alpha1/unifiedagentconfiguration
+  labels:
+    testing.upbound.io/example-name: test_unified_agent_configuration
+  name: test-unified-agent-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.unified_agent_configuration_description}
+    displayName: ${var.unified_agent_configuration_display_name}
+    freeformTags: ${var.unified_agent_configuration_freeform_tags}
+    groupAssociation:
+    - groupList:
+      - ocid1.dynamicgroup.oc1..aaaaaaaatqbpurg4jtr57dthka4lbykvsqajjmynecixwgsfgu2z36wf4kgq
+    isEnabled: ${var.unified_agent_configuration_is_enabled}
+    serviceConfiguration:
+    - configurationType: ${var.unified_agent_configuration_service_configuration_configuration_type}
+      destination:
+      - logObjectIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        operationalMetricsConfiguration:
+        - destination:
+          - compartmentId: ${var.compartment_id}
+          source:
+          - recordInput:
+            - namespace: tf_test_namespace
+              resourceGroup: tf-test-resource-group
+            type: UMA_METRICS
+      sources:
+      - name: ${var.unified_agent_configuration_service_configuration_sources_name}
+        parser:
+        - isMergeCriFields: false
+          nestedParser:
+          - fieldTimeKey: time
+            isKeepTimeKey: true
+            timeFormat: '%Y-%m-%dT%H:%M:%S.%L%z'
+          parserType: CRI
+        paths:
+        - /var/log/*
+        sourceType: ${var.unified_agent_configuration_service_configuration_sources_source_type}
+      - name: ${var.unified_agent_configuration_service_configuration_sources_name}
+        parser:
+        - parserType: NONE
+        paths:
+        - /var/log/*
+        sourceType: ${var.unified_agent_configuration_service_configuration_sources_source_type}

@@ -1,0 +1,89 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: SteeringPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/steeringpolicy
+  labels:
+    testing.upbound.io/example-name: test_steering_policy
+  name: test-steering-policy
+spec:
+  forProvider:
+    answers:
+    - isDisabled: ${var.steering_policy_answers_is_disabled}
+      name: ${var.steering_policy_answers_name}
+      pool: ${var.steering_policy_answers_pool}
+      rdata: ${var.steering_policy_answers_rdata}
+      rtype: ${var.steering_policy_answers_rtype}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.steering_policy_display_name}
+    freeformTags: ${var.steering_policy_freeform_tags}
+    healthCheckMonitorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_http_monitor
+    rules:
+    - cases:
+      - answerData:
+        - answerCondition: ${var.steering_policy_rules_cases_answer_data_answer_condition}
+          shouldKeep: ${var.steering_policy_rules_cases_answer_data_should_keep}
+        caseCondition: ${var.steering_policy_rules_cases_case_condition}
+      defaultAnswerData:
+      - answerCondition: ${var.steering_policy_rules_default_answer_data_answer_condition}
+        shouldKeep: ${var.steering_policy_rules_default_answer_data_should_keep}
+      ruleType: FILTER
+    - cases:
+      - caseCondition: ${var.steering_policy_rules_cases_case_condition}
+      ruleType: HEALTH
+    - cases:
+      - caseCondition: ${var.steering_policy_rules_cases_case_condition}
+        count: ${var.steering_policy_rules_cases_count}
+      defaultCount: ${var.steering_policy_rules_default_count}
+      ruleType: LIMIT
+    - cases:
+      - answerData:
+        - answerCondition: ${var.steering_policy_rules_cases_answer_data_answer_condition}
+          value: ${var.steering_policy_rules_cases_answer_data_value}
+        caseCondition: ${var.steering_policy_rules_cases_case_condition}
+      defaultAnswerData:
+      - answerCondition: ${var.steering_policy_rules_default_answer_data_answer_condition}
+        value: ${var.steering_policy_rules_default_answer_data_value}
+      ruleType: PRIORITY
+    - cases:
+      - answerData:
+        - answerCondition: ${var.steering_policy_rules_cases_answer_data_answer_condition}
+          value: ${var.steering_policy_rules_cases_answer_data_value}
+        caseCondition: ${var.steering_policy_rules_cases_case_condition}
+      defaultAnswerData:
+      - answerCondition: ${var.steering_policy_rules_default_answer_data_answer_condition}
+        value: ${var.steering_policy_rules_default_answer_data_value}
+      ruleType: ${var.steering_policy_rules_rule_type}
+    template: ${var.steering_policy_template}
+    ttl: ${var.steering_policy_ttl}
+
+---
+
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: HTTPMonitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/steeringpolicy
+  labels:
+    testing.upbound.io/example-name: test_http_monitor
+  name: test-http-monitor
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.http_monitor_display_name}
+    freeformTags: ${var.http_monitor_freeform_tags}
+    intervalInSeconds: ${var.http_monitor_interval_in_seconds}
+    isEnabled: ${var.http_monitor_is_enabled}
+    method: ${var.http_monitor_method}
+    path: ${var.http_monitor_path}
+    port: ${var.http_monitor_port}
+    protocol: ${var.http_monitor_protocol}
+    targets: ${var.http_monitor_targets}
+    timeoutInSeconds: ${var.http_monitor_timeout_in_seconds}
+    vantagePointNames: ${var.http_monitor_vantage_point_names}

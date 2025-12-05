@@ -1,0 +1,59 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: ServiceGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/servicegateway
+  labels:
+    testing.upbound.io/example-name: test_service_gateway
+  name: test-service-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testServiceGateway
+    routeTableId: ${oci_core_route_table.test_route_table_transit_routing.id}
+    services:
+    - serviceId: ${data.oci_core_services.test_services.services[0]["id"]}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/servicegateway
+  labels:
+    testing.upbound.io/example-name: test_route_table_transit_routing
+  name: test-route-table-transit-routing
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testRouteTableTransitRouting
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/servicegateway
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testVcn
+    dnsLabel: dnslabel

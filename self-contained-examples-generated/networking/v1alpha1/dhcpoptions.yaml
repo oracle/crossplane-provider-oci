@@ -1,0 +1,42 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: DhcpOptions
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/dhcpoptions
+  labels:
+    testing.upbound.io/example-name: example_dhcp_options_1
+  name: example-dhcp-options-1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleDhcpOptions1
+    options:
+    - serverType: VcnLocalPlusInternet
+      type: DomainNameServer
+    - searchDomainNames:
+      - test.com
+      type: SearchDomain
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/dhcpoptions
+  labels:
+    testing.upbound.io/example-name: example_vcn
+  name: example-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn

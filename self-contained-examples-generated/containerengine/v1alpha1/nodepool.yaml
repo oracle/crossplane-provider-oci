@@ -1,0 +1,231 @@
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: NodePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: test_node_pool
+  name: test-node-pool
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.node_pool_defined_tags_value}
+    freeformTags: ${var.node_pool_freeform_tags}
+    initialNodeLabels:
+    - key: key
+      value: value
+    kubernetesVersion: v1.20.11
+    name: tfPool
+    nodeConfigDetails:
+    - definedTags:
+        ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.node_pool_defined_tags_value}
+      freeformTags: ${var.node_pool_node_config_details_freeform_tags}
+      placementConfigs:
+      - availabilityDomain: ${data.oci_identity_availability_domain.ad1.name}
+        faultDomains:
+        - FAULT-DOMAIN-1
+        - FAULT-DOMAIN-3
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: nodePool_Subnet_1
+      size: ${var.node_pool_node_config_details_size}
+    nodeShape: VM.Standard2.1
+    nodeSourceDetails:
+    - imageId: ${local.image_id}
+      sourceType: IMAGE
+    sshPublicKey: ${var.node_pool_ssh_public_key}
+
+---
+
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: test_cluster
+  name: test-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.cluster_defined_tags_value}
+    freeformTags: ${var.cluster_freeform_tags}
+    kubernetesVersion: v1.20.11
+    name: tfTestCluster
+    options:
+    - addOns:
+      - isKubernetesDashboardEnabled: "true"
+        isTillerEnabled: "true"
+      admissionControllerOptions:
+      - isPodSecurityPolicyEnabled: true
+      kubernetesNetworkConfig:
+      - podsCidr: 10.1.0.0/16
+        servicesCidr: 10.2.0.0/16
+      persistentVolumeConfig:
+      - definedTags:
+          ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.cluster_defined_tags_value}
+        freeformTags: ${var.cluster_options_persistent_volume_config_freeform_tags}
+      serviceLbConfig:
+      - definedTags:
+          ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.cluster_defined_tags_value}
+        freeformTags: ${var.cluster_options_service_lb_config_freeform_tags}
+      serviceLbSubnetIdsRef:
+      - name: clusterSubnet_1
+      - name: clusterSubnet_2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: test_ig
+  name: test-ig
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfClusterInternetGateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfClustersRouteTable
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_ig
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: clusterSubnet_1
+  name: clustersubnet-1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad1.name}
+    cidrBlock: 10.0.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfSubNet1ForClusters
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: clusterSubnet_2
+  name: clustersubnet-2
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad2.name}
+    cidrBlock: 10.0.21.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfSubNet1ForClusters
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: nodePool_Subnet_1
+  name: nodepool-subnet-1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad1.name}
+    cidrBlock: 10.0.22.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfSubNet1ForNodePool
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/nodepool
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfVcnForClusters

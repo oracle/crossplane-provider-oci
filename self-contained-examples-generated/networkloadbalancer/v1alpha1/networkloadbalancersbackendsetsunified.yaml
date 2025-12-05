@@ -1,0 +1,200 @@
+apiVersion: networkloadbalancer.oci.upbound.io/v1alpha1
+kind: NetworkLoadBalancersBackendSetsUnified
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: nlb-bes1
+  name: nlb-bes1
+spec:
+  forProvider:
+    backends:
+    - ipAddress: 10.0.0.3
+      isBackup: false
+      isDrain: false
+      isOffline: false
+      port: 80
+      weight: 1
+    - ipAddress: ${oci_core_instance.instance1.private_ip}
+      isBackup: false
+      isDrain: false
+      isOffline: false
+      port: 20
+      weight: 1
+    healthChecker:
+    - intervalInMillis: 10000
+      port: "80"
+      protocol: TCP
+      requestData: SGVsbG9Xb3JsZA==
+      responseData: SGVsbG9Xb3JsZA==
+      retries: 3
+      timeoutInMillis: 10000
+    name: nlb-bes1
+    networkLoadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: nlb1
+    policy: TWO_TUPLE
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: instance1
+  name: instance1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad1.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createVnicDetails:
+    - hostnameLabel: be-instance1
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: subnet1
+    displayName: be-instance1
+    metadata:
+      user_data: ${base64encode(var.user-data)}
+    shape: ${var.instance_shape}
+    sourceDetails:
+    - sourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: oci_core_images
+      sourceType: image
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: internetgateway1
+  name: internetgateway1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: internetgateway1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: routetable1
+  name: routetable1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: routetable1
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: internetgateway1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: securitylist1
+  name: securitylist1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    displayName: public
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 80
+        min: 80
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 443
+        min: 443
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: subnet1
+  name: subnet1
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    displayName: subnet1
+    dnsLabel: subnet1
+    provisioner:
+      local-exec:
+      - command: sleep 5
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: routetable1
+    securityListIdRefs:
+    - name: securitylist1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified
+  labels:
+    testing.upbound.io/example-name: vcn1
+  name: vcn1
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vcn1
+    dnsLabel: vcn1
+    isIpv6Enabled: true

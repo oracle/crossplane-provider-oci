@@ -1,0 +1,212 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: ExportSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_export_set_1
+  name: my-export-set-1
+spec:
+  forProvider:
+    displayName: ${var.export_set_name_1}
+    maxFsStatBytes: ${var.max_byte}
+    maxFsStatFiles: ${var.max_files}
+    mountTargetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_mount_target_1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_internet_gateway
+  name: my-internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my internet gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_route_table
+  name: my-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my route table
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: my_internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_security_list
+  name: my-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my_security_list
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+    ingressSecurityRules:
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - max: 2050
+        min: 2048
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - sourcePortRange:
+        - max: 2050
+          min: 2048
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - max: 111
+        min: 111
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 22
+        min: 22
+    - icmpOptions:
+      - code: 4
+        type: 3
+      protocol: 1
+      source: 0.0.0.0/0
+    - icmpOptions:
+      - type: 3
+      protocol: 1
+      source: ${var.my_vcn-cidr}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_subnet
+  name: my-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: ${var.my_subnet_cidr}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: mysubnet
+    dnsLabel: mysubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_route_table
+    securityListIdRefs:
+    - name: my_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_vcn
+  name: my-vcn
+spec:
+  forProvider:
+    cidrBlock: ${var.my_vcn-cidr}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: myvcn
+    dnsLabel: myvcn
+
+---
+
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: MountTarget
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/exportset
+  labels:
+    testing.upbound.io/example-name: my_mount_target_1
+  name: my-mount-target-1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.mount_target_1_display_name}
+    freeformTags:
+      Department: Finance
+    isLockOverride: ${var.is_lock_override}
+    locks:
+    - message: ${var.locks_message}
+      type: ${var.locks_type}
+    nsgIds:
+    - ${oci_core_network_security_group.test_network_security_group.id}
+    requestedThroughput: "1"
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_subnet

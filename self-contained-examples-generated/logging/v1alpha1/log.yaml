@@ -1,0 +1,18 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: Log
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logging/v1alpha1/log
+  labels:
+    testing.upbound.io/example-name: test_log
+  name: test-log
+spec:
+  forProvider:
+    displayName: ${var.test_log_name}
+    freeformTags: ${var.freeform_tags_value}
+    isEnabled: "false"
+    logGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    logType: ${var.log_log_type.custom}
+    retentionDuration: "30"

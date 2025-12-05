@@ -1,0 +1,15 @@
+apiVersion: artifacts.oci.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/repository
+  labels:
+    testing.upbound.io/example-name: test_repository
+  name: test-repository
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isImmutable: false
+    repositoryType: GENERIC

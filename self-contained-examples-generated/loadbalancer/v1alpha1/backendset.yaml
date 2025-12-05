@@ -1,0 +1,96 @@
+apiVersion: loadbalancer.oci.upbound.io/v1alpha1
+kind: BackendSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loadbalancer/v1alpha1/backendset
+  labels:
+    testing.upbound.io/example-name: lb-bes1
+  name: lb-bes1
+spec:
+  forProvider:
+    healthChecker:
+    - port: "80"
+      protocol: HTTP
+      responseBodyRegex: .*
+      urlPath: /
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lb1
+    name: lb-bes1
+    policy: ROUND_ROBIN
+    sessionPersistenceConfiguration:
+    - cookieName: lb-session1
+      disableFallback: true
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loadbalancer/v1alpha1/backendset
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loadbalancer/v1alpha1/backendset
+  labels:
+    testing.upbound.io/example-name: subnet1
+  name: subnet1
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad1.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    displayName: subnet1
+    dnsLabel: subnet1
+    prohibitPublicIpOnVnic: true
+    provisioner:
+      local-exec:
+      - command: sleep 5
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    securityListIdRefs:
+    - name: vcn1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loadbalancer/v1alpha1/backendset
+  labels:
+    testing.upbound.io/example-name: vcn1
+  name: vcn1
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vcn1
+    dnsLabel: vcn1

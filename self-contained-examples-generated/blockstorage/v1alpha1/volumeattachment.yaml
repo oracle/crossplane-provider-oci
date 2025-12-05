@@ -1,0 +1,201 @@
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: VolumeAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_volume_attachment
+  name: test-volume-attachment
+spec:
+  forProvider:
+    attachmentType: iscsi
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_volume
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_instance
+  name: test-instance
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createVnicDetails:
+    - hostnameLabel: winmachine
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    displayName: ${var.instance_name}
+    metadata:
+      user_data: ${data.template_cloudinit_config.cloudinit_config.rendered}
+    shape: VM.Standard2.1
+    sourceDetails:
+    - bootVolumeSizeInGbs: ${var.size_in_gbs}
+      sourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: instance_image_ocid[var
+      sourceType: image
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_internet_gateway
+  name: test-internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInternetGateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestRouteTable
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_security_list
+  name: test-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestSecurityList
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+      stateless: false
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 0.0.0.0/0
+      stateless: false
+      tcpOptions:
+      - max: 3389
+        min: 3389
+    - protocol: "6"
+      source: 0.0.0.0/0
+      stateless: false
+      tcpOptions:
+      - max: 5986
+        min: 5985
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: TestSubnet
+    dnsLabel: testsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: testvcn
+
+---
+
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: Volume
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumeattachment
+  labels:
+    testing.upbound.io/example-name: test_volume
+  name: test-volume
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVolume
+    sizeInGbs: ${var.size_in_gbs}

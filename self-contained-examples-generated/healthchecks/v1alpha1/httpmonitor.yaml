@@ -1,0 +1,24 @@
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: HTTPMonitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: healthchecks/v1alpha1/httpmonitor
+  labels:
+    testing.upbound.io/example-name: test_http_monitor
+  name: test-http-monitor
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.http_monitor_display_name}
+    freeformTags: ${var.http_monitor_freeform_tags}
+    intervalInSeconds: ${var.http_monitor_interval_in_seconds}
+    isEnabled: ${var.http_monitor_is_enabled}
+    method: ${var.http_monitor_method}
+    path: ${var.http_monitor_path}
+    port: ${var.http_monitor_port}
+    protocol: ${var.http_monitor_protocol}
+    targets: ${var.http_monitor_targets}
+    timeoutInSeconds: ${var.http_monitor_timeout_in_seconds}
+    vantagePointNames: ${var.http_monitor_vantage_point_names}

@@ -1,0 +1,15 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicy
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy
+  name: test-network-firewall-policy
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.network_firewall_policy_display_name}
+    freeformTags: ${var.network_firewall_policy_freeform_tags}

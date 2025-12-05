@@ -1,0 +1,35 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: PrivateIp
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/privateip
+  labels:
+    testing.upbound.io/example-name: private_reserve_ip
+  name: private-reserve-ip
+spec:
+  forProvider:
+    displayName: reserve_private_ip
+    lifetime: RESERVED
+    routeTableId: ${oci_core_vcn.example_vcn.default_route_table_id}
+    vnicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: oci_core_vnic_attachments
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/privateip
+  labels:
+    testing.upbound.io/example-name: example_vcn
+  name: example-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn

@@ -1,0 +1,80 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vlan
+  labels:
+    testing.upbound.io/example-name: test_vlan
+  name: test-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.test_availability_domains.availability_domains[0].name}
+    cidrBlock: 10.0.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: displayName
+    freeformTags:
+      Department: Finance
+    nsgIds:
+    - ${oci_core_network_security_group.test_network_security_group.id}
+    routeTableId: ${oci_core_route_table.test_route_table.id}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    vlanTag: "10"
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vlan
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vlan
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/vlan
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

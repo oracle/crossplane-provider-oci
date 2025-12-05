@@ -1,0 +1,34 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: AppCatalogSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/appcatalogsubscription
+  labels:
+    testing.upbound.io/example-name: test_app_catalog_subscription
+  name: test-app-catalog-subscription
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_ocid}
+    eulaLink: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.eula_link}
+    listingId: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.listing_id}
+    listingResourceVersion: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.listing_resource_version}
+    oracleTermsOfUseLink: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.oracle_terms_of_use_link}
+    signature: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.signature}
+    timeRetrieved: ${oci_core_app_catalog_listing_resource_version_agreement.test_app_catalog_listing_resource_version_agreement.time_retrieved}
+    timeouts:
+    - create: 20m
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: AppCatalogListingResourceVersionAgreement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/appcatalogsubscription
+  labels:
+    testing.upbound.io/example-name: test_app_catalog_listing_resource_version_agreement
+  name: test-app-catalog-listing-resource-version-agreement
+spec:
+  forProvider:
+    listingId: ${data.oci_core_app_catalog_listing_resource_versions.test_app_catalog_listing_resource_versions.app_catalog_listing_resource_versions[0]["listing_id"]}
+    listingResourceVersion: ${data.oci_core_app_catalog_listing_resource_versions.test_app_catalog_listing_resource_versions.app_catalog_listing_resource_versions[0]["listing_resource_version"]}

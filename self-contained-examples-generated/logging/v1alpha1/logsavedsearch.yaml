@@ -1,0 +1,17 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: LogSavedSearch
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logging/v1alpha1/logsavedsearch
+  labels:
+    testing.upbound.io/example-name: test_log_saved_search
+  name: test-log-saved-search
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: description
+    freeformTags: ${var.log_saved_search_freeform_tags}
+    name: ${var.test_log_saved_search_name}
+    query: exampleQuery

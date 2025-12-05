@@ -1,0 +1,15 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: Tag
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/tag
+  labels:
+    testing.upbound.io/example-name: tag1
+  name: tag1
+spec:
+  forProvider:
+    description: tf example tag
+    name: tf-example-tag
+    tagNamespaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tag-namespace1

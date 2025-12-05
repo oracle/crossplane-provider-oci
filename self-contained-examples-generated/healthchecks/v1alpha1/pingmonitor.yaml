@@ -1,0 +1,22 @@
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: PingMonitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: healthchecks/v1alpha1/pingmonitor
+  labels:
+    testing.upbound.io/example-name: test_ping_monitor
+  name: test-ping-monitor
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.ping_monitor_display_name}
+    freeformTags: ${var.ping_monitor_freeform_tags}
+    intervalInSeconds: ${var.ping_monitor_interval_in_seconds}
+    isEnabled: ${var.ping_monitor_is_enabled}
+    port: ${var.ping_monitor_port}
+    protocol: ${var.ping_monitor_protocol}
+    targets: ${var.ping_monitor_targets}
+    timeoutInSeconds: ${var.ping_monitor_timeout_in_seconds}
+    vantagePointNames: ${var.ping_monitor_vantage_point_names}

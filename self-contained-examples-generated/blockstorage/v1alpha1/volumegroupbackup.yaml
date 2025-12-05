@@ -1,0 +1,16 @@
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: VolumeGroupBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumegroupbackup
+  labels:
+    testing.upbound.io/example-name: test_volume_group_backup
+  name: test-volume-group-backup
+spec:
+  forProvider:
+    displayName: ${var.volume_group_backup_display_name}
+    freeformTags: ${var.volume_group_backup_freeform_tags}
+    type: ${var.volume_group_backup_type}
+    volumeGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_volume_group

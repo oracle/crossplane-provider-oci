@@ -1,0 +1,278 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstancePoolInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_instance_pool_instance
+  name: test-instance-pool-instance
+spec:
+  forProvider:
+    autoTerminateInstanceOnDelete: false
+    decrementSizeOnDelete: true
+    instanceId: ${oci_core_instance.test_instance.id}
+    instancePoolId: ${oci_core_instance_pool.test_instance_pool.id}
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_instance
+  name: test-instance
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createVnicDetails:
+    - assignPublicIp: true
+      displayName: PrimaryVnic
+      hostnameLabel: testinstanceforinstancepool
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    displayName: TestInstanceForInstancePool
+    faultDomain: FAULT-DOMAIN-1
+    shape: ${var.instance_shape}
+    shapeConfig:
+    - memoryInGbs: ${var.instance_shape_config_memory_in_gbs}
+      ocpus: ${var.instance_ocpus}
+    sourceDetails:
+    - sourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: flex_instance_image_ocid[var
+      sourceType: image
+    timeouts:
+    - create: 60m
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_instance_configuration
+  name: test-instance-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInstanceConfiguration
+    instanceDetails:
+    - blockVolumes:
+      - attachDetails:
+        - displayName: TestAttachVolumeDetails-1
+          isReadOnly: true
+          isShareable: true
+          type: paravirtualized
+        createDetails:
+        - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+          blockVolumeReplicas:
+          - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+            displayName: TestCreateVolumeDetails-1
+          compartmentId: ${var.compartment_ocid}
+          displayName: TestCreateVolumeDetails-1
+          isAutoTuneEnabled: false
+          sizeInGbs: 50
+          vpusPerGb: 20
+      - attachDetails:
+        - displayName: TestAttachVolumeDetails-2
+          isReadOnly: true
+          isShareable: true
+          type: paravirtualized
+        createDetails:
+        - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+          compartmentId: ${var.compartment_ocid}
+          displayName: TestCreateVolumeDetails-2
+          sizeInGbs: 50
+          vpusPerGb: 20
+      instanceType: compute
+      launchDetails:
+      - agentConfig:
+        - isManagementDisabled: false
+          isMonitoringDisabled: false
+        availabilityConfig:
+        - isLiveMigrationPreferred: false
+          recoveryAction: RESTORE_INSTANCE
+        compartmentId: ${var.compartment_ocid}
+        createVnicDetails:
+        - assignPrivateDnsRecord: true
+          assignPublicIp: true
+          displayName: TestInstanceConfigurationVNIC
+          skipSourceDestCheck: false
+        displayName: TestInstanceConfigurationLaunchDetails
+        extendedMetadata:
+          nested_object: '{"some_string": "stringB", "object": {"some_string": "stringC"}}'
+          some_string: stringA
+        instanceOptions:
+        - areLegacyImdsEndpointsDisabled: false
+        ipxeScript: ipxeScript
+        isPvEncryptionInTransitEnabled: false
+        launchMode: NATIVE
+        launchOptions:
+        - networkType: PARAVIRTUALIZED
+        preferredMaintenanceAction: LIVE_MIGRATE
+        shape: ${var.instance_shape}
+        shapeConfig:
+        - memoryInGbs: ${var.instance_shape_config_memory_in_gbs}
+          ocpus: ${var.instance_ocpus}
+        sourceDetails:
+        - imageId: ${var.flex_instance_image_ocid[var.region]}
+          sourceType: image
+
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstancePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_instance_pool
+  name: test-instance-pool
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_ocid}
+    displayName: TestInstancePool
+    instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration.id}
+    instanceDisplayNameFormatter: host-$${launchCount}
+    instanceHostnameFormatter: host-$${launchCount}
+    loadBalancers:
+    - backendSetName: lb-bes1
+      loadBalancerId: ${oci_load_balancer.test_load_balancer.id}
+      port: 80
+      vnicSelection: primaryvnic
+    placementConfigurations:
+    - availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+      faultDomains:
+      - FAULT-DOMAIN-1
+      primarySubnetId: ${oci_core_subnet.test_subnet.id}
+    size: 2
+    state: RUNNING
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_internet_gateway
+  name: test-internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestInternetGateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestRouteTable
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: TestSubnet
+    dnsLabel: testsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: testvcn
+
+---
+
+apiVersion: loadbalancer.oci.upbound.io/v1alpha1
+kind: BackendSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancepoolinstance
+  labels:
+    testing.upbound.io/example-name: test_backend_set
+  name: test-backend-set
+spec:
+  forProvider:
+    healthChecker:
+    - port: "80"
+      protocol: HTTP
+      responseBodyRegex: .*
+      urlPath: /
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_load_balancer
+    name: lb-bes1
+    policy: ROUND_ROBIN

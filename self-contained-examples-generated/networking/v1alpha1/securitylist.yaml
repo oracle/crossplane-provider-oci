@@ -1,0 +1,70 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/securitylist
+  labels:
+    testing.upbound.io/example-name: my_security_list
+  name: my-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my_security_list
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+    ingressSecurityRules:
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - max: 2050
+        min: 2048
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - sourcePortRange:
+        - max: 2050
+          min: 2048
+    - protocol: "6"
+      source: ${var.my_vcn-cidr}
+      tcpOptions:
+      - max: 111
+        min: 111
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 22
+        min: 22
+    - icmpOptions:
+      - code: 4
+        type: 3
+      protocol: 1
+      source: 0.0.0.0/0
+    - icmpOptions:
+      - type: 3
+      protocol: 1
+      source: ${var.my_vcn-cidr}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/securitylist
+  labels:
+    testing.upbound.io/example-name: my_vcn
+  name: my-vcn
+spec:
+  forProvider:
+    cidrBlock: ${var.my_vcn-cidr}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: myvcn
+    dnsLabel: myvcn

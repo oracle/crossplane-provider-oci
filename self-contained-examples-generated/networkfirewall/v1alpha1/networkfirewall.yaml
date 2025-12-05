@@ -1,0 +1,93 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewall
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewall
+  labels:
+    testing.upbound.io/example-name: test_network_firewall
+  name: test-network-firewall
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.network_firewall_display_name}
+    freeformTags: ${var.network_firewall_freeform_tags}
+    ipv4address: ${var.network_firewall_ipv4address}
+    ipv6address: ${var.network_firewall_ipv6address}
+    natConfiguration:
+    - mustEnablePrivateNat: false
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    networkSecurityGroupIds: ${var.network_firewall_network_security_group_ids}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewall
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.0.2.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    displayName: TestSubnet
+    dnsLabel: testsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    securityListIdRefs:
+    - name: vcn1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewall
+  labels:
+    testing.upbound.io/example-name: vcn1
+  name: vcn1
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: firewallVCN
+    dnsLabel: VcnFw
+
+---
+
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewall
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy
+  name: test-network-firewall-policy
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

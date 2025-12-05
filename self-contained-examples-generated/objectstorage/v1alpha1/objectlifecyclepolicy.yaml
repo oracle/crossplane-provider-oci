@@ -1,0 +1,44 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: ObjectLifecyclePolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/objectlifecyclepolicy
+  labels:
+    testing.upbound.io/example-name: lifecyclePolicy_2
+  name: lifecyclepolicy-2
+spec:
+  forProvider:
+    bucket: tf-example-bucket-with-retention-rule
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    rules:
+    - action: ARCHIVE
+      isEnabled: "true"
+      name: test-rule-3
+      target: objects
+      timeAmount: "5"
+      timeUnit: DAYS
+    - action: ABORT
+      isEnabled: "true"
+      name: test-rule-4
+      target: multipart-uploads
+      timeAmount: "4"
+      timeUnit: DAYS
+
+---
+
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: objectstorage/v1alpha1/objectlifecyclepolicy
+  labels:
+    testing.upbound.io/example-name: bucket_with_lifeCyclePolicyRule_2
+  name: bucket-with-lifecyclepolicyrule-2
+spec:
+  forProvider:
+    accessType: NoPublicAccess
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tf-example-bucket-lifecyclerule_2
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

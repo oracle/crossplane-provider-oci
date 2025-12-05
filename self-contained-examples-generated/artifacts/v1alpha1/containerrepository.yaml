@@ -1,0 +1,22 @@
+apiVersion: artifacts.oci.upbound.io/v1alpha1
+kind: ContainerRepository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/containerrepository
+  labels:
+    testing.upbound.io/example-name: test_container_repository
+  name: test-container-repository
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      example-tag-namespace-all.example-tag: ${var.container_repository_defined_tags_value}
+    displayName: ${random_string.container_repository_display_name.result}
+    freeformTags: ${var.container_repository_freeform_tags}
+    isImmutable: ${var.container_repository_is_immutable}
+    isPublic: ${var.container_repository_is_public}
+    readme:
+    - content: ${var.container_repository_readme_content}
+      format: ${var.container_repository_readme_format}

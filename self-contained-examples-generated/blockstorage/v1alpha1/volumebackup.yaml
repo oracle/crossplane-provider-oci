@@ -1,0 +1,34 @@
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: VolumeBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumebackup
+  labels:
+    testing.upbound.io/example-name: test_volume_backup
+  name: test-volume-backup
+spec:
+  forProvider:
+    displayName: ${var.volume_backup_display_name}
+    freeformTags: ${var.volume_backup_freeform_tags}
+    type: ${var.volume_backup_type}
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_volume
+
+---
+
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: Volume
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumebackup
+  labels:
+    testing.upbound.io/example-name: test_volume
+  name: test-volume
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-volume

@@ -1,0 +1,35 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: KeyVersion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/keyversion
+  labels:
+    testing.upbound.io/example-name: test_key_version
+  name: test-key-version
+spec:
+  forProvider:
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    managementEndpoint: ${data.oci_kms_vault.test_vault.management_endpoint}
+
+---
+
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Key
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/keyversion
+  labels:
+    testing.upbound.io/example-name: test_key
+  name: test-key
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.key_display_name}
+    keyShape:
+    - algorithm: ${var.key_key_shape_algorithm}
+      length: ${var.key_key_shape_length}
+    managementEndpoint: ${data.oci_kms_vault.test_vault.management_endpoint}

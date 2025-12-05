@@ -1,0 +1,12 @@
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: Compartment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/compartment
+  labels:
+    testing.upbound.io/example-name: compartment1
+  name: compartment1
+spec:
+  forProvider:
+    description: compartment created by terraform
+    name: tf-example-compartment

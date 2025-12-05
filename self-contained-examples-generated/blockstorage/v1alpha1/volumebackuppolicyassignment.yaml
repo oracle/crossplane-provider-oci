@@ -1,0 +1,35 @@
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: VolumeBackupPolicyAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumebackuppolicyassignment
+  labels:
+    testing.upbound.io/example-name: policy
+  name: policy
+spec:
+  forProvider:
+    assetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+    policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: oci_core_volume_backup_policies
+
+---
+
+apiVersion: blockstorage.oci.upbound.io/v1alpha1
+kind: Volume
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockstorage/v1alpha1/volumebackuppolicyassignment
+  labels:
+    testing.upbound.io/example-name: t2
+  name: t2
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-volume-with-backup-policy
+    sizeInGbs: ${var.DBSize}

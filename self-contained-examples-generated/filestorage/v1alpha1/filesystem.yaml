@@ -1,0 +1,55 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: FileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/filesystem
+  labels:
+    testing.upbound.io/example-name: my_fs_clone
+  name: my-fs-clone
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.file_system_clone_display_name}
+    isLockOverride: ${var.is_lock_override}
+    locks:
+    - message: ${var.locks_message}
+      type: ${var.locks_type}
+    sourceSnapshotId: ${oci_file_storage_snapshot.my_snapshot_clone.id}
+
+---
+
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: FileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/filesystem
+  labels:
+    testing.upbound.io/example-name: my_fs_simple
+  name: my-fs-simple
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.file_system_simple_display_name}
+
+---
+
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: Snapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/filesystem
+  labels:
+    testing.upbound.io/example-name: my_snapshot_clone
+  name: my-snapshot-clone
+spec:
+  forProvider:
+    fileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_fs_simple
+    name: ${var.snapshot_name_clone}

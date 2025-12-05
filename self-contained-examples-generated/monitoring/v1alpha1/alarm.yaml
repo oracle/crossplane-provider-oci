@@ -1,0 +1,68 @@
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: Alarm
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/alarm
+  labels:
+    testing.upbound.io/example-name: test_alarm
+  name: test-alarm
+spec:
+  forProvider:
+    alarmSummary: ${var.alarm_summary}
+    body: ${var.alarm_body}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinations:
+    - ${oci_ons_notification_topic.test_notification_topic.id}
+    displayName: ${var.alarm_display_name}
+    evaluationSlackDuration: ${var.alarm_evaluation_slack_duration}
+    isEnabled: ${var.alarm_is_enabled}
+    isNotificationsPerMetricDimensionEnabled: ${var.is_notifications_per_metric_dimension_enabled}
+    messageFormat: ${var.alarm_message_format}
+    metricCompartmentIdInSubtree: ${var.alarm_metric_compartment_id_in_subtree}
+    metricCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    namespace: ${var.alarm_namespace}
+    notificationTitle: ${var.alarm_notification_title}
+    notificationVersion: ${var.alarm_notification_version}
+    overrides:
+    - body: 90% CPU utilization.
+      pendingDuration: PT10M
+      query: CPUUtilization[1m].mean() > 90
+      ruleName: RULE1
+      severity: WARNING
+    - body: 95% CPU utilization.
+      pendingDuration: PT5M
+      query: CPUUtilization[1m].mean() > 95
+      ruleName: RULE2
+      severity: CRITICAL
+    pendingDuration: ${var.alarm_pending_duration}
+    query: ${var.alarm_query}
+    repeatNotificationDuration: ${var.alarm_repeat_notification_duration}
+    resolution: ${var.alarm_resolution}
+    resourceGroup: ${var.alarm_resource_group}
+    ruleName: ${var.alarm_rule_name}
+    severity: ${var.alarm_severity}
+    suppression:
+    - description: ${var.alarm_suppression_description}
+      timeSuppressFrom: ${var.alarm_suppression_time_suppress_from}
+      timeSuppressUntil: ${var.alarm_suppression_time_suppress_until}
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/alarm
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

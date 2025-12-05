@@ -1,0 +1,12 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: AppCatalogListingResourceVersionAgreement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/appcataloglistingresourceversionagreement
+  labels:
+    testing.upbound.io/example-name: test_app_catalog_listing_resource_version_agreement
+  name: test-app-catalog-listing-resource-version-agreement
+spec:
+  forProvider:
+    listingId: ${data.oci_core_app_catalog_listing_resource_version.test_app_catalog_listing_resource_version.listing_id}
+    listingResourceVersion: ${data.oci_core_app_catalog_listing_resource_version.test_app_catalog_listing_resource_version.listing_resource_version}

@@ -1,0 +1,62 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetable
+  labels:
+    testing.upbound.io/example-name: pe_route_table
+  name: pe-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.rt_display_name}
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: pe_internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pe_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetable
+  labels:
+    testing.upbound.io/example-name: pe_internet_gateway
+  name: pe-internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.ig_display_name}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pe_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networking/v1alpha1/routetable
+  labels:
+    testing.upbound.io/example-name: pe_vcn
+  name: pe-vcn
+spec:
+  forProvider:
+    cidrBlock: ${var.vcn_cidr_block}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.vcn_display_name}
+    dnsLabel: ${var.vcn_dns_label}

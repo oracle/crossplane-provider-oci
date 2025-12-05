@@ -1,0 +1,106 @@
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: Vtap
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/vtap
+  labels:
+    testing.upbound.io/example-name: example_vtap
+  name: example-vtap
+spec:
+  forProvider:
+    captureFilterId: ${oci_core_capture_filter.example_capture_filter.id}
+    compartmentId: ${var.compartment_ocid}
+    displayName: exampleVtap
+    isVtapEnabled: true
+    sourceId: ${oci_load_balancer.lb1.id}
+    sourceType: LOAD_BALANCER
+    targetIp: 1.1.1.1
+    vcnId: ${oci_core_vcn.example_vcn.id}
+
+---
+
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: CaptureFilter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/vtap
+  labels:
+    testing.upbound.io/example-name: example_capture_filter
+  name: example-capture-filter
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleCaptureFilter
+    filterType: VTAP
+    vtapCaptureFilterRules:
+    - trafficDirection: INGRESS
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/vtap
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/vtap
+  labels:
+    testing.upbound.io/example-name: regional_subnet
+  name: regional-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+    displayName: regionalSubnet
+    dnsLabel: regionalsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+    securityListIdRefs:
+    - name: example_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/vtap
+  labels:
+    testing.upbound.io/example-name: example_vcn
+  name: example-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn

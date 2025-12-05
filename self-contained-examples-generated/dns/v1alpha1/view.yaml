@@ -1,0 +1,14 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: View
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/view
+  labels:
+    testing.upbound.io/example-name: test_view
+  name: test-view
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    scope: PRIVATE

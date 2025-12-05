@@ -1,0 +1,47 @@
+apiVersion: events.oci.upbound.io/v1alpha1
+kind: Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: events/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: test_rule
+  name: test-rule
+spec:
+  forProvider:
+    actions:
+    - actions:
+      - actionType: ONS
+        description: description
+        isEnabled: true
+        topicIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_notification_topic
+      - actionType: OSS
+        description: description
+        isEnabled: true
+        streamIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_stream
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    condition: '{"eventType": "com.oraclecloud.dbaas.autonomous.database.backup.end"}'
+    displayName: This rule sends a notification upon completion of DbaaS backup
+    isEnabled: true
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: events/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: testNotificationTopic
