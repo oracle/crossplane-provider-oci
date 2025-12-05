@@ -23,7 +23,6 @@ import (
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 
 	"github.com/oracle/provider-oci/config/artifacts"
-	"github.com/oracle/provider-oci/hack"
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
@@ -32,6 +31,7 @@ import (
 	"github.com/oracle/provider-oci/config/filestorage"
 	"github.com/oracle/provider-oci/config/functions"
 	"github.com/oracle/provider-oci/config/healthchecks"
+	"github.com/oracle/provider-oci/hack"
 	"github.com/oracle/provider-oci/config/identity"
 	"github.com/oracle/provider-oci/config/kms"
 	"github.com/oracle/provider-oci/config/loadbalancer"
@@ -56,9 +56,55 @@ var providerSchema string
 //go:embed provider-metadata.yaml
 var providerMetadata string
 
+//go:embed self-contained-provider-metadata.yaml
+var selfContainedProviderMetadata string
+
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
+		ujconfig.WithRootGroup("oci.upbound.io"),
+		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithDefaultResourceOptions(
+			GroupKindOverrides(),
+			ExternalNameConfigurations(),
+		),
+		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithMainTemplate(hack.MainTemplate),
+	)
+
+	for _, configure := range []func(provider *ujconfig.Provider){
+		// add custom config functions
+		objectstorage.Configure,
+		identity.Configure,
+		core.Configure,
+		kms.Configure,
+		containerengine.Configure,
+		artifacts.Configure,
+		ons.Configure,
+		networkloadbalancer.Configure,
+		dns.Configure,
+		healthchecks.Configure,
+		functions.Configure,
+		networkfirewall.Configure,
+		logging.Configure,
+		monitoring.Configure,
+		loadbalancer.Configure,
+		certificatesmanagement.Configure,
+		filestorage.Configure,
+		events.Configure,
+		vault.Configure,
+		streaming.Configure,
+	} {
+		configure(pc)
+	}
+
+	pc.ConfigureResources()
+	return pc
+}
+
+// GetSelfContainedProvider returns provider configuration for self-contained examples
+func GetSelfContainedProvider() *ujconfig.Provider {
+	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(selfContainedProviderMetadata),
 		ujconfig.WithRootGroup("oci.upbound.io"),
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithDefaultResourceOptions(
