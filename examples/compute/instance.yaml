@@ -1,0 +1,95 @@
+---
+
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: my_instance
+  name: my-instance
+spec:
+  forProvider:
+    availabilityDomain: "xxx"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_compartment
+    createVnicDetails:
+      - hostnameLabel: myinstance
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: my_subnet
+    displayName: my instance
+    shape: "VM.Standard.E4.Flex"
+    shapeConfig:
+      - baselineOcpuUtilization: "BASELINE_1_8"
+        memoryInGbs: 2
+        ocpus: 1
+    sourceDetails:
+      - sourceId: "ocid1.image.xxx"
+        sourceType: image
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: my_subnet
+  name: my-subnet
+spec:
+  forProvider:
+    availabilityDomain: "xxx"
+    cidrBlock: "10.0.10.0/24"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_compartment
+    displayName: mysubnet
+    dnsLabel: mysubnet
+    # Uncomment to Add Route table and Security List
+    #    routeTableIdSelector:
+    #      matchLabels:
+    #        testing.upbound.io/example-name: my_route_table
+    #    securityListIdRefs:
+    #      - name: my_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: my_vcn
+  name: my-vcn
+spec:
+  forProvider:
+    cidrBlocks:
+      - "10.0.0.0/16"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_compartment
+    displayName: myvcn
+    dnsLabel: myvcn
+
+---
+
+apiVersion: identity.oci.upbound.io/v1alpha1
+kind: Compartment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identity/v1alpha1/compartment
+  labels:
+    testing.upbound.io/example-name: my_compartment
+  name: my-compartment
+spec:
+  forProvider:
+    compartmentId: "ocid1.compartment.xxx"
+    description: compartment created by crossplane for testing
+    name: mycompartment
