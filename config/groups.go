@@ -451,6 +451,14 @@ var GroupMap = map[string]GroupKindCalculator{
 		return "events", "Rule"
 	},
 
+	// MySQL Service
+	"oci_mysql_backup":            func(name string) (string, string) { return "mysql", "MysqlBackup" },
+	"oci_mysql_channel":           func(name string) (string, string) { return "mysql", "MysqlChannel" },
+	"oci_mysql_configuration":     func(name string) (string, string) { return "mysql", "MysqlConfiguration" },
+	"oci_mysql_db_system":         func(name string) (string, string) { return "mysql", "MysqlDbSystem" },
+	"oci_mysql_heat_wave_cluster": func(name string) (string, string) { return "mysql", "MysqlHeatWaveCluster" },
+	"oci_mysql_replica":           func(name string) (string, string) { return "mysql", "MysqlReplica" },
+
 	// Streaming Service
 	"oci_streaming_stream": func(name string) (string, string) {
 		return "streaming", "Stream"
@@ -473,6 +481,9 @@ func GroupKindOverrides() config.ResourceOption {
 	return func(r *config.Resource) {
 		if f, ok := GroupMap[r.Name]; ok {
 			r.ShortGroup, r.Kind = f(r.Name)
+		} else {
+			// Fallback to automatic detection for any unmapped resources
+			r.ShortGroup, r.Kind = ServiceGroupDetector(r.Name)
 		}
 	}
 }
