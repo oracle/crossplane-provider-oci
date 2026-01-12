@@ -1,0 +1,35 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlDbSystem
+metadata:
+  labels:
+    testing.upbound.io/example-name: mysqldbsystem1
+  name: mysqldbsystem1
+spec:
+  forProvider:
+    availabilityDomain: xxx
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment1
+    shapeName: "MySQL.2"
+    displayName: mysqldbsystem1        #Optional_field
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet1
+    adminPasswordSecretRef:
+      # Prerequisite: Before creating the MysqlDbSystem resource, copy the following Secret manifest
+      # into a separate YAML file (e.g., mysql-db-admin-secret.yaml) and apply it using:
+      # kubectl apply -f mysql-db-admin-secret.yaml
+      #
+      # Example:
+      #apiVersion: v1
+      #kind: Secret
+      #metadata:
+      #  name: mysql-db-admin-secret
+      #  namespace: crossplane-system
+      #type: Opaque
+      #data:
+      #  example-key: xyz
+      key: example-key                # Key within the Secret
+      name: mysql-db-admin-secret     # Secret name
+      namespace: crossplane-system    # Secret namespace
+    adminUsername: myadminuser

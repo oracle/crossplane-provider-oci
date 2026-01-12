@@ -1,0 +1,13 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlConfiguration
+metadata:
+  labels:
+    testing.upbound.io/example-name: mysqlconfiguration1
+  name: mysqlconfiguration1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment1
+    displayName: mysqlconfiguration1  #Optional_field
+    shapeName: "MySQL.2"
