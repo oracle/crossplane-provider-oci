@@ -1,0 +1,25 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlReplica
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqlreplica
+  labels:
+    testing.upbound.io/example-name: test_replica
+  name: test-replica
+spec:
+  forProvider:
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_mysql_db_system
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.replica_description}
+    displayName: ${var.replica_display_name}
+    freeformTags:
+      bar-key: value
+    isDeleteProtected: ${var.replica_is_delete_protected}
+    replicaOverrides:
+    - configurationId: ${oci_mysql_mysql_configuration.test_mysql_configuration.id}
+      mysqlVersion: ${var.replica_replica_overrides_mysql_version}
+      nsgIds: ${var.replica_replica_overrides_nsg_ids}
+      shapeName: ${oci_mysql_shape.test_shape.name}

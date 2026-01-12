@@ -1,0 +1,84 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlDbSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqldbsystem
+  labels:
+    testing.upbound.io/example-name: test_mysql_db_system
+  name: test-mysql-db-system
+spec:
+  forProvider:
+    accessMode: ${var.mysql_db_system_access_mode}
+    adminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    adminUsername: ${var.mysql_db_system_admin_username}
+    availabilityDomain: ${var.mysql_db_system_availability_domain}
+    backupPolicy:
+    - copyPolicies:
+      - backupCopyRetentionInDays: ${var.mysql_db_system_backup_policy_copy_policies_backup_copy_retention_in_days}
+        copyToRegion: ${var.mysql_db_system_backup_policy_copy_policies_copy_to_region}
+      definedTags:
+        foo-namespace.bar-key: value
+      freeformTags:
+        bar-key: value
+      isEnabled: ${var.mysql_db_system_backup_policy_is_enabled}
+      pitrPolicy:
+      - isEnabled: ${var.mysql_db_system_backup_policy_pitr_policy_is_enabled}
+      retentionInDays: ${var.mysql_db_system_backup_policy_retention_in_days}
+      softDelete: ${var.mysql_db_system_backup_policy_soft_delete}
+      windowStartTime: ${var.mysql_db_system_backup_policy_window_start_time}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurationId: ${oci_audit_configuration.test_configuration.id}
+    crashRecovery: ${var.mysql_db_system_crash_recovery}
+    customerContacts:
+    - email: ${var.mysql_db_system_customer_contacts_email}
+    dataStorage:
+    - isAutoExpandStorageEnabled: ${var.mysql_db_system_data_storage_is_auto_expand_storage_enabled}
+      maxStorageSizeInGbs: ${var.mysql_db_system_data_storage_max_storage_size_in_gbs}
+    dataStorageSizeInGb: ${var.mysql_db_system_data_storage_size_in_gb}
+    databaseManagement: ${var.mysql_db_system_database_management}
+    databaseMode: ${var.mysql_db_system_database_mode}
+    definedTags:
+      foo-namespace.bar-key: value
+    deletionPolicy:
+    - automaticBackupRetention: ${var.mysql_db_system_deletion_policy_automatic_backup_retention}
+      finalBackup: ${var.mysql_db_system_deletion_policy_final_backup}
+      isDeleteProtected: ${var.mysql_db_system_deletion_policy_is_delete_protected}
+    description: ${var.mysql_db_system_description}
+    displayName: ${var.mysql_db_system_display_name}
+    encryptData:
+    - keyGenerationType: ${var.mysql_db_system_encrypt_data_key_generation_type}
+      keyId: ${oci_kms_key.test_key.id}
+    faultDomain: ${var.mysql_db_system_fault_domain}
+    freeformTags:
+      bar-key: value
+    hostnameLabel: ${var.mysql_db_system_hostname_label}
+    ipAddress: ${var.mysql_db_system_ip_address}
+    isHighlyAvailable: ${var.mysql_db_system_is_highly_available}
+    maintenance:
+    - windowStartTime: ${var.mysql_db_system_maintenance_window_start_time}
+    nsgIds: ${var.mysql_db_system_nsg_ids}
+    port: ${var.mysql_db_system_port}
+    portX: ${var.mysql_db_system_port_x}
+    readEndpoint:
+    - excludeIps: ${var.mysql_db_system_read_endpoint_exclude_ips}
+      isEnabled: ${var.mysql_db_system_read_endpoint_is_enabled}
+      readEndpointHostnameLabel: ${var.mysql_db_system_read_endpoint_read_endpoint_hostname_label}
+      readEndpointIpAddress: ${var.mysql_db_system_read_endpoint_read_endpoint_ip_address}
+    rest:
+    - configuration: ${var.mysql_db_system_rest_configuration}
+      port: ${var.mysql_db_system_rest_port}
+    secureConnections:
+    - certificateGenerationType: ${var.mysql_db_system_secure_connections_certificate_generation_type}
+      certificateId: ${oci_apigateway_certificate.test_certificate.id}
+    shapeName: ${var.mysql_shape_name}
+    source:
+    - backupId: ${oci_mysql_mysql_backup.test_backup.id}
+      sourceType: ${var.mysql_db_system_source_source_type}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

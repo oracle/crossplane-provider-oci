@@ -1,0 +1,142 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqlconfiguration
+  labels:
+    testing.upbound.io/example-name: test_mysql_configuration
+  name: test-mysql-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.mysql_configuration_description}
+    displayName: ${var.mysql_configuration_display_name}
+    freeformTags:
+      bar-key: value
+    initVariables:
+    - lowerCaseTableNames: ${var.mysql_configuration_init_variables_lower_case_table_names}
+    parentConfigurationId: ${oci_audit_configuration.test_configuration.id}
+    shapeName: ${oci_mysql_shape.test_shape.name}
+    variables:
+    - autoIncrementIncrement: ${var.mysql_configuration_variables_auto_increment_increment}
+      autoIncrementOffset: ${var.mysql_configuration_variables_auto_increment_offset}
+      autocommit: ${var.mysql_configuration_variables_autocommit}
+      bigTables: ${var.mysql_configuration_variables_big_tables}
+      binlogExpireLogsSeconds: ${var.mysql_configuration_variables_binlog_expire_logs_seconds}
+      binlogGroupCommitSyncDelay: ${var.mysql_configuration_variables_binlog_group_commit_sync_delay}
+      binlogGroupCommitSyncNoDelayCount: ${var.mysql_configuration_variables_binlog_group_commit_sync_no_delay_count}
+      binlogRowMetadata: ${var.mysql_configuration_variables_binlog_row_metadata}
+      binlogRowValueOptions: ${var.mysql_configuration_variables_binlog_row_value_options}
+      binlogTransactionCompression: ${var.mysql_configuration_variables_binlog_transaction_compression}
+      blockEncryptionMode: ${var.mysql_configuration_variables_block_encryption_mode}
+      characterSetServer: ${var.mysql_configuration_variables_character_set_server}
+      collationServer: ${var.mysql_configuration_variables_collation_server}
+      completionType: ${var.mysql_configuration_variables_completion_type}
+      connectTimeout: ${var.mysql_configuration_variables_connect_timeout}
+      connectionMemoryChunkSize: ${var.mysql_configuration_variables_connection_memory_chunk_size}
+      connectionMemoryLimit: ${var.mysql_configuration_variables_connection_memory_limit}
+      cteMaxRecursionDepth: ${var.mysql_configuration_variables_cte_max_recursion_depth}
+      defaultAuthenticationPlugin: ${var.mysql_configuration_variables_default_authentication_plugin}
+      explainFormat: ${var.mysql_configuration_variables_explain_format}
+      explicitDefaultsForTimestamp: ${var.mysql_configuration_variables_explicit_defaults_for_timestamp}
+      foreignKeyChecks: ${var.mysql_configuration_variables_foreign_key_checks}
+      generatedRandomPasswordLength: ${var.mysql_configuration_variables_generated_random_password_length}
+      globalConnectionMemoryLimit: ${var.mysql_configuration_variables_global_connection_memory_limit}
+      globalConnectionMemoryTracking: ${var.mysql_configuration_variables_global_connection_memory_tracking}
+      groupConcatMaxLen: ${var.mysql_configuration_variables_group_concat_max_len}
+      groupReplicationConsistency: ${var.mysql_configuration_variables_group_replication_consistency}
+      informationSchemaStatsExpiry: ${var.mysql_configuration_variables_information_schema_stats_expiry}
+      innodbAdaptiveHashIndex: ${var.mysql_configuration_variables_innodb_adaptive_hash_index}
+      innodbAutoincLockMode: ${var.mysql_configuration_variables_innodb_autoinc_lock_mode}
+      innodbBufferPoolDumpPct: ${var.mysql_configuration_variables_innodb_buffer_pool_dump_pct}
+      innodbBufferPoolInstances: ${var.mysql_configuration_variables_innodb_buffer_pool_instances}
+      innodbBufferPoolSize: ${var.mysql_configuration_variables_innodb_buffer_pool_size}
+      innodbChangeBuffering: ${var.mysql_configuration_variables_innodb_change_buffering}
+      innodbDdlBufferSize: ${var.mysql_configuration_variables_innodb_ddl_buffer_size}
+      innodbDdlThreads: ${var.mysql_configuration_variables_innodb_ddl_threads}
+      innodbFtEnableStopword: ${var.mysql_configuration_variables_innodb_ft_enable_stopword}
+      innodbFtMaxTokenSize: ${var.mysql_configuration_variables_innodb_ft_max_token_size}
+      innodbFtMinTokenSize: ${var.mysql_configuration_variables_innodb_ft_min_token_size}
+      innodbFtNumWordOptimize: ${var.mysql_configuration_variables_innodb_ft_num_word_optimize}
+      innodbFtResultCacheLimit: ${var.mysql_configuration_variables_innodb_ft_result_cache_limit}
+      innodbFtServerStopwordTable: ${var.mysql_configuration_variables_innodb_ft_server_stopword_table}
+      innodbLockWaitTimeout: ${var.mysql_configuration_variables_innodb_lock_wait_timeout}
+      innodbLogWriterThreads: ${var.mysql_configuration_variables_innodb_log_writer_threads}
+      innodbMaxPurgeLag: ${var.mysql_configuration_variables_innodb_max_purge_lag}
+      innodbMaxPurgeLagDelay: ${var.mysql_configuration_variables_innodb_max_purge_lag_delay}
+      innodbNumaInterleave: ${var.mysql_configuration_variables_innodb_numa_interleave}
+      innodbOnlineAlterLogMaxSize: ${var.mysql_configuration_variables_innodb_online_alter_log_max_size}
+      innodbRedoLogCapacity: ${var.mysql_configuration_variables_innodb_redo_log_capacity}
+      innodbRollbackOnTimeout: ${var.mysql_configuration_variables_innodb_rollback_on_timeout}
+      innodbSortBufferSize: ${var.mysql_configuration_variables_innodb_sort_buffer_size}
+      innodbStatsPersistentSamplePages: ${var.mysql_configuration_variables_innodb_stats_persistent_sample_pages}
+      innodbStatsTransientSamplePages: ${var.mysql_configuration_variables_innodb_stats_transient_sample_pages}
+      innodbStrictMode: ${var.mysql_configuration_variables_innodb_strict_mode}
+      innodbUndoLogTruncate: ${var.mysql_configuration_variables_innodb_undo_log_truncate}
+      interactiveTimeout: ${var.mysql_configuration_variables_interactive_timeout}
+      joinBufferSize: ${var.mysql_configuration_variables_join_buffer_size}
+      localInfile: ${var.mysql_configuration_variables_local_infile}
+      longQueryTime: ${var.mysql_configuration_variables_long_query_time}
+      mandatoryRoles: ${var.mysql_configuration_variables_mandatory_roles}
+      maxAllowedPacket: ${var.mysql_configuration_variables_max_allowed_packet}
+      maxBinlogCacheSize: ${var.mysql_configuration_variables_max_binlog_cache_size}
+      maxConnectErrors: ${var.mysql_configuration_variables_max_connect_errors}
+      maxConnections: ${var.mysql_configuration_variables_max_connections}
+      maxExecutionTime: ${var.mysql_configuration_variables_max_execution_time}
+      maxHeapTableSize: ${var.mysql_configuration_variables_max_heap_table_size}
+      maxPreparedStmtCount: ${var.mysql_configuration_variables_max_prepared_stmt_count}
+      maxSeeksForKey: ${var.mysql_configuration_variables_max_seeks_for_key}
+      maxUserConnections: ${var.mysql_configuration_variables_max_user_connections}
+      mysqlFirewallMode: ${var.mysql_configuration_variables_mysql_firewall_mode}
+      mysqlZstdDefaultCompressionLevel: ${var.mysql_configuration_variables_mysql_zstd_default_compression_level}
+      mysqlxConnectTimeout: ${var.mysql_configuration_variables_mysqlx_connect_timeout}
+      mysqlxDeflateDefaultCompressionLevel: ${var.mysql_configuration_variables_mysqlx_deflate_default_compression_level}
+      mysqlxDeflateMaxClientCompressionLevel: ${var.mysql_configuration_variables_mysqlx_deflate_max_client_compression_level}
+      mysqlxDocumentIdUniquePrefix: ${var.mysql_configuration_variables_mysqlx_document_id_unique_prefix}
+      mysqlxEnableHelloNotice: ${var.mysql_configuration_variables_mysqlx_enable_hello_notice}
+      mysqlxIdleWorkerThreadTimeout: ${var.mysql_configuration_variables_mysqlx_idle_worker_thread_timeout}
+      mysqlxInteractiveTimeout: ${var.mysql_configuration_variables_mysqlx_interactive_timeout}
+      mysqlxLz4DefaultCompressionLevel: ${var.mysql_configuration_variables_mysqlx_lz4default_compression_level}
+      mysqlxLz4MaxClientCompressionLevel: ${var.mysql_configuration_variables_mysqlx_lz4max_client_compression_level}
+      mysqlxMaxAllowedPacket: ${var.mysql_configuration_variables_mysqlx_max_allowed_packet}
+      mysqlxMinWorkerThreads: ${var.mysql_configuration_variables_mysqlx_min_worker_threads}
+      mysqlxReadTimeout: ${var.mysql_configuration_variables_mysqlx_read_timeout}
+      mysqlxWaitTimeout: ${var.mysql_configuration_variables_mysqlx_wait_timeout}
+      mysqlxWriteTimeout: ${var.mysql_configuration_variables_mysqlx_write_timeout}
+      mysqlxZstdDefaultCompressionLevel: ${var.mysql_configuration_variables_mysqlx_zstd_default_compression_level}
+      mysqlxZstdMaxClientCompressionLevel: ${var.mysql_configuration_variables_mysqlx_zstd_max_client_compression_level}
+      netReadTimeout: ${var.mysql_configuration_variables_net_read_timeout}
+      netWriteTimeout: ${var.mysql_configuration_variables_net_write_timeout}
+      optimizerSwitch: ${var.mysql_configuration_variables_optimizer_switch}
+      parserMaxMemSize: ${var.mysql_configuration_variables_parser_max_mem_size}
+      queryAllocBlockSize: ${var.mysql_configuration_variables_query_alloc_block_size}
+      queryPreallocSize: ${var.mysql_configuration_variables_query_prealloc_size}
+      rangeOptimizerMaxMemSize: ${var.mysql_configuration_variables_range_optimizer_max_mem_size}
+      regexpTimeLimit: ${var.mysql_configuration_variables_regexp_time_limit}
+      relayLogSpaceLimit: ${var.mysql_configuration_variables_relay_log_space_limit}
+      replicaNetTimeout: ${var.mysql_configuration_variables_replica_net_timeout}
+      replicaParallelWorkers: ${var.mysql_configuration_variables_replica_parallel_workers}
+      replicaTypeConversions: ${var.mysql_configuration_variables_replica_type_conversions}
+      requireSecureTransport: ${var.mysql_configuration_variables_require_secure_transport}
+      skipNameResolve: ${var.mysql_configuration_variables_skip_name_resolve}
+      sortBufferSize: ${var.mysql_configuration_variables_sort_buffer_size}
+      sqlGenerateInvisiblePrimaryKey: ${var.mysql_configuration_variables_sql_generate_invisible_primary_key}
+      sqlMode: ${var.mysql_configuration_variables_sql_mode}
+      sqlRequirePrimaryKey: ${var.mysql_configuration_variables_sql_require_primary_key}
+      sqlWarnings: ${var.mysql_configuration_variables_sql_warnings}
+      tableDefinitionCache: ${var.mysql_configuration_variables_table_definition_cache}
+      tableOpenCache: ${var.mysql_configuration_variables_table_open_cache}
+      temptableMaxRam: ${var.mysql_configuration_variables_temptable_max_ram}
+      threadPoolDedicatedListeners: ${var.mysql_configuration_variables_thread_pool_dedicated_listeners}
+      threadPoolMaxTransactionsLimit: ${var.mysql_configuration_variables_thread_pool_max_transactions_limit}
+      threadPoolQueryThreadsPerGroup: ${var.mysql_configuration_variables_thread_pool_query_threads_per_group}
+      threadPoolSize: ${var.mysql_configuration_variables_thread_pool_size}
+      threadPoolTransactionDelay: ${var.mysql_configuration_variables_thread_pool_transaction_delay}
+      timeZone: ${var.mysql_configuration_variables_time_zone}
+      tmpTableSize: ${var.mysql_configuration_variables_tmp_table_size}
+      transactionIsolation: ${var.mysql_configuration_variables_transaction_isolation}
+      waitTimeout: ${var.mysql_configuration_variables_wait_timeout}

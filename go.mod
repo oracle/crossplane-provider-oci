@@ -8,6 +8,7 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20250603090330-889cfb100517
 	github.com/crossplane/upjet v1.9.0
 	github.com/pkg/errors v0.9.1
+	golang.org/x/text v0.26.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.33.2
 	k8s.io/client-go v0.33.2
@@ -113,7 +114,6 @@ require (
 	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/term v0.32.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
 	golang.org/x/time v0.12.0 // indirect
 	golang.org/x/tools v0.34.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.5.0 // indirect

@@ -1,0 +1,1149 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: mysqlbackups.mysql.oci.upbound.io
+spec:
+  group: mysql.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: MysqlBackup
+    listKind: MysqlBackupList
+    plural: mysqlbackups
+    singular: mysqlbackup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: MysqlBackup is the Schema for the MysqlBackups API. Provides
+          the Mysql Backup resource in Oracle Cloud Infrastructure MySQL Database
+          service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MysqlBackupSpec defines the desired state of MysqlBackup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  backupType:
+                    description: The type of backup.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the backup
+                      exists in.
+                    type: string
+                  dbSystemId:
+                    description: The OCID of the DB System the Backup is associated
+                      with.
+                    type: string
+                  dbSystemIdRef:
+                    description: Reference to a MysqlDbSystem in mysql to populate
+                      dbSystemId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  dbSystemIdSelector:
+                    description: Selector for a MysqlDbSystem in mysql to populate
+                      dbSystemId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  dbSystemSnapshotSummary:
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) A user-supplied display name for
+                            the backup.
+                          type: string
+                        id:
+                          description: The OCID of the DB System.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-supplied description for the backup.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-supplied display name for the
+                      backup.
+                    type: string
+                  encryptData:
+                    description: Encrypt data details.
+                    items:
+                      properties:
+                        keyGenerationType:
+                          description: Select whether to use Oracle-managed key (SYSTEM)
+                            or your own key (BYOK).
+                          type: string
+                        keyId:
+                          description: The OCID of the key to use.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  retentionInDays:
+                    description: (Updatable) Number of days to retain this backup.
+                    type: number
+                  softDelete:
+                    description: (Updatable) Retains the backup to be deleted due
+                      to the retention policy in DELETE SCHEDULED state for 7 days
+                      before permanently deleting it.
+                    type: string
+                  sourceDetails:
+                    description: Details of backup source in the cloud.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the source backup.
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment the
+                            backup exists in.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  backupType:
+                    description: The type of backup.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the backup
+                      exists in.
+                    type: string
+                  dbSystemId:
+                    description: The OCID of the DB System the Backup is associated
+                      with.
+                    type: string
+                  dbSystemIdRef:
+                    description: Reference to a MysqlDbSystem in mysql to populate
+                      dbSystemId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  dbSystemIdSelector:
+                    description: Selector for a MysqlDbSystem in mysql to populate
+                      dbSystemId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  dbSystemSnapshotSummary:
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) A user-supplied display name for
+                            the backup.
+                          type: string
+                        id:
+                          description: The OCID of the DB System.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-supplied description for the backup.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-supplied display name for the
+                      backup.
+                    type: string
+                  encryptData:
+                    description: Encrypt data details.
+                    items:
+                      properties:
+                        keyGenerationType:
+                          description: Select whether to use Oracle-managed key (SYSTEM)
+                            or your own key (BYOK).
+                          type: string
+                        keyId:
+                          description: The OCID of the key to use.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  retentionInDays:
+                    description: (Updatable) Number of days to retain this backup.
+                    type: number
+                  softDelete:
+                    description: (Updatable) Retains the backup to be deleted due
+                      to the retention policy in DELETE SCHEDULED state for 7 days
+                      before permanently deleting it.
+                    type: string
+                  sourceDetails:
+                    description: Details of backup source in the cloud.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the source backup.
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment the
+                            backup exists in.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: MysqlBackupStatus defines the observed state of MysqlBackup.
+            properties:
+              atProvider:
+                properties:
+                  backupSizeInGbs:
+                    description: The size of the backup in base-2 (IEC) gibibytes.
+                      (GiB).
+                    type: number
+                  backupType:
+                    description: The type of backup.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the backup
+                      exists in.
+                    type: string
+                  creationType:
+                    description: 'Indicates how the backup was created: manually,
+                      automatic, or by an Operator.'
+                    type: string
+                  dataStorageSizeInGb:
+                    description: Initial size of the data volume in GiBs.
+                    type: number
+                  dbSystemId:
+                    description: The OCID of the DB System the Backup is associated
+                      with.
+                    type: string
+                  dbSystemSnapshot:
+                    description: Snapshot of the DbSystem details at the time of the
+                      backup
+                    items:
+                      properties:
+                        adminUsername:
+                          description: The username for the administrative user.
+                          type: string
+                        availabilityDomain:
+                          description: The Availability Domain where the primary DB
+                            System should be located.
+                          type: string
+                        backupPolicy:
+                          description: The Backup policy for the DB System.
+                          items:
+                            properties:
+                              copyPolicies:
+                                description: List of policies of a DB system to schedule
+                                  cross-region DB system backup copy.
+                                items:
+                                  properties:
+                                    backupCopyRetentionInDays:
+                                      description: Number of days to retain the copied
+                                        DB system backup.
+                                      type: number
+                                    copyToRegion:
+                                      description: The destination region name to
+                                        which the DB system backup will be copied.
+                                      type: string
+                                  type: object
+                                type: array
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Updatable) Defined tags for this resource.
+                                  Each key is predefined and scoped to a namespace.
+                                  Example: {"foo-namespace.bar-key": "value"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Updatable) Simple key-value pair that
+                                  is applied without any predefined name, type or
+                                  scope. Exists for cross-compatibility only. Example:
+                                  {"bar-key": "value"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              isEnabled:
+                                description: If automated backups are enabled or disabled.
+                                type: boolean
+                              pitrPolicy:
+                                description: The PITR policy for the DB System.
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: If automated backups are enabled
+                                        or disabled.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              retentionInDays:
+                                description: (Updatable) Number of days to retain
+                                  this backup.
+                                type: number
+                              softDelete:
+                                description: (Updatable) Retains the backup to be
+                                  deleted due to the retention policy in DELETE SCHEDULED
+                                  state for 7 days before permanently deleting it.
+                                type: string
+                              windowStartTime:
+                                description: The start of a 30-minute window of time
+                                  in which daily, automated backups occur.
+                                type: string
+                            type: object
+                          type: array
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment the
+                            backup exists in.
+                          type: string
+                        configurationId:
+                          description: The OCID of the Configuration to be used for
+                            Instances in this DB System.
+                          type: string
+                        crashRecovery:
+                          description: Whether to run the DB System with InnoDB Redo
+                            Logs and the Double Write Buffer enabled or disabled,
+                            and whether to enable or disable syncing of the Binary
+                            Logs.
+                          type: string
+                        dataStorage:
+                          description: Data Storage information.
+                          items:
+                            properties:
+                              allocatedStorageSizeInGbs:
+                                description: The actual allocated storage size for
+                                  the DB System. This may be higher than dataStorageSizeInGBs
+                                  if an automatic storage expansion has occurred.
+                                type: number
+                              dataStorageSizeInGb:
+                                description: Initial size of the data volume in GiBs.
+                                type: number
+                              dataStorageSizeLimitInGbs:
+                                description: The absolute limit the DB System's storage
+                                  size may ever expand to, either manually or automatically.
+                                  This limit is based based on the initial dataStorageSizeInGBs
+                                  when the DB System was first created. Both dataStorageSizeInGBs
+                                  and maxDataStorageSizeInGBs can not exceed this
+                                  value.
+                                type: number
+                              isAutoExpandStorageEnabled:
+                                description: Enable/disable automatic storage expansion.
+                                  When set to true, the DB System will automatically
+                                  add storage incrementally up to the value specified
+                                  in maxStorageSizeInGBs.
+                                type: boolean
+                              maxStorageSizeInGbs:
+                                description: Maximum storage size this DB System can
+                                  expand to. When isAutoExpandStorageEnabled is set
+                                  to true, the DB System will add storage incrementally
+                                  up to this value.
+                                type: number
+                            type: object
+                          type: array
+                        dataStorageSizeInGb:
+                          description: Initial size of the data volume in GiBs.
+                          type: number
+                        databaseManagement:
+                          description: Whether to enable monitoring via the Database
+                            Management service.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Defined tags for this resource.
+                            Each key is predefined and scoped to a namespace. Example:
+                            {"foo-namespace.bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        deletionPolicy:
+                          description: The Deletion policy for the DB System.
+                          items:
+                            properties:
+                              automaticBackupRetention:
+                                description: Specifies if any automatic backups created
+                                  for a DB System should be retained or deleted when
+                                  the DB System is deleted.
+                                type: string
+                              finalBackup:
+                                description: 'Specifies whether or not a backup is
+                                  taken when the DB System is deleted. REQUIRE_FINAL_BACKUP:
+                                  a backup is taken if the DB System is deleted. SKIP_FINAL_BACKUP:
+                                  a backup is not taken if the DB System is deleted.'
+                                type: string
+                              isDeleteProtected:
+                                description: Specifies whether the DB System can be
+                                  deleted. Set to true to prevent deletion, false
+                                  (default) to allow.
+                                type: boolean
+                            type: object
+                          type: array
+                        description:
+                          description: (Updatable) A user-supplied description for
+                            the backup.
+                          type: string
+                        displayName:
+                          description: (Updatable) A user-supplied display name for
+                            the backup.
+                          type: string
+                        encryptData:
+                          description: Encrypt data details.
+                          items:
+                            properties:
+                              keyGenerationType:
+                                description: Select whether to use Oracle-managed
+                                  key (SYSTEM) or your own key (BYOK).
+                                type: string
+                              keyId:
+                                description: The OCID of the key to use.
+                                type: string
+                            type: object
+                          type: array
+                        endpoints:
+                          description: The network endpoints available for this DB
+                            System.
+                          items:
+                            properties:
+                              hostname:
+                                description: The network address of the DB System.
+                                type: string
+                              ipAddress:
+                                description: The IP address the DB System is configured
+                                  to listen on.
+                                type: string
+                              modes:
+                                description: The access modes from the client that
+                                  this endpoint supports.
+                                items:
+                                  type: string
+                                type: array
+                              port:
+                                description: The port the MySQL instance listens on.
+                                type: number
+                              portX:
+                                description: The network port where to connect to
+                                  use this endpoint using the X protocol.
+                                type: number
+                              resourceId:
+                                description: The OCID of the resource that this endpoint
+                                  is attached to.
+                                type: string
+                              resourceType:
+                                description: The type of endpoint that clients and
+                                  connectors can connect to.
+                                type: string
+                              status:
+                                description: The state of the endpoints, as far as
+                                  it can seen from the DB System. There may be some
+                                  inconsistency with the actual state of the MySQL
+                                  service.
+                                type: string
+                              statusDetails:
+                                description: Additional information about the current
+                                  endpoint status.
+                                type: string
+                            type: object
+                          type: array
+                        faultDomain:
+                          description: The name of the Fault Domain the DB System
+                            is located in.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Simple key-value pair that is
+                            applied without any predefined name, type or scope. Exists
+                            for cross-compatibility only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        hostnameLabel:
+                          description: The hostname for the primary endpoint of the
+                            DB System. Used for DNS. The value is the hostname portion
+                            of the primary private IP's fully qualified domain name
+                            (FQDN) (for example, "dbsystem-1" in FQDN "dbsystem-1.subnet123.vcn1.oraclevcn.com").
+                            Must be unique across all VNICs in the subnet and comply
+                            with RFC 952 and RFC 1123.
+                          type: string
+                        id:
+                          description: The OCID of the DB System.
+                          type: string
+                        ipAddress:
+                          description: The IP address the DB System is configured
+                            to listen on.
+                          type: string
+                        isHighlyAvailable:
+                          description: Specifies if the DB System is highly available.
+                          type: boolean
+                        maintenance:
+                          description: The Maintenance Policy for the DB System or
+                            Read Replica that this model is included in.
+                          items:
+                            properties:
+                              windowStartTime:
+                                description: The start of a 30-minute window of time
+                                  in which daily, automated backups occur.
+                                type: string
+                            type: object
+                          type: array
+                        mysqlVersion:
+                          description: Name of the MySQL Version in use for the DB
+                            System.
+                          type: string
+                        nsgIds:
+                          description: Network Security Group OCIDs used for the VNIC
+                            attachment.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        port:
+                          description: The port the MySQL instance listens on.
+                          type: number
+                        portX:
+                          description: The network port where to connect to use this
+                            endpoint using the X protocol.
+                          type: number
+                        readEndpoint:
+                          description: The read endpoint of a DB System.
+                          items:
+                            properties:
+                              excludeIps:
+                                description: A list of IP addresses of read replicas
+                                  that are excluded from serving read requests.
+                                items:
+                                  type: string
+                                type: array
+                              isEnabled:
+                                description: If automated backups are enabled or disabled.
+                                type: boolean
+                              readEndpointHostnameLabel:
+                                description: The hostname for the read endpoint of
+                                  the DB System. Used for DNS.
+                                type: string
+                              readEndpointIpAddress:
+                                description: The IP address the DB System read endpoint
+                                  is configured to listen on. A private IP address
+                                  of your choice to assign to the read endpoint of
+                                  the DB System. Must be an available IP address within
+                                  the subnet's CIDR. If you don't specify a value,
+                                  Oracle automatically assigns a private IP address
+                                  from the subnet. This should be a "dotted-quad"
+                                  style IPv4 address.
+                                type: string
+                            type: object
+                          type: array
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                        rest:
+                          description: REST configuration details.
+                          items:
+                            properties:
+                              configuration:
+                                description: Select how REST is configured across
+                                  the DB System instances.
+                                type: string
+                              port:
+                                description: The port the MySQL instance listens on.
+                                type: number
+                            type: object
+                          type: array
+                        secureConnections:
+                          description: Secure connection configuration details.
+                          items:
+                            properties:
+                              certificateGenerationType:
+                                description: Select whether to use MySQL Database
+                                  Service-managed certificate (SYSTEM) or your own
+                                  certificate (BYOC).
+                                type: string
+                              certificateId:
+                                description: The OCID of the certificate to use.
+                                type: string
+                            type: object
+                          type: array
+                        shapeName:
+                          description: The shape of the primary instances of the DB
+                            System. The shape determines resources allocated to a
+                            DB System - CPU cores and memory for VM shapes; CPU cores,
+                            memory and storage for non-VM (or bare metal) shapes.
+                            To get a list of shapes, use (the ListShapes operation.
+                          type: string
+                        subnetId:
+                          description: The OCID of the subnet the DB System is associated
+                            with.
+                          type: string
+                      type: object
+                    type: array
+                  dbSystemSnapshotSummary:
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) A user-supplied display name for
+                            the backup.
+                          type: string
+                        id:
+                          description: The OCID of the DB System.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-supplied description for the backup.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-supplied display name for the
+                      backup.
+                    type: string
+                  encryptData:
+                    description: Encrypt data details.
+                    items:
+                      properties:
+                        keyGenerationType:
+                          description: Select whether to use Oracle-managed key (SYSTEM)
+                            or your own key (BYOK).
+                          type: string
+                        keyId:
+                          description: The OCID of the key to use.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the DB System.
+                    type: string
+                  immediateSourceBackupId:
+                    description: The OCID of the immediate source DB system backup
+                      from which this DB system backup was copied.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycleState.
+                    type: string
+                  mysqlVersion:
+                    description: Name of the MySQL Version in use for the DB System.
+                    type: string
+                  originalSourceBackupId:
+                    description: The OCID of the original source DB system backup
+                      from which this DB system backup was copied.
+                    type: string
+                  retentionInDays:
+                    description: (Updatable) Number of days to retain this backup.
+                    type: number
+                  shapeName:
+                    description: The shape of the primary instances of the DB System.
+                      The shape determines resources allocated to a DB System - CPU
+                      cores and memory for VM shapes; CPU cores, memory and storage
+                      for non-VM (or bare metal) shapes. To get a list of shapes,
+                      use (the ListShapes operation.
+                    type: string
+                  softDelete:
+                    description: (Updatable) Retains the backup to be deleted due
+                      to the retention policy in DELETE SCHEDULED state for 7 days
+                      before permanently deleting it.
+                    type: string
+                  sourceDetails:
+                    description: Details of backup source in the cloud.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the source backup.
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment the
+                            backup exists in.
+                          type: string
+                        region:
+                          description: The region of the backup source.
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The state of the backup.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCopyCreated:
+                    description: The date and time the DB system backup copy was created,
+                      as described by RFC 3339.
+                    type: string
+                  timeCreated:
+                    description: The time the backup record was created.
+                    type: string
+                  timeUpdated:
+                    description: The time at which the backup was updated.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

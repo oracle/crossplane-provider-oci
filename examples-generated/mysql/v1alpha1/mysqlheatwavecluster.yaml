@@ -1,0 +1,16 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlHeatWaveCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqlheatwavecluster
+  labels:
+    testing.upbound.io/example-name: test_heat_wave_cluster
+  name: test-heat-wave-cluster
+spec:
+  forProvider:
+    clusterSize: ${var.heat_wave_cluster_cluster_size}
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+    isLakehouseEnabled: ${var.heat_wave_cluster_is_lakehouse_enabled}
+    shapeName: ${oci_mysql_shape.test_shape.name}

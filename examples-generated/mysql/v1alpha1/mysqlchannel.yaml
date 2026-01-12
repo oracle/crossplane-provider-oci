@@ -1,0 +1,50 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqlchannel
+  labels:
+    testing.upbound.io/example-name: test_channel
+  name: test-channel
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.channel_description}
+    displayName: ${var.channel_display_name}
+    freeformTags:
+      bar-key: value
+    isEnabled: ${var.channel_is_enabled}
+    source:
+    - anonymousTransactionsHandling:
+      - lastConfiguredLogFilename: ${var.channel_source_anonymous_transactions_handling_last_configured_log_filename}
+        lastConfiguredLogOffset: ${var.channel_source_anonymous_transactions_handling_last_configured_log_offset}
+        policy: ${var.channel_source_anonymous_transactions_handling_policy}
+        uuid: ${var.channel_source_anonymous_transactions_handling_uuid}
+      hostname: ${var.channel_source_hostname}
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      port: ${var.channel_source_port}
+      sourceType: ${var.channel_source_source_type}
+      sslCaCertificate:
+      - certificateType: ${var.channel_source_ssl_ca_certificate_certificate_type}
+        contents: ${var.channel_source_ssl_ca_certificate_contents}
+      sslMode: ${var.channel_source_ssl_mode}
+      username: ${var.channel_source_username}
+    target:
+    - applierUsername: ${var.channel_target_applier_username}
+      channelName: ${oci_mysql_channel.test_channel.name}
+      dbSystemIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_db_system
+      delayInSeconds: ${var.channel_target_delay_in_seconds}
+      filters:
+      - type: ${var.channel_target_filters_type}
+        value: ${var.channel_target_filters_value}
+      tablesWithoutPrimaryKeyHandling: ${var.channel_target_tables_without_primary_key_handling}
+      targetType: ${var.channel_target_target_type}

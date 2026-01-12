@@ -1,0 +1,22 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/mysqlbackup
+  labels:
+    testing.upbound.io/example-name: test_mysql_backup
+  name: test-mysql-backup
+spec:
+  forProvider:
+    backupType: ${var.mysql_backup_backup_type}
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.mysql_backup_description}
+    displayName: ${var.mysql_backup_display_name}
+    freeformTags:
+      bar-key: value
+    retentionInDays: ${var.mysql_backup_retention_in_days}
+    softDelete: ${var.mysql_backup_soft_delete}
