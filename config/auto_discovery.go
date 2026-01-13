@@ -54,7 +54,7 @@ func ProblematicResources() []string {
 func AutoExternalNameConfiguration() config.ResourceOption {
 	return func(r *config.Resource) {
 		// Only apply if not already configured
-		if r.ExternalName.GetExternalNameFn == nil {
+		if r.ExternalName.DisableNameInitializer == false {
 			// Check if this resource has explicit configuration
 			if _, ok := ExternalNameConfigs[r.Name]; !ok {
 				// Use IdentifierFromProvider as default for all OCI resources
