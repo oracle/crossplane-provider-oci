@@ -459,6 +459,11 @@ var GroupMap = map[string]GroupKindCalculator{
 	"oci_mysql_heat_wave_cluster": func(name string) (string, string) { return "mysql", "MysqlHeatWaveCluster" },
 	"oci_mysql_replica":           func(name string) (string, string) { return "mysql", "MysqlReplica" },
 
+	// PostgreSQL Service
+	"oci_psql_backup":        func(name string) (string, string) { return "psql", "PsqlBackup" },
+	"oci_psql_configuration": func(name string) (string, string) { return "psql", "PsqlConfiguration" },
+	"oci_psql_db_system":     func(name string) (string, string) { return "psql", "PsqlDbSystem" },
+
 	// Streaming Service
 	"oci_streaming_stream": func(name string) (string, string) {
 		return "streaming", "Stream"

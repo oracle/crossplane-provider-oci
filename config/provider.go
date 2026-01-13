@@ -41,6 +41,7 @@ import (
 	"github.com/oracle/provider-oci/config/networkloadbalancer"
 	"github.com/oracle/provider-oci/config/objectstorage"
 	"github.com/oracle/provider-oci/config/ons"
+	"github.com/oracle/provider-oci/config/psql"
 	"github.com/oracle/provider-oci/config/streaming"
 	"github.com/oracle/provider-oci/config/vault"
 	"github.com/oracle/provider-oci/hack"
@@ -61,7 +62,8 @@ var providerMetadata string
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithRootGroup("oci.upbound.io"),
-		ujconfig.WithIncludeList(append(ExternalNameConfigured(), "oci_mysql_.*")),
+		// This will include manually configured resources + 6 MySQL resources + 3 PSQL resources
+		ujconfig.WithIncludeList(append(ExternalNameConfigured(), "oci_mysql_.*", "oci_psql_.*")),
 		ujconfig.WithDefaultResourceOptions(
 			GroupKindOverrides(),
 			ExternalNameConfigurations(),
@@ -95,6 +97,7 @@ func GetProvider() *ujconfig.Provider {
 		vault.Configure,
 		streaming.Configure,
 		mysql.Configure,
+		psql.Configure,
 	} {
 		configure(pc)
 	}
