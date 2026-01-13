@@ -1,0 +1,51 @@
+apiVersion: psql.oci.upbound.io/v1alpha1
+kind: PsqlDbSystem
+metadata:
+  labels:
+    testing.upbound.io/example-name: psqldbsystem1
+  name: psqldbsystem1
+spec:
+  forProvider:
+    dbVersion: "14"
+    displayName: "psqldbsystem1"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment1
+
+    systemType: "OCI_OPTIMIZED_STORAGE"
+    shape: "PostgreSQL.VM.Standard.E5.Flex"
+    instanceOcpuCount: 1
+    instanceMemorySizeInGbs: 16
+
+    storageDetails:
+      - isRegionallyDurable: true
+        systemType: "OCI_OPTIMIZED_STORAGE"
+
+    networkDetails:
+      - isReaderEndpointEnabled: true
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: subnet1
+
+    # Credentials are required to create a PSQL DB System.
+    # Apply the following before creating an instance of db with your own credentials
+    # kubectl create secret generic password-secret-psqldbsystem1 \
+    # --from-literal=credentials='Mysecret@1' \
+    # -n crossplane-system
+
+    # kubectl create secret generic password-type-secret-psqldbsystem1 \
+    # --from-literal=credentials='PLAIN_TEXT' \
+    # -n crossplane-system
+
+    credentials:
+      # Update with your preferred username to login into PSQL DB System
+      - username: "adminUser"
+        passwordDetails:
+          - passwordSecretRef:
+              name: password-secret-psqldbsystem1
+              key: credentials
+              namespace: crossplane-system
+            passwordTypeSecretRef:
+              name: password-type-secret-psqldbsystem1
+              key: credentials
+              namespace: crossplane-system
