@@ -1,0 +1,23 @@
+apiVersion: psql.oci.upbound.io/v1alpha1
+kind: PsqlBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psql/v1alpha1/psqlbackup
+  labels:
+    testing.upbound.io/example-name: test_backup
+  name: test-backup
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.backup_description}
+    displayName: ${var.backup_display_name}
+    freeformTags:
+      bar-key: value
+    retentionPeriod: ${var.backup_retention_period}

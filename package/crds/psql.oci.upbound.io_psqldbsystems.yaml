@@ -1,0 +1,1615 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: psqldbsystems.psql.oci.upbound.io
+spec:
+  group: psql.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: PsqlDbSystem
+    listKind: PsqlDbSystemList
+    plural: psqldbsystems
+    singular: psqldbsystem
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PsqlDbSystem is the Schema for the PsqlDbSystems API. Provides
+          the Db System resource in Oracle Cloud Infrastructure Psql service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PsqlDbSystemSpec defines the desired state of PsqlDbSystem
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  applyConfig:
+                    description: Whether a configuration update requires a restart
+                      of the database instance or a reload of the configuration. Some
+                      configuration changes require a restart of database instances
+                      to be applied. Apply config can be passed as RESTART or RELOAD
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the database system.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  configId:
+                    description: The OCID of the configuration associated with the
+                      database system.
+                    type: string
+                  credentials:
+                    description: Initial database system credentials that the database
+                      system will be provisioned with. The password details are not
+                      visible on any subsequent operation, such as GET /dbSystems/{dbSystemId}.
+                    items:
+                      properties:
+                        passwordDetails:
+                          description: Details for the database system password. Password
+                            can be passed as VaultSecretPasswordDetails or PlainTextPasswordDetails.
+                          items:
+                            properties:
+                              passwordSecretRef:
+                                description: The database system password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              passwordTypeSecretRef:
+                                description: The password type.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              secretId:
+                                description: The OCID of the secret where the password
+                                  is stored.
+                                type: string
+                              secretVersion:
+                                description: The secret version of the stored password.
+                                type: string
+                            type: object
+                          type: array
+                        username:
+                          description: The database system administrator username.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: Version of database system software.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-provided description of a database
+                      system.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-friendly display name for the
+                      database system. Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  instanceCount:
+                    description: Count of database instances nodes to be created in
+                      the database system.
+                    type: number
+                  instanceMemorySizeInGbs:
+                    description: (Updatable) The total amount of memory available
+                      to each database instance node, in gigabytes.
+                    type: number
+                  instanceOcpuCount:
+                    description: (Updatable) The total number of OCPUs available to
+                      each database instance node.
+                    type: number
+                  instancesDetails:
+                    description: Details of database instances nodes to be created.
+                      This parameter is optional. If specified, its size must match
+                      instanceCount.
+                    items:
+                      properties:
+                        description:
+                          description: (Updatable) A user-provided description of
+                            a database system.
+                          type: string
+                        displayName:
+                          description: (Updatable) A user-friendly display name for
+                            the database system. Avoid entering confidential information.
+                          type: string
+                        privateIp:
+                          description: Private IP in customer subnet that will be
+                            assigned to the database instance node. This value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses in the specified subnet.
+                          type: string
+                      type: object
+                    type: array
+                  managementPolicy:
+                    description: (Updatable) PostgreSQL database system management
+                      policy update details.
+                    items:
+                      properties:
+                        backupPolicy:
+                          description: (Updatable) PostgreSQL database system backup
+                            policy.
+                          items:
+                            properties:
+                              backupStart:
+                                description: (Updatable) Hour of the day when the
+                                  backup starts.
+                                type: string
+                              copyPolicy:
+                                description: (Updatable) Backup copy details
+                                items:
+                                  properties:
+                                    compartmentId:
+                                      description: (Updatable) The OCID of the compartment
+                                        that contains the database system.
+                                      type: string
+                                    regions:
+                                      description: (Updatable) List of region names
+                                        of the remote region
+                                      items:
+                                        type: string
+                                      type: array
+                                    retentionPeriod:
+                                      description: (Updatable) Retention period in
+                                        days of the backup copy.
+                                      type: number
+                                  type: object
+                                type: array
+                              daysOfTheMonth:
+                                description: (Updatable) Day of the month when the
+                                  backup should start. To ensure that the backup runs
+                                  monthly, the latest day of the month that you can
+                                  use to schedule a backup is the the 28th day.
+                                items:
+                                  type: number
+                                type: array
+                              daysOfTheWeek:
+                                description: (Updatable) The day of the week that
+                                  the backup starts.
+                                items:
+                                  type: string
+                                type: array
+                              kind:
+                                description: (Updatable) The kind of backup policy.
+                                type: string
+                              retentionDays:
+                                description: (Updatable) How many days the data should
+                                  be stored after the database system deletion.
+                                type: number
+                            type: object
+                          type: array
+                        maintenanceWindowStart:
+                          description: (Updatable) The start of the maintenance window
+                            in UTC.
+                          type: string
+                      type: object
+                    type: array
+                  networkDetails:
+                    description: (Updatable) Network details for the database system.
+                    items:
+                      properties:
+                        isReaderEndpointEnabled:
+                          description: (Updatable) Specifies if the reader endpoint
+                            is enabled on the dbSystem.
+                          type: boolean
+                        nsgIds:
+                          description: (Updatable) List of customer Network Security
+                            Group OCIDs associated with the database system.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        primaryDbEndpointPrivateIp:
+                          description: Private IP in customer subnet. The value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses from the specified subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the customer subnet associated
+                            with the database system.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  patchOperations:
+                    description: (Updatable) For adding and removing from read replica
+                      database instances. Please remove the patch_operations after
+                      it is applied. Update the instance_count arrodrandly. Cannot
+                      be specified when creating the resource.
+                    items:
+                      properties:
+                        from:
+                          type: string
+                        operation:
+                          description: 'The operation can be one of these values:
+                            INSERT, REMOVE.'
+                          type: string
+                        position:
+                          type: string
+                        selectedItem:
+                          type: string
+                        selection:
+                          description: In case of INSERT, selection is instances.
+                            In case of REMOVE, selection is instances[?id == '${var.instance_id}'].
+                          type: string
+                        value:
+                          additionalProperties:
+                            type: string
+                          description: 'Specify instance details such as displayName,
+                            description or privateIp. Example: {"displayName": "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
+                  shape:
+                    description: '(Updatable) The name of the shape for the database
+                      instance node. Use the /shapes API for accepted shapes. Example:
+                      VM.Standard.E4.Flex'
+                    type: string
+                  source:
+                    description: The source of the database system.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the database system backup.
+                          type: string
+                        isHavingRestoreConfigOverrides:
+                          description: (Applicable when source_type=BACKUP) Deprecated.
+                            Don't use.
+                          type: boolean
+                        sourceType:
+                          description: 'The source descriminator. Example: {"source_type":
+                            "BACKUP"}.'
+                          type: string
+                      type: object
+                    type: array
+                  storageDetails:
+                    description: (Updatable) Storage details of the database system.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: Specifies the availability domain of AD-local
+                            storage. If isRegionallyDurable is set to true, availabilityDomain
+                            should not be specified. If isRegionallyDurable is set
+                            to false, availabilityDomain must be specified.
+                          type: string
+                        iops:
+                          description: (Applicable when system_type=OCI_OPTIMIZED_STORAGE)
+                            (Updatable) Guaranteed input/output storage requests per
+                            second (IOPS) available to the database system. Find more
+                            about the supported Peformance Tiers here.
+                          type: string
+                        isRegionallyDurable:
+                          description: Specifies if the block volume used for the
+                            database system is regional or AD-local. If not specified,
+                            it will be set to false. If isRegionallyDurable is set
+                            to true, availabilityDomain should not be specified. If
+                            isRegionallyDurable is set to false, availabilityDomain
+                            must be specified.
+                          type: boolean
+                        systemType:
+                          description: Type of the database system.
+                          type: string
+                      type: object
+                    type: array
+                  systemType:
+                    description: Type of the database system.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  applyConfig:
+                    description: Whether a configuration update requires a restart
+                      of the database instance or a reload of the configuration. Some
+                      configuration changes require a restart of database instances
+                      to be applied. Apply config can be passed as RESTART or RELOAD
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the database system.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  configId:
+                    description: The OCID of the configuration associated with the
+                      database system.
+                    type: string
+                  credentials:
+                    description: Initial database system credentials that the database
+                      system will be provisioned with. The password details are not
+                      visible on any subsequent operation, such as GET /dbSystems/{dbSystemId}.
+                    items:
+                      properties:
+                        passwordDetails:
+                          description: Details for the database system password. Password
+                            can be passed as VaultSecretPasswordDetails or PlainTextPasswordDetails.
+                          items:
+                            properties:
+                              passwordSecretRef:
+                                description: The database system password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              passwordTypeSecretRef:
+                                description: The password type.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              secretId:
+                                description: The OCID of the secret where the password
+                                  is stored.
+                                type: string
+                              secretVersion:
+                                description: The secret version of the stored password.
+                                type: string
+                            required:
+                            - passwordTypeSecretRef
+                            type: object
+                          type: array
+                        username:
+                          description: The database system administrator username.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: Version of database system software.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-provided description of a database
+                      system.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-friendly display name for the
+                      database system. Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  instanceCount:
+                    description: Count of database instances nodes to be created in
+                      the database system.
+                    type: number
+                  instanceMemorySizeInGbs:
+                    description: (Updatable) The total amount of memory available
+                      to each database instance node, in gigabytes.
+                    type: number
+                  instanceOcpuCount:
+                    description: (Updatable) The total number of OCPUs available to
+                      each database instance node.
+                    type: number
+                  instancesDetails:
+                    description: Details of database instances nodes to be created.
+                      This parameter is optional. If specified, its size must match
+                      instanceCount.
+                    items:
+                      properties:
+                        description:
+                          description: (Updatable) A user-provided description of
+                            a database system.
+                          type: string
+                        displayName:
+                          description: (Updatable) A user-friendly display name for
+                            the database system. Avoid entering confidential information.
+                          type: string
+                        privateIp:
+                          description: Private IP in customer subnet that will be
+                            assigned to the database instance node. This value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses in the specified subnet.
+                          type: string
+                      type: object
+                    type: array
+                  managementPolicy:
+                    description: (Updatable) PostgreSQL database system management
+                      policy update details.
+                    items:
+                      properties:
+                        backupPolicy:
+                          description: (Updatable) PostgreSQL database system backup
+                            policy.
+                          items:
+                            properties:
+                              backupStart:
+                                description: (Updatable) Hour of the day when the
+                                  backup starts.
+                                type: string
+                              copyPolicy:
+                                description: (Updatable) Backup copy details
+                                items:
+                                  properties:
+                                    compartmentId:
+                                      description: (Updatable) The OCID of the compartment
+                                        that contains the database system.
+                                      type: string
+                                    regions:
+                                      description: (Updatable) List of region names
+                                        of the remote region
+                                      items:
+                                        type: string
+                                      type: array
+                                    retentionPeriod:
+                                      description: (Updatable) Retention period in
+                                        days of the backup copy.
+                                      type: number
+                                  type: object
+                                type: array
+                              daysOfTheMonth:
+                                description: (Updatable) Day of the month when the
+                                  backup should start. To ensure that the backup runs
+                                  monthly, the latest day of the month that you can
+                                  use to schedule a backup is the the 28th day.
+                                items:
+                                  type: number
+                                type: array
+                              daysOfTheWeek:
+                                description: (Updatable) The day of the week that
+                                  the backup starts.
+                                items:
+                                  type: string
+                                type: array
+                              kind:
+                                description: (Updatable) The kind of backup policy.
+                                type: string
+                              retentionDays:
+                                description: (Updatable) How many days the data should
+                                  be stored after the database system deletion.
+                                type: number
+                            type: object
+                          type: array
+                        maintenanceWindowStart:
+                          description: (Updatable) The start of the maintenance window
+                            in UTC.
+                          type: string
+                      type: object
+                    type: array
+                  networkDetails:
+                    description: (Updatable) Network details for the database system.
+                    items:
+                      properties:
+                        isReaderEndpointEnabled:
+                          description: (Updatable) Specifies if the reader endpoint
+                            is enabled on the dbSystem.
+                          type: boolean
+                        nsgIds:
+                          description: (Updatable) List of customer Network Security
+                            Group OCIDs associated with the database system.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        primaryDbEndpointPrivateIp:
+                          description: Private IP in customer subnet. The value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses from the specified subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the customer subnet associated
+                            with the database system.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  patchOperations:
+                    description: (Updatable) For adding and removing from read replica
+                      database instances. Please remove the patch_operations after
+                      it is applied. Update the instance_count arrodrandly. Cannot
+                      be specified when creating the resource.
+                    items:
+                      properties:
+                        from:
+                          type: string
+                        operation:
+                          description: 'The operation can be one of these values:
+                            INSERT, REMOVE.'
+                          type: string
+                        position:
+                          type: string
+                        selectedItem:
+                          type: string
+                        selection:
+                          description: In case of INSERT, selection is instances.
+                            In case of REMOVE, selection is instances[?id == '${var.instance_id}'].
+                          type: string
+                        value:
+                          additionalProperties:
+                            type: string
+                          description: 'Specify instance details such as displayName,
+                            description or privateIp. Example: {"displayName": "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
+                  shape:
+                    description: '(Updatable) The name of the shape for the database
+                      instance node. Use the /shapes API for accepted shapes. Example:
+                      VM.Standard.E4.Flex'
+                    type: string
+                  source:
+                    description: The source of the database system.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the database system backup.
+                          type: string
+                        isHavingRestoreConfigOverrides:
+                          description: (Applicable when source_type=BACKUP) Deprecated.
+                            Don't use.
+                          type: boolean
+                        sourceType:
+                          description: 'The source descriminator. Example: {"source_type":
+                            "BACKUP"}.'
+                          type: string
+                      type: object
+                    type: array
+                  storageDetails:
+                    description: (Updatable) Storage details of the database system.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: Specifies the availability domain of AD-local
+                            storage. If isRegionallyDurable is set to true, availabilityDomain
+                            should not be specified. If isRegionallyDurable is set
+                            to false, availabilityDomain must be specified.
+                          type: string
+                        iops:
+                          description: (Applicable when system_type=OCI_OPTIMIZED_STORAGE)
+                            (Updatable) Guaranteed input/output storage requests per
+                            second (IOPS) available to the database system. Find more
+                            about the supported Peformance Tiers here.
+                          type: string
+                        isRegionallyDurable:
+                          description: Specifies if the block volume used for the
+                            database system is regional or AD-local. If not specified,
+                            it will be set to false. If isRegionallyDurable is set
+                            to true, availabilityDomain should not be specified. If
+                            isRegionallyDurable is set to false, availabilityDomain
+                            must be specified.
+                          type: boolean
+                        systemType:
+                          description: Type of the database system.
+                          type: string
+                      type: object
+                    type: array
+                  systemType:
+                    description: Type of the database system.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.dbVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbVersion)
+                || (has(self.initProvider) && has(self.initProvider.dbVersion))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.networkDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkDetails)
+                || (has(self.initProvider) && has(self.initProvider.networkDetails))'
+            - message: spec.forProvider.shape is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shape)
+                || (has(self.initProvider) && has(self.initProvider.shape))'
+            - message: spec.forProvider.storageDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageDetails)
+                || (has(self.initProvider) && has(self.initProvider.storageDetails))'
+          status:
+            description: PsqlDbSystemStatus defines the observed state of PsqlDbSystem.
+            properties:
+              atProvider:
+                properties:
+                  adminUsername:
+                    description: The database system administrator username.
+                    type: string
+                  applyConfig:
+                    description: Whether a configuration update requires a restart
+                      of the database instance or a reload of the configuration. Some
+                      configuration changes require a restart of database instances
+                      to be applied. Apply config can be passed as RESTART or RELOAD
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the database system.
+                    type: string
+                  configId:
+                    description: The OCID of the configuration associated with the
+                      database system.
+                    type: string
+                  credentials:
+                    description: Initial database system credentials that the database
+                      system will be provisioned with. The password details are not
+                      visible on any subsequent operation, such as GET /dbSystems/{dbSystemId}.
+                    items:
+                      properties:
+                        passwordDetails:
+                          description: Details for the database system password. Password
+                            can be passed as VaultSecretPasswordDetails or PlainTextPasswordDetails.
+                          items:
+                            properties:
+                              secretId:
+                                description: The OCID of the secret where the password
+                                  is stored.
+                                type: string
+                              secretVersion:
+                                description: The secret version of the stored password.
+                                type: string
+                            type: object
+                          type: array
+                        username:
+                          description: The database system administrator username.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: Version of database system software.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-provided description of a database
+                      system.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-friendly display name for the
+                      database system. Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: A unique identifier for the database system. Immutable
+                      on creation.
+                    type: string
+                  instanceCount:
+                    description: Count of database instances nodes to be created in
+                      the database system.
+                    type: number
+                  instanceMemorySizeInGbs:
+                    description: (Updatable) The total amount of memory available
+                      to each database instance node, in gigabytes.
+                    type: number
+                  instanceOcpuCount:
+                    description: (Updatable) The total number of OCPUs available to
+                      each database instance node.
+                    type: number
+                  instances:
+                    description: The list of instances, or nodes, in the database
+                      system.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: Specifies the availability domain of AD-local
+                            storage. If isRegionallyDurable is set to true, availabilityDomain
+                            should not be specified. If isRegionallyDurable is set
+                            to false, availabilityDomain must be specified.
+                          type: string
+                        description:
+                          description: (Updatable) A user-provided description of
+                            a database system.
+                          type: string
+                        displayName:
+                          description: (Updatable) A user-friendly display name for
+                            the database system. Avoid entering confidential information.
+                          type: string
+                        id:
+                          description: A unique identifier for the database system.
+                            Immutable on creation.
+                          type: string
+                        lifecycleDetails:
+                          description: A message describing the current state in more
+                            detail. For example, can be used to provide actionable
+                            information for a resource in Failed state.
+                          type: string
+                        state:
+                          description: The current state of the database instance
+                            node.
+                          type: string
+                        timeCreated:
+                          description: 'The date and time that the database instance
+                            node was created, expressed in RFC 3339 timestamp format.  Example:
+                            2016-08-25T21:10:29.600Z'
+                          type: string
+                        timeUpdated:
+                          description: 'The date and time that the database instance
+                            node was updated, expressed in RFC 3339 timestamp format.  Example:
+                            2016-08-25T21:10:29.600Z'
+                          type: string
+                      type: object
+                    type: array
+                  instancesDetails:
+                    description: Details of database instances nodes to be created.
+                      This parameter is optional. If specified, its size must match
+                      instanceCount.
+                    items:
+                      properties:
+                        description:
+                          description: (Updatable) A user-provided description of
+                            a database system.
+                          type: string
+                        displayName:
+                          description: (Updatable) A user-friendly display name for
+                            the database system. Avoid entering confidential information.
+                          type: string
+                        privateIp:
+                          description: Private IP in customer subnet that will be
+                            assigned to the database instance node. This value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses in the specified subnet.
+                          type: string
+                      type: object
+                    type: array
+                  lifecycleDetails:
+                    description: A message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in Failed state.
+                    type: string
+                  managementPolicy:
+                    description: (Updatable) PostgreSQL database system management
+                      policy update details.
+                    items:
+                      properties:
+                        backupPolicy:
+                          description: (Updatable) PostgreSQL database system backup
+                            policy.
+                          items:
+                            properties:
+                              backupStart:
+                                description: (Updatable) Hour of the day when the
+                                  backup starts.
+                                type: string
+                              copyPolicy:
+                                description: (Updatable) Backup copy details
+                                items:
+                                  properties:
+                                    compartmentId:
+                                      description: (Updatable) The OCID of the compartment
+                                        that contains the database system.
+                                      type: string
+                                    regions:
+                                      description: (Updatable) List of region names
+                                        of the remote region
+                                      items:
+                                        type: string
+                                      type: array
+                                    retentionPeriod:
+                                      description: (Updatable) Retention period in
+                                        days of the backup copy.
+                                      type: number
+                                  type: object
+                                type: array
+                              daysOfTheMonth:
+                                description: (Updatable) Day of the month when the
+                                  backup should start. To ensure that the backup runs
+                                  monthly, the latest day of the month that you can
+                                  use to schedule a backup is the the 28th day.
+                                items:
+                                  type: number
+                                type: array
+                              daysOfTheWeek:
+                                description: (Updatable) The day of the week that
+                                  the backup starts.
+                                items:
+                                  type: string
+                                type: array
+                              kind:
+                                description: (Updatable) The kind of backup policy.
+                                type: string
+                              retentionDays:
+                                description: (Updatable) How many days the data should
+                                  be stored after the database system deletion.
+                                type: number
+                            type: object
+                          type: array
+                        maintenanceWindowStart:
+                          description: (Updatable) The start of the maintenance window
+                            in UTC.
+                          type: string
+                      type: object
+                    type: array
+                  networkDetails:
+                    description: (Updatable) Network details for the database system.
+                    items:
+                      properties:
+                        isReaderEndpointEnabled:
+                          description: (Updatable) Specifies if the reader endpoint
+                            is enabled on the dbSystem.
+                          type: boolean
+                        nsgIds:
+                          description: (Updatable) List of customer Network Security
+                            Group OCIDs associated with the database system.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        primaryDbEndpointPrivateIp:
+                          description: Private IP in customer subnet. The value is
+                            optional. If the IP is not provided, the IP will be chosen
+                            from the available IP addresses from the specified subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the customer subnet associated
+                            with the database system.
+                          type: string
+                      type: object
+                    type: array
+                  patchOperations:
+                    description: (Updatable) For adding and removing from read replica
+                      database instances. Please remove the patch_operations after
+                      it is applied. Update the instance_count arrodrandly. Cannot
+                      be specified when creating the resource.
+                    items:
+                      properties:
+                        from:
+                          type: string
+                        operation:
+                          description: 'The operation can be one of these values:
+                            INSERT, REMOVE.'
+                          type: string
+                        position:
+                          type: string
+                        selectedItem:
+                          type: string
+                        selection:
+                          description: In case of INSERT, selection is instances.
+                            In case of REMOVE, selection is instances[?id == '${var.instance_id}'].
+                          type: string
+                        value:
+                          additionalProperties:
+                            type: string
+                          description: 'Specify instance details such as displayName,
+                            description or privateIp. Example: {"displayName": "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
+                  shape:
+                    description: '(Updatable) The name of the shape for the database
+                      instance node. Use the /shapes API for accepted shapes. Example:
+                      VM.Standard.E4.Flex'
+                    type: string
+                  source:
+                    description: The source of the database system.
+                    items:
+                      properties:
+                        backupId:
+                          description: The OCID of the database system backup.
+                          type: string
+                        isHavingRestoreConfigOverrides:
+                          description: (Applicable when source_type=BACKUP) Deprecated.
+                            Don't use.
+                          type: boolean
+                        sourceType:
+                          description: 'The source descriminator. Example: {"source_type":
+                            "BACKUP"}.'
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The current state of the database instance node.
+                    type: string
+                  storageDetails:
+                    description: (Updatable) Storage details of the database system.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: Specifies the availability domain of AD-local
+                            storage. If isRegionallyDurable is set to true, availabilityDomain
+                            should not be specified. If isRegionallyDurable is set
+                            to false, availabilityDomain must be specified.
+                          type: string
+                        iops:
+                          description: (Applicable when system_type=OCI_OPTIMIZED_STORAGE)
+                            (Updatable) Guaranteed input/output storage requests per
+                            second (IOPS) available to the database system. Find more
+                            about the supported Peformance Tiers here.
+                          type: string
+                        isRegionallyDurable:
+                          description: Specifies if the block volume used for the
+                            database system is regional or AD-local. If not specified,
+                            it will be set to false. If isRegionallyDurable is set
+                            to true, availabilityDomain should not be specified. If
+                            isRegionallyDurable is set to false, availabilityDomain
+                            must be specified.
+                          type: boolean
+                        systemType:
+                          description: Type of the database system.
+                          type: string
+                      type: object
+                    type: array
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'System tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  systemType:
+                    description: Type of the database system.
+                    type: string
+                  timeCreated:
+                    description: 'The date and time that the database instance node
+                      was created, expressed in RFC 3339 timestamp format.  Example:
+                      2016-08-25T21:10:29.600Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The date and time that the database instance node
+                      was updated, expressed in RFC 3339 timestamp format.  Example:
+                      2016-08-25T21:10:29.600Z'
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

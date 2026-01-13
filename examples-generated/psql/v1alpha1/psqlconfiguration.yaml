@@ -1,0 +1,30 @@
+apiVersion: psql.oci.upbound.io/v1alpha1
+kind: PsqlConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psql/v1alpha1/psqlconfiguration
+  labels:
+    testing.upbound.io/example-name: test_configuration
+  name: test-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    compatibleShapes: ${var.configuration_compatible_shapes}
+    dbConfigurationOverrides:
+    - items:
+      - configKey: ${var.configuration_db_configuration_overrides_items_config_key}
+        overridenConfigValue: ${var.configuration_db_configuration_overrides_items_overriden_config_value}
+    dbVersion: ${var.configuration_db_version}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.configuration_description}
+    displayName: ${var.configuration_display_name}
+    freeformTags:
+      bar-key: value
+    instanceMemorySizeInGbs: ${var.configuration_instance_memory_size_in_gbs}
+    instanceOcpuCount: ${var.configuration_instance_ocpu_count}
+    isFlexible: ${var.configuration_is_flexible}
+    shape: ${var.configuration_shape}
+    systemTags: ${var.configuration_system_tags}

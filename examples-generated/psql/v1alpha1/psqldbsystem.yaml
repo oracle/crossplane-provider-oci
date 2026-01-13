@@ -1,0 +1,75 @@
+apiVersion: psql.oci.upbound.io/v1alpha1
+kind: PsqlDbSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psql/v1alpha1/psqldbsystem
+  labels:
+    testing.upbound.io/example-name: test_db_system
+  name: test-db-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configId: ${oci_apm_config_config.test_config.id}
+    credentials:
+    - passwordDetails:
+      - passwordSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        passwordTypeSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        secretId: ${oci_vault_secret.test_secret.id}
+        secretVersion: ${var.db_system_credentials_password_details_secret_version}
+      username: ${var.db_system_credentials_username}
+    dbVersion: ${var.db_system_db_version}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.db_system_description}
+    displayName: ${var.db_system_display_name}
+    freeformTags:
+      bar-key: value
+    instanceCount: ${var.db_system_instance_count}
+    instanceMemorySizeInGbs: ${var.db_system_instance_memory_size_in_gbs}
+    instanceOcpuCount: ${var.db_system_instance_ocpu_count}
+    instancesDetails:
+    - description: ${var.db_system_instances_details_description}
+      displayName: ${var.db_system_instances_details_display_name}
+      privateIp: ${var.db_system_instances_details_private_ip}
+    managementPolicy:
+    - backupPolicy:
+      - backupStart: ${var.db_system_management_policy_backup_policy_backup_start}
+        copyPolicy:
+        - compartmentId: ${var.compartment_id}
+          regions: ${var.db_system_management_policy_backup_policy_copy_policy_regions}
+          retentionPeriod: ${var.db_system_management_policy_backup_policy_copy_policy_retention_period}
+        daysOfTheMonth: ${var.db_system_management_policy_backup_policy_days_of_the_month}
+        daysOfTheWeek: ${var.db_system_management_policy_backup_policy_days_of_the_week}
+        kind: ${var.db_system_management_policy_backup_policy_kind}
+        retentionDays: ${var.db_system_management_policy_backup_policy_retention_days}
+      maintenanceWindowStart: ${var.db_system_management_policy_maintenance_window_start}
+    networkDetails:
+    - isReaderEndpointEnabled: ${var.db_system_network_details_is_reader_endpoint_enabled}
+      nsgIds: ${var.db_system_network_details_nsg_ids}
+      primaryDbEndpointPrivateIp: ${var.db_system_network_details_primary_db_endpoint_private_ip}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    patchOperations:
+    - operation: ${var.db_system_patch_operations_operation}
+      selection: ${var.db_system_patch_operations_selection}
+      value: ${var.db_system_patch_operations_value}
+    shape: ${var.db_system_shape}
+    source:
+    - backupId: ${oci_psql_backup.test_backup.id}
+      isHavingRestoreConfigOverrides: ${var.db_system_source_is_having_restore_config_overrides}
+      sourceType: ${var.db_system_source_source_type}
+    storageDetails:
+    - availabilityDomain: ${var.db_system_storage_details_availability_domain}
+      iops: ${var.db_system_storage_details_iops}
+      isRegionallyDurable: ${var.db_system_storage_details_is_regionally_durable}
+      systemType: ${var.db_system_storage_details_system_type}
+    systemType: ${var.db_system_system_type}

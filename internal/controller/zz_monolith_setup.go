@@ -135,6 +135,9 @@ import (
 	notificationtopic "github.com/oracle/provider-oci/internal/controller/ons/notificationtopic"
 	subscription "github.com/oracle/provider-oci/internal/controller/ons/subscription"
 	providerconfig "github.com/oracle/provider-oci/internal/controller/providerconfig"
+	psqlbackup "github.com/oracle/provider-oci/internal/controller/psql/psqlbackup"
+	psqlconfiguration "github.com/oracle/provider-oci/internal/controller/psql/psqlconfiguration"
+	psqldbsystem "github.com/oracle/provider-oci/internal/controller/psql/psqldbsystem"
 	connectharness "github.com/oracle/provider-oci/internal/controller/streaming/connectharness"
 	stream "github.com/oracle/provider-oci/internal/controller/streaming/stream"
 	streampool "github.com/oracle/provider-oci/internal/controller/streaming/streampool"
@@ -271,6 +274,9 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		notificationtopic.Setup,
 		subscription.Setup,
 		providerconfig.Setup,
+		psqlbackup.Setup,
+		psqlconfiguration.Setup,
+		psqldbsystem.Setup,
 		connectharness.Setup,
 		stream.Setup,
 		streampool.Setup,
