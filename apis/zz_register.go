@@ -25,6 +25,7 @@ import (
 	v1alpha1loadbalancer "github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1"
 	v1alpha1logging "github.com/oracle/provider-oci/apis/logging/v1alpha1"
 	v1alpha1monitoring "github.com/oracle/provider-oci/apis/monitoring/v1alpha1"
+	v1alpha1mysql "github.com/oracle/provider-oci/apis/mysql/v1alpha1"
 	v1alpha1networkconnectivity "github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1"
 	v1alpha1networkfirewall "github.com/oracle/provider-oci/apis/networkfirewall/v1alpha1"
 	v1alpha1networking "github.com/oracle/provider-oci/apis/networking/v1alpha1"
@@ -55,6 +56,7 @@ func init() {
 		v1alpha1loadbalancer.SchemeBuilder.AddToScheme,
 		v1alpha1logging.SchemeBuilder.AddToScheme,
 		v1alpha1monitoring.SchemeBuilder.AddToScheme,
+		v1alpha1mysql.SchemeBuilder.AddToScheme,
 		v1alpha1networkconnectivity.SchemeBuilder.AddToScheme,
 		v1alpha1networkfirewall.SchemeBuilder.AddToScheme,
 		v1alpha1networking.SchemeBuilder.AddToScheme,

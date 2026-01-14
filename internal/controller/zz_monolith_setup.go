@@ -88,6 +88,12 @@ import (
 	alarm "github.com/oracle/provider-oci/internal/controller/monitoring/alarm"
 	capturefilter "github.com/oracle/provider-oci/internal/controller/monitoring/capturefilter"
 	vtap "github.com/oracle/provider-oci/internal/controller/monitoring/vtap"
+	mysqlbackup "github.com/oracle/provider-oci/internal/controller/mysql/mysqlbackup"
+	mysqlchannel "github.com/oracle/provider-oci/internal/controller/mysql/mysqlchannel"
+	mysqlconfiguration "github.com/oracle/provider-oci/internal/controller/mysql/mysqlconfiguration"
+	mysqldbsystem "github.com/oracle/provider-oci/internal/controller/mysql/mysqldbsystem"
+	mysqlheatwavecluster "github.com/oracle/provider-oci/internal/controller/mysql/mysqlheatwavecluster"
+	mysqlreplica "github.com/oracle/provider-oci/internal/controller/mysql/mysqlreplica"
 	cpe "github.com/oracle/provider-oci/internal/controller/networkconnectivity/cpe"
 	crossconnect "github.com/oracle/provider-oci/internal/controller/networkconnectivity/crossconnect"
 	crossconnectgroup "github.com/oracle/provider-oci/internal/controller/networkconnectivity/crossconnectgroup"
@@ -224,6 +230,12 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		alarm.Setup,
 		capturefilter.Setup,
 		vtap.Setup,
+		mysqlbackup.Setup,
+		mysqlchannel.Setup,
+		mysqlconfiguration.Setup,
+		mysqldbsystem.Setup,
+		mysqlheatwavecluster.Setup,
+		mysqlreplica.Setup,
 		cpe.Setup,
 		crossconnect.Setup,
 		crossconnectgroup.Setup,
