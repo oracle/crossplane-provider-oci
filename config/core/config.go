@@ -22,57 +22,152 @@ import (
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
-	p.AddResourceConfigurator("oci_core_instance", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-		// r.ShortGroup = "compute"
 
-		// This resource reside inside a compartment. By defining it as a reference to Compartment
-		// object, we can build cross resource referencing.
+	p.AddResourceConfigurator("oci_core_compute_capacity_report", func(r *config.Resource) {
+		// REQUIRED
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
-			// RefFieldName:      "compartmentIdRef",
-			// SelectorFieldName: "compartmentIdSelector",
 		}
+	})
 
-		r.References["create_vnic_details.subnet_id"] = config.Reference{
-			TerraformName: "oci_core_subnet",
+	p.AddResourceConfigurator("oci_core_compute_capacity_reservation", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
 		}
+	})
 
-		r.References["create_vnic_details.nsg_ids"] = config.Reference{
-			TerraformName: "oci_core_network_security_group",
+	p.AddResourceConfigurator("oci_core_compute_capacity_topology", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
 		}
+	})
 
-		r.References["create_vnic_details.vlan_id"] = config.Reference{
-			TerraformName: "oci_core_vlan",
+	p.AddResourceConfigurator("oci_core_compute_cluster", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
 		}
+	})
 
-		r.References["dedicated_vm_host_id"] = config.Reference{
-			TerraformName: "oci_core_dedicated_vm_host",
+	p.AddResourceConfigurator("oci_core_compute_gpu_memory_cluster", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
 		}
+		r.References["compute_cluster_id"] = config.Reference{
+			TerraformName: "oci_core_compute_cluster",
+		}
+		r.References["instance_configuration_id"] = config.Reference{
+			TerraformName: "oci_core_instance_configuration",
+		}
+	})
 
-		r.References["source_details.source_id"] = config.Reference{
+	p.AddResourceConfigurator("oci_core_compute_host_group", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_compute_image_capability_schema", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+		r.References["image_id"] = config.Reference{
 			TerraformName: "oci_core_image",
 		}
+	})
 
-		// r.LateInitializer = config.LateInitializer{
-		// 	// NOTE(): These are ignored because they conflict with each other.
-		// 	// See the following for more details: https://github.com/crossplane/terrajet/issues/107
-		// 	IgnoredFields: []string{
-		// 		"compartment_id",
-		//         "dedicated_vm_host_id"
+	p.AddResourceConfigurator("oci_core_console_history", func(r *config.Resource) {
+		// REQUIRED
+		r.References["instance_id"] = config.Reference{
+			TerraformName: "oci_core_instance",
+		}
+	})
 
-		// 	},
-
+	p.AddResourceConfigurator("oci_core_dedicated_vm_host", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
 	})
 
 	p.AddResourceConfigurator("oci_core_image", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-		// r.ShortGroup = "compute"
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+		r.References["instance_id"] = config.Reference{
+			TerraformName: "oci_core_instance",
+		}
+	})
 
+	p.AddResourceConfigurator("oci_core_instance", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+
+		// OPTIONAL
+		r.References["create_vnic_details.subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
+		r.References["create_vnic_details.nsg_ids"] = config.Reference{
+			TerraformName: "oci_core_network_security_group",
+		}
+		r.References["create_vnic_details.vlan_id"] = config.Reference{
+			TerraformName: "oci_core_vlan",
+		}
+		r.References["dedicated_vm_host_id"] = config.Reference{
+			TerraformName: "oci_core_dedicated_vm_host",
+		}
+		r.References["source_details.source_id"] = config.Reference{
+			TerraformName: "oci_core_image",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_instance_configuration", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_instance_console_connection", func(r *config.Resource) {
+		// REQUIRED
+		r.References["instance_id"] = config.Reference{
+			TerraformName: "oci_core_instance",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_instance_pool", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+		r.References["instance_configuration_id"] = config.Reference{
+			TerraformName: "oci_core_instance_configuration",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_instance_pool_instance", func(r *config.Resource) {
+		// REQUIRED
+		r.References["instance_id"] = config.Reference{
+			TerraformName: "oci_core_instance",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_core_shape_management", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+		r.References["source_details.source_id"] = config.Reference{
+			TerraformName: "oci_core_image",
+		}
 	})
 
 	p.AddResourceConfigurator("oci_core_vcn", func(r *config.Resource) {
@@ -103,7 +198,7 @@ func Configure(p *config.Provider) {
 		}
 
 		r.References["security_list_ids"] = config.Reference{
-			TerraformName:      "oci_core_security_list", // how to add array
+			TerraformName:     "oci_core_security_list", // how to add array
 			RefFieldName:      "SecurityListIDRefs",
 			SelectorFieldName: "SecurityListIDSelector",
 		}
@@ -114,13 +209,6 @@ func Configure(p *config.Provider) {
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
-
-	})
-
-	p.AddResourceConfigurator("oci_core_dedicated_vm_host", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 
 	})
 
@@ -426,17 +514,6 @@ func Configure(p *config.Provider) {
 		r.References["peer_drg_id"] = config.Reference{
 			TerraformName: "oci_core_remote_peering_connection",
 		}
-	})
-
-	p.AddResourceConfigurator("oci_core_instance_configuration", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
-		r.References["compartment_id"] = config.Reference{
-			TerraformName: "oci_identity_compartment",
-		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_cpe", func(r *config.Resource) {
