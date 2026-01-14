@@ -1,0 +1,22 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeCapacityTopology
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computecapacitytopology
+  labels:
+    testing.upbound.io/example-name: test_compute_capacity_topology
+  name: test-compute-capacity-topology
+spec:
+  forProvider:
+    availabilityDomain: ${var.compute_capacity_topology_availability_domain}
+    capacitySource:
+    - capacityType: ${var.compute_capacity_topology_capacity_source_capacity_type}
+      compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.compute_capacity_topology_display_name}
+    freeformTags:
+      Department: Finance

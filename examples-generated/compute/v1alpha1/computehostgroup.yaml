@@ -1,0 +1,24 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeHostGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computehostgroup
+  labels:
+    testing.upbound.io/example-name: test_compute_host_group
+  name: test-compute-host-group
+spec:
+  forProvider:
+    availabilityDomain: ${var.compute_host_group_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurations:
+    - firmwareBundleId: ${oci_core_firmware_bundle.test_firmware_bundle.id}
+      recycleLevel: ${var.compute_host_group_configurations_recycle_level}
+      target: ${var.compute_host_group_configurations_target}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.compute_host_group_display_name}
+    freeformTags:
+      Department: Finance
+    isTargetedPlacementRequired: ${var.compute_host_group_is_targeted_placement_required}

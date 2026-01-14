@@ -48,7 +48,16 @@ type ComputeCapacityReservationInitParameters struct {
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the capacity reservation.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -119,8 +128,17 @@ type ComputeCapacityReservationParameters struct {
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the capacity reservation.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -160,10 +178,39 @@ type InstanceReservationConfigsInitParameters struct {
 	InstanceShape *string `json:"instanceShape,omitempty" tf:"instance_shape,omitempty"`
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
-	InstanceShapeConfig []InstanceShapeConfigInitParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigInitParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	ReservedCount *string `json:"reservedCount,omitempty" tf:"reserved_count,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigInitParameters struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigObservation struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+}
+
+type InstanceReservationConfigsInstanceShapeConfigParameters struct {
+
+	// (Updatable) The total amount of memory available to the instance, in gigabytes.
+	// +kubebuilder:validation:Optional
+	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
+
+	// (Updatable) The total number of OCPUs available to the instance.
+	// +kubebuilder:validation:Optional
+	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 }
 
 type InstanceReservationConfigsObservation struct {
@@ -181,7 +228,7 @@ type InstanceReservationConfigsObservation struct {
 	InstanceShape *string `json:"instanceShape,omitempty" tf:"instance_shape,omitempty"`
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
-	InstanceShapeConfig []InstanceShapeConfigObservation `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigObservation `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	ReservedCount *string `json:"reservedCount,omitempty" tf:"reserved_count,omitempty"`
@@ -210,40 +257,11 @@ type InstanceReservationConfigsParameters struct {
 
 	// (Updatable) The shape configuration requested when launching instances in a compute capacity reservation.
 	// +kubebuilder:validation:Optional
-	InstanceShapeConfig []InstanceShapeConfigParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
+	InstanceShapeConfig []InstanceReservationConfigsInstanceShapeConfigParameters `json:"instanceShapeConfig,omitempty" tf:"instance_shape_config,omitempty"`
 
 	// (Updatable) The total number of instances that can be launched from the capacity configuration.
 	// +kubebuilder:validation:Optional
 	ReservedCount *string `json:"reservedCount" tf:"reserved_count,omitempty"`
-}
-
-type InstanceShapeConfigInitParameters struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
-}
-
-type InstanceShapeConfigObservation struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
-}
-
-type InstanceShapeConfigParameters struct {
-
-	// (Updatable) The total amount of memory available to the instance, in gigabytes.
-	// +kubebuilder:validation:Optional
-	MemoryInGbs *float64 `json:"memoryInGbs,omitempty" tf:"memory_in_gbs,omitempty"`
-
-	// (Updatable) The total number of OCPUs available to the instance.
-	// +kubebuilder:validation:Optional
-	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 }
 
 // ComputeCapacityReservationSpec defines the desired state of ComputeCapacityReservation
@@ -283,7 +301,6 @@ type ComputeCapacityReservation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.availabilityDomain) || (has(self.initProvider) && has(self.initProvider.availabilityDomain))",message="spec.forProvider.availabilityDomain is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceReservationConfigs) || (has(self.initProvider) && has(self.initProvider.instanceReservationConfigs))",message="spec.forProvider.instanceReservationConfigs is a required parameter"
 	Spec   ComputeCapacityReservationSpec   `json:"spec"`
 	Status ComputeCapacityReservationStatus `json:"status,omitempty"`

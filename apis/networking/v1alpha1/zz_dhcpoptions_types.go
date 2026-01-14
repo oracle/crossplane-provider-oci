@@ -42,7 +42,7 @@ type DhcpOptionsInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) A set of DHCP options.
-	Options []OptionsInitParameters `json:"options,omitempty" tf:"options,omitempty"`
+	Options []DhcpOptionsOptionsInitParameters `json:"options,omitempty" tf:"options,omitempty"`
 
 	// The OCID of the VCN the set of DHCP options belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -80,7 +80,7 @@ type DhcpOptionsObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Updatable) A set of DHCP options.
-	Options []OptionsObservation `json:"options,omitempty" tf:"options,omitempty"`
+	Options []DhcpOptionsOptionsObservation `json:"options,omitempty" tf:"options,omitempty"`
 
 	// The current state of the set of DHCP options.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -90,6 +90,55 @@ type DhcpOptionsObservation struct {
 
 	// The OCID of the VCN the set of DHCP options belongs to.
 	VcnID *string `json:"vcnId,omitempty" tf:"vcn_id,omitempty"`
+}
+
+type DhcpOptionsOptionsInitParameters struct {
+
+	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
+	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
+
+	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
+	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
+
+	// (Updatable)
+	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
+
+	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type DhcpOptionsOptionsObservation struct {
+
+	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
+	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
+
+	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
+	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
+
+	// (Updatable)
+	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
+
+	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type DhcpOptionsOptionsParameters struct {
+
+	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
+	// +kubebuilder:validation:Optional
+	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
+
+	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
+	// +kubebuilder:validation:Optional
+	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
+
+	// (Updatable)
+	// +kubebuilder:validation:Optional
+	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
+
+	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type DhcpOptionsParameters struct {
@@ -127,7 +176,7 @@ type DhcpOptionsParameters struct {
 
 	// (Updatable) A set of DHCP options.
 	// +kubebuilder:validation:Optional
-	Options []OptionsParameters `json:"options,omitempty" tf:"options,omitempty"`
+	Options []DhcpOptionsOptionsParameters `json:"options,omitempty" tf:"options,omitempty"`
 
 	// The OCID of the VCN the set of DHCP options belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -141,55 +190,6 @@ type DhcpOptionsParameters struct {
 	// Selector for a Vcn in networking to populate vcnId.
 	// +kubebuilder:validation:Optional
 	VcnIDSelector *v1.Selector `json:"vcnIdSelector,omitempty" tf:"-"`
-}
-
-type OptionsInitParameters struct {
-
-	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
-	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
-
-	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
-	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
-
-	// (Updatable)
-	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
-
-	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type OptionsObservation struct {
-
-	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
-	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
-
-	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
-	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
-
-	// (Updatable)
-	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
-
-	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-}
-
-type OptionsParameters struct {
-
-	// (Applicable when type=DomainNameServer) (Updatable) If you set serverType to CustomDnsServer, specify the IP address of at least one DNS server of your choice (three maximum).
-	// +kubebuilder:validation:Optional
-	CustomDNSServers []*string `json:"customDnsServers,omitempty" tf:"custom_dns_servers,omitempty"`
-
-	// (Updatable) A single search domain name according to RFC 952 and RFC 1123. During a DNS query, the OS will append this search domain name to the value being queried.
-	// +kubebuilder:validation:Optional
-	SearchDomainNames []*string `json:"searchDomainNames,omitempty" tf:"search_domain_names,omitempty"`
-
-	// (Updatable)
-	// +kubebuilder:validation:Optional
-	ServerType *string `json:"serverType,omitempty" tf:"server_type,omitempty"`
-
-	// (Updatable) The specific DHCP option. Either DomainNameServer (for DhcpDnsOption) or SearchDomain (for DhcpSearchDomainOption).
-	// +kubebuilder:validation:Optional
-	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 // DhcpOptionsSpec defines the desired state of DhcpOptions

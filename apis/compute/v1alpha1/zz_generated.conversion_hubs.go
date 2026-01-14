@@ -16,10 +16,28 @@ func (tr *AppCatalogSubscription) Hub() {}
 func (tr *ClusterNetwork) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ComputeCapacityReport) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ComputeCapacityReservation) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ComputeCapacityTopology) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ComputeCluster) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ComputeGpuMemoryCluster) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ComputeGpuMemoryFabric) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ComputeHost) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ComputeHostGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ComputeImageCapabilitySchema) Hub() {}
@@ -41,6 +59,9 @@ func (tr *InstanceConfiguration) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *InstanceConsoleConnection) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *InstanceMaintenanceEvent) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *InstancePool) Hub() {}

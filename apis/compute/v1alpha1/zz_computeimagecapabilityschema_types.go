@@ -16,7 +16,16 @@ import (
 type ComputeImageCapabilitySchemaInitParameters struct {
 
 	// (Updatable) The OCID of the compartment that contains the resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The name of the compute global image capability schema version
 	ComputeGlobalImageCapabilitySchemaVersionName *string `json:"computeGlobalImageCapabilitySchemaVersionName,omitempty" tf:"compute_global_image_capability_schema_version_name,omitempty"`
@@ -33,7 +42,16 @@ type ComputeImageCapabilitySchemaInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The ocid of the image
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The map of each capability name to its ImageCapabilitySchemaDescriptor.
 	// +mapType=granular
@@ -79,8 +97,17 @@ type ComputeImageCapabilitySchemaObservation struct {
 type ComputeImageCapabilitySchemaParameters struct {
 
 	// (Updatable) The OCID of the compartment that contains the resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The name of the compute global image capability schema version
 	// +kubebuilder:validation:Optional
@@ -101,8 +128,17 @@ type ComputeImageCapabilitySchemaParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The ocid of the image
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The map of each capability name to its ImageCapabilitySchemaDescriptor.
 	// +kubebuilder:validation:Optional
@@ -146,9 +182,7 @@ type ComputeImageCapabilitySchemaStatus struct {
 type ComputeImageCapabilitySchema struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.computeGlobalImageCapabilitySchemaVersionName) || (has(self.initProvider) && has(self.initProvider.computeGlobalImageCapabilitySchemaVersionName))",message="spec.forProvider.computeGlobalImageCapabilitySchemaVersionName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.imageId) || (has(self.initProvider) && has(self.initProvider.imageId))",message="spec.forProvider.imageId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemaData) || (has(self.initProvider) && has(self.initProvider.schemaData))",message="spec.forProvider.schemaData is a required parameter"
 	Spec   ComputeImageCapabilitySchemaSpec   `json:"spec"`
 	Status ComputeImageCapabilitySchemaStatus `json:"status,omitempty"`

@@ -16,7 +16,16 @@ import (
 type InstancePoolInitParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -30,7 +39,16 @@ type InstancePoolInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the instance configuration associated with the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
 	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format
 	InstanceDisplayNameFormatter *string `json:"instanceDisplayNameFormatter,omitempty" tf:"instance_display_name_formatter,omitempty"`
@@ -165,8 +183,17 @@ type InstancePoolObservation struct {
 type InstancePoolParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -183,8 +210,17 @@ type InstancePoolParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the instance configuration associated with the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
 	// +kubebuilder:validation:Optional
 	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A user-friendly formatter for the instance pool's instances. Instance displaynames follow the format. The formatter does not retroactively change instance's displaynames, only instance displaynames in the future follow the format
 	// +kubebuilder:validation:Optional
@@ -542,8 +578,6 @@ type InstancePoolStatus struct {
 type InstancePool struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceConfigurationId) || (has(self.initProvider) && has(self.initProvider.instanceConfigurationId))",message="spec.forProvider.instanceConfigurationId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.placementConfigurations) || (has(self.initProvider) && has(self.initProvider.placementConfigurations))",message="spec.forProvider.placementConfigurations is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.size) || (has(self.initProvider) && has(self.initProvider.size))",message="spec.forProvider.size is a required parameter"
 	Spec   InstancePoolSpec   `json:"spec"`

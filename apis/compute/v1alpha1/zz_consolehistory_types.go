@@ -27,7 +27,16 @@ type ConsoleHistoryInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance to get the console history from.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 }
 
 type ConsoleHistoryObservation struct {
@@ -79,8 +88,17 @@ type ConsoleHistoryParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance to get the console history from.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 }
 
 // ConsoleHistorySpec defines the desired state of ConsoleHistory
@@ -119,9 +137,8 @@ type ConsoleHistoryStatus struct {
 type ConsoleHistory struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
-	Spec   ConsoleHistorySpec   `json:"spec"`
-	Status ConsoleHistoryStatus `json:"status,omitempty"`
+	Spec              ConsoleHistorySpec   `json:"spec"`
+	Status            ConsoleHistoryStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

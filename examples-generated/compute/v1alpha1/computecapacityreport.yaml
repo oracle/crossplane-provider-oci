@@ -1,0 +1,21 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeCapacityReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computecapacityreport
+  labels:
+    testing.upbound.io/example-name: test_compute_capacity_report
+  name: test-compute-capacity-report
+spec:
+  forProvider:
+    availabilityDomain: ${var.compute_capacity_report_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    shapeAvailabilities:
+    - faultDomain: ${var.compute_capacity_report_shape_availabilities_fault_domain}
+      instanceShape: ${var.compute_capacity_report_shape_availabilities_instance_shape}
+      instanceShapeConfig:
+      - memoryInGbs: ${var.compute_capacity_report_shape_availabilities_instance_shape_config_memory_in_gbs}
+        nvmes: ${var.compute_capacity_report_shape_availabilities_instance_shape_config_nvmes}
+        ocpus: ${var.compute_capacity_report_shape_availabilities_instance_shape_config_ocpus}

@@ -10,7 +10,9 @@ spec:
   forProvider:
     availabilityDomain: ${var.dedicated_vm_host_availability_domain}
     capacityConfig: ${var.dedicated_vm_host_capacity_config}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     dedicatedVmHostShape: ${var.dedicated_vm_host_dedicated_vm_host_shape}
     definedTags:
       Operations.CostCenter: "42"

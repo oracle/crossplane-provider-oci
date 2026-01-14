@@ -1,0 +1,19 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeGpuMemoryFabric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/computegpumemoryfabric
+  labels:
+    testing.upbound.io/example-name: test_compute_gpu_memory_fabric
+  name: test-compute-gpu-memory-fabric
+spec:
+  forProvider:
+    computeGpuMemoryFabricId: ${oci_core_compute_gpu_memory_fabric.test_compute_gpu_memory_fabric.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.compute_gpu_memory_fabric_display_name}
+    freeformTags:
+      Department: Finance
+    memoryFabricPreferences:
+    - customerDesiredFirmwareBundleId: ${oci_core_customer_desired_firmware_bundle.test_customer_desired_firmware_bundle.id}
+      fabricRecycleLevel: ${var.compute_gpu_memory_fabric_memory_fabric_preferences_fabric_recycle_level}

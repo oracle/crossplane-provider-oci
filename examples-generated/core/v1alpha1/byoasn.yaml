@@ -1,0 +1,17 @@
+apiVersion: core.oci.upbound.io/v1alpha1
+kind: Byoasn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: core/v1alpha1/byoasn
+  labels:
+    testing.upbound.io/example-name: test_byoasn
+  name: test-byoasn
+spec:
+  forProvider:
+    asn: ${var.byoasn_asn}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.byoasn_display_name}
+    freeformTags:
+      Department: Finance

@@ -24,7 +24,16 @@ type InstanceConsoleConnectionInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance to create the console connection to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The SSH public key used to authenticate the console connection.
 	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`
@@ -81,8 +90,17 @@ type InstanceConsoleConnectionParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance to create the console connection to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The SSH public key used to authenticate the console connection.
 	// +kubebuilder:validation:Optional
@@ -125,7 +143,6 @@ type InstanceConsoleConnectionStatus struct {
 type InstanceConsoleConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.publicKey) || (has(self.initProvider) && has(self.initProvider.publicKey))",message="spec.forProvider.publicKey is a required parameter"
 	Spec   InstanceConsoleConnectionSpec   `json:"spec"`
 	Status InstanceConsoleConnectionStatus `json:"status,omitempty"`

@@ -13,4 +13,6 @@ spec:
     displayName: ${var.console_history_display_name}
     freeformTags:
       Department: Finance
-    instanceId: ${oci_core_instance.test_instance.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance

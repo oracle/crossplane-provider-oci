@@ -8,14 +8,18 @@ metadata:
   name: test-compute-image-capability-schema
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     computeGlobalImageCapabilitySchemaVersionName: ${var.compute_image_capability_schema_compute_global_image_capability_schema_version_name}
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.compute_image_capability_schema_display_name}
     freeformTags:
       Department: Finance
-    imageId: ${oci_core_image.test_image.id}
+    imageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_image
     schemaData:
     - default_value: ${var.compute_image_capability_schema_schema_data_default_value}
       descriptor_type: ${var.compute_image_capability_schema_schema_data_descriptor_type}

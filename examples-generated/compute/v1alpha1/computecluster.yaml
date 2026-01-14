@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     availabilityDomain: ${var.compute_cluster_availability_domain}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.compute_cluster_display_name}

@@ -7,6 +7,33 @@ package v1alpha1
 
 import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
+// GetItems of this DefaultDhcpOptionsList.
+func (l *DefaultDhcpOptionsList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DefaultRouteTableList.
+func (l *DefaultRouteTableList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DefaultSecurityListList.
+func (l *DefaultSecurityListList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DhcpOptionsList.
 func (l *DhcpOptionsList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

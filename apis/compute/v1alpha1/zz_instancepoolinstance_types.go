@@ -19,7 +19,16 @@ type InstancePoolInstanceInitParameters struct {
 	DecrementSizeOnDelete *bool `json:"decrementSizeOnDelete,omitempty" tf:"decrement_size_on_delete,omitempty"`
 
 	// The OCID of the instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the instance pool.
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
@@ -79,8 +88,17 @@ type InstancePoolInstanceParameters struct {
 	DecrementSizeOnDelete *bool `json:"decrementSizeOnDelete,omitempty" tf:"decrement_size_on_delete,omitempty"`
 
 	// The OCID of the instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the instance pool.
 	// +kubebuilder:validation:Optional
@@ -147,7 +165,6 @@ type InstancePoolInstanceStatus struct {
 type InstancePoolInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceId) || (has(self.initProvider) && has(self.initProvider.instanceId))",message="spec.forProvider.instanceId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instancePoolId) || (has(self.initProvider) && has(self.initProvider.instancePoolId))",message="spec.forProvider.instancePoolId is a required parameter"
 	Spec   InstancePoolInstanceSpec   `json:"spec"`
 	Status InstancePoolInstanceStatus `json:"status,omitempty"`

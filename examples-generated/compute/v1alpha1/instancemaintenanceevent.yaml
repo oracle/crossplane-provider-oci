@@ -1,0 +1,19 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceMaintenanceEvent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancemaintenanceevent
+  labels:
+    testing.upbound.io/example-name: test_instance_maintenance_event
+  name: test-instance-maintenance-event
+spec:
+  forProvider:
+    alternativeResolutionAction: ${var.instance_maintenance_event_alternative_resolution_action}
+    canDeleteLocalStorage: ${var.instance_maintenance_event_can_delete_local_storage}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.instance_maintenance_event_display_name}
+    freeformTags:
+      Department: Finance
+    instanceMaintenanceEventId: ${oci_core_instance_maintenance_event.test_instance_maintenance_event.id}
+    timeWindowStart: ${var.instance_maintenance_event_time_window_start}

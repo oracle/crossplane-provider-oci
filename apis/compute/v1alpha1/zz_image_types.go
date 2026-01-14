@@ -31,7 +31,16 @@ type AgentFeaturesParameters struct {
 type ImageInitParameters struct {
 
 	// (Updatable) The OCID of the compartment you want the image to be created in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -47,7 +56,16 @@ type ImageInitParameters struct {
 	ImageSourceDetails []ImageSourceDetailsInitParameters `json:"imageSourceDetails,omitempty" tf:"image_source_details,omitempty"`
 
 	// The OCID of the instance you want to use as the basis for the image.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are:
 	LaunchMode *string `json:"launchMode,omitempty" tf:"launch_mode,omitempty"`
@@ -117,8 +135,17 @@ type ImageObservation struct {
 type ImageParameters struct {
 
 	// (Updatable) The OCID of the compartment you want the image to be created in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -138,8 +165,17 @@ type ImageParameters struct {
 	ImageSourceDetails []ImageSourceDetailsParameters `json:"imageSourceDetails,omitempty" tf:"image_source_details,omitempty"`
 
 	// The OCID of the instance you want to use as the basis for the image.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Instance
 	// +kubebuilder:validation:Optional
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
+
+	// Reference to a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDRef *v1.Reference `json:"instanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a Instance in compute to populate instanceId.
+	// +kubebuilder:validation:Optional
+	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are:
 	// +kubebuilder:validation:Optional
@@ -298,9 +334,8 @@ type ImageStatus struct {
 type Image struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
-	Spec   ImageSpec   `json:"spec"`
-	Status ImageStatus `json:"status,omitempty"`
+	Spec              ImageSpec   `json:"spec"`
+	Status            ImageStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

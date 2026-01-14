@@ -8,13 +8,17 @@ metadata:
   name: test-instance-pool
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.instance_pool_display_name}
     freeformTags:
       Department: Finance
-    instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration.id}
+    instanceConfigurationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance_configuration
     instanceDisplayNameFormatter: ${var.instance_pool_instance_display_name_formatter}
     instanceHostnameFormatter: ${var.instance_pool_instance_hostname_formatter}
     lifecycleManagement:

@@ -9,6 +9,9 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	defaultdhcpoptions "github.com/oracle/provider-oci/internal/controller/networking/defaultdhcpoptions"
+	defaultroutetable "github.com/oracle/provider-oci/internal/controller/networking/defaultroutetable"
+	defaultsecuritylist "github.com/oracle/provider-oci/internal/controller/networking/defaultsecuritylist"
 	dhcpoptions "github.com/oracle/provider-oci/internal/controller/networking/dhcpoptions"
 	internetgateway "github.com/oracle/provider-oci/internal/controller/networking/internetgateway"
 	ipv6 "github.com/oracle/provider-oci/internal/controller/networking/ipv6"
@@ -35,6 +38,9 @@ import (
 // the supplied manager.
 func Setup_networking(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		defaultdhcpoptions.Setup,
+		defaultroutetable.Setup,
+		defaultsecuritylist.Setup,
 		dhcpoptions.Setup,
 		internetgateway.Setup,
 		ipv6.Setup,

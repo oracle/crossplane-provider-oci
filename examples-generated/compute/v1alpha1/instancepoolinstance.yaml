@@ -8,5 +8,7 @@ metadata:
   name: test-instance-pool-instance
 spec:
   forProvider:
-    instanceId: ${oci_core_instance.test_instance.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance
     instancePoolId: ${oci_core_instance_pool.test_instance_pool.id}

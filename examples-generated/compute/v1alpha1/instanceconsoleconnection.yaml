@@ -12,5 +12,7 @@ spec:
       Operations.CostCenter: "42"
     freeformTags:
       Department: Finance
-    instanceId: ${oci_core_instance.test_instance.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance
     publicKey: ${var.instance_console_connection_public_key}

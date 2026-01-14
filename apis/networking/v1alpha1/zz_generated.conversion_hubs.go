@@ -7,6 +7,15 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *DefaultDhcpOptions) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DefaultRouteTable) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DefaultSecurityList) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DhcpOptions) Hub() {}
 
 // Hub marks this type as a conversion hub.

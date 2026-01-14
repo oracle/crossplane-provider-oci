@@ -34,6 +34,15 @@ func (l *ClusterNetworkList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this ComputeCapacityReportList.
+func (l *ComputeCapacityReportList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ComputeCapacityReservationList.
 func (l *ComputeCapacityReservationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -43,8 +52,53 @@ func (l *ComputeCapacityReservationList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this ComputeCapacityTopologyList.
+func (l *ComputeCapacityTopologyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ComputeClusterList.
 func (l *ComputeClusterList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ComputeGpuMemoryClusterList.
+func (l *ComputeGpuMemoryClusterList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ComputeGpuMemoryFabricList.
+func (l *ComputeGpuMemoryFabricList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ComputeHostGroupList.
+func (l *ComputeHostGroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ComputeHostList.
+func (l *ComputeHostList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -108,6 +162,15 @@ func (l *InstanceConsoleConnectionList) GetItems() []resource.Managed {
 
 // GetItems of this InstanceList.
 func (l *InstanceList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this InstanceMaintenanceEventList.
+func (l *InstanceMaintenanceEventList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
