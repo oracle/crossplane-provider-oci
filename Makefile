@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.4.6
 
 export TERRAFORM_PROVIDER_SOURCE := oracle/oci
 export TERRAFORM_PROVIDER_REPO := https://github.com/oracle/terraform-provider-oci
-export TERRAFORM_PROVIDER_VERSION := 7.12.0
+export TERRAFORM_PROVIDER_VERSION := 7.27.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-oci
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-oci_v$(TERRAFORM_PROVIDER_VERSION)
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-oci/$(TERRAFORM_PROVIDER_VERSION)
