@@ -26,6 +26,7 @@ import (
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
+	"github.com/oracle/provider-oci/config/database"
 	"github.com/oracle/provider-oci/config/dns"
 	"github.com/oracle/provider-oci/config/events"
 	"github.com/oracle/provider-oci/config/filestorage"
@@ -61,6 +62,7 @@ var providerMetadata string
 
 var ServiceWildcards = []string{
 	"oci_containerengine_.*",
+	"oci_database_.*",
 	"oci_identity_.*",
 	"oci_kms_.*",
 	"oci_mysql_.*",
@@ -113,6 +115,7 @@ func GetProvider() *ujconfig.Provider {
 		mysql.Configure,
 		psql.Configure,
 		redis.Configure,
+		database.Configure,
 	} {
 		configure(pc)
 	}
