@@ -8,7 +8,9 @@ metadata:
   name: test-object
 spec:
   forProvider:
-    bucket: ${var.object_bucket}
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     cacheControl: ${var.object_cache_control}
     content: ${var.object_content}
     contentDisposition: ${var.object_content_disposition}
@@ -19,7 +21,5 @@ spec:
     metadata: ${var.object_metadata}
     namespace: ${var.object_namespace}
     object: ${var.object_object}
-    opcSseKmsKeyIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
+    opcSseKmsKeyId: ${var.object_opc_sse_kms_key_id}
     storageTier: ${var.object_storage_tier}

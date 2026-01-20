@@ -45,25 +45,6 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 	{
-		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
-			Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
-	}
-	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
-	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -82,25 +63,6 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.KMSKeyID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.KMSKeyIDRef,
-			Selector:     mg.Spec.InitProvider.KMSKeyIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.KMSKeyID")
-	}
-	mg.Spec.InitProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.KMSKeyIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -114,43 +76,231 @@ func (mg *Object) ResolveReferences(ctx context.Context, c client.Reader) error 
 	var rsp reference.ResolutionResponse
 	var err error
 	{
-		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.OpcSseKMSKeyID),
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bucket),
 			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.OpcSseKMSKeyIDRef,
-			Selector:     mg.Spec.ForProvider.OpcSseKMSKeyIDSelector,
+			Reference:    mg.Spec.ForProvider.BucketRef,
+			Selector:     mg.Spec.ForProvider.BucketSelector,
 			To:           reference.To{List: l, Managed: m},
 		})
 	}
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.OpcSseKMSKeyID")
+		return errors.Wrap(err, "mg.Spec.ForProvider.Bucket")
 	}
-	mg.Spec.ForProvider.OpcSseKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.OpcSseKMSKeyIDRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BucketRef = rsp.ResolvedReference
 	{
-		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.OpcSseKMSKeyID),
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bucket),
 			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.OpcSseKMSKeyIDRef,
-			Selector:     mg.Spec.InitProvider.OpcSseKMSKeyIDSelector,
+			Reference:    mg.Spec.InitProvider.BucketRef,
+			Selector:     mg.Spec.InitProvider.BucketSelector,
 			To:           reference.To{List: l, Managed: m},
 		})
 	}
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.OpcSseKMSKeyID")
+		return errors.Wrap(err, "mg.Spec.InitProvider.Bucket")
 	}
-	mg.Spec.InitProvider.OpcSseKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.OpcSseKMSKeyIDRef = rsp.ResolvedReference
+	mg.Spec.InitProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BucketRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ObjectLifecyclePolicy.
+func (mg *ObjectLifecyclePolicy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.BucketRef,
+			Selector:     mg.Spec.ForProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Bucket")
+	}
+	mg.Spec.ForProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BucketRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.BucketRef,
+			Selector:     mg.Spec.InitProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Bucket")
+	}
+	mg.Spec.InitProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BucketRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Preauthrequest.
+func (mg *Preauthrequest) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.BucketRef,
+			Selector:     mg.Spec.ForProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Bucket")
+	}
+	mg.Spec.ForProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BucketRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.BucketRef,
+			Selector:     mg.Spec.InitProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Bucket")
+	}
+	mg.Spec.InitProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BucketRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ReplicationPolicy.
+func (mg *ReplicationPolicy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.BucketRef,
+			Selector:     mg.Spec.ForProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Bucket")
+	}
+	mg.Spec.ForProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BucketRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DestinationBucketName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.DestinationBucketNameRef,
+			Selector:     mg.Spec.ForProvider.DestinationBucketNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DestinationBucketName")
+	}
+	mg.Spec.ForProvider.DestinationBucketName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DestinationBucketNameRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bucket),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.BucketRef,
+			Selector:     mg.Spec.InitProvider.BucketSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Bucket")
+	}
+	mg.Spec.InitProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BucketRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Bucket", "BucketList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DestinationBucketName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.DestinationBucketNameRef,
+			Selector:     mg.Spec.InitProvider.DestinationBucketNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DestinationBucketName")
+	}
+	mg.Spec.InitProvider.DestinationBucketName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DestinationBucketNameRef = rsp.ResolvedReference
 
 	return nil
 }

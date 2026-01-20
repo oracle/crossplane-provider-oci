@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
-  name: objects.objectstorage.oci.upbound.io
+  name: preauthrequests.objectstorage.oci.upbound.io
 spec:
   group: objectstorage.oci.upbound.io
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - oci
-    kind: Object
-    listKind: ObjectList
-    plural: objects
-    singular: object
+    kind: Preauthrequest
+    listKind: PreauthrequestList
+    plural: preauthrequests
+    singular: preauthrequest
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Object is the Schema for the Objects API. Provides the Object
-          resource in Oracle Cloud Infrastructure Object Storage service
+        description: Preauthrequest is the Schema for the Preauthrequests API. Provides
+          the Preauthenticated Request resource in Oracle Cloud Infrastructure Object
+          Storage service
         properties:
           apiVersion:
             description: |-
@@ -55,7 +56,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ObjectSpec defines the desired state of Object
+            description: PreauthrequestSpec defines the desired state of Preauthrequest
             properties:
               deletionPolicy:
                 default: Delete
@@ -73,9 +74,20 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  accessType:
+                    description: 'The operation that can be performed on this resource.
+                      Allowed Values: ObjectRead, ObjectWrite, ObjectReadWrite, AnyObjectReadWrite
+                      or AnyObjectRead'
+                    type: string
                   bucket:
                     description: 'The name of the bucket. Avoid entering confidential
                       information. Example: my-new-bucket1'
+                    type: string
+                  bucketListingAction:
+                    description: 'Specifies whether a list operation is allowed on
+                      a PAR with accessType "AnyObjectRead" or "AnyObjectReadWrite".
+                      Deny: Prevents the user from performing a list operation. ListObjects:
+                      Authorizes the user to perform a list operation.'
                     type: string
                   bucketRef:
                     description: Reference to a Bucket in objectstorage to populate
@@ -153,130 +165,39 @@ spec:
                             type: string
                         type: object
                     type: object
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  name:
+                    description: A user-specified name for the pre-authenticated request.
+                      Names can be helpful in managing pre-authenticated requests.
+                      Avoid entering confidential information.
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
-                    type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
-                    type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
-                    type: object
-                    x-kubernetes-map-type: granular
                   namespace:
                     description: The Object Storage namespace used for the request.
                     type: string
                   object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
+                    description: Deprecated. Instead use object_name. Requests that
+                      include both object and object_name will be rejected.  The name
+                      of the object that is being granted access to by the pre-authenticated
+                      request. Avoid entering confidential information. The object
+                      name can be null and if so, the pre-authenticated request grants
+                      access to the entire bucket if the access type allows that.
+                      The object name can be a prefix as well, in that case pre-authenticated
+                      request grants access to all the objects within the bucket starting
+                      with that prefix provided that we have the correct access type.
                     type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
+                  objectName:
+                    description: The name of the object that is being granted access
+                      to by the pre-authenticated request. Avoid entering confidential
+                      information. The object name can be null and if so, the pre-authenticated
+                      request grants access to the entire bucket if the access type
+                      allows that. The object name can be a prefix as well, in that
+                      case pre-authenticated request grants access to all the objects
+                      within the bucket starting with that prefix provided that we
+                      have the correct access type.
                     type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
-                    type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
+                  timeExpires:
+                    description: The expiration date for the pre-authenticated request
+                      as per RFC 3339. After this date the pre-authenticated request
+                      will no longer be valid.
                     type: string
                 type: object
               initProvider:
@@ -292,9 +213,20 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  accessType:
+                    description: 'The operation that can be performed on this resource.
+                      Allowed Values: ObjectRead, ObjectWrite, ObjectReadWrite, AnyObjectReadWrite
+                      or AnyObjectRead'
+                    type: string
                   bucket:
                     description: 'The name of the bucket. Avoid entering confidential
                       information. Example: my-new-bucket1'
+                    type: string
+                  bucketListingAction:
+                    description: 'Specifies whether a list operation is allowed on
+                      a PAR with accessType "AnyObjectRead" or "AnyObjectReadWrite".
+                      Deny: Prevents the user from performing a list operation. ListObjects:
+                      Authorizes the user to perform a list operation.'
                     type: string
                   bucketRef:
                     description: Reference to a Bucket in objectstorage to populate
@@ -372,130 +304,39 @@ spec:
                             type: string
                         type: object
                     type: object
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  name:
+                    description: A user-specified name for the pre-authenticated request.
+                      Names can be helpful in managing pre-authenticated requests.
+                      Avoid entering confidential information.
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
-                    type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
-                    type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
-                    type: object
-                    x-kubernetes-map-type: granular
                   namespace:
                     description: The Object Storage namespace used for the request.
                     type: string
                   object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
+                    description: Deprecated. Instead use object_name. Requests that
+                      include both object and object_name will be rejected.  The name
+                      of the object that is being granted access to by the pre-authenticated
+                      request. Avoid entering confidential information. The object
+                      name can be null and if so, the pre-authenticated request grants
+                      access to the entire bucket if the access type allows that.
+                      The object name can be a prefix as well, in that case pre-authenticated
+                      request grants access to all the objects within the bucket starting
+                      with that prefix provided that we have the correct access type.
                     type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
+                  objectName:
+                    description: The name of the object that is being granted access
+                      to by the pre-authenticated request. Avoid entering confidential
+                      information. The object name can be null and if so, the pre-authenticated
+                      request grants access to the entire bucket if the access type
+                      allows that. The object name can be a prefix as well, in that
+                      case pre-authenticated request grants access to all the objects
+                      within the bucket starting with that prefix provided that we
+                      have the correct access type.
                     type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
-                    type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
+                  timeExpires:
+                    description: The expiration date for the pre-authenticated request
+                      as per RFC 3339. After this date the pre-authenticated request
+                      will no longer be valid.
                     type: string
                 type: object
               managementPolicies:
@@ -666,158 +507,95 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: spec.forProvider.accessType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.accessType)
+                || (has(self.initProvider) && has(self.initProvider.accessType))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
             - message: spec.forProvider.namespace is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.__namespace__)
                 || (has(self.initProvider) && has(self.initProvider.__namespace__))'
-            - message: spec.forProvider.object is a required parameter
+            - message: spec.forProvider.timeExpires is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.object)
-                || (has(self.initProvider) && has(self.initProvider.object))'
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.timeExpires)
+                || (has(self.initProvider) && has(self.initProvider.timeExpires))'
           status:
-            description: ObjectStatus defines the observed state of Object.
+            description: PreauthrequestStatus defines the observed state of Preauthrequest.
             properties:
               atProvider:
                 properties:
+                  accessType:
+                    description: 'The operation that can be performed on this resource.
+                      Allowed Values: ObjectRead, ObjectWrite, ObjectReadWrite, AnyObjectReadWrite
+                      or AnyObjectRead'
+                    type: string
+                  accessUri:
+                    description: The URI to embed in the URL https://objectstorage.${var.region}.oraclecloud.com{var.access_uri}
+                      when using the pre-authenticated request.
+                    type: string
                   bucket:
                     description: 'The name of the bucket. Avoid entering confidential
                       information. Example: my-new-bucket1'
                     type: string
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  bucketListingAction:
+                    description: 'Specifies whether a list operation is allowed on
+                      a PAR with accessType "AnyObjectRead" or "AnyObjectReadWrite".
+                      Deny: Prevents the user from performing a list operation. ListObjects:
+                      Authorizes the user to perform a list operation.'
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
+                  fullPath:
+                    description: The full Path for the object.
                     type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
-                    type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentLength:
-                    description: (Updatable) The content length of the body.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
                   id:
+                    description: The unique identifier to use when directly addressing
+                      the pre-authenticated request.
                     type: string
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
-                    type: object
-                    x-kubernetes-map-type: granular
+                  name:
+                    description: A user-specified name for the pre-authenticated request.
+                      Names can be helpful in managing pre-authenticated requests.
+                      Avoid entering confidential information.
+                    type: string
                   namespace:
                     description: The Object Storage namespace used for the request.
                     type: string
                   object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
+                    description: Deprecated. Instead use object_name. Requests that
+                      include both object and object_name will be rejected.  The name
+                      of the object that is being granted access to by the pre-authenticated
+                      request. Avoid entering confidential information. The object
+                      name can be null and if so, the pre-authenticated request grants
+                      access to the entire bucket if the access type allows that.
+                      The object name can be a prefix as well, in that case pre-authenticated
+                      request grants access to all the objects within the bucket starting
+                      with that prefix provided that we have the correct access type.
                     type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
+                  objectName:
+                    description: The name of the object that is being granted access
+                      to by the pre-authenticated request. Avoid entering confidential
+                      information. The object name can be null and if so, the pre-authenticated
+                      request grants access to the entire bucket if the access type
+                      allows that. The object name can be a prefix as well, in that
+                      case pre-authenticated request grants access to all the objects
+                      within the bucket starting with that prefix provided that we
+                      have the correct access type.
                     type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
+                  parId:
+                    description: The unique identifier for the pre-authenticated request.
+                      This can be used to manage operations against the pre-authenticated
+                      request, such as GET or DELETE.
                     type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  state:
+                  timeCreated:
+                    description: The date when the pre-authenticated request was created
+                      as per specification RFC 3339.
                     type: string
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
-                    type: string
-                  versionId:
-                    type: string
-                  workRequestId:
+                  timeExpires:
+                    description: The expiration date for the pre-authenticated request
+                      as per RFC 3339. After this date the pre-authenticated request
+                      will no longer be valid.
                     type: string
                 type: object
               conditions:

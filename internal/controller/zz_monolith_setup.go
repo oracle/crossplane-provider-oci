@@ -198,8 +198,12 @@ import (
 	networkloadbalancer "github.com/oracle/provider-oci/internal/controller/networkloadbalancer/networkloadbalancer"
 	networkloadbalancersbackendsetsunified "github.com/oracle/provider-oci/internal/controller/networkloadbalancer/networkloadbalancersbackendsetsunified"
 	bucket "github.com/oracle/provider-oci/internal/controller/objectstorage/bucket"
+	namespacemetadata "github.com/oracle/provider-oci/internal/controller/objectstorage/namespacemetadata"
 	object "github.com/oracle/provider-oci/internal/controller/objectstorage/object"
 	objectlifecyclepolicy "github.com/oracle/provider-oci/internal/controller/objectstorage/objectlifecyclepolicy"
+	preauthrequest "github.com/oracle/provider-oci/internal/controller/objectstorage/preauthrequest"
+	privateendpoint "github.com/oracle/provider-oci/internal/controller/objectstorage/privateendpoint"
+	replicationpolicy "github.com/oracle/provider-oci/internal/controller/objectstorage/replicationpolicy"
 	notificationtopic "github.com/oracle/provider-oci/internal/controller/ons/notificationtopic"
 	subscription "github.com/oracle/provider-oci/internal/controller/ons/subscription"
 	providerconfig "github.com/oracle/provider-oci/internal/controller/providerconfig"
@@ -405,8 +409,12 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		networkloadbalancer.Setup,
 		networkloadbalancersbackendsetsunified.Setup,
 		bucket.Setup,
+		namespacemetadata.Setup,
 		object.Setup,
 		objectlifecyclepolicy.Setup,
+		preauthrequest.Setup,
+		privateendpoint.Setup,
+		replicationpolicy.Setup,
 		notificationtopic.Setup,
 		subscription.Setup,
 		providerconfig.Setup,

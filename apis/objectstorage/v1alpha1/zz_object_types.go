@@ -16,7 +16,16 @@ import (
 type ObjectInitParameters struct {
 
 	// The name of the bucket. Avoid entering confidential information. Example: my-new-bucket1
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.
 	CacheControl *string `json:"cacheControl,omitempty" tf:"cache_control,omitempty"`
@@ -54,16 +63,7 @@ type ObjectInitParameters struct {
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
 
 	// (Updatable) The OCID of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	OpcSseKMSKeyID *string `json:"opcSseKmsKeyId,omitempty" tf:"opc_sse_kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate opcSseKmsKeyId.
-	// +kubebuilder:validation:Optional
-	OpcSseKMSKeyIDRef *v1.Reference `json:"opcSseKmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate opcSseKmsKeyId.
-	// +kubebuilder:validation:Optional
-	OpcSseKMSKeyIDSelector *v1.Selector `json:"opcSseKmsKeyIdSelector,omitempty" tf:"-"`
 
 	// An absolute path to a file on the local system. Cannot be defined if content or source_uri_details is defined.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
@@ -144,8 +144,17 @@ type ObjectObservation struct {
 type ObjectParameters struct {
 
 	// The name of the bucket. Avoid entering confidential information. Example: my-new-bucket1
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.
 	// +kubebuilder:validation:Optional
@@ -194,17 +203,8 @@ type ObjectParameters struct {
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
 
 	// (Updatable) The OCID of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	// +kubebuilder:validation:Optional
 	OpcSseKMSKeyID *string `json:"opcSseKmsKeyId,omitempty" tf:"opc_sse_kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate opcSseKmsKeyId.
-	// +kubebuilder:validation:Optional
-	OpcSseKMSKeyIDRef *v1.Reference `json:"opcSseKmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate opcSseKmsKeyId.
-	// +kubebuilder:validation:Optional
-	OpcSseKMSKeyIDSelector *v1.Selector `json:"opcSseKmsKeyIdSelector,omitempty" tf:"-"`
 
 	// An absolute path to a file on the local system. Cannot be defined if content or source_uri_details is defined.
 	// +kubebuilder:validation:Optional
@@ -345,7 +345,6 @@ type ObjectStatus struct {
 type Object struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bucket) || (has(self.initProvider) && has(self.initProvider.bucket))",message="spec.forProvider.bucket is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.__namespace__) || (has(self.initProvider) && has(self.initProvider.__namespace__))",message="spec.forProvider.namespace is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.object) || (has(self.initProvider) && has(self.initProvider.object))",message="spec.forProvider.object is a required parameter"
 	Spec   ObjectSpec   `json:"spec"`

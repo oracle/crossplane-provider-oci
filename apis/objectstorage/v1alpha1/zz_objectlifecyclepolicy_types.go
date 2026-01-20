@@ -16,7 +16,16 @@ import (
 type ObjectLifecyclePolicyInitParameters struct {
 
 	// The name of the bucket. Avoid entering confidential information. Example: my-new-bucket1
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// The Object Storage namespace used for the request.
 	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
@@ -45,8 +54,17 @@ type ObjectLifecyclePolicyObservation struct {
 type ObjectLifecyclePolicyParameters struct {
 
 	// The name of the bucket. Avoid entering confidential information. Example: my-new-bucket1
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// The Object Storage namespace used for the request.
 	// +kubebuilder:validation:Optional
@@ -220,7 +238,6 @@ type ObjectLifecyclePolicyStatus struct {
 type ObjectLifecyclePolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bucket) || (has(self.initProvider) && has(self.initProvider.bucket))",message="spec.forProvider.bucket is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.__namespace__) || (has(self.initProvider) && has(self.initProvider.__namespace__))",message="spec.forProvider.namespace is a required parameter"
 	Spec   ObjectLifecyclePolicySpec   `json:"spec"`
 	Status ObjectLifecyclePolicyStatus `json:"status,omitempty"`

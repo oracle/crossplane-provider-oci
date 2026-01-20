@@ -8,7 +8,9 @@ metadata:
   name: test-object-lifecycle-policy
 spec:
   forProvider:
-    bucket: ${var.object_lifecycle_policy_bucket}
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     namespace: ${var.object_lifecycle_policy_namespace}
     rules:
     - action: ${var.object_lifecycle_policy_rules_action}

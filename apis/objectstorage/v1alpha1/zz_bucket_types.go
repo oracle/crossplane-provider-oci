@@ -42,16 +42,7 @@ type BucketInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Arbitrary string, up to 4KB, of keys and values for user-defined metadata.
 	// +mapType=granular
@@ -184,17 +175,8 @@ type BucketParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
-
-	// Reference to a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a Key in kms to populate kmsKeyId.
-	// +kubebuilder:validation:Optional
-	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Arbitrary string, up to 4KB, of keys and values for user-defined metadata.
 	// +kubebuilder:validation:Optional

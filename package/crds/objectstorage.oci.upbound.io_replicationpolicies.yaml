@@ -4,7 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.18.0
-  name: objects.objectstorage.oci.upbound.io
+  name: replicationpolicies.objectstorage.oci.upbound.io
 spec:
   group: objectstorage.oci.upbound.io
   names:
@@ -12,10 +12,10 @@ spec:
     - crossplane
     - managed
     - oci
-    kind: Object
-    listKind: ObjectList
-    plural: objects
-    singular: object
+    kind: ReplicationPolicy
+    listKind: ReplicationPolicyList
+    plural: replicationpolicies
+    singular: replicationpolicy
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,8 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Object is the Schema for the Objects API. Provides the Object
-          resource in Oracle Cloud Infrastructure Object Storage service
+        description: ReplicationPolicy is the Schema for the ReplicationPolicys API.
+          Provides the Replication Policy resource in Oracle Cloud Infrastructure
+          Object Storage service
         properties:
           apiVersion:
             description: |-
@@ -55,7 +56,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ObjectSpec defines the desired state of Object
+            description: ReplicationPolicySpec defines the desired state of ReplicationPolicy
             properties:
               deletionPolicy:
                 default: Delete
@@ -153,130 +154,102 @@ spec:
                             type: string
                         type: object
                     type: object
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  deleteObjectInDestinationBucket:
+                    description: 'The name of the bucket. Avoid entering confidential
+                      information. Example: my-new-bucket1'
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
+                  destinationBucketName:
+                    description: The bucket to replicate to in the destination region.
+                      Replication policy creation does not automatically create a
+                      destination bucket. Create the destination bucket before creating
+                      the policy.
                     type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
-                    type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
+                  destinationBucketNameRef:
+                    description: Reference to a Bucket in objectstorage to populate
+                      destinationBucketName.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
                     type: object
-                    x-kubernetes-map-type: granular
+                  destinationBucketNameSelector:
+                    description: Selector for a Bucket in objectstorage to populate
+                      destinationBucketName.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  destinationRegionName:
+                    description: The destination region to replicate to, for example
+                      "us-ashburn-1".
+                    type: string
+                  name:
+                    description: The name of the policy. Avoid entering confidential
+                      information.
+                    type: string
                   namespace:
                     description: The Object Storage namespace used for the request.
-                    type: string
-                  object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
-                    type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
-                    type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
-                    type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
                     type: string
                 type: object
               initProvider:
@@ -372,130 +345,102 @@ spec:
                             type: string
                         type: object
                     type: object
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  deleteObjectInDestinationBucket:
+                    description: 'The name of the bucket. Avoid entering confidential
+                      information. Example: my-new-bucket1'
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
+                  destinationBucketName:
+                    description: The bucket to replicate to in the destination region.
+                      Replication policy creation does not automatically create a
+                      destination bucket. Create the destination bucket before creating
+                      the policy.
                     type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
-                    type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
+                  destinationBucketNameRef:
+                    description: Reference to a Bucket in objectstorage to populate
+                      destinationBucketName.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
                     type: object
-                    x-kubernetes-map-type: granular
+                  destinationBucketNameSelector:
+                    description: Selector for a Bucket in objectstorage to populate
+                      destinationBucketName.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  destinationRegionName:
+                    description: The destination region to replicate to, for example
+                      "us-ashburn-1".
+                    type: string
+                  name:
+                    description: The name of the policy. Avoid entering confidential
+                      information.
+                    type: string
                   namespace:
                     description: The Object Storage namespace used for the request.
-                    type: string
-                  object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
-                    type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
-                    type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
-                    type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
                     type: string
                 type: object
               managementPolicies:
@@ -666,16 +611,20 @@ spec:
             - forProvider
             type: object
             x-kubernetes-validations:
+            - message: spec.forProvider.destinationRegionName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.destinationRegionName)
+                || (has(self.initProvider) && has(self.initProvider.destinationRegionName))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
             - message: spec.forProvider.namespace is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.__namespace__)
                 || (has(self.initProvider) && has(self.initProvider.__namespace__))'
-            - message: spec.forProvider.object is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.object)
-                || (has(self.initProvider) && has(self.initProvider.object))'
           status:
-            description: ObjectStatus defines the observed state of Object.
+            description: ReplicationPolicyStatus defines the observed state of ReplicationPolicy.
             properties:
               atProvider:
                 properties:
@@ -683,141 +632,45 @@ spec:
                     description: 'The name of the bucket. Avoid entering confidential
                       information. Example: my-new-bucket1'
                     type: string
-                  cacheControl:
-                    description: The optional Cache-Control header that defines the
-                      caching behavior value to be returned in GetObject and HeadObject
-                      responses. Specifying values for this header has no effect on
-                      Object Storage behavior. Programs that read the object determine
-                      what to do based on the value provided. For example, you could
-                      use this header to identify objects that require caching restrictions.
+                  deleteObjectInDestinationBucket:
+                    description: 'The name of the bucket. Avoid entering confidential
+                      information. Example: my-new-bucket1'
                     type: string
-                  content:
-                    description: The object to upload to the object store. Cannot
-                      be defined if source or source_uri_details is defined.
+                  destinationBucketName:
+                    description: The bucket to replicate to in the destination region.
+                      Replication policy creation does not automatically create a
+                      destination bucket. Create the destination bucket before creating
+                      the policy.
                     type: string
-                  contentDisposition:
-                    description: The optional Content-Disposition header that defines
-                      presentational information for the object to be returned in
-                      GetObject and HeadObject responses. Specifying values for this
-                      header has no effect on Object Storage behavior. Programs that
-                      read the object determine what to do based on the value provided.
-                      For example, you could use this header to let users download
-                      objects with custom filenames in a browser.
+                  destinationRegionName:
+                    description: The destination region to replicate to, for example
+                      "us-ashburn-1".
                     type: string
-                  contentEncoding:
-                    description: The optional Content-Encoding header that defines
-                      the content encodings that were applied to the object to upload.
-                      Specifying values for this header has no effect on Object Storage
-                      behavior. Programs that read the object determine what to do
-                      based on the value provided. For example, you could use this
-                      header to determine what decoding mechanisms need to be applied
-                      to obtain the media-type specified by the Content-Type header
-                      of the object.
-                    type: string
-                  contentLanguage:
-                    description: The optional Content-Language header that defines
-                      the content language of the object to upload. Specifying values
-                      for this header has no effect on Object Storage behavior. Programs
-                      that read the object determine what to do based on the value
-                      provided. For example, you could use this header to identify
-                      and differentiate objects based on a particular language.
-                    type: string
-                  contentLength:
-                    description: (Updatable) The content length of the body.
-                    type: string
-                  contentMd5:
-                    description: '(Updatable) The optional header that defines the
-                      base64-encoded MD5 hash of the body. If the optional Content-MD5
-                      header is present, Object Storage performs an integrity check
-                      on the body of the HTTP request by computing the MD5 hash for
-                      the body and comparing it to the MD5 hash supplied in the header.
-                      If the two hashes do not match, the object is rejected and an
-                      HTTP-400 Unmatched Content MD5 error is returned with the message:'
-                    type: string
-                  contentType:
-                    description: The optional Content-Type header that defines the
-                      standard MIME type format of the object. Content type defaults
-                      to 'application/octet-stream' if not specified in the PutObject
-                      call. Specifying values for this header has no effect on Object
-                      Storage behavior. Programs that read the object determine what
-                      to do based on the value provided. For example, you could use
-                      this header to identify and perform special operations on text
-                      only objects.
-                    type: string
-                  deleteAllObjectVersions:
-                    description: (Updatable) A boolean to delete all object versions
-                      for an object in a bucket that has or ever had versioning enabled.
-                    type: boolean
                   id:
+                    description: The id of the replication policy.
                     type: string
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: |-
-                      Optional user-defined metadata key and value.
-                      Note: All specified keys must be in lower case.
-                    type: object
-                    x-kubernetes-map-type: granular
+                  name:
+                    description: The name of the policy. Avoid entering confidential
+                      information.
+                    type: string
                   namespace:
                     description: The Object Storage namespace used for the request.
                     type: string
-                  object:
-                    description: '(Updatable) The name of the object. Avoid entering
-                      confidential information. Example: test/object1.log'
+                  status:
+                    description: The replication status of the policy. If the status
+                      is CLIENT_ERROR, once the user fixes the issue described in
+                      the status message, the status will become ACTIVE.
                     type: string
-                  opcSseKmsKeyId:
-                    description: (Updatable) The OCID of a master encryption key used
-                      to call the Key Management service to generate a data encryption
-                      key or to encrypt or decrypt a data encryption key.
+                  statusMessage:
+                    description: A human-readable description of the status.
                     type: string
-                  source:
-                    description: An absolute path to a file on the local system. Cannot
-                      be defined if content or source_uri_details is defined.
+                  timeCreated:
+                    description: The date when the replication policy was created
+                      as per RFC 3339.
                     type: string
-                  sourceUriDetails:
-                    description: |-
-                      Details of the source URI of the object in the cloud. Cannot be defined if content or source is defined.
-                      Note: To enable object copy, you must authorize the service to manage objects on your behalf.
-                    items:
-                      properties:
-                        bucket:
-                          description: 'The name of the bucket. Avoid entering confidential
-                            information. Example: my-new-bucket1'
-                          type: string
-                        destinationObjectIfMatchEtag:
-                          description: The entity tag to match the target object.
-                          type: string
-                        destinationObjectIfNoneMatchEtag:
-                          description: The entity tag to not match the target object.
-                          type: string
-                        namespace:
-                          description: The Object Storage namespace used for the request.
-                          type: string
-                        object:
-                          description: '(Updatable) The name of the object. Avoid
-                            entering confidential information. Example: test/object1.log'
-                          type: string
-                        region:
-                          description: The region of the source object.
-                          type: string
-                        sourceObjectIfMatchEtag:
-                          description: The entity tag to match the source object.
-                          type: string
-                        sourceVersionId:
-                          description: The version id of the object to be restored.
-                          type: string
-                      type: object
-                    type: array
-                  state:
-                    type: string
-                  storageTier:
-                    description: (Updatable) The storage tier that the object should
-                      be stored in. If not specified, the object will be stored in
-                      the same storage tier as the bucket.
-                    type: string
-                  versionId:
-                    type: string
-                  workRequestId:
+                  timeLastSync:
+                    description: Changes made to the source bucket before this time
+                      has been replicated.
                     type: string
                 type: object
               conditions:
