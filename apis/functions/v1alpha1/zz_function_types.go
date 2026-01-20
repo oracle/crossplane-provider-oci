@@ -13,6 +13,65 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type FailureDestinationInitParameters struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+}
+
+type FailureDestinationObservation struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+}
+
+type FailureDestinationParameters struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	// +kubebuilder:validation:Optional
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	// +kubebuilder:validation:Optional
+	Kind *string `json:"kind" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	// +kubebuilder:validation:Optional
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	// +kubebuilder:validation:Optional
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	// +kubebuilder:validation:Optional
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+}
+
 type FunctionInitParameters struct {
 
 	// The OCID of the application this function belongs to.
@@ -35,8 +94,14 @@ type FunctionInitParameters struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
+	// (Updatable) Timeout for detached function invocations. Value in seconds.
+	DetachedModeTimeoutInSeconds *float64 `json:"detachedModeTimeoutInSeconds,omitempty" tf:"detached_mode_timeout_in_seconds,omitempty"`
+
 	// The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the error of the failed detached function invocation. A notification is an example of a failure destination.  Example: {"kind": "NOTIFICATION", "topicId": "topic_OCID"}
+	FailureDestination []FailureDestinationInitParameters `json:"failureDestination,omitempty" tf:"failure_destination,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -56,6 +121,9 @@ type FunctionInitParameters struct {
 
 	// The source details for the Function. The function can be created from various sources.
 	SourceDetails []SourceDetailsInitParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the successful detached function invocation. A stream is an example of a success destination.  Example: {"kind": "STREAM", "streamId": "stream_OCID"}
+	SuccessDestination []SuccessDestinationInitParameters `json:"successDestination,omitempty" tf:"success_destination,omitempty"`
 
 	// (Updatable) Timeout for executions of the function. Value in seconds.
 	TimeoutInSeconds *float64 `json:"timeoutInSeconds,omitempty" tf:"timeout_in_seconds,omitempty"`
@@ -80,8 +148,14 @@ type FunctionObservation struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
+	// (Updatable) Timeout for detached function invocations. Value in seconds.
+	DetachedModeTimeoutInSeconds *float64 `json:"detachedModeTimeoutInSeconds,omitempty" tf:"detached_mode_timeout_in_seconds,omitempty"`
+
 	// The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the error of the failed detached function invocation. A notification is an example of a failure destination.  Example: {"kind": "NOTIFICATION", "topicId": "topic_OCID"}
+	FailureDestination []FailureDestinationObservation `json:"failureDestination,omitempty" tf:"failure_destination,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -113,6 +187,9 @@ type FunctionObservation struct {
 
 	// The current state of the function.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the successful detached function invocation. A stream is an example of a success destination.  Example: {"kind": "STREAM", "streamId": "stream_OCID"}
+	SuccessDestination []SuccessDestinationObservation `json:"successDestination,omitempty" tf:"success_destination,omitempty"`
 
 	// The time the function was created, expressed in RFC 3339 timestamp format.  Example: 2018-09-12T22:47:12.613Z
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
@@ -152,9 +229,17 @@ type FunctionParameters struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
+	// (Updatable) Timeout for detached function invocations. Value in seconds.
+	// +kubebuilder:validation:Optional
+	DetachedModeTimeoutInSeconds *float64 `json:"detachedModeTimeoutInSeconds,omitempty" tf:"detached_mode_timeout_in_seconds,omitempty"`
+
 	// The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the error of the failed detached function invocation. A notification is an example of a failure destination.  Example: {"kind": "NOTIFICATION", "topicId": "topic_OCID"}
+	// +kubebuilder:validation:Optional
+	FailureDestination []FailureDestinationParameters `json:"failureDestination,omitempty" tf:"failure_destination,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -180,6 +265,10 @@ type FunctionParameters struct {
 	// The source details for the Function. The function can be created from various sources.
 	// +kubebuilder:validation:Optional
 	SourceDetails []SourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+
+	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the successful detached function invocation. A stream is an example of a success destination.  Example: {"kind": "STREAM", "streamId": "stream_OCID"}
+	// +kubebuilder:validation:Optional
+	SuccessDestination []SuccessDestinationParameters `json:"successDestination,omitempty" tf:"success_destination,omitempty"`
 
 	// (Updatable) Timeout for executions of the function. Value in seconds.
 	// +kubebuilder:validation:Optional
@@ -243,7 +332,7 @@ type SourceDetailsInitParameters struct {
 	// The OCID of the PbfListing this function is sourced from.
 	PbfListingID *string `json:"pbfListingId,omitempty" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PRE_BUILT_FUNCTIONS.
+	// Type of the Function Source. Possible values: PBF.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 }
 
@@ -252,7 +341,7 @@ type SourceDetailsObservation struct {
 	// The OCID of the PbfListing this function is sourced from.
 	PbfListingID *string `json:"pbfListingId,omitempty" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PRE_BUILT_FUNCTIONS.
+	// Type of the Function Source. Possible values: PBF.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 }
 
@@ -262,9 +351,68 @@ type SourceDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	PbfListingID *string `json:"pbfListingId" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PRE_BUILT_FUNCTIONS.
+	// Type of the Function Source. Possible values: PBF.
 	// +kubebuilder:validation:Optional
 	SourceType *string `json:"sourceType" tf:"source_type,omitempty"`
+}
+
+type SuccessDestinationInitParameters struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+}
+
+type SuccessDestinationObservation struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
+}
+
+type SuccessDestinationParameters struct {
+
+	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
+	// +kubebuilder:validation:Optional
+	ChannelID *string `json:"channelId,omitempty" tf:"channel_id,omitempty"`
+
+	// (Updatable) The type of destination for the response to a failed detached function invocation.
+	// +kubebuilder:validation:Optional
+	Kind *string `json:"kind" tf:"kind,omitempty"`
+
+	// (Updatable) The OCID of the queue.
+	// +kubebuilder:validation:Optional
+	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// (Updatable) The OCID of the stream.
+	// +kubebuilder:validation:Optional
+	StreamID *string `json:"streamId,omitempty" tf:"stream_id,omitempty"`
+
+	// (Updatable) The OCID of the topic.
+	// +kubebuilder:validation:Optional
+	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
 }
 
 // FunctionSpec defines the desired state of Function

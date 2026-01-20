@@ -38,6 +38,9 @@ type InstancePoolInitParameters struct {
 	// (Updatable) A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format
 	InstanceHostnameFormatter *string `json:"instanceHostnameFormatter,omitempty" tf:"instance_hostname_formatter,omitempty"`
 
+	// (Updatable) The lifecycle management options for the instance pool.
+	LifecycleManagement []LifecycleManagementInitParameters `json:"lifecycleManagement,omitempty" tf:"lifecycle_management,omitempty"`
+
 	// The load balancers to attach to the instance pool. (Note: From 6.16.0 load_balancers field in oci_core_instance_pool is changed from TypeList to TypeSet - to support load balancer insert operation. Also, LB cant by accessed by index)
 	LoadBalancers []InstancePoolLoadBalancersInitParameters `json:"loadBalancers,omitempty" tf:"load_balancers,omitempty"`
 
@@ -140,6 +143,9 @@ type InstancePoolObservation struct {
 	// (Updatable) A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format
 	InstanceHostnameFormatter *string `json:"instanceHostnameFormatter,omitempty" tf:"instance_hostname_formatter,omitempty"`
 
+	// (Updatable) The lifecycle management options for the instance pool.
+	LifecycleManagement []LifecycleManagementObservation `json:"lifecycleManagement,omitempty" tf:"lifecycle_management,omitempty"`
+
 	// The load balancers to attach to the instance pool. (Note: From 6.16.0 load_balancers field in oci_core_instance_pool is changed from TypeList to TypeSet - to support load balancer insert operation. Also, LB cant by accessed by index)
 	LoadBalancers []InstancePoolLoadBalancersObservation `json:"loadBalancers,omitempty" tf:"load_balancers,omitempty"`
 
@@ -187,6 +193,10 @@ type InstancePoolParameters struct {
 	// (Updatable) A user-friendly formatter for the instance pool's instances. Instance hostnames follow the format. The formatter does not retroactively change instance's hostnames, only instance hostnames in the future follow the format
 	// +kubebuilder:validation:Optional
 	InstanceHostnameFormatter *string `json:"instanceHostnameFormatter,omitempty" tf:"instance_hostname_formatter,omitempty"`
+
+	// (Updatable) The lifecycle management options for the instance pool.
+	// +kubebuilder:validation:Optional
+	LifecycleManagement []LifecycleManagementParameters `json:"lifecycleManagement,omitempty" tf:"lifecycle_management,omitempty"`
 
 	// The load balancers to attach to the instance pool. (Note: From 6.16.0 load_balancers field in oci_core_instance_pool is changed from TypeList to TypeSet - to support load balancer insert operation. Also, LB cant by accessed by index)
 	// +kubebuilder:validation:Optional
@@ -262,6 +272,73 @@ type InstancePoolPlacementConfigurationsParameters struct {
 	// (Updatable) The set of secondary VNIC data for instances in the pool.
 	// +kubebuilder:validation:Optional
 	SecondaryVnicSubnets []PlacementConfigurationsSecondaryVnicSubnetsParameters `json:"secondaryVnicSubnets,omitempty" tf:"secondary_vnic_subnets,omitempty"`
+}
+
+type LifecycleActionsInitParameters struct {
+
+	// (Updatable) The data for pre-termination action for an instance pool
+	PreTermination []PreTerminationInitParameters `json:"preTermination,omitempty" tf:"pre_termination,omitempty"`
+}
+
+type LifecycleActionsObservation struct {
+
+	// (Updatable) The data for pre-termination action for an instance pool
+	PreTermination []PreTerminationObservation `json:"preTermination,omitempty" tf:"pre_termination,omitempty"`
+}
+
+type LifecycleActionsParameters struct {
+
+	// (Updatable) The data for pre-termination action for an instance pool
+	// +kubebuilder:validation:Optional
+	PreTermination []PreTerminationParameters `json:"preTermination,omitempty" tf:"pre_termination,omitempty"`
+}
+
+type LifecycleManagementInitParameters struct {
+
+	// (Updatable) The lifecycle actions for the instance pool.
+	LifecycleActions []LifecycleActionsInitParameters `json:"lifecycleActions,omitempty" tf:"lifecycle_actions,omitempty"`
+}
+
+type LifecycleManagementObservation struct {
+
+	// (Updatable) The lifecycle actions for the instance pool.
+	LifecycleActions []LifecycleActionsObservation `json:"lifecycleActions,omitempty" tf:"lifecycle_actions,omitempty"`
+}
+
+type LifecycleManagementParameters struct {
+
+	// (Updatable) The lifecycle actions for the instance pool.
+	// +kubebuilder:validation:Optional
+	LifecycleActions []LifecycleActionsParameters `json:"lifecycleActions" tf:"lifecycle_actions,omitempty"`
+}
+
+type OnTimeoutInitParameters struct {
+
+	// (Updatable) Whether the block volume should be preserved after termination.
+	PreserveBlockVolumeMode *string `json:"preserveBlockVolumeMode,omitempty" tf:"preserve_block_volume_mode,omitempty"`
+
+	// (Updatable) Whether the boot volume should be preserved after termination.
+	PreserveBootVolumeMode *string `json:"preserveBootVolumeMode,omitempty" tf:"preserve_boot_volume_mode,omitempty"`
+}
+
+type OnTimeoutObservation struct {
+
+	// (Updatable) Whether the block volume should be preserved after termination.
+	PreserveBlockVolumeMode *string `json:"preserveBlockVolumeMode,omitempty" tf:"preserve_block_volume_mode,omitempty"`
+
+	// (Updatable) Whether the boot volume should be preserved after termination.
+	PreserveBootVolumeMode *string `json:"preserveBootVolumeMode,omitempty" tf:"preserve_boot_volume_mode,omitempty"`
+}
+
+type OnTimeoutParameters struct {
+
+	// (Updatable) Whether the block volume should be preserved after termination.
+	// +kubebuilder:validation:Optional
+	PreserveBlockVolumeMode *string `json:"preserveBlockVolumeMode" tf:"preserve_block_volume_mode,omitempty"`
+
+	// (Updatable) Whether the boot volume should be preserved after termination.
+	// +kubebuilder:validation:Optional
+	PreserveBootVolumeMode *string `json:"preserveBootVolumeMode" tf:"preserve_boot_volume_mode,omitempty"`
 }
 
 type PlacementConfigurationsPrimaryVnicSubnetsInitParameters struct {
@@ -388,6 +465,45 @@ type PlacementConfigurationsSecondaryVnicSubnetsParameters struct {
 	// (Updatable) The subnet OCID for the secondary VNIC.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+}
+
+type PreTerminationInitParameters struct {
+
+	// (Updatable) Whether pre-termination action is enabled or not.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// (Updatable) Options to handle timeout for pre-termination action.
+	OnTimeout []OnTimeoutInitParameters `json:"onTimeout,omitempty" tf:"on_timeout,omitempty"`
+
+	// (Updatable) The timeout in seconds for pre-termination action for an instance pool(min = 0 sec, max = 7200 secs).
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+}
+
+type PreTerminationObservation struct {
+
+	// (Updatable) Whether pre-termination action is enabled or not.
+	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
+
+	// (Updatable) Options to handle timeout for pre-termination action.
+	OnTimeout []OnTimeoutObservation `json:"onTimeout,omitempty" tf:"on_timeout,omitempty"`
+
+	// (Updatable) The timeout in seconds for pre-termination action for an instance pool(min = 0 sec, max = 7200 secs).
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+}
+
+type PreTerminationParameters struct {
+
+	// (Updatable) Whether pre-termination action is enabled or not.
+	// +kubebuilder:validation:Optional
+	IsEnabled *bool `json:"isEnabled" tf:"is_enabled,omitempty"`
+
+	// (Updatable) Options to handle timeout for pre-termination action.
+	// +kubebuilder:validation:Optional
+	OnTimeout []OnTimeoutParameters `json:"onTimeout" tf:"on_timeout,omitempty"`
+
+	// (Updatable) The timeout in seconds for pre-termination action for an instance pool(min = 0 sec, max = 7200 secs).
+	// +kubebuilder:validation:Optional
+	Timeout *float64 `json:"timeout" tf:"timeout,omitempty"`
 }
 
 // InstancePoolSpec defines the desired state of InstancePool

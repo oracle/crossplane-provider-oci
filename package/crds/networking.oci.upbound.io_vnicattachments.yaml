@@ -151,6 +151,13 @@ spec:
                               ipv6Address:
                                 type: string
                               ipv6SubnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -191,6 +198,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead
@@ -388,6 +403,13 @@ spec:
                               ipv6Address:
                                 type: string
                               ipv6SubnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -428,6 +450,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead
@@ -797,6 +827,13 @@ spec:
                               ipv6Address:
                                 type: string
                               ipv6SubnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -837,6 +874,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead

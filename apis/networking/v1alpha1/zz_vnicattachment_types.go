@@ -58,6 +58,9 @@ type CreateVnicDetailsInitParameters struct {
 	// (Updatable) Whether the source/destination check is disabled on the VNIC. Defaults to false, which means the check is performed. For information about why you would skip the source/destination check, see Using a Private IP as a Route Target.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -109,6 +112,9 @@ type CreateVnicDetailsObservation struct {
 
 	// (Updatable) Whether the source/destination check is disabled on the VNIC. Defaults to false, which means the check is performed. For information about why you would skip the source/destination check, see Using a Private IP as a Route Target.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
+
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
 
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -175,6 +181,10 @@ type CreateVnicDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -187,12 +197,14 @@ type CreateVnicDetailsParameters struct {
 type Ipv6AddressIpv6SubnetCidrPairDetailsInitParameters struct {
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	IPv6SubnetCidr *string `json:"ipv6SubnetCidr,omitempty" tf:"ipv6_subnet_cidr,omitempty"`
 }
 
 type Ipv6AddressIpv6SubnetCidrPairDetailsObservation struct {
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	IPv6SubnetCidr *string `json:"ipv6SubnetCidr,omitempty" tf:"ipv6_subnet_cidr,omitempty"`
 }
 
@@ -201,6 +213,7 @@ type Ipv6AddressIpv6SubnetCidrPairDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	// +kubebuilder:validation:Optional
 	IPv6SubnetCidr *string `json:"ipv6SubnetCidr,omitempty" tf:"ipv6_subnet_cidr,omitempty"`
 }

@@ -68,6 +68,7 @@ spec:
         capacityReservationId: ${oci_core_capacity_reservation.test_capacity_reservation.id}
         clusterPlacementGroupId: ${oci_identity_group.test_group.id}
         compartmentId: ${var.compartment_id}
+        computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
         createVnicDetails:
         - assignIpv6Ip: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_ipv6ip}
           assignPrivateDnsRecord: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_private_dns_record}
@@ -85,6 +86,7 @@ spec:
           privateIp: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_private_ip}
           securityAttributes: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_security_attributes}
           skipSourceDestCheck: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_skip_source_dest_check}
+          subnetCidr: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_subnet_cidr}
           subnetId: ${oci_core_subnet.test_subnet.id}
         dedicatedVmHostId: ${oci_core_dedicated_vm_host.test_dedicated_vm_host.id}
         definedTags:
@@ -97,6 +99,7 @@ spec:
         instanceOptions:
         - areLegacyImdsEndpointsDisabled: ${var.instance_configuration_instance_details_launch_details_instance_options_are_legacy_imds_endpoints_disabled}
         ipxeScript: ${var.instance_configuration_instance_details_launch_details_ipxe_script}
+        isAiEnterpriseEnabled: ${var.instance_configuration_instance_details_launch_details_is_ai_enterprise_enabled}
         isPvEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_launch_details_is_pv_encryption_in_transit_enabled}
         launchMode: ${var.instance_configuration_instance_details_launch_details_launch_mode}
         launchOptions:
@@ -110,6 +113,9 @@ spec:
         - licenseType: ${var.instance_configuration_instance_details_launch_details_licensing_configs_license_type}
           type: ${var.instance_configuration_instance_details_launch_details_licensing_configs_type}
         metadata: ${var.instance_configuration_instance_details_launch_details_metadata}
+        placementConstraintDetails:
+        - computeHostGroupId: ${oci_core_compute_host_group.test_compute_host_group.id}
+          type: ${var.instance_configuration_instance_details_launch_details_placement_constraint_details_type}
         platformConfig:
         - areVirtualInstructionsEnabled: ${var.instance_configuration_instance_details_launch_details_platform_config_are_virtual_instructions_enabled}
           configMap: ${var.instance_configuration_instance_details_launch_details_platform_config_config_map}
@@ -135,6 +141,7 @@ spec:
           memoryInGbs: ${var.instance_configuration_instance_details_launch_details_shape_config_memory_in_gbs}
           nvmes: ${var.instance_configuration_instance_details_launch_details_shape_config_nvmes}
           ocpus: ${var.instance_configuration_instance_details_launch_details_shape_config_ocpus}
+          resourceManagement: ${var.instance_configuration_instance_details_launch_details_shape_config_resource_management}
           vcpus: ${var.instance_configuration_instance_details_launch_details_shape_config_vcpus}
         sourceDetails:
         - bootVolumeId: ${oci_core_boot_volume.test_boot_volume.id}
@@ -195,6 +202,7 @@ spec:
           capacityReservationId: ${oci_core_capacity_reservation.test_capacity_reservation.id}
           clusterPlacementGroupId: ${oci_identity_group.test_group.id}
           compartmentId: ${var.compartment_id}
+          computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
           createVnicDetails:
           - assignIpv6Ip: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_ipv6ip}
             assignPrivateDnsRecord: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_assign_private_dns_record}
@@ -212,6 +220,7 @@ spec:
             privateIp: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_private_ip}
             securityAttributes: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_security_attributes}
             skipSourceDestCheck: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_skip_source_dest_check}
+            subnetCidr: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_subnet_cidr}
             subnetId: ${oci_core_subnet.test_subnet.id}
           dedicatedVmHostId: ${oci_core_dedicated_vm_host.test_dedicated_vm_host.id}
           definedTags:
@@ -224,6 +233,7 @@ spec:
           instanceOptions:
           - areLegacyImdsEndpointsDisabled: ${var.instance_configuration_instance_details_options_launch_details_instance_options_are_legacy_imds_endpoints_disabled}
           ipxeScript: ${var.instance_configuration_instance_details_options_launch_details_ipxe_script}
+          isAiEnterpriseEnabled: ${var.instance_configuration_instance_details_options_launch_details_is_ai_enterprise_enabled}
           isPvEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_options_launch_details_is_pv_encryption_in_transit_enabled}
           launchMode: ${var.instance_configuration_instance_details_options_launch_details_launch_mode}
           launchOptions:
@@ -237,6 +247,9 @@ spec:
           - licenseType: ${var.instance_configuration_instance_details_options_launch_details_licensing_configs_license_type}
             type: ${var.instance_configuration_instance_details_options_launch_details_licensing_configs_type}
           metadata: ${var.instance_configuration_instance_details_options_launch_details_metadata}
+          placementConstraintDetails:
+          - computeHostGroupId: ${oci_core_compute_host_group.test_compute_host_group.id}
+            type: ${var.instance_configuration_instance_details_options_launch_details_placement_constraint_details_type}
           platformConfig:
           - areVirtualInstructionsEnabled: ${var.instance_configuration_instance_details_options_launch_details_platform_config_are_virtual_instructions_enabled}
             isAccessControlServiceEnabled: ${var.instance_configuration_instance_details_options_launch_details_platform_config_is_access_control_service_enabled}
@@ -261,6 +274,7 @@ spec:
             memoryInGbs: ${var.instance_configuration_instance_details_options_launch_details_shape_config_memory_in_gbs}
             nvmes: ${var.instance_configuration_instance_details_options_launch_details_shape_config_nvmes}
             ocpus: ${var.instance_configuration_instance_details_options_launch_details_shape_config_ocpus}
+            resourceManagement: ${var.instance_configuration_instance_details_options_launch_details_shape_config_resource_management}
             vcpus: ${var.instance_configuration_instance_details_options_launch_details_shape_config_vcpus}
           sourceDetails:
           - bootVolumeId: ${oci_core_boot_volume.test_boot_volume.id}
@@ -291,6 +305,7 @@ spec:
             privateIp: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_private_ip}
             securityAttributes: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_security_attributes}
             skipSourceDestCheck: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_skip_source_dest_check}
+            subnetCidr: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_subnet_cidr}
             subnetId: ${oci_core_subnet.test_subnet.id}
           displayName: ${var.instance_configuration_instance_details_options_secondary_vnics_display_name}
           nicIndex: ${var.instance_configuration_instance_details_options_secondary_vnics_nic_index}
@@ -308,6 +323,7 @@ spec:
           privateIp: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_private_ip}
           securityAttributes: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_security_attributes}
           skipSourceDestCheck: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_skip_source_dest_check}
+          subnetCidr: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_subnet_cidr}
           subnetId: ${oci_core_subnet.test_subnet.id}
         displayName: ${var.instance_configuration_instance_details_secondary_vnics_display_name}
         nicIndex: ${var.instance_configuration_instance_details_secondary_vnics_nic_index}

@@ -115,6 +115,51 @@ spec:
                       formatter does not retroactively change instance's hostnames,
                       only instance hostnames in the future follow the format
                     type: string
+                  lifecycleManagement:
+                    description: (Updatable) The lifecycle management options for
+                      the instance pool.
+                    items:
+                      properties:
+                        lifecycleActions:
+                          description: (Updatable) The lifecycle actions for the instance
+                            pool.
+                          items:
+                            properties:
+                              preTermination:
+                                description: (Updatable) The data for pre-termination
+                                  action for an instance pool
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: (Updatable) Whether pre-termination
+                                        action is enabled or not.
+                                      type: boolean
+                                    onTimeout:
+                                      description: (Updatable) Options to handle timeout
+                                        for pre-termination action.
+                                      items:
+                                        properties:
+                                          preserveBlockVolumeMode:
+                                            description: (Updatable) Whether the block
+                                              volume should be preserved after termination.
+                                            type: string
+                                          preserveBootVolumeMode:
+                                            description: (Updatable) Whether the boot
+                                              volume should be preserved after termination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: (Updatable) The timeout in seconds
+                                        for pre-termination action for an instance
+                                        pool(min = 0 sec, max = 7200 secs).
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   loadBalancers:
                     description: 'The load balancers to attach to the instance pool.
                       (Note: From 6.16.0 load_balancers field in oci_core_instance_pool
@@ -317,6 +362,51 @@ spec:
                       formatter does not retroactively change instance's hostnames,
                       only instance hostnames in the future follow the format
                     type: string
+                  lifecycleManagement:
+                    description: (Updatable) The lifecycle management options for
+                      the instance pool.
+                    items:
+                      properties:
+                        lifecycleActions:
+                          description: (Updatable) The lifecycle actions for the instance
+                            pool.
+                          items:
+                            properties:
+                              preTermination:
+                                description: (Updatable) The data for pre-termination
+                                  action for an instance pool
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: (Updatable) Whether pre-termination
+                                        action is enabled or not.
+                                      type: boolean
+                                    onTimeout:
+                                      description: (Updatable) Options to handle timeout
+                                        for pre-termination action.
+                                      items:
+                                        properties:
+                                          preserveBlockVolumeMode:
+                                            description: (Updatable) Whether the block
+                                              volume should be preserved after termination.
+                                            type: string
+                                          preserveBootVolumeMode:
+                                            description: (Updatable) Whether the boot
+                                              volume should be preserved after termination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: (Updatable) The timeout in seconds
+                                        for pre-termination action for an instance
+                                        pool(min = 0 sec, max = 7200 secs).
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   loadBalancers:
                     description: 'The load balancers to attach to the instance pool.
                       (Note: From 6.16.0 load_balancers field in oci_core_instance_pool
@@ -703,6 +793,51 @@ spec:
                       formatter does not retroactively change instance's hostnames,
                       only instance hostnames in the future follow the format
                     type: string
+                  lifecycleManagement:
+                    description: (Updatable) The lifecycle management options for
+                      the instance pool.
+                    items:
+                      properties:
+                        lifecycleActions:
+                          description: (Updatable) The lifecycle actions for the instance
+                            pool.
+                          items:
+                            properties:
+                              preTermination:
+                                description: (Updatable) The data for pre-termination
+                                  action for an instance pool
+                                items:
+                                  properties:
+                                    isEnabled:
+                                      description: (Updatable) Whether pre-termination
+                                        action is enabled or not.
+                                      type: boolean
+                                    onTimeout:
+                                      description: (Updatable) Options to handle timeout
+                                        for pre-termination action.
+                                      items:
+                                        properties:
+                                          preserveBlockVolumeMode:
+                                            description: (Updatable) Whether the block
+                                              volume should be preserved after termination.
+                                            type: string
+                                          preserveBootVolumeMode:
+                                            description: (Updatable) Whether the boot
+                                              volume should be preserved after termination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: (Updatable) The timeout in seconds
+                                        for pre-termination action for an instance
+                                        pool(min = 0 sec, max = 7200 secs).
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   loadBalancers:
                     description: 'The load balancers to attach to the instance pool.
                       (Note: From 6.16.0 load_balancers field in oci_core_instance_pool

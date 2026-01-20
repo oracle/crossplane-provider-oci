@@ -24,6 +24,7 @@ spec:
     networkSecurityGroupIdsSelector:
       matchLabels:
         testing.upbound.io/example-name: example
+    securityAttributes: ${var.application_security_attributes}
     shape: ${var.application_shape}
     subnetIdsSelector:
       matchLabels:

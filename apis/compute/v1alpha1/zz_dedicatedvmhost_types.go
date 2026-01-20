@@ -45,6 +45,9 @@ type DedicatedVmHostInitParameters struct {
 	// The availability domain of the dedicated virtual machine host.  Example: Uocm:PHX-AD-1
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
+	// The capacity configuration selected to be configured for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes API first to see the capacity configuration options.
+	CapacityConfig *string `json:"capacityConfig,omitempty" tf:"capacity_config,omitempty"`
+
 	// (Updatable) The OCID of the compartment.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
@@ -65,7 +68,10 @@ type DedicatedVmHostInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// Generic placement details field which is overloaded with bare metal host id or host group id based on the resource we are targeting to launch.
+	// Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If true, only Confidential VMs can be launched. If false, Confidential VMs cannot be launched.
+	IsMemoryEncryptionEnabled *bool `json:"isMemoryEncryptionEnabled,omitempty" tf:"is_memory_encryption_enabled,omitempty"`
+
+	// The details for providing placement constraints.
 	PlacementConstraintDetails []PlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
@@ -74,13 +80,16 @@ type DedicatedVmHostObservation struct {
 	// The availability domain of the dedicated virtual machine host.  Example: Uocm:PHX-AD-1
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
-	// A list of total and remaining CPU & memory per capacity bucket.
+	// A list of total and remaining CPU and memory per capacity bucket.
 	CapacityBins []CapacityBinsObservation `json:"capacityBins,omitempty" tf:"capacity_bins,omitempty"`
+
+	// The capacity configuration selected to be configured for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes API first to see the capacity configuration options.
+	CapacityConfig *string `json:"capacityConfig,omitempty" tf:"capacity_config,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
-	// The OCID of the compute bare metal host.
+	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
 	// The dedicated virtual machine host shape. The shape determines the number of CPUs and other resources available for VM instances launched on the dedicated virtual machine host.
@@ -103,7 +112,10 @@ type DedicatedVmHostObservation struct {
 	// The OCID of the dedicated VM host.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Generic placement details field which is overloaded with bare metal host id or host group id based on the resource we are targeting to launch.
+	// Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If true, only Confidential VMs can be launched. If false, Confidential VMs cannot be launched.
+	IsMemoryEncryptionEnabled *bool `json:"isMemoryEncryptionEnabled,omitempty" tf:"is_memory_encryption_enabled,omitempty"`
+
+	// The details for providing placement constraints.
 	PlacementConstraintDetails []PlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// The remaining memory of the capacity bucket, in GBs.
@@ -131,6 +143,10 @@ type DedicatedVmHostParameters struct {
 	// +kubebuilder:validation:Optional
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
+	// The capacity configuration selected to be configured for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes API first to see the capacity configuration options.
+	// +kubebuilder:validation:Optional
+	CapacityConfig *string `json:"capacityConfig,omitempty" tf:"capacity_config,omitempty"`
+
 	// (Updatable) The OCID of the compartment.
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -157,36 +173,40 @@ type DedicatedVmHostParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// Generic placement details field which is overloaded with bare metal host id or host group id based on the resource we are targeting to launch.
+	// Specifies if the Dedicated Virtual Machine Host (DVMH) is restricted to running only Confidential VMs. If true, only Confidential VMs can be launched. If false, Confidential VMs cannot be launched.
+	// +kubebuilder:validation:Optional
+	IsMemoryEncryptionEnabled *bool `json:"isMemoryEncryptionEnabled,omitempty" tf:"is_memory_encryption_enabled,omitempty"`
+
+	// The details for providing placement constraints.
 	// +kubebuilder:validation:Optional
 	PlacementConstraintDetails []PlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
 type PlacementConstraintDetailsInitParameters struct {
 
-	// The OCID of the compute bare metal host.
+	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
-	// Determines the type of targeted launch.
+	// The type for the placement constraints. Use COMPUTE_BARE_METAL_HOST when specifying the compute bare metal host OCID. Use HOST_GROUP when specifying the compute host group OCID.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type PlacementConstraintDetailsObservation struct {
 
-	// The OCID of the compute bare metal host.
+	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
-	// Determines the type of targeted launch.
+	// The type for the placement constraints. Use COMPUTE_BARE_METAL_HOST when specifying the compute bare metal host OCID. Use HOST_GROUP when specifying the compute host group OCID.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type PlacementConstraintDetailsParameters struct {
 
-	// The OCID of the compute bare metal host.
+	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	// +kubebuilder:validation:Optional
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
-	// Determines the type of targeted launch.
+	// The type for the placement constraints. Use COMPUTE_BARE_METAL_HOST when specifying the compute bare metal host OCID. Use HOST_GROUP when specifying the compute host group OCID.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }

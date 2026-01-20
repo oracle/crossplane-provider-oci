@@ -22,4 +22,5 @@ spec:
     - configurationId: ${oci_mysql_mysql_configuration.test_mysql_configuration.id}
       mysqlVersion: ${var.replica_replica_overrides_mysql_version}
       nsgIds: ${var.replica_replica_overrides_nsg_ids}
+      securityAttributes: ${var.replica_replica_overrides_security_attributes}
       shapeName: ${oci_mysql_shape.test_shape.name}

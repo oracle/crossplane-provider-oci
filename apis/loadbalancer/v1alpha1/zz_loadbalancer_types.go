@@ -58,7 +58,7 @@ type LoadBalancerInitParameters struct {
 	// IPv6 is currently supported only in the Government Cloud. Whether the load balancer has an IPv4 or IPv6 IP address.
 	IPMode *string `json:"ipMode,omitempty" tf:"ip_mode,omitempty"`
 
-	// Applies to IPV6 LB creation only.
+	// (Updatable) Applies to IPV6 LB creation only.
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 
 	// (Updatable) Whether or not the load balancer has delete protection enabled.
@@ -77,7 +77,7 @@ type LoadBalancerInitParameters struct {
 	// (Updatable) If isRequestIdEnabled is true then this field contains the name of the header field that contains the unique request id that is attached to every request from the load balancer to the load balancer backends and to every response from the load balancer.
 	RequestIDHeader *string `json:"requestIdHeader,omitempty" tf:"request_id_header,omitempty"`
 
-	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
+	// (Updatable) An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
 	ReservedIps []ReservedIpsInitParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
 	// (Updatable) Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value":"42","mode":"audit", "usagetype" : "zpr"}}}
@@ -119,7 +119,7 @@ type LoadBalancerObservation struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// Ocid of the Reserved IP/Public Ip created with VCN.
+	// (Updatable) Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// An array of IP addresses.
@@ -131,7 +131,7 @@ type LoadBalancerObservation struct {
 	// IPv6 is currently supported only in the Government Cloud. Whether the load balancer has an IPv4 or IPv6 IP address.
 	IPMode *string `json:"ipMode,omitempty" tf:"ip_mode,omitempty"`
 
-	// Applies to IPV6 LB creation only.
+	// (Updatable) Applies to IPV6 LB creation only.
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 
 	// (Updatable) Whether or not the load balancer has delete protection enabled.
@@ -150,7 +150,7 @@ type LoadBalancerObservation struct {
 	// (Updatable) If isRequestIdEnabled is true then this field contains the name of the header field that contains the unique request id that is attached to every request from the load balancer to the load balancer backends and to every response from the load balancer.
 	RequestIDHeader *string `json:"requestIdHeader,omitempty" tf:"request_id_header,omitempty"`
 
-	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
+	// (Updatable) An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
 	ReservedIps []ReservedIpsObservation `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
 	// (Updatable) Extended Defined tags for ZPR for this resource. Each key is predefined and scoped to a namespace.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value":"42","mode":"audit", "usagetype" : "zpr"}}}
@@ -210,7 +210,7 @@ type LoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	IPMode *string `json:"ipMode,omitempty" tf:"ip_mode,omitempty"`
 
-	// Applies to IPV6 LB creation only.
+	// (Updatable) Applies to IPV6 LB creation only.
 	// +kubebuilder:validation:Optional
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 
@@ -235,7 +235,7 @@ type LoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	RequestIDHeader *string `json:"requestIdHeader,omitempty" tf:"request_id_header,omitempty"`
 
-	// An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
+	// (Updatable) An array of reserved Ips. Pre-created public IP that will be used as the IP of this load balancer. This reserved IP will not be deleted when load balancer is deleted. This ip should not be already mapped to any other resource.
 	// +kubebuilder:validation:Optional
 	ReservedIps []ReservedIpsParameters `json:"reservedIps,omitempty" tf:"reserved_ips,omitempty"`
 
@@ -271,7 +271,7 @@ type ReservedIPInitParameters struct {
 
 type ReservedIPObservation struct {
 
-	// Ocid of the Reserved IP/Public Ip created with VCN.
+	// (Updatable) Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -280,19 +280,19 @@ type ReservedIPParameters struct {
 
 type ReservedIpsInitParameters struct {
 
-	// Ocid of the Reserved IP/Public Ip created with VCN.
+	// (Updatable) Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ReservedIpsObservation struct {
 
-	// Ocid of the Reserved IP/Public Ip created with VCN.
+	// (Updatable) Ocid of the Reserved IP/Public Ip created with VCN.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ReservedIpsParameters struct {
 
-	// Ocid of the Reserved IP/Public Ip created with VCN.
+	// (Updatable) Ocid of the Reserved IP/Public Ip created with VCN.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }

@@ -60,7 +60,10 @@ spec:
     ipAddress: ${var.mysql_db_system_ip_address}
     isHighlyAvailable: ${var.mysql_db_system_is_highly_available}
     maintenance:
-    - windowStartTime: ${var.mysql_db_system_maintenance_window_start_time}
+    - maintenanceScheduleType: ${var.mysql_db_system_maintenance_maintenance_schedule_type}
+      versionPreference: ${var.mysql_db_system_maintenance_version_preference}
+      versionTrackPreference: ${var.mysql_db_system_maintenance_version_track_preference}
+      windowStartTime: ${var.mysql_db_system_maintenance_window_start_time}
     nsgIds: ${var.mysql_db_system_nsg_ids}
     port: ${var.mysql_db_system_port}
     portX: ${var.mysql_db_system_port_x}
@@ -75,6 +78,7 @@ spec:
     secureConnections:
     - certificateGenerationType: ${var.mysql_db_system_secure_connections_certificate_generation_type}
       certificateId: ${oci_apigateway_certificate.test_certificate.id}
+    securityAttributes: ${var.mysql_db_system_security_attributes}
     shapeName: ${var.mysql_shape_name}
     source:
     - backupId: ${oci_mysql_mysql_backup.test_backup.id}

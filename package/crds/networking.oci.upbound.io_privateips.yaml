@@ -73,6 +73,16 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  cidrPrefixLength:
+                    description: 'An optional field that when combined with the ipAddress
+                      field, will be used to allocate secondary IPv4 CIDRs. The CIDR
+                      range created by this combination must be within the subnet''s
+                      CIDR  and the CIDR range should not collide with any existing
+                      IPv4 address allocation. The VNIC ID specified in the request
+                      object should not already been assigned more than the max IPv4
+                      addresses. If you don''t specify a value, this option will be
+                      ignored.  Example: 18'
+                    type: number
                   definedTags:
                     additionalProperties:
                       type: string
@@ -109,9 +119,12 @@ spec:
                       specify a value, Oracle automatically assigns a private IP address
                       from the subnet.  Example: 10.0.3.3'
                     type: string
+                  ipv4subnetCidrAtCreation:
+                    description: Any one of the IPv4 CIDRs allocated to the subnet.
+                    type: string
                   lifetime:
                     description: '(Updatable) Lifetime of the IP address. There are
-                      two types of IPv6 IPs:'
+                      two types of IPs:'
                     type: string
                   routeTableId:
                     description: (Updatable) The OCID of the route table the IP address
@@ -294,6 +307,16 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  cidrPrefixLength:
+                    description: 'An optional field that when combined with the ipAddress
+                      field, will be used to allocate secondary IPv4 CIDRs. The CIDR
+                      range created by this combination must be within the subnet''s
+                      CIDR  and the CIDR range should not collide with any existing
+                      IPv4 address allocation. The VNIC ID specified in the request
+                      object should not already been assigned more than the max IPv4
+                      addresses. If you don''t specify a value, this option will be
+                      ignored.  Example: 18'
+                    type: number
                   definedTags:
                     additionalProperties:
                       type: string
@@ -330,9 +353,12 @@ spec:
                       specify a value, Oracle automatically assigns a private IP address
                       from the subnet.  Example: 10.0.3.3'
                     type: string
+                  ipv4subnetCidrAtCreation:
+                    description: Any one of the IPv4 CIDRs allocated to the subnet.
+                    type: string
                   lifetime:
                     description: '(Updatable) Lifetime of the IP address. There are
-                      two types of IPv6 IPs:'
+                      two types of IPs:'
                     type: string
                   routeTableId:
                     description: (Updatable) The OCID of the route table the IP address
@@ -679,6 +705,16 @@ spec:
                       will be null if this is a secondary private IP assigned to a
                       VNIC that is in a regional subnet.  Example: Uocm:PHX-AD-1'
                     type: string
+                  cidrPrefixLength:
+                    description: 'An optional field that when combined with the ipAddress
+                      field, will be used to allocate secondary IPv4 CIDRs. The CIDR
+                      range created by this combination must be within the subnet''s
+                      CIDR  and the CIDR range should not collide with any existing
+                      IPv4 address allocation. The VNIC ID specified in the request
+                      object should not already been assigned more than the max IPv4
+                      addresses. If you don''t specify a value, this option will be
+                      ignored.  Example: 18'
+                    type: number
                   compartmentId:
                     description: The OCID of the compartment containing the private
                       IP.
@@ -726,6 +762,9 @@ spec:
                     description: State of the IP address. If an IP address is assigned
                       to a VNIC it is ASSIGNED, otherwise it is AVAILABLE.
                     type: string
+                  ipv4subnetCidrAtCreation:
+                    description: Any one of the IPv4 CIDRs allocated to the subnet.
+                    type: string
                   isPrimary:
                     description: 'Whether this private IP is the primary one on the
                       VNIC. Primary private IPs are unassigned and deleted automatically
@@ -735,7 +774,7 @@ spec:
                     type: boolean
                   lifetime:
                     description: '(Updatable) Lifetime of the IP address. There are
-                      two types of IPv6 IPs:'
+                      two types of IPs:'
                     type: string
                   routeTableId:
                     description: (Updatable) The OCID of the route table the IP address

@@ -33,3 +33,4 @@ spec:
       subnetIdSelector:
         matchLabels:
           testing.upbound.io/example-name: test_subnet
+    securityAttributes: ${var.stream_pool_security_attributes}

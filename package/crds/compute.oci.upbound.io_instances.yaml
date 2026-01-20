@@ -310,6 +310,13 @@ spec:
                               ipv6address:
                                 type: string
                               ipv6subnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -426,6 +433,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead
@@ -747,6 +762,10 @@ spec:
                   ipxeScript:
                     description: This is an advanced option.
                     type: string
+                  isAiEnterpriseEnabled:
+                    description: (Updatable) Whether to enable AI enterprise on the
+                      instance.
+                    type: boolean
                   isPvEncryptionInTransitEnabled:
                     description: Whether to enable in-transit encryption for the data
                       volume's paravirtualized attachment. The default value is false.
@@ -1063,6 +1082,10 @@ spec:
                           description: (Updatable) The total number of OCPUs available
                             to the instance.
                           type: number
+                        resourceManagement:
+                          description: (Updatable) This field is reserved for internal
+                            use.
+                          type: string
                         vcpus:
                           description: (Updatable) The total number of VCPUs available
                             to the instance. This can be used instead of OCPUs, in
@@ -1479,6 +1502,13 @@ spec:
                               ipv6address:
                                 type: string
                               ipv6subnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -1595,6 +1625,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead
@@ -1916,6 +1954,10 @@ spec:
                   ipxeScript:
                     description: This is an advanced option.
                     type: string
+                  isAiEnterpriseEnabled:
+                    description: (Updatable) Whether to enable AI enterprise on the
+                      instance.
+                    type: boolean
                   isPvEncryptionInTransitEnabled:
                     description: Whether to enable in-transit encryption for the data
                       volume's paravirtualized attachment. The default value is false.
@@ -2232,6 +2274,10 @@ spec:
                           description: (Updatable) The total number of OCPUs available
                             to the instance.
                           type: number
+                        resourceManagement:
+                          description: (Updatable) This field is reserved for internal
+                            use.
+                          type: string
                         vcpus:
                           description: (Updatable) The total number of VCPUs available
                             to the instance. This can be used instead of OCPUs, in
@@ -2740,6 +2786,13 @@ spec:
                               ipv6address:
                                 type: string
                               ipv6subnetCidr:
+                                description: 'One of the IPv4 CIDR blocks allocated
+                                  to the subnet. Represents the IP range from which
+                                  the VNIC''s private IP address will be assigned
+                                  if privateIp or privateIpId is not specified. Either
+                                  this field or the privateIp (or privateIpId, if
+                                  applicable) field must be provided, but not both
+                                  simultaneously. Example: 192.168.1.0/28'
                                 type: string
                             type: object
                           type: array
@@ -2777,6 +2830,14 @@ spec:
                             you would skip the source/destination check, see Using
                             a Private IP as a Route Target.
                           type: boolean
+                        subnetCidr:
+                          description: 'One of the IPv4 CIDR blocks allocated to the
+                            subnet. Represents the IP range from which the VNIC''s
+                            private IP address will be assigned if privateIp or privateIpId
+                            is not specified. Either this field or the privateIp (or
+                            privateIpId, if applicable) field must be provided, but
+                            not both simultaneously. Example: 192.168.1.0/28'
+                          type: string
                         subnetId:
                           description: The OCID of the subnet to create the VNIC in.
                             When launching an instance, use this subnetId instead
@@ -2873,6 +2934,10 @@ spec:
                   ipxeScript:
                     description: This is an advanced option.
                     type: string
+                  isAiEnterpriseEnabled:
+                    description: (Updatable) Whether to enable AI enterprise on the
+                      instance.
+                    type: boolean
                   isCrossNumaNode:
                     description: Whether the instance’s OCPUs and memory are distributed
                       across multiple NUMA nodes.
@@ -3248,6 +3313,10 @@ spec:
                         processorDescription:
                           description: A short description of the instance's processor
                             (CPU).
+                          type: string
+                        resourceManagement:
+                          description: (Updatable) This field is reserved for internal
+                            use.
                           type: string
                         vcpus:
                           description: (Updatable) The total number of VCPUs available

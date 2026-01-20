@@ -43,6 +43,7 @@ spec:
       type: ${var.mount_target_locks_type}
     nsgIds: ${var.mount_target_nsg_ids}
     requestedThroughput: ${var.mount_target_requested_throughput}
+    securityAttributes: ${var.mount_target_security_attributes}
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_subnet

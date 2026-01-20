@@ -4393,6 +4393,11 @@ func (in *CreateVnicDetailsInitParameters) DeepCopyInto(out *CreateVnicDetailsIn
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -4614,6 +4619,11 @@ func (in *CreateVnicDetailsObservation) DeepCopyInto(out *CreateVnicDetailsObser
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -4752,6 +4762,11 @@ func (in *CreateVnicDetailsParameters) DeepCopyInto(out *CreateVnicDetailsParame
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -4829,6 +4844,11 @@ func (in *DedicatedVmHostInitParameters) DeepCopyInto(out *DedicatedVmHostInitPa
 		*out = new(string)
 		**out = **in
 	}
+	if in.CapacityConfig != nil {
+		in, out := &in.CapacityConfig, &out.CapacityConfig
+		*out = new(string)
+		**out = **in
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -4880,6 +4900,11 @@ func (in *DedicatedVmHostInitParameters) DeepCopyInto(out *DedicatedVmHostInitPa
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.IsMemoryEncryptionEnabled != nil {
+		in, out := &in.IsMemoryEncryptionEnabled, &out.IsMemoryEncryptionEnabled
+		*out = new(bool)
+		**out = **in
 	}
 	if in.PlacementConstraintDetails != nil {
 		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
@@ -4947,6 +4972,11 @@ func (in *DedicatedVmHostObservation) DeepCopyInto(out *DedicatedVmHostObservati
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.CapacityConfig != nil {
+		in, out := &in.CapacityConfig, &out.CapacityConfig
+		*out = new(string)
+		**out = **in
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -5009,6 +5039,11 @@ func (in *DedicatedVmHostObservation) DeepCopyInto(out *DedicatedVmHostObservati
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsMemoryEncryptionEnabled != nil {
+		in, out := &in.IsMemoryEncryptionEnabled, &out.IsMemoryEncryptionEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.PlacementConstraintDetails != nil {
 		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
 		*out = make([]PlacementConstraintDetailsObservation, len(*in))
@@ -5066,6 +5101,11 @@ func (in *DedicatedVmHostParameters) DeepCopyInto(out *DedicatedVmHostParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.CapacityConfig != nil {
+		in, out := &in.CapacityConfig, &out.CapacityConfig
+		*out = new(string)
+		**out = **in
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -5117,6 +5157,11 @@ func (in *DedicatedVmHostParameters) DeepCopyInto(out *DedicatedVmHostParameters
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.IsMemoryEncryptionEnabled != nil {
+		in, out := &in.IsMemoryEncryptionEnabled, &out.IsMemoryEncryptionEnabled
+		*out = new(bool)
+		**out = **in
 	}
 	if in.PlacementConstraintDetails != nil {
 		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
@@ -6649,6 +6694,11 @@ func (in *InstanceDetailsSecondaryVnicsCreateVnicDetailsInitParameters) DeepCopy
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -6845,6 +6895,11 @@ func (in *InstanceDetailsSecondaryVnicsCreateVnicDetailsObservation) DeepCopyInt
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -6964,6 +7019,11 @@ func (in *InstanceDetailsSecondaryVnicsCreateVnicDetailsParameters) DeepCopyInto
 	if in.SkipSourceDestCheck != nil {
 		in, out := &in.SkipSourceDestCheck, &out.SkipSourceDestCheck
 		*out = new(bool)
+		**out = **in
+	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -7241,6 +7301,11 @@ func (in *InstanceInitParameters) DeepCopyInto(out *InstanceInitParameters) {
 	if in.IpxeScript != nil {
 		in, out := &in.IpxeScript, &out.IpxeScript
 		*out = new(string)
+		**out = **in
+	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
 		**out = **in
 	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
@@ -7699,6 +7764,11 @@ func (in *InstanceObservation) DeepCopyInto(out *InstanceObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsCrossNumaNode != nil {
 		in, out := &in.IsCrossNumaNode, &out.IsCrossNumaNode
 		*out = new(bool)
@@ -8114,6 +8184,11 @@ func (in *InstanceParameters) DeepCopyInto(out *InstanceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -8425,6 +8500,13 @@ func (in *InstancePoolInitParameters) DeepCopyInto(out *InstancePoolInitParamete
 		in, out := &in.InstanceHostnameFormatter, &out.InstanceHostnameFormatter
 		*out = new(string)
 		**out = **in
+	}
+	if in.LifecycleManagement != nil {
+		in, out := &in.LifecycleManagement, &out.LifecycleManagement
+		*out = make([]LifecycleManagementInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LoadBalancers != nil {
 		in, out := &in.LoadBalancers, &out.LoadBalancers
@@ -8940,6 +9022,13 @@ func (in *InstancePoolObservation) DeepCopyInto(out *InstancePoolObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.LifecycleManagement != nil {
+		in, out := &in.LifecycleManagement, &out.LifecycleManagement
+		*out = make([]LifecycleManagementObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
 	if in.LoadBalancers != nil {
 		in, out := &in.LoadBalancers, &out.LoadBalancers
 		*out = make([]InstancePoolLoadBalancersObservation, len(*in))
@@ -9040,6 +9129,13 @@ func (in *InstancePoolParameters) DeepCopyInto(out *InstancePoolParameters) {
 		in, out := &in.InstanceHostnameFormatter, &out.InstanceHostnameFormatter
 		*out = new(string)
 		**out = **in
+	}
+	if in.LifecycleManagement != nil {
+		in, out := &in.LifecycleManagement, &out.LifecycleManagement
+		*out = make([]LifecycleManagementParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LoadBalancers != nil {
 		in, out := &in.LoadBalancers, &out.LoadBalancers
@@ -10442,6 +10538,11 @@ func (in *LaunchDetailsCreateVnicDetailsInitParameters) DeepCopyInto(out *Launch
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -10638,6 +10739,11 @@ func (in *LaunchDetailsCreateVnicDetailsObservation) DeepCopyInto(out *LaunchDet
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -10759,6 +10865,11 @@ func (in *LaunchDetailsCreateVnicDetailsParameters) DeepCopyInto(out *LaunchDeta
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -10810,6 +10921,11 @@ func (in *LaunchDetailsInitParameters) DeepCopyInto(out *LaunchDetailsInitParame
 	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
 		*out = new(string)
 		**out = **in
 	}
@@ -10895,6 +11011,11 @@ func (in *LaunchDetailsInitParameters) DeepCopyInto(out *LaunchDetailsInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -10933,6 +11054,13 @@ func (in *LaunchDetailsInitParameters) DeepCopyInto(out *LaunchDetailsInitParame
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]LaunchDetailsPlacementConstraintDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -11308,6 +11436,11 @@ func (in *LaunchDetailsObservation) DeepCopyInto(out *LaunchDetailsObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreateVnicDetails != nil {
 		in, out := &in.CreateVnicDetails, &out.CreateVnicDetails
 		*out = make([]LaunchDetailsCreateVnicDetailsObservation, len(*in))
@@ -11390,6 +11523,11 @@ func (in *LaunchDetailsObservation) DeepCopyInto(out *LaunchDetailsObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -11428,6 +11566,13 @@ func (in *LaunchDetailsObservation) DeepCopyInto(out *LaunchDetailsObservation) 
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]LaunchDetailsPlacementConstraintDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -11533,6 +11678,11 @@ func (in *LaunchDetailsParameters) DeepCopyInto(out *LaunchDetailsParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreateVnicDetails != nil {
 		in, out := &in.CreateVnicDetails, &out.CreateVnicDetails
 		*out = make([]LaunchDetailsCreateVnicDetailsParameters, len(*in))
@@ -11615,6 +11765,11 @@ func (in *LaunchDetailsParameters) DeepCopyInto(out *LaunchDetailsParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -11653,6 +11808,13 @@ func (in *LaunchDetailsParameters) DeepCopyInto(out *LaunchDetailsParameters) {
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]LaunchDetailsPlacementConstraintDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -11717,6 +11879,81 @@ func (in *LaunchDetailsParameters) DeepCopy() *LaunchDetailsParameters {
 		return nil
 	}
 	out := new(LaunchDetailsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LaunchDetailsPlacementConstraintDetailsInitParameters) DeepCopyInto(out *LaunchDetailsPlacementConstraintDetailsInitParameters) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LaunchDetailsPlacementConstraintDetailsInitParameters.
+func (in *LaunchDetailsPlacementConstraintDetailsInitParameters) DeepCopy() *LaunchDetailsPlacementConstraintDetailsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LaunchDetailsPlacementConstraintDetailsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LaunchDetailsPlacementConstraintDetailsObservation) DeepCopyInto(out *LaunchDetailsPlacementConstraintDetailsObservation) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LaunchDetailsPlacementConstraintDetailsObservation.
+func (in *LaunchDetailsPlacementConstraintDetailsObservation) DeepCopy() *LaunchDetailsPlacementConstraintDetailsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(LaunchDetailsPlacementConstraintDetailsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LaunchDetailsPlacementConstraintDetailsParameters) DeepCopyInto(out *LaunchDetailsPlacementConstraintDetailsParameters) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LaunchDetailsPlacementConstraintDetailsParameters.
+func (in *LaunchDetailsPlacementConstraintDetailsParameters) DeepCopy() *LaunchDetailsPlacementConstraintDetailsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LaunchDetailsPlacementConstraintDetailsParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -12143,6 +12380,11 @@ func (in *LaunchDetailsShapeConfigInitParameters) DeepCopyInto(out *LaunchDetail
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -12183,6 +12425,11 @@ func (in *LaunchDetailsShapeConfigObservation) DeepCopyInto(out *LaunchDetailsSh
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -12221,6 +12468,11 @@ func (in *LaunchDetailsShapeConfigParameters) DeepCopyInto(out *LaunchDetailsSha
 	if in.Ocpus != nil {
 		in, out := &in.Ocpus, &out.Ocpus
 		*out = new(float64)
+		**out = **in
+	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
 		**out = **in
 	}
 	if in.Vcpus != nil {
@@ -12906,6 +13158,138 @@ func (in *LicensingConfigsParameters) DeepCopy() *LicensingConfigsParameters {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleActionsInitParameters) DeepCopyInto(out *LifecycleActionsInitParameters) {
+	*out = *in
+	if in.PreTermination != nil {
+		in, out := &in.PreTermination, &out.PreTermination
+		*out = make([]PreTerminationInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleActionsInitParameters.
+func (in *LifecycleActionsInitParameters) DeepCopy() *LifecycleActionsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleActionsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleActionsObservation) DeepCopyInto(out *LifecycleActionsObservation) {
+	*out = *in
+	if in.PreTermination != nil {
+		in, out := &in.PreTermination, &out.PreTermination
+		*out = make([]PreTerminationObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleActionsObservation.
+func (in *LifecycleActionsObservation) DeepCopy() *LifecycleActionsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleActionsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleActionsParameters) DeepCopyInto(out *LifecycleActionsParameters) {
+	*out = *in
+	if in.PreTermination != nil {
+		in, out := &in.PreTermination, &out.PreTermination
+		*out = make([]PreTerminationParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleActionsParameters.
+func (in *LifecycleActionsParameters) DeepCopy() *LifecycleActionsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleActionsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleManagementInitParameters) DeepCopyInto(out *LifecycleManagementInitParameters) {
+	*out = *in
+	if in.LifecycleActions != nil {
+		in, out := &in.LifecycleActions, &out.LifecycleActions
+		*out = make([]LifecycleActionsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleManagementInitParameters.
+func (in *LifecycleManagementInitParameters) DeepCopy() *LifecycleManagementInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleManagementInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleManagementObservation) DeepCopyInto(out *LifecycleManagementObservation) {
+	*out = *in
+	if in.LifecycleActions != nil {
+		in, out := &in.LifecycleActions, &out.LifecycleActions
+		*out = make([]LifecycleActionsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleManagementObservation.
+func (in *LifecycleManagementObservation) DeepCopy() *LifecycleManagementObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleManagementObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LifecycleManagementParameters) DeepCopyInto(out *LifecycleManagementParameters) {
+	*out = *in
+	if in.LifecycleActions != nil {
+		in, out := &in.LifecycleActions, &out.LifecycleActions
+		*out = make([]LifecycleActionsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LifecycleManagementParameters.
+func (in *LifecycleManagementParameters) DeepCopy() *LifecycleManagementParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LifecycleManagementParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *LoadBalancerBackendsInitParameters) DeepCopyInto(out *LoadBalancerBackendsInitParameters) {
 	*out = *in
 }
@@ -13051,6 +13435,81 @@ func (in *LoadBalancersParameters) DeepCopy() *LoadBalancersParameters {
 		return nil
 	}
 	out := new(LoadBalancersParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OnTimeoutInitParameters) DeepCopyInto(out *OnTimeoutInitParameters) {
+	*out = *in
+	if in.PreserveBlockVolumeMode != nil {
+		in, out := &in.PreserveBlockVolumeMode, &out.PreserveBlockVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.PreserveBootVolumeMode != nil {
+		in, out := &in.PreserveBootVolumeMode, &out.PreserveBootVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OnTimeoutInitParameters.
+func (in *OnTimeoutInitParameters) DeepCopy() *OnTimeoutInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(OnTimeoutInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OnTimeoutObservation) DeepCopyInto(out *OnTimeoutObservation) {
+	*out = *in
+	if in.PreserveBlockVolumeMode != nil {
+		in, out := &in.PreserveBlockVolumeMode, &out.PreserveBlockVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.PreserveBootVolumeMode != nil {
+		in, out := &in.PreserveBootVolumeMode, &out.PreserveBootVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OnTimeoutObservation.
+func (in *OnTimeoutObservation) DeepCopy() *OnTimeoutObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(OnTimeoutObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OnTimeoutParameters) DeepCopyInto(out *OnTimeoutParameters) {
+	*out = *in
+	if in.PreserveBlockVolumeMode != nil {
+		in, out := &in.PreserveBlockVolumeMode, &out.PreserveBlockVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+	if in.PreserveBootVolumeMode != nil {
+		in, out := &in.PreserveBootVolumeMode, &out.PreserveBootVolumeMode
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OnTimeoutParameters.
+func (in *OnTimeoutParameters) DeepCopy() *OnTimeoutParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(OnTimeoutParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -13483,6 +13942,11 @@ func (in *OptionsLaunchDetailsCreateVnicDetailsInitParameters) DeepCopyInto(out 
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -13679,6 +14143,11 @@ func (in *OptionsLaunchDetailsCreateVnicDetailsObservation) DeepCopyInto(out *Op
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -13800,6 +14269,11 @@ func (in *OptionsLaunchDetailsCreateVnicDetailsParameters) DeepCopyInto(out *Opt
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -13851,6 +14325,11 @@ func (in *OptionsLaunchDetailsInitParameters) DeepCopyInto(out *OptionsLaunchDet
 	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
 		*out = new(string)
 		**out = **in
 	}
@@ -13936,6 +14415,11 @@ func (in *OptionsLaunchDetailsInitParameters) DeepCopyInto(out *OptionsLaunchDet
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -13974,6 +14458,13 @@ func (in *OptionsLaunchDetailsInitParameters) DeepCopyInto(out *OptionsLaunchDet
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]OptionsLaunchDetailsPlacementConstraintDetailsInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -14349,6 +14840,11 @@ func (in *OptionsLaunchDetailsObservation) DeepCopyInto(out *OptionsLaunchDetail
 		*out = new(string)
 		**out = **in
 	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreateVnicDetails != nil {
 		in, out := &in.CreateVnicDetails, &out.CreateVnicDetails
 		*out = make([]OptionsLaunchDetailsCreateVnicDetailsObservation, len(*in))
@@ -14431,6 +14927,11 @@ func (in *OptionsLaunchDetailsObservation) DeepCopyInto(out *OptionsLaunchDetail
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -14469,6 +14970,13 @@ func (in *OptionsLaunchDetailsObservation) DeepCopyInto(out *OptionsLaunchDetail
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]OptionsLaunchDetailsPlacementConstraintDetailsObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -14574,6 +15082,11 @@ func (in *OptionsLaunchDetailsParameters) DeepCopyInto(out *OptionsLaunchDetails
 		*out = new(string)
 		**out = **in
 	}
+	if in.ComputeClusterID != nil {
+		in, out := &in.ComputeClusterID, &out.ComputeClusterID
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreateVnicDetails != nil {
 		in, out := &in.CreateVnicDetails, &out.CreateVnicDetails
 		*out = make([]OptionsLaunchDetailsCreateVnicDetailsParameters, len(*in))
@@ -14656,6 +15169,11 @@ func (in *OptionsLaunchDetailsParameters) DeepCopyInto(out *OptionsLaunchDetails
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsAIEnterpriseEnabled != nil {
+		in, out := &in.IsAIEnterpriseEnabled, &out.IsAIEnterpriseEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -14694,6 +15212,13 @@ func (in *OptionsLaunchDetailsParameters) DeepCopyInto(out *OptionsLaunchDetails
 				**out = **in
 			}
 			(*out)[key] = outVal
+		}
+	}
+	if in.PlacementConstraintDetails != nil {
+		in, out := &in.PlacementConstraintDetails, &out.PlacementConstraintDetails
+		*out = make([]OptionsLaunchDetailsPlacementConstraintDetailsParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
 	if in.PlatformConfig != nil {
@@ -14758,6 +15283,81 @@ func (in *OptionsLaunchDetailsParameters) DeepCopy() *OptionsLaunchDetailsParame
 		return nil
 	}
 	out := new(OptionsLaunchDetailsParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsInitParameters) DeepCopyInto(out *OptionsLaunchDetailsPlacementConstraintDetailsInitParameters) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OptionsLaunchDetailsPlacementConstraintDetailsInitParameters.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsInitParameters) DeepCopy() *OptionsLaunchDetailsPlacementConstraintDetailsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(OptionsLaunchDetailsPlacementConstraintDetailsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsObservation) DeepCopyInto(out *OptionsLaunchDetailsPlacementConstraintDetailsObservation) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OptionsLaunchDetailsPlacementConstraintDetailsObservation.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsObservation) DeepCopy() *OptionsLaunchDetailsPlacementConstraintDetailsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(OptionsLaunchDetailsPlacementConstraintDetailsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsParameters) DeepCopyInto(out *OptionsLaunchDetailsPlacementConstraintDetailsParameters) {
+	*out = *in
+	if in.ComputeHostGroupID != nil {
+		in, out := &in.ComputeHostGroupID, &out.ComputeHostGroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Type != nil {
+		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new OptionsLaunchDetailsPlacementConstraintDetailsParameters.
+func (in *OptionsLaunchDetailsPlacementConstraintDetailsParameters) DeepCopy() *OptionsLaunchDetailsPlacementConstraintDetailsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(OptionsLaunchDetailsPlacementConstraintDetailsParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -15061,6 +15661,11 @@ func (in *OptionsLaunchDetailsShapeConfigInitParameters) DeepCopyInto(out *Optio
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -15101,6 +15706,11 @@ func (in *OptionsLaunchDetailsShapeConfigObservation) DeepCopyInto(out *OptionsL
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -15139,6 +15749,11 @@ func (in *OptionsLaunchDetailsShapeConfigParameters) DeepCopyInto(out *OptionsLa
 	if in.Ocpus != nil {
 		in, out := &in.Ocpus, &out.Ocpus
 		*out = new(float64)
+		**out = **in
+	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
 		**out = **in
 	}
 	if in.Vcpus != nil {
@@ -16601,6 +17216,102 @@ func (in *PluginsConfigParameters) DeepCopy() *PluginsConfigParameters {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *PreTerminationInitParameters) DeepCopyInto(out *PreTerminationInitParameters) {
+	*out = *in
+	if in.IsEnabled != nil {
+		in, out := &in.IsEnabled, &out.IsEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.OnTimeout != nil {
+		in, out := &in.OnTimeout, &out.OnTimeout
+		*out = make([]OnTimeoutInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Timeout != nil {
+		in, out := &in.Timeout, &out.Timeout
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PreTerminationInitParameters.
+func (in *PreTerminationInitParameters) DeepCopy() *PreTerminationInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(PreTerminationInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *PreTerminationObservation) DeepCopyInto(out *PreTerminationObservation) {
+	*out = *in
+	if in.IsEnabled != nil {
+		in, out := &in.IsEnabled, &out.IsEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.OnTimeout != nil {
+		in, out := &in.OnTimeout, &out.OnTimeout
+		*out = make([]OnTimeoutObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Timeout != nil {
+		in, out := &in.Timeout, &out.Timeout
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PreTerminationObservation.
+func (in *PreTerminationObservation) DeepCopy() *PreTerminationObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(PreTerminationObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *PreTerminationParameters) DeepCopyInto(out *PreTerminationParameters) {
+	*out = *in
+	if in.IsEnabled != nil {
+		in, out := &in.IsEnabled, &out.IsEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.OnTimeout != nil {
+		in, out := &in.OnTimeout, &out.OnTimeout
+		*out = make([]OnTimeoutParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.Timeout != nil {
+		in, out := &in.Timeout, &out.Timeout
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new PreTerminationParameters.
+func (in *PreTerminationParameters) DeepCopy() *PreTerminationParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(PreTerminationParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *PreemptibleInstanceConfigInitParameters) DeepCopyInto(out *PreemptibleInstanceConfigInitParameters) {
 	*out = *in
 	if in.PreemptionAction != nil {
@@ -17159,6 +17870,11 @@ func (in *SecondaryVnicsCreateVnicDetailsInitParameters) DeepCopyInto(out *Secon
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -17355,6 +18071,11 @@ func (in *SecondaryVnicsCreateVnicDetailsObservation) DeepCopyInto(out *Secondar
 		*out = new(bool)
 		**out = **in
 	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -17474,6 +18195,11 @@ func (in *SecondaryVnicsCreateVnicDetailsParameters) DeepCopyInto(out *Secondary
 	if in.SkipSourceDestCheck != nil {
 		in, out := &in.SkipSourceDestCheck, &out.SkipSourceDestCheck
 		*out = new(bool)
+		**out = **in
+	}
+	if in.SubnetCidr != nil {
+		in, out := &in.SubnetCidr, &out.SubnetCidr
+		*out = new(string)
 		**out = **in
 	}
 	if in.SubnetID != nil {
@@ -17612,6 +18338,11 @@ func (in *ShapeConfigInitParameters) DeepCopyInto(out *ShapeConfigInitParameters
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -17692,6 +18423,11 @@ func (in *ShapeConfigObservation) DeepCopyInto(out *ShapeConfigObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
+		**out = **in
+	}
 	if in.Vcpus != nil {
 		in, out := &in.Vcpus, &out.Vcpus
 		*out = new(float64)
@@ -17730,6 +18466,11 @@ func (in *ShapeConfigParameters) DeepCopyInto(out *ShapeConfigParameters) {
 	if in.Ocpus != nil {
 		in, out := &in.Ocpus, &out.Ocpus
 		*out = new(float64)
+		**out = **in
+	}
+	if in.ResourceManagement != nil {
+		in, out := &in.ResourceManagement, &out.ResourceManagement
+		*out = new(string)
 		**out = **in
 	}
 	if in.Vcpus != nil {

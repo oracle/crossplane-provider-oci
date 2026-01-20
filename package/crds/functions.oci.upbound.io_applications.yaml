@@ -294,6 +294,15 @@ spec:
                             type: string
                         type: object
                     type: object
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shape:
                     description: 'Valid values are GENERIC_X86, GENERIC_ARM and GENERIC_X86_ARM.
                       Default is GENERIC_X86. Setting this to GENERIC_X86, will run
@@ -647,6 +656,15 @@ spec:
                             type: string
                         type: object
                     type: object
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shape:
                     description: 'Valid values are GENERIC_X86, GENERIC_ARM and GENERIC_X86_ARM.
                       Default is GENERIC_X86. Setting this to GENERIC_X86, will run
@@ -1012,6 +1030,15 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shape:
                     description: 'Valid values are GENERIC_X86, GENERIC_ARM and GENERIC_X86_ARM.
                       Default is GENERIC_X86. Setting this to GENERIC_X86, will run

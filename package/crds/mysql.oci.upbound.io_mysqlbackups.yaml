@@ -236,6 +236,22 @@ spec:
                           type: string
                       type: object
                     type: array
+                  validateBackupDetails:
+                    items:
+                      properties:
+                        isPreparedBackupRequired:
+                          description: 'Specifies whether the backup needs to be prepared
+                            for fast restore or not. Set to true to prepare the backup
+                            Note: Prepare backup is a one time operation, therefore
+                            this field can be set to true only once.'
+                          type: boolean
+                      type: object
+                    type: array
+                  validateTrigger:
+                    description: (Updatable) An optional integer property when incremented
+                      will trigger a validation of the backup. Set the integer to
+                      1 initially and increment it by 1 to re-trigger validation.
+                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -412,6 +428,22 @@ spec:
                           type: string
                       type: object
                     type: array
+                  validateBackupDetails:
+                    items:
+                      properties:
+                        isPreparedBackupRequired:
+                          description: 'Specifies whether the backup needs to be prepared
+                            for fast restore or not. Set to true to prepare the backup
+                            Note: Prepare backup is a one time operation, therefore
+                            this field can be set to true only once.'
+                          type: boolean
+                      type: object
+                    type: array
+                  validateTrigger:
+                    description: (Updatable) An optional integer property when incremented
+                      will trigger a validation of the backup. Set the integer to
+                      1 initially and increment it by 1 to re-trigger validation.
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -592,6 +624,49 @@ spec:
                   backupType:
                     description: The type of backup.
                     type: string
+                  backupValidationDetails:
+                    description: Backup validation details.
+                    items:
+                      properties:
+                        backupPreparationStatus:
+                          description: 'Indicates whether the backup has been prepared
+                            successfully.  PREPARED: The backup is prepared one. NOT_PREPARED:
+                            The backup is not prepared.'
+                          type: string
+                        errorMessage:
+                          description: Error message if the backup validation has
+                            failed.
+                          type: string
+                        estimatedRestoreDuration:
+                          description: The estimated restore duration of the backup.
+                          type: string
+                        preparedBackupDetails:
+                          description: Prepared backup details.
+                          items:
+                            properties:
+                              preparedBackupRestoreReductionInMinutes:
+                                description: The estimated time saving when this prepared
+                                  backup is restored.
+                                type: number
+                              timePrepared:
+                                description: The date and time the backup was prepared.
+                                type: string
+                            type: object
+                          type: array
+                        timeLastValidated:
+                          description: The date and time of the most recent validation
+                            performed on the backup.
+                          type: string
+                        validationStatus:
+                          description: 'The status of backup validation:  NOT_VALIDATED
+                            (Default): The backup has not been validated.  VALIDATED:
+                            The backup has been validated successfully.  NEEDS_ATTENTION:
+                            The backup validation failed due to a transient issue.
+                            Validation should be retried.  FAILED: The backup cannot
+                            be restored.'
+                          type: string
+                      type: object
+                    type: array
                   compartmentId:
                     description: (Updatable) The OCID of the compartment the backup
                       exists in.
@@ -869,6 +944,34 @@ spec:
                             Read Replica that this model is included in.
                           items:
                             properties:
+                              maintenanceScheduleType:
+                                description: 'The maintenance schedule type of the
+                                  DB system. EARLY:   Maintenance schedule follows
+                                  a cycle where upgrades are performed when versions
+                                  become deprecated. REGULAR: Maintenance schedule
+                                  follows the normal cycle where upgrades are performed
+                                  when versions become unavailable.'
+                                type: string
+                              targetVersion:
+                                description: The version that is expected to be targeted
+                                  during the next scheduled maintenance run.
+                                type: string
+                              timeScheduled:
+                                description: The time the scheduled maintenance is
+                                  expected to start, as described by RFC 3339.
+                                type: string
+                              versionPreference:
+                                description: The preferred version to target when
+                                  performing an automatic MySQL upgrade.
+                                type: string
+                              versionTrackPreference:
+                                description: 'The preferred version track to target
+                                  when performing an automatic MySQL upgrade. LONG_TERM_SUPPORT:
+                                  No MySQL database behavior changes. INNOVATION:        Provides
+                                  access to the latest features and all bug fixes.
+                                  FOLLOW:            Follows the track of the current
+                                  MySQL version.'
+                                type: string
                               windowStartTime:
                                 description: The start of a 30-minute window of time
                                   in which daily, automated backups occur.
@@ -952,6 +1055,15 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        securityAttributes:
+                          additionalProperties:
+                            type: string
+                          description: 'Security Attributes for this resource. Each
+                            key is predefined and scoped to a namespace. For more
+                            information, see ZPR Artifacts. Example: {"Oracle-ZPR":
+                            {"MaxEgressCount": {"value": "42", "mode": "audit"}}}'
+                          type: object
+                          x-kubernetes-map-type: granular
                         shapeName:
                           description: The shape of the primary instances of the DB
                             System. The shape determines resources allocated to a
@@ -1085,6 +1197,22 @@ spec:
                   timeUpdated:
                     description: The time at which the backup was updated.
                     type: string
+                  validateBackupDetails:
+                    items:
+                      properties:
+                        isPreparedBackupRequired:
+                          description: 'Specifies whether the backup needs to be prepared
+                            for fast restore or not. Set to true to prepare the backup
+                            Note: Prepare backup is a one time operation, therefore
+                            this field can be set to true only once.'
+                          type: boolean
+                      type: object
+                    type: array
+                  validateTrigger:
+                    description: (Updatable) An optional integer property when incremented
+                      will trigger a validation of the backup. Set the integer to
+                      1 initially and increment it by 1 to re-trigger validation.
+                    type: number
                 type: object
               conditions:
                 description: Conditions of the resource.

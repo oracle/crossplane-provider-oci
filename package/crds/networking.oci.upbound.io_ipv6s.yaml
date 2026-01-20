@@ -73,6 +73,10 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  cidrPrefixLength:
+                    description: Length of cidr range. Optional field to specify flexible
+                      cidr.
+                    type: number
                   definedTags:
                     additionalProperties:
                       type: string
@@ -137,6 +141,10 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
+                  cidrPrefixLength:
+                    description: Length of cidr range. Optional field to specify flexible
+                      cidr.
+                    type: number
                   definedTags:
                     additionalProperties:
                       type: string
@@ -360,6 +368,10 @@ spec:
             properties:
               atProvider:
                 properties:
+                  cidrPrefixLength:
+                    description: Length of cidr range. Optional field to specify flexible
+                      cidr.
+                    type: number
                   compartmentId:
                     description: The OCID of the compartment containing the IPv6.
                       This is the same as the VNIC's compartment.

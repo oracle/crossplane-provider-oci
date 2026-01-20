@@ -470,6 +470,11 @@ spec:
                                 description: (Updatable) The OCID of the compartment
                                   containing the instance configuration.
                                 type: string
+                              computeClusterId:
+                                description: (Applicable when instance_type=compute)
+                                  The OCID of the compute cluster that the instance
+                                  will be created in.
+                                type: string
                               createVnicDetails:
                                 description: (Applicable when instance_type=compute)
                                   Contains the properties of the VNIC for an instance
@@ -587,6 +592,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC
@@ -664,6 +681,10 @@ spec:
                                 description: (Applicable when instance_type=compute)
                                   This is an advanced option.
                                 type: string
+                              isAiEnterpriseEnabled:
+                                description: (Applicable when instance_type=compute)
+                                  Whether to enable AI enterprise on the instance.
+                                type: boolean
                               isPvEncryptionInTransitEnabled:
                                 description: (Applicable when type=paravirtualized)
                                   Whether to enable in-transit encryption for the
@@ -737,6 +758,22 @@ spec:
                                   maps only).
                                 type: object
                                 x-kubernetes-map-type: granular
+                              placementConstraintDetails:
+                                description: (Applicable when instance_type=compute)
+                                  The details for providing placement constraints.
+                                items:
+                                  properties:
+                                    computeHostGroupId:
+                                      description: The OCID of the compute host group.
+                                        This is only available for dedicated capacity
+                                        customers.
+                                      type: string
+                                    type:
+                                      description: The type of volume. The only supported
+                                        values are "iscsi" and "paravirtualized"
+                                      type: string
+                                  type: object
+                                type: array
                               platformConfig:
                                 description: (Applicable when instance_type=compute)  (Updatable
                                   only for VM's) The platform configuration requested
@@ -900,6 +937,10 @@ spec:
                                         The total number of OCPUs available to the
                                         instance.
                                       type: number
+                                    resourceManagement:
+                                      description: (Applicable when instance_type=compute)
+                                        This field is reserved for internal use.
+                                      type: string
                                     vcpus:
                                       description: (Applicable when instance_type=compute)
                                         The total number of VCPUs available to the
@@ -1299,6 +1340,11 @@ spec:
                                       description: (Updatable) The OCID of the compartment
                                         containing the instance configuration.
                                       type: string
+                                    computeClusterId:
+                                      description: (Applicable when instance_type=compute)
+                                        The OCID of the compute cluster that the instance
+                                        will be created in.
+                                      type: string
                                     createVnicDetails:
                                       description: (Applicable when instance_type=compute)
                                         Contains the properties of the VNIC for an
@@ -1425,6 +1471,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -1506,6 +1565,10 @@ spec:
                                       description: (Applicable when instance_type=compute)
                                         This is an advanced option.
                                       type: string
+                                    isAiEnterpriseEnabled:
+                                      description: (Applicable when instance_type=compute)
+                                        Whether to enable AI enterprise on the instance.
+                                      type: boolean
                                     isPvEncryptionInTransitEnabled:
                                       description: (Applicable when type=paravirtualized)
                                         Whether to enable in-transit encryption for
@@ -1579,6 +1642,22 @@ spec:
                                         string/string maps only).
                                       type: object
                                       x-kubernetes-map-type: granular
+                                    placementConstraintDetails:
+                                      description: (Applicable when instance_type=compute)
+                                        The details for providing placement constraints.
+                                      items:
+                                        properties:
+                                          computeHostGroupId:
+                                            description: The OCID of the compute host
+                                              group. This is only available for dedicated
+                                              capacity customers.
+                                            type: string
+                                          type:
+                                            description: The type of volume. The only
+                                              supported values are "iscsi" and "paravirtualized"
+                                            type: string
+                                        type: object
+                                      type: array
                                     platformConfig:
                                       description: (Applicable when instance_type=compute)  (Updatable
                                         only for VM's) The platform configuration
@@ -1744,6 +1823,11 @@ spec:
                                               The total number of OCPUs available
                                               to the instance.
                                             type: number
+                                          resourceManagement:
+                                            description: (Applicable when instance_type=compute)
+                                              This field is reserved for internal
+                                              use.
+                                            type: string
                                           vcpus:
                                             description: (Applicable when instance_type=compute)
                                               The total number of VCPUs available
@@ -1965,6 +2049,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -2114,6 +2211,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC
@@ -2563,6 +2672,11 @@ spec:
                                 description: (Updatable) The OCID of the compartment
                                   containing the instance configuration.
                                 type: string
+                              computeClusterId:
+                                description: (Applicable when instance_type=compute)
+                                  The OCID of the compute cluster that the instance
+                                  will be created in.
+                                type: string
                               createVnicDetails:
                                 description: (Applicable when instance_type=compute)
                                   Contains the properties of the VNIC for an instance
@@ -2680,6 +2794,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC
@@ -2757,6 +2883,10 @@ spec:
                                 description: (Applicable when instance_type=compute)
                                   This is an advanced option.
                                 type: string
+                              isAiEnterpriseEnabled:
+                                description: (Applicable when instance_type=compute)
+                                  Whether to enable AI enterprise on the instance.
+                                type: boolean
                               isPvEncryptionInTransitEnabled:
                                 description: (Applicable when type=paravirtualized)
                                   Whether to enable in-transit encryption for the
@@ -2830,6 +2960,22 @@ spec:
                                   maps only).
                                 type: object
                                 x-kubernetes-map-type: granular
+                              placementConstraintDetails:
+                                description: (Applicable when instance_type=compute)
+                                  The details for providing placement constraints.
+                                items:
+                                  properties:
+                                    computeHostGroupId:
+                                      description: The OCID of the compute host group.
+                                        This is only available for dedicated capacity
+                                        customers.
+                                      type: string
+                                    type:
+                                      description: The type of volume. The only supported
+                                        values are "iscsi" and "paravirtualized"
+                                      type: string
+                                  type: object
+                                type: array
                               platformConfig:
                                 description: (Applicable when instance_type=compute)  (Updatable
                                   only for VM's) The platform configuration requested
@@ -2993,6 +3139,10 @@ spec:
                                         The total number of OCPUs available to the
                                         instance.
                                       type: number
+                                    resourceManagement:
+                                      description: (Applicable when instance_type=compute)
+                                        This field is reserved for internal use.
+                                      type: string
                                     vcpus:
                                       description: (Applicable when instance_type=compute)
                                         The total number of VCPUs available to the
@@ -3392,6 +3542,11 @@ spec:
                                       description: (Updatable) The OCID of the compartment
                                         containing the instance configuration.
                                       type: string
+                                    computeClusterId:
+                                      description: (Applicable when instance_type=compute)
+                                        The OCID of the compute cluster that the instance
+                                        will be created in.
+                                      type: string
                                     createVnicDetails:
                                       description: (Applicable when instance_type=compute)
                                         Contains the properties of the VNIC for an
@@ -3518,6 +3673,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -3599,6 +3767,10 @@ spec:
                                       description: (Applicable when instance_type=compute)
                                         This is an advanced option.
                                       type: string
+                                    isAiEnterpriseEnabled:
+                                      description: (Applicable when instance_type=compute)
+                                        Whether to enable AI enterprise on the instance.
+                                      type: boolean
                                     isPvEncryptionInTransitEnabled:
                                       description: (Applicable when type=paravirtualized)
                                         Whether to enable in-transit encryption for
@@ -3672,6 +3844,22 @@ spec:
                                         string/string maps only).
                                       type: object
                                       x-kubernetes-map-type: granular
+                                    placementConstraintDetails:
+                                      description: (Applicable when instance_type=compute)
+                                        The details for providing placement constraints.
+                                      items:
+                                        properties:
+                                          computeHostGroupId:
+                                            description: The OCID of the compute host
+                                              group. This is only available for dedicated
+                                              capacity customers.
+                                            type: string
+                                          type:
+                                            description: The type of volume. The only
+                                              supported values are "iscsi" and "paravirtualized"
+                                            type: string
+                                        type: object
+                                      type: array
                                     platformConfig:
                                       description: (Applicable when instance_type=compute)  (Updatable
                                         only for VM's) The platform configuration
@@ -3837,6 +4025,11 @@ spec:
                                               The total number of OCPUs available
                                               to the instance.
                                             type: number
+                                          resourceManagement:
+                                            description: (Applicable when instance_type=compute)
+                                              This field is reserved for internal
+                                              use.
+                                            type: string
                                           vcpus:
                                             description: (Applicable when instance_type=compute)
                                               The total number of VCPUs available
@@ -4058,6 +4251,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -4207,6 +4413,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC
@@ -4751,6 +4969,11 @@ spec:
                                 description: (Updatable) The OCID of the compartment
                                   containing the instance configuration.
                                 type: string
+                              computeClusterId:
+                                description: (Applicable when instance_type=compute)
+                                  The OCID of the compute cluster that the instance
+                                  will be created in.
+                                type: string
                               createVnicDetails:
                                 description: (Applicable when instance_type=compute)
                                   Contains the properties of the VNIC for an instance
@@ -4868,6 +5091,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC
@@ -4945,6 +5180,10 @@ spec:
                                 description: (Applicable when instance_type=compute)
                                   This is an advanced option.
                                 type: string
+                              isAiEnterpriseEnabled:
+                                description: (Applicable when instance_type=compute)
+                                  Whether to enable AI enterprise on the instance.
+                                type: boolean
                               isPvEncryptionInTransitEnabled:
                                 description: (Applicable when type=paravirtualized)
                                   Whether to enable in-transit encryption for the
@@ -5018,6 +5257,22 @@ spec:
                                   maps only).
                                 type: object
                                 x-kubernetes-map-type: granular
+                              placementConstraintDetails:
+                                description: (Applicable when instance_type=compute)
+                                  The details for providing placement constraints.
+                                items:
+                                  properties:
+                                    computeHostGroupId:
+                                      description: The OCID of the compute host group.
+                                        This is only available for dedicated capacity
+                                        customers.
+                                      type: string
+                                    type:
+                                      description: The type of volume. The only supported
+                                        values are "iscsi" and "paravirtualized"
+                                      type: string
+                                  type: object
+                                type: array
                               platformConfig:
                                 description: (Applicable when instance_type=compute)  (Updatable
                                   only for VM's) The platform configuration requested
@@ -5181,6 +5436,10 @@ spec:
                                         The total number of OCPUs available to the
                                         instance.
                                       type: number
+                                    resourceManagement:
+                                      description: (Applicable when instance_type=compute)
+                                        This field is reserved for internal use.
+                                      type: string
                                     vcpus:
                                       description: (Applicable when instance_type=compute)
                                         The total number of VCPUs available to the
@@ -5580,6 +5839,11 @@ spec:
                                       description: (Updatable) The OCID of the compartment
                                         containing the instance configuration.
                                       type: string
+                                    computeClusterId:
+                                      description: (Applicable when instance_type=compute)
+                                        The OCID of the compute cluster that the instance
+                                        will be created in.
+                                      type: string
                                     createVnicDetails:
                                       description: (Applicable when instance_type=compute)
                                         Contains the properties of the VNIC for an
@@ -5706,6 +5970,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -5787,6 +6064,10 @@ spec:
                                       description: (Applicable when instance_type=compute)
                                         This is an advanced option.
                                       type: string
+                                    isAiEnterpriseEnabled:
+                                      description: (Applicable when instance_type=compute)
+                                        Whether to enable AI enterprise on the instance.
+                                      type: boolean
                                     isPvEncryptionInTransitEnabled:
                                       description: (Applicable when type=paravirtualized)
                                         Whether to enable in-transit encryption for
@@ -5860,6 +6141,22 @@ spec:
                                         string/string maps only).
                                       type: object
                                       x-kubernetes-map-type: granular
+                                    placementConstraintDetails:
+                                      description: (Applicable when instance_type=compute)
+                                        The details for providing placement constraints.
+                                      items:
+                                        properties:
+                                          computeHostGroupId:
+                                            description: The OCID of the compute host
+                                              group. This is only available for dedicated
+                                              capacity customers.
+                                            type: string
+                                          type:
+                                            description: The type of volume. The only
+                                              supported values are "iscsi" and "paravirtualized"
+                                            type: string
+                                        type: object
+                                      type: array
                                     platformConfig:
                                       description: (Applicable when instance_type=compute)  (Updatable
                                         only for VM's) The platform configuration
@@ -6025,6 +6322,11 @@ spec:
                                               The total number of OCPUs available
                                               to the instance.
                                             type: number
+                                          resourceManagement:
+                                            description: (Applicable when instance_type=compute)
+                                              This field is reserved for internal
+                                              use.
+                                            type: string
                                           vcpus:
                                             description: (Applicable when instance_type=compute)
                                               The total number of VCPUs available
@@ -6246,6 +6548,19 @@ spec:
                                               attribute of CreateVnicDetails for more
                                               information.
                                             type: boolean
+                                          subnetCidr:
+                                            description: '(Applicable when instance_type=compute)
+                                              One of the IPv4 CIDR blocks allocated
+                                              to the subnet. Represents the IP range
+                                              from which the VNIC''s private IP address
+                                              will be assigned if privateIp or privateIpId
+                                              is not specified. Either this field
+                                              or the privateIp (or privateIpId, if
+                                              applicable) field must be provided,
+                                              but not both simultaneously. Example:
+                                              192.168.1.0/28 See the subnetCidr attribute
+                                              of CreateVnicDetails for more information.'
+                                            type: string
                                           subnetId:
                                             description: (Applicable when instance_type=compute)
                                               The OCID of the subnet to create the
@@ -6395,6 +6710,18 @@ spec:
                                         on the VNIC. See the skipSourceDestCheck attribute
                                         of CreateVnicDetails for more information.
                                       type: boolean
+                                    subnetCidr:
+                                      description: '(Applicable when instance_type=compute)
+                                        One of the IPv4 CIDR blocks allocated to the
+                                        subnet. Represents the IP range from which
+                                        the VNIC''s private IP address will be assigned
+                                        if privateIp or privateIpId is not specified.
+                                        Either this field or the privateIp (or privateIpId,
+                                        if applicable) field must be provided, but
+                                        not both simultaneously. Example: 192.168.1.0/28
+                                        See the subnetCidr attribute of CreateVnicDetails
+                                        for more information.'
+                                      type: string
                                     subnetId:
                                       description: (Applicable when instance_type=compute)
                                         The OCID of the subnet to create the VNIC

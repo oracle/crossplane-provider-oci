@@ -304,6 +304,15 @@ spec:
                       create MountTarget. Available shapes and corresponding throughput
                       are listed at Mount Target Performance.
                     type: string
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes are labels for a
+                      resource that can be referenced in a Zero Trust Packet Routing
+                      (ZPR) policy to control access to ZPR-supported resources.  Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   subnetId:
                     description: The OCID of the subnet in which to create the mount
                       target.
@@ -627,6 +636,15 @@ spec:
                       create MountTarget. Available shapes and corresponding throughput
                       are listed at Mount Target Performance.
                     type: string
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes are labels for a
+                      resource that can be referenced in a Zero Trust Packet Routing
+                      (ZPR) policy to control access to ZPR-supported resources.  Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   subnetId:
                     description: The OCID of the subnet in which to create the mount
                       target.
@@ -1062,6 +1080,15 @@ spec:
                     type: string
                   reservedStorageCapacity:
                     type: string
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes are labels for a
+                      resource that can be referenced in a Zero Trust Packet Routing
+                      (ZPR) policy to control access to ZPR-supported resources.  Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   state:
                     description: The current state of the mount target.
                     type: string

@@ -22,6 +22,7 @@ spec:
     dnsLabel: ${var.subnet_dns_label}
     freeformTags:
       Department: Finance
+    ipv4cidrBlocks: ${var.subnet_ipv4cidr_blocks}
     ipv6cidrBlock: ${var.subnet_ipv6cidr_block}
     ipv6cidrBlocks: ${var.subnet_ipv6cidr_blocks}
     prohibitInternetIngress: ${var.subnet_prohibit_internet_ingress}

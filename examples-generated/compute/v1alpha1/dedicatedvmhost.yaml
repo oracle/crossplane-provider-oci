@@ -9,6 +9,7 @@ metadata:
 spec:
   forProvider:
     availabilityDomain: ${var.dedicated_vm_host_availability_domain}
+    capacityConfig: ${var.dedicated_vm_host_capacity_config}
     compartmentId: ${var.compartment_id}
     dedicatedVmHostShape: ${var.dedicated_vm_host_dedicated_vm_host_shape}
     definedTags:
@@ -17,6 +18,7 @@ spec:
     faultDomain: ${var.dedicated_vm_host_fault_domain}
     freeformTags:
       Department: Finance
+    isMemoryEncryptionEnabled: ${var.dedicated_vm_host_is_memory_encryption_enabled}
     placementConstraintDetails:
     - computeBareMetalHostId: ${oci_core_compute_bare_metal_host.test_compute_bare_metal_host.id}
       type: ${var.dedicated_vm_host_placement_constraint_details_type}

@@ -48,6 +48,33 @@ type BackupPolicyObservation struct {
 type BackupPolicyParameters struct {
 }
 
+type BackupValidationDetailsInitParameters struct {
+}
+
+type BackupValidationDetailsObservation struct {
+
+	// Indicates whether the backup has been prepared successfully.  PREPARED: The backup is prepared one. NOT_PREPARED: The backup is not prepared.
+	BackupPreparationStatus *string `json:"backupPreparationStatus,omitempty" tf:"backup_preparation_status,omitempty"`
+
+	// Error message if the backup validation has failed.
+	ErrorMessage *string `json:"errorMessage,omitempty" tf:"error_message,omitempty"`
+
+	// The estimated restore duration of the backup.
+	EstimatedRestoreDuration *string `json:"estimatedRestoreDuration,omitempty" tf:"estimated_restore_duration,omitempty"`
+
+	// Prepared backup details.
+	PreparedBackupDetails []PreparedBackupDetailsObservation `json:"preparedBackupDetails,omitempty" tf:"prepared_backup_details,omitempty"`
+
+	// The date and time of the most recent validation performed on the backup.
+	TimeLastValidated *string `json:"timeLastValidated,omitempty" tf:"time_last_validated,omitempty"`
+
+	// The status of backup validation:  NOT_VALIDATED (Default): The backup has not been validated.  VALIDATED: The backup has been validated successfully.  NEEDS_ATTENTION: The backup validation failed due to a transient issue. Validation should be retried.  FAILED: The backup cannot be restored.
+	ValidationStatus *string `json:"validationStatus,omitempty" tf:"validation_status,omitempty"`
+}
+
+type BackupValidationDetailsParameters struct {
+}
+
 type CopyPoliciesInitParameters struct {
 }
 
@@ -160,6 +187,10 @@ type DBSystemSnapshotObservation struct {
 
 	// Secure connection configuration details.
 	SecureConnections []SecureConnectionsObservation `json:"secureConnections,omitempty" tf:"secure_connections,omitempty"`
+
+	// Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The shape of the primary instances of the DB System. The shape determines resources allocated to a DB System - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. To get a list of shapes, use (the ListShapes operation.
 	ShapeName *string `json:"shapeName,omitempty" tf:"shape_name,omitempty"`
@@ -308,6 +339,21 @@ type MaintenanceInitParameters struct {
 
 type MaintenanceObservation struct {
 
+	// The maintenance schedule type of the DB system. EARLY:   Maintenance schedule follows a cycle where upgrades are performed when versions become deprecated. REGULAR: Maintenance schedule follows the normal cycle where upgrades are performed when versions become unavailable.
+	MaintenanceScheduleType *string `json:"maintenanceScheduleType,omitempty" tf:"maintenance_schedule_type,omitempty"`
+
+	// The version that is expected to be targeted during the next scheduled maintenance run.
+	TargetVersion *string `json:"targetVersion,omitempty" tf:"target_version,omitempty"`
+
+	// The time the scheduled maintenance is expected to start, as described by RFC 3339.
+	TimeScheduled *string `json:"timeScheduled,omitempty" tf:"time_scheduled,omitempty"`
+
+	// The preferred version to target when performing an automatic MySQL upgrade.
+	VersionPreference *string `json:"versionPreference,omitempty" tf:"version_preference,omitempty"`
+
+	// The preferred version track to target when performing an automatic MySQL upgrade. LONG_TERM_SUPPORT: No MySQL database behavior changes. INNOVATION:        Provides access to the latest features and all bug fixes. FOLLOW:            Follows the track of the current MySQL version.
+	VersionTrackPreference *string `json:"versionTrackPreference,omitempty" tf:"version_track_preference,omitempty"`
+
 	// The start of a 30-minute window of time in which daily, automated backups occur.
 	WindowStartTime *string `json:"windowStartTime,omitempty" tf:"window_start_time,omitempty"`
 }
@@ -391,6 +437,11 @@ type MysqlBackupInitParameters struct {
 
 	// Details of backup source in the cloud.
 	SourceDetails []SourceDetailsInitParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+
+	ValidateBackupDetails []ValidateBackupDetailsInitParameters `json:"validateBackupDetails,omitempty" tf:"validate_backup_details,omitempty"`
+
+	// (Updatable) An optional integer property when incremented will trigger a validation of the backup. Set the integer to 1 initially and increment it by 1 to re-trigger validation.
+	ValidateTrigger *float64 `json:"validateTrigger,omitempty" tf:"validate_trigger,omitempty"`
 }
 
 type MysqlBackupObservation struct {
@@ -400,6 +451,9 @@ type MysqlBackupObservation struct {
 
 	// The type of backup.
 	BackupType *string `json:"backupType,omitempty" tf:"backup_type,omitempty"`
+
+	// Backup validation details.
+	BackupValidationDetails []BackupValidationDetailsObservation `json:"backupValidationDetails,omitempty" tf:"backup_validation_details,omitempty"`
 
 	// (Updatable) The OCID of the compartment the backup exists in.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -477,6 +531,11 @@ type MysqlBackupObservation struct {
 
 	// The time at which the backup was updated.
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
+
+	ValidateBackupDetails []ValidateBackupDetailsObservation `json:"validateBackupDetails,omitempty" tf:"validate_backup_details,omitempty"`
+
+	// (Updatable) An optional integer property when incremented will trigger a validation of the backup. Set the integer to 1 initially and increment it by 1 to re-trigger validation.
+	ValidateTrigger *float64 `json:"validateTrigger,omitempty" tf:"validate_trigger,omitempty"`
 }
 
 type MysqlBackupParameters struct {
@@ -538,6 +597,13 @@ type MysqlBackupParameters struct {
 	// Details of backup source in the cloud.
 	// +kubebuilder:validation:Optional
 	SourceDetails []SourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ValidateBackupDetails []ValidateBackupDetailsParameters `json:"validateBackupDetails,omitempty" tf:"validate_backup_details,omitempty"`
+
+	// (Updatable) An optional integer property when incremented will trigger a validation of the backup. Set the integer to 1 initially and increment it by 1 to re-trigger validation.
+	// +kubebuilder:validation:Optional
+	ValidateTrigger *float64 `json:"validateTrigger,omitempty" tf:"validate_trigger,omitempty"`
 }
 
 type PitrPolicyInitParameters struct {
@@ -550,6 +616,21 @@ type PitrPolicyObservation struct {
 }
 
 type PitrPolicyParameters struct {
+}
+
+type PreparedBackupDetailsInitParameters struct {
+}
+
+type PreparedBackupDetailsObservation struct {
+
+	// The estimated time saving when this prepared backup is restored.
+	PreparedBackupRestoreReductionInMinutes *float64 `json:"preparedBackupRestoreReductionInMinutes,omitempty" tf:"prepared_backup_restore_reduction_in_minutes,omitempty"`
+
+	// The date and time the backup was prepared.
+	TimePrepared *string `json:"timePrepared,omitempty" tf:"time_prepared,omitempty"`
+}
+
+type PreparedBackupDetailsParameters struct {
 }
 
 type ReadEndpointInitParameters struct {
@@ -640,6 +721,25 @@ type SourceDetailsParameters struct {
 	// The region of the backup source.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region" tf:"region,omitempty"`
+}
+
+type ValidateBackupDetailsInitParameters struct {
+
+	// Specifies whether the backup needs to be prepared for fast restore or not. Set to true to prepare the backup Note: Prepare backup is a one time operation, therefore this field can be set to true only once.
+	IsPreparedBackupRequired *bool `json:"isPreparedBackupRequired,omitempty" tf:"is_prepared_backup_required,omitempty"`
+}
+
+type ValidateBackupDetailsObservation struct {
+
+	// Specifies whether the backup needs to be prepared for fast restore or not. Set to true to prepare the backup Note: Prepare backup is a one time operation, therefore this field can be set to true only once.
+	IsPreparedBackupRequired *bool `json:"isPreparedBackupRequired,omitempty" tf:"is_prepared_backup_required,omitempty"`
+}
+
+type ValidateBackupDetailsParameters struct {
+
+	// Specifies whether the backup needs to be prepared for fast restore or not. Set to true to prepare the backup Note: Prepare backup is a one time operation, therefore this field can be set to true only once.
+	// +kubebuilder:validation:Optional
+	IsPreparedBackupRequired *bool `json:"isPreparedBackupRequired" tf:"is_prepared_backup_required,omitempty"`
 }
 
 // MysqlBackupSpec defines the desired state of MysqlBackup

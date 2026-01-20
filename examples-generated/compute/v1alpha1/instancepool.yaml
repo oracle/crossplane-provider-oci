@@ -17,6 +17,14 @@ spec:
     instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration.id}
     instanceDisplayNameFormatter: ${var.instance_pool_instance_display_name_formatter}
     instanceHostnameFormatter: ${var.instance_pool_instance_hostname_formatter}
+    lifecycleManagement:
+    - lifecycleActions:
+      - preTermination:
+        - isEnabled: ${var.instance_pool_lifecycle_management_lifecycle_actions_pre_termination_is_enabled}
+          onTimeout:
+          - preserveBlockVolumeMode: ${var.instance_pool_lifecycle_management_lifecycle_actions_pre_termination_on_timeout_preserve_block_volume_mode}
+            preserveBootVolumeMode: ${var.instance_pool_lifecycle_management_lifecycle_actions_pre_termination_on_timeout_preserve_boot_volume_mode}
+          timeout: ${var.instance_pool_lifecycle_management_lifecycle_actions_pre_termination_timeout}
     loadBalancers:
     - backendSetName: ${var.backend_set_name}
       loadBalancerId: ${oci_load_balancer_load_balancer.test_load_balancer.id}

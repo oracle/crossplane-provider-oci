@@ -21,6 +21,7 @@ spec:
       privateIp: ${var.vnic_attachment_create_vnic_details_private_ip}
       securityAttributes: ${var.vnic_attachment_create_vnic_details_security_attributes}
       skipSourceDestCheck: ${var.vnic_attachment_create_vnic_details_skip_source_dest_check}
+      subnetCidr: ${var.vnic_attachment_create_vnic_details_subnet_cidr}
       subnetId: ${oci_core_subnet.test_subnet.id}
       vlanId: ${oci_core_vlan.test_vlan.id}
     displayName: ${var.vnic_attachment_display_name}

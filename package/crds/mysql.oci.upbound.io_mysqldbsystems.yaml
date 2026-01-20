@@ -394,6 +394,27 @@ spec:
                       and backup_policy cannot be updated in the same request.
                     items:
                       properties:
+                        maintenanceScheduleType:
+                          description: '(Updatable) The maintenance schedule type
+                            of the DB system. Defaults to REGULAR. EARLY:   Maintenance
+                            schedule follows a cycle where upgrades are performed
+                            when versions become deprecated. REGULAR: Maintenance
+                            schedule follows the normal cycle where upgrades are performed
+                            when versions become unavailable.'
+                          type: string
+                        versionPreference:
+                          description: (Updatable) The preferred version to target
+                            when performing an automatic MySQL upgrade. Defaults to
+                            OLDEST.
+                          type: string
+                        versionTrackPreference:
+                          description: '(Updatable) The preferred version track to
+                            target when performing an automatic MySQL upgrade. Defaults
+                            to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior
+                            changes. INNOVATION:        Provides access to the latest
+                            features and all bug fixes. FOLLOW:            Follows
+                            the track of the current MySQL version.'
+                          type: string
                         windowStartTime:
                           description: (Updatable) The start of a 30-minute window
                             of time in which daily, automated backups occur.
@@ -477,6 +498,15 @@ spec:
                           type: string
                       type: object
                     type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shapeName:
                     description: (Updatable) The name of the shape. The shape determines
                       the resources allocated
@@ -956,6 +986,27 @@ spec:
                       and backup_policy cannot be updated in the same request.
                     items:
                       properties:
+                        maintenanceScheduleType:
+                          description: '(Updatable) The maintenance schedule type
+                            of the DB system. Defaults to REGULAR. EARLY:   Maintenance
+                            schedule follows a cycle where upgrades are performed
+                            when versions become deprecated. REGULAR: Maintenance
+                            schedule follows the normal cycle where upgrades are performed
+                            when versions become unavailable.'
+                          type: string
+                        versionPreference:
+                          description: (Updatable) The preferred version to target
+                            when performing an automatic MySQL upgrade. Defaults to
+                            OLDEST.
+                          type: string
+                        versionTrackPreference:
+                          description: '(Updatable) The preferred version track to
+                            target when performing an automatic MySQL upgrade. Defaults
+                            to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior
+                            changes. INNOVATION:        Provides access to the latest
+                            features and all bug fixes. FOLLOW:            Follows
+                            the track of the current MySQL version.'
+                          type: string
                         windowStartTime:
                           description: (Updatable) The start of a 30-minute window
                             of time in which daily, automated backups occur.
@@ -1039,6 +1090,15 @@ spec:
                           type: string
                       type: object
                     type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shapeName:
                     description: (Updatable) The name of the shape. The shape determines
                       the resources allocated
@@ -1906,6 +1966,35 @@ spec:
                       and backup_policy cannot be updated in the same request.
                     items:
                       properties:
+                        maintenanceScheduleType:
+                          description: '(Updatable) The maintenance schedule type
+                            of the DB system. Defaults to REGULAR. EARLY:   Maintenance
+                            schedule follows a cycle where upgrades are performed
+                            when versions become deprecated. REGULAR: Maintenance
+                            schedule follows the normal cycle where upgrades are performed
+                            when versions become unavailable.'
+                          type: string
+                        targetVersion:
+                          description: The version that is expected to be targeted
+                            during the next scheduled maintenance run.
+                          type: string
+                        timeScheduled:
+                          description: The time the scheduled maintenance is expected
+                            to start, as described by RFC 3339.
+                          type: string
+                        versionPreference:
+                          description: (Updatable) The preferred version to target
+                            when performing an automatic MySQL upgrade. Defaults to
+                            OLDEST.
+                          type: string
+                        versionTrackPreference:
+                          description: '(Updatable) The preferred version track to
+                            target when performing an automatic MySQL upgrade. Defaults
+                            to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior
+                            changes. INNOVATION:        Provides access to the latest
+                            features and all bug fixes. FOLLOW:            Follows
+                            the track of the current MySQL version.'
+                          type: string
                         windowStartTime:
                           description: (Updatable) The start of a 30-minute window
                             of time in which daily, automated backups occur.
@@ -2004,6 +2093,15 @@ spec:
                           type: string
                       type: object
                     type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
                   shapeName:
                     description: (Updatable) The name of the shape. The shape determines
                       the resources allocated

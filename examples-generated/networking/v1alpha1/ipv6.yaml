@@ -8,6 +8,7 @@ metadata:
   name: test-ipv6
 spec:
   forProvider:
+    cidrPrefixLength: ${var.ipv6_cidr_prefix_length}
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.ipv6_display_name}

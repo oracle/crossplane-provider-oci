@@ -59,6 +59,9 @@ type SubnetInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// The list of all IPv4 CIDR blocks for the subnet that meets the following criteria:
+	Ipv4CidrBlocks []*string `json:"ipv4cidrBlocks,omitempty" tf:"ipv4cidr_blocks,omitempty"`
+
 	// (Updatable) Use this to enable IPv6 addressing for this subnet. The VCN must be enabled for IPv6. You can't change this subnet characteristic later. All subnets are /64 in size. The subnet portion of the IPv6 address is the fourth hextet from the left (1111 in the following example).
 	Ipv6CidrBlock *string `json:"ipv6cidrBlock,omitempty" tf:"ipv6cidr_block,omitempty"`
 
@@ -141,6 +144,9 @@ type SubnetObservation struct {
 
 	// The subnet's Oracle ID (OCID).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The list of all IPv4 CIDR blocks for the subnet that meets the following criteria:
+	Ipv4CidrBlocks []*string `json:"ipv4cidrBlocks,omitempty" tf:"ipv4cidr_blocks,omitempty"`
 
 	// (Updatable) Use this to enable IPv6 addressing for this subnet. The VCN must be enabled for IPv6. You can't change this subnet characteristic later. All subnets are /64 in size. The subnet portion of the IPv6 address is the fourth hextet from the left (1111 in the following example).
 	Ipv6CidrBlock *string `json:"ipv6cidrBlock,omitempty" tf:"ipv6cidr_block,omitempty"`
@@ -237,6 +243,10 @@ type SubnetParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// The list of all IPv4 CIDR blocks for the subnet that meets the following criteria:
+	// +kubebuilder:validation:Optional
+	Ipv4CidrBlocks []*string `json:"ipv4cidrBlocks,omitempty" tf:"ipv4cidr_blocks,omitempty"`
+
 	// (Updatable) Use this to enable IPv6 addressing for this subnet. The VCN must be enabled for IPv6. You can't change this subnet characteristic later. All subnets are /64 in size. The subnet portion of the IPv6 address is the fourth hextet from the left (1111 in the following example).
 	// +kubebuilder:validation:Optional
 	Ipv6CidrBlock *string `json:"ipv6cidrBlock,omitempty" tf:"ipv6cidr_block,omitempty"`
@@ -332,9 +342,8 @@ type SubnetStatus struct {
 type Subnet struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cidrBlock) || (has(self.initProvider) && has(self.initProvider.cidrBlock))",message="spec.forProvider.cidrBlock is a required parameter"
-	Spec   SubnetSpec   `json:"spec"`
-	Status SubnetStatus `json:"status,omitempty"`
+	Spec              SubnetSpec   `json:"spec"`
+	Status            SubnetStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

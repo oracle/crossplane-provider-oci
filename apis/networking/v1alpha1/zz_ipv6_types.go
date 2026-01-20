@@ -15,6 +15,9 @@ import (
 
 type Ipv6InitParameters struct {
 
+	// Length of cidr range. Optional field to specify flexible cidr.
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
+
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
@@ -46,6 +49,9 @@ type Ipv6InitParameters struct {
 }
 
 type Ipv6Observation struct {
+
+	// Length of cidr range. Optional field to specify flexible cidr.
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
 
 	// The OCID of the compartment containing the IPv6. This is the same as the VNIC's compartment.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -93,6 +99,10 @@ type Ipv6Observation struct {
 }
 
 type Ipv6Parameters struct {
+
+	// Length of cidr range. Optional field to specify flexible cidr.
+	// +kubebuilder:validation:Optional
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional

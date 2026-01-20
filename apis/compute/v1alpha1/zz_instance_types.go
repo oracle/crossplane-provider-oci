@@ -143,6 +143,9 @@ type CreateVnicDetailsInitParameters struct {
 	// (Updatable) Whether the source/destination check is disabled on the VNIC. Defaults to false, which means the check is performed. For information about why you would skip the source/destination check, see Using a Private IP as a Route Target.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -171,12 +174,14 @@ type CreateVnicDetailsInitParameters struct {
 type CreateVnicDetailsIpv6AddressIpv6SubnetCidrPairDetailsInitParameters struct {
 	Ipv6Address *string `json:"ipv6address,omitempty" tf:"ipv6address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 }
 
 type CreateVnicDetailsIpv6AddressIpv6SubnetCidrPairDetailsObservation struct {
 	Ipv6Address *string `json:"ipv6address,omitempty" tf:"ipv6address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 }
 
@@ -185,6 +190,7 @@ type CreateVnicDetailsIpv6AddressIpv6SubnetCidrPairDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	Ipv6Address *string `json:"ipv6address,omitempty" tf:"ipv6address,omitempty"`
 
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
 	// +kubebuilder:validation:Optional
 	Ipv6SubnetCidr *string `json:"ipv6subnetCidr,omitempty" tf:"ipv6subnet_cidr,omitempty"`
 }
@@ -231,6 +237,9 @@ type CreateVnicDetailsObservation struct {
 
 	// (Updatable) Whether the source/destination check is disabled on the VNIC. Defaults to false, which means the check is performed. For information about why you would skip the source/destination check, see Using a Private IP as a Route Target.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
+
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
 
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -302,6 +311,10 @@ type CreateVnicDetailsParameters struct {
 	// (Updatable) Whether the source/destination check is disabled on the VNIC. Defaults to false, which means the check is performed. For information about why you would skip the source/destination check, see Using a Private IP as a Route Target.
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
+
+	// One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
 
 	// The OCID of the subnet to create the VNIC in. When launching an instance, use this subnetId instead of the deprecated subnetId in LaunchInstanceDetails. At least one of them is required; if you provide both, the values must match.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
@@ -412,6 +425,9 @@ type InstanceInitParameters struct {
 
 	// This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
+
+	// (Updatable) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
 
 	// Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false. Use this field only during create. To update use is_pv_encryption_in_transit_enabled under launch_options instead.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -604,6 +620,9 @@ type InstanceObservation struct {
 
 	// This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
+
+	// (Updatable) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
 
 	// Whether the instance’s OCPUs and memory are distributed across multiple NUMA nodes.
 	IsCrossNumaNode *bool `json:"isCrossNumaNode,omitempty" tf:"is_cross_numa_node,omitempty"`
@@ -806,6 +825,10 @@ type InstanceParameters struct {
 	// This is an advanced option.
 	// +kubebuilder:validation:Optional
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
+
+	// (Updatable) Whether to enable AI enterprise on the instance.
+	// +kubebuilder:validation:Optional
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
 
 	// Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false. Use this field only during create. To update use is_pv_encryption_in_transit_enabled under launch_options instead.
 	// +kubebuilder:validation:Optional
@@ -1410,6 +1433,9 @@ type ShapeConfigInitParameters struct {
 	// (Updatable) The total number of OCPUs available to the instance.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 
+	// (Updatable) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
+
 	// (Updatable) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
 }
@@ -1452,6 +1478,9 @@ type ShapeConfigObservation struct {
 	// A short description of the instance's processor (CPU).
 	ProcessorDescription *string `json:"processorDescription,omitempty" tf:"processor_description,omitempty"`
 
+	// (Updatable) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
+
 	// (Updatable) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
 }
@@ -1473,6 +1502,10 @@ type ShapeConfigParameters struct {
 	// (Updatable) The total number of OCPUs available to the instance.
 	// +kubebuilder:validation:Optional
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+
+	// (Updatable) This field is reserved for internal use.
+	// +kubebuilder:validation:Optional
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
 
 	// (Updatable) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	// +kubebuilder:validation:Optional

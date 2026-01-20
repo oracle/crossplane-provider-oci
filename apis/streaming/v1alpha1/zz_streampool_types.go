@@ -224,6 +224,10 @@ type StreamPoolInitParameters struct {
 
 	// Optional parameters if a private stream pool is requested.
 	PrivateEndpointSettings []PrivateEndpointSettingsInitParameters `json:"privateEndpointSettings,omitempty" tf:"private_endpoint_settings,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 }
 
 type StreamPoolObservation struct {
@@ -262,6 +266,10 @@ type StreamPoolObservation struct {
 
 	// Optional parameters if a private stream pool is requested.
 	PrivateEndpointSettings []PrivateEndpointSettingsObservation `json:"privateEndpointSettings,omitempty" tf:"private_endpoint_settings,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The current state of the stream pool.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -310,6 +318,11 @@ type StreamPoolParameters struct {
 	// Optional parameters if a private stream pool is requested.
 	// +kubebuilder:validation:Optional
 	PrivateEndpointSettings []PrivateEndpointSettingsParameters `json:"privateEndpointSettings,omitempty" tf:"private_endpoint_settings,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 }
 
 // StreamPoolSpec defines the desired state of StreamPool

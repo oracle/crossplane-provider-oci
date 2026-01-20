@@ -275,6 +275,12 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  ipv4cidrBlocks:
+                    description: 'The list of all IPv4 CIDR blocks for the subnet
+                      that meets the following criteria:'
+                    items:
+                      type: string
+                    type: array
                   ipv6cidrBlock:
                     description: (Updatable) Use this to enable IPv6 addressing for
                       this subnet. The VCN must be enabled for IPv6. You can't change
@@ -765,6 +771,12 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  ipv4cidrBlocks:
+                    description: 'The list of all IPv4 CIDR blocks for the subnet
+                      that meets the following criteria:'
+                    items:
+                      type: string
+                    type: array
                   ipv6cidrBlock:
                     description: (Updatable) Use this to enable IPv6 addressing for
                       this subnet. The VCN must be enabled for IPv6. You can't change
@@ -1207,11 +1219,6 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.cidrBlock is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.cidrBlock)
-                || (has(self.initProvider) && has(self.initProvider.cidrBlock))'
           status:
             description: SubnetStatus defines the observed state of Subnet.
             properties:
@@ -1270,6 +1277,12 @@ spec:
                   id:
                     description: The subnet's Oracle ID (OCID).
                     type: string
+                  ipv4cidrBlocks:
+                    description: 'The list of all IPv4 CIDR blocks for the subnet
+                      that meets the following criteria:'
+                    items:
+                      type: string
+                    type: array
                   ipv6cidrBlock:
                     description: (Updatable) Use this to enable IPv6 addressing for
                       this subnet. The VCN must be enabled for IPv6. You can't change

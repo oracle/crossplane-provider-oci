@@ -8,6 +8,7 @@ metadata:
   name: test-private-ip
 spec:
   forProvider:
+    cidrPrefixLength: ${var.private_ip_cidr_prefix_length}
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.private_ip_display_name}
@@ -15,6 +16,7 @@ spec:
       Department: Finance
     hostnameLabel: ${var.private_ip_hostname_label}
     ipAddress: ${var.private_ip_ip_address}
+    ipv4subnetCidrAtCreation: ${var.private_ip_ipv4subnet_cidr_at_creation}
     lifetime: ${var.private_ip_lifetime}
     routeTableId: ${oci_core_route_table.test_route_table.id}
     subnetId: ${oci_core_subnet.test_subnet.id}

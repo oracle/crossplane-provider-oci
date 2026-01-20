@@ -181,7 +181,7 @@ spec:
                       Cloud. Whether the load balancer has an IPv4 or IPv6 IP address.
                     type: string
                   ipv6subnetCidr:
-                    description: Applies to IPV6 LB creation only.
+                    description: (Updatable) Applies to IPV6 LB creation only.
                     type: string
                   isDeleteProtectionEnabled:
                     description: (Updatable) Whether or not the load balancer has
@@ -210,15 +210,15 @@ spec:
                       from the load balancer.
                     type: string
                   reservedIps:
-                    description: An array of reserved Ips. Pre-created public IP that
-                      will be used as the IP of this load balancer. This reserved
-                      IP will not be deleted when load balancer is deleted. This ip
-                      should not be already mapped to any other resource.
+                    description: (Updatable) An array of reserved Ips. Pre-created
+                      public IP that will be used as the IP of this load balancer.
+                      This reserved IP will not be deleted when load balancer is deleted.
+                      This ip should not be already mapped to any other resource.
                     items:
                       properties:
                         id:
-                          description: Ocid of the Reserved IP/Public Ip created with
-                            VCN.
+                          description: (Updatable) Ocid of the Reserved IP/Public
+                            Ip created with VCN.
                           type: string
                       type: object
                     type: array
@@ -468,7 +468,7 @@ spec:
                       Cloud. Whether the load balancer has an IPv4 or IPv6 IP address.
                     type: string
                   ipv6subnetCidr:
-                    description: Applies to IPV6 LB creation only.
+                    description: (Updatable) Applies to IPV6 LB creation only.
                     type: string
                   isDeleteProtectionEnabled:
                     description: (Updatable) Whether or not the load balancer has
@@ -497,15 +497,15 @@ spec:
                       from the load balancer.
                     type: string
                   reservedIps:
-                    description: An array of reserved Ips. Pre-created public IP that
-                      will be used as the IP of this load balancer. This reserved
-                      IP will not be deleted when load balancer is deleted. This ip
-                      should not be already mapped to any other resource.
+                    description: (Updatable) An array of reserved Ips. Pre-created
+                      public IP that will be used as the IP of this load balancer.
+                      This reserved IP will not be deleted when load balancer is deleted.
+                      This ip should not be already mapped to any other resource.
                     items:
                       properties:
                         id:
-                          description: Ocid of the Reserved IP/Public Ip created with
-                            VCN.
+                          description: (Updatable) Ocid of the Reserved IP/Public
+                            Ip created with VCN.
                           type: string
                       type: object
                     type: array
@@ -843,7 +843,8 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   id:
-                    description: Ocid of the Reserved IP/Public Ip created with VCN.
+                    description: (Updatable) Ocid of the Reserved IP/Public Ip created
+                      with VCN.
                     type: string
                   ipAddressDetails:
                     description: An array of IP addresses.
@@ -859,8 +860,8 @@ spec:
                           items:
                             properties:
                               id:
-                                description: Ocid of the Reserved IP/Public Ip created
-                                  with VCN.
+                                description: (Updatable) Ocid of the Reserved IP/Public
+                                  Ip created with VCN.
                                 type: string
                             type: object
                           type: array
@@ -877,7 +878,7 @@ spec:
                       Cloud. Whether the load balancer has an IPv4 or IPv6 IP address.
                     type: string
                   ipv6subnetCidr:
-                    description: Applies to IPV6 LB creation only.
+                    description: (Updatable) Applies to IPV6 LB creation only.
                     type: string
                   isDeleteProtectionEnabled:
                     description: (Updatable) Whether or not the load balancer has
@@ -906,15 +907,15 @@ spec:
                       from the load balancer.
                     type: string
                   reservedIps:
-                    description: An array of reserved Ips. Pre-created public IP that
-                      will be used as the IP of this load balancer. This reserved
-                      IP will not be deleted when load balancer is deleted. This ip
-                      should not be already mapped to any other resource.
+                    description: (Updatable) An array of reserved Ips. Pre-created
+                      public IP that will be used as the IP of this load balancer.
+                      This reserved IP will not be deleted when load balancer is deleted.
+                      This ip should not be already mapped to any other resource.
                     items:
                       properties:
                         id:
-                          description: Ocid of the Reserved IP/Public Ip created with
-                            VCN.
+                          description: (Updatable) Ocid of the Reserved IP/Public
+                            Ip created with VCN.
                           type: string
                       type: object
                     type: array

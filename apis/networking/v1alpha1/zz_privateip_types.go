@@ -15,6 +15,9 @@ import (
 
 type PrivateIpInitParameters struct {
 
+	// An optional field that when combined with the ipAddress field, will be used to allocate secondary IPv4 CIDRs. The CIDR range created by this combination must be within the subnet's CIDR  and the CIDR range should not collide with any existing IPv4 address allocation. The VNIC ID specified in the request object should not already been assigned more than the max IPv4 addresses. If you don't specify a value, this option will be ignored.  Example: 18
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
+
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
@@ -32,7 +35,10 @@ type PrivateIpInitParameters struct {
 	// A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.  Example: 10.0.3.3
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (Updatable) Lifetime of the IP address. There are two types of IPv6 IPs:
+	// Any one of the IPv4 CIDRs allocated to the subnet.
+	Ipv4SubnetCidrAtCreation *string `json:"ipv4subnetCidrAtCreation,omitempty" tf:"ipv4subnet_cidr_at_creation,omitempty"`
+
+	// (Updatable) Lifetime of the IP address. There are two types of IPs:
 	Lifetime *string `json:"lifetime,omitempty" tf:"lifetime,omitempty"`
 
 	// (Updatable) The OCID of the route table the IP address or VNIC will use. For more information, see Source Based Routing.
@@ -71,6 +77,9 @@ type PrivateIpObservation struct {
 	// The private IP's availability domain. This attribute will be null if this is a secondary private IP assigned to a VNIC that is in a regional subnet.  Example: Uocm:PHX-AD-1
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
+	// An optional field that when combined with the ipAddress field, will be used to allocate secondary IPv4 CIDRs. The CIDR range created by this combination must be within the subnet's CIDR  and the CIDR range should not collide with any existing IPv4 address allocation. The VNIC ID specified in the request object should not already been assigned more than the max IPv4 addresses. If you don't specify a value, this option will be ignored.  Example: 18
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
+
 	// The OCID of the compartment containing the private IP.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
@@ -97,12 +106,15 @@ type PrivateIpObservation struct {
 	// State of the IP address. If an IP address is assigned to a VNIC it is ASSIGNED, otherwise it is AVAILABLE.
 	IPState *string `json:"ipState,omitempty" tf:"ip_state,omitempty"`
 
+	// Any one of the IPv4 CIDRs allocated to the subnet.
+	Ipv4SubnetCidrAtCreation *string `json:"ipv4subnetCidrAtCreation,omitempty" tf:"ipv4subnet_cidr_at_creation,omitempty"`
+
 	// Whether this private IP is the primary one on the VNIC. Primary private IPs are unassigned and deleted automatically when the VNIC is terminated.  Example: true
 	IsPrimary *bool `json:"isPrimary,omitempty" tf:"is_primary,omitempty"`
 
 	IsReserved *bool `json:"isReserved,omitempty" tf:"is_reserved,omitempty"`
 
-	// (Updatable) Lifetime of the IP address. There are two types of IPv6 IPs:
+	// (Updatable) Lifetime of the IP address. There are two types of IPs:
 	Lifetime *string `json:"lifetime,omitempty" tf:"lifetime,omitempty"`
 
 	// (Updatable) The OCID of the route table the IP address or VNIC will use. For more information, see Source Based Routing.
@@ -122,6 +134,10 @@ type PrivateIpObservation struct {
 }
 
 type PrivateIpParameters struct {
+
+	// An optional field that when combined with the ipAddress field, will be used to allocate secondary IPv4 CIDRs. The CIDR range created by this combination must be within the subnet's CIDR  and the CIDR range should not collide with any existing IPv4 address allocation. The VNIC ID specified in the request object should not already been assigned more than the max IPv4 addresses. If you don't specify a value, this option will be ignored.  Example: 18
+	// +kubebuilder:validation:Optional
+	CidrPrefixLength *float64 `json:"cidrPrefixLength,omitempty" tf:"cidr_prefix_length,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -145,7 +161,11 @@ type PrivateIpParameters struct {
 	// +kubebuilder:validation:Optional
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (Updatable) Lifetime of the IP address. There are two types of IPv6 IPs:
+	// Any one of the IPv4 CIDRs allocated to the subnet.
+	// +kubebuilder:validation:Optional
+	Ipv4SubnetCidrAtCreation *string `json:"ipv4subnetCidrAtCreation,omitempty" tf:"ipv4subnet_cidr_at_creation,omitempty"`
+
+	// (Updatable) Lifetime of the IP address. There are two types of IPs:
 	// +kubebuilder:validation:Optional
 	Lifetime *string `json:"lifetime,omitempty" tf:"lifetime,omitempty"`
 

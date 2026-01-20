@@ -77,6 +77,11 @@ spec:
                     description: 'The availability domain of the dedicated virtual
                       machine host.  Example: Uocm:PHX-AD-1'
                     type: string
+                  capacityConfig:
+                    description: The capacity configuration selected to be configured
+                      for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes
+                      API first to see the capacity configuration options.
+                    type: string
                   compartmentId:
                     description: (Updatable) The OCID of the compartment.
                     type: string
@@ -115,17 +120,25 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  isMemoryEncryptionEnabled:
+                    description: Specifies if the Dedicated Virtual Machine Host (DVMH)
+                      is restricted to running only Confidential VMs. If true, only
+                      Confidential VMs can be launched. If false, Confidential VMs
+                      cannot be launched.
+                    type: boolean
                   placementConstraintDetails:
-                    description: Generic placement details field which is overloaded
-                      with bare metal host id or host group id based on the resource
-                      we are targeting to launch.
+                    description: The details for providing placement constraints.
                     items:
                       properties:
                         computeBareMetalHostId:
-                          description: The OCID of the compute bare metal host.
+                          description: The OCID of the compute bare metal host. This
+                            is only available for dedicated capacity customers.
                           type: string
                         type:
-                          description: Determines the type of targeted launch.
+                          description: The type for the placement constraints. Use
+                            COMPUTE_BARE_METAL_HOST when specifying the compute bare
+                            metal host OCID. Use HOST_GROUP when specifying the compute
+                            host group OCID.
                           type: string
                       type: object
                     type: array
@@ -147,6 +160,11 @@ spec:
                     description: 'The availability domain of the dedicated virtual
                       machine host.  Example: Uocm:PHX-AD-1'
                     type: string
+                  capacityConfig:
+                    description: The capacity configuration selected to be configured
+                      for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes
+                      API first to see the capacity configuration options.
+                    type: string
                   compartmentId:
                     description: (Updatable) The OCID of the compartment.
                     type: string
@@ -185,17 +203,25 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  isMemoryEncryptionEnabled:
+                    description: Specifies if the Dedicated Virtual Machine Host (DVMH)
+                      is restricted to running only Confidential VMs. If true, only
+                      Confidential VMs can be launched. If false, Confidential VMs
+                      cannot be launched.
+                    type: boolean
                   placementConstraintDetails:
-                    description: Generic placement details field which is overloaded
-                      with bare metal host id or host group id based on the resource
-                      we are targeting to launch.
+                    description: The details for providing placement constraints.
                     items:
                       properties:
                         computeBareMetalHostId:
-                          description: The OCID of the compute bare metal host.
+                          description: The OCID of the compute bare metal host. This
+                            is only available for dedicated capacity customers.
                           type: string
                         type:
-                          description: Determines the type of targeted launch.
+                          description: The type for the placement constraints. Use
+                            COMPUTE_BARE_METAL_HOST when specifying the compute bare
+                            metal host OCID. Use HOST_GROUP when specifying the compute
+                            host group OCID.
                           type: string
                       type: object
                     type: array
@@ -390,8 +416,8 @@ spec:
                       machine host.  Example: Uocm:PHX-AD-1'
                     type: string
                   capacityBins:
-                    description: A list of total and remaining CPU & memory per capacity
-                      bucket.
+                    description: A list of total and remaining CPU and memory per
+                      capacity bucket.
                     items:
                       properties:
                         capacityIndex:
@@ -420,11 +446,17 @@ spec:
                           type: number
                       type: object
                     type: array
+                  capacityConfig:
+                    description: The capacity configuration selected to be configured
+                      for the Dedicated Virtual Machine host.  Run ListDedicatedVmHostShapes
+                      API first to see the capacity configuration options.
+                    type: string
                   compartmentId:
                     description: (Updatable) The OCID of the compartment.
                     type: string
                   computeBareMetalHostId:
-                    description: The OCID of the compute bare metal host.
+                    description: The OCID of the compute bare metal host. This is
+                      only available for dedicated capacity customers.
                     type: string
                   dedicatedVmHostShape:
                     description: The dedicated virtual machine host shape. The shape
@@ -464,17 +496,25 @@ spec:
                   id:
                     description: The OCID of the dedicated VM host.
                     type: string
+                  isMemoryEncryptionEnabled:
+                    description: Specifies if the Dedicated Virtual Machine Host (DVMH)
+                      is restricted to running only Confidential VMs. If true, only
+                      Confidential VMs can be launched. If false, Confidential VMs
+                      cannot be launched.
+                    type: boolean
                   placementConstraintDetails:
-                    description: Generic placement details field which is overloaded
-                      with bare metal host id or host group id based on the resource
-                      we are targeting to launch.
+                    description: The details for providing placement constraints.
                     items:
                       properties:
                         computeBareMetalHostId:
-                          description: The OCID of the compute bare metal host.
+                          description: The OCID of the compute bare metal host. This
+                            is only available for dedicated capacity customers.
                           type: string
                         type:
-                          description: Determines the type of targeted launch.
+                          description: The type for the placement constraints. Use
+                            COMPUTE_BARE_METAL_HOST when specifying the compute bare
+                            metal host OCID. Use HOST_GROUP when specifying the compute
+                            host group OCID.
                           type: string
                       type: object
                     type: array

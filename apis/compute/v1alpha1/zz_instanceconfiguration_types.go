@@ -956,6 +956,9 @@ type InstanceDetailsSecondaryVnicsCreateVnicDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -1031,6 +1034,9 @@ type InstanceDetailsSecondaryVnicsCreateVnicDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -1088,6 +1094,10 @@ type InstanceDetailsSecondaryVnicsCreateVnicDetailsParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
+
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
 
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional
@@ -1282,6 +1292,9 @@ type LaunchDetailsCreateVnicDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -1357,6 +1370,9 @@ type LaunchDetailsCreateVnicDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -1415,6 +1431,10 @@ type LaunchDetailsCreateVnicDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -1439,6 +1459,9 @@ type LaunchDetailsInitParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the instance configuration.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
 
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	CreateVnicDetails []LaunchDetailsCreateVnicDetailsInitParameters `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
@@ -1470,6 +1493,9 @@ type LaunchDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -1485,6 +1511,9 @@ type LaunchDetailsInitParameters struct {
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	PlacementConstraintDetails []LaunchDetailsPlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	PlatformConfig []LaunchDetailsPlatformConfigInitParameters `json:"platformConfig,omitempty" tf:"platform_config,omitempty"`
@@ -1646,6 +1675,9 @@ type LaunchDetailsObservation struct {
 	// (Updatable) The OCID of the compartment containing the instance configuration.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	CreateVnicDetails []LaunchDetailsCreateVnicDetailsObservation `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
 
@@ -1676,6 +1708,9 @@ type LaunchDetailsObservation struct {
 	// (Applicable when instance_type=compute) This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -1691,6 +1726,9 @@ type LaunchDetailsObservation struct {
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	PlacementConstraintDetails []LaunchDetailsPlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	PlatformConfig []LaunchDetailsPlatformConfigObservation `json:"platformConfig,omitempty" tf:"platform_config,omitempty"`
@@ -1741,6 +1779,10 @@ type LaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	// +kubebuilder:validation:Optional
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	// +kubebuilder:validation:Optional
 	CreateVnicDetails []LaunchDetailsCreateVnicDetailsParameters `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
@@ -1780,6 +1822,10 @@ type LaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	// +kubebuilder:validation:Optional
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	// +kubebuilder:validation:Optional
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -1800,6 +1846,10 @@ type LaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	// +kubebuilder:validation:Optional
+	PlacementConstraintDetails []LaunchDetailsPlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	// +kubebuilder:validation:Optional
@@ -1829,6 +1879,35 @@ type LaunchDetailsParameters struct {
 	// (Applicable when instance_type=compute)
 	// +kubebuilder:validation:Optional
 	SourceDetails []LaunchDetailsSourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+}
+
+type LaunchDetailsPlacementConstraintDetailsInitParameters struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type LaunchDetailsPlacementConstraintDetailsObservation struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type LaunchDetailsPlacementConstraintDetailsParameters struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupID *string `json:"computeHostGroupId" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type LaunchDetailsPlatformConfigInitParameters struct {
@@ -2025,6 +2104,9 @@ type LaunchDetailsShapeConfigInitParameters struct {
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
+
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
 }
@@ -2042,6 +2124,9 @@ type LaunchDetailsShapeConfigObservation struct {
 
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
 
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
@@ -2064,6 +2149,10 @@ type LaunchDetailsShapeConfigParameters struct {
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	// +kubebuilder:validation:Optional
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	// +kubebuilder:validation:Optional
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
 
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	// +kubebuilder:validation:Optional
@@ -2373,6 +2462,9 @@ type OptionsLaunchDetailsCreateVnicDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -2448,6 +2540,9 @@ type OptionsLaunchDetailsCreateVnicDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -2506,6 +2601,10 @@ type OptionsLaunchDetailsCreateVnicDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -2530,6 +2629,9 @@ type OptionsLaunchDetailsInitParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the instance configuration.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
 
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	CreateVnicDetails []OptionsLaunchDetailsCreateVnicDetailsInitParameters `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
@@ -2561,6 +2663,9 @@ type OptionsLaunchDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -2576,6 +2681,9 @@ type OptionsLaunchDetailsInitParameters struct {
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	PlacementConstraintDetails []OptionsLaunchDetailsPlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	PlatformConfig []OptionsLaunchDetailsPlatformConfigInitParameters `json:"platformConfig,omitempty" tf:"platform_config,omitempty"`
@@ -2737,6 +2845,9 @@ type OptionsLaunchDetailsObservation struct {
 	// (Updatable) The OCID of the compartment containing the instance configuration.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	CreateVnicDetails []OptionsLaunchDetailsCreateVnicDetailsObservation `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
 
@@ -2767,6 +2878,9 @@ type OptionsLaunchDetailsObservation struct {
 	// (Applicable when instance_type=compute) This is an advanced option.
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -2782,6 +2896,9 @@ type OptionsLaunchDetailsObservation struct {
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	PlacementConstraintDetails []OptionsLaunchDetailsPlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	PlatformConfig []OptionsLaunchDetailsPlatformConfigObservation `json:"platformConfig,omitempty" tf:"platform_config,omitempty"`
@@ -2832,6 +2949,10 @@ type OptionsLaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// (Applicable when instance_type=compute) The OCID of the compute cluster that the instance will be created in.
+	// +kubebuilder:validation:Optional
+	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
 	// (Applicable when instance_type=compute) Contains the properties of the VNIC for an instance configuration. See CreateVnicDetails and Instance Configurations for more information.
 	// +kubebuilder:validation:Optional
 	CreateVnicDetails []OptionsLaunchDetailsCreateVnicDetailsParameters `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
@@ -2871,6 +2992,10 @@ type OptionsLaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IpxeScript *string `json:"ipxeScript,omitempty" tf:"ipxe_script,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether to enable AI enterprise on the instance.
+	// +kubebuilder:validation:Optional
+	IsAIEnterpriseEnabled *bool `json:"isAiEnterpriseEnabled,omitempty" tf:"is_ai_enterprise_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	// +kubebuilder:validation:Optional
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -2891,6 +3016,10 @@ type OptionsLaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// (Applicable when instance_type=compute) The details for providing placement constraints.
+	// +kubebuilder:validation:Optional
+	PlacementConstraintDetails []OptionsLaunchDetailsPlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// (Applicable when instance_type=compute)  (Updatable only for VM's) The platform configuration requested for the instance.
 	// +kubebuilder:validation:Optional
@@ -2920,6 +3049,35 @@ type OptionsLaunchDetailsParameters struct {
 	// (Applicable when instance_type=compute)
 	// +kubebuilder:validation:Optional
 	SourceDetails []OptionsLaunchDetailsSourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
+}
+
+type OptionsLaunchDetailsPlacementConstraintDetailsInitParameters struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type OptionsLaunchDetailsPlacementConstraintDetailsObservation struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type OptionsLaunchDetailsPlacementConstraintDetailsParameters struct {
+
+	// The OCID of the compute host group. This is only available for dedicated capacity customers.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupID *string `json:"computeHostGroupId" tf:"compute_host_group_id,omitempty"`
+
+	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type OptionsLaunchDetailsPlatformConfigInitParameters struct {
@@ -3074,6 +3232,9 @@ type OptionsLaunchDetailsShapeConfigInitParameters struct {
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
+
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
 }
@@ -3091,6 +3252,9 @@ type OptionsLaunchDetailsShapeConfigObservation struct {
 
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
 
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	Vcpus *float64 `json:"vcpus,omitempty" tf:"vcpus,omitempty"`
@@ -3113,6 +3277,10 @@ type OptionsLaunchDetailsShapeConfigParameters struct {
 	// (Applicable when instance_type=compute) The total number of OCPUs available to the instance.
 	// +kubebuilder:validation:Optional
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
+
+	// (Applicable when instance_type=compute) This field is reserved for internal use.
+	// +kubebuilder:validation:Optional
+	ResourceManagement *string `json:"resourceManagement,omitempty" tf:"resource_management,omitempty"`
 
 	// (Applicable when instance_type=compute) The total number of VCPUs available to the instance. This can be used instead of OCPUs, in which case the actual number of OCPUs will be calculated based on this value and the actual hardware. This must be a multiple of 2.
 	// +kubebuilder:validation:Optional
@@ -3298,6 +3466,9 @@ type SecondaryVnicsCreateVnicDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -3373,6 +3544,9 @@ type SecondaryVnicsCreateVnicDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
 
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
@@ -3430,6 +3604,10 @@ type SecondaryVnicsCreateVnicDetailsParameters struct {
 	// (Applicable when instance_type=compute) Whether the source/destination check is disabled on the VNIC. See the skipSourceDestCheck attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional
 	SkipSourceDestCheck *bool `json:"skipSourceDestCheck,omitempty" tf:"skip_source_dest_check,omitempty"`
+
+	// (Applicable when instance_type=compute) One of the IPv4 CIDR blocks allocated to the subnet. Represents the IP range from which the VNIC's private IP address will be assigned if privateIp or privateIpId is not specified. Either this field or the privateIp (or privateIpId, if applicable) field must be provided, but not both simultaneously. Example: 192.168.1.0/28 See the subnetCidr attribute of CreateVnicDetails for more information.
+	// +kubebuilder:validation:Optional
+	SubnetCidr *string `json:"subnetCidr,omitempty" tf:"subnet_cidr,omitempty"`
 
 	// (Applicable when instance_type=compute) The OCID of the subnet to create the VNIC in. See the subnetId attribute of CreateVnicDetails for more information.
 	// +kubebuilder:validation:Optional

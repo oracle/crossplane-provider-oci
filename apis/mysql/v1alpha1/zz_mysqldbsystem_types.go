@@ -577,6 +577,10 @@ type MysqlDbSystemInitParameters struct {
 	// (Updatable) Secure connection configuration details.
 	SecureConnections []MysqlDbSystemSecureConnectionsInitParameters `json:"secureConnections,omitempty" tf:"secure_connections,omitempty"`
 
+	// (Updatable) Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
 	// (Updatable) The name of the shape. The shape determines the resources allocated
 	ShapeName *string `json:"shapeName,omitempty" tf:"shape_name,omitempty"`
 
@@ -604,17 +608,53 @@ type MysqlDbSystemInitParameters struct {
 
 type MysqlDbSystemMaintenanceInitParameters struct {
 
+	// (Updatable) The maintenance schedule type of the DB system. Defaults to REGULAR. EARLY:   Maintenance schedule follows a cycle where upgrades are performed when versions become deprecated. REGULAR: Maintenance schedule follows the normal cycle where upgrades are performed when versions become unavailable.
+	MaintenanceScheduleType *string `json:"maintenanceScheduleType,omitempty" tf:"maintenance_schedule_type,omitempty"`
+
+	// (Updatable) The preferred version to target when performing an automatic MySQL upgrade. Defaults to OLDEST.
+	VersionPreference *string `json:"versionPreference,omitempty" tf:"version_preference,omitempty"`
+
+	// (Updatable) The preferred version track to target when performing an automatic MySQL upgrade. Defaults to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior changes. INNOVATION:        Provides access to the latest features and all bug fixes. FOLLOW:            Follows the track of the current MySQL version.
+	VersionTrackPreference *string `json:"versionTrackPreference,omitempty" tf:"version_track_preference,omitempty"`
+
 	// (Updatable) The start of a 30-minute window of time in which daily, automated backups occur.
 	WindowStartTime *string `json:"windowStartTime,omitempty" tf:"window_start_time,omitempty"`
 }
 
 type MysqlDbSystemMaintenanceObservation struct {
 
+	// (Updatable) The maintenance schedule type of the DB system. Defaults to REGULAR. EARLY:   Maintenance schedule follows a cycle where upgrades are performed when versions become deprecated. REGULAR: Maintenance schedule follows the normal cycle where upgrades are performed when versions become unavailable.
+	MaintenanceScheduleType *string `json:"maintenanceScheduleType,omitempty" tf:"maintenance_schedule_type,omitempty"`
+
+	// The version that is expected to be targeted during the next scheduled maintenance run.
+	TargetVersion *string `json:"targetVersion,omitempty" tf:"target_version,omitempty"`
+
+	// The time the scheduled maintenance is expected to start, as described by RFC 3339.
+	TimeScheduled *string `json:"timeScheduled,omitempty" tf:"time_scheduled,omitempty"`
+
+	// (Updatable) The preferred version to target when performing an automatic MySQL upgrade. Defaults to OLDEST.
+	VersionPreference *string `json:"versionPreference,omitempty" tf:"version_preference,omitempty"`
+
+	// (Updatable) The preferred version track to target when performing an automatic MySQL upgrade. Defaults to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior changes. INNOVATION:        Provides access to the latest features and all bug fixes. FOLLOW:            Follows the track of the current MySQL version.
+	VersionTrackPreference *string `json:"versionTrackPreference,omitempty" tf:"version_track_preference,omitempty"`
+
 	// (Updatable) The start of a 30-minute window of time in which daily, automated backups occur.
 	WindowStartTime *string `json:"windowStartTime,omitempty" tf:"window_start_time,omitempty"`
 }
 
 type MysqlDbSystemMaintenanceParameters struct {
+
+	// (Updatable) The maintenance schedule type of the DB system. Defaults to REGULAR. EARLY:   Maintenance schedule follows a cycle where upgrades are performed when versions become deprecated. REGULAR: Maintenance schedule follows the normal cycle where upgrades are performed when versions become unavailable.
+	// +kubebuilder:validation:Optional
+	MaintenanceScheduleType *string `json:"maintenanceScheduleType,omitempty" tf:"maintenance_schedule_type,omitempty"`
+
+	// (Updatable) The preferred version to target when performing an automatic MySQL upgrade. Defaults to OLDEST.
+	// +kubebuilder:validation:Optional
+	VersionPreference *string `json:"versionPreference,omitempty" tf:"version_preference,omitempty"`
+
+	// (Updatable) The preferred version track to target when performing an automatic MySQL upgrade. Defaults to FOLLOW. LONG_TERM_SUPPORT: No MySQL database behavior changes. INNOVATION:        Provides access to the latest features and all bug fixes. FOLLOW:            Follows the track of the current MySQL version.
+	// +kubebuilder:validation:Optional
+	VersionTrackPreference *string `json:"versionTrackPreference,omitempty" tf:"version_track_preference,omitempty"`
 
 	// (Updatable) The start of a 30-minute window of time in which daily, automated backups occur.
 	// +kubebuilder:validation:Optional
@@ -739,6 +779,10 @@ type MysqlDbSystemObservation struct {
 
 	// (Updatable) Secure connection configuration details.
 	SecureConnections []MysqlDbSystemSecureConnectionsObservation `json:"secureConnections,omitempty" tf:"secure_connections,omitempty"`
+
+	// (Updatable) Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// (Updatable) The name of the shape. The shape determines the resources allocated
 	ShapeName *string `json:"shapeName,omitempty" tf:"shape_name,omitempty"`
@@ -903,6 +947,11 @@ type MysqlDbSystemParameters struct {
 	// (Updatable) Secure connection configuration details.
 	// +kubebuilder:validation:Optional
 	SecureConnections []MysqlDbSystemSecureConnectionsParameters `json:"secureConnections,omitempty" tf:"secure_connections,omitempty"`
+
+	// (Updatable) Security Attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see ZPR Artifacts. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// (Updatable) The name of the shape. The shape determines the resources allocated
 	// +kubebuilder:validation:Optional
