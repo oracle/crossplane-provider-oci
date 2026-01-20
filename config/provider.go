@@ -58,12 +58,18 @@ var providerSchema string
 //go:embed provider-metadata.yaml
 var providerMetadata string
 
+var ServiceWildcards = []string{
+	"oci_identity_.*",
+	"oci_mysql_.*",
+	"oci_psql_.*",
+}
+
 // GetProvider returns provider configuration
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithRootGroup("oci.upbound.io"),
-		// This will include manually configured resources + 6 MySQL resources + 3 PSQL resources
-		ujconfig.WithIncludeList(append(ExternalNameConfigured(), "oci_mysql_.*", "oci_psql_.*", "oci_identity_.*")),
+		// This will include manually configured resources + resources corresponding to services listed in wildcards
+		ujconfig.WithIncludeList(append(ExternalNameConfigured(), ServiceWildcards...)),
 		ujconfig.WithDefaultResourceOptions(
 			GroupKindOverrides(),
 			ExternalNameConfigurations(),
