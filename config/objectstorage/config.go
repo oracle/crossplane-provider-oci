@@ -21,32 +21,45 @@ import "github.com/crossplane/upjet/pkg/config"
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("oci_objectstorage_bucket", func(r *config.Resource) {
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
+		// REQUIRED
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
-		}
-		r.References["kms_key_id"] = config.Reference{
-			TerraformName: "oci_kms_key",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_objectstorage_object", func(r *config.Resource) {
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
-		r.References["opc_sse_kms_key_id"] = config.Reference{
-			TerraformName: "oci_kms_key",
+		// REQUIRED
+		r.References["bucket"] = config.Reference{
+			TerraformName: "oci_objectstorage_bucket",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_objectstorage_object_lifecycle_policy", func(r *config.Resource) {
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
+		// REQUIRED
+		r.References["bucket"] = config.Reference{
+			TerraformName: "oci_objectstorage_bucket",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_objectstorage_preauthrequest", func(r *config.Resource) {
+		// REQUIRED
+		r.References["bucket"] = config.Reference{
+			TerraformName: "oci_objectstorage_bucket",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_objectstorage_replication_policy", func(r *config.Resource) {
+		// REQUIRED
+		r.References["bucket"] = config.Reference{
+			TerraformName: "oci_objectstorage_bucket",
+		}
+		r.References["destination_bucket_name"] = config.Reference{
+			TerraformName: "oci_objectstorage_bucket",
+		}
+		// oci_identity_region is an invalid resource to add as reference, but is still required by oci_objectstorage_replication_policy
+		// added example to pass it as a string instead.
+		//r.References["destination_region_name"] = config.Reference{
+		//	TerraformName: "oci_identity_region",
+		//}
 	})
 }
