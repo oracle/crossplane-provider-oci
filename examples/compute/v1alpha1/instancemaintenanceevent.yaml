@@ -1,0 +1,12 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceMaintenanceEvent
+metadata:
+  labels:
+    testing.upbound.io/example-name: instancemaintenanceevent_label_1
+  name: instancemaintenanceevent1
+spec:
+  forProvider:
+    canDeleteLocalStorage: true
+    displayName: instancemaintenanceevent1
+    instanceMaintenanceEventId: ${INSTANCEMAINTENANCEEVENT_ID}
+    timeWindowStart: "2026-01-01T23:00:00Z"

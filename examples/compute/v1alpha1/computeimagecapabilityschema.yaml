@@ -1,0 +1,18 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeImageCapabilitySchema
+metadata:
+  labels:
+    testing.upbound.io/example-name: computeimagecapabilityschema_label_1
+  name: computeimagecapabilityschema1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    computeGlobalImageCapabilitySchemaVersionName: 2026-01-28
+    displayName: computeimagecapabilityschema1
+    imageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: image_label_1
+    schemaData:
+      compute.instanceCapabilities.secureBoot: '{"descriptorType":"BOOLEAN","source":"GLOBAL","defaultValue":true}'

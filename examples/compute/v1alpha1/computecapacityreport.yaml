@@ -1,0 +1,17 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeCapacityReport
+metadata:
+  labels:
+    testing.upbound.io/example-name: computecapacityreport_label_1
+  name: computecapacityreport1
+spec:
+  forProvider:
+    availabilityDomain: ${AVAILABILITY_DOMAIN}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    shapeAvailabilities:
+    - instanceShape: "VM.Standard.E4.Flex"
+      instanceShapeConfig:
+        - memoryInGbs: 2
+          ocpus: 1

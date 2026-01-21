@@ -1,0 +1,12 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Image
+metadata:
+  labels:
+    testing.upbound.io/example-name: image_label_1
+  name: image1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    instanceId: ${IMAGE_INSTANCE_OCID}

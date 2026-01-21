@@ -1,0 +1,9 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeHost
+metadata:
+  labels:
+    testing.upbound.io/example-name: computehost_label_1
+  name: computehost1
+spec:
+  forProvider:
+    computeHostId: ${COMPUTEHOST_ID}

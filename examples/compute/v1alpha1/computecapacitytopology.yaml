@@ -1,0 +1,15 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: ComputeCapacityTopology
+metadata:
+  labels:
+    testing.upbound.io/example-name: computecapacitytopology_label_1
+  name: computecapacitytopology1
+spec:
+  forProvider:
+    availabilityDomain: ${AVAILABILITY_DOMAIN}
+    capacitySource:
+    - capacityType: DEDICATED
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: computecapacitytopology1

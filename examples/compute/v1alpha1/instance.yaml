@@ -1,0 +1,27 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  labels:
+    testing.upbound.io/example-name: instance_label_1
+  name: instance1
+spec:
+  forProvider:
+    availabilityDomain: ${AVAILABILITY_DOMAIN}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: instance1
+    shape: "VM.Standard.E4.Flex"
+    shapeConfig:
+      - baselineOcpuUtilization: "BASELINE_1_8"
+        memoryInGbs: 2
+        ocpus: 1
+    createVnicDetails:
+      - subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: subnet_label_1
+    sourceDetails:
+      - sourceIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: image_label_1
+        sourceType: image
