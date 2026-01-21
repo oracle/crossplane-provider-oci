@@ -1,0 +1,22 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  labels:
+    testing.upbound.io/example-name: bucketwithretnetionrule_label_1
+  name: bucketwithretnetionrule1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/objectstorage_bucket
+    accessType: NoPublicAccess
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: bucketwithretnetionrule1
+    namespace: ${OBJECTSTORAGE_NAMESPACE}
+    retentionRules:
+      - displayName: retentionrule1
+        duration:
+          - timeAmount: "10"
+            timeUnit: DAYS
+        timeRuleLocked: "2026-12-12T23:00:00Z"

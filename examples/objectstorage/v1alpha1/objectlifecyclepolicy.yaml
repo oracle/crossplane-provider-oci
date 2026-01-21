@@ -1,0 +1,19 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: ObjectLifecyclePolicy
+metadata:
+  labels:
+    testing.upbound.io/example-name: objectlifecyclepolicy_label_1
+  name: objectlifecyclepolicy1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/objectstorage_object_lifecycle_policy
+    bucket: bucket1
+    namespace: ${OBJECTSTORAGE_NAMESPACE}
+    rules:
+    - action: ARCHIVE
+      isEnabled: true
+      name: rule1
+      target: objects
+      timeAmount: "5"
+      timeUnit: DAYS

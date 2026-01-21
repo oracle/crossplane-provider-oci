@@ -1,0 +1,15 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Preauthrequest
+metadata:
+  labels:
+    testing.upbound.io/example-name: preauthrequest_label_1
+  name: preauthrequest1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/objectstorage_preauthrequest
+    accessType: AnyObjectWrite
+    bucket: bucket1
+    name: preauthrequest1
+    namespace: ${OBJECTSTORAGE_NAMESPACE}
+    timeExpires: "2026-12-12T23:00:00Z"

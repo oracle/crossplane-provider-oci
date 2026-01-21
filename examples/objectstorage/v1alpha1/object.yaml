@@ -1,0 +1,18 @@
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Object
+metadata:
+  labels:
+    testing.upbound.io/example-name: object_label_1
+  name: object1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/objectstorage_object
+    bucket: bucket1
+    content: "Hello from Crossplane OCI Object!"
+    contentDisposition: attachment; filename="hello.txt"
+    contentLanguage: en-US
+    contentType: text/plain
+    namespace: ${OBJECTSTORAGE_NAMESPACE}
+    object: object1
+    storageTier: InfrequentAccess
