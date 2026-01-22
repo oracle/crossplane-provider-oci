@@ -1,0 +1,16 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  labels:
+    testing.upbound.io/example-name: subnet_label_1
+  name: subnet1
+spec:
+  forProvider:
+    cidrBlock: 10.0.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: subnet1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1

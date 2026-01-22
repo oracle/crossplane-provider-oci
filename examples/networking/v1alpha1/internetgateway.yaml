@@ -1,0 +1,15 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  labels:
+    testing.upbound.io/example-name: internetgateway_label_1
+  name: internetgateway1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: internetgateway1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1

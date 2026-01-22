@@ -1,0 +1,13 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  labels:
+    testing.upbound.io/example-name: vcn_label_1
+  name: vcn1
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: vcn1

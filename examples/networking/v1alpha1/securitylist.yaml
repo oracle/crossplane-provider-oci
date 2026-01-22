@@ -1,0 +1,40 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  labels:
+    testing.upbound.io/example-name: securitylist_label_1
+  name: securitylist1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: securitylist1
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 10.0.0.0/16
+      tcpOptions:
+      - max: 2050
+        min: 2048
+    - protocol: "6"
+      source: 10.0.0.0/16
+      tcpOptions:
+      - sourcePortRange:
+        - max: 2050
+          min: 2048
+    - protocol: "6"
+      source: 10.0.0.0/16
+      tcpOptions:
+      - max: 111
+        min: 111
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 22
+        min: 22
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1

@@ -1,0 +1,12 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: PublicIpPool
+metadata:
+  labels:
+    testing.upbound.io/example-name: publicippool_label_1
+  name: publicippool1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: publicippool1

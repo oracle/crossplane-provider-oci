@@ -1,0 +1,22 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: DhcpOptions
+metadata:
+  labels:
+    testing.upbound.io/example-name: dhcpoptions_label_1
+  name: dhcpoptions1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: dhcpoptions1
+    options:
+    - serverType: VcnLocalPlusInternet
+      type: DomainNameServer
+    - searchDomainNames:
+      - test.com
+      type: SearchDomain
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1
+
