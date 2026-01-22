@@ -16,10 +16,28 @@ import (
 type RouteTableAttachmentInitParameters struct {
 
 	// The OCID of the route table.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the subnet.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type RouteTableAttachmentObservation struct {
@@ -35,12 +53,30 @@ type RouteTableAttachmentObservation struct {
 type RouteTableAttachmentParameters struct {
 
 	// The OCID of the route table.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the subnet.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 // RouteTableAttachmentSpec defines the desired state of RouteTableAttachment
@@ -79,10 +115,8 @@ type RouteTableAttachmentStatus struct {
 type RouteTableAttachment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.routeTableId) || (has(self.initProvider) && has(self.initProvider.routeTableId))",message="spec.forProvider.routeTableId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
-	Spec   RouteTableAttachmentSpec   `json:"spec"`
-	Status RouteTableAttachmentStatus `json:"status,omitempty"`
+	Spec              RouteTableAttachmentSpec   `json:"spec"`
+	Status            RouteTableAttachmentStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

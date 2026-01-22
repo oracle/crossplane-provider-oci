@@ -1,0 +1,19 @@
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: VnicAttachment
+metadata:
+  labels:
+    testing.upbound.io/example-name: vnicattachment_label_1
+  name: vnicattachment1
+spec:
+  forProvider:
+    createVnicDetails:
+    - subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: subnet_label_1
+      vlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: vlan_label_1
+    displayName: vnicattachment1
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_label_1

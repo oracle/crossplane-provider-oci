@@ -171,23 +171,13 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_vcn", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-		// r.ShortGroup = "compute"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 			// SelectorFieldName: "compartmentIdSelector",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_subnet", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
 			// RefFieldName:      "vcnIdRef",
@@ -209,14 +199,9 @@ func Configure(p *config.Provider) {
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_internet_gateway", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -224,14 +209,9 @@ func Configure(p *config.Provider) {
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_nat_gateway", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -239,28 +219,23 @@ func Configure(p *config.Provider) {
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_service_gateway", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
+		}
+
+		r.References["route_table_id"] = config.Reference{
+			TerraformName: "oci_core_route_table",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_network_security_group", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -281,21 +256,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_network_security_group_security_rule", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["network_security_group_id"] = config.Reference{
 			TerraformName: "oci_core_network_security_group",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_route_table", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -311,14 +277,18 @@ func Configure(p *config.Provider) {
 		// r.References["route_rules.network_entity_id"] = config.Reference{
 		// 	Type: "InternetGateway",
 		// }
+	})
 
+	p.AddResourceConfigurator("oci_core_route_table_attachment", func(r *config.Resource) {
+		r.References["route_table_id"] = config.Reference{
+			TerraformName: "oci_core_route_table",
+		}
+		r.References["subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
 	})
 
 	p.AddResourceConfigurator("oci_core_security_list", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -326,14 +296,9 @@ func Configure(p *config.Provider) {
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_dhcp_options", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -344,20 +309,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_drg", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_attachment", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_id"] = config.Reference{
 			TerraformName: "oci_core_drg",
 		}
@@ -373,10 +330,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_attachment_management", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -392,30 +345,18 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_attachments_list", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_id"] = config.Reference{
 			TerraformName: "oci_core_drg",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_route_distribution", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_id"] = config.Reference{
 			TerraformName: "oci_core_drg",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_route_distribution_statement", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_route_distribution_id"] = config.Reference{
 			TerraformName: "oci_core_drg_route_distribution",
 		}
@@ -425,10 +366,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_route_table", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_id"] = config.Reference{
 			TerraformName: "oci_core_drg",
 		}
@@ -438,10 +375,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_drg_route_table_route_rule", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["drg_route_table_id"] = config.Reference{
 			TerraformName: "oci_core_drg_route_table",
 		}
@@ -451,23 +384,21 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_private_ip", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["vlan_id"] = config.Reference{
 			TerraformName: "oci_core_vlan",
 		}
 		r.References["vnic_id"] = config.Reference{
 			TerraformName: "oci_core_vnic_attachment",
 		}
+		r.References["subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
+		r.References["route_table_id"] = config.Reference{
+			TerraformName: "oci_core_route_table",
+		}
 	})
 
 	p.AddResourceConfigurator("oci_core_public_ip", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -480,20 +411,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_public_ip_pool", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_public_ip_pool_capacity", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["public_ip_pool_id"] = config.Reference{
 			TerraformName: "oci_core_public_ip_pool",
 		}
@@ -501,10 +424,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_remote_peering_connection", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -517,10 +436,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_cpe", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -528,19 +443,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_capture_filter", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_ipsec", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -552,14 +460,9 @@ func Configure(p *config.Provider) {
 		r.References["drg_id"] = config.Reference{
 			TerraformName: "oci_core_drg",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_local_peering_gateway", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
-
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -567,12 +470,9 @@ func Configure(p *config.Provider) {
 		r.References["vcn_id"] = config.Reference{
 			TerraformName: "oci_core_vcn",
 		}
-
 	})
 
 	p.AddResourceConfigurator("oci_core_byoip_range", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 		r.Kind = "ByoipRange"
 		r.References["byoip_range_id"] = config.Reference{
 			TerraformName: "oci_core_byoip_range",
@@ -580,9 +480,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_vlan", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -592,18 +489,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_volume", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_backup", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -613,18 +504,12 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_backup_policy", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_backup_policy_assignment", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["asset_id"] = config.Reference{
 			TerraformName: "oci_core_volume",
 		}
@@ -634,9 +519,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_group_backup", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -646,9 +528,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_group", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
@@ -658,9 +537,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_core_volume_attachment", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["instance_id"] = config.Reference{
 			TerraformName: "oci_core_instance",
 		}
@@ -669,9 +545,6 @@ func Configure(p *config.Provider) {
 		}
 	})
 	p.AddResourceConfigurator("oci_core_vnic_attachment", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		// we need to override the default group that terrajet generated for
-		r.Version = "v1alpha1"
 		r.References["instance_id"] = config.Reference{
 			TerraformName: "oci_core_instance",
 		}

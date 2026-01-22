@@ -6287,10 +6287,30 @@ func (in *PrivateIpInitParameters) DeepCopyInto(out *PrivateIpInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VlanID != nil {
 		in, out := &in.VlanID, &out.VlanID
@@ -6568,10 +6588,30 @@ func (in *PrivateIpParameters) DeepCopyInto(out *PrivateIpParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VlanID != nil {
 		in, out := &in.VlanID, &out.VlanID
@@ -8157,10 +8197,30 @@ func (in *RouteTableAttachmentInitParameters) DeepCopyInto(out *RouteTableAttach
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -8244,10 +8304,30 @@ func (in *RouteTableAttachmentParameters) DeepCopyInto(out *RouteTableAttachment
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -9952,6 +10032,16 @@ func (in *ServiceGatewayInitParameters) DeepCopyInto(out *ServiceGatewayInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Services != nil {
 		in, out := &in.Services, &out.Services
 		*out = make([]ServicesInitParameters, len(*in))
@@ -10171,6 +10261,16 @@ func (in *ServiceGatewayParameters) DeepCopyInto(out *ServiceGatewayParameters) 
 		in, out := &in.RouteTableID, &out.RouteTableID
 		*out = new(string)
 		**out = **in
+	}
+	if in.RouteTableIDRef != nil {
+		in, out := &in.RouteTableIDRef, &out.RouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RouteTableIDSelector != nil {
+		in, out := &in.RouteTableIDSelector, &out.RouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Services != nil {
 		in, out := &in.Services, &out.Services
