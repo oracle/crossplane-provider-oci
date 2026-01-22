@@ -1,0 +1,14 @@
+apiVersion: mysql.oci.upbound.io/v1alpha1
+kind: MysqlBackup
+metadata:
+  labels:
+    testing.upbound.io/example-name: mysqlbackup_label_1
+  name: mysqlbackup1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/mysql_mysql_backup
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: mysqldbsystem_label_1
+    displayName: mysqlbackup1
