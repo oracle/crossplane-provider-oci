@@ -16,14 +16,14 @@
 
 package mysql
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"github.com/crossplane/upjet/pkg/config"
+)
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	// oci_mysql_mysql_db_system
 	p.AddResourceConfigurator("oci_mysql_mysql_db_system", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
@@ -36,8 +36,6 @@ func Configure(p *config.Provider) {
 
 	// oci_mysql_replica
 	p.AddResourceConfigurator("oci_mysql_replica", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["db_system_id"] = config.Reference{
 			TerraformName: "oci_mysql_mysql_db_system",
@@ -46,8 +44,6 @@ func Configure(p *config.Provider) {
 
 	// oci_mysql_mysql_configuration
 	p.AddResourceConfigurator("oci_mysql_mysql_configuration", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
@@ -57,8 +53,6 @@ func Configure(p *config.Provider) {
 
 	// oci_mysql_mysql_backup
 	p.AddResourceConfigurator("oci_mysql_mysql_backup", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["db_system_id"] = config.Reference{
 			TerraformName: "oci_mysql_mysql_db_system",
@@ -67,8 +61,6 @@ func Configure(p *config.Provider) {
 
 	// oci_mysql_heat_wave_cluster
 	p.AddResourceConfigurator("oci_mysql_heat_wave_cluster", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["db_system_id"] = config.Reference{
 			TerraformName: "oci_mysql_mysql_db_system",
@@ -77,8 +69,6 @@ func Configure(p *config.Provider) {
 
 	// oci_mysql_channel
 	p.AddResourceConfigurator("oci_mysql_channel", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
 
 		r.References["target.db_system_id"] = config.Reference{
 			TerraformName: "oci_mysql_mysql_db_system",
