@@ -1,0 +1,15 @@
+apiVersion: networkloadbalancer.oci.upbound.io/v1alpha1
+kind: BackendSet
+metadata:
+  labels:
+    testing.upbound.io/example-name: backendset_label_1
+  name: backendset1
+spec:
+  forProvider:
+    healthChecker:
+      - protocol: "TCP"
+    networkLoadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: networkloadbalancer_label_1
+    name: "backendset1"
+    policy: "FIVE_TUPLE"

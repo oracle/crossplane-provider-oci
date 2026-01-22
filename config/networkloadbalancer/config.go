@@ -21,64 +21,38 @@ import "github.com/crossplane/upjet/pkg/config"
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("oci_network_load_balancer_network_load_balancer", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+		// REQUIRED
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
-
 		r.References["subnet_id"] = config.Reference{
 			TerraformName: "oci_core_subnet",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_network_load_balancer_backend_set", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+		// REQUIRED
 		r.References["network_load_balancer_id"] = config.Reference{
 			TerraformName: "oci_network_load_balancer_network_load_balancer",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_network_load_balancer_backend", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+		// REQUIRED
 		r.References["network_load_balancer_id"] = config.Reference{
 			TerraformName: "oci_network_load_balancer_network_load_balancer",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_network_load_balancer_network_load_balancers_backend_sets_unified", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+		// REQUIRED
 		r.References["network_load_balancer_id"] = config.Reference{
 			TerraformName: "oci_network_load_balancer_network_load_balancer",
 		}
 	})
 
 	p.AddResourceConfigurator("oci_network_load_balancer_listener", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+		// REQUIRED
 		r.References["network_load_balancer_id"] = config.Reference{
 			TerraformName: "oci_network_load_balancer_network_load_balancer",
 		}

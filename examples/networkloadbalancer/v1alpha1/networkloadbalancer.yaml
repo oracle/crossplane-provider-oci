@@ -1,0 +1,15 @@
+apiVersion: networkloadbalancer.oci.upbound.io/v1alpha1
+kind: NetworkLoadBalancer
+metadata:
+  labels:
+    testing.upbound.io/example-name: networkloadbalancer_label_1
+  name: networkloadbalancer1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
+    displayName: "networkloadbalancer1"

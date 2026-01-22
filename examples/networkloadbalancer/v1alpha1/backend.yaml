@@ -1,0 +1,14 @@
+apiVersion: networkloadbalancer.oci.upbound.io/v1alpha1
+kind: Backend
+metadata:
+  labels:
+    testing.upbound.io/example-name: backend_label_1
+  name: backend1
+spec:
+  forProvider:
+    networkLoadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: networkloadbalancer_label_1
+    backendSetName: "backendset1"
+    ipAddress: "10.0.1.3"
+    port: 10
