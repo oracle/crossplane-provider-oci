@@ -1,0 +1,17 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisClusterGetOciCacheUser
+metadata:
+  name: redisclustergetocicacheuser1
+  labels:
+    testing.upbound.io/example-name: redisclustergetocicacheuser_label_1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/redis_redis_cluster_get_oci_cache_user
+    redisClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: rediscluster_label_1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: redisclustergetocicacheuser1

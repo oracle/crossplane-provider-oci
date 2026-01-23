@@ -1,0 +1,38 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: OciCacheUser
+metadata:
+  labels:
+    testing.upbound.io/example-name: ocicacheuser_label_1
+  name: ocicacheuser1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/redis_oci_cache_user
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: ocicacheuser1
+    description: cache user for testing
+    aclString: "~* +get +set"
+    status: "ON"
+    authenticationMode:
+      - authenticationType: password
+        hashedPasswordsSecretRef:
+        # Prerequisite: Before creating the OciCacheUser resource, copy the following Secret manifest
+        # into a separate YAML file (e.g., rediscacheusersecret1.yaml) and apply it using:
+        # kubectl apply -f rediscacheusersecret1.yaml
+        #
+        # Example:
+        # apiVersion: v1
+        # kind: Secret
+        # metadata:
+        #   labels:
+        #     testing.upbound.io/example-name: rediscacheusersecret_label_1
+        #   name: rediscacheusersecret1
+        #   namespace: default
+        # type: Opaque
+        # data:
+        #   password: xyz       #encoded/hashed password
+          - name: rediscacheusersecret1       # Secret name
+            namespace: default                # Secret namespace
+            key: password                     # Key within the Secret

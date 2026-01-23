@@ -1,0 +1,17 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisClusterDetachOciCacheUser
+metadata:
+  name: redisclusterdetachocicacheuser1
+  labels:
+    testing.upbound.io/example-name: redisclusterdetachocicacheuser_label_1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/redis_redis_cluster_detach_oci_cache_user
+    ociCacheUsersSelector:
+      matchLabels:
+        testing.upbound.io/example-name: ocicacheuser_label_1   
+
+    redisClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: rediscluster_label_1  

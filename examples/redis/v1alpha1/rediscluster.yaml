@@ -1,0 +1,20 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisCluster
+metadata:
+  labels:
+    testing.upbound.io/example-name: rediscluster_label_1
+  name: rediscluster1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/redis_redis_cluster
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: rediscluster1
+    nodeCount: 1
+    nodeMemoryInGbs: 2
+    softwareVersion: REDIS_7_0
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
