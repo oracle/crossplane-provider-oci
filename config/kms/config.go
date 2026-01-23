@@ -20,43 +20,100 @@ import "github.com/crossplane/upjet/pkg/config"
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
-	p.AddResourceConfigurator("oci_kms_key", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+	p.AddResourceConfigurator("oci_kms_ekms_private_endpoint", func(r *config.Resource) {
+		// REQUIRED
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
-
+		r.References["subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
 	})
 
-	p.AddResourceConfigurator("oci_kms_key_version", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
-
+	p.AddResourceConfigurator("oci_kms_encrypted_data", func(r *config.Resource) {
+		// REQUIRED
 		r.References["key_id"] = config.Reference{
 			TerraformName: "oci_kms_key",
 		}
-
+		//r.References["crypto_endpoint"] = config.Reference{
+		// // Need an extractor here to identify crypto endpoint
+		//	TerraformName: "oci_kms_vault.crypto_endpoint",
+		//}
 	})
 
-	p.AddResourceConfigurator("oci_kms_vault", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
+	p.AddResourceConfigurator("oci_kms_generated_key", func(r *config.Resource) {
+		// REQUIRED
+		r.References["key_id"] = config.Reference{
+			TerraformName: "oci_kms_key",
+		}
+		//r.References["crypto_endpoint"] = config.Reference{
+		// // Need an extractor here to identify crypto endpoint
+		//	TerraformName: "oci_kms_vault.crypto_endpoint",
+		//}
+	})
 
+	p.AddResourceConfigurator("oci_kms_key", func(r *config.Resource) {
+		// REQUIRED
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
 		}
-
+		//r.References["management_endpoint"] = config.Reference{
+		// // Need an extractor here to identify management endpoint
+		//	TerraformName: "oci_kms_vault.management_endpoint",
+		//}
 	})
 
+	p.AddResourceConfigurator("oci_kms_key_version", func(r *config.Resource) {
+		// REQUIRED
+		r.References["key_id"] = config.Reference{
+			TerraformName: "oci_kms_key",
+		}
+		//r.References["management_endpoint"] = config.Reference{
+		// // Need an extractor here to identify management endpoint
+		//	TerraformName: "oci_kms_vault.management_endpoint",
+		//}
+	})
+
+	p.AddResourceConfigurator("oci_kms_sign", func(r *config.Resource) {
+		// REQUIRED
+		r.References["key_id"] = config.Reference{
+			TerraformName: "oci_kms_key",
+		}
+		//r.References["crypto_endpoint"] = config.Reference{
+		// // Need an extractor here to identify crypto endpoint
+		//	TerraformName: "oci_kms_vault.crypto_endpoint",
+		//}
+	})
+
+	p.AddResourceConfigurator("oci_kms_vault", func(r *config.Resource) {
+		// REQUIRED
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_kms_vault_replication", func(r *config.Resource) {
+		// REQUIRED
+		r.References["vault_id"] = config.Reference{
+			TerraformName: "oci_kms_vault",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_kms_verify", func(r *config.Resource) {
+		// REQUIRED
+		r.References["key_id"] = config.Reference{
+			TerraformName: "oci_kms_key",
+		}
+		r.References["key_version_id"] = config.Reference{
+			TerraformName: "oci_kms_key_version",
+		}
+		//r.References["signature"] = config.Reference{
+		// // Need an extractor here to identify signature (base64 encoded binary data object)
+		//	TerraformName: "oci_kms_sign.signature",
+		//}
+		//r.References["crypto_endpoint"] = config.Reference{
+		// // Need an extractor here to identify crypto endpoint
+		//	TerraformName: "oci_kms_vault.crypto_endpoint",
+		//}
+	})
 }
