@@ -210,6 +210,15 @@ import (
 	psqlbackup "github.com/oracle/provider-oci/internal/controller/psql/psqlbackup"
 	psqlconfiguration "github.com/oracle/provider-oci/internal/controller/psql/psqlconfiguration"
 	psqldbsystem "github.com/oracle/provider-oci/internal/controller/psql/psqldbsystem"
+	ocicacheconfigset "github.com/oracle/provider-oci/internal/controller/redis/ocicacheconfigset"
+	ocicacheconfigsetlistassociatedocicachecluster "github.com/oracle/provider-oci/internal/controller/redis/ocicacheconfigsetlistassociatedocicachecluster"
+	ocicacheuser "github.com/oracle/provider-oci/internal/controller/redis/ocicacheuser"
+	ocicacheusergetrediscluster "github.com/oracle/provider-oci/internal/controller/redis/ocicacheusergetrediscluster"
+	rediscluster "github.com/oracle/provider-oci/internal/controller/redis/rediscluster"
+	redisclusterattachocicacheuser "github.com/oracle/provider-oci/internal/controller/redis/redisclusterattachocicacheuser"
+	redisclustercreateidentitytoken "github.com/oracle/provider-oci/internal/controller/redis/redisclustercreateidentitytoken"
+	redisclusterdetachocicacheuser "github.com/oracle/provider-oci/internal/controller/redis/redisclusterdetachocicacheuser"
+	redisclustergetocicacheuser "github.com/oracle/provider-oci/internal/controller/redis/redisclustergetocicacheuser"
 	connectharness "github.com/oracle/provider-oci/internal/controller/streaming/connectharness"
 	stream "github.com/oracle/provider-oci/internal/controller/streaming/stream"
 	streampool "github.com/oracle/provider-oci/internal/controller/streaming/streampool"
@@ -421,6 +430,15 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		psqlbackup.Setup,
 		psqlconfiguration.Setup,
 		psqldbsystem.Setup,
+		ocicacheconfigset.Setup,
+		ocicacheconfigsetlistassociatedocicachecluster.Setup,
+		ocicacheuser.Setup,
+		ocicacheusergetrediscluster.Setup,
+		rediscluster.Setup,
+		redisclusterattachocicacheuser.Setup,
+		redisclustercreateidentitytoken.Setup,
+		redisclusterdetachocicacheuser.Setup,
+		redisclustergetocicacheuser.Setup,
 		connectharness.Setup,
 		stream.Setup,
 		streampool.Setup,

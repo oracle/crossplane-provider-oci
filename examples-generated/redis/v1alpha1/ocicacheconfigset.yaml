@@ -1,0 +1,24 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: OciCacheConfigSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/ocicacheconfigset
+  labels:
+    testing.upbound.io/example-name: test_oci_cache_config_set
+  name: test-oci-cache-config-set
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurationDetails:
+    - items:
+      - configKey: ${var.oci_cache_config_set_configuration_details_items_config_key}
+        configValue: ${var.oci_cache_config_set_configuration_details_items_config_value}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.oci_cache_config_set_description}
+    displayName: ${var.oci_cache_config_set_display_name}
+    freeformTags:
+      bar-key: value
+    softwareVersion: ${var.oci_cache_config_set_software_version}

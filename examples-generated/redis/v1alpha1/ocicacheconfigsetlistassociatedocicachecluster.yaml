@@ -1,0 +1,13 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: OciCacheConfigSetlistAssociatedOciCacheCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/ocicacheconfigsetlistassociatedocicachecluster
+  labels:
+    testing.upbound.io/example-name: test_oci_cache_config_setlist_associated_oci_cache_cluster
+  name: test-oci-cache-config-setlist-associated-oci-cache-cluster
+spec:
+  forProvider:
+    ociCacheConfigSetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oci_cache_config_set

@@ -1,0 +1,17 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: OciCacheUserGetRedisCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/ocicacheusergetrediscluster
+  labels:
+    testing.upbound.io/example-name: test_oci_cache_user_get_redis_cluster
+  name: test-oci-cache-user-get-redis-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.oci_cache_user_get_redis_cluster_display_name}
+    ociCacheUserIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oci_cache_user

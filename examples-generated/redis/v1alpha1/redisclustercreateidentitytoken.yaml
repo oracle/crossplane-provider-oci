@@ -1,0 +1,17 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisClusterCreateIdentityToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/redisclustercreateidentitytoken
+  labels:
+    testing.upbound.io/example-name: test_redis_cluster_create_identity_token
+  name: test-redis-cluster-create-identity-token
+spec:
+  forProvider:
+    definedTags: ${var.redis_cluster_create_identity_token_defined_tags}
+    freeformTags: ${var.redis_cluster_create_identity_token_freeform_tags}
+    publicKey: ${var.redis_cluster_create_identity_token_public_key}
+    redisClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_redis_cluster
+    redisUser: ${var.redis_cluster_create_identity_token_redis_user}

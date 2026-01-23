@@ -1,0 +1,29 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/rediscluster
+  labels:
+    testing.upbound.io/example-name: test_redis_cluster
+  name: test-redis-cluster
+spec:
+  forProvider:
+    clusterMode: ${var.redis_cluster_cluster_mode}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.redis_cluster_display_name}
+    freeformTags:
+      bar-key: value
+    nodeCount: ${var.redis_cluster_node_count}
+    nodeMemoryInGbs: ${var.redis_cluster_node_memory_in_gbs}
+    nsgIds: ${var.redis_cluster_nsg_ids}
+    ociCacheConfigSetId: ${oci_redis_oci_cache_config_set.test_oci_cache_config_set.id}
+    securityAttributes: ${var.redis_cluster_security_attributes}
+    shardCount: ${var.redis_cluster_shard_count}
+    softwareVersion: ${var.redis_cluster_software_version}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

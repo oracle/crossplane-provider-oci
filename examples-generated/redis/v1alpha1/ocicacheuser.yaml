@@ -1,0 +1,27 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: OciCacheUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/ocicacheuser
+  labels:
+    testing.upbound.io/example-name: test_oci_cache_user
+  name: test-oci-cache-user
+spec:
+  forProvider:
+    aclString: ${var.oci_cache_user_acl_string}
+    authenticationMode:
+    - authenticationType: ${var.oci_cache_user_authentication_mode_authentication_type}
+      hashedPasswordsSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.oci_cache_user_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.oci_cache_user_name}
+    status: ${var.oci_cache_user_status}

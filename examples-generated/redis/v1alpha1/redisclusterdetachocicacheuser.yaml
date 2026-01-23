@@ -1,0 +1,16 @@
+apiVersion: redis.oci.upbound.io/v1alpha1
+kind: RedisClusterDetachOciCacheUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/redisclusterdetachocicacheuser
+  labels:
+    testing.upbound.io/example-name: test_redis_cluster_detach_oci_cache_user
+  name: test-redis-cluster-detach-oci-cache-user
+spec:
+  forProvider:
+    ociCacheUsersSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    redisClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_redis_cluster
