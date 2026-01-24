@@ -1,0 +1,18 @@
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: Cluster
+metadata:
+  labels:
+    testing.upbound.io/example-name: cluster_label_1
+  name: cluster1
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/containerengine_cluster
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: cluster1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1
+    kubernetesVersion: v1.34.1
