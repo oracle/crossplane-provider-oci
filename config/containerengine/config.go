@@ -21,11 +21,6 @@ import "github.com/crossplane/upjet/pkg/config"
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("oci_containerengine_cluster", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
 
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
@@ -44,7 +39,7 @@ func Configure(p *config.Provider) {
 		}
 
 		r.References["options.service_lb_subnet_ids"] = config.Reference{
-			TerraformName:      "oci_core_subnet",
+			TerraformName:     "oci_core_subnet",
 			RefFieldName:      "ServiceLBSubnetIdsRef",
 			SelectorFieldName: "ServiceLBSubnetIDSelector",
 		}
@@ -52,11 +47,6 @@ func Configure(p *config.Provider) {
 	})
 
 	p.AddResourceConfigurator("oci_containerengine_node_pool", func(r *config.Resource) {
-		// r.ShortGroup = "compartment"
-		r.Version = "v1alpha1"
-		// Identifier for this resource is assigned by the provider. In other
-		// words it is not simply the name of the resource.
-		r.ExternalName = config.IdentifierFromProvider
 
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
@@ -88,6 +78,77 @@ func Configure(p *config.Provider) {
 			},
 		}
 
+		r.UseAsync = true
+	})
+
+	p.AddResourceConfigurator("oci_containerengine_addon", func(r *config.Resource) {
+
+		// Required
+		r.References["cluster_id"] = config.Reference{
+			TerraformName: "oci_containerengine_cluster",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_containerengine_cluster_complete_credential_rotation_management", func(r *config.Resource) {
+
+		// Required
+		r.References["cluster_id"] = config.Reference{
+			TerraformName: "oci_containerengine_cluster",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_containerengine_cluster_start_credential_rotation_management", func(r *config.Resource) {
+
+		// Required
+		r.References["cluster_id"] = config.Reference{
+			TerraformName: "oci_containerengine_cluster",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_containerengine_cluster_workload_mapping", func(r *config.Resource) {
+
+		// Required
+		r.References["cluster_id"] = config.Reference{
+			TerraformName: "oci_containerengine_cluster",
+		}
+
+		// Required
+		r.References["mapped_compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+
+	})
+
+	p.AddResourceConfigurator("oci_containerengine_virtual_node_pool", func(r *config.Resource) {
+
+		// Required
+		r.References["cluster_id"] = config.Reference{
+			TerraformName: "oci_containerengine_cluster",
+		}
+
+		// Required
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+
+		// Required
+		r.References["placement_configurations.subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
+
+		// Optional
+		r.References["nsg_ids"] = config.Reference{
+			TerraformName: "oci_core_network_security_group",
+		}
+
+		// Required
+		r.References["pod_configuration.subnet_id"] = config.Reference{
+			TerraformName: "oci_core_subnet",
+		}
+		// Optional
+		r.References["pod_configuration.nsg_ids"] = config.Reference{
+			TerraformName: "oci_core_network_security_group",
+		}
 		r.UseAsync = true
 	})
 
