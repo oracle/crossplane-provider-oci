@@ -1,0 +1,21 @@
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: ClusterWorkloadMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/clusterworkloadmapping
+  labels:
+    testing.upbound.io/example-name: test_cluster_workload_mapping
+  name: test-cluster-workload-mapping
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    mappedCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    namespace: ${var.cluster_workload_mapping_namespace}

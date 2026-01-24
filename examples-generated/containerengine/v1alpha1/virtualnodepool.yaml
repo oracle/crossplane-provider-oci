@@ -1,0 +1,51 @@
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: VirtualNodePool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerengine/v1alpha1/virtualnodepool
+  labels:
+    testing.upbound.io/example-name: test_virtual_node_pool
+  name: test-virtual-node-pool
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.virtual_node_pool_display_name}
+    freeformTags:
+      Department: Finance
+    initialVirtualNodeLabels:
+    - key: ${var.virtual_node_pool_initial_virtual_node_labels_key}
+      value: ${var.virtual_node_pool_initial_virtual_node_labels_value}
+    nsgIdsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    placementConfigurations:
+    - availabilityDomain: ${var.virtual_node_pool_placement_configurations_availability_domain}
+      faultDomain: ${var.virtual_node_pool_placement_configurations_fault_domain}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    podConfiguration:
+    - nsgIdsSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
+      shape: ${var.virtual_node_pool_pod_configuration_shape}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    size: ${var.virtual_node_pool_size}
+    taints:
+    - effect: ${var.virtual_node_pool_taints_effect}
+      key: ${var.virtual_node_pool_taints_key}
+      value: ${var.virtual_node_pool_taints_value}
+    virtualNodeTags:
+    - definedTags:
+        Operations.CostCenter: "42"
+      freeformTags:
+        Department: Finance

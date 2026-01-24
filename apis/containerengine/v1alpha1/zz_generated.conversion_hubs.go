@@ -7,7 +7,22 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *Addon) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Cluster) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ClusterCompleteCredentialRotationManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ClusterStartCredentialRotationManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ClusterWorkloadMapping) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *NodePool) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *VirtualNodePool) Hub() {}

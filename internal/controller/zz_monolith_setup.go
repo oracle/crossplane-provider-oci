@@ -38,8 +38,13 @@ import (
 	instancepool "github.com/oracle/provider-oci/internal/controller/compute/instancepool"
 	instancepoolinstance "github.com/oracle/provider-oci/internal/controller/compute/instancepoolinstance"
 	shapemanagement "github.com/oracle/provider-oci/internal/controller/compute/shapemanagement"
+	addon "github.com/oracle/provider-oci/internal/controller/containerengine/addon"
 	cluster "github.com/oracle/provider-oci/internal/controller/containerengine/cluster"
+	clustercompletecredentialrotationmanagement "github.com/oracle/provider-oci/internal/controller/containerengine/clustercompletecredentialrotationmanagement"
+	clusterstartcredentialrotationmanagement "github.com/oracle/provider-oci/internal/controller/containerengine/clusterstartcredentialrotationmanagement"
+	clusterworkloadmapping "github.com/oracle/provider-oci/internal/controller/containerengine/clusterworkloadmapping"
 	nodepool "github.com/oracle/provider-oci/internal/controller/containerengine/nodepool"
+	virtualnodepool "github.com/oracle/provider-oci/internal/controller/containerengine/virtualnodepool"
 	record "github.com/oracle/provider-oci/internal/controller/dns/record"
 	resolver "github.com/oracle/provider-oci/internal/controller/dns/resolver"
 	resolverendpoint "github.com/oracle/provider-oci/internal/controller/dns/resolverendpoint"
@@ -258,8 +263,13 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		instancepool.Setup,
 		instancepoolinstance.Setup,
 		shapemanagement.Setup,
+		addon.Setup,
 		cluster.Setup,
+		clustercompletecredentialrotationmanagement.Setup,
+		clusterstartcredentialrotationmanagement.Setup,
+		clusterworkloadmapping.Setup,
 		nodepool.Setup,
+		virtualnodepool.Setup,
 		record.Setup,
 		resolver.Setup,
 		resolverendpoint.Setup,
