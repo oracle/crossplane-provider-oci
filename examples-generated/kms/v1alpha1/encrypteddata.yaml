@@ -1,0 +1,19 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: EncryptedData
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/encrypteddata
+  labels:
+    testing.upbound.io/example-name: test_encrypted_data
+  name: test-encrypted-data
+spec:
+  forProvider:
+    associatedData: ${var.encrypted_data_associated_data}
+    cryptoEndpoint: ${var.encrypted_data_crypto_endpoint}
+    encryptionAlgorithm: ${var.encrypted_data_encryption_algorithm}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    keyVersionId: ${oci_kms_key_version.test_key_version.id}
+    loggingContext: ${var.encrypted_data_logging_context}
+    plaintext: ${var.encrypted_data_plaintext}

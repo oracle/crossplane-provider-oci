@@ -1,0 +1,21 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Verify
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/verify
+  labels:
+    testing.upbound.io/example-name: test_verify
+  name: test-verify
+spec:
+  forProvider:
+    cryptoEndpoint: ${var.verify_message_crypto_endpoint}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    keyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
+    message: ${var.verify_message}
+    messageType: ${var.verify_message_type}
+    signature: ${var.verify_signature}
+    signingAlgorithm: ${var.verify_signing_algorithm}

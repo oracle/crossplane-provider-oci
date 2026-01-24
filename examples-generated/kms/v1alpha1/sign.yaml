@@ -1,0 +1,19 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Sign
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/sign
+  labels:
+    testing.upbound.io/example-name: test_sign
+  name: test-sign
+spec:
+  forProvider:
+    cryptoEndpoint: ${var.sign_message_crypto_endpoint}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    keyVersionId: ${oci_kms_key_version.test_key_version.id}
+    logging_context: ${var.sign_logging_context}
+    message: ${var.sign_message}
+    messageType: ${var.sign_message_type}
+    signingAlgorithm: ${var.sign_signing_algorithm}

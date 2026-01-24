@@ -1,0 +1,24 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: EkmsPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/ekmsprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_ekms_private_endpoint
+  name: test-ekms-private-endpoint
+spec:
+  forProvider:
+    caBundle: ${var.ekms_private_endpoint_ca_bundle}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.ekms_private_endpoint_display_name}
+    externalKeyManagerIp: ${var.ekms_private_endpoint_external_key_manager_ip}
+    freeformTags:
+      bar-key: value
+    port: ${var.ekms_private_endpoint_port}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

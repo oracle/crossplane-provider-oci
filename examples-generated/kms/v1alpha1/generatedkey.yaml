@@ -1,0 +1,21 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: GeneratedKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/generatedkey
+  labels:
+    testing.upbound.io/example-name: test_generated_key
+  name: test-generated-key
+spec:
+  forProvider:
+    associatedData: ${var.generated_key_associated_data}
+    cryptoEndpoint: ${var.generated_key_crypto_endpoint}
+    includePlaintextKey: ${var.generated_key_include_plaintext_key}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    keyShape:
+    - algorithm: ${var.generated_key_key_shape_algorithm}
+      curveId: ${oci_kms_curve.test_curve.id}
+      length: ${var.generated_key_key_shape_length}
+    loggingContext: ${var.generated_key_logging_context}

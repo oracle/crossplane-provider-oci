@@ -7,10 +7,28 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *EkmsPrivateEndpoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EncryptedData) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *GeneratedKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Key) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *KeyVersion) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *Sign) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Vault) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *VaultReplication) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *Verify) Hub() {}

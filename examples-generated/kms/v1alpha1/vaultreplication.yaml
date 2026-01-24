@@ -1,0 +1,14 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: VaultReplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/vaultreplication
+  labels:
+    testing.upbound.io/example-name: test_replication
+  name: test-replication
+spec:
+  forProvider:
+    replicaRegion: ${var.replica_region}
+    vaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
