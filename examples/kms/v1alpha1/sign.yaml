@@ -1,0 +1,18 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Sign
+metadata:
+  labels:
+    testing.upbound.io/example-name: sign_label_1
+  name: sign1
+spec:
+  forProvider:
+    # ref: https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/kms_sign
+    cryptoEndpoint: ${VAULT_CRYPTO_ENDPOINT}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key_label_2
+    # message should be a base64 encoded string
+    # To generate a base64 string yourself run the following command. Replace with your data.
+    # echo -n "message" | base64
+    message: "bWVzc2FnZQ=="
+    signingAlgorithm: "SHA_256_RSA_PKCS1_V1_5"

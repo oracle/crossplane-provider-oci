@@ -1,0 +1,17 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: Key
+metadata:
+  labels:
+    testing.upbound.io/example-name: key_label_2
+  name: key2
+spec:
+  forProvider:
+    # ref: https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/kms_key
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: key2
+    keyShape:
+    - algorithm: "RSA"
+      length: 2048
+    managementEndpoint: ${VAULT_MANAGEMENT_ENDPOINT}

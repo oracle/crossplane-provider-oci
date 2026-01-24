@@ -1,0 +1,17 @@
+apiVersion: kms.oci.upbound.io/v1alpha1
+kind: EncryptedData
+metadata:
+  labels:
+    testing.upbound.io/example-name: encrypteddata_label_1
+  name: encrypteddata1
+spec:
+  forProvider:
+    # ref: registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/kms_encrypted_data
+    cryptoEndpoint: ${VAULT_CRYPTO_ENDPOINT}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key_label_1
+    # plaintext should be a base64 encoded string
+    # To generate a base64 string yourself run the following command. Replace with your data.
+    # echo -n "Plain text for encryption" | base64
+    plaintext: "UGxhaW4gdGV4dCBmb3IgZW5jcnlwdGlvbg=="
