@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: InstancePoolInstance
-metadata:
-  name: test-instance-pool-instance
-spec:
-  forProvider:
-    instanceId: ocid1.instance.xxx
-    instancePoolId: ocid1.instancepool.xxx

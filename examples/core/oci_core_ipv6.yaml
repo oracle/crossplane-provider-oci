@@ -1,7 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: IPv6
-metadata:
-  name: test-ipv6
-spec:
-  forProvider:
-    vnicId: ocid1.vcn.xxx

@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: CrossConnectGroup
-metadata:
-  name: test-cross-connect-group
-spec:
-  forProvider:
-    compartmentId: ocid1.compartment.xxx
-    displayName: test-cross-connect-group

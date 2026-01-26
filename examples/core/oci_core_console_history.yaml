@@ -1,7 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: ConsoleHistory
-metadata:
-  name: test-console-history
-spec:
-  forProvider:
-    instanceId: ocid1.instance.xxx

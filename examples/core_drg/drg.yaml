@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: Drg
-metadata:
-  name: drg-via-crossplane
-spec:
-  forProvider:
-    compartmentIdRef: 
-      name : compartment-via-crossplane1

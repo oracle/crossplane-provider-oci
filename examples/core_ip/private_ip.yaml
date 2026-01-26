@@ -1,9 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: PriavteIP
-metadata:
-  name: private-ip-via-crossplane
-spec:
-  forProvider:
-    displayName: private-ip-via-crossplane
-    ipAddress: "192.162.0.1"
-    

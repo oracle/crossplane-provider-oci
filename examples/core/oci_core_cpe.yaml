@@ -1,9 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: Cpe
-metadata:
-  name: testcpe
-spec:
-  forProvider:
-    compartmentIdRef:
-      name : compartment-via-crossplane5
-    ipAddress: "203.0.113.6"

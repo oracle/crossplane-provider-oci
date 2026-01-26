@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: DrgAttachmentsList
-metadata:
-  name: drg-attachments-list-via-crossplane
-spec:
-  forProvider:
-    drgIdRef: 
-      name : drg-via-crossplane

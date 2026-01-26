@@ -1,9 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: DrgRouteTable
-metadata:
-  name: drg-route-table-via-crossplane
-spec:
-  forProvider:
-    drgIdRef: 
-      name : drg-via-crossplane
-    displayName: drg-route-table-via-crossplane

@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: ComputeCluster
-metadata:
-  name: test-compute-cluster
-spec:
-  forProvider:
-    availabilityDomain: xxx
-    compartment_id: ocid1.compartment.xxx

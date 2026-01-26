@@ -1,8 +1,0 @@
-apiVersion: core.oci.upbound.io/v1alpha1
-kind: RouteTableAttachment
-metadata:
-  name: test-route-table-attachment
-spec:
-  forProvider:
-    routeTableId: ocid1.routetable.xxx
-    subnetId: ocid1.subnet.oc1.xxx
