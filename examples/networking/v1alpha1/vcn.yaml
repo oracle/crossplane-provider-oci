@@ -6,7 +6,8 @@ metadata:
   name: vcn1
 spec:
   forProvider:
-    cidrBlock: 10.0.0.0/16
+    cidrBlocks:
+    - 10.0.0.0/16
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
