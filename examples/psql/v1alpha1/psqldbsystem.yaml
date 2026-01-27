@@ -2,7 +2,7 @@ apiVersion: psql.oci.upbound.io/v1alpha1
 kind: PsqlDbSystem
 metadata:
   labels:
-    testing.upbound.io/example-name: psqldbsystem1
+    testing.upbound.io/example-name: psqldbsystem_label_1
   name: psqldbsystem1
 spec:
   forProvider:
@@ -10,7 +10,7 @@ spec:
     displayName: "psqldbsystem1"
     compartmentIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: compartment1
+        testing.upbound.io/example-name: compartment_label_1
 
     systemType: "OCI_OPTIMIZED_STORAGE"
     shape: "PostgreSQL.VM.Standard.E5.Flex"
@@ -25,7 +25,7 @@ spec:
       - isReaderEndpointEnabled: true
         subnetIdSelector:
           matchLabels:
-            testing.upbound.io/example-name: subnet1
+            testing.upbound.io/example-name: subnet_label_1
 
     # Credentials are required to create a PSQL DB System.
     # Apply the following before creating an instance of db with your own credentials
