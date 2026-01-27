@@ -13,5 +13,5 @@ spec:
     displayName: key2
     keyShape:
     - algorithm: "RSA"
-      length: 2048
+      length: 256
     managementEndpoint: ${VAULT_MANAGEMENT_ENDPOINT}
