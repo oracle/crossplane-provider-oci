@@ -1,0 +1,12 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: Backup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/backup
+  labels:
+    testing.upbound.io/example-name: test_backup
+  name: test-backup
+spec:
+  forProvider:
+    databaseId: ${oci_database_database.test_database.id}
+    displayName: ${var.backup_display_name}

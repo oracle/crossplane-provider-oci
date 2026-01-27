@@ -1,0 +1,14 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructureConfigureExascaleManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadatainfrastructureconfigureexascalemanagement
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure_configure_exascale_management
+  name: test-exadata-infrastructure-configure-exascale-management
+spec:
+  forProvider:
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    totalStorageInGbs: ${var.exadata_infrastructure_configure_exascale_management_total_storage_in_gbs}

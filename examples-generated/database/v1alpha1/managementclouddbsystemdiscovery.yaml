@@ -1,0 +1,23 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudDbSystemDiscovery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementclouddbsystemdiscovery
+  labels:
+    testing.upbound.io/example-name: test_cloud_db_system_discovery
+  name: test-cloud-db-system-discovery
+spec:
+  forProvider:
+    agentId: ${oci_cloud_bridge_agent.test_agent.id}
+    compartmentId: ${var.compartment_id}
+    dbaasParentInfrastructureId: ${oci_database_management_dbaas_parent_infrastructure.test_dbaas_parent_infrastructure.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    deploymentType: ${var.cloud_db_system_discovery_deployment_type}
+    displayName: ${var.cloud_db_system_discovery_display_name}
+    freeformTags:
+      Department: Finance
+    patchOperations:
+    - operation: ${var.cloud_db_system_discovery_patch_operations_operation}
+      selection: ${var.cloud_db_system_discovery_patch_operations_selection}
+      value: ${var.cloud_db_system_discovery_patch_operations_value}

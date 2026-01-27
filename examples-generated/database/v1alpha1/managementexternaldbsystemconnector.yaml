@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalDbSystemConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternaldbsystemconnector
+  labels:
+    testing.upbound.io/example-name: test_external_db_system_connector
+  name: test-external-db-system-connector
+spec:
+  forProvider:
+    connectorType: ${var.external_db_system_connector_connector_type}
+    displayName: ${var.external_db_system_connector_display_name}
+    externalDbSystemId: ${oci_database_management_external_db_system.test_external_db_system.id}

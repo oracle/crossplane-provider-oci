@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalDbSystemDatabaseManagementsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternaldbsystemdatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_external_db_system_database_managements_management
+  name: test-external-db-system-database-managements-management
+spec:
+  forProvider:
+    enableDatabaseManagement: ${var.enable_database_management}
+    externalDbSystemId: ${oci_database_management_external_db_system.test_external_db_system.id}
+    licenseModel: ${var.external_db_system_database_managements_management_license_model}

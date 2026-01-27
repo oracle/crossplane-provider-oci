@@ -1,0 +1,119 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MigrationMigration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migrationmigration
+  labels:
+    testing.upbound.io/example-name: test_migration
+  name: test-migration
+spec:
+  forProvider:
+    advancedParameters:
+    - dataType: ${var.migration_advanced_parameters_data_type}
+      name: ${var.migration_advanced_parameters_name}
+      value: ${var.migration_advanced_parameters_value}
+    advisorSettings:
+    - isIgnoreErrors: ${var.migration_advisor_settings_is_ignore_errors}
+      isSkipAdvisor: ${var.migration_advisor_settings_is_skip_advisor}
+    bulkIncludeExcludeData: ${var.migration_bulk_include_exclude_data}
+    compartmentId: ${var.compartment_id}
+    dataTransferMediumDetails:
+    - accessKeyId: ${oci_kms_key.test_key.id}
+      name: ${var.migration_data_transfer_medium_details_name}
+      objectStorageBucket:
+      - bucket: ${var.migration_data_transfer_medium_details_object_storage_bucket_bucket}
+        namespace: ${var.migration_data_transfer_medium_details_object_storage_bucket_namespace}
+      region: ${var.migration_data_transfer_medium_details_region}
+      secretAccessKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      sharedStorageMountTargetId: ${oci_file_storage_mount_target.test_mount_target.id}
+      source:
+      - kind: ${var.migration_data_transfer_medium_details_source_kind}
+        ociHome: ${var.migration_data_transfer_medium_details_source_oci_home}
+        walletLocation: ${var.migration_data_transfer_medium_details_source_wallet_location}
+      target:
+      - kind: ${var.migration_data_transfer_medium_details_target_kind}
+        ociHome: ${var.migration_data_transfer_medium_details_target_oci_home}
+        walletLocation: ${var.migration_data_transfer_medium_details_target_wallet_location}
+      type: ${var.migration_data_transfer_medium_details_type}
+    databaseCombination: ${var.migration_database_combination}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.migration_description}
+    displayName: ${var.migration_display_name}
+    excludeObjects:
+    - isOmitExcludedTableFromReplication: ${var.migration_exclude_objects_is_omit_excluded_table_from_replication}
+      object: ${var.migration_exclude_objects_object}
+      owner: ${var.migration_exclude_objects_owner}
+      schema: ${var.migration_exclude_objects_schema}
+      type: ${var.migration_exclude_objects_type}
+    freeformTags: ${var.migration_freeform_tags}
+    ggsDetails:
+    - acceptableLag: ${var.migration_ggs_details_acceptable_lag}
+      extract:
+      - longTransDuration: ${var.migration_ggs_details_extract_long_trans_duration}
+        performanceProfile: ${var.migration_ggs_details_extract_performance_profile}
+      replicat:
+      - performanceProfile: ${var.migration_ggs_details_replicat_performance_profile}
+    hubDetails:
+    - acceptableLag: ${var.migration_hub_details_acceptable_lag}
+      computeId: ${oci_database_migration_compute.test_compute.id}
+      extract:
+      - longTransDuration: ${var.migration_hub_details_extract_long_trans_duration}
+        performanceProfile: ${var.migration_hub_details_extract_performance_profile}
+      keyId: ${oci_kms_key.test_key.id}
+      replicat:
+      - performanceProfile: ${var.migration_hub_details_replicat_performance_profile}
+      restAdminCredentials:
+      - passwordSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        username: ${var.migration_hub_details_rest_admin_credentials_username}
+      url: ${var.migration_hub_details_url}
+      vaultId: ${oci_kms_vault.test_vault.id}
+    includeObjects:
+    - isOmitExcludedTableFromReplication: ${var.migration_include_objects_is_omit_excluded_table_from_replication}
+      object: ${var.migration_include_objects_object}
+      owner: ${var.migration_include_objects_owner}
+      schema: ${var.migration_include_objects_schema}
+      type: ${var.migration_include_objects_type}
+    initialLoadSettings:
+    - compatibility: ${var.migration_initial_load_settings_compatibility}
+      dataPumpParameters:
+      - estimate: ${var.migration_initial_load_settings_data_pump_parameters_estimate}
+        excludeParameters: ${var.migration_initial_load_settings_data_pump_parameters_exclude_parameters}
+        exportParallelismDegree: ${var.migration_initial_load_settings_data_pump_parameters_export_parallelism_degree}
+        importParallelismDegree: ${var.migration_initial_load_settings_data_pump_parameters_import_parallelism_degree}
+        isCluster: ${var.migration_initial_load_settings_data_pump_parameters_is_cluster}
+        tableExistsAction: ${var.migration_initial_load_settings_data_pump_parameters_table_exists_action}
+      exportDirectoryObject:
+      - name: ${var.migration_initial_load_settings_export_directory_object_name}
+        path: ${var.migration_initial_load_settings_export_directory_object_path}
+      handleGrantErrors: ${var.migration_initial_load_settings_handle_grant_errors}
+      importDirectoryObject:
+      - name: ${var.migration_initial_load_settings_import_directory_object_name}
+        path: ${var.migration_initial_load_settings_import_directory_object_path}
+      isConsistent: ${var.migration_initial_load_settings_is_consistent}
+      isIgnoreExistingObjects: ${var.migration_initial_load_settings_is_ignore_existing_objects}
+      isTzUtc: ${var.migration_initial_load_settings_is_tz_utc}
+      jobMode: ${var.migration_initial_load_settings_job_mode}
+      metadataRemaps:
+      - newValue: ${var.migration_initial_load_settings_metadata_remaps_new_value}
+        oldValue: ${var.migration_initial_load_settings_metadata_remaps_old_value}
+        type: ${var.migration_initial_load_settings_metadata_remaps_type}
+      primaryKeyCompatibility: ${var.migration_initial_load_settings_primary_key_compatibility}
+      tablespaceDetails:
+      - blockSizeInKbs: ${var.migration_initial_load_settings_tablespace_details_block_size_in_kbs}
+        extendSizeInMbs: ${var.migration_initial_load_settings_tablespace_details_extend_size_in_mbs}
+        isAutoCreate: ${var.migration_initial_load_settings_tablespace_details_is_auto_create}
+        isBigFile: ${var.migration_initial_load_settings_tablespace_details_is_big_file}
+        remapTarget: ${var.migration_initial_load_settings_tablespace_details_remap_target}
+        targetType: ${var.migration_initial_load_settings_tablespace_details_target_type}
+    sourceContainerDatabaseConnectionId: ${oci_database_migration_connection.test_connection.id}
+    sourceDatabaseConnectionId: ${oci_database_migration_connection.test_connection.id}
+    sourceStandbyDatabaseConnectionId: ${oci_database_migration_connection.test_connection.id}
+    targetDatabaseConnectionId: ${oci_database_migration_connection.test_connection.id}
+    type: ${var.migration_type}

@@ -1,0 +1,17 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExternalPluggableDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externalpluggabledatabase
+  labels:
+    testing.upbound.io/example-name: test_external_pluggable_database
+  name: test-external-pluggable-database
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.external_pluggable_database_defined_tags}
+    displayName: ${var.external_pluggable_database_display_name}
+    externalContainerDatabaseId: ${oci_database_external_container_database.test_external_container_database.id}
+    freeformTags:
+      Department: Finance
+    sourceId: ${oci_database_source.test_source.id}

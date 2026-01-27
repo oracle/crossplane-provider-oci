@@ -1,0 +1,39 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
+  name: test-autonomous-exadata-infrastructure
+spec:
+  forProvider:
+    availabilityDomain: ${var.autonomous_exadata_infrastructure_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.autonomous_exadata_infrastructure_display_name}
+    domain: ${var.autonomous_exadata_infrastructure_domain}
+    freeformTags:
+      Department: Finance
+    licenseModel: ${var.autonomous_exadata_infrastructure_license_model}
+    maintenanceWindowDetails:
+    - customActionTimeoutInMins: ${var.autonomous_exadata_infrastructure_maintenance_window_details_custom_action_timeout_in_mins}
+      daysOfWeek:
+      - name: ${var.autonomous_exadata_infrastructure_maintenance_window_details_days_of_week_name}
+      hoursOfDay: ${var.autonomous_exadata_infrastructure_maintenance_window_details_hours_of_day}
+      isCustomActionTimeoutEnabled: ${var.autonomous_exadata_infrastructure_maintenance_window_details_is_custom_action_timeout_enabled}
+      isMonthlyPatchingEnabled: ${var.autonomous_exadata_infrastructure_maintenance_window_details_is_monthly_patching_enabled}
+      leadTimeInWeeks: ${var.autonomous_exadata_infrastructure_maintenance_window_details_lead_time_in_weeks}
+      months:
+      - name: ${var.autonomous_exadata_infrastructure_maintenance_window_details_months_name}
+      patchingMode: ${var.autonomous_exadata_infrastructure_maintenance_window_details_patching_mode}
+      preference: ${var.autonomous_exadata_infrastructure_maintenance_window_details_preference}
+      weeksOfMonth: ${var.autonomous_exadata_infrastructure_maintenance_window_details_weeks_of_month}
+    nsgIds: ${var.autonomous_exadata_infrastructure_nsg_ids}
+    shape: ${var.autonomous_exadata_infrastructure_shape}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

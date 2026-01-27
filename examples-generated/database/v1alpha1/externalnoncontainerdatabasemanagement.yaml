@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExternalNonContainerDatabaseManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externalnoncontainerdatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_external_non_container_database_management
+  name: test-external-non-container-database-management
+spec:
+  forProvider:
+    externalDatabaseConnectorId: ${oci_database_external_database_connector.test_external_database_connector.id}
+    externalNonContainerDatabaseId: ${oci_database_external_non_container_database.test_external_non_container_database.id}
+    license_mode: ${var.external_non_container_database_management_license_model}

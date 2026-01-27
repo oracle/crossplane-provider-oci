@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudDbSystemConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementclouddbsystemconnector
+  labels:
+    testing.upbound.io/example-name: test_cloud_db_system_connector
+  name: test-cloud-db-system-connector
+spec:
+  forProvider:
+    cloudDbSystemId: ${oci_database_management_cloud_db_system.test_cloud_db_system.id}
+    connectorType: ${var.cloud_db_system_connector_connector_type}
+    displayName: ${var.cloud_db_system_connector_display_name}

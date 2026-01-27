@@ -1,0 +1,40 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementPluggabledatabasePluggableDatabaseDbmFeaturesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementpluggabledatabasepluggabledatabasedbmfeaturesmanagement
+  labels:
+    testing.upbound.io/example-name: test_pluggabledatabase_pluggable_database_dbm_features_management
+  name: test-pluggabledatabase-pluggable-database-dbm-features-management
+spec:
+  forProvider:
+    enablePluggableDatabaseDbmFeature: ${var.enable_pluggable_database_dbm_feature}
+    featureDetails:
+    - canEnableAllCurrentPdbs: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_can_enable_all_current_pdbs}
+      connectorDetails:
+      - connectorType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_connector_details_connector_type}
+        databaseConnectorId: ${oci_database_management_database_connector.test_database_connector.id}
+        managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+        privateEndPointId: ${oci_database_management_private_end_point.test_private_end_point.id}
+      databaseConnectionDetails:
+      - connectionCredentials:
+        - credentialName: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_name}
+          credentialType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_type}
+          namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_role}
+          sslSecretId: ${oci_vault_secret.test_secret.id}
+          userName: ${var.user_name}
+        connectionString:
+        - connectionType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_connection_type}
+          port: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_port}
+          protocol: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_protocol}
+          service: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_service}
+      enable_pluggable_database_dbm_feature: ${var.enable_pluggable_database_dbm_feature}
+      feature: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_feature}
+      isAutoEnablePluggableDatabase: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_is_auto_enable_pluggable_database}
+      managementType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_management_type}
+    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}

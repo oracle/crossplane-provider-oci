@@ -1,0 +1,22 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalDbSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternaldbsystem
+  labels:
+    testing.upbound.io/example-name: test_external_db_system
+  name: test-external-db-system
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    databaseManagementConfig:
+    - licenseModel: ${var.external_db_system_database_management_config_license_model}
+    dbSystemDiscoveryId: ${oci_database_management_db_system_discovery.test_db_system_discovery.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.external_db_system_display_name}
+    freeformTags:
+      Department: Finance
+    stackMonitoringConfig:
+    - isEnabled: ${var.external_db_system_stack_monitoring_config_is_enabled}
+      metadata: ${var.external_db_system_stack_monitoring_config_metadata}

@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbNodeSnapshotManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbnodesnapshotmanagement
+  labels:
+    testing.upbound.io/example-name: test_db_node_snapshot_management
+  name: test-db-node-snapshot-management
+spec:
+  forProvider:
+    definedTags: ${var.db_node_snapshot_defined_tags}
+    exadbVmClusterId: ${oci_database_exadb_vm_cluster.test_exadb_vm_cluster.id}
+    freeformTags: ${var.db_node_snapshot_freeform_tags}
+    name: ${var.db_node_snapshot_suffix}
+    sourceDbnodeIds: ${oci_database_exadb_vm_cluster.test_exadb_vm_cluster.node_resource[*].node_id}

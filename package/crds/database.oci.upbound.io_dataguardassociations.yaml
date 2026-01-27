@@ -1,0 +1,1267 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: dataguardassociations.database.oci.upbound.io
+spec:
+  group: database.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DataGuardAssociation
+    listKind: DataGuardAssociationList
+    plural: dataguardassociations
+    singular: dataguardassociation
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DataGuardAssociation is the Schema for the DataGuardAssociations
+          API. Provides the Data Guard Association resource in Oracle Cloud Infrastructure
+          Database service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DataGuardAssociationSpec defines the desired state of DataGuardAssociation
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  availabilityDomain:
+                    description: (Applicable when creation_type=NewDbSystem) The name
+                      of the availability domain that the standby database DB system
+                      will be located in. For example- "Uocm:PHX-AD-1".
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Applicable when creation_type=NewDbSystem) A list
+                      of the OCIDs of the network security groups (NSGs) that the
+                      backup network of this DB system belongs to. Setting this to
+                      an empty array after the list is created removes the resource
+                      from all NSGs. For more information about NSGs, see Security
+                      Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  clusterPlacementGroupId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  computeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of compute servers for the DB system.
+                    type: number
+                  computeModel:
+                    description: (Applicable when creation_type=NewDbSystem) The compute
+                      model for Base Database Service. This is required if using the
+                      computeCount parameter. If using cpuCoreCount then it is an
+                      error to specify computeModel to a non-null value. The ECPU
+                      compute model is the recommended model, and the OCPU compute
+                      model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of CPU cores available for AMD-based virtual machine DB systems.
+                    type: number
+                  createAsync:
+                    type: boolean
+                  creationType:
+                    description: Specifies whether to create the peer database in
+                      an existing DB system or in a new DB system.
+                    type: string
+                  dataCollectionOptions:
+                    description: (Applicable when creation_type=NewDbSystem) Indicates
+                      user preferences for the various diagnostic collection options
+                      for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether diagnostic collection is enabled for
+                            the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic
+                            collection allows you to receive Events service notifications
+                            for guest VM issues. Diagnostic collection also allows
+                            Oracle to provide enhanced service and proactive support
+                            for your Exadata system. You can enable diagnostic collection
+                            during VM cluster/Cloud VM cluster provisioning. You can
+                            also disable or enable it at any time using the UpdateVmCluster
+                            or updateCloudVmCluster API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether health monitoring is enabled for the
+                            VM cluster / Cloud VM cluster / VMBM DBCS. Enabling health
+                            monitoring allows Oracle to collect diagnostic data and
+                            share it with its operations and support personnel. You
+                            may also receive notifications for some events. Collecting
+                            health diagnostics enables Oracle to provide proactive
+                            support and enhanced service for your system. Optionally
+                            enable health monitoring while provisioning a system.
+                            You can also disable or enable health monitoring anytime
+                            using the UpdateVmCluster, UpdateCloudVmCluster or updateDbsystem
+                            API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether incident logs and trace collection are
+                            enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+                            Enabling incident logs collection allows Oracle to receive
+                            Events service notifications for guest VM issues, collect
+                            incident logs and traces, and use them to diagnose issues
+                            and resolve them. Optionally enable incident logs collection
+                            while provisioning a system. You can also disable or enable
+                            incident logs collection anytime using the UpdateVmCluster,
+                            updateCloudVmCluster or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  databaseAdminPasswordSecretRef:
+                    description: (Updatable) A strong password for the SYS, SYSTEM,
+                      and PDB Admin users to apply during standby creation.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  databaseDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  databaseSoftwareImageId:
+                    description: The database software image OCID. Applicable only
+                      when creationType=ExistingDbSystem and when the existing database
+                      has Exadata shape.
+                    type: string
+                  dbSystemDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemSecurityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Security
+                      Attributes for this resource. Each key is predefined and scoped
+                      to a namespace. For more information, see Resource Tags. Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deleteStandbyDbHomeOnDelete:
+                    description: (Updatable) if set to true the destroy operation
+                      will destroy the standby dbHome/dbSystem that is referenced
+                      in the Data Guard Association. The Data Guard Association gets
+                      destroyed when standby dbHome/dbSystem is terminated. Only true
+                      is supported at this time.
+                    type: string
+                  displayName:
+                    description: (Applicable when creation_type=NewDbSystem) The user-friendly
+                      name of the DB system that will contain the the standby database.
+                      The display name does not have to be unique.
+                    type: string
+                  domain:
+                    description: (Applicable when creation_type=NewDbSystem) A domain
+                      name used for the DB system. If the Oracle-provided Internet
+                      and VCN Resolver is enabled for the specified subnet, the domain
+                      name for the subnet is used (do not provide one). Otherwise,
+                      provide a valid DNS domain name. Hyphens (-) are not permitted.
+                    type: string
+                  faultDomains:
+                    description: (Applicable when creation_type=NewDbSystem) A Fault
+                      Domain is a grouping of hardware and infrastructure within an
+                      availability domain. Fault Domains let you distribute your instances
+                      so that they are not on the same physical hardware within a
+                      single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  hostname:
+                    description: (Applicable when creation_type=NewDbSystem) The hostname
+                      for the DB node.
+                    type: string
+                  isActiveDataGuardEnabled:
+                    description: (Updatable) True if active Data Guard is enabled.
+                    type: boolean
+                  licenseModel:
+                    description: (Applicable when creation_type=NewDbSystem) The Oracle
+                      license model that applies to all the databases on the dataguard
+                      standby DB system. The default is LICENSE_INCLUDED. Bring your
+                      own license (BYOL) allows you to select the DB edition using
+                      the optional parameter, for Autonomous AI Database Serverless.
+                    type: string
+                  migrateTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Migrate. Could be set to any integer value.
+                    type: number
+                  nodeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of nodes to launch for the DB system of the standby in the Data
+                      Guard association. For a 2-node RAC virtual machine DB system,
+                      specify either 1 or 2. If you do not supply this parameter,
+                      the default is the node count of the primary DB system.
+                    type: number
+                  nsgIds:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      list of OCIDs for the network security groups (NSGs) to which
+                      this resource belongs. Setting this to an empty list removes
+                      all resources from all NSGs. For more information about NSGs,
+                      see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  peerDbHomeId:
+                    description: (Applicable when creation_type=ExistingDbSystem |
+                      ExistingVmCluster) The OCID of the DB home in which to create
+                      the standby database. You must supply this value to create standby
+                      database with an existing DB home
+                    type: string
+                  peerDbSystemId:
+                    description: (Applicable when creation_type=ExistingDbSystem)
+                      The OCID of the DB system in which to create the standby database.
+                      You must supply this value if creationType is ExistingDbSystem.
+                    type: string
+                  peerDbUniqueName:
+                    description: Specifies the DB_UNIQUE_NAME of the peer database
+                      to be created.
+                    type: string
+                  peerSidPrefix:
+                    description: Specifies a prefix for the Oracle SID of the database
+                      to be created.
+                    type: string
+                  peerVmClusterId:
+                    description: (Applicable when creation_type=ExistingVmCluster)
+                      The OCID of the VM Cluster in which to create the standby database.
+                      You must supply this value if creationType is ExistingVmCluster.
+                    type: string
+                  privateIp:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv4
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv4 address from the
+                      subnet.
+                    type: string
+                  privateIpV6:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv6
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv6 address from the
+                      subnet.
+                    type: string
+                  protectionMode:
+                    description: (Updatable) The protection mode to set up between
+                      the primary and standby databases. For more information, see
+                      Oracle Data Guard Protection Modes in the Oracle Data Guard
+                      documentation.
+                    type: string
+                  shape:
+                    description: (Applicable when creation_type=NewDbSystem) The virtual
+                      machine DB system shape to launch for the standby database in
+                      the Data Guard association. The shape determines the number
+                      of CPU cores and the amount of memory available for the DB system.
+                      Only virtual machine shapes are valid options. If you do not
+                      supply this parameter, the default shape is the shape of the
+                      primary DB system.
+                    type: string
+                  storageVolumePerformanceMode:
+                    description: (Applicable when creation_type=NewDbSystem) The block
+                      storage volume performance level. Valid values are BALANCED
+                      and HIGH_PERFORMANCE. See Block Volume Performance for more
+                      information.
+                    type: string
+                  subnetId:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      OCID of the subnet the DB system is associated with. Subnet
+                      Restrictions:'
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  timeZone:
+                    description: (Applicable when creation_type=NewDbSystem) The time
+                      zone of the dataguard standby DB system. For details, see DB
+                      System Time Zones.
+                    type: string
+                  transportType:
+                    description: '(Updatable) The redo transport type to use for this
+                      Data Guard association.  Valid values depend on the specified
+                      protectionMode:'
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  availabilityDomain:
+                    description: (Applicable when creation_type=NewDbSystem) The name
+                      of the availability domain that the standby database DB system
+                      will be located in. For example- "Uocm:PHX-AD-1".
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Applicable when creation_type=NewDbSystem) A list
+                      of the OCIDs of the network security groups (NSGs) that the
+                      backup network of this DB system belongs to. Setting this to
+                      an empty array after the list is created removes the resource
+                      from all NSGs. For more information about NSGs, see Security
+                      Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  clusterPlacementGroupId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  computeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of compute servers for the DB system.
+                    type: number
+                  computeModel:
+                    description: (Applicable when creation_type=NewDbSystem) The compute
+                      model for Base Database Service. This is required if using the
+                      computeCount parameter. If using cpuCoreCount then it is an
+                      error to specify computeModel to a non-null value. The ECPU
+                      compute model is the recommended model, and the OCPU compute
+                      model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of CPU cores available for AMD-based virtual machine DB systems.
+                    type: number
+                  createAsync:
+                    type: boolean
+                  creationType:
+                    description: Specifies whether to create the peer database in
+                      an existing DB system or in a new DB system.
+                    type: string
+                  dataCollectionOptions:
+                    description: (Applicable when creation_type=NewDbSystem) Indicates
+                      user preferences for the various diagnostic collection options
+                      for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether diagnostic collection is enabled for
+                            the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic
+                            collection allows you to receive Events service notifications
+                            for guest VM issues. Diagnostic collection also allows
+                            Oracle to provide enhanced service and proactive support
+                            for your Exadata system. You can enable diagnostic collection
+                            during VM cluster/Cloud VM cluster provisioning. You can
+                            also disable or enable it at any time using the UpdateVmCluster
+                            or updateCloudVmCluster API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether health monitoring is enabled for the
+                            VM cluster / Cloud VM cluster / VMBM DBCS. Enabling health
+                            monitoring allows Oracle to collect diagnostic data and
+                            share it with its operations and support personnel. You
+                            may also receive notifications for some events. Collecting
+                            health diagnostics enables Oracle to provide proactive
+                            support and enhanced service for your system. Optionally
+                            enable health monitoring while provisioning a system.
+                            You can also disable or enable health monitoring anytime
+                            using the UpdateVmCluster, UpdateCloudVmCluster or updateDbsystem
+                            API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether incident logs and trace collection are
+                            enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+                            Enabling incident logs collection allows Oracle to receive
+                            Events service notifications for guest VM issues, collect
+                            incident logs and traces, and use them to diagnose issues
+                            and resolve them. Optionally enable incident logs collection
+                            while provisioning a system. You can also disable or enable
+                            incident logs collection anytime using the UpdateVmCluster,
+                            updateCloudVmCluster or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  databaseAdminPasswordSecretRef:
+                    description: (Updatable) A strong password for the SYS, SYSTEM,
+                      and PDB Admin users to apply during standby creation.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  databaseDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  databaseSoftwareImageId:
+                    description: The database software image OCID. Applicable only
+                      when creationType=ExistingDbSystem and when the existing database
+                      has Exadata shape.
+                    type: string
+                  dbSystemDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemSecurityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Security
+                      Attributes for this resource. Each key is predefined and scoped
+                      to a namespace. For more information, see Resource Tags. Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deleteStandbyDbHomeOnDelete:
+                    description: (Updatable) if set to true the destroy operation
+                      will destroy the standby dbHome/dbSystem that is referenced
+                      in the Data Guard Association. The Data Guard Association gets
+                      destroyed when standby dbHome/dbSystem is terminated. Only true
+                      is supported at this time.
+                    type: string
+                  displayName:
+                    description: (Applicable when creation_type=NewDbSystem) The user-friendly
+                      name of the DB system that will contain the the standby database.
+                      The display name does not have to be unique.
+                    type: string
+                  domain:
+                    description: (Applicable when creation_type=NewDbSystem) A domain
+                      name used for the DB system. If the Oracle-provided Internet
+                      and VCN Resolver is enabled for the specified subnet, the domain
+                      name for the subnet is used (do not provide one). Otherwise,
+                      provide a valid DNS domain name. Hyphens (-) are not permitted.
+                    type: string
+                  faultDomains:
+                    description: (Applicable when creation_type=NewDbSystem) A Fault
+                      Domain is a grouping of hardware and infrastructure within an
+                      availability domain. Fault Domains let you distribute your instances
+                      so that they are not on the same physical hardware within a
+                      single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  hostname:
+                    description: (Applicable when creation_type=NewDbSystem) The hostname
+                      for the DB node.
+                    type: string
+                  isActiveDataGuardEnabled:
+                    description: (Updatable) True if active Data Guard is enabled.
+                    type: boolean
+                  licenseModel:
+                    description: (Applicable when creation_type=NewDbSystem) The Oracle
+                      license model that applies to all the databases on the dataguard
+                      standby DB system. The default is LICENSE_INCLUDED. Bring your
+                      own license (BYOL) allows you to select the DB edition using
+                      the optional parameter, for Autonomous AI Database Serverless.
+                    type: string
+                  migrateTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Migrate. Could be set to any integer value.
+                    type: number
+                  nodeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of nodes to launch for the DB system of the standby in the Data
+                      Guard association. For a 2-node RAC virtual machine DB system,
+                      specify either 1 or 2. If you do not supply this parameter,
+                      the default is the node count of the primary DB system.
+                    type: number
+                  nsgIds:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      list of OCIDs for the network security groups (NSGs) to which
+                      this resource belongs. Setting this to an empty list removes
+                      all resources from all NSGs. For more information about NSGs,
+                      see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  peerDbHomeId:
+                    description: (Applicable when creation_type=ExistingDbSystem |
+                      ExistingVmCluster) The OCID of the DB home in which to create
+                      the standby database. You must supply this value to create standby
+                      database with an existing DB home
+                    type: string
+                  peerDbSystemId:
+                    description: (Applicable when creation_type=ExistingDbSystem)
+                      The OCID of the DB system in which to create the standby database.
+                      You must supply this value if creationType is ExistingDbSystem.
+                    type: string
+                  peerDbUniqueName:
+                    description: Specifies the DB_UNIQUE_NAME of the peer database
+                      to be created.
+                    type: string
+                  peerSidPrefix:
+                    description: Specifies a prefix for the Oracle SID of the database
+                      to be created.
+                    type: string
+                  peerVmClusterId:
+                    description: (Applicable when creation_type=ExistingVmCluster)
+                      The OCID of the VM Cluster in which to create the standby database.
+                      You must supply this value if creationType is ExistingVmCluster.
+                    type: string
+                  privateIp:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv4
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv4 address from the
+                      subnet.
+                    type: string
+                  privateIpV6:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv6
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv6 address from the
+                      subnet.
+                    type: string
+                  protectionMode:
+                    description: (Updatable) The protection mode to set up between
+                      the primary and standby databases. For more information, see
+                      Oracle Data Guard Protection Modes in the Oracle Data Guard
+                      documentation.
+                    type: string
+                  shape:
+                    description: (Applicable when creation_type=NewDbSystem) The virtual
+                      machine DB system shape to launch for the standby database in
+                      the Data Guard association. The shape determines the number
+                      of CPU cores and the amount of memory available for the DB system.
+                      Only virtual machine shapes are valid options. If you do not
+                      supply this parameter, the default shape is the shape of the
+                      primary DB system.
+                    type: string
+                  storageVolumePerformanceMode:
+                    description: (Applicable when creation_type=NewDbSystem) The block
+                      storage volume performance level. Valid values are BALANCED
+                      and HIGH_PERFORMANCE. See Block Volume Performance for more
+                      information.
+                    type: string
+                  subnetId:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      OCID of the subnet the DB system is associated with. Subnet
+                      Restrictions:'
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  timeZone:
+                    description: (Applicable when creation_type=NewDbSystem) The time
+                      zone of the dataguard standby DB system. For details, see DB
+                      System Time Zones.
+                    type: string
+                  transportType:
+                    description: '(Updatable) The redo transport type to use for this
+                      Data Guard association.  Valid values depend on the specified
+                      protectionMode:'
+                    type: string
+                required:
+                - databaseAdminPasswordSecretRef
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.creationType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.creationType)
+                || (has(self.initProvider) && has(self.initProvider.creationType))'
+            - message: spec.forProvider.databaseAdminPasswordSecretRef is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.databaseAdminPasswordSecretRef)'
+            - message: spec.forProvider.databaseId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.databaseId)
+                || (has(self.initProvider) && has(self.initProvider.databaseId))'
+            - message: spec.forProvider.deleteStandbyDbHomeOnDelete is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.deleteStandbyDbHomeOnDelete)
+                || (has(self.initProvider) && has(self.initProvider.deleteStandbyDbHomeOnDelete))'
+            - message: spec.forProvider.protectionMode is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.protectionMode)
+                || (has(self.initProvider) && has(self.initProvider.protectionMode))'
+            - message: spec.forProvider.transportType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.transportType)
+                || (has(self.initProvider) && has(self.initProvider.transportType))'
+          status:
+            description: DataGuardAssociationStatus defines the observed state of
+              DataGuardAssociation.
+            properties:
+              atProvider:
+                properties:
+                  applyLag:
+                    description: 'The lag time between updates to the primary database
+                      and application of the redo data on the standby database, as
+                      computed by the reporting database.  Example: 9 seconds'
+                    type: string
+                  applyRate:
+                    description: 'The rate at which redo logs are synced between the
+                      associated databases.  Example: 180 Mb per second'
+                    type: string
+                  availabilityDomain:
+                    description: (Applicable when creation_type=NewDbSystem) The name
+                      of the availability domain that the standby database DB system
+                      will be located in. For example- "Uocm:PHX-AD-1".
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Applicable when creation_type=NewDbSystem) A list
+                      of the OCIDs of the network security groups (NSGs) that the
+                      backup network of this DB system belongs to. Setting this to
+                      an empty array after the list is created removes the resource
+                      from all NSGs. For more information about NSGs, see Security
+                      Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  clusterPlacementGroupId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  computeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of compute servers for the DB system.
+                    type: number
+                  computeModel:
+                    description: (Applicable when creation_type=NewDbSystem) The compute
+                      model for Base Database Service. This is required if using the
+                      computeCount parameter. If using cpuCoreCount then it is an
+                      error to specify computeModel to a non-null value. The ECPU
+                      compute model is the recommended model, and the OCPU compute
+                      model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of CPU cores available for AMD-based virtual machine DB systems.
+                    type: number
+                  createAsync:
+                    type: boolean
+                  creationType:
+                    description: Specifies whether to create the peer database in
+                      an existing DB system or in a new DB system.
+                    type: string
+                  dataCollectionOptions:
+                    description: (Applicable when creation_type=NewDbSystem) Indicates
+                      user preferences for the various diagnostic collection options
+                      for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether diagnostic collection is enabled for
+                            the VM cluster/Cloud VM cluster/VMBM DBCS. Enabling diagnostic
+                            collection allows you to receive Events service notifications
+                            for guest VM issues. Diagnostic collection also allows
+                            Oracle to provide enhanced service and proactive support
+                            for your Exadata system. You can enable diagnostic collection
+                            during VM cluster/Cloud VM cluster provisioning. You can
+                            also disable or enable it at any time using the UpdateVmCluster
+                            or updateCloudVmCluster API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether health monitoring is enabled for the
+                            VM cluster / Cloud VM cluster / VMBM DBCS. Enabling health
+                            monitoring allows Oracle to collect diagnostic data and
+                            share it with its operations and support personnel. You
+                            may also receive notifications for some events. Collecting
+                            health diagnostics enables Oracle to provide proactive
+                            support and enhanced service for your system. Optionally
+                            enable health monitoring while provisioning a system.
+                            You can also disable or enable health monitoring anytime
+                            using the UpdateVmCluster, UpdateCloudVmCluster or updateDbsystem
+                            API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Applicable when creation_type=NewDbSystem)
+                            Indicates whether incident logs and trace collection are
+                            enabled for the VM cluster / Cloud VM cluster / VMBM DBCS.
+                            Enabling incident logs collection allows Oracle to receive
+                            Events service notifications for guest VM issues, collect
+                            incident logs and traces, and use them to diagnose issues
+                            and resolve them. Optionally enable incident logs collection
+                            while provisioning a system. You can also disable or enable
+                            incident logs collection anytime using the UpdateVmCluster,
+                            updateCloudVmCluster or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  databaseDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  databaseSoftwareImageId:
+                    description: The database software image OCID. Applicable only
+                      when creationType=ExistingDbSystem and when the existing database
+                      has Exadata shape.
+                    type: string
+                  dbSystemDefinedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when creation_type=NewDbSystem) Defined
+                      tags for this resource. Each key is predefined and scoped to
+                      a namespace. For more information, see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemFreeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Free-form
+                      tags for this resource. Each tag is a simple key-value pair
+                      with no predefined name, type, or namespace. For more information,
+                      see Resource Tags.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  dbSystemSecurityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when creation_type=NewDbSystem) Security
+                      Attributes for this resource. Each key is predefined and scoped
+                      to a namespace. For more information, see Resource Tags. Example:
+                      {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deleteStandbyDbHomeOnDelete:
+                    description: (Updatable) if set to true the destroy operation
+                      will destroy the standby dbHome/dbSystem that is referenced
+                      in the Data Guard Association. The Data Guard Association gets
+                      destroyed when standby dbHome/dbSystem is terminated. Only true
+                      is supported at this time.
+                    type: string
+                  displayName:
+                    description: (Applicable when creation_type=NewDbSystem) The user-friendly
+                      name of the DB system that will contain the the standby database.
+                      The display name does not have to be unique.
+                    type: string
+                  domain:
+                    description: (Applicable when creation_type=NewDbSystem) A domain
+                      name used for the DB system. If the Oracle-provided Internet
+                      and VCN Resolver is enabled for the specified subnet, the domain
+                      name for the subnet is used (do not provide one). Otherwise,
+                      provide a valid DNS domain name. Hyphens (-) are not permitted.
+                    type: string
+                  faultDomains:
+                    description: (Applicable when creation_type=NewDbSystem) A Fault
+                      Domain is a grouping of hardware and infrastructure within an
+                      availability domain. Fault Domains let you distribute your instances
+                      so that they are not on the same physical hardware within a
+                      single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  hostname:
+                    description: (Applicable when creation_type=NewDbSystem) The hostname
+                      for the DB node.
+                    type: string
+                  id:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  isActiveDataGuardEnabled:
+                    description: (Updatable) True if active Data Guard is enabled.
+                    type: boolean
+                  licenseModel:
+                    description: (Applicable when creation_type=NewDbSystem) The Oracle
+                      license model that applies to all the databases on the dataguard
+                      standby DB system. The default is LICENSE_INCLUDED. Bring your
+                      own license (BYOL) allows you to select the DB edition using
+                      the optional parameter, for Autonomous AI Database Serverless.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycleState,
+                      if available.
+                    type: string
+                  migrateTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Migrate. Could be set to any integer value.
+                    type: number
+                  nodeCount:
+                    description: (Applicable when creation_type=NewDbSystem) The number
+                      of nodes to launch for the DB system of the standby in the Data
+                      Guard association. For a 2-node RAC virtual machine DB system,
+                      specify either 1 or 2. If you do not supply this parameter,
+                      the default is the node count of the primary DB system.
+                    type: number
+                  nsgIds:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      list of OCIDs for the network security groups (NSGs) to which
+                      this resource belongs. Setting this to an empty list removes
+                      all resources from all NSGs. For more information about NSGs,
+                      see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  peerDataGuardAssociationId:
+                    description: The OCID of the peer database's Data Guard association.
+                    type: string
+                  peerDatabaseId:
+                    description: The OCID of the associated peer database.
+                    type: string
+                  peerDbHomeId:
+                    description: (Applicable when creation_type=ExistingDbSystem |
+                      ExistingVmCluster) The OCID of the DB home in which to create
+                      the standby database. You must supply this value to create standby
+                      database with an existing DB home
+                    type: string
+                  peerDbSystemId:
+                    description: (Applicable when creation_type=ExistingDbSystem)
+                      The OCID of the DB system in which to create the standby database.
+                      You must supply this value if creationType is ExistingDbSystem.
+                    type: string
+                  peerDbUniqueName:
+                    description: Specifies the DB_UNIQUE_NAME of the peer database
+                      to be created.
+                    type: string
+                  peerRole:
+                    description: The role of the peer database in this Data Guard
+                      association.
+                    type: string
+                  peerSidPrefix:
+                    description: Specifies a prefix for the Oracle SID of the database
+                      to be created.
+                    type: string
+                  peerVmClusterId:
+                    description: (Applicable when creation_type=ExistingVmCluster)
+                      The OCID of the VM Cluster in which to create the standby database.
+                      You must supply this value if creationType is ExistingVmCluster.
+                    type: string
+                  privateIp:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv4
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv4 address from the
+                      subnet.
+                    type: string
+                  privateIpV6:
+                    description: (Applicable when creation_type=NewDbSystem) The IPv6
+                      address from the provided Oracle Cloud Infrastructure subnet
+                      which needs to be assigned to the VNIC. If not provided, it
+                      will be auto-assigned with an available IPv6 address from the
+                      subnet.
+                    type: string
+                  protectionMode:
+                    description: (Updatable) The protection mode to set up between
+                      the primary and standby databases. For more information, see
+                      Oracle Data Guard Protection Modes in the Oracle Data Guard
+                      documentation.
+                    type: string
+                  role:
+                    description: The role of the reporting database in this Data Guard
+                      association.
+                    type: string
+                  shape:
+                    description: (Applicable when creation_type=NewDbSystem) The virtual
+                      machine DB system shape to launch for the standby database in
+                      the Data Guard association. The shape determines the number
+                      of CPU cores and the amount of memory available for the DB system.
+                      Only virtual machine shapes are valid options. If you do not
+                      supply this parameter, the default shape is the shape of the
+                      primary DB system.
+                    type: string
+                  state:
+                    description: The current state of the Data Guard association.
+                    type: string
+                  storageVolumePerformanceMode:
+                    description: (Applicable when creation_type=NewDbSystem) The block
+                      storage volume performance level. Valid values are BALANCED
+                      and HIGH_PERFORMANCE. See Block Volume Performance for more
+                      information.
+                    type: string
+                  subnetId:
+                    description: '(Applicable when creation_type=NewDbSystem) The
+                      OCID of the subnet the DB system is associated with. Subnet
+                      Restrictions:'
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the Data Guard association.
+                    type: string
+                  timeCreated:
+                    description: The date and time the Data Guard association was
+                      created.
+                    type: string
+                  timeZone:
+                    description: (Applicable when creation_type=NewDbSystem) The time
+                      zone of the dataguard standby DB system. For details, see DB
+                      System Time Zones.
+                    type: string
+                  transportType:
+                    description: '(Updatable) The redo transport type to use for this
+                      Data Guard association.  Valid values depend on the specified
+                      protectionMode:'
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

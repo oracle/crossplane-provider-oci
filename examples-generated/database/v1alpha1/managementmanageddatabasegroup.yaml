@@ -1,0 +1,19 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementManagedDatabaseGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementmanageddatabasegroup
+  labels:
+    testing.upbound.io/example-name: test_managed_database_group
+  name: test-managed-database-group
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.managed_database_group_description}
+    freeformTags:
+      Department: Finance
+    managedDatabases:
+    - id: ${var.managed_database_id}
+    name: ${var.managed_database_group_name}

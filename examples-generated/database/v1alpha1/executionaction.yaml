@@ -1,0 +1,23 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExecutionAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/executionaction
+  labels:
+    testing.upbound.io/example-name: test_execution_action
+  name: test-execution-action
+spec:
+  forProvider:
+    actionMembers:
+    - estimatedTimeInMins: ${var.execution_action_action_members_estimated_time_in_mins}
+      memberId: ${oci_database_member.test_member.id}
+      memberOrder: ${var.execution_action_action_members_member_order}
+      status: ${var.execution_action_action_members_status}
+      totalTimeTakenInMins: ${var.execution_action_action_members_total_time_taken_in_mins}
+    actionParams: ${var.execution_action_action_params}
+    actionType: ${var.execution_action_action_type}
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.execution_action_defined_tags}
+    executionWindowId: ${oci_database_execution_window.test_execution_window.id}
+    freeformTags:
+      Department: Finance

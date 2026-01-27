@@ -1,0 +1,3255 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: autonomousdatabases.database.oci.upbound.io
+spec:
+  group: database.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: AutonomousDatabase
+    listKind: AutonomousDatabaseList
+    plural: autonomousdatabases
+    singular: autonomousdatabase
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AutonomousDatabase is the Schema for the AutonomousDatabases
+          API. Provides the Autonomous Database resource in Oracle Cloud Infrastructure
+          Database service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AutonomousDatabaseSpec defines the desired state of AutonomousDatabase
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  adminPasswordSecretRef:
+                    description: (Updatable) The password must be between 12 and 30
+                      characters long, and must contain at least 1 uppercase, 1 lowercase,
+                      and 1 numeric character. It cannot contain the double quote
+                      symbol (") or the username "admin", regardless of casing. The
+                      password is mandatory if source value is "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP",
+                      "DATABASE" or "NONE".
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  arePrimaryWhitelistedIpsUsed:
+                    description: (Updatable) This field will be null if the Autonomous
+                      AI Database is not Data Guard enabled or Access Control is disabled.
+                      It's value would be TRUE if Autonomous AI Database is Data Guard
+                      enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses primary IP access control list (ACL) for standby.
+                      It's value would be FALSE if Autonomous AI Database is Data
+                      Guard enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses different IP access control list (ACL) for
+                      standby compared to primary.
+                    type: boolean
+                  autoRefreshFrequencyInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The frequency a refreshable clone is refreshed after auto-refresh
+                      is enabled. The minimum is 1 hour. The maximum is 7 days. The
+                      date and time that auto-refresh is enabled is controlled by
+                      the timeOfAutoRefreshStart parameter.
+                    type: number
+                  autoRefreshPointLagInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The time, in seconds, the data of the refreshable clone lags
+                      the primary database at the point of refresh. The minimum is
+                      0 minutes (0 mins means refresh to the latest available timestamp).
+                      The maximum is 7 days. The lag time increases after refreshing
+                      until the next data refresh happens.
+                    type: number
+                  autonomousContainerDatabaseId:
+                    description: The Autonomous Container Database OCID. Used only
+                      by Autonomous AI Database on Dedicated Exadata Infrastructure.
+                    type: string
+                  autonomousDatabaseBackupId:
+                    description: The OCID of the source Autonomous AI Database Backup
+                      that you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousDatabaseId:
+                    description: The OCID of the source Autonomous AI Database that
+                      you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousMaintenanceScheduleType:
+                    description: (Updatable) The maintenance schedule type of the
+                      Autonomous AI Database Serverless. An EARLY maintenance schedule
+                      follows a schedule applying patches prior to the REGULAR schedule.
+                      A REGULAR maintenance schedule follows the normal cycle
+                    type: string
+                  backupRetentionPeriodInDays:
+                    description: (Updatable) Retention period, in days, for long-term
+                      backups
+                    type: number
+                  byolComputeCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a Bring Your Own License (BYOL), including those used for auto-scaling,
+                      disaster recovery, tools, etc. Any CPU usage above this limit
+                      is considered as License Included and billed.
+                    type: number
+                  characterSet:
+                    description: The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Allowed values for an Autonomous AI
+                      Database Serverless instance as as returned by List Autonomous
+                      AI Database Character Sets
+                    type: string
+                  cloneTableSpaceList:
+                    description: (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP)
+                      A list of the source Autonomous AI Database's table space number(s)
+                      used to create this partial clone from the backup.
+                    items:
+                      type: number
+                    type: array
+                  cloneType:
+                    description: The Autonomous AI Database clone type.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment of the Autonomous
+                      AI Database.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  computeCount:
+                    description: (Updatable) The compute amount (CPUs) available to
+                      the database. Minimum and maximum values depend on the compute
+                      model and whether the database is an Autonomous AI Database
+                      Serverless instance or an Autonomous AI Database on Dedicated
+                      Exadata Infrastructure. The 'ECPU' compute model requires a
+                      minimum value of one, for databases in the elastic resource
+                      pool and minimum value of two, otherwise. Required when using
+                      the computeModel parameter. When using cpuCoreCount parameter,
+                      it is an error to specify computeCount to a non-null value.
+                      Providing computeModel and computeCount is the preferred method
+                      for both OCPU and ECPU.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model of the Autonomous AI
+                      Database. This is required if using the computeCount parameter.
+                      If using cpuCoreCount then it is an error to specify computeModel
+                      to a non-null value. ECPU compute model is the recommended model
+                      and OCPU compute model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  customerContacts:
+                    description: (Updatable) Customer Contacts.
+                    items:
+                      properties:
+                        email:
+                          description: (Updatable) The email address used by Oracle
+                            to send notifications regarding databases and infrastructure.
+                          type: string
+                      type: object
+                    type: array
+                  dataSafeStatus:
+                    description: (Updatable) Status of the Data Safe registration
+                      for this Autonomous Database. Could be REGISTERED or NOT_REGISTERED.
+                    type: string
+                  dataStorageSizeInGb:
+                    description: (Updatable) The size, in gigabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. The maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details.
+                    type: number
+                  dataStorageSizeInTbs:
+                    description: (Updatable) The size, in terabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. For Autonomous AI Databases
+                      on dedicated Exadata infrastructure, the maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details. A full Exadata service
+                      is allocated when the Autonomous AI Database size is set to
+                      the upper limit (384 TB).
+                    type: number
+                  databaseEdition:
+                    description: (Updatable) The Oracle AI Database Edition that applies
+                      to the Autonomous AI Databases. This parameter accepts options
+                      STANDARD_EDITION and ENTERPRISE_EDITION.
+                    type: string
+                  databaseManagementStatus:
+                    description: Status of Database Management for this Autonomous
+                      AI Database.
+                    type: string
+                  dbName:
+                    description: The database name. The name must begin with an alphabetic
+                      character and can contain a maximum of 30 alphanumeric characters.
+                      Special characters are not permitted. The database name must
+                      be unique in the tenancy. It is required in all cases except
+                      when creating a cross-region Autonomous Data Guard standby instance
+                      or a cross-region disaster recovery standby instance.
+                    type: string
+                  dbToolsDetails:
+                    description: (Updatable) The list of database tools details.
+                    items:
+                      properties:
+                        computeCount:
+                          description: (Updatable) The compute amount (CPUs) available
+                            to the database. Minimum and maximum values depend on
+                            the compute model and whether the database is an Autonomous
+                            AI Database Serverless instance or an Autonomous AI Database
+                            on Dedicated Exadata Infrastructure. The 'ECPU' compute
+                            model requires a minimum value of one, for databases in
+                            the elastic resource pool and minimum value of two, otherwise.
+                            Required when using the computeModel parameter. When using
+                            cpuCoreCount parameter, it is an error to specify computeCount
+                            to a non-null value. Providing computeModel and computeCount
+                            is the preferred method for both OCPU and ECPU.
+                          type: number
+                        isEnabled:
+                          description: (Updatable) Indicates whether tool is enabled.
+                          type: boolean
+                        maxIdleTimeInMinutes:
+                          description: (Updatable) The max idle time, in minutes,
+                            after which the VM used by database tools will be terminated.
+                          type: number
+                        name:
+                          description: (Updatable) Name of database tool.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: (Updatable) A valid Oracle AI Database version for
+                      Autonomous AI Database.db_workload AJD is only supported for
+                      db_version 19c and above.
+                    type: string
+                  dbWorkload:
+                    description: '(Updatable) The Autonomous AI Database workload
+                      type. The following values are valid:'
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  disasterRecoveryType:
+                    description: Indicates the disaster recovery (DR) type of the
+                      standby Autonomous AI Database Serverless instance. Autonomous
+                      Data Guard (ADG) DR type provides business critical DR with
+                      a faster recovery time objective (RTO) during failover or switchover.
+                      Backup-based DR type provides lower cost DR with a slower RTO
+                      during failover or switchover.
+                    type: string
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Autonomous
+                      AI Database. The name does not have to be unique.
+                    type: string
+                  enableDeleteScheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    type: boolean
+                  encryptionKey:
+                    description: (Updatable) Details of the Autonomous AI Database
+                      encryption key.
+                    items:
+                      properties:
+                        arnRole:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS ARN role
+                          type: string
+                        autonomousDatabaseProvider:
+                          description: (Updatable) The provider for the Autonomous
+                            AI Database encryption key.
+                          type: string
+                        certificateDirectoryName:
+                          description: (Updatable) OKV certificate directory name
+                          type: string
+                        certificateId:
+                          description: (Applicable when provider=OKV) (Updatable)
+                            OKV certificate id
+                          type: string
+                        directoryName:
+                          description: (Updatable) OKV wallet directory name
+                          type: string
+                        externalId:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS external ID
+                          type: string
+                        keyArn:
+                          description: (Updatable) AWS key ARN
+                          type: string
+                        keyName:
+                          description: (Updatable) Azure key name
+                          type: string
+                        keyRing:
+                          description: (Updatable) GCP key ring
+                          type: string
+                        kmsKeyId:
+                          description: (Updatable) The OCID of the key container that
+                            is used as the master encryption key in database transparent
+                            data encryption (TDE) operations.
+                          type: string
+                        kmsRestEndpoint:
+                          description: (Applicable when provider=GCP) (Updatable)
+                            GCP kms REST API endpoint
+                          type: string
+                        location:
+                          description: (Updatable) GCP key ring location
+                          type: string
+                        okvKmsKey:
+                          description: (Updatable) UUID of OKV KMS Key
+                          type: string
+                        okvUri:
+                          description: (Updatable) URI of OKV server
+                          type: string
+                        project:
+                          description: (Updatable) GCP project name
+                          type: string
+                        serviceEndpointUri:
+                          description: (Updatable) AWS key service endpoint URI
+                          type: string
+                        vaultId:
+                          description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                            vault. This parameter and secretId are required for Customer
+                            Managed Keys.
+                          type: string
+                        vaultUri:
+                          description: (Updatable) Azure vault URI
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inMemoryPercentage:
+                    description: (Updatable) The percentage of the System Global Area(SGA)
+                      assigned to In-Memory tables in Autonomous AI Database. This
+                      property is applicable only to Autonomous AI Databases on the
+                      Exadata Cloud@Customer platform.
+                    type: number
+                  isAccessControlEnabled:
+                    description: (Updatable) Indicates if the database-level access
+                      control is enabled. If disabled, database access is defined
+                      by the network security rules. If enabled, database access is
+                      restricted to the IP addresses defined by the rules specified
+                      with the whitelistedIps property. While specifying whitelistedIps
+                      rules is optional, if database-level access control is enabled
+                      and no rules are specified, the database will become inaccessible.
+                      The rules can be added later using the UpdateAutonomousDatabase
+                      API operation or edit option in console. When creating a database
+                      clone, the desired access control setting should be specified.
+                      By default, database-level access control will be disabled for
+                      the clone.
+                    type: boolean
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database CPU core count. The default value
+                      is TRUE.
+                    type: boolean
+                  isAutoScalingForStorageEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database storage. The default value is
+                      FALSE.
+                    type: boolean
+                  isBackupRetentionLocked:
+                    description: (Updatable) True if the Autonomous AI Database is
+                      backup retention locked.
+                    type: boolean
+                  isDataGuardEnabled:
+                    description: (Updatable) Deprecated. Indicates whether the Autonomous
+                      AI Database has local (in-region) Data Guard enabled. Not applicable
+                      to cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isDedicated:
+                    description: True if the database is on dedicated Exadata infrastructure.
+                    type: boolean
+                  isDevTier:
+                    description: (Updatable) Autonomous AI Database for Developers
+                      are fixed-shape Autonomous AI Databases that developers can
+                      use to build and test new applications. On Serverless, these
+                      are low-cost and billed per instance, on Dedicated and Cloud@Customer
+                      there is no additional cost to create Developer databases. Developer
+                      databases come with limited resources and is not intended for
+                      large-scale testing and production deployments. When you need
+                      more compute or storage resources, you may upgrade to a full
+                      paid production database.
+                    type: boolean
+                  isDisableDbVersionUpgradeSchedule:
+                    type: boolean
+                  isDisconnectPeer:
+                    type: boolean
+                  isFreeTier:
+                    description: (Updatable) Indicates if this is an Always Free resource.
+                      The default value is false. Note that Always Free Autonomous
+                      AI Databases have 1 CPU and 20GB of memory. For Always Free
+                      databases, memory and CPU cannot be scaled.
+                    type: boolean
+                  isLocalDataGuardEnabled:
+                    description: (Updatable) Indicates whether the Autonomous AI Database
+                      has local (in-region) Data Guard enabled. Not applicable to
+                      cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isMtlsConnectionRequired:
+                    description: (Updatable) Specifies if the Autonomous AI Database
+                      requires mTLS connections.
+                    type: boolean
+                  isPreviewVersionWithServiceTermsAccepted:
+                    description: If set to TRUE, indicates that an Autonomous AI Database
+                      preview version is being provisioned, and that the preview version's
+                      terms of service have been accepted. Note that preview version
+                      software is only available for Autonomous AI Database Serverless
+                      instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).
+                    type: boolean
+                  isRefreshableClone:
+                    description: Indicates if the Autonomous AI Database is a refreshable
+                      clone.
+                    type: boolean
+                  isReplicateAutomaticBackups:
+                    description: (Applicable when source=CROSS_REGION_DISASTER_RECOVERY
+                      | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of
+                      backups are replicated across regions for Cross-Region ADB or
+                      Backup-Based DR between Primary and Standby. If false, the backups
+                      taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleDbVersionUpgradeToEarliest:
+                    type: boolean
+                  isShrinkOnly:
+                    type: boolean
+                  keyVersionId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  kmsKeyId:
+                    description: (Updatable) The OCID of the key container that is
+                      used as the master encryption key in database transparent data
+                      encryption (TDE) operations.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to the Oracle Autonomous AI Database. Bring your own license
+                      (BYOL) allows you to apply your current on-premises Oracle software
+                      licenses to equivalent, highly automated Oracle services in
+                      the cloud. License Included allows you to subscribe to new Oracle
+                      AI Database software licenses and the Oracle AI Database service.
+                      Note that when provisioning an Autonomous AI Database on dedicated
+                      Exadata infrastructure, this attribute must be null. It is already
+                      set at the Autonomous Exadata Infrastructure level. When provisioning
+                      an [Autonomous AI Database Serverless] (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      database, if a value is not specified, the system defaults the
+                      value to BRING_YOUR_OWN_LICENSE. Bring your own license (BYOL)
+                      also allows you to select the DB edition using the optional
+                      parameter.
+                    type: string
+                  localAdgAutoFailoverMaxDataLossLimit:
+                    description: Parameter that allows users to select an acceptable
+                      maximum data loss limit in seconds, up to which Automatic Failover
+                      will be triggered when necessary for a Local Autonomous Data
+                      Guard
+                    type: number
+                  longTermBackupSchedule:
+                    description: Details for the long-term backup schedule.
+                    items:
+                      properties:
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        repeatCadence:
+                          description: The frequency of the long-term backup schedule
+                          type: string
+                        retentionPeriodInDays:
+                          description: Retention period, in days, for long-term backups
+                          type: number
+                        timeOfBackup:
+                          description: The timestamp for the long-term backup schedule.
+                            For a MONTHLY cadence, months having fewer days than the
+                            provided date will have the backup taken on the last day
+                            of that month.
+                          type: string
+                      type: object
+                    type: array
+                  maxCpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  ncharacterSet:
+                    description: 'The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Use List Autonomous AI Database Character
+                      Sets to list the allowed values for an Autonomous AI Database
+                      Serverless instance. For an Autonomous AI Database on dedicated
+                      Exadata infrastructure, the allowed values are: AL16UTF16 or
+                      UTF8.'
+                    type: string
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  ocpuCount:
+                    description: (Updatable) The number of OCPU cores to be made available
+                      to the database.
+                    type: number
+                  openMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      Indicates the Autonomous AI Database mode. The database can
+                      be opened in READ_ONLY or READ_WRITE mode.
+                    type: string
+                  operationsInsightsStatus:
+                    description: Status of Operations Insights for this Autonomous
+                      AI Database.
+                    type: string
+                  peerDbId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  permissionLevel:
+                    description: The Autonomous AI Database permission level. Restricted
+                      mode allows access only by admin users.
+                    type: string
+                  privateEndpointIp:
+                    description: (Updatable) The private endpoint Ip address for the
+                      resource.
+                    type: string
+                  privateEndpointLabel:
+                    description: (Updatable) The private endpoint label for the resource.
+                    type: string
+                  refreshableMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The refresh mode of the clone. AUTOMATIC indicates that the
+                      clone is automatically being refreshed with data from the source
+                      Autonomous AI Database.
+                    type: string
+                  remoteDisasterRecoveryType:
+                    description: Indicates the cross-region disaster recovery (DR)
+                      type of the standby Autonomous AI Database Serverless instance.
+                      Autonomous Data Guard (ADG) DR type provides business critical
+                      DR with a faster recovery time objective (RTO) during failover
+                      or switchover. Backup-based DR type provides lower cost DR with
+                      a slower RTO during failover or switchover.
+                    type: string
+                  resourcePoolLeaderId:
+                    description: (Updatable) The unique identifier for leader Autonomous
+                      AI Database OCID OCID.
+                    type: string
+                  resourcePoolSummary:
+                    description: (Updatable) The configuration details for resource
+                      pool
+                    items:
+                      properties:
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        poolSize:
+                          description: (Updatable) Resource pool size.
+                          type: number
+                      type: object
+                    type: array
+                  rotateKeyTrigger:
+                    type: boolean
+                  scheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    items:
+                      properties:
+                        dayOfWeek:
+                          description: (Updatable) Day of the week.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of database tool.
+                                type: string
+                            type: object
+                          type: array
+                        scheduledStartTime:
+                          description: (Updatable) auto start time. value must be
+                            of ISO-8601 format "HH:mm"
+                          type: string
+                        scheduledStopTime:
+                          description: (Updatable) auto stop time. value must be of
+                            ISO-8601 format "HH:mm"
+                          type: string
+                      type: object
+                    type: array
+                  secretId:
+                    description: (Updatable) The Oracle Cloud Infrastructure vault
+                      secret [/Content/General/Concepts/identifiers.htm]OCID.
+                    type: string
+                  secretVersionNumber:
+                    description: (Updatable) The version of the vault secret. If no
+                      version is specified, the latest version will be used.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shrinkAdbTrigger:
+                    type: number
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new Autonomous AI Database. Use DATABASE for creating a new
+                      Autonomous AI Database by cloning an existing Autonomous AI
+                      Database. Use CROSS_REGION_DATAGUARD to create a standby Data
+                      Guard database in another region.'
+                    type: string
+                  sourceId:
+                    description: The OCID of the source Autonomous AI Database that
+                      will be used to create a new peer database for the Data Guard
+                      association.
+                    type: string
+                  standbyWhitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                  state:
+                    description: The current state of the Autonomous AI Database.
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet the resource is
+                      associated with.
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                  switchoverTo:
+                    type: string
+                  switchoverToRemotePeerId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  timeOfAutoRefreshStart:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The the date and time that auto-refreshing will begin for an
+                      Autonomous AI Database refreshable clone. This value controls
+                      only the start time for the first refresh operation. Subsequent
+                      (ongoing) refresh operations have start times controlled by
+                      the value of the autoRefreshFrequencyInSeconds parameter.
+                    type: string
+                  timeScheduledDbVersionUpgrade:
+                    description: The date and time the Autonomous AI Database scheduled
+                      to upgrade to 26ai.
+                    type: string
+                  timestamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) The
+                      timestamp specified for the point-in-time clone of the source
+                      Autonomous AI Database. The timestamp must be in the past.
+                    type: string
+                  useLatestAvailableBackupTimeStamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) Clone
+                      from latest available backup timestamp.
+                    type: boolean
+                  vanityUrlDetails:
+                    description: Details for api gateway and vanity url(custom url)
+                      for dbTools.
+                    items:
+                      properties:
+                        apiGatewayId:
+                          description: API Gateway ID.
+                          type: string
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        vanityUrlHostName:
+                          description: Custom URL prefix provided by the customer
+                            to access dbTools.
+                          type: string
+                      type: object
+                    type: array
+                  vaultId:
+                    description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                      vault. This parameter and secretId are required for Customer
+                      Managed Keys.
+                    type: string
+                  whitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  adminPasswordSecretRef:
+                    description: (Updatable) The password must be between 12 and 30
+                      characters long, and must contain at least 1 uppercase, 1 lowercase,
+                      and 1 numeric character. It cannot contain the double quote
+                      symbol (") or the username "admin", regardless of casing. The
+                      password is mandatory if source value is "BACKUP_FROM_ID", "BACKUP_FROM_TIMESTAMP",
+                      "DATABASE" or "NONE".
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  arePrimaryWhitelistedIpsUsed:
+                    description: (Updatable) This field will be null if the Autonomous
+                      AI Database is not Data Guard enabled or Access Control is disabled.
+                      It's value would be TRUE if Autonomous AI Database is Data Guard
+                      enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses primary IP access control list (ACL) for standby.
+                      It's value would be FALSE if Autonomous AI Database is Data
+                      Guard enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses different IP access control list (ACL) for
+                      standby compared to primary.
+                    type: boolean
+                  autoRefreshFrequencyInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The frequency a refreshable clone is refreshed after auto-refresh
+                      is enabled. The minimum is 1 hour. The maximum is 7 days. The
+                      date and time that auto-refresh is enabled is controlled by
+                      the timeOfAutoRefreshStart parameter.
+                    type: number
+                  autoRefreshPointLagInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The time, in seconds, the data of the refreshable clone lags
+                      the primary database at the point of refresh. The minimum is
+                      0 minutes (0 mins means refresh to the latest available timestamp).
+                      The maximum is 7 days. The lag time increases after refreshing
+                      until the next data refresh happens.
+                    type: number
+                  autonomousContainerDatabaseId:
+                    description: The Autonomous Container Database OCID. Used only
+                      by Autonomous AI Database on Dedicated Exadata Infrastructure.
+                    type: string
+                  autonomousDatabaseBackupId:
+                    description: The OCID of the source Autonomous AI Database Backup
+                      that you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousDatabaseId:
+                    description: The OCID of the source Autonomous AI Database that
+                      you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousMaintenanceScheduleType:
+                    description: (Updatable) The maintenance schedule type of the
+                      Autonomous AI Database Serverless. An EARLY maintenance schedule
+                      follows a schedule applying patches prior to the REGULAR schedule.
+                      A REGULAR maintenance schedule follows the normal cycle
+                    type: string
+                  backupRetentionPeriodInDays:
+                    description: (Updatable) Retention period, in days, for long-term
+                      backups
+                    type: number
+                  byolComputeCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a Bring Your Own License (BYOL), including those used for auto-scaling,
+                      disaster recovery, tools, etc. Any CPU usage above this limit
+                      is considered as License Included and billed.
+                    type: number
+                  characterSet:
+                    description: The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Allowed values for an Autonomous AI
+                      Database Serverless instance as as returned by List Autonomous
+                      AI Database Character Sets
+                    type: string
+                  cloneTableSpaceList:
+                    description: (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP)
+                      A list of the source Autonomous AI Database's table space number(s)
+                      used to create this partial clone from the backup.
+                    items:
+                      type: number
+                    type: array
+                  cloneType:
+                    description: The Autonomous AI Database clone type.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment of the Autonomous
+                      AI Database.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  computeCount:
+                    description: (Updatable) The compute amount (CPUs) available to
+                      the database. Minimum and maximum values depend on the compute
+                      model and whether the database is an Autonomous AI Database
+                      Serverless instance or an Autonomous AI Database on Dedicated
+                      Exadata Infrastructure. The 'ECPU' compute model requires a
+                      minimum value of one, for databases in the elastic resource
+                      pool and minimum value of two, otherwise. Required when using
+                      the computeModel parameter. When using cpuCoreCount parameter,
+                      it is an error to specify computeCount to a non-null value.
+                      Providing computeModel and computeCount is the preferred method
+                      for both OCPU and ECPU.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model of the Autonomous AI
+                      Database. This is required if using the computeCount parameter.
+                      If using cpuCoreCount then it is an error to specify computeModel
+                      to a non-null value. ECPU compute model is the recommended model
+                      and OCPU compute model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  customerContacts:
+                    description: (Updatable) Customer Contacts.
+                    items:
+                      properties:
+                        email:
+                          description: (Updatable) The email address used by Oracle
+                            to send notifications regarding databases and infrastructure.
+                          type: string
+                      type: object
+                    type: array
+                  dataSafeStatus:
+                    description: (Updatable) Status of the Data Safe registration
+                      for this Autonomous Database. Could be REGISTERED or NOT_REGISTERED.
+                    type: string
+                  dataStorageSizeInGb:
+                    description: (Updatable) The size, in gigabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. The maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details.
+                    type: number
+                  dataStorageSizeInTbs:
+                    description: (Updatable) The size, in terabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. For Autonomous AI Databases
+                      on dedicated Exadata infrastructure, the maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details. A full Exadata service
+                      is allocated when the Autonomous AI Database size is set to
+                      the upper limit (384 TB).
+                    type: number
+                  databaseEdition:
+                    description: (Updatable) The Oracle AI Database Edition that applies
+                      to the Autonomous AI Databases. This parameter accepts options
+                      STANDARD_EDITION and ENTERPRISE_EDITION.
+                    type: string
+                  databaseManagementStatus:
+                    description: Status of Database Management for this Autonomous
+                      AI Database.
+                    type: string
+                  dbName:
+                    description: The database name. The name must begin with an alphabetic
+                      character and can contain a maximum of 30 alphanumeric characters.
+                      Special characters are not permitted. The database name must
+                      be unique in the tenancy. It is required in all cases except
+                      when creating a cross-region Autonomous Data Guard standby instance
+                      or a cross-region disaster recovery standby instance.
+                    type: string
+                  dbToolsDetails:
+                    description: (Updatable) The list of database tools details.
+                    items:
+                      properties:
+                        computeCount:
+                          description: (Updatable) The compute amount (CPUs) available
+                            to the database. Minimum and maximum values depend on
+                            the compute model and whether the database is an Autonomous
+                            AI Database Serverless instance or an Autonomous AI Database
+                            on Dedicated Exadata Infrastructure. The 'ECPU' compute
+                            model requires a minimum value of one, for databases in
+                            the elastic resource pool and minimum value of two, otherwise.
+                            Required when using the computeModel parameter. When using
+                            cpuCoreCount parameter, it is an error to specify computeCount
+                            to a non-null value. Providing computeModel and computeCount
+                            is the preferred method for both OCPU and ECPU.
+                          type: number
+                        isEnabled:
+                          description: (Updatable) Indicates whether tool is enabled.
+                          type: boolean
+                        maxIdleTimeInMinutes:
+                          description: (Updatable) The max idle time, in minutes,
+                            after which the VM used by database tools will be terminated.
+                          type: number
+                        name:
+                          description: (Updatable) Name of database tool.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: (Updatable) A valid Oracle AI Database version for
+                      Autonomous AI Database.db_workload AJD is only supported for
+                      db_version 19c and above.
+                    type: string
+                  dbWorkload:
+                    description: '(Updatable) The Autonomous AI Database workload
+                      type. The following values are valid:'
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  disasterRecoveryType:
+                    description: Indicates the disaster recovery (DR) type of the
+                      standby Autonomous AI Database Serverless instance. Autonomous
+                      Data Guard (ADG) DR type provides business critical DR with
+                      a faster recovery time objective (RTO) during failover or switchover.
+                      Backup-based DR type provides lower cost DR with a slower RTO
+                      during failover or switchover.
+                    type: string
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Autonomous
+                      AI Database. The name does not have to be unique.
+                    type: string
+                  enableDeleteScheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    type: boolean
+                  encryptionKey:
+                    description: (Updatable) Details of the Autonomous AI Database
+                      encryption key.
+                    items:
+                      properties:
+                        arnRole:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS ARN role
+                          type: string
+                        autonomousDatabaseProvider:
+                          description: (Updatable) The provider for the Autonomous
+                            AI Database encryption key.
+                          type: string
+                        certificateDirectoryName:
+                          description: (Updatable) OKV certificate directory name
+                          type: string
+                        certificateId:
+                          description: (Applicable when provider=OKV) (Updatable)
+                            OKV certificate id
+                          type: string
+                        directoryName:
+                          description: (Updatable) OKV wallet directory name
+                          type: string
+                        externalId:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS external ID
+                          type: string
+                        keyArn:
+                          description: (Updatable) AWS key ARN
+                          type: string
+                        keyName:
+                          description: (Updatable) Azure key name
+                          type: string
+                        keyRing:
+                          description: (Updatable) GCP key ring
+                          type: string
+                        kmsKeyId:
+                          description: (Updatable) The OCID of the key container that
+                            is used as the master encryption key in database transparent
+                            data encryption (TDE) operations.
+                          type: string
+                        kmsRestEndpoint:
+                          description: (Applicable when provider=GCP) (Updatable)
+                            GCP kms REST API endpoint
+                          type: string
+                        location:
+                          description: (Updatable) GCP key ring location
+                          type: string
+                        okvKmsKey:
+                          description: (Updatable) UUID of OKV KMS Key
+                          type: string
+                        okvUri:
+                          description: (Updatable) URI of OKV server
+                          type: string
+                        project:
+                          description: (Updatable) GCP project name
+                          type: string
+                        serviceEndpointUri:
+                          description: (Updatable) AWS key service endpoint URI
+                          type: string
+                        vaultId:
+                          description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                            vault. This parameter and secretId are required for Customer
+                            Managed Keys.
+                          type: string
+                        vaultUri:
+                          description: (Updatable) Azure vault URI
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inMemoryPercentage:
+                    description: (Updatable) The percentage of the System Global Area(SGA)
+                      assigned to In-Memory tables in Autonomous AI Database. This
+                      property is applicable only to Autonomous AI Databases on the
+                      Exadata Cloud@Customer platform.
+                    type: number
+                  isAccessControlEnabled:
+                    description: (Updatable) Indicates if the database-level access
+                      control is enabled. If disabled, database access is defined
+                      by the network security rules. If enabled, database access is
+                      restricted to the IP addresses defined by the rules specified
+                      with the whitelistedIps property. While specifying whitelistedIps
+                      rules is optional, if database-level access control is enabled
+                      and no rules are specified, the database will become inaccessible.
+                      The rules can be added later using the UpdateAutonomousDatabase
+                      API operation or edit option in console. When creating a database
+                      clone, the desired access control setting should be specified.
+                      By default, database-level access control will be disabled for
+                      the clone.
+                    type: boolean
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database CPU core count. The default value
+                      is TRUE.
+                    type: boolean
+                  isAutoScalingForStorageEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database storage. The default value is
+                      FALSE.
+                    type: boolean
+                  isBackupRetentionLocked:
+                    description: (Updatable) True if the Autonomous AI Database is
+                      backup retention locked.
+                    type: boolean
+                  isDataGuardEnabled:
+                    description: (Updatable) Deprecated. Indicates whether the Autonomous
+                      AI Database has local (in-region) Data Guard enabled. Not applicable
+                      to cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isDedicated:
+                    description: True if the database is on dedicated Exadata infrastructure.
+                    type: boolean
+                  isDevTier:
+                    description: (Updatable) Autonomous AI Database for Developers
+                      are fixed-shape Autonomous AI Databases that developers can
+                      use to build and test new applications. On Serverless, these
+                      are low-cost and billed per instance, on Dedicated and Cloud@Customer
+                      there is no additional cost to create Developer databases. Developer
+                      databases come with limited resources and is not intended for
+                      large-scale testing and production deployments. When you need
+                      more compute or storage resources, you may upgrade to a full
+                      paid production database.
+                    type: boolean
+                  isDisableDbVersionUpgradeSchedule:
+                    type: boolean
+                  isDisconnectPeer:
+                    type: boolean
+                  isFreeTier:
+                    description: (Updatable) Indicates if this is an Always Free resource.
+                      The default value is false. Note that Always Free Autonomous
+                      AI Databases have 1 CPU and 20GB of memory. For Always Free
+                      databases, memory and CPU cannot be scaled.
+                    type: boolean
+                  isLocalDataGuardEnabled:
+                    description: (Updatable) Indicates whether the Autonomous AI Database
+                      has local (in-region) Data Guard enabled. Not applicable to
+                      cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isMtlsConnectionRequired:
+                    description: (Updatable) Specifies if the Autonomous AI Database
+                      requires mTLS connections.
+                    type: boolean
+                  isPreviewVersionWithServiceTermsAccepted:
+                    description: If set to TRUE, indicates that an Autonomous AI Database
+                      preview version is being provisioned, and that the preview version's
+                      terms of service have been accepted. Note that preview version
+                      software is only available for Autonomous AI Database Serverless
+                      instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).
+                    type: boolean
+                  isRefreshableClone:
+                    description: Indicates if the Autonomous AI Database is a refreshable
+                      clone.
+                    type: boolean
+                  isReplicateAutomaticBackups:
+                    description: (Applicable when source=CROSS_REGION_DISASTER_RECOVERY
+                      | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of
+                      backups are replicated across regions for Cross-Region ADB or
+                      Backup-Based DR between Primary and Standby. If false, the backups
+                      taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleDbVersionUpgradeToEarliest:
+                    type: boolean
+                  isShrinkOnly:
+                    type: boolean
+                  keyVersionId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  kmsKeyId:
+                    description: (Updatable) The OCID of the key container that is
+                      used as the master encryption key in database transparent data
+                      encryption (TDE) operations.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to the Oracle Autonomous AI Database. Bring your own license
+                      (BYOL) allows you to apply your current on-premises Oracle software
+                      licenses to equivalent, highly automated Oracle services in
+                      the cloud. License Included allows you to subscribe to new Oracle
+                      AI Database software licenses and the Oracle AI Database service.
+                      Note that when provisioning an Autonomous AI Database on dedicated
+                      Exadata infrastructure, this attribute must be null. It is already
+                      set at the Autonomous Exadata Infrastructure level. When provisioning
+                      an [Autonomous AI Database Serverless] (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      database, if a value is not specified, the system defaults the
+                      value to BRING_YOUR_OWN_LICENSE. Bring your own license (BYOL)
+                      also allows you to select the DB edition using the optional
+                      parameter.
+                    type: string
+                  localAdgAutoFailoverMaxDataLossLimit:
+                    description: Parameter that allows users to select an acceptable
+                      maximum data loss limit in seconds, up to which Automatic Failover
+                      will be triggered when necessary for a Local Autonomous Data
+                      Guard
+                    type: number
+                  longTermBackupSchedule:
+                    description: Details for the long-term backup schedule.
+                    items:
+                      properties:
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        repeatCadence:
+                          description: The frequency of the long-term backup schedule
+                          type: string
+                        retentionPeriodInDays:
+                          description: Retention period, in days, for long-term backups
+                          type: number
+                        timeOfBackup:
+                          description: The timestamp for the long-term backup schedule.
+                            For a MONTHLY cadence, months having fewer days than the
+                            provided date will have the backup taken on the last day
+                            of that month.
+                          type: string
+                      type: object
+                    type: array
+                  maxCpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  ncharacterSet:
+                    description: 'The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Use List Autonomous AI Database Character
+                      Sets to list the allowed values for an Autonomous AI Database
+                      Serverless instance. For an Autonomous AI Database on dedicated
+                      Exadata infrastructure, the allowed values are: AL16UTF16 or
+                      UTF8.'
+                    type: string
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  ocpuCount:
+                    description: (Updatable) The number of OCPU cores to be made available
+                      to the database.
+                    type: number
+                  openMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      Indicates the Autonomous AI Database mode. The database can
+                      be opened in READ_ONLY or READ_WRITE mode.
+                    type: string
+                  operationsInsightsStatus:
+                    description: Status of Operations Insights for this Autonomous
+                      AI Database.
+                    type: string
+                  peerDbId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  permissionLevel:
+                    description: The Autonomous AI Database permission level. Restricted
+                      mode allows access only by admin users.
+                    type: string
+                  privateEndpointIp:
+                    description: (Updatable) The private endpoint Ip address for the
+                      resource.
+                    type: string
+                  privateEndpointLabel:
+                    description: (Updatable) The private endpoint label for the resource.
+                    type: string
+                  refreshableMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The refresh mode of the clone. AUTOMATIC indicates that the
+                      clone is automatically being refreshed with data from the source
+                      Autonomous AI Database.
+                    type: string
+                  remoteDisasterRecoveryType:
+                    description: Indicates the cross-region disaster recovery (DR)
+                      type of the standby Autonomous AI Database Serverless instance.
+                      Autonomous Data Guard (ADG) DR type provides business critical
+                      DR with a faster recovery time objective (RTO) during failover
+                      or switchover. Backup-based DR type provides lower cost DR with
+                      a slower RTO during failover or switchover.
+                    type: string
+                  resourcePoolLeaderId:
+                    description: (Updatable) The unique identifier for leader Autonomous
+                      AI Database OCID OCID.
+                    type: string
+                  resourcePoolSummary:
+                    description: (Updatable) The configuration details for resource
+                      pool
+                    items:
+                      properties:
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        poolSize:
+                          description: (Updatable) Resource pool size.
+                          type: number
+                      type: object
+                    type: array
+                  rotateKeyTrigger:
+                    type: boolean
+                  scheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    items:
+                      properties:
+                        dayOfWeek:
+                          description: (Updatable) Day of the week.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of database tool.
+                                type: string
+                            type: object
+                          type: array
+                        scheduledStartTime:
+                          description: (Updatable) auto start time. value must be
+                            of ISO-8601 format "HH:mm"
+                          type: string
+                        scheduledStopTime:
+                          description: (Updatable) auto stop time. value must be of
+                            ISO-8601 format "HH:mm"
+                          type: string
+                      type: object
+                    type: array
+                  secretId:
+                    description: (Updatable) The Oracle Cloud Infrastructure vault
+                      secret [/Content/General/Concepts/identifiers.htm]OCID.
+                    type: string
+                  secretVersionNumber:
+                    description: (Updatable) The version of the vault secret. If no
+                      version is specified, the latest version will be used.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shrinkAdbTrigger:
+                    type: number
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new Autonomous AI Database. Use DATABASE for creating a new
+                      Autonomous AI Database by cloning an existing Autonomous AI
+                      Database. Use CROSS_REGION_DATAGUARD to create a standby Data
+                      Guard database in another region.'
+                    type: string
+                  sourceId:
+                    description: The OCID of the source Autonomous AI Database that
+                      will be used to create a new peer database for the Data Guard
+                      association.
+                    type: string
+                  standbyWhitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                  state:
+                    description: The current state of the Autonomous AI Database.
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet the resource is
+                      associated with.
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                  switchoverTo:
+                    type: string
+                  switchoverToRemotePeerId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  timeOfAutoRefreshStart:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The the date and time that auto-refreshing will begin for an
+                      Autonomous AI Database refreshable clone. This value controls
+                      only the start time for the first refresh operation. Subsequent
+                      (ongoing) refresh operations have start times controlled by
+                      the value of the autoRefreshFrequencyInSeconds parameter.
+                    type: string
+                  timeScheduledDbVersionUpgrade:
+                    description: The date and time the Autonomous AI Database scheduled
+                      to upgrade to 26ai.
+                    type: string
+                  timestamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) The
+                      timestamp specified for the point-in-time clone of the source
+                      Autonomous AI Database. The timestamp must be in the past.
+                    type: string
+                  useLatestAvailableBackupTimeStamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) Clone
+                      from latest available backup timestamp.
+                    type: boolean
+                  vanityUrlDetails:
+                    description: Details for api gateway and vanity url(custom url)
+                      for dbTools.
+                    items:
+                      properties:
+                        apiGatewayId:
+                          description: API Gateway ID.
+                          type: string
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        vanityUrlHostName:
+                          description: Custom URL prefix provided by the customer
+                            to access dbTools.
+                          type: string
+                      type: object
+                    type: array
+                  vaultId:
+                    description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                      vault. This parameter and secretId are required for Customer
+                      Managed Keys.
+                    type: string
+                  whitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.dbName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbName)
+                || (has(self.initProvider) && has(self.initProvider.dbName))'
+          status:
+            description: AutonomousDatabaseStatus defines the observed state of AutonomousDatabase.
+            properties:
+              atProvider:
+                properties:
+                  actualUsedDataStorageSizeInTbs:
+                    description: The current amount of storage in use for user and
+                      system data, in terabytes (TB).
+                    type: number
+                  additionalAttributes:
+                    additionalProperties:
+                      type: string
+                    description: 'Additional attributes for this resource. Each attribute
+                      is a simple key-value pair with no predefined name, type, or
+                      namespace. Example: { "gcpAccountName": "gcpName" }'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  allocatedStorageSizeInTbs:
+                    description: The amount of storage currently allocated for the
+                      database tables and billed for, rounded up. When auto-scaling
+                      is not enabled, this value is equal to the dataStorageSizeInTBs
+                      value. You can compare this value to the actualUsedDataStorageSizeInTBs
+                      value to determine if a manual shrink operation is appropriate
+                      for your allocated storage.
+                    type: number
+                  apexDetails:
+                    description: Information about Oracle APEX AI Application Development.
+                    items:
+                      properties:
+                        apexVersion:
+                          description: The Oracle APEX AI Application Development
+                            version.
+                          type: string
+                        ordsVersion:
+                          description: The Oracle REST Data Services (ORDS) version.
+                          type: string
+                      type: object
+                    type: array
+                  arePrimaryWhitelistedIpsUsed:
+                    description: (Updatable) This field will be null if the Autonomous
+                      AI Database is not Data Guard enabled or Access Control is disabled.
+                      It's value would be TRUE if Autonomous AI Database is Data Guard
+                      enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses primary IP access control list (ACL) for standby.
+                      It's value would be FALSE if Autonomous AI Database is Data
+                      Guard enabled and Access Control is enabled and if the Autonomous
+                      AI Database uses different IP access control list (ACL) for
+                      standby compared to primary.
+                    type: boolean
+                  autoRefreshFrequencyInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The frequency a refreshable clone is refreshed after auto-refresh
+                      is enabled. The minimum is 1 hour. The maximum is 7 days. The
+                      date and time that auto-refresh is enabled is controlled by
+                      the timeOfAutoRefreshStart parameter.
+                    type: number
+                  autoRefreshPointLagInSeconds:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The time, in seconds, the data of the refreshable clone lags
+                      the primary database at the point of refresh. The minimum is
+                      0 minutes (0 mins means refresh to the latest available timestamp).
+                      The maximum is 7 days. The lag time increases after refreshing
+                      until the next data refresh happens.
+                    type: number
+                  autonomousContainerDatabaseId:
+                    description: The Autonomous Container Database OCID. Used only
+                      by Autonomous AI Database on Dedicated Exadata Infrastructure.
+                    type: string
+                  autonomousDatabaseBackupId:
+                    description: The OCID of the source Autonomous AI Database Backup
+                      that you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousDatabaseId:
+                    description: The OCID of the source Autonomous AI Database that
+                      you will clone to create a new Autonomous AI Database.
+                    type: string
+                  autonomousMaintenanceScheduleType:
+                    description: (Updatable) The maintenance schedule type of the
+                      Autonomous AI Database Serverless. An EARLY maintenance schedule
+                      follows a schedule applying patches prior to the REGULAR schedule.
+                      A REGULAR maintenance schedule follows the normal cycle
+                    type: string
+                  availabilityDomain:
+                    description: The availability domain where the Autonomous AI Database
+                      Serverless instance is located.
+                    type: string
+                  availableUpgradeVersions:
+                    description: List of Oracle AI Database versions available for
+                      a database upgrade. If there are no version upgrades available,
+                      this list is empty.
+                    items:
+                      type: string
+                    type: array
+                  backupConfig:
+                    description: Autonomous AI Database configuration details for
+                      storing manual backups in the Object Storage service.
+                    items:
+                      properties:
+                        manualBackupBucketName:
+                          description: Name of Object Storage bucket to use for storing
+                            manual backups.
+                          type: string
+                        manualBackupType:
+                          description: The manual backup destination type.
+                          type: string
+                      type: object
+                    type: array
+                  backupRetentionPeriodInDays:
+                    description: (Updatable) Retention period, in days, for long-term
+                      backups
+                    type: number
+                  byolComputeCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a Bring Your Own License (BYOL), including those used for auto-scaling,
+                      disaster recovery, tools, etc. Any CPU usage above this limit
+                      is considered as License Included and billed.
+                    type: number
+                  characterSet:
+                    description: The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Allowed values for an Autonomous AI
+                      Database Serverless instance as as returned by List Autonomous
+                      AI Database Character Sets
+                    type: string
+                  cloneTableSpaceList:
+                    description: (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP)
+                      A list of the source Autonomous AI Database's table space number(s)
+                      used to create this partial clone from the backup.
+                    items:
+                      type: number
+                    type: array
+                  cloneType:
+                    description: The Autonomous AI Database clone type.
+                    type: string
+                  clusterPlacementGroupId:
+                    description: The OCID of the cluster placement group of the Autonomous
+                      Serverless Database.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment of the Autonomous
+                      AI Database.
+                    type: string
+                  computeCount:
+                    description: (Updatable) The compute amount (CPUs) available to
+                      the database. Minimum and maximum values depend on the compute
+                      model and whether the database is an Autonomous AI Database
+                      Serverless instance or an Autonomous AI Database on Dedicated
+                      Exadata Infrastructure. The 'ECPU' compute model requires a
+                      minimum value of one, for databases in the elastic resource
+                      pool and minimum value of two, otherwise. Required when using
+                      the computeModel parameter. When using cpuCoreCount parameter,
+                      it is an error to specify computeCount to a non-null value.
+                      Providing computeModel and computeCount is the preferred method
+                      for both OCPU and ECPU.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model of the Autonomous AI
+                      Database. This is required if using the computeCount parameter.
+                      If using cpuCoreCount then it is an error to specify computeModel
+                      to a non-null value. ECPU compute model is the recommended model
+                      and OCPU compute model is legacy.
+                    type: string
+                  connectionStrings:
+                    description: The connection string used to connect to the Autonomous
+                      AI Database. The username for the Service Console is ADMIN.
+                      Use the password you entered when creating the Autonomous AI
+                      Database for the password value.
+                    items:
+                      properties:
+                        allConnectionStrings:
+                          additionalProperties:
+                            type: string
+                          description: Returns all connection strings that can be
+                            used to connect to the Autonomous AI Database. For more
+                            information, please see Predefined Database Service Names
+                            for Autonomous AI Transaction Processing
+                          type: object
+                          x-kubernetes-map-type: granular
+                        dedicated:
+                          description: The database service provides the least level
+                            of resources to each SQL statement, but supports the most
+                            number of concurrent SQL statements.
+                          type: string
+                        high:
+                          description: The High database service provides the highest
+                            level of resources to each SQL statement resulting in
+                            the highest performance, but supports the fewest number
+                            of concurrent SQL statements.
+                          type: string
+                        low:
+                          description: The Low database service provides the least
+                            level of resources to each SQL statement, but supports
+                            the most number of concurrent SQL statements.
+                          type: string
+                        medium:
+                          description: The Medium database service provides a lower
+                            level of resources to each SQL statement potentially resulting
+                            a lower level of performance, but supports more concurrent
+                            SQL statements.
+                          type: string
+                        profiles:
+                          description: A list of connection string profiles to allow
+                            clients to group, filter and select connection string
+                            values based on structured metadata.
+                          items:
+                            properties:
+                              consumerGroup:
+                                description: Consumer group used by the connection.
+                                type: string
+                              displayName:
+                                description: (Updatable) The user-friendly name for
+                                  the Autonomous AI Database. The name does not have
+                                  to be unique.
+                                type: string
+                              hostFormat:
+                                description: Host format used in connection string.
+                                type: string
+                              isRegional:
+                                description: True for a regional connection string,
+                                  applicable to cross-region DG only.
+                                type: boolean
+                              protocol:
+                                description: Protocol used by the connection.
+                                type: string
+                              sessionMode:
+                                description: Specifies whether the listener performs
+                                  a direct hand-off of the session, or redirects the
+                                  session. In RAC deployments where SCAN is used,
+                                  sessions are redirected to a Node VIP. Use DIRECT
+                                  for direct hand-offs. Use REDIRECT to redirect the
+                                  session.
+                                type: string
+                              syntaxFormat:
+                                description: Specifies whether the connection string
+                                  is using the long (LONG), Easy Connect (EZCONNECT),
+                                  or Easy Connect Plus (EZCONNECTPLUS) format. Autonomous
+                                  AI Database Serverless instances always use the
+                                  long format.
+                                type: string
+                              tlsAuthentication:
+                                description: Specifies whether the TLS handshake is
+                                  using one-way (SERVER) or mutual (MUTUAL) authentication.
+                                type: string
+                              value:
+                                description: Connection string value.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  connectionUrls:
+                    description: 'The URLs for accessing Oracle Application Express
+                      (APEX) and SQL Developer Web with a browser from a Compute instance
+                      within your VCN or that has a direct connection to your VCN.
+                      Note that these URLs are provided by the console only for databases
+                      on dedicated Exadata infrastructure.  Example: {"sqlDevWebUrl":
+                      "https://<hostname>/ords...", "apexUrl", "https://<hostname>/ords..."}'
+                    items:
+                      properties:
+                        apexUrl:
+                          description: Oracle Application Express (APEX) URL.
+                          type: string
+                        databaseTransformsUrl:
+                          description: The URL of the Database Transforms for the
+                            Autonomous AI Database.
+                          type: string
+                        graphStudioUrl:
+                          description: The URL of the Graph Studio for the Autonomous
+                            AI Database.
+                          type: string
+                        machineLearningNotebookUrl:
+                          description: The URL of the Oracle Machine Learning (OML)
+                            Notebook for the Autonomous AI Database.
+                          type: string
+                        machineLearningUserManagementUrl:
+                          description: Oracle Machine Learning user management URL.
+                          type: string
+                        mongoDbUrl:
+                          description: The URL of the MongoDB API for the Autonomous
+                            AI Database.
+                          type: string
+                        ordsUrl:
+                          description: The Oracle REST Data Services (ORDS) URL of
+                            the Web Access for the Autonomous AI Database.
+                          type: string
+                        sqlDevWebUrl:
+                          description: Oracle SQL Developer Web URL.
+                          type: string
+                      type: object
+                    type: array
+                  cpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  customerContacts:
+                    description: (Updatable) Customer Contacts.
+                    items:
+                      properties:
+                        email:
+                          description: (Updatable) The email address used by Oracle
+                            to send notifications regarding databases and infrastructure.
+                          type: string
+                      type: object
+                    type: array
+                  dataSafeStatus:
+                    description: (Updatable) Status of the Data Safe registration
+                      for this Autonomous Database. Could be REGISTERED or NOT_REGISTERED.
+                    type: string
+                  dataStorageSizeInGb:
+                    description: (Updatable) The size, in gigabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. The maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details.
+                    type: number
+                  dataStorageSizeInTbs:
+                    description: (Updatable) The size, in terabytes, of the data volume
+                      that will be created and attached to the database. This storage
+                      can later be scaled up if needed. For Autonomous AI Databases
+                      on dedicated Exadata infrastructure, the maximum storage value
+                      is determined by the infrastructure shape. See Characteristics
+                      of Infrastructure Shapes for shape details. A full Exadata service
+                      is allocated when the Autonomous AI Database size is set to
+                      the upper limit (384 TB).
+                    type: number
+                  databaseEdition:
+                    description: (Updatable) The Oracle AI Database Edition that applies
+                      to the Autonomous AI Databases. This parameter accepts options
+                      STANDARD_EDITION and ENTERPRISE_EDITION.
+                    type: string
+                  databaseManagementStatus:
+                    description: Status of Database Management for this Autonomous
+                      AI Database.
+                    type: string
+                  dataguardRegionType:
+                    description: Deprecated. The Autonomous Data Guard region type
+                      of the Autonomous AI Database. For Autonomous AI Database Serverless,
+                      Autonomous Data Guard associations have designated primary and
+                      standby regions, and these region types do not change when the
+                      database changes roles. The standby regions in Autonomous Data
+                      Guard associations can be the same region designated as the
+                      primary region, or they can be remote regions. Certain database
+                      administrative operations may be available only in the primary
+                      region of the Autonomous Data Guard association, and cannot
+                      be performed when the database using the primary role is operating
+                      in a remote Autonomous Data Guard standby region.
+                    type: string
+                  dbName:
+                    description: The database name. The name must begin with an alphabetic
+                      character and can contain a maximum of 30 alphanumeric characters.
+                      Special characters are not permitted. The database name must
+                      be unique in the tenancy. It is required in all cases except
+                      when creating a cross-region Autonomous Data Guard standby instance
+                      or a cross-region disaster recovery standby instance.
+                    type: string
+                  dbToolsDetails:
+                    description: (Updatable) The list of database tools details.
+                    items:
+                      properties:
+                        computeCount:
+                          description: (Updatable) The compute amount (CPUs) available
+                            to the database. Minimum and maximum values depend on
+                            the compute model and whether the database is an Autonomous
+                            AI Database Serverless instance or an Autonomous AI Database
+                            on Dedicated Exadata Infrastructure. The 'ECPU' compute
+                            model requires a minimum value of one, for databases in
+                            the elastic resource pool and minimum value of two, otherwise.
+                            Required when using the computeModel parameter. When using
+                            cpuCoreCount parameter, it is an error to specify computeCount
+                            to a non-null value. Providing computeModel and computeCount
+                            is the preferred method for both OCPU and ECPU.
+                          type: number
+                        isEnabled:
+                          description: (Updatable) Indicates whether tool is enabled.
+                          type: boolean
+                        maxIdleTimeInMinutes:
+                          description: (Updatable) The max idle time, in minutes,
+                            after which the VM used by database tools will be terminated.
+                          type: number
+                        name:
+                          description: (Updatable) Name of database tool.
+                          type: string
+                      type: object
+                    type: array
+                  dbVersion:
+                    description: (Updatable) A valid Oracle AI Database version for
+                      Autonomous AI Database.db_workload AJD is only supported for
+                      db_version 19c and above.
+                    type: string
+                  dbWorkload:
+                    description: '(Updatable) The Autonomous AI Database workload
+                      type. The following values are valid:'
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  disasterRecoveryRegionType:
+                    description: Deprecated. The disaster recovery (DR) region type
+                      of the Autonomous AI Database. For Autonomous AI Database Serverless
+                      instances, DR associations have designated primary and standby
+                      regions. These region types do not change when the database
+                      changes roles. The standby region in DR associations can be
+                      the same region as the primary region, or they can be in a remote
+                      regions. Some database administration operations may be available
+                      only in the primary region of the DR association, and cannot
+                      be performed when the database using the primary role is operating
+                      in a remote region.
+                    type: string
+                  disasterRecoveryType:
+                    description: Indicates the disaster recovery (DR) type of the
+                      standby Autonomous AI Database Serverless instance. Autonomous
+                      Data Guard (ADG) DR type provides business critical DR with
+                      a faster recovery time objective (RTO) during failover or switchover.
+                      Backup-based DR type provides lower cost DR with a slower RTO
+                      during failover or switchover.
+                    type: string
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Autonomous
+                      AI Database. The name does not have to be unique.
+                    type: string
+                  enableDeleteScheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    type: boolean
+                  encryptionKey:
+                    description: (Updatable) Details of the Autonomous AI Database
+                      encryption key.
+                    items:
+                      properties:
+                        arnRole:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS ARN role
+                          type: string
+                        autonomousDatabaseProvider:
+                          description: (Updatable) The provider for the Autonomous
+                            AI Database encryption key.
+                          type: string
+                        certificateDirectoryName:
+                          description: (Updatable) OKV certificate directory name
+                          type: string
+                        certificateId:
+                          description: (Applicable when provider=OKV) (Updatable)
+                            OKV certificate id
+                          type: string
+                        directoryName:
+                          description: (Updatable) OKV wallet directory name
+                          type: string
+                        externalId:
+                          description: (Applicable when provider=AWS) (Updatable)
+                            AWS external ID
+                          type: string
+                        keyArn:
+                          description: (Updatable) AWS key ARN
+                          type: string
+                        keyName:
+                          description: (Updatable) Azure key name
+                          type: string
+                        keyRing:
+                          description: (Updatable) GCP key ring
+                          type: string
+                        kmsKeyId:
+                          description: (Updatable) The OCID of the key container that
+                            is used as the master encryption key in database transparent
+                            data encryption (TDE) operations.
+                          type: string
+                        kmsRestEndpoint:
+                          description: (Applicable when provider=GCP) (Updatable)
+                            GCP kms REST API endpoint
+                          type: string
+                        location:
+                          description: (Updatable) GCP key ring location
+                          type: string
+                        okvKmsKey:
+                          description: (Updatable) UUID of OKV KMS Key
+                          type: string
+                        okvUri:
+                          description: (Updatable) URI of OKV server
+                          type: string
+                        project:
+                          description: (Updatable) GCP project name
+                          type: string
+                        serviceEndpointUri:
+                          description: (Updatable) AWS key service endpoint URI
+                          type: string
+                        vaultId:
+                          description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                            vault. This parameter and secretId are required for Customer
+                            Managed Keys.
+                          type: string
+                        vaultUri:
+                          description: (Updatable) Azure vault URI
+                          type: string
+                      type: object
+                    type: array
+                  encryptionKeyHistoryEntry:
+                    description: Key History Entry.
+                    items:
+                      properties:
+                        encryptionKey:
+                          description: (Updatable) Details of the Autonomous AI Database
+                            encryption key.
+                          items:
+                            properties:
+                              arnRole:
+                                description: (Applicable when provider=AWS) (Updatable)
+                                  AWS ARN role
+                                type: string
+                              autonomousDatabaseProvider:
+                                description: (Updatable) The provider for the Autonomous
+                                  AI Database encryption key.
+                                type: string
+                              certificateDirectoryName:
+                                description: (Updatable) OKV certificate directory
+                                  name
+                                type: string
+                              certificateId:
+                                description: (Applicable when provider=OKV) (Updatable)
+                                  OKV certificate id
+                                type: string
+                              directoryName:
+                                description: (Updatable) OKV wallet directory name
+                                type: string
+                              externalId:
+                                description: (Applicable when provider=AWS) (Updatable)
+                                  AWS external ID
+                                type: string
+                              keyArn:
+                                description: (Updatable) AWS key ARN
+                                type: string
+                              keyName:
+                                description: (Updatable) Azure key name
+                                type: string
+                              keyRing:
+                                description: (Updatable) GCP key ring
+                                type: string
+                              kmsKeyId:
+                                description: (Updatable) The OCID of the key container
+                                  that is used as the master encryption key in database
+                                  transparent data encryption (TDE) operations.
+                                type: string
+                              kmsRestEndpoint:
+                                description: (Applicable when provider=GCP) (Updatable)
+                                  GCP kms REST API endpoint
+                                type: string
+                              location:
+                                description: (Updatable) GCP key ring location
+                                type: string
+                              okvKmsKey:
+                                description: (Updatable) UUID of OKV KMS Key
+                                type: string
+                              okvUri:
+                                description: (Updatable) URI of OKV server
+                                type: string
+                              project:
+                                description: (Updatable) GCP project name
+                                type: string
+                              serviceEndpointUri:
+                                description: (Updatable) AWS key service endpoint
+                                  URI
+                                type: string
+                              vaultId:
+                                description: (Updatable) The OCID of the Oracle Cloud
+                                  Infrastructure vault. This parameter and secretId
+                                  are required for Customer Managed Keys.
+                                type: string
+                              vaultUri:
+                                description: (Updatable) Azure vault URI
+                                type: string
+                            type: object
+                          type: array
+                        timeActivated:
+                          description: The date and time the encryption key was activated.
+                          type: string
+                      type: object
+                    type: array
+                  failedDataRecoveryInSeconds:
+                    description: Indicates the number of seconds of data loss for
+                      a Data Guard failover.
+                    type: number
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  inMemoryAreaInGbs:
+                    description: The area assigned to In-Memory tables in Autonomous
+                      AI Database.
+                    type: number
+                  inMemoryPercentage:
+                    description: (Updatable) The percentage of the System Global Area(SGA)
+                      assigned to In-Memory tables in Autonomous AI Database. This
+                      property is applicable only to Autonomous AI Databases on the
+                      Exadata Cloud@Customer platform.
+                    type: number
+                  infrastructureType:
+                    description: The infrastructure type this resource belongs to.
+                    type: string
+                  isAccessControlEnabled:
+                    description: (Updatable) Indicates if the database-level access
+                      control is enabled. If disabled, database access is defined
+                      by the network security rules. If enabled, database access is
+                      restricted to the IP addresses defined by the rules specified
+                      with the whitelistedIps property. While specifying whitelistedIps
+                      rules is optional, if database-level access control is enabled
+                      and no rules are specified, the database will become inaccessible.
+                      The rules can be added later using the UpdateAutonomousDatabase
+                      API operation or edit option in console. When creating a database
+                      clone, the desired access control setting should be specified.
+                      By default, database-level access control will be disabled for
+                      the clone.
+                    type: boolean
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database CPU core count. The default value
+                      is TRUE.
+                    type: boolean
+                  isAutoScalingForStorageEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Autonomous AI Database storage. The default value is
+                      FALSE.
+                    type: boolean
+                  isBackupRetentionLocked:
+                    description: (Updatable) True if the Autonomous AI Database is
+                      backup retention locked.
+                    type: boolean
+                  isDataGuardEnabled:
+                    description: (Updatable) Deprecated. Indicates whether the Autonomous
+                      AI Database has local (in-region) Data Guard enabled. Not applicable
+                      to cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isDedicated:
+                    description: True if the database is on dedicated Exadata infrastructure.
+                    type: boolean
+                  isDevTier:
+                    description: (Updatable) Autonomous AI Database for Developers
+                      are fixed-shape Autonomous AI Databases that developers can
+                      use to build and test new applications. On Serverless, these
+                      are low-cost and billed per instance, on Dedicated and Cloud@Customer
+                      there is no additional cost to create Developer databases. Developer
+                      databases come with limited resources and is not intended for
+                      large-scale testing and production deployments. When you need
+                      more compute or storage resources, you may upgrade to a full
+                      paid production database.
+                    type: boolean
+                  isDisableDbVersionUpgradeSchedule:
+                    type: boolean
+                  isDisconnectPeer:
+                    type: boolean
+                  isFreeTier:
+                    description: (Updatable) Indicates if this is an Always Free resource.
+                      The default value is false. Note that Always Free Autonomous
+                      AI Databases have 1 CPU and 20GB of memory. For Always Free
+                      databases, memory and CPU cannot be scaled.
+                    type: boolean
+                  isLocalDataGuardEnabled:
+                    description: (Updatable) Indicates whether the Autonomous AI Database
+                      has local (in-region) Data Guard enabled. Not applicable to
+                      cross-region Autonomous Data Guard associations, or to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isMtlsConnectionRequired:
+                    description: (Updatable) Specifies if the Autonomous AI Database
+                      requires mTLS connections.
+                    type: boolean
+                  isPreview:
+                    description: Indicates if the Autonomous AI Database version is
+                      a preview version.
+                    type: boolean
+                  isPreviewVersionWithServiceTermsAccepted:
+                    description: If set to TRUE, indicates that an Autonomous AI Database
+                      preview version is being provisioned, and that the preview version's
+                      terms of service have been accepted. Note that preview version
+                      software is only available for Autonomous AI Database Serverless
+                      instances (https://docs.oracle.com/en/cloud/paas/autonomous-database/serverless/).
+                    type: boolean
+                  isReconnectCloneEnabled:
+                    description: Indicates if the refreshable clone can be reconnected
+                      to its source database.
+                    type: boolean
+                  isRefreshableClone:
+                    description: Indicates if the Autonomous AI Database is a refreshable
+                      clone.
+                    type: boolean
+                  isRemoteDataGuardEnabled:
+                    description: Indicates whether the Autonomous AI Database has
+                      Cross Region Data Guard enabled. Not applicable to Autonomous
+                      AI Databases using dedicated Exadata infrastructure or Exadata
+                      Cloud@Customer infrastructure.
+                    type: boolean
+                  isReplicateAutomaticBackups:
+                    description: (Applicable when source=CROSS_REGION_DISASTER_RECOVERY
+                      | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of
+                      backups are replicated across regions for Cross-Region ADB or
+                      Backup-Based DR between Primary and Standby. If false, the backups
+                      taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleDbVersionUpgradeToEarliest:
+                    type: boolean
+                  isShrinkOnly:
+                    type: boolean
+                  keyHistoryEntry:
+                    description: Key History Entry.
+                    items:
+                      properties:
+                        id:
+                          description: The OCID of the Autonomous AI Database.
+                          type: string
+                        kmsKeyVersionId:
+                          description: The OCID of the key container version that
+                            is used in database transparent data encryption (TDE)
+                            operations KMS Key can have multiple key versions. If
+                            none is specified, the current key version (latest) of
+                            the Key Id is used for the operation. Autonomous AI Database
+                            Serverless does not use key versions, hence is not applicable
+                            for Autonomous AI Database Serverless instances.
+                          type: string
+                        timeActivated:
+                          description: The date and time the encryption key was activated.
+                          type: string
+                        vaultId:
+                          description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                            vault. This parameter and secretId are required for Customer
+                            Managed Keys.
+                          type: string
+                      type: object
+                    type: array
+                  keyStoreId:
+                    description: The OCID of the key store of Oracle Vault.
+                    type: string
+                  keyStoreWalletName:
+                    description: The wallet name for Oracle Key Vault.
+                    type: string
+                  keyVersionId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  kmsKeyId:
+                    description: (Updatable) The OCID of the key container that is
+                      used as the master encryption key in database transparent data
+                      encryption (TDE) operations.
+                    type: string
+                  kmsKeyLifecycleDetails:
+                    description: KMS key lifecycle details.
+                    type: string
+                  kmsKeyVersionId:
+                    description: The OCID of the key container version that is used
+                      in database transparent data encryption (TDE) operations KMS
+                      Key can have multiple key versions. If none is specified, the
+                      current key version (latest) of the Key Id is used for the operation.
+                      Autonomous AI Database Serverless does not use key versions,
+                      hence is not applicable for Autonomous AI Database Serverless
+                      instances.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to the Oracle Autonomous AI Database. Bring your own license
+                      (BYOL) allows you to apply your current on-premises Oracle software
+                      licenses to equivalent, highly automated Oracle services in
+                      the cloud. License Included allows you to subscribe to new Oracle
+                      AI Database software licenses and the Oracle AI Database service.
+                      Note that when provisioning an Autonomous AI Database on dedicated
+                      Exadata infrastructure, this attribute must be null. It is already
+                      set at the Autonomous Exadata Infrastructure level. When provisioning
+                      an [Autonomous AI Database Serverless] (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      database, if a value is not specified, the system defaults the
+                      value to BRING_YOUR_OWN_LICENSE. Bring your own license (BYOL)
+                      also allows you to select the DB edition using the optional
+                      parameter.
+                    type: string
+                  lifecycleDetails:
+                    description: Information about the current lifecycle state.
+                    type: string
+                  localAdgAutoFailoverMaxDataLossLimit:
+                    description: Parameter that allows users to select an acceptable
+                      maximum data loss limit in seconds, up to which Automatic Failover
+                      will be triggered when necessary for a Local Autonomous Data
+                      Guard
+                    type: number
+                  localDisasterRecoveryType:
+                    description: Indicates the local disaster recovery (DR) type of
+                      the Autonomous AI Database Serverless instance. Autonomous Data
+                      Guard (ADG) DR type provides business critical DR with a faster
+                      recovery time objective (RTO) during failover or switchover.
+                      Backup-based DR type provides lower cost DR with a slower RTO
+                      during failover or switchover.
+                    type: string
+                  localStandbyDb:
+                    description: Autonomous Data Guard standby database details.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: The availability domain where the Autonomous
+                            AI Database Serverless instance is located.
+                          type: string
+                        lagTimeInSeconds:
+                          description: The amount of time, in seconds, that the data
+                            of the standby database lags the data of the primary database.
+                            Can be used to determine the potential data loss in the
+                            event of a failover.
+                          type: number
+                        lifecycleDetails:
+                          description: Information about the current lifecycle state.
+                          type: string
+                        maintenanceTargetComponent:
+                          description: The component chosen for maintenance.
+                          type: string
+                        state:
+                          description: The current state of the Autonomous AI Database.
+                          type: string
+                        timeDataGuardRoleChanged:
+                          description: The date and time the Autonomous Data Guard
+                            role was switched for the standby Autonomous AI Database.
+                          type: string
+                        timeDisasterRecoveryRoleChanged:
+                          description: The date and time the Disaster Recovery role
+                            was switched for the standby Autonomous AI Database.
+                          type: string
+                        timeMaintenanceBegin:
+                          description: The date and time when maintenance will begin.
+                          type: string
+                        timeMaintenanceEnd:
+                          description: The date and time when maintenance will end.
+                          type: string
+                      type: object
+                    type: array
+                  longTermBackupSchedule:
+                    description: Details for the long-term backup schedule.
+                    items:
+                      properties:
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        repeatCadence:
+                          description: The frequency of the long-term backup schedule
+                          type: string
+                        retentionPeriodInDays:
+                          description: Retention period, in days, for long-term backups
+                          type: number
+                        timeOfBackup:
+                          description: The timestamp for the long-term backup schedule.
+                            For a MONTHLY cadence, months having fewer days than the
+                            provided date will have the backup taken on the last day
+                            of that month.
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceTargetComponent:
+                    description: The component chosen for maintenance.
+                    type: string
+                  maxCpuCoreCount:
+                    description: (Updatable) The number of CPU cores to be made available
+                      to the database. For Autonomous AI Databases on dedicated Exadata
+                      infrastructure, the maximum number of cores is determined by
+                      the infrastructure shape. See Characteristics of Infrastructure
+                      Shapes for shape details.
+                    type: number
+                  memoryPerComputeUnitInGbs:
+                    description: The amount of memory (in GBs) to be enabled per OCPU
+                      or ECPU.
+                    type: number
+                  memoryPerOracleComputeUnitInGbs:
+                    description: The amount of memory (in GBs, rounded off to nearest
+                      integer value) to be enabled per OCPU or ECPU. This is deprecated.
+                      Please refer to memoryPerComputeUnitInGBs for accurate value.
+                    type: number
+                  ncharacterSet:
+                    description: 'The character set for the Autonomous AI Database.
+                      The default is AL32UTF8. Use List Autonomous AI Database Character
+                      Sets to list the allowed values for an Autonomous AI Database
+                      Serverless instance. For an Autonomous AI Database on dedicated
+                      Exadata infrastructure, the allowed values are: AL16UTF16 or
+                      UTF8.'
+                    type: string
+                  netServicesArchitecture:
+                    description: Enabling SHARED server architecture enables a database
+                      server to allow many client processes to share very few server
+                      processes, thereby increasing the number of supported users.
+                    type: string
+                  nextLongTermBackupTimeStamp:
+                    description: The date and time when the next long-term backup
+                      would be created.
+                    type: string
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  ocpuCount:
+                    description: (Updatable) The number of OCPU cores to be made available
+                      to the database.
+                    type: number
+                  openMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      Indicates the Autonomous AI Database mode. The database can
+                      be opened in READ_ONLY or READ_WRITE mode.
+                    type: string
+                  operationsInsightsStatus:
+                    description: Status of Operations Insights for this Autonomous
+                      AI Database.
+                    type: string
+                  peerDbId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  peerDbIds:
+                    description: The list of OCIDs of standby databases located in
+                      Autonomous Data Guard remote regions that are associated with
+                      the source database. Note that for Autonomous AI Database Serverless
+                      instances, standby databases located in the same region as the
+                      source primary database do not have OCIDs.
+                    items:
+                      type: string
+                    type: array
+                  permissionLevel:
+                    description: The Autonomous AI Database permission level. Restricted
+                      mode allows access only by admin users.
+                    type: string
+                  privateEndpoint:
+                    description: The private endpoint for the resource.
+                    type: string
+                  privateEndpointIp:
+                    description: (Updatable) The private endpoint Ip address for the
+                      resource.
+                    type: string
+                  privateEndpointLabel:
+                    description: (Updatable) The private endpoint label for the resource.
+                    type: string
+                  provisionableCpus:
+                    description: An array of CPU values that an Autonomous AI Database
+                      can be scaled to.
+                    items:
+                      type: number
+                    type: array
+                  publicConnectionUrls:
+                    description: The Public URLs of Private Endpoint database for
+                      accessing Oracle Application Express (APEX) and SQL Developer
+                      Web with a browser from a Compute instance within your VCN or
+                      that has a direct connection to your VCN.
+                    items:
+                      properties:
+                        apexUrl:
+                          description: Oracle Application Express (APEX) URL.
+                          type: string
+                        databaseTransformsUrl:
+                          description: The URL of the Database Transforms for the
+                            Autonomous AI Database.
+                          type: string
+                        graphStudioUrl:
+                          description: The URL of the Graph Studio for the Autonomous
+                            AI Database.
+                          type: string
+                        machineLearningNotebookUrl:
+                          description: The URL of the Oracle Machine Learning (OML)
+                            Notebook for the Autonomous AI Database.
+                          type: string
+                        machineLearningUserManagementUrl:
+                          description: Oracle Machine Learning user management URL.
+                          type: string
+                        mongoDbUrl:
+                          description: The URL of the MongoDB API for the Autonomous
+                            AI Database.
+                          type: string
+                        ordsUrl:
+                          description: The Oracle REST Data Services (ORDS) URL of
+                            the Web Access for the Autonomous AI Database.
+                          type: string
+                        sqlDevWebUrl:
+                          description: Oracle SQL Developer Web URL.
+                          type: string
+                      type: object
+                    type: array
+                  publicEndpoint:
+                    description: The public endpoint for the private endpoint enabled
+                      resource.
+                    type: string
+                  refreshableMode:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The refresh mode of the clone. AUTOMATIC indicates that the
+                      clone is automatically being refreshed with data from the source
+                      Autonomous AI Database.
+                    type: string
+                  refreshableStatus:
+                    description: The refresh status of the clone. REFRESHING indicates
+                      that the clone is currently being refreshed with data from the
+                      source Autonomous AI Database.
+                    type: string
+                  remoteDisasterRecoveryConfiguration:
+                    description: Configurations of a Disaster Recovery.
+                    items:
+                      properties:
+                        disasterRecoveryType:
+                          description: Indicates the disaster recovery (DR) type of
+                            the standby Autonomous AI Database Serverless instance.
+                            Autonomous Data Guard (ADG) DR type provides business
+                            critical DR with a faster recovery time objective (RTO)
+                            during failover or switchover. Backup-based DR type provides
+                            lower cost DR with a slower RTO during failover or switchover.
+                          type: string
+                        isReplicateAutomaticBackups:
+                          description: (Applicable when source=CROSS_REGION_DISASTER_RECOVERY
+                            | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth
+                            of backups are replicated across regions for Cross-Region
+                            ADB or Backup-Based DR between Primary and Standby. If
+                            false, the backups taken on the Primary are not replicated
+                            to the Standby database.
+                          type: boolean
+                        isSnapshotStandby:
+                          description: Indicates if user wants to convert to a snapshot
+                            standby. For example, true would set a standby database
+                            to snapshot standby database. False would set a snapshot
+                            standby database back to regular standby database.
+                          type: boolean
+                        timeSnapshotStandbyEnabledTill:
+                          description: Time and date stored as an RFC 3339 formatted
+                            timestamp string. For example, 2022-01-01T12:00:00.000Z
+                            would set a limit for the snapshot standby to be converted
+                            back to a cross-region standby database.
+                          type: string
+                      type: object
+                    type: array
+                  remoteDisasterRecoveryType:
+                    description: Indicates the cross-region disaster recovery (DR)
+                      type of the standby Autonomous AI Database Serverless instance.
+                      Autonomous Data Guard (ADG) DR type provides business critical
+                      DR with a faster recovery time objective (RTO) during failover
+                      or switchover. Backup-based DR type provides lower cost DR with
+                      a slower RTO during failover or switchover.
+                    type: string
+                  resourcePoolLeaderId:
+                    description: (Updatable) The unique identifier for leader Autonomous
+                      AI Database OCID OCID.
+                    type: string
+                  resourcePoolSummary:
+                    description: (Updatable) The configuration details for resource
+                      pool
+                    items:
+                      properties:
+                        availableComputeCapacity:
+                          description: (Updatable) Available capacity left for new
+                            elastic pool members provision
+                          type: number
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        poolSize:
+                          description: (Updatable) Resource pool size.
+                          type: number
+                        totalComputeCapacity:
+                          description: Resource Pool total capacity, it's currently
+                            4x of pool size
+                          type: number
+                      type: object
+                    type: array
+                  role:
+                    description: The Data Guard role of the Autonomous Container Database
+                      or Autonomous AI Database, if Autonomous Data Guard is enabled.
+                    type: string
+                  rotateKeyTrigger:
+                    type: boolean
+                  scheduledOperations:
+                    description: (Updatable) The list of scheduled operations. Consists
+                      of values such as dayOfWeek, scheduledStartTime, scheduledStopTime.
+                    items:
+                      properties:
+                        dayOfWeek:
+                          description: (Updatable) Day of the week.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of database tool.
+                                type: string
+                            type: object
+                          type: array
+                        scheduledStartTime:
+                          description: (Updatable) auto start time. value must be
+                            of ISO-8601 format "HH:mm"
+                          type: string
+                        scheduledStopTime:
+                          description: (Updatable) auto stop time. value must be of
+                            ISO-8601 format "HH:mm"
+                          type: string
+                      type: object
+                    type: array
+                  secretId:
+                    description: (Updatable) The Oracle Cloud Infrastructure vault
+                      secret [/Content/General/Concepts/identifiers.htm]OCID.
+                    type: string
+                  secretVersionNumber:
+                    description: (Updatable) The version of the vault secret. If no
+                      version is specified, the latest version will be used.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  serviceConsoleUrl:
+                    description: The URL of the Service Console for the Autonomous
+                      AI Database.
+                    type: string
+                  shrinkAdbTrigger:
+                    type: number
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new Autonomous AI Database. Use DATABASE for creating a new
+                      Autonomous AI Database by cloning an existing Autonomous AI
+                      Database. Use CROSS_REGION_DATAGUARD to create a standby Data
+                      Guard database in another region.'
+                    type: string
+                  sourceId:
+                    description: The OCID of the source Autonomous AI Database that
+                      will be used to create a new peer database for the Data Guard
+                      association.
+                    type: string
+                  standbyDb:
+                    description: Deprecated Autonomous Data Guard standby database
+                      details.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: The availability domain where the Autonomous
+                            AI Database Serverless instance is located.
+                          type: string
+                        lagTimeInSeconds:
+                          description: The amount of time, in seconds, that the data
+                            of the standby database lags the data of the primary database.
+                            Can be used to determine the potential data loss in the
+                            event of a failover.
+                          type: number
+                        lifecycleDetails:
+                          description: Information about the current lifecycle state.
+                          type: string
+                        maintenanceTargetComponent:
+                          description: The component chosen for maintenance.
+                          type: string
+                        state:
+                          description: The current state of the Autonomous AI Database.
+                          type: string
+                        timeDataGuardRoleChanged:
+                          description: The date and time the Autonomous Data Guard
+                            role was switched for the standby Autonomous AI Database.
+                          type: string
+                        timeDisasterRecoveryRoleChanged:
+                          description: The date and time the Disaster Recovery role
+                            was switched for the standby Autonomous AI Database.
+                          type: string
+                        timeMaintenanceBegin:
+                          description: The date and time when maintenance will begin.
+                          type: string
+                        timeMaintenanceEnd:
+                          description: The date and time when maintenance will end.
+                          type: string
+                      type: object
+                    type: array
+                  standbyWhitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                  state:
+                    description: The current state of the Autonomous AI Database.
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet the resource is
+                      associated with.
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                  supportedRegionsToCloneTo:
+                    description: The list of regions that support the creation of
+                      an Autonomous AI Database clone or an Autonomous Data Guard
+                      standby database.
+                    items:
+                      type: string
+                    type: array
+                  switchoverTo:
+                    type: string
+                  switchoverToRemotePeerId:
+                    description: The OCID of the Autonomous AI Database.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: System tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The date and time the Autonomous AI Database was
+                      created.
+                    type: string
+                  timeDataGuardRoleChanged:
+                    description: The date and time the Autonomous Data Guard role
+                      was switched for the standby Autonomous AI Database.
+                    type: string
+                  timeDeletionOfFreeAutonomousDatabase:
+                    description: The date and time the Always Free database will be
+                      automatically deleted because of inactivity. If the database
+                      is in the STOPPED state and without activity until this time,
+                      it will be deleted.
+                    type: string
+                  timeDisasterRecoveryRoleChanged:
+                    description: The date and time the Disaster Recovery role was
+                      switched for the standby Autonomous AI Database.
+                    type: string
+                  timeEarliestAvailableDbVersionUpgrade:
+                    description: The earliest(min) date and time the Autonomous AI
+                      Database can be scheduled to upgrade to 26ai.
+                    type: string
+                  timeLatestAvailableDbVersionUpgrade:
+                    description: The max date and time the Autonomous AI Database
+                      can be scheduled to upgrade to 26ai.
+                    type: string
+                  timeLocalDataGuardEnabled:
+                    description: The date and time that Autonomous Data Guard was
+                      enabled for an Autonomous AI Database where the standby was
+                      provisioned in the same region as the primary database.
+                    type: string
+                  timeMaintenanceBegin:
+                    description: The date and time when maintenance will begin.
+                    type: string
+                  timeMaintenanceEnd:
+                    description: The date and time when maintenance will end.
+                    type: string
+                  timeOfAutoRefreshStart:
+                    description: (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable)
+                      The the date and time that auto-refreshing will begin for an
+                      Autonomous AI Database refreshable clone. This value controls
+                      only the start time for the first refresh operation. Subsequent
+                      (ongoing) refresh operations have start times controlled by
+                      the value of the autoRefreshFrequencyInSeconds parameter.
+                    type: string
+                  timeOfJoiningResourcePool:
+                    description: The time the member joined the resource pool.
+                    type: string
+                  timeOfLastFailover:
+                    description: The timestamp of the last failover operation.
+                    type: string
+                  timeOfLastRefresh:
+                    description: The date and time when last refresh happened.
+                    type: string
+                  timeOfLastRefreshPoint:
+                    description: The refresh point timestamp (UTC). The refresh point
+                      is the time to which the database was most recently refreshed.
+                      Data created after the refresh point is not included in the
+                      refresh.
+                    type: string
+                  timeOfLastSwitchover:
+                    description: The timestamp of the last switchover operation for
+                      the Autonomous AI Database.
+                    type: string
+                  timeOfNextRefresh:
+                    description: The date and time of next refresh.
+                    type: string
+                  timeReclamationOfFreeAutonomousDatabase:
+                    description: The date and time the Always Free database will be
+                      stopped because of inactivity. If this time is reached without
+                      any database activity, the database will automatically be put
+                      into the STOPPED state.
+                    type: string
+                  timeScheduledDbVersionUpgrade:
+                    description: The date and time the Autonomous AI Database scheduled
+                      to upgrade to 26ai.
+                    type: string
+                  timeUndeleted:
+                    description: The date and time the Autonomous AI Database was
+                      most recently undeleted.
+                    type: string
+                  timeUntilReconnectCloneEnabled:
+                    description: The time and date as an RFC3339 formatted string,
+                      e.g., 2022-01-01T12:00:00.000Z, to set the limit for a refreshable
+                      clone to be reconnected to its source database.
+                    type: string
+                  timestamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) The
+                      timestamp specified for the point-in-time clone of the source
+                      Autonomous AI Database. The timestamp must be in the past.
+                    type: string
+                  totalBackupStorageSizeInGbs:
+                    description: The backup storage to the database.
+                    type: number
+                  useLatestAvailableBackupTimeStamp:
+                    description: (Applicable when source=BACKUP_FROM_TIMESTAMP) Clone
+                      from latest available backup timestamp.
+                    type: boolean
+                  usedDataStorageSizeInGbs:
+                    description: The storage space consumed by Autonomous AI Database
+                      in GBs.
+                    type: number
+                  usedDataStorageSizeInTbs:
+                    description: The amount of storage that has been used for Autonomous
+                      AI Databases in dedicated infrastructure, in terabytes.
+                    type: number
+                  vanityConnectionUrls:
+                    description: 'The URLs for accessing Oracle Application Express
+                      (APEX) and SQL Developer Web with a browser from a Compute instance
+                      within your VCN or that has a direct connection to your VCN.
+                      Note that these URLs are provided by the console only for databases
+                      on dedicated Exadata infrastructure.  Example: {"sqlDevWebUrl":
+                      "https://<hostname>/ords...", "apexUrl", "https://<hostname>/ords..."}'
+                    items:
+                      properties:
+                        apexUrl:
+                          description: Oracle Application Express (APEX) URL.
+                          type: string
+                        databaseTransformsUrl:
+                          description: The URL of the Database Transforms for the
+                            Autonomous AI Database.
+                          type: string
+                        graphStudioUrl:
+                          description: The URL of the Graph Studio for the Autonomous
+                            AI Database.
+                          type: string
+                        machineLearningNotebookUrl:
+                          description: The URL of the Oracle Machine Learning (OML)
+                            Notebook for the Autonomous AI Database.
+                          type: string
+                        machineLearningUserManagementUrl:
+                          description: Oracle Machine Learning user management URL.
+                          type: string
+                        mongoDbUrl:
+                          description: The URL of the MongoDB API for the Autonomous
+                            AI Database.
+                          type: string
+                        ordsUrl:
+                          description: The Oracle REST Data Services (ORDS) URL of
+                            the Web Access for the Autonomous AI Database.
+                          type: string
+                        sqlDevWebUrl:
+                          description: Oracle SQL Developer Web URL.
+                          type: string
+                      type: object
+                    type: array
+                  vanityUrlDetails:
+                    description: Details for api gateway and vanity url(custom url)
+                      for dbTools.
+                    items:
+                      properties:
+                        apiGatewayId:
+                          description: API Gateway ID.
+                          type: string
+                        isDisabled:
+                          description: (Updatable) Indicates if the resource pool
+                            should be deleted for the Autonomous AI Database.
+                          type: boolean
+                        vanityUrlHostName:
+                          description: Custom URL prefix provided by the customer
+                            to access dbTools.
+                          type: string
+                      type: object
+                    type: array
+                  vaultId:
+                    description: (Updatable) The OCID of the Oracle Cloud Infrastructure
+                      vault. This parameter and secretId are required for Customer
+                      Managed Keys.
+                    type: string
+                  whitelistedIps:
+                    description: (Updatable) The client IP access control list (ACL).
+                      This feature is available for [Autonomous AI Database Serverless]
+                      (https://docs.oracle.com/en/cloud/paas/autonomous-database/index.html)
+                      and on Exadata Cloud@Customer. Only clients connecting from
+                      an IP address included in the ACL may access the Autonomous
+                      AI Database instance. If arePrimaryWhitelistedIpsUsed is 'TRUE'
+                      then Autonomous AI Database uses this primary's IP access control
+                      list (ACL) for the disaster recovery peer called standbywhitelistedips.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

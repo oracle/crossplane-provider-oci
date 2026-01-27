@@ -1,0 +1,21 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementDbManagementPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementdbmanagementprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_db_management_private_endpoint
+  name: test-db-management-private-endpoint
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.db_management_private_endpoint_description}
+    freeformTags:
+      Department: Finance
+    isCluster: ${var.db_management_private_endpoint_is_cluster}
+    isDnsResolutionEnabled: ${var.db_management_private_endpoint_is_dns_resolution_enabled}
+    name: ${var.db_management_private_endpoint_name}
+    nsgIds: ${var.db_management_private_endpoint_nsg_ids}
+    subnetId: ${oci_core_subnet.test_subnet.id}

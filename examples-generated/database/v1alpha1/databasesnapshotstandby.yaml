@@ -1,0 +1,17 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DatabaseSnapshotStandby
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_database_snapshot_standby
+  name: test-database-snapshot-standby
+spec:
+  forProvider:
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseId: ${oci_database_database.test_database.id}
+    snapshotDurationInDays: ${var.database_snapshot_standby_snapshot_duration_in_days}
+    standbyConversionType: ${var.database_snapshot_standby_standby_conversion_type}

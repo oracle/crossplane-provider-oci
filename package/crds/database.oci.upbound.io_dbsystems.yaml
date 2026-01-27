@@ -1,0 +1,2815 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: dbsystems.database.oci.upbound.io
+spec:
+  group: database.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DbSystem
+    listKind: DbSystemList
+    plural: dbsystems
+    singular: dbsystem
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DbSystem is the Schema for the DbSystems API. Provides the Db
+          System resource in Oracle Cloud Infrastructure Database service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DbSystemSpec defines the desired state of DbSystem
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the DB system is located.
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Updatable) A list of the OCIDs of the network security
+                      groups (NSGs) that the backup network of this DB system belongs
+                      to. Setting this to an empty array after the list is created
+                      removes the resource from all NSGs. For more information about
+                      NSGs, see Security Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  backupSubnetId:
+                    description: The OCID of the backup network subnet the DB system
+                      is associated with. Applicable only to Exadata DB systems.
+                    type: string
+                  clusterName:
+                    description: The cluster name for Exadata and 2-node RAC virtual
+                      machine DB systems. The cluster name must begin with an alphabetic
+                      character, and may contain hyphens (-). Underscores (_) are
+                      not permitted. The cluster name can be no longer than 11 characters
+                      and is not case sensitive.
+                    type: string
+                  clusterPlacementGroupId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the DB system  belongs
+                      in.
+                    type: string
+                  computeCount:
+                    description: (Updatable) The number of compute servers for the
+                      DB system.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model for Base Database Service.
+                      This is required if using the computeCount parameter. If using
+                      cpuCoreCount then it is an error to specify computeModel to
+                      a non-null value. The ECPU compute model is the recommended
+                      model, and the OCPU compute model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: '(Updatable) The number of CPU cores to enable for
+                      a bare metal or Exadata DB system or AMD VMDB Systems. The valid
+                      values depend on the specified shape:'
+                    type: number
+                  dataCollectionOptions:
+                    description: (Updatable) Indicates user preferences for the various
+                      diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM
+                      DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Updatable) Indicates whether diagnostic collection
+                            is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                            Enabling diagnostic collection allows you to receive Events
+                            service notifications for guest VM issues. Diagnostic
+                            collection also allows Oracle to provide enhanced service
+                            and proactive support for your Exadata system. You can
+                            enable diagnostic collection during VM cluster/Cloud VM
+                            cluster provisioning. You can also disable or enable it
+                            at any time using the UpdateVmCluster or updateCloudVmCluster
+                            API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Updatable) Indicates whether health monitoring
+                            is enabled for the VM cluster / Cloud VM cluster / VMBM
+                            DBCS. Enabling health monitoring allows Oracle to collect
+                            diagnostic data and share it with its operations and support
+                            personnel. You may also receive notifications for some
+                            events. Collecting health diagnostics enables Oracle to
+                            provide proactive support and enhanced service for your
+                            system. Optionally enable health monitoring while provisioning
+                            a system. You can also disable or enable health monitoring
+                            anytime using the UpdateVmCluster, UpdateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Updatable) Indicates whether incident logs
+                            and trace collection are enabled for the VM cluster /
+                            Cloud VM cluster / VMBM DBCS. Enabling incident logs collection
+                            allows Oracle to receive Events service notifications
+                            for guest VM issues, collect incident logs and traces,
+                            and use them to diagnose issues and resolve them. Optionally
+                            enable incident logs collection while provisioning a system.
+                            You can also disable or enable incident logs collection
+                            anytime using the UpdateVmCluster, updateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  dataStoragePercentage:
+                    description: The percentage assigned to DATA storage (user data
+                      and database files). The remaining percentage is assigned to
+                      RECO storage (database redo logs, archive logs, and recovery
+                      manager backups). Specify 80 or 40. The default is 80 percent
+                      assigned to DATA storage. Not applicable for virtual machine
+                      DB systems. Required for BMDBs.
+                    type: number
+                  dataStorageSizeInGb:
+                    description: (Updatable) Size (in GB) of the initial data volume
+                      that will be created and attached to a virtual machine DB system.
+                      You can scale up storage after provisioning, as needed. Note
+                      that the total storage size attached will be more than the amount
+                      you specify to allow for REDO/RECO space and software volume.
+                      By default this will be set to 256. Required for VMDBs.
+                    type: number
+                  databaseEdition:
+                    description: The Oracle Database Edition that applies to all the
+                      databases on the DB system. Exadata DB systems and 2-node RAC
+                      DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
+                    type: string
+                  dbHome:
+                    description: (Updatable) Details for creating a Database Home
+                      if you are creating a database by restoring from a database
+                      backup.
+                    items:
+                      properties:
+                        createAsync:
+                          type: boolean
+                        database:
+                          description: (Updatable) Details for creating a database
+                            by restoring from a source database system.
+                          items:
+                            properties:
+                              adminPasswordSecretRef:
+                                description: 'A strong password for SYS, SYSTEM, PDB
+                                  Admin and TDE Wallet. The password must be at least
+                                  nine characters and contain at least two uppercase,
+                                  two lowercase, two numbers, and two special characters.
+                                  The special characters must be _, #, or -.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              backupId:
+                                description: The backup OCID.
+                                type: string
+                              backupTdePasswordSecretRef:
+                                description: (Applicable when source=DATABASE | DB_BACKUP)
+                                  The password to open the TDE wallet.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              characterSet:
+                                description: '(Applicable when source=NONE) The character
+                                  set for the database.  The default is AL32UTF8.
+                                  Allowed values are:'
+                                type: string
+                              databaseId:
+                                description: The database OCID.
+                                type: string
+                              databaseSoftwareImageId:
+                                description: (Applicable when source=NONE) The database
+                                  software image OCID
+                                type: string
+                              dbBackupConfig:
+                                description: (Applicable when source=DB_SYSTEM | NONE)
+                                  (Updatable) Backup Options To use any of the API
+                                  operations, you must be authorized in an IAM policy.
+                                  If you're not authorized, talk to an administrator.
+                                  If you're an administrator who needs to write policies
+                                  to give users access, see Getting Started with Policies.
+                                items:
+                                  properties:
+                                    autoBackupEnabled:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) If set to true, configures
+                                        automatic backups. If you previously used
+                                        RMAN or dbcli to configure backups and then
+                                        you switch to using the Console or the API
+                                        for backups, a new backup configuration is
+                                        created and associated with your database.
+                                        This means that you can no longer rely on
+                                        your previously configured unmanaged backups
+                                        to work.
+                                      type: boolean
+                                    autoBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Time window selected for
+                                        initiating automatic backup for the database
+                                        system. There are twelve available two-hour
+                                        time windows. If no option is selected, a
+                                        start time between 12:00 AM to 7:00 AM in
+                                        the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    autoFullBackupDay:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) Day of the week the full backup should
+                                        be applied on the database system. If no option
+                                        is selected, the value is null and we will
+                                        default to Sunday.
+                                      type: string
+                                    autoFullBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) Time window selected for initiating
+                                        full backup for the database system. There
+                                        are twelve available two-hour time windows.
+                                        If no option is selected, the value is null
+                                        and a start time between 12:00 AM to 7:00
+                                        AM in the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    backupDeletionPolicy:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) This defines when the backups will
+                                        be deleted. - DELETE_IMMEDIATELY option keep
+                                        the backup for predefined time i.e 72 hours
+                                        and then delete permanently... - DELETE_AFTER_RETENTION_PERIOD
+                                        will keep the backups as per the policy defined
+                                        for database backups.
+                                      type: string
+                                    backupDestinationDetails:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Backup destination details.
+                                      items:
+                                        properties:
+                                          backupRetentionPolicyOnTerminate:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Defines the automatic and manual
+                                              backup retention policy for the Autonomous
+                                              Database termination.  The retention
+                                              policy set on the Autonomous Container
+                                              Database is not applicable for cross
+                                              region remote backups and backups hosted
+                                              on recovery Appliance backup destination.
+                                              Options are 'RETAIN_PER_RETENTION_WINDOW'
+                                              or 'RETAIN_FOR_72_HOURS'.The default
+                                              value is 'RETAIN_FOR_72_HOURS'.
+                                            type: string
+                                          dbrsPolicyId:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the DBRS policy
+                                              used for backup.
+                                            type: string
+                                          id:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the backup destination.
+                                            type: string
+                                          isRemote:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates whether the backup
+                                              destination is cross-region or local.
+                                            type: boolean
+                                          isRetentionLockEnabled:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates if backup retention
+                                              is locked for all the database backups
+                                              in the Autonomous Container Database
+                                              (ACD). The retention window cannot be
+                                              decreased if the backup retention lock
+                                              is enabled. Once applied on the Autonomous
+                                              Container Database, the retention lock
+                                              cannot be removed, or the retention
+                                              period cannot be decreased after a 14-day
+                                              period. If the backup is a Long Term
+                                              Backup and retention lock is enabled,
+                                              the backup cannot be deleted and must
+                                              expire. The retention lock set on the
+                                              Autonomous Container Database is not
+                                              applicable for cross region remote backups
+                                              and backups hosted on recovery Appliance
+                                              backup destination.
+                                            type: boolean
+                                          remoteRegion:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The name of the remote region
+                                              where the remote automatic incremental
+                                              backups will be stored.           For
+                                              information about valid region names,
+                                              see Regions and Availability Domains.
+                                            type: string
+                                          type:
+                                            description: Type of the database backup
+                                              destination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    recoveryWindowInDays:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Number of days between
+                                        the current and the earliest point of recoverability
+                                        covered by automatic backups. This value applies
+                                        to automatic backups only. After a new automatic
+                                        backup has been created, Oracle removes old
+                                        automatic backups that are created before
+                                        the window. When the value is updated, it
+                                        is applied to all existing automatic backups.
+                                      type: number
+                                    runImmediateFullBackup:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) If set to true, configures automatic
+                                        full backups in the local region (the region
+                                        of the DB system) for the first backup run
+                                        immediately.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              dbDomain:
+                                description: (Applicable when source=DB_SYSTEM) The
+                                  database domain. In a distributed database system,
+                                  DB_DOMAIN specifies the logical location of the
+                                  database within the network structure.
+                                type: string
+                              dbName:
+                                description: The display name of the database to be
+                                  created from the backup. It must begin with an alphabetic
+                                  character and can contain a maximum of eight alphanumeric
+                                  characters. Special characters are not permitted.
+                                type: string
+                              dbUniqueName:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                              dbWorkload:
+                                description: (Applicable when source=NONE) Deprecated.
+                                  The dbWorkload field has been deprecated for Exadata
+                                  Database Service on Dedicated Infrastructure, Exadata
+                                  Database Service on Cloud@Customer, and Base Database
+                                  Service. Support for this attribute will end in
+                                  November 2023. You may choose to update your custom
+                                  scripts to exclude the dbWorkload attribute. After
+                                  November 2023 if you pass a value to the dbWorkload
+                                  attribute, it will be ignored.
+                                type: string
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                                  | NONE) (Updatable) Defined tags for this resource.
+                                  Each key is predefined and scoped to a namespace.
+                                  For more information, see Resource Tags.
+                                type: object
+                                x-kubernetes-map-type: granular
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when source=DB_BACKUP |
+                                  DB_SYSTEM | NONE) (Updatable) Free-form tags for
+                                  this resource. Each tag is a simple key-value pair
+                                  with no predefined name, type, or namespace. For
+                                  more information, see Resource Tags.  Example: {"Department":
+                                  "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              kmsKeyId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container that is used as the master
+                                  encryption key in database transparent data encryption
+                                  (TDE) operations.
+                                type: string
+                              kmsKeyVersionId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container version that is used in database
+                                  transparent data encryption (TDE) operations KMS
+                                  Key can have multiple key versions. If none is specified,
+                                  the current key version (latest) of the Key Id is
+                                  used for the operation. Autonomous AI Database Serverless
+                                  does not use key versions, hence is not applicable
+                                  for Autonomous AI Database Serverless instances.
+                                type: string
+                              ncharacterSet:
+                                description: '(Applicable when source=NONE) The national
+                                  character set for the database.  The default is
+                                  AL16UTF16. Allowed values are: AL16UTF16 or UTF8.'
+                                type: string
+                              pdbName:
+                                description: (Applicable when source=NONE) The name
+                                  of the pluggable database. The name must begin with
+                                  an alphabetic character and can contain a maximum
+                                  of thirty alphanumeric characters. Special characters
+                                  are not permitted. Pluggable database should not
+                                  be same as database name.
+                                type: string
+                              pluggableDatabases:
+                                description: (Applicable when source=DATABASE | DB_BACKUP)
+                                  The list of pluggable databases that needs to be
+                                  restored into new database.
+                                items:
+                                  type: string
+                                type: array
+                              tdeWalletPasswordSecretRef:
+                                description: '(Applicable when source=NONE) The optional
+                                  password to open the TDE wallet. The password must
+                                  be at least nine characters and contain at least
+                                  two uppercase, two lowercase, two numeric, and two
+                                  special characters. The special characters must
+                                  be _, #, or -.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              timeStampForPointInTimeRecovery:
+                                description: (Applicable when source=DATABASE) The
+                                  point in time of the original database from which
+                                  the new database is created. If not specifed, the
+                                  latest backup is used to create the database.
+                                type: string
+                              vaultId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the Oracle Cloud Infrastructure vault. This parameter
+                                  and secretId are required for Customer Managed Keys.
+                                type: string
+                            type: object
+                          type: array
+                        databaseSoftwareImageId:
+                          description: (Applicable when source=NONE) The database
+                            software image OCID
+                          type: string
+                        dbVersion:
+                          description: A valid Oracle Database version. For a list
+                            of supported versions, use the ListDbVersions operation.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Defined tags for this resource. Each
+                            key is predefined and scoped to a namespace. For more
+                            information, see Resource Tags.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: The user-provided name of the Database Home.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        isUnifiedAuditingEnabled:
+                          description: (Applicable when source=DATABASE | DB_BACKUP
+                            | NONE) Indicates whether unified auditing is enabled
+                            or not
+                          type: boolean
+                      type: object
+                    type: array
+                  dbSystemOptions:
+                    description: The DB system options.
+                    items:
+                      properties:
+                        storageManagement:
+                          description: The storage option used in DB system. ASM -
+                            Automatic storage management LVM - Logical Volume management
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE)
+                      (Updatable) Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diskRedundancy:
+                    description: (Applicable when source=DATABASE | DB_BACKUP | NONE)
+                      The type of redundancy configured for the DB system. Normal
+                      is 2-way redundancy, recommended for test and development systems.
+                      High is 3-way redundancy, recommended for production systems.
+                    type: string
+                  displayName:
+                    description: The user-provided name of the Database Home.
+                    type: string
+                  domain:
+                    description: A domain name used for the DB system. If the Oracle-provided
+                      Internet and VCN Resolver is enabled for the specified subnet,
+                      the domain name for the subnet is used (do not provide one).
+                      Otherwise, provide a valid DNS domain name. Hyphens (-) are
+                      not permitted.
+                    type: string
+                  faultDomains:
+                    description: A Fault Domain is a grouping of hardware and infrastructure
+                      within an availability domain. Fault Domains let you distribute
+                      your instances so that they are not on the same physical hardware
+                      within a single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when source=DB_BACKUP | DB_SYSTEM |
+                      NONE) (Updatable) Free-form tags for this resource. Each tag
+                      is a simple key-value pair with no predefined name, type, or
+                      namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  hostname:
+                    description: The hostname for the DB system. The hostname must
+                      begin with an alphabetic character, and can contain alphanumeric
+                      characters and hyphens (-). The maximum length of the hostname
+                      is 16 characters for bare metal and virtual machine DB systems,
+                      and 12 characters for Exadata DB systems.
+                    type: string
+                  kmsKeyId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container that is used as the master encryption key in database
+                      transparent data encryption (TDE) operations.
+                    type: string
+                  kmsKeyVersionId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container version that is used in database transparent data
+                      encryption (TDE) operations KMS Key can have multiple key versions.
+                      If none is specified, the current key version (latest) of the
+                      Key Id is used for the operation. Autonomous AI Database Serverless
+                      does not use key versions, hence is not applicable for Autonomous
+                      AI Database Serverless instances.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to all the databases on the DB system. The default is LICENSE_INCLUDED.
+                    type: string
+                  maintenanceWindowDetails:
+                    description: (Applicable when source=NONE) (Updatable) The scheduling
+                      details for the quarterly maintenance window. Patching and system
+                      updates take place during the maintenance window.
+                    items:
+                      properties:
+                        customActionTimeoutInMins:
+                          description: (Applicable when source=NONE) (Updatable) Determines
+                            the amount of time the system will wait before the start
+                            of each database server patching operation. Custom action
+                            timeout is in minutes and valid value is between 15 to
+                            120 (inclusive).
+                          type: number
+                        daysOfWeek:
+                          description: (Applicable when source=NONE) (Updatable) Days
+                            during the week when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        hoursOfDay:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            window of hours during the day when maintenance should
+                            be performed. The window is a 4 hour slot. Valid values
+                            are - 0 - represents time slot 0:00 - 3:59 UTC - 4 - represents
+                            time slot 4:00 - 7:59 UTC - 8 - represents time slot 8:00
+                            - 11:59 UTC - 12 - represents time slot 12:00 - 15:59
+                            UTC - 16 - represents time slot 16:00 - 19:59 UTC - 20
+                            - represents time slot 20:00 - 23:59 UTC
+                          items:
+                            type: number
+                          type: array
+                        isCustomActionTimeoutEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the configuration of a custom action timeout
+                            (waiting period) between database server patching operations.
+                          type: boolean
+                        isMonthlyPatchingEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the monthly patching option.
+                          type: boolean
+                        leadTimeInWeeks:
+                          description: (Applicable when source=NONE) (Updatable) Lead
+                            time window allows user to set a lead time to prepare
+                            for a down time. The lead time is in weeks and valid value
+                            is between 1 to 4.
+                          type: number
+                        months:
+                          description: (Applicable when source=NONE) (Updatable) Months
+                            during the year when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        patchingMode:
+                          description: (Applicable when source=NONE) (Updatable) Cloud
+                            Exadata infrastructure node patching method, either "ROLLING"
+                            or "NONROLLING". Default value is ROLLING.
+                          type: string
+                        preference:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            maintenance window scheduling preference.
+                          type: string
+                        skipRu:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, skips the release update (RU) for the quarter. You
+                            cannot skip two consecutive quarters. An RU skip request
+                            will only be honoured if the current version of the Autonomous
+                            Container Database is supported for current quarter.
+                          items:
+                            type: boolean
+                          type: array
+                        weeksOfMonth:
+                          description: (Applicable when source=NONE) (Updatable) Weeks
+                            during the month when maintenance should be performed.
+                            Weeks start on the 1st, 8th, 15th, and 22nd days of the
+                            month, and have a duration of 7 days. Weeks start and
+                            end based on calendar dates, not days of the week. For
+                            example, to allow maintenance during the 2nd week of the
+                            month (from the 8th day to the 14th day of the month),
+                            use the value 2. Maintenance cannot be scheduled for the
+                            fifth week of months that contain more than 28 days. Note
+                            that this parameter works in conjunction with the  daysOfWeek
+                            and hoursOfDay parameters to allow you to specify specific
+                            days of the week and hours that maintenance will be performed.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  nodeCount:
+                    description: The number of nodes to launch for a virtual machine
+                      DB system. Specify either 1 or 2. By default this will be set
+                      to 1.
+                    type: number
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  privateIp:
+                    description: A private IP address of your choice. Must be an available
+                      IP address within the subnet's CIDR. If you don't specify a
+                      value, Oracle automatically assigns a private IP address from
+                      the subnet. Supported for VM BM shape.
+                    type: string
+                  privateIpV6:
+                    description: A private IPv6 address of your choice. Must be an
+                      available IP address within the subnet's CIDR. If you don't
+                      specify a value and the subnet is dual stack, Oracle automatically
+                      assigns a private IPv6 address from the subnet.
+                    type: string
+                  recoStorageSizeInGb:
+                    description: The RECO/REDO storage size, in gigabytes, that is
+                      currently allocated to the DB system. Applies only for virtual
+                      machine DB systems.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: (Updatable) The shape of the DB system. The shape
+                      determines resources allocated to the DB system.
+                    type: string
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new database. Use DB_BACKUP for creating a new database by
+                      restoring from a backup. Use DATABASE for creating a new database
+                      from an existing database, including archive redo log data.
+                      The default is NONE.'
+                    type: string
+                  sourceDbSystemId:
+                    description: The OCID of the DB system.
+                    type: string
+                  sparseDiskgroup:
+                    description: If true, Sparse Diskgroup is configured for Exadata
+                      dbsystem. If False, Sparse diskgroup is not configured. Only
+                      applied for Exadata shape.
+                    type: boolean
+                  sshPublicKeys:
+                    description: (Updatable) The public key portion of the key pair
+                      to use for SSH access to the DB system. Multiple public keys
+                      can be provided. The length of the combined keys cannot exceed
+                      40,000 characters.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  storageVolumePerformanceMode:
+                    description: The block storage volume performance level. Valid
+                      values are BALANCED and HIGH_PERFORMANCE. See Block Volume Performance
+                      for more information.
+                    type: string
+                  subnetId:
+                    description: The OCID of the subnet the DB system is associated
+                      with.
+                    type: string
+                  subscriptionId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  timeZone:
+                    description: The time zone to use for the DB system. For details,
+                      see DB System Time Zones.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the DB system is located.
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Updatable) A list of the OCIDs of the network security
+                      groups (NSGs) that the backup network of this DB system belongs
+                      to. Setting this to an empty array after the list is created
+                      removes the resource from all NSGs. For more information about
+                      NSGs, see Security Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  backupSubnetId:
+                    description: The OCID of the backup network subnet the DB system
+                      is associated with. Applicable only to Exadata DB systems.
+                    type: string
+                  clusterName:
+                    description: The cluster name for Exadata and 2-node RAC virtual
+                      machine DB systems. The cluster name must begin with an alphabetic
+                      character, and may contain hyphens (-). Underscores (_) are
+                      not permitted. The cluster name can be no longer than 11 characters
+                      and is not case sensitive.
+                    type: string
+                  clusterPlacementGroupId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the DB system  belongs
+                      in.
+                    type: string
+                  computeCount:
+                    description: (Updatable) The number of compute servers for the
+                      DB system.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model for Base Database Service.
+                      This is required if using the computeCount parameter. If using
+                      cpuCoreCount then it is an error to specify computeModel to
+                      a non-null value. The ECPU compute model is the recommended
+                      model, and the OCPU compute model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: '(Updatable) The number of CPU cores to enable for
+                      a bare metal or Exadata DB system or AMD VMDB Systems. The valid
+                      values depend on the specified shape:'
+                    type: number
+                  dataCollectionOptions:
+                    description: (Updatable) Indicates user preferences for the various
+                      diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM
+                      DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Updatable) Indicates whether diagnostic collection
+                            is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                            Enabling diagnostic collection allows you to receive Events
+                            service notifications for guest VM issues. Diagnostic
+                            collection also allows Oracle to provide enhanced service
+                            and proactive support for your Exadata system. You can
+                            enable diagnostic collection during VM cluster/Cloud VM
+                            cluster provisioning. You can also disable or enable it
+                            at any time using the UpdateVmCluster or updateCloudVmCluster
+                            API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Updatable) Indicates whether health monitoring
+                            is enabled for the VM cluster / Cloud VM cluster / VMBM
+                            DBCS. Enabling health monitoring allows Oracle to collect
+                            diagnostic data and share it with its operations and support
+                            personnel. You may also receive notifications for some
+                            events. Collecting health diagnostics enables Oracle to
+                            provide proactive support and enhanced service for your
+                            system. Optionally enable health monitoring while provisioning
+                            a system. You can also disable or enable health monitoring
+                            anytime using the UpdateVmCluster, UpdateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Updatable) Indicates whether incident logs
+                            and trace collection are enabled for the VM cluster /
+                            Cloud VM cluster / VMBM DBCS. Enabling incident logs collection
+                            allows Oracle to receive Events service notifications
+                            for guest VM issues, collect incident logs and traces,
+                            and use them to diagnose issues and resolve them. Optionally
+                            enable incident logs collection while provisioning a system.
+                            You can also disable or enable incident logs collection
+                            anytime using the UpdateVmCluster, updateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  dataStoragePercentage:
+                    description: The percentage assigned to DATA storage (user data
+                      and database files). The remaining percentage is assigned to
+                      RECO storage (database redo logs, archive logs, and recovery
+                      manager backups). Specify 80 or 40. The default is 80 percent
+                      assigned to DATA storage. Not applicable for virtual machine
+                      DB systems. Required for BMDBs.
+                    type: number
+                  dataStorageSizeInGb:
+                    description: (Updatable) Size (in GB) of the initial data volume
+                      that will be created and attached to a virtual machine DB system.
+                      You can scale up storage after provisioning, as needed. Note
+                      that the total storage size attached will be more than the amount
+                      you specify to allow for REDO/RECO space and software volume.
+                      By default this will be set to 256. Required for VMDBs.
+                    type: number
+                  databaseEdition:
+                    description: The Oracle Database Edition that applies to all the
+                      databases on the DB system. Exadata DB systems and 2-node RAC
+                      DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
+                    type: string
+                  dbHome:
+                    description: (Updatable) Details for creating a Database Home
+                      if you are creating a database by restoring from a database
+                      backup.
+                    items:
+                      properties:
+                        createAsync:
+                          type: boolean
+                        database:
+                          description: (Updatable) Details for creating a database
+                            by restoring from a source database system.
+                          items:
+                            properties:
+                              adminPasswordSecretRef:
+                                description: 'A strong password for SYS, SYSTEM, PDB
+                                  Admin and TDE Wallet. The password must be at least
+                                  nine characters and contain at least two uppercase,
+                                  two lowercase, two numbers, and two special characters.
+                                  The special characters must be _, #, or -.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              backupId:
+                                description: The backup OCID.
+                                type: string
+                              backupTdePasswordSecretRef:
+                                description: (Applicable when source=DATABASE | DB_BACKUP)
+                                  The password to open the TDE wallet.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              characterSet:
+                                description: '(Applicable when source=NONE) The character
+                                  set for the database.  The default is AL32UTF8.
+                                  Allowed values are:'
+                                type: string
+                              databaseId:
+                                description: The database OCID.
+                                type: string
+                              databaseSoftwareImageId:
+                                description: (Applicable when source=NONE) The database
+                                  software image OCID
+                                type: string
+                              dbBackupConfig:
+                                description: (Applicable when source=DB_SYSTEM | NONE)
+                                  (Updatable) Backup Options To use any of the API
+                                  operations, you must be authorized in an IAM policy.
+                                  If you're not authorized, talk to an administrator.
+                                  If you're an administrator who needs to write policies
+                                  to give users access, see Getting Started with Policies.
+                                items:
+                                  properties:
+                                    autoBackupEnabled:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) If set to true, configures
+                                        automatic backups. If you previously used
+                                        RMAN or dbcli to configure backups and then
+                                        you switch to using the Console or the API
+                                        for backups, a new backup configuration is
+                                        created and associated with your database.
+                                        This means that you can no longer rely on
+                                        your previously configured unmanaged backups
+                                        to work.
+                                      type: boolean
+                                    autoBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Time window selected for
+                                        initiating automatic backup for the database
+                                        system. There are twelve available two-hour
+                                        time windows. If no option is selected, a
+                                        start time between 12:00 AM to 7:00 AM in
+                                        the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    autoFullBackupDay:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) Day of the week the full backup should
+                                        be applied on the database system. If no option
+                                        is selected, the value is null and we will
+                                        default to Sunday.
+                                      type: string
+                                    autoFullBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) Time window selected for initiating
+                                        full backup for the database system. There
+                                        are twelve available two-hour time windows.
+                                        If no option is selected, the value is null
+                                        and a start time between 12:00 AM to 7:00
+                                        AM in the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    backupDeletionPolicy:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) This defines when the backups will
+                                        be deleted. - DELETE_IMMEDIATELY option keep
+                                        the backup for predefined time i.e 72 hours
+                                        and then delete permanently... - DELETE_AFTER_RETENTION_PERIOD
+                                        will keep the backups as per the policy defined
+                                        for database backups.
+                                      type: string
+                                    backupDestinationDetails:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Backup destination details.
+                                      items:
+                                        properties:
+                                          backupRetentionPolicyOnTerminate:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Defines the automatic and manual
+                                              backup retention policy for the Autonomous
+                                              Database termination.  The retention
+                                              policy set on the Autonomous Container
+                                              Database is not applicable for cross
+                                              region remote backups and backups hosted
+                                              on recovery Appliance backup destination.
+                                              Options are 'RETAIN_PER_RETENTION_WINDOW'
+                                              or 'RETAIN_FOR_72_HOURS'.The default
+                                              value is 'RETAIN_FOR_72_HOURS'.
+                                            type: string
+                                          dbrsPolicyId:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the DBRS policy
+                                              used for backup.
+                                            type: string
+                                          id:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the backup destination.
+                                            type: string
+                                          isRemote:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates whether the backup
+                                              destination is cross-region or local.
+                                            type: boolean
+                                          isRetentionLockEnabled:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates if backup retention
+                                              is locked for all the database backups
+                                              in the Autonomous Container Database
+                                              (ACD). The retention window cannot be
+                                              decreased if the backup retention lock
+                                              is enabled. Once applied on the Autonomous
+                                              Container Database, the retention lock
+                                              cannot be removed, or the retention
+                                              period cannot be decreased after a 14-day
+                                              period. If the backup is a Long Term
+                                              Backup and retention lock is enabled,
+                                              the backup cannot be deleted and must
+                                              expire. The retention lock set on the
+                                              Autonomous Container Database is not
+                                              applicable for cross region remote backups
+                                              and backups hosted on recovery Appliance
+                                              backup destination.
+                                            type: boolean
+                                          remoteRegion:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The name of the remote region
+                                              where the remote automatic incremental
+                                              backups will be stored.           For
+                                              information about valid region names,
+                                              see Regions and Availability Domains.
+                                            type: string
+                                          type:
+                                            description: Type of the database backup
+                                              destination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    recoveryWindowInDays:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Number of days between
+                                        the current and the earliest point of recoverability
+                                        covered by automatic backups. This value applies
+                                        to automatic backups only. After a new automatic
+                                        backup has been created, Oracle removes old
+                                        automatic backups that are created before
+                                        the window. When the value is updated, it
+                                        is applied to all existing automatic backups.
+                                      type: number
+                                    runImmediateFullBackup:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) If set to true, configures automatic
+                                        full backups in the local region (the region
+                                        of the DB system) for the first backup run
+                                        immediately.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              dbDomain:
+                                description: (Applicable when source=DB_SYSTEM) The
+                                  database domain. In a distributed database system,
+                                  DB_DOMAIN specifies the logical location of the
+                                  database within the network structure.
+                                type: string
+                              dbName:
+                                description: The display name of the database to be
+                                  created from the backup. It must begin with an alphabetic
+                                  character and can contain a maximum of eight alphanumeric
+                                  characters. Special characters are not permitted.
+                                type: string
+                              dbUniqueName:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                              dbWorkload:
+                                description: (Applicable when source=NONE) Deprecated.
+                                  The dbWorkload field has been deprecated for Exadata
+                                  Database Service on Dedicated Infrastructure, Exadata
+                                  Database Service on Cloud@Customer, and Base Database
+                                  Service. Support for this attribute will end in
+                                  November 2023. You may choose to update your custom
+                                  scripts to exclude the dbWorkload attribute. After
+                                  November 2023 if you pass a value to the dbWorkload
+                                  attribute, it will be ignored.
+                                type: string
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                                  | NONE) (Updatable) Defined tags for this resource.
+                                  Each key is predefined and scoped to a namespace.
+                                  For more information, see Resource Tags.
+                                type: object
+                                x-kubernetes-map-type: granular
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when source=DB_BACKUP |
+                                  DB_SYSTEM | NONE) (Updatable) Free-form tags for
+                                  this resource. Each tag is a simple key-value pair
+                                  with no predefined name, type, or namespace. For
+                                  more information, see Resource Tags.  Example: {"Department":
+                                  "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              kmsKeyId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container that is used as the master
+                                  encryption key in database transparent data encryption
+                                  (TDE) operations.
+                                type: string
+                              kmsKeyVersionId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container version that is used in database
+                                  transparent data encryption (TDE) operations KMS
+                                  Key can have multiple key versions. If none is specified,
+                                  the current key version (latest) of the Key Id is
+                                  used for the operation. Autonomous AI Database Serverless
+                                  does not use key versions, hence is not applicable
+                                  for Autonomous AI Database Serverless instances.
+                                type: string
+                              ncharacterSet:
+                                description: '(Applicable when source=NONE) The national
+                                  character set for the database.  The default is
+                                  AL16UTF16. Allowed values are: AL16UTF16 or UTF8.'
+                                type: string
+                              pdbName:
+                                description: (Applicable when source=NONE) The name
+                                  of the pluggable database. The name must begin with
+                                  an alphabetic character and can contain a maximum
+                                  of thirty alphanumeric characters. Special characters
+                                  are not permitted. Pluggable database should not
+                                  be same as database name.
+                                type: string
+                              pluggableDatabases:
+                                description: (Applicable when source=DATABASE | DB_BACKUP)
+                                  The list of pluggable databases that needs to be
+                                  restored into new database.
+                                items:
+                                  type: string
+                                type: array
+                              tdeWalletPasswordSecretRef:
+                                description: '(Applicable when source=NONE) The optional
+                                  password to open the TDE wallet. The password must
+                                  be at least nine characters and contain at least
+                                  two uppercase, two lowercase, two numeric, and two
+                                  special characters. The special characters must
+                                  be _, #, or -.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              timeStampForPointInTimeRecovery:
+                                description: (Applicable when source=DATABASE) The
+                                  point in time of the original database from which
+                                  the new database is created. If not specifed, the
+                                  latest backup is used to create the database.
+                                type: string
+                              vaultId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the Oracle Cloud Infrastructure vault. This parameter
+                                  and secretId are required for Customer Managed Keys.
+                                type: string
+                            required:
+                            - adminPasswordSecretRef
+                            type: object
+                          type: array
+                        databaseSoftwareImageId:
+                          description: (Applicable when source=NONE) The database
+                            software image OCID
+                          type: string
+                        dbVersion:
+                          description: A valid Oracle Database version. For a list
+                            of supported versions, use the ListDbVersions operation.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Defined tags for this resource. Each
+                            key is predefined and scoped to a namespace. For more
+                            information, see Resource Tags.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: The user-provided name of the Database Home.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        isUnifiedAuditingEnabled:
+                          description: (Applicable when source=DATABASE | DB_BACKUP
+                            | NONE) Indicates whether unified auditing is enabled
+                            or not
+                          type: boolean
+                      type: object
+                    type: array
+                  dbSystemOptions:
+                    description: The DB system options.
+                    items:
+                      properties:
+                        storageManagement:
+                          description: The storage option used in DB system. ASM -
+                            Automatic storage management LVM - Logical Volume management
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE)
+                      (Updatable) Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diskRedundancy:
+                    description: (Applicable when source=DATABASE | DB_BACKUP | NONE)
+                      The type of redundancy configured for the DB system. Normal
+                      is 2-way redundancy, recommended for test and development systems.
+                      High is 3-way redundancy, recommended for production systems.
+                    type: string
+                  displayName:
+                    description: The user-provided name of the Database Home.
+                    type: string
+                  domain:
+                    description: A domain name used for the DB system. If the Oracle-provided
+                      Internet and VCN Resolver is enabled for the specified subnet,
+                      the domain name for the subnet is used (do not provide one).
+                      Otherwise, provide a valid DNS domain name. Hyphens (-) are
+                      not permitted.
+                    type: string
+                  faultDomains:
+                    description: A Fault Domain is a grouping of hardware and infrastructure
+                      within an availability domain. Fault Domains let you distribute
+                      your instances so that they are not on the same physical hardware
+                      within a single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when source=DB_BACKUP | DB_SYSTEM |
+                      NONE) (Updatable) Free-form tags for this resource. Each tag
+                      is a simple key-value pair with no predefined name, type, or
+                      namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  hostname:
+                    description: The hostname for the DB system. The hostname must
+                      begin with an alphabetic character, and can contain alphanumeric
+                      characters and hyphens (-). The maximum length of the hostname
+                      is 16 characters for bare metal and virtual machine DB systems,
+                      and 12 characters for Exadata DB systems.
+                    type: string
+                  kmsKeyId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container that is used as the master encryption key in database
+                      transparent data encryption (TDE) operations.
+                    type: string
+                  kmsKeyVersionId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container version that is used in database transparent data
+                      encryption (TDE) operations KMS Key can have multiple key versions.
+                      If none is specified, the current key version (latest) of the
+                      Key Id is used for the operation. Autonomous AI Database Serverless
+                      does not use key versions, hence is not applicable for Autonomous
+                      AI Database Serverless instances.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to all the databases on the DB system. The default is LICENSE_INCLUDED.
+                    type: string
+                  maintenanceWindowDetails:
+                    description: (Applicable when source=NONE) (Updatable) The scheduling
+                      details for the quarterly maintenance window. Patching and system
+                      updates take place during the maintenance window.
+                    items:
+                      properties:
+                        customActionTimeoutInMins:
+                          description: (Applicable when source=NONE) (Updatable) Determines
+                            the amount of time the system will wait before the start
+                            of each database server patching operation. Custom action
+                            timeout is in minutes and valid value is between 15 to
+                            120 (inclusive).
+                          type: number
+                        daysOfWeek:
+                          description: (Applicable when source=NONE) (Updatable) Days
+                            during the week when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        hoursOfDay:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            window of hours during the day when maintenance should
+                            be performed. The window is a 4 hour slot. Valid values
+                            are - 0 - represents time slot 0:00 - 3:59 UTC - 4 - represents
+                            time slot 4:00 - 7:59 UTC - 8 - represents time slot 8:00
+                            - 11:59 UTC - 12 - represents time slot 12:00 - 15:59
+                            UTC - 16 - represents time slot 16:00 - 19:59 UTC - 20
+                            - represents time slot 20:00 - 23:59 UTC
+                          items:
+                            type: number
+                          type: array
+                        isCustomActionTimeoutEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the configuration of a custom action timeout
+                            (waiting period) between database server patching operations.
+                          type: boolean
+                        isMonthlyPatchingEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the monthly patching option.
+                          type: boolean
+                        leadTimeInWeeks:
+                          description: (Applicable when source=NONE) (Updatable) Lead
+                            time window allows user to set a lead time to prepare
+                            for a down time. The lead time is in weeks and valid value
+                            is between 1 to 4.
+                          type: number
+                        months:
+                          description: (Applicable when source=NONE) (Updatable) Months
+                            during the year when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        patchingMode:
+                          description: (Applicable when source=NONE) (Updatable) Cloud
+                            Exadata infrastructure node patching method, either "ROLLING"
+                            or "NONROLLING". Default value is ROLLING.
+                          type: string
+                        preference:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            maintenance window scheduling preference.
+                          type: string
+                        skipRu:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, skips the release update (RU) for the quarter. You
+                            cannot skip two consecutive quarters. An RU skip request
+                            will only be honoured if the current version of the Autonomous
+                            Container Database is supported for current quarter.
+                          items:
+                            type: boolean
+                          type: array
+                        weeksOfMonth:
+                          description: (Applicable when source=NONE) (Updatable) Weeks
+                            during the month when maintenance should be performed.
+                            Weeks start on the 1st, 8th, 15th, and 22nd days of the
+                            month, and have a duration of 7 days. Weeks start and
+                            end based on calendar dates, not days of the week. For
+                            example, to allow maintenance during the 2nd week of the
+                            month (from the 8th day to the 14th day of the month),
+                            use the value 2. Maintenance cannot be scheduled for the
+                            fifth week of months that contain more than 28 days. Note
+                            that this parameter works in conjunction with the  daysOfWeek
+                            and hoursOfDay parameters to allow you to specify specific
+                            days of the week and hours that maintenance will be performed.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  nodeCount:
+                    description: The number of nodes to launch for a virtual machine
+                      DB system. Specify either 1 or 2. By default this will be set
+                      to 1.
+                    type: number
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  privateIp:
+                    description: A private IP address of your choice. Must be an available
+                      IP address within the subnet's CIDR. If you don't specify a
+                      value, Oracle automatically assigns a private IP address from
+                      the subnet. Supported for VM BM shape.
+                    type: string
+                  privateIpV6:
+                    description: A private IPv6 address of your choice. Must be an
+                      available IP address within the subnet's CIDR. If you don't
+                      specify a value and the subnet is dual stack, Oracle automatically
+                      assigns a private IPv6 address from the subnet.
+                    type: string
+                  recoStorageSizeInGb:
+                    description: The RECO/REDO storage size, in gigabytes, that is
+                      currently allocated to the DB system. Applies only for virtual
+                      machine DB systems.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: (Updatable) The shape of the DB system. The shape
+                      determines resources allocated to the DB system.
+                    type: string
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new database. Use DB_BACKUP for creating a new database by
+                      restoring from a backup. Use DATABASE for creating a new database
+                      from an existing database, including archive redo log data.
+                      The default is NONE.'
+                    type: string
+                  sourceDbSystemId:
+                    description: The OCID of the DB system.
+                    type: string
+                  sparseDiskgroup:
+                    description: If true, Sparse Diskgroup is configured for Exadata
+                      dbsystem. If False, Sparse diskgroup is not configured. Only
+                      applied for Exadata shape.
+                    type: boolean
+                  sshPublicKeys:
+                    description: (Updatable) The public key portion of the key pair
+                      to use for SSH access to the DB system. Multiple public keys
+                      can be provided. The length of the combined keys cannot exceed
+                      40,000 characters.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  storageVolumePerformanceMode:
+                    description: The block storage volume performance level. Valid
+                      values are BALANCED and HIGH_PERFORMANCE. See Block Volume Performance
+                      for more information.
+                    type: string
+                  subnetId:
+                    description: The OCID of the subnet the DB system is associated
+                      with.
+                    type: string
+                  subscriptionId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  timeZone:
+                    description: The time zone to use for the DB system. For details,
+                      see DB System Time Zones.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityDomain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityDomain)
+                || (has(self.initProvider) && has(self.initProvider.availabilityDomain))'
+            - message: spec.forProvider.compartmentId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.compartmentId)
+                || (has(self.initProvider) && has(self.initProvider.compartmentId))'
+            - message: spec.forProvider.dbHome is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dbHome)
+                || (has(self.initProvider) && has(self.initProvider.dbHome))'
+            - message: spec.forProvider.hostname is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.hostname)
+                || (has(self.initProvider) && has(self.initProvider.hostname))'
+            - message: spec.forProvider.shape is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shape)
+                || (has(self.initProvider) && has(self.initProvider.shape))'
+            - message: spec.forProvider.sshPublicKeys is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.sshPublicKeys)
+                || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))'
+            - message: spec.forProvider.subnetId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.subnetId)
+                || (has(self.initProvider) && has(self.initProvider.subnetId))'
+          status:
+            description: DbSystemStatus defines the observed state of DbSystem.
+            properties:
+              atProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the DB system is located.
+                    type: string
+                  backupNetworkNsgIds:
+                    description: (Updatable) A list of the OCIDs of the network security
+                      groups (NSGs) that the backup network of this DB system belongs
+                      to. Setting this to an empty array after the list is created
+                      removes the resource from all NSGs. For more information about
+                      NSGs, see Security Rules. Applicable only to Exadata systems.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  backupSubnetId:
+                    description: The OCID of the backup network subnet the DB system
+                      is associated with. Applicable only to Exadata DB systems.
+                    type: string
+                  clusterName:
+                    description: The cluster name for Exadata and 2-node RAC virtual
+                      machine DB systems. The cluster name must begin with an alphabetic
+                      character, and may contain hyphens (-). Underscores (_) are
+                      not permitted. The cluster name can be no longer than 11 characters
+                      and is not case sensitive.
+                    type: string
+                  clusterPlacementGroupId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment the DB system  belongs
+                      in.
+                    type: string
+                  computeCount:
+                    description: (Updatable) The number of compute servers for the
+                      DB system.
+                    type: number
+                  computeModel:
+                    description: (Updatable) The compute model for Base Database Service.
+                      This is required if using the computeCount parameter. If using
+                      cpuCoreCount then it is an error to specify computeModel to
+                      a non-null value. The ECPU compute model is the recommended
+                      model, and the OCPU compute model is legacy.
+                    type: string
+                  cpuCoreCount:
+                    description: '(Updatable) The number of CPU cores to enable for
+                      a bare metal or Exadata DB system or AMD VMDB Systems. The valid
+                      values depend on the specified shape:'
+                    type: number
+                  dataCollectionOptions:
+                    description: (Updatable) Indicates user preferences for the various
+                      diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM
+                      DBCS.
+                    items:
+                      properties:
+                        isDiagnosticsEventsEnabled:
+                          description: (Updatable) Indicates whether diagnostic collection
+                            is enabled for the VM cluster/Cloud VM cluster/VMBM DBCS.
+                            Enabling diagnostic collection allows you to receive Events
+                            service notifications for guest VM issues. Diagnostic
+                            collection also allows Oracle to provide enhanced service
+                            and proactive support for your Exadata system. You can
+                            enable diagnostic collection during VM cluster/Cloud VM
+                            cluster provisioning. You can also disable or enable it
+                            at any time using the UpdateVmCluster or updateCloudVmCluster
+                            API.
+                          type: boolean
+                        isHealthMonitoringEnabled:
+                          description: (Updatable) Indicates whether health monitoring
+                            is enabled for the VM cluster / Cloud VM cluster / VMBM
+                            DBCS. Enabling health monitoring allows Oracle to collect
+                            diagnostic data and share it with its operations and support
+                            personnel. You may also receive notifications for some
+                            events. Collecting health diagnostics enables Oracle to
+                            provide proactive support and enhanced service for your
+                            system. Optionally enable health monitoring while provisioning
+                            a system. You can also disable or enable health monitoring
+                            anytime using the UpdateVmCluster, UpdateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                        isIncidentLogsEnabled:
+                          description: (Updatable) Indicates whether incident logs
+                            and trace collection are enabled for the VM cluster /
+                            Cloud VM cluster / VMBM DBCS. Enabling incident logs collection
+                            allows Oracle to receive Events service notifications
+                            for guest VM issues, collect incident logs and traces,
+                            and use them to diagnose issues and resolve them. Optionally
+                            enable incident logs collection while provisioning a system.
+                            You can also disable or enable incident logs collection
+                            anytime using the UpdateVmCluster, updateCloudVmCluster
+                            or updateDbsystem API.
+                          type: boolean
+                      type: object
+                    type: array
+                  dataStoragePercentage:
+                    description: The percentage assigned to DATA storage (user data
+                      and database files). The remaining percentage is assigned to
+                      RECO storage (database redo logs, archive logs, and recovery
+                      manager backups). Specify 80 or 40. The default is 80 percent
+                      assigned to DATA storage. Not applicable for virtual machine
+                      DB systems. Required for BMDBs.
+                    type: number
+                  dataStorageSizeInGb:
+                    description: (Updatable) Size (in GB) of the initial data volume
+                      that will be created and attached to a virtual machine DB system.
+                      You can scale up storage after provisioning, as needed. Note
+                      that the total storage size attached will be more than the amount
+                      you specify to allow for REDO/RECO space and software volume.
+                      By default this will be set to 256. Required for VMDBs.
+                    type: number
+                  databaseEdition:
+                    description: The Oracle Database Edition that applies to all the
+                      databases on the DB system. Exadata DB systems and 2-node RAC
+                      DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.
+                    type: string
+                  dbHome:
+                    description: (Updatable) Details for creating a Database Home
+                      if you are creating a database by restoring from a database
+                      backup.
+                    items:
+                      properties:
+                        createAsync:
+                          type: boolean
+                        database:
+                          description: (Updatable) Details for creating a database
+                            by restoring from a source database system.
+                          items:
+                            properties:
+                              backupId:
+                                description: The backup OCID.
+                                type: string
+                              characterSet:
+                                description: '(Applicable when source=NONE) The character
+                                  set for the database.  The default is AL32UTF8.
+                                  Allowed values are:'
+                                type: string
+                              connectionStrings:
+                                items:
+                                  properties:
+                                    allConnectionStrings:
+                                      additionalProperties:
+                                        type: string
+                                      type: object
+                                      x-kubernetes-map-type: granular
+                                    cdbDefault:
+                                      type: string
+                                    cdbIpDefault:
+                                      type: string
+                                  type: object
+                                type: array
+                              databaseId:
+                                description: The database OCID.
+                                type: string
+                              databaseSoftwareImageId:
+                                description: (Applicable when source=NONE) The database
+                                  software image OCID
+                                type: string
+                              dbBackupConfig:
+                                description: (Applicable when source=DB_SYSTEM | NONE)
+                                  (Updatable) Backup Options To use any of the API
+                                  operations, you must be authorized in an IAM policy.
+                                  If you're not authorized, talk to an administrator.
+                                  If you're an administrator who needs to write policies
+                                  to give users access, see Getting Started with Policies.
+                                items:
+                                  properties:
+                                    autoBackupEnabled:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) If set to true, configures
+                                        automatic backups. If you previously used
+                                        RMAN or dbcli to configure backups and then
+                                        you switch to using the Console or the API
+                                        for backups, a new backup configuration is
+                                        created and associated with your database.
+                                        This means that you can no longer rely on
+                                        your previously configured unmanaged backups
+                                        to work.
+                                      type: boolean
+                                    autoBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Time window selected for
+                                        initiating automatic backup for the database
+                                        system. There are twelve available two-hour
+                                        time windows. If no option is selected, a
+                                        start time between 12:00 AM to 7:00 AM in
+                                        the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    autoFullBackupDay:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) Day of the week the full backup should
+                                        be applied on the database system. If no option
+                                        is selected, the value is null and we will
+                                        default to Sunday.
+                                      type: string
+                                    autoFullBackupWindow:
+                                      description: '(Applicable when source=DB_SYSTEM
+                                        | NONE) Time window selected for initiating
+                                        full backup for the database system. There
+                                        are twelve available two-hour time windows.
+                                        If no option is selected, the value is null
+                                        and a start time between 12:00 AM to 7:00
+                                        AM in the region of the database is automatically
+                                        chosen. For example, if the user selects SLOT_TWO
+                                        from the enum list, the automatic backup job
+                                        will start in between 2:00 AM (inclusive)
+                                        to 4:00 AM (exclusive).  Example: SLOT_TWO'
+                                      type: string
+                                    backupDeletionPolicy:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) This defines when the backups will
+                                        be deleted. - DELETE_IMMEDIATELY option keep
+                                        the backup for predefined time i.e 72 hours
+                                        and then delete permanently... - DELETE_AFTER_RETENTION_PERIOD
+                                        will keep the backups as per the policy defined
+                                        for database backups.
+                                      type: string
+                                    backupDestinationDetails:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Backup destination details.
+                                      items:
+                                        properties:
+                                          backupRetentionPolicyOnTerminate:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Defines the automatic and manual
+                                              backup retention policy for the Autonomous
+                                              Database termination.  The retention
+                                              policy set on the Autonomous Container
+                                              Database is not applicable for cross
+                                              region remote backups and backups hosted
+                                              on recovery Appliance backup destination.
+                                              Options are 'RETAIN_PER_RETENTION_WINDOW'
+                                              or 'RETAIN_FOR_72_HOURS'.The default
+                                              value is 'RETAIN_FOR_72_HOURS'.
+                                            type: string
+                                          dbrsPolicyId:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the DBRS policy
+                                              used for backup.
+                                            type: string
+                                          id:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The OCID of the backup destination.
+                                            type: string
+                                          isRemote:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates whether the backup
+                                              destination is cross-region or local.
+                                            type: boolean
+                                          isRetentionLockEnabled:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) Indicates if backup retention
+                                              is locked for all the database backups
+                                              in the Autonomous Container Database
+                                              (ACD). The retention window cannot be
+                                              decreased if the backup retention lock
+                                              is enabled. Once applied on the Autonomous
+                                              Container Database, the retention lock
+                                              cannot be removed, or the retention
+                                              period cannot be decreased after a 14-day
+                                              period. If the backup is a Long Term
+                                              Backup and retention lock is enabled,
+                                              the backup cannot be deleted and must
+                                              expire. The retention lock set on the
+                                              Autonomous Container Database is not
+                                              applicable for cross region remote backups
+                                              and backups hosted on recovery Appliance
+                                              backup destination.
+                                            type: boolean
+                                          remoteRegion:
+                                            description: (Applicable when source=DB_SYSTEM
+                                              | NONE) The name of the remote region
+                                              where the remote automatic incremental
+                                              backups will be stored.           For
+                                              information about valid region names,
+                                              see Regions and Availability Domains.
+                                            type: string
+                                          type:
+                                            description: Type of the database backup
+                                              destination.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    recoveryWindowInDays:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) (Updatable) Number of days between
+                                        the current and the earliest point of recoverability
+                                        covered by automatic backups. This value applies
+                                        to automatic backups only. After a new automatic
+                                        backup has been created, Oracle removes old
+                                        automatic backups that are created before
+                                        the window. When the value is updated, it
+                                        is applied to all existing automatic backups.
+                                      type: number
+                                    runImmediateFullBackup:
+                                      description: (Applicable when source=DB_SYSTEM
+                                        | NONE) If set to true, configures automatic
+                                        full backups in the local region (the region
+                                        of the DB system) for the first backup run
+                                        immediately.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              dbDomain:
+                                description: (Applicable when source=DB_SYSTEM) The
+                                  database domain. In a distributed database system,
+                                  DB_DOMAIN specifies the logical location of the
+                                  database within the network structure.
+                                type: string
+                              dbName:
+                                description: The display name of the database to be
+                                  created from the backup. It must begin with an alphabetic
+                                  character and can contain a maximum of eight alphanumeric
+                                  characters. Special characters are not permitted.
+                                type: string
+                              dbUniqueName:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                              dbWorkload:
+                                description: (Applicable when source=NONE) Deprecated.
+                                  The dbWorkload field has been deprecated for Exadata
+                                  Database Service on Dedicated Infrastructure, Exadata
+                                  Database Service on Cloud@Customer, and Base Database
+                                  Service. Support for this attribute will end in
+                                  November 2023. You may choose to update your custom
+                                  scripts to exclude the dbWorkload attribute. After
+                                  November 2023 if you pass a value to the dbWorkload
+                                  attribute, it will be ignored.
+                                type: string
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                                  | NONE) (Updatable) Defined tags for this resource.
+                                  Each key is predefined and scoped to a namespace.
+                                  For more information, see Resource Tags.
+                                type: object
+                                x-kubernetes-map-type: granular
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when source=DB_BACKUP |
+                                  DB_SYSTEM | NONE) (Updatable) Free-form tags for
+                                  this resource. Each tag is a simple key-value pair
+                                  with no predefined name, type, or namespace. For
+                                  more information, see Resource Tags.  Example: {"Department":
+                                  "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              id:
+                                description: (Applicable when source=DB_SYSTEM | NONE)
+                                  The OCID of the backup destination.
+                                type: string
+                              kmsKeyId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container that is used as the master
+                                  encryption key in database transparent data encryption
+                                  (TDE) operations.
+                                type: string
+                              kmsKeyVersionId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the key container version that is used in database
+                                  transparent data encryption (TDE) operations KMS
+                                  Key can have multiple key versions. If none is specified,
+                                  the current key version (latest) of the Key Id is
+                                  used for the operation. Autonomous AI Database Serverless
+                                  does not use key versions, hence is not applicable
+                                  for Autonomous AI Database Serverless instances.
+                                type: string
+                              lifecycleDetails:
+                                description: Additional information about the current
+                                  lifecycleState.
+                                type: string
+                              ncharacterSet:
+                                description: '(Applicable when source=NONE) The national
+                                  character set for the database.  The default is
+                                  AL16UTF16. Allowed values are: AL16UTF16 or UTF8.'
+                                type: string
+                              pdbName:
+                                description: (Applicable when source=NONE) The name
+                                  of the pluggable database. The name must begin with
+                                  an alphabetic character and can contain a maximum
+                                  of thirty alphanumeric characters. Special characters
+                                  are not permitted. Pluggable database should not
+                                  be same as database name.
+                                type: string
+                              pluggableDatabases:
+                                description: (Applicable when source=DATABASE | DB_BACKUP)
+                                  The list of pluggable databases that needs to be
+                                  restored into new database.
+                                items:
+                                  type: string
+                                type: array
+                              state:
+                                description: The current state of IORM configuration
+                                  for the Exadata DB system.
+                                type: string
+                              timeCreated:
+                                description: The date and time the DB system was created.
+                                type: string
+                              timeStampForPointInTimeRecovery:
+                                description: (Applicable when source=DATABASE) The
+                                  point in time of the original database from which
+                                  the new database is created. If not specifed, the
+                                  latest backup is used to create the database.
+                                type: string
+                              vaultId:
+                                description: (Applicable when source=NONE) The OCID
+                                  of the Oracle Cloud Infrastructure vault. This parameter
+                                  and secretId are required for Customer Managed Keys.
+                                type: string
+                            type: object
+                          type: array
+                        databaseSoftwareImageId:
+                          description: (Applicable when source=NONE) The database
+                            software image OCID
+                          type: string
+                        dbHomeLocation:
+                          type: string
+                        dbVersion:
+                          description: A valid Oracle Database version. For a list
+                            of supported versions, use the ListDbVersions operation.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: (Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Defined tags for this resource. Each
+                            key is predefined and scoped to a namespace. For more
+                            information, see Resource Tags.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: The user-provided name of the Database Home.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Applicable when source=DB_BACKUP | DB_SYSTEM
+                            | NONE) (Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        id:
+                          description: (Applicable when source=DB_SYSTEM | NONE) The
+                            OCID of the backup destination.
+                          type: string
+                        isUnifiedAuditingEnabled:
+                          description: (Applicable when source=DATABASE | DB_BACKUP
+                            | NONE) Indicates whether unified auditing is enabled
+                            or not
+                          type: boolean
+                        lastPatchHistoryEntryId:
+                          description: The OCID of the last patch history. This value
+                            is updated as soon as a patch operation starts.
+                          type: string
+                        lifecycleDetails:
+                          description: Additional information about the current lifecycleState.
+                          type: string
+                        state:
+                          description: The current state of IORM configuration for
+                            the Exadata DB system.
+                          type: string
+                        timeCreated:
+                          description: The date and time the DB system was created.
+                          type: string
+                      type: object
+                    type: array
+                  dbSystemOptions:
+                    description: The DB system options.
+                    items:
+                      properties:
+                        storageManagement:
+                          description: The storage option used in DB system. ASM -
+                            Automatic storage management LVM - Logical Volume management
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE)
+                      (Updatable) Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diskRedundancy:
+                    description: (Applicable when source=DATABASE | DB_BACKUP | NONE)
+                      The type of redundancy configured for the DB system. Normal
+                      is 2-way redundancy, recommended for test and development systems.
+                      High is 3-way redundancy, recommended for production systems.
+                    type: string
+                  displayName:
+                    description: The user-provided name of the Database Home.
+                    type: string
+                  domain:
+                    description: A domain name used for the DB system. If the Oracle-provided
+                      Internet and VCN Resolver is enabled for the specified subnet,
+                      the domain name for the subnet is used (do not provide one).
+                      Otherwise, provide a valid DNS domain name. Hyphens (-) are
+                      not permitted.
+                    type: string
+                  faultDomains:
+                    description: A Fault Domain is a grouping of hardware and infrastructure
+                      within an availability domain. Fault Domains let you distribute
+                      your instances so that they are not on the same physical hardware
+                      within a single availability domain. A hardware failure or maintenance
+                      that affects one Fault Domain does not affect DB systems in
+                      other Fault Domains.
+                    items:
+                      type: string
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when source=DB_BACKUP | DB_SYSTEM |
+                      NONE) (Updatable) Free-form tags for this resource. Each tag
+                      is a simple key-value pair with no predefined name, type, or
+                      namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  hostname:
+                    description: The hostname for the DB system. The hostname must
+                      begin with an alphabetic character, and can contain alphanumeric
+                      characters and hyphens (-). The maximum length of the hostname
+                      is 16 characters for bare metal and virtual machine DB systems,
+                      and 12 characters for Exadata DB systems.
+                    type: string
+                  id:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  iormConfigCache:
+                    description: The IORM settings of the Exadata DB system.
+                    items:
+                      properties:
+                        dbPlans:
+                          description: An array of IORM settings for all the database
+                            in the Exadata DB system.
+                          items:
+                            properties:
+                              dbName:
+                                description: The display name of the database to be
+                                  created from the backup. It must begin with an alphabetic
+                                  character and can contain a maximum of eight alphanumeric
+                                  characters. Special characters are not permitted.
+                                type: string
+                              flashCacheLimit:
+                                description: The flash cache limit for this database.
+                                  This value is internally configured based on the
+                                  share value assigned to the database.
+                                type: string
+                              share:
+                                description: The relative priority of this database.
+                                type: number
+                            type: object
+                          type: array
+                        dbSystemId:
+                          description: (Applicable when source=DB_SYSTEM | NONE) The
+                            OCID of the backup destination.
+                          type: string
+                        lifecycleDetails:
+                          description: Additional information about the current lifecycleState.
+                          type: string
+                        objective:
+                          description: The current value for the IORM objective. The
+                            default is AUTO.
+                          type: string
+                        state:
+                          description: The current state of IORM configuration for
+                            the Exadata DB system.
+                          type: string
+                      type: object
+                    type: array
+                  kmsKeyId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container that is used as the master encryption key in database
+                      transparent data encryption (TDE) operations.
+                    type: string
+                  kmsKeyVersionId:
+                    description: (Applicable when source=NONE) The OCID of the key
+                      container version that is used in database transparent data
+                      encryption (TDE) operations KMS Key can have multiple key versions.
+                      If none is specified, the current key version (latest) of the
+                      Key Id is used for the operation. Autonomous AI Database Serverless
+                      does not use key versions, hence is not applicable for Autonomous
+                      AI Database Serverless instances.
+                    type: string
+                  lastMaintenanceRunId:
+                    description: The OCID of the last maintenance run.
+                    type: string
+                  lastPatchHistoryEntryId:
+                    description: The OCID of the last patch history. This value is
+                      updated as soon as a patch operation starts.
+                    type: string
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to all the databases on the DB system. The default is LICENSE_INCLUDED.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycleState.
+                    type: string
+                  listenerPort:
+                    description: The port number configured for the listener on the
+                      DB system.
+                    type: number
+                  maintenanceWindow:
+                    description: The scheduling details for the quarterly maintenance
+                      window. Patching and system updates take place during the maintenance
+                      window.
+                    items:
+                      properties:
+                        customActionTimeoutInMins:
+                          description: (Applicable when source=NONE) (Updatable) Determines
+                            the amount of time the system will wait before the start
+                            of each database server patching operation. Custom action
+                            timeout is in minutes and valid value is between 15 to
+                            120 (inclusive).
+                          type: number
+                        daysOfWeek:
+                          description: (Applicable when source=NONE) (Updatable) Days
+                            during the week when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        hoursOfDay:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            window of hours during the day when maintenance should
+                            be performed. The window is a 4 hour slot. Valid values
+                            are - 0 - represents time slot 0:00 - 3:59 UTC - 4 - represents
+                            time slot 4:00 - 7:59 UTC - 8 - represents time slot 8:00
+                            - 11:59 UTC - 12 - represents time slot 12:00 - 15:59
+                            UTC - 16 - represents time slot 16:00 - 19:59 UTC - 20
+                            - represents time slot 20:00 - 23:59 UTC
+                          items:
+                            type: number
+                          type: array
+                        isCustomActionTimeoutEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the configuration of a custom action timeout
+                            (waiting period) between database server patching operations.
+                          type: boolean
+                        isMonthlyPatchingEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the monthly patching option.
+                          type: boolean
+                        leadTimeInWeeks:
+                          description: (Applicable when source=NONE) (Updatable) Lead
+                            time window allows user to set a lead time to prepare
+                            for a down time. The lead time is in weeks and valid value
+                            is between 1 to 4.
+                          type: number
+                        months:
+                          description: (Applicable when source=NONE) (Updatable) Months
+                            during the year when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        patchingMode:
+                          description: (Applicable when source=NONE) (Updatable) Cloud
+                            Exadata infrastructure node patching method, either "ROLLING"
+                            or "NONROLLING". Default value is ROLLING.
+                          type: string
+                        preference:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            maintenance window scheduling preference.
+                          type: string
+                        skipRu:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, skips the release update (RU) for the quarter. You
+                            cannot skip two consecutive quarters. An RU skip request
+                            will only be honoured if the current version of the Autonomous
+                            Container Database is supported for current quarter.
+                          items:
+                            type: boolean
+                          type: array
+                        weeksOfMonth:
+                          description: (Applicable when source=NONE) (Updatable) Weeks
+                            during the month when maintenance should be performed.
+                            Weeks start on the 1st, 8th, 15th, and 22nd days of the
+                            month, and have a duration of 7 days. Weeks start and
+                            end based on calendar dates, not days of the week. For
+                            example, to allow maintenance during the 2nd week of the
+                            month (from the 8th day to the 14th day of the month),
+                            use the value 2. Maintenance cannot be scheduled for the
+                            fifth week of months that contain more than 28 days. Note
+                            that this parameter works in conjunction with the  daysOfWeek
+                            and hoursOfDay parameters to allow you to specify specific
+                            days of the week and hours that maintenance will be performed.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  maintenanceWindowDetails:
+                    description: (Applicable when source=NONE) (Updatable) The scheduling
+                      details for the quarterly maintenance window. Patching and system
+                      updates take place during the maintenance window.
+                    items:
+                      properties:
+                        customActionTimeoutInMins:
+                          description: (Applicable when source=NONE) (Updatable) Determines
+                            the amount of time the system will wait before the start
+                            of each database server patching operation. Custom action
+                            timeout is in minutes and valid value is between 15 to
+                            120 (inclusive).
+                          type: number
+                        daysOfWeek:
+                          description: (Applicable when source=NONE) (Updatable) Days
+                            during the week when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        hoursOfDay:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            window of hours during the day when maintenance should
+                            be performed. The window is a 4 hour slot. Valid values
+                            are - 0 - represents time slot 0:00 - 3:59 UTC - 4 - represents
+                            time slot 4:00 - 7:59 UTC - 8 - represents time slot 8:00
+                            - 11:59 UTC - 12 - represents time slot 12:00 - 15:59
+                            UTC - 16 - represents time slot 16:00 - 19:59 UTC - 20
+                            - represents time slot 20:00 - 23:59 UTC
+                          items:
+                            type: number
+                          type: array
+                        isCustomActionTimeoutEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the configuration of a custom action timeout
+                            (waiting period) between database server patching operations.
+                          type: boolean
+                        isMonthlyPatchingEnabled:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, enables the monthly patching option.
+                          type: boolean
+                        leadTimeInWeeks:
+                          description: (Applicable when source=NONE) (Updatable) Lead
+                            time window allows user to set a lead time to prepare
+                            for a down time. The lead time is in weeks and valid value
+                            is between 1 to 4.
+                          type: number
+                        months:
+                          description: (Applicable when source=NONE) (Updatable) Months
+                            during the year when maintenance should be performed.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) Name of the day of the week.
+                                type: string
+                            type: object
+                          type: array
+                        patchingMode:
+                          description: (Applicable when source=NONE) (Updatable) Cloud
+                            Exadata infrastructure node patching method, either "ROLLING"
+                            or "NONROLLING". Default value is ROLLING.
+                          type: string
+                        preference:
+                          description: (Applicable when source=NONE) (Updatable) The
+                            maintenance window scheduling preference.
+                          type: string
+                        skipRu:
+                          description: (Applicable when source=NONE) (Updatable) If
+                            true, skips the release update (RU) for the quarter. You
+                            cannot skip two consecutive quarters. An RU skip request
+                            will only be honoured if the current version of the Autonomous
+                            Container Database is supported for current quarter.
+                          items:
+                            type: boolean
+                          type: array
+                        weeksOfMonth:
+                          description: (Applicable when source=NONE) (Updatable) Weeks
+                            during the month when maintenance should be performed.
+                            Weeks start on the 1st, 8th, 15th, and 22nd days of the
+                            month, and have a duration of 7 days. Weeks start and
+                            end based on calendar dates, not days of the week. For
+                            example, to allow maintenance during the 2nd week of the
+                            month (from the 8th day to the 14th day of the month),
+                            use the value 2. Maintenance cannot be scheduled for the
+                            fifth week of months that contain more than 28 days. Note
+                            that this parameter works in conjunction with the  daysOfWeek
+                            and hoursOfDay parameters to allow you to specify specific
+                            days of the week and hours that maintenance will be performed.
+                          items:
+                            type: number
+                          type: array
+                      type: object
+                    type: array
+                  memorySizeInGbs:
+                    description: Memory allocated to the DB system, in gigabytes.
+                    type: number
+                  nextMaintenanceRunId:
+                    description: The OCID of the next maintenance run.
+                    type: string
+                  nodeCount:
+                    description: The number of nodes to launch for a virtual machine
+                      DB system. Specify either 1 or 2. By default this will be set
+                      to 1.
+                    type: number
+                  nsgIds:
+                    description: '(Updatable) The list of OCIDs for the network security
+                      groups (NSGs) to which this resource belongs. Setting this to
+                      an empty list removes all resources from all NSGs. For more
+                      information about NSGs, see Security Rules. NsgIds restrictions:'
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  osVersion:
+                    description: The most recent OS Patch Version applied on the DB
+                      system.
+                    type: string
+                  pointInTimeDataDiskCloneTimestamp:
+                    description: The point in time for a cloned database system when
+                      the data disks were cloned from the source database system,
+                      as described in RFC 3339.
+                    type: string
+                  privateIp:
+                    description: A private IP address of your choice. Must be an available
+                      IP address within the subnet's CIDR. If you don't specify a
+                      value, Oracle automatically assigns a private IP address from
+                      the subnet. Supported for VM BM shape.
+                    type: string
+                  privateIpV6:
+                    description: A private IPv6 address of your choice. Must be an
+                      available IP address within the subnet's CIDR. If you don't
+                      specify a value and the subnet is dual stack, Oracle automatically
+                      assigns a private IPv6 address from the subnet.
+                    type: string
+                  recoStorageSizeInGb:
+                    description: The RECO/REDO storage size, in gigabytes, that is
+                      currently allocated to the DB system. Applies only for virtual
+                      machine DB systems.
+                    type: number
+                  scanDnsName:
+                    description: The FQDN of the DNS record for the SCAN IP addresses
+                      that are associated with the DB system.
+                    type: string
+                  scanDnsRecordId:
+                    description: The OCID of the DNS record for the SCAN IP addresses
+                      that are associated with the DB system.
+                    type: string
+                  scanIpIds:
+                    description: The OCID of the Single Client Access Name (SCAN)
+                      IPv4 addresses associated with the DB system. SCAN IPv4 addresses
+                      are typically used for load balancing and are not assigned to
+                      any interface. Oracle Clusterware directs the requests to the
+                      appropriate nodes in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  scanIpv6Ids:
+                    description: The OCID of the Single Client Access Name (SCAN)
+                      IPv6 addresses associated with the DB system. SCAN IPv6 addresses
+                      are typically used for load balancing and are not assigned to
+                      any interface. Oracle Clusterware directs the requests to the
+                      appropriate nodes in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security Attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "audit"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: (Updatable) The shape of the DB system. The shape
+                      determines resources allocated to the DB system.
+                    type: string
+                  source:
+                    description: 'The source of the database: Use NONE for creating
+                      a new database. Use DB_BACKUP for creating a new database by
+                      restoring from a backup. Use DATABASE for creating a new database
+                      from an existing database, including archive redo log data.
+                      The default is NONE.'
+                    type: string
+                  sourceDbSystemId:
+                    description: The OCID of the DB system.
+                    type: string
+                  sparseDiskgroup:
+                    description: If true, Sparse Diskgroup is configured for Exadata
+                      dbsystem. If False, Sparse diskgroup is not configured. Only
+                      applied for Exadata shape.
+                    type: boolean
+                  sshPublicKeys:
+                    description: (Updatable) The public key portion of the key pair
+                      to use for SSH access to the DB system. Multiple public keys
+                      can be provided. The length of the combined keys cannot exceed
+                      40,000 characters.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  state:
+                    description: The current state of IORM configuration for the Exadata
+                      DB system.
+                    type: string
+                  storageVolumePerformanceMode:
+                    description: The block storage volume performance level. Valid
+                      values are BALANCED and HIGH_PERFORMANCE. See Block Volume Performance
+                      for more information.
+                    type: string
+                  subnetId:
+                    description: The OCID of the subnet the DB system is associated
+                      with.
+                    type: string
+                  subscriptionId:
+                    description: (Applicable when source=DB_SYSTEM | NONE) The OCID
+                      of the backup destination.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: System tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The date and time the DB system was created.
+                    type: string
+                  timeZone:
+                    description: The time zone to use for the DB system. For details,
+                      see DB System Time Zones.
+                    type: string
+                  version:
+                    description: The Oracle Database version of the DB system.
+                    type: string
+                  vipIds:
+                    description: The OCID of the virtual IPv4 (VIP) addresses associated
+                      with the DB system. The Cluster Ready Services (CRS) creates
+                      and maintains one VIPv4 address for each node in the DB system
+                      to enable failover. If one node fails, the VIPv4 is reassigned
+                      to another active node in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  vipv6ids:
+                    description: The OCID of the virtual IPv6 (VIP) addresses associated
+                      with the DB system. The Cluster Ready Services (CRS) creates
+                      and maintains one VIP IpV6 address for each node in the DB system
+                      to enable failover. If one node fails, the VIP is reassigned
+                      to another active node in the cluster.
+                    items:
+                      type: string
+                    type: array
+                  zoneId:
+                    description: The OCID of the zone the DB system is associated
+                      with.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

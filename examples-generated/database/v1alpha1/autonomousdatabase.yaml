@@ -1,0 +1,115 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabase
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database
+  name: test-autonomous-database
+spec:
+  forProvider:
+    adminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    arePrimaryWhitelistedIpsUsed: ${var.autonomous_database_are_primary_whitelisted_ips_used}
+    autoRefreshFrequencyInSeconds: ${var.autonomous_database_auto_refresh_frequency_in_seconds}
+    autoRefreshPointLagInSeconds: ${var.autonomous_database_auto_refresh_point_lag_in_seconds}
+    autonomousContainerDatabaseId: ${oci_database_autonomous_container_database.test_autonomous_container_database.id}
+    autonomousDatabaseBackupId: ${oci_database_autonomous_database_backup.test_autonomous_database_backup.id}
+    autonomousDatabaseId: ${oci_database_autonomous_database.test_autonomous_database.id}
+    autonomousMaintenanceScheduleType: ${var.autonomous_database_autonomous_maintenance_schedule_type}
+    backupRetentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}
+    byolComputeCountLimit: ${var.autonomous_database_byol_compute_count_limit}
+    characterSet: ${var.autonomous_database_character_set}
+    cloneTableSpaceList: ${var.autonomous_database_clone_table_space_list}
+    cloneType: ${var.autonomous_database_clone_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: ${var.autonomous_database_compute_count}
+    computeModel: ${var.autonomous_database_compute_model}
+    cpuCoreCount: ${var.autonomous_database_cpu_core_count}
+    customerContacts:
+    - email: ${var.autonomous_database_customer_contacts_email}
+    dataSafeStatus: ${var.autonomous_database_data_safe_status}
+    dataStorageSizeInGb: ${var.autonomous_database_data_storage_size_in_gb}
+    dataStorageSizeInTbs: ${var.autonomous_database_data_storage_size_in_tbs}
+    databaseEdition: ${var.autonomous_database_database_edition}
+    dbName: ${var.autonomous_database_db_name}
+    dbToolsDetails:
+    - computeCount: ${var.autonomous_database_db_tools_details_compute_count}
+      isEnabled: ${var.autonomous_database_db_tools_details_is_enabled}
+      maxIdleTimeInMinutes: ${var.autonomous_database_db_tools_details_max_idle_time_in_minutes}
+      name: ${var.autonomous_database_db_tools_details_name}
+    dbVersion: ${var.autonomous_database_db_version}
+    dbWorkload: ${var.autonomous_database_db_workload}
+    definedTags: ${var.autonomous_database_defined_tags}
+    disasterRecoveryType: ${var.autonomous_database_disaster_recovery_type}
+    displayName: ${var.autonomous_database_display_name}
+    encryptionKey:
+    - arnRole: ${var.autonomous_database_encryption_key_arn_role}
+      autonomousDatabaseProvider: ${var.autonomous_database_encryption_key_autonomous_database_provider}
+      certificateDirectoryName: ${var.autonomous_database_encryption_key_certificate_directory_name}
+      certificateId: ${oci_apigateway_certificate.test_certificate.id}
+      directoryName: ${var.autonomous_database_encryption_key_directory_name}
+      externalId: ${oci_database_external.test_external.id}
+      keyArn: ${var.autonomous_database_encryption_key_key_arn}
+      keyName: ${oci_kms_key.test_key.name}
+      keyRing: ${var.autonomous_database_encryption_key_key_ring}
+      kmsKeyId: ${oci_kms_key.test_key.id}
+      kmsRestEndpoint: ${var.autonomous_database_encryption_key_kms_rest_endpoint}
+      location: ${var.autonomous_database_encryption_key_location}
+      okvKmsKey: ${var.autonomous_database_encryption_key_okv_kms_key}
+      okvUri: ${var.autonomous_database_encryption_key_okv_uri}
+      project: ${var.autonomous_database_encryption_key_project}
+      serviceEndpointUri: ${var.autonomous_database_encryption_key_service_endpoint_uri}
+      vaultId: ${oci_kms_vault.test_vault.id}
+      vaultUri: ${var.autonomous_database_encryption_key_vault_uri}
+    freeformTags:
+      Department: Finance
+    inMemoryPercentage: ${var.autonomous_database_in_memory_percentage}
+    isAccessControlEnabled: ${var.autonomous_database_is_access_control_enabled}
+    isAutoScalingEnabled: ${var.autonomous_database_is_auto_scaling_enabled}
+    isAutoScalingForStorageEnabled: ${var.autonomous_database_is_auto_scaling_for_storage_enabled}
+    isBackupRetentionLocked: ${var.autonomous_database_is_backup_retention_locked}
+    isDataGuardEnabled: ${var.autonomous_database_is_data_guard_enabled}
+    isDedicated: ${var.autonomous_database_is_dedicated}
+    isDevTier: ${var.autonomous_database_is_dev_tier}
+    isFreeTier: ${var.autonomous_database_is_free_tier}
+    isLocalDataGuardEnabled: ${var.autonomous_database_is_local_data_guard_enabled}
+    isMtlsConnectionRequired: ${var.autonomous_database_is_mtls_connection_required}
+    isPreviewVersionWithServiceTermsAccepted: ${var.autonomous_database_is_preview_version_with_service_terms_accepted}
+    isReplicateAutomaticBackups: ${var.autonomous_database_is_replicate_automatic_backups}
+    kmsKeyId: ${oci_kms_key.test_key.id}
+    licenseModel: ${var.autonomous_database_license_model}
+    ncharacterSet: ${var.autonomous_database_ncharacter_set}
+    nsgIds: ${var.autonomous_database_nsg_ids}
+    ocpuCount: ${var.autonomous_database_ocpu_count}
+    openMode: ${var.autonomous_database_open_mode}
+    privateEndpointIp: ${var.autonomous_database_private_endpoint_ip}
+    privateEndpointLabel: ${var.autonomous_database_private_endpoint_label}
+    refreshableMode: ${var.autonomous_database_refreshable_mode}
+    remoteDisasterRecoveryType: ${var.autonomous_database_remote_disaster_recovery_type}
+    resourcePoolLeaderId: ${oci_database_resource_pool_leader.test_resource_pool_leader.id}
+    resourcePoolSummary:
+    - isDisabled: ${var.autonomous_database_resource_pool_summary_is_disabled}
+      poolSize: ${var.autonomous_database_resource_pool_summary_pool_size}
+    scheduledOperations:
+    - dayOfWeek:
+      - name: ${var.autonomous_database_scheduled_operations_day_of_week_name}
+      scheduledStartTime: ${var.autonomous_database_scheduled_operations_scheduled_start_time}
+      scheduledStopTime: ${var.autonomous_database_scheduled_operations_scheduled_stop_time}
+    secretId: ${oci_vault_secret.test_secret.id}
+    secretVersionNumber: ${var.autonomous_database_secret_version_number}
+    securityAttributes: ${var.autonomous_database_security_attributes}
+    source: ${var.autonomous_database_source}
+    sourceId: ${oci_database_source.test_source.id}
+    standbyWhitelistedIps: ${var.autonomous_database_standby_whitelisted_ips}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
+    timeOfAutoRefreshStart: ${var.autonomous_database_time_of_auto_refresh_start}
+    timestamp: ${var.autonomous_database_timestamp}
+    useLatestAvailableBackupTimeStamp: ${var.autonomous_database_use_latest_available_backup_time_stamp}
+    vaultId: ${oci_kms_vault.test_vault.id}
+    whitelistedIps: ${var.autonomous_database_whitelisted_ips}

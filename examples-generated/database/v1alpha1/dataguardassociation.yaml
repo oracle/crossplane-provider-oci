@@ -1,0 +1,53 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DataGuardAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_data_guard_association
+  name: test-data-guard-association
+spec:
+  forProvider:
+    availabilityDomain: ${var.data_guard_association_availability_domain}
+    backupNetworkNsgIds: ${var.data_guard_association_backup_network_nsg_ids}
+    computeCount: ${var.data_guard_association_compute_count}
+    computeModel: ${var.data_guard_association_compute_model}
+    cpuCoreCount: ${var.data_guard_association_cpu_core_count}
+    creationType: ${var.data_guard_association_creation_type}
+    dataCollectionOptions:
+    - isDiagnosticsEventsEnabled: ${var.data_guard_association_data_collection_options_is_diagnostics_events_enabled}
+      isHealthMonitoringEnabled: ${var.data_guard_association_data_collection_options_is_health_monitoring_enabled}
+      isIncidentLogsEnabled: ${var.data_guard_association_data_collection_options_is_incident_logs_enabled}
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseDefinedTags: ${var.data_guard_association_database_defined_tags}
+    databaseFreeformTags: ${var.data_guard_association_database_freeform_tags}
+    databaseId: ${oci_database_database.test_database.id}
+    databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+    dbSystemDefinedTags: ${var.data_guard_association_db_system_defined_tags}
+    dbSystemFreeformTags: ${var.data_guard_association_db_system_freeform_tags}
+    dbSystemSecurityAttributes: ${var.data_guard_association_db_system_security_attributes}
+    deleteStandbyDbHomeOnDelete: ${var.data_guard_association_delete_standby_db_home_on_delete}
+    displayName: ${var.data_guard_association_display_name}
+    domain: ${var.data_guard_association_domain}
+    faultDomains: ${var.data_guard_association_fault_domains}
+    hostname: ${var.data_guard_association_hostname}
+    isActiveDataGuardEnabled: ${var.data_guard_association_is_active_data_guard_enabled}
+    licenseModel: ${var.data_guard_association_license_model}
+    nodeCount: ${var.data_guard_association_node_count}
+    nsgIds: ${var.data_guard_association_nsg_ids}
+    peerDbHomeId: ${oci_database_db_home.test_db_home.id}
+    peerDbSystemId: ${oci_database_db_system.test_db_system.id}
+    peerDbUniqueName: ${var.data_guard_association_peer_db_unique_name}
+    peerSidPrefix: ${var.data_guard_association_peer_sid_prefix}
+    peerVmClusterId: ${oci_database_vm_cluster.test_vm_cluster.id}
+    privateIp: ${var.data_guard_association_private_ip}
+    privateIpV6: ${var.data_guard_association_private_ip_v6}
+    protectionMode: ${var.data_guard_association_protection_mode}
+    shape: ${var.data_guard_association_shape}
+    storageVolumePerformanceMode: ${var.data_guard_association_storage_volume_performance_mode}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    timeZone: ${var.data_guard_association_time_zone}
+    transportType: ${var.data_guard_association_transport_type}

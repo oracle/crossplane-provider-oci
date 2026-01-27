@@ -1,0 +1,27 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_database_tools_private_endpoint
+  name: test-database-tools-private-endpoint
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.database_tools_private_endpoint_description}
+    displayName: ${var.database_tools_private_endpoint_display_name}
+    endpointServiceId: ${oci_core_service.test_service.id}
+    freeformTags:
+      bar-key: value
+    locks:
+    - message: ${var.database_tools_private_endpoint_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.database_tools_private_endpoint_locks_time_created}
+      type: ${var.database_tools_private_endpoint_locks_type}
+    nsgIds: ${var.database_tools_private_endpoint_nsg_ids}
+    privateEndpointIp: ${var.database_tools_private_endpoint_private_endpoint_ip}
+    securityAttributes: ${var.database_tools_private_endpoint_security_attributes}
+    subnetId: ${oci_core_subnet.test_subnet.id}

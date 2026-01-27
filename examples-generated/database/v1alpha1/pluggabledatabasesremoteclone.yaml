@@ -1,0 +1,26 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: PluggableDatabasesRemoteClone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabasesremoteclone
+  labels:
+    testing.upbound.io/example-name: test_pluggable_databases_remote_clone
+  name: test-pluggable-databases-remote-clone
+spec:
+  forProvider:
+    clonedPdbName: ${var.pluggable_databases_remote_clone_cloned_pdb_name}
+    pdbAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    shouldPdbAdminAccountBeLocked: ${var.pluggable_databases_remote_clone_should_pdb_admin_account_be_locked}
+    sourceContainerDbAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    targetContainerDatabaseId: ${oci_database_database.test_database.id}
+    targetTdeWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

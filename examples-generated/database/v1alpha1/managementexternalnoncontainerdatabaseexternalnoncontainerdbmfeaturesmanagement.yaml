@@ -1,0 +1,23 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalnoncontainerdatabaseExternalNonContainerDbmFeaturesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalnoncontainerdatabaseexternalnoncontainerdbmfeaturesmanagement
+  labels:
+    testing.upbound.io/example-name: test_externalnoncontainerdatabase_external_non_container_dbm_features_management
+  name: test-externalnoncontainerdatabase-external-non-container-dbm-features-management
+spec:
+  forProvider:
+    enableExternalNonContainerDbmFeature: ${var.enable_external_non_container_dbm_feature}
+    externalNonContainerDatabaseId: ${oci_database_external_non_container_database.test_external_non_container_database.id}
+    featureDetails:
+    - canEnableAllCurrentPdbs: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_can_enable_all_current_pdbs}
+      connectorDetails:
+      - connectorType: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_connector_details_connector_type}
+        databaseConnectorId: ${oci_database_management_database_connector.test_database_connector.id}
+        managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+        privateEndPointId: ${oci_database_management_private_end_point.test_private_end_point.id}
+      enable_external_non_container_dbm_feature: ${var.enable_external_non_container_dbm_feature}
+      feature: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_feature}
+      isAutoEnablePluggableDatabase: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_is_auto_enable_pluggable_database}
+      licenseModel: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_license_model}

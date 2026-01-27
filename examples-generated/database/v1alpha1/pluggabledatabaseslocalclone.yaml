@@ -1,0 +1,21 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: PluggableDatabasesLocalClone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabaseslocalclone
+  labels:
+    testing.upbound.io/example-name: test_pluggable_databases_local_clone
+  name: test-pluggable-databases-local-clone
+spec:
+  forProvider:
+    clonedPdbName: ${var.pluggable_databases_local_clone_cloned_pdb_name}
+    pdbAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    shouldPdbAdminAccountBeLocked: ${var.pluggable_databases_local_clone_should_pdb_admin_account_be_locked}
+    targetTdeWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

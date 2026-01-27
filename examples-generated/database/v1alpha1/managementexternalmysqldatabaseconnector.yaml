@@ -1,0 +1,21 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalMySqlDatabaseConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalmysqldatabaseconnector
+  labels:
+    testing.upbound.io/example-name: test_external_my_sql_database_connector
+  name: test-external-my-sql-database-connector
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    connectorDetails:
+    - credentialType: ${var.external_my_sql_database_connector_connector_details_credential_type}
+      displayName: ${var.external_my_sql_database_connector_connector_details_display_name}
+      externalDatabaseId: ${oci_database_management_external_database.test_external_database.id}
+      hostName: ${var.external_my_sql_database_connector_connector_details_host_name}
+      macsAgentId: ${oci_cloud_bridge_agent.test_agent.id}
+      networkProtocol: ${var.external_my_sql_database_connector_connector_details_network_protocol}
+      port: ${var.external_my_sql_database_connector_connector_details_port}
+      sslSecretId: ${oci_vault_secret.test_secret.id}
+    isTestConnectionParam: ${var.external_my_sql_database_connector_is_test_connection_param}

@@ -1,0 +1,12 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbNodeSnapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbnodesnapshot
+  labels:
+    testing.upbound.io/example-name: test_db_node_snapshot
+  name: test-db-node-snapshot
+spec:
+  forProvider:
+    dbnodeSnapshotId: ${oci_database_db_node_snapshot_management.test_db_node_snapshot_management.snapshots[0].id}
+    mountDbnodeId: "null"

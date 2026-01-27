@@ -1,0 +1,18 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingplan
+  labels:
+    testing.upbound.io/example-name: test_scheduling_plan
+  name: test-scheduling-plan
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.scheduling_plan_defined_tags}
+    freeformTags:
+      Department: Finance
+    isUsingRecommendedScheduledActions: ${var.scheduling_plan_is_using_recommended_scheduled_actions}
+    resourceId: ${oci_cloud_guard_resource.test_resource.id}
+    schedulingPolicyId: ${oci_database_scheduling_policy.test_scheduling_policy.id}
+    serviceType: ${var.scheduling_plan_service_type}

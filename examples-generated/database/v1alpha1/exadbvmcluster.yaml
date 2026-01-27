@@ -1,0 +1,47 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadbVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: test_exadb_vm_cluster
+  name: test-exadb-vm-cluster
+spec:
+  forProvider:
+    availabilityDomain: ${var.exadb_vm_cluster_availability_domain}
+    backupNetworkNsgIds: ${var.exadb_vm_cluster_backup_network_nsg_ids}
+    backupSubnetId: ${oci_core_subnet.test_subnet.id}
+    clusterName: ${var.exadb_vm_cluster_cluster_name}
+    compartmentId: ${var.compartment_id}
+    dataCollectionOptions:
+    - isDiagnosticsEventsEnabled: ${var.exadb_vm_cluster_data_collection_options_is_diagnostics_events_enabled}
+      isHealthMonitoringEnabled: ${var.exadb_vm_cluster_data_collection_options_is_health_monitoring_enabled}
+      isIncidentLogsEnabled: ${var.exadb_vm_cluster_data_collection_options_is_incident_logs_enabled}
+    definedTags: ${var.exadb_vm_cluster_defined_tags}
+    displayName: ${var.exadb_vm_cluster_display_name}
+    domain: ${var.exadb_vm_cluster_domain}
+    exascaleDbStorageVaultId: ${oci_database_exascale_db_storage_vault.test_exascale_db_storage_vault.id}
+    freeformTags:
+      Department: Finance
+    gridImageId: ${oci_core_image.test_image.id}
+    hostname: ${var.exadb_vm_cluster_hostname}
+    licenseModel: ${var.exadb_vm_cluster_license_model}
+    nodeConfig:
+    - enabledEcpuCountPerNode: ${var.exadb_vm_cluster_enabled_ecpu_count_per_node}
+      totalEcpuCountPerNode: ${var.exadb_vm_cluster_total_ecpu_count_per_node}
+      vmFileSystemStorageSizeGbsPerNode: ${var.exadb_vm_cluster_vm_file_system_storage_size_in_gbs_per_node}
+    nodeResource:
+    - nodeName: node1
+    - nodeName: node2
+    nsgIds: ${var.exadb_vm_cluster_nsg_ids}
+    privateZoneId: ${oci_dns_zone.test_zone.id}
+    scanListenerPortTcp: ${var.exadb_vm_cluster_scan_listener_port_tcp}
+    scanListenerPortTcpSsl: ${var.exadb_vm_cluster_scan_listener_port_tcp_ssl}
+    securityAttributes: ${var.exadb_vm_cluster_security_attributes}
+    shape: ${var.exadb_vm_cluster_shape}
+    shapeAttribute: ${var.exadb_vm_cluster_shape_attribute}
+    sshPublicKeys: ${var.exadb_vm_cluster_ssh_public_keys}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    subscriptionId: ${var.tenant_subscription_id}
+    systemVersion: ${var.exadb_vm_cluster_system_version}
+    timeZone: ${var.exadb_vm_cluster_time_zone}

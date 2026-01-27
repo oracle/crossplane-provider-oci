@@ -1,0 +1,19 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseSaasAdminUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesaasadminuser
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_saas_admin_user
+  name: test-autonomous-database-saas-admin-user
+spec:
+  forProvider:
+    accessType: ${var.autonomous_database_saas_admin_user_access_type}
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    duration: ${var.autonomous_database_saas_admin_user_duration}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

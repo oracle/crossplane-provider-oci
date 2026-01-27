@@ -1,0 +1,17 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataIormConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadataiormconfig
+  labels:
+    testing.upbound.io/example-name: test_exadata_iorm_config
+  name: test-exadata-iorm-config
+spec:
+  forProvider:
+    dbPlans:
+    - dbName: ${var.exadata_iorm_config_db_plans_db_name}
+      share: ${var.exadata_iorm_config_db_plans_share}
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+    objective: AUTO

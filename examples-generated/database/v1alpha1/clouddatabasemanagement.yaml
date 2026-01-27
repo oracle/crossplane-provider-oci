@@ -1,0 +1,22 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudDatabaseManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test
+  name: test
+spec:
+  forProvider:
+    credentialdetails:
+    - passwordSecretId: ${var.database_cloud_database_management_details_password_secret_id}
+      userName: ${var.database_cloud_database_management_details_user_name}
+    databaseId: ${oci_database_database.test_database.id}
+    enableManagement: ${var.database_cloud_database_management_details_enable_management}
+    managementType: ${var.database_cloud_database_management_details_management_type}
+    port: ${var.cloud_database_management_port}
+    privateEndPointId: ${var.database_cloud_database_management_details_private_end_point_id}
+    protocol: ${var.cloud_database_management_protocol}
+    role: ${var.cloud_database_management_role}
+    serviceName: ${var.database_cloud_database_management_details_service_name}
+    sslSecretId: ${oci_vault_secret.test_secret.id}

@@ -1,0 +1,22 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DatabaseSoftwareImage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesoftwareimage
+  labels:
+    testing.upbound.io/example-name: test_database_software_image
+  name: test-database-software-image
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    databaseSoftwareImageOneOffPatches: ${var.database_software_image_database_software_image_one_off_patches}
+    databaseVersion: ${var.database_software_image_database_version}
+    definedTags: ${var.database_software_image_defined_tags}
+    displayName: ${var.database_software_image_display_name}
+    freeformTags:
+      Department: Finance
+    imageShapeFamily: ${var.database_software_image_image_shape_family}
+    imageType: ${var.database_software_image_image_type}
+    lsInventory: ${var.database_software_image_ls_inventory}
+    patchSet: ${var.database_software_image_patch_set}
+    sourceDbHomeId: ${oci_database_db_home.test_db_home.id}

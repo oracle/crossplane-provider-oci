@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalAsmInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalasminstance
+  labels:
+    testing.upbound.io/example-name: test_external_asm_instance
+  name: test-external-asm-instance
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    externalAsmInstanceId: ${oci_database_management_external_asm_instance.test_external_asm_instance.id}
+    freeformTags:
+      Department: Finance

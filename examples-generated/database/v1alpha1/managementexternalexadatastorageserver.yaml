@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalExadataStorageServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalexadatastorageserver
+  labels:
+    testing.upbound.io/example-name: test_external_exadata_storage_server
+  name: test-external-exadata-storage-server
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    externalExadataStorageServerId: ${oci_database_management_external_exadata_storage_server.test_external_exadata_storage_server.id}
+    freeformTags:
+      Department: Finance

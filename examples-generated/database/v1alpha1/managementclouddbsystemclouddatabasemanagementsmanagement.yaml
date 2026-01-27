@@ -1,0 +1,14 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudDbSystemCloudDatabaseManagementsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementclouddbsystemclouddatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_cloud_db_system_cloud_database_managements_management
+  name: test-cloud-db-system-cloud-database-managements-management
+spec:
+  forProvider:
+    cloudDbSystemId: ${oci_database_management_cloud_db_system.test_cloud_db_system.id}
+    enableCloudDatabaseManagement: ${var.enable_cloud_database_management}
+    isEnabled: ${var.cloud_db_system_cloud_database_managements_management_is_enabled}
+    metadata: ${var.cloud_db_system_cloud_database_managements_management_metadata}

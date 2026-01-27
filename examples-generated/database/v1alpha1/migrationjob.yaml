@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MigrationJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migrationjob
+  labels:
+    testing.upbound.io/example-name: test_job
+  name: test-job
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.job_display_name}
+    freeformTags: ${var.job_freeform_tags}
+    jobId: ${oci_database_migration_job.test_job.id}

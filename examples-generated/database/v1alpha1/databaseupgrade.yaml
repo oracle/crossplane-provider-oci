@@ -1,0 +1,18 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DatabaseUpgrade
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databaseupgrade
+  labels:
+    testing.upbound.io/example-name: test_database_upgrade
+  name: test-database-upgrade
+spec:
+  forProvider:
+    action: ${var.database_upgrade_action}
+    databaseId: ${oci_database_database.test_database.id}
+    databaseUpgradeSourceDetails:
+    - databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+      db_home_id: ${oci_database_db_home.test_db_home.id}
+      dbVersion: ${var.database_upgrade_database_upgrade_source_details_db_version}
+      options: ${var.database_upgrade_database_upgrade_source_details_options}
+      source: ${var.database_upgrade_database_upgrade_source_details_source}

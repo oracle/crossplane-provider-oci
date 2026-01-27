@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudClusterInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementcloudclusterinstance
+  labels:
+    testing.upbound.io/example-name: test_cloud_cluster_instance
+  name: test-cloud-cluster-instance
+spec:
+  forProvider:
+    cloudClusterInstanceId: ${oci_database_management_cloud_cluster_instance.test_cloud_cluster_instance.id}
+    cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance

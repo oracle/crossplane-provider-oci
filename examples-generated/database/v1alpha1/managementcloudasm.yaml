@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudAsm
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementcloudasm
+  labels:
+    testing.upbound.io/example-name: test_cloud_asm
+  name: test-cloud-asm
+spec:
+  forProvider:
+    cloudAsmId: ${oci_database_management_cloud_asm.test_cloud_asm.id}
+    cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance

@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudListener
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementcloudlistener
+  labels:
+    testing.upbound.io/example-name: test_cloud_listener
+  name: test-cloud-listener
+spec:
+  forProvider:
+    cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
+    cloudListenerId: ${oci_database_management_cloud_listener.test_cloud_listener.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance

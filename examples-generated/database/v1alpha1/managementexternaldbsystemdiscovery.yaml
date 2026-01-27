@@ -1,0 +1,21 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalDbSystemDiscovery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternaldbsystemdiscovery
+  labels:
+    testing.upbound.io/example-name: test_external_db_system_discovery
+  name: test-external-db-system-discovery
+spec:
+  forProvider:
+    agentId: ${oci_cloud_bridge_agent.test_agent.id}
+    compartmentId: ${var.compartment_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.external_db_system_discovery_display_name}
+    freeformTags:
+      Department: Finance
+    patchOperations:
+    - operation: ${var.external_db_system_discovery_patch_operations_operation}
+      selection: ${var.external_db_system_discovery_patch_operations_selection}
+      value: ${var.external_db_system_discovery_patch_operations_value}

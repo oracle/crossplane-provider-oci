@@ -1,0 +1,60 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/cloudvmcluster
+  labels:
+    testing.upbound.io/example-name: test_cloud_vm_cluster
+  name: test-cloud-vm-cluster
+spec:
+  forProvider:
+    backupNetworkNsgIds: ${var.cloud_vm_cluster_backup_network_nsg_ids}
+    backupSubnetId: ${oci_core_subnet.test_subnet.id}
+    cloudAutomationUpdateDetails:
+    - applyUpdateTimePreference:
+      - applyUpdatePreferredEndTime: ${var.cloud_vm_cluster_cloud_automation_update_details_apply_update_time_preference_apply_update_preferred_end_time}
+        applyUpdatePreferredStartTime: ${var.cloud_vm_cluster_cloud_automation_update_details_apply_update_time_preference_apply_update_preferred_start_time}
+      freezePeriod:
+      - freezePeriodEndTime: ${var.cloud_vm_cluster_cloud_automation_update_details_freeze_period_freeze_period_end_time}
+        freezePeriodStartTime: ${var.cloud_vm_cluster_cloud_automation_update_details_freeze_period_freeze_period_start_time}
+      isEarlyAdoptionEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_early_adoption_enabled}
+      isFreezePeriodEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_freeze_period_enabled}
+    cloudExadataInfrastructureId: ${oci_database_cloud_exadata_infrastructure.test_cloud_exadata_infrastructure.id}
+    clusterName: ${var.cloud_vm_cluster_cluster_name}
+    compartmentId: ${var.compartment_id}
+    cpuCoreCount: ${var.cloud_vm_cluster_cpu_core_count}
+    dataCollectionOptions:
+    - isDiagnosticsEventsEnabled: ${var.cloud_vm_cluster_data_collection_options_is_diagnostics_events_enabled}
+      isHealthMonitoringEnabled: ${var.cloud_vm_cluster_data_collection_options_is_health_monitoring_enabled}
+      isIncidentLogsEnabled: ${var.cloud_vm_cluster_data_collection_options_is_incident_logs_enabled}
+    dataStoragePercentage: ${var.cloud_vm_cluster_data_storage_percentage}
+    dataStorageSizeInTbs: ${var.cloud_vm_cluster_data_storage_size_in_tbs}
+    dbNodeStorageSizeInGbs: ${var.cloud_vm_cluster_db_node_storage_size_in_gbs}
+    dbServers: ${var.cloud_vm_cluster_db_servers}
+    definedTags: ${var.cloud_vm_cluster_defined_tags}
+    displayName: ${var.cloud_vm_cluster_display_name}
+    domain: ${var.cloud_vm_cluster_domain}
+    exascaleDbStorageVaultId: ${oci_database_exascale_db_storage_vault.test_exascale_db_storage_vault.id}
+    fileSystemConfigurationDetails:
+    - fileSystemSizeGb: ${var.cloud_vm_cluster_file_system_configuration_details_file_system_size_gb}
+      mountPoint: ${var.cloud_vm_cluster_file_system_configuration_details_mount_point}
+    freeformTags:
+      Department: Finance
+    giVersion: ${var.cloud_vm_cluster_gi_version}
+    hostname: ${var.cloud_vm_cluster_hostname}
+    isLocalBackupEnabled: ${var.cloud_vm_cluster_is_local_backup_enabled}
+    isSparseDiskgroupEnabled: ${var.cloud_vm_cluster_is_sparse_diskgroup_enabled}
+    licenseModel: ${var.cloud_vm_cluster_license_model}
+    memorySizeInGbs: ${var.cloud_vm_cluster_memory_size_in_gbs}
+    nsgIds: ${var.cloud_vm_cluster_nsg_ids}
+    ocpuCount: ${var.cloud_vm_cluster_ocpu_count}
+    privateZoneId: ${oci_dns_zone.test_zone.id}
+    scanListenerPortTcp: ${var.cloud_vm_cluster_scan_listener_port_tcp}
+    scanListenerPortTcpSsl: ${var.cloud_vm_cluster_scan_listener_port_tcp_ssl}
+    securityAttributes: ${var.cloud_vm_cluster_security_attributes}
+    sshPublicKeys: ${var.cloud_vm_cluster_ssh_public_keys}
+    subnetId: ${oci_core_subnet.test_subnet.id}
+    subscriptionId: ${var.tenant_subscription_id}
+    systemVersion: ${var.cloud_vm_cluster_system_version}
+    timeZone: ${var.cloud_vm_cluster_time_zone}
+    vmClusterType: ${var.cloud_vm_cluster_vm_cluster_type}

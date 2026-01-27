@@ -1,0 +1,24 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: BackupDestination
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/backupdestination
+  labels:
+    testing.upbound.io/example-name: test_backup_destination
+  name: test-backup-destination
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    connectionString: ${var.backup_destination_connection_string}
+    definedTags: ${var.backup_destination_defined_tags}
+    displayName: ${var.backup_destination_display_name}
+    freeformTags:
+      Department: Finance
+    localMountPointPath: ${var.backup_destination_local_mount_point_path}
+    mountTypeDetails:
+    - localMountPointPath: ${var.backup_destination_mount_type_details_local_mount_point_path}
+      mountType: ${var.backup_destination_mount_type_details_mount_type}
+      nfsServer: ${var.backup_destination_mount_type_details_nfs_server}
+      nfsServerExport: ${var.backup_destination_mount_type_details_nfs_server_export}
+    type: ${var.backup_destination_type}
+    vpcUsers: ${var.backup_destination_vpc_users}

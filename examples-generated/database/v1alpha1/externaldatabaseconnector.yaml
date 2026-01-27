@@ -1,0 +1,32 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExternalDatabaseConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externaldatabaseconnector
+  labels:
+    testing.upbound.io/example-name: test_external_database_connector
+  name: test-external-database-connector
+spec:
+  forProvider:
+    connectionCredentials:
+    - credentialName: ${var.external_database_connector_connection_credentials_credential_name}
+      credentialType: ${var.external_database_connector_connection_credentials_credential_type}
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      role: ${var.external_database_connector_connection_credentials_role}
+      sslSecretId: ${oci_vault_secret.test_secret.id}
+      username: ${var.external_database_connector_connection_credentials_username}
+    connectionString:
+    - hostname: ${var.external_database_connector_connection_string_hostname}
+      port: ${var.external_database_connector_connection_string_port}
+      protocol: ${var.external_database_connector_connection_string_protocol}
+      service: ${var.external_database_connector_connection_string_service}
+    connectorAgentId: ${oci_database_connector_agent.test_connector_agent.id}
+    connectorType: ${var.external_database_connector_connector_type}
+    definedTags: ${var.external_database_connector_defined_tags}
+    displayName: ${var.external_database_connector_display_name}
+    externalDatabaseId: ${oci_database_database.test_database.id}
+    freeformTags:
+      Department: Finance

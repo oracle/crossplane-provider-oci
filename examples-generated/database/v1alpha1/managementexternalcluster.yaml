@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalcluster
+  labels:
+    testing.upbound.io/example-name: test_external_cluster
+  name: test-external-cluster
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    externalClusterId: ${oci_database_management_external_cluster.test_external_cluster.id}
+    externalConnectorId: ${oci_database_management_external_connector.test_external_connector.id}
+    freeformTags:
+      Department: Finance

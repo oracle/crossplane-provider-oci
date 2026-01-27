@@ -1,0 +1,36 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementautonomousdatabaseautonomousdatabasedbmfeaturesmanagement
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_autonomous_database_dbm_features_management
+  name: test-autonomous-database-autonomous-database-dbm-features-management
+spec:
+  forProvider:
+    autonomousDatabaseId: ${oci_database_autonomous_database.test_autonomous_database.id}
+    enableAutonomousDatabaseDbmFeature: ${var.enable_autonomous_database_dbm_feature}
+    featureDetails:
+    - connectorDetails:
+      - connectorType: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_connector_details_connector_type}
+        databaseConnectorId: ${oci_database_management_database_connector.test_database_connector.id}
+        managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+        privateEndPointId: ${oci_database_management_private_end_point.test_private_end_point.id}
+      databaseConnectionDetails:
+      - connectionCredentials:
+        - credentialName: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_name}
+          credentialType: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_type}
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_role}
+          sslSecretId: ${oci_vault_secret.test_secret.id}
+          userName: ${var.user_name}
+        connectionString:
+        - connectionType: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_connection_type}
+          port: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_port}
+          protocol: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_protocol}
+          service: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_service}
+      enable_autonomous_database_dbm_feature: ${var.enable_autonomous_database_dbm_feature}
+      feature: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_feature}

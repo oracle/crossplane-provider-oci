@@ -1,0 +1,15 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseInstanceWalletManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabaseinstancewalletmanagement
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_instance_wallet_management
+  name: test-autonomous-database-instance-wallet-management
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    gracePeriod: ${var.autonomous_database_instance_wallet_management_grace_period}
+    shouldRotate: ${var.autonomous_database_instance_wallet_management_should_rotate}

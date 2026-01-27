@@ -1,0 +1,19 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseSoftwareImage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesoftwareimage
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_software_image
+  name: test-autonomous-database-software-image
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.autonomous_database_software_image_defined_tags}
+    displayName: ${var.autonomous_database_software_image_display_name}
+    freeformTags:
+      Department: Finance
+    imageShapeFamily: ${var.autonomous_database_software_image_image_shape_family}
+    sourceCdbId: ${oci_database_source_cdb.test_source_cdb.id}

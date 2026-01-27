@@ -1,0 +1,53 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudAutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/cloudautonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+  name: test-cloud-autonomous-vm-cluster
+spec:
+  forProvider:
+    autonomousDataStorageSizeInTbs: ${var.cloud_autonomous_vm_cluster_autonomous_data_storage_size_in_tbs}
+    cloudExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_exadata_infrastructure
+    clusterTimeZone: ${var.cloud_autonomous_vm_cluster_cluster_time_zone}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeModel: ${var.cloud_autonomous_vm_cluster_compute_model}
+    cpuCoreCountPerNode: ${var.cloud_autonomous_vm_cluster_cpu_core_count_per_node}
+    dbServers: ${var.cloud_autonomous_vm_cluster_db_servers}
+    definedTags: ${var.cloud_autonomous_vm_cluster_defined_tags}
+    description: ${var.cloud_autonomous_vm_cluster_description}
+    displayName: ${var.cloud_autonomous_vm_cluster_display_name}
+    freeformTags:
+      Department: Finance
+    isMtlsEnabledVmCluster: ${var.cloud_autonomous_vm_cluster_is_mtls_enabled_vm_cluster}
+    licenseModel: ${var.cloud_autonomous_vm_cluster_license_model}
+    maintenanceWindowDetails:
+    - customActionTimeoutInMins: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_custom_action_timeout_in_mins}
+      daysOfWeek:
+      - name: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_days_of_week_name}
+      hoursOfDay: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_hours_of_day}
+      isCustomActionTimeoutEnabled: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_is_custom_action_timeout_enabled}
+      isMonthlyPatchingEnabled: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_is_monthly_patching_enabled}
+      leadTimeInWeeks: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_lead_time_in_weeks}
+      months:
+      - name: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_months_name}
+      patchingMode: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_patching_mode}
+      preference: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_preference}
+      skipRu: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_skip_ru}
+      weeksOfMonth: ${var.cloud_autonomous_vm_cluster_maintenance_window_details_weeks_of_month}
+    memoryPerOracleComputeUnitInGbs: ${var.cloud_autonomous_vm_cluster_memory_per_oracle_compute_unit_in_gbs}
+    nsgIds: ${var.cloud_autonomous_vm_cluster_nsg_ids}
+    opcDryRun: ${var.cloud_autonomous_vm_cluster_opc_dry_run}
+    scanListenerPortNonTls: ${var.cloud_autonomous_vm_cluster_scan_listener_port_non_tls}
+    scanListenerPortTls: ${var.cloud_autonomous_vm_cluster_scan_listener_port_tls}
+    securityAttributes: ${var.cloud_autonomous_vm_cluster_security_attributes}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
+    totalContainerDatabases: ${var.cloud_autonomous_vm_cluster_total_container_databases}

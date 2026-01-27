@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalmysqldatabaseexternalmysqldatabasesmanagement
+  labels:
+    testing.upbound.io/example-name: test_external_my_sql_database_external_mysql_databases_management
+  name: test-external-my-sql-database-external-mysql-databases-management
+spec:
+  forProvider:
+    connectorId: ${oci_database_management_connector.test_connector.id}
+    enableExternalMysqlDatabase: ${var.enable_external_mysql_database}
+    externalMySqlDatabaseId: ${oci_database_management_external_my_sql_database.test_external_my_sql_database.id}

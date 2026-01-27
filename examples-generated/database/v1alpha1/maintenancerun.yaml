@@ -1,0 +1,17 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MaintenanceRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_maintenance_run
+  name: test-maintenance-run
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+    isDstFileUpdateEnabled: ${var.maintenance_run_is_dst_file_update_enabled}
+    patchType: ${var.maintenance_run_patch_type}
+    patchingMode: ${var.maintenance_run_patching_mode}
+    targetResourceId: ${oci_usage_proxy_resource.test_resource.id}
+    timeScheduled: ${var.maintenance_run_time_scheduled}

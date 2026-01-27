@@ -1,0 +1,26 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExascaleDbStorageVault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exascaledbstoragevault
+  labels:
+    testing.upbound.io/example-name: test_exascale_db_storage_vault
+  name: test-exascale-db-storage-vault
+spec:
+  forProvider:
+    additionalFlashCacheInPercent: ${var.exascale_db_storage_vault_additional_flash_cache_in_percent}
+    autoscaleLimitInGbs: ${var.exascale_db_storage_vault_autoscale_limit_in_gbs}
+    availabilityDomain: ${var.exascale_db_storage_vault_availability_domain}
+    clusterPlacementGroupId: ${oci_cluster_placement_groups_cluster_placement_group.test_cluster_placement_group.id}
+    compartmentId: ${var.compartment_id}
+    definedTags: ${var.exascale_db_storage_vault_defined_tags}
+    description: ${var.exascale_db_storage_vault_description}
+    displayName: ${var.exascale_db_storage_vault_display_name}
+    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
+    freeformTags:
+      Department: Finance
+    highCapacityDatabaseStorage:
+    - totalSizeInGbs: ${var.exascale_db_storage_vault_high_capacity_database_storage_total_size_in_gbs}
+    isAutoscaleEnabled: ${var.exascale_db_storage_vault_is_autoscale_enabled}
+    subscriptionId: ${var.tenant_subscription_id}
+    timeZone: ${var.exascale_db_storage_vault_time_zone}

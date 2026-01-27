@@ -1,0 +1,13 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: VmClusterRemoveVirtualMachine
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/vmclusterremovevirtualmachine
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster_remove_virtual_machine
+  name: test-vm-cluster-remove-virtual-machine
+spec:
+  forProvider:
+    dbServers:
+    - dbServerId: ${oci_database_db_server.test_db_server.id}
+    vmClusterId: ${oci_database_vm_cluster.test_vm_cluster.id}

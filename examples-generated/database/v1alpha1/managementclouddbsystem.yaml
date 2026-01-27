@@ -1,0 +1,23 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudDbSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementclouddbsystem
+  labels:
+    testing.upbound.io/example-name: test_cloud_db_system
+  name: test-cloud-db-system
+spec:
+  forProvider:
+    compartmentId: ${var.compartment_id}
+    databaseManagementConfig:
+    - isEnabled: ${var.cloud_db_system_database_management_config_is_enabled}
+      metadata: ${var.cloud_db_system_database_management_config_metadata}
+    dbSystemDiscoveryId: ${oci_database_management_db_system_discovery.test_db_system_discovery.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.cloud_db_system_display_name}
+    freeformTags:
+      Department: Finance
+    stackMonitoringConfig:
+    - isEnabled: ${var.cloud_db_system_stack_monitoring_config_is_enabled}
+      metadata: ${var.cloud_db_system_stack_monitoring_config_metadata}

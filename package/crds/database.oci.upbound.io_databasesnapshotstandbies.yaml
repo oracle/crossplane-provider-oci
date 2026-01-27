@@ -1,0 +1,731 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: databasesnapshotstandbies.database.oci.upbound.io
+spec:
+  group: database.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DatabaseSnapshotStandby
+    listKind: DatabaseSnapshotStandbyList
+    plural: databasesnapshotstandbies
+    singular: databasesnapshotstandby
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DatabaseSnapshotStandby is the Schema for the DatabaseSnapshotStandbys
+          API. Provides the Database Snapshot Standby resource in Oracle Cloud Infrastructure
+          Database service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DatabaseSnapshotStandbySpec defines the desired state of
+              DatabaseSnapshotStandby
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  databaseAdminPasswordSecretRef:
+                    description: The administrator password of the primary database
+                      in this Data Guard association.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  snapshotDurationInDays:
+                    description: SnapshotDurationInDays is the duration in day(s)
+                      after which the Snapshot Standby Database will get converted
+                      back to Physical Standby. The minimum value of snapshotDurationInDays
+                      is 3 days and maximum value is 14 days. Default value will be
+                      7 days if not provided in the Request.
+                    type: number
+                  standbyConversionType:
+                    description: Defines the conversion type of the standby database.
+                      Specify this to convert a physical standby to a snapshot standby
+                      and vice versa.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  databaseAdminPasswordSecretRef:
+                    description: The administrator password of the primary database
+                      in this Data Guard association.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  snapshotDurationInDays:
+                    description: SnapshotDurationInDays is the duration in day(s)
+                      after which the Snapshot Standby Database will get converted
+                      back to Physical Standby. The minimum value of snapshotDurationInDays
+                      is 3 days and maximum value is 14 days. Default value will be
+                      7 days if not provided in the Request.
+                    type: number
+                  standbyConversionType:
+                    description: Defines the conversion type of the standby database.
+                      Specify this to convert a physical standby to a snapshot standby
+                      and vice versa.
+                    type: string
+                required:
+                - databaseAdminPasswordSecretRef
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.databaseAdminPasswordSecretRef is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.databaseAdminPasswordSecretRef)'
+            - message: spec.forProvider.databaseId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.databaseId)
+                || (has(self.initProvider) && has(self.initProvider.databaseId))'
+            - message: spec.forProvider.standbyConversionType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.standbyConversionType)
+                || (has(self.initProvider) && has(self.initProvider.standbyConversionType))'
+          status:
+            description: DatabaseSnapshotStandbyStatus defines the observed state
+              of DatabaseSnapshotStandby.
+            properties:
+              atProvider:
+                properties:
+                  characterSet:
+                    description: The character set for the database.
+                    type: string
+                  compartmentId:
+                    description: The OCID of the compartment.
+                    type: string
+                  connectionStrings:
+                    description: The Connection strings used to connect to the Oracle
+                      Database.
+                    items:
+                      properties:
+                        allConnectionStrings:
+                          additionalProperties:
+                            type: string
+                          description: All connection strings to use to connect to
+                            the Database.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        cdbDefault:
+                          description: Host name based CDB Connection String.
+                          type: string
+                        cdbIpDefault:
+                          description: IP based CDB Connection String.
+                          type: string
+                      type: object
+                    type: array
+                  dataGuardGroup:
+                    description: Details of Data Guard setup that the given database
+                      is part of.  Also includes information about databases part
+                      of this Data Guard group and properties for their Data Guard
+                      configuration.
+                    items:
+                      properties:
+                        members:
+                          description: List of Data Guard members, representing each
+                            database that is part of Data Guard.
+                          items:
+                            properties:
+                              applyLag:
+                                description: 'The lag time between updates to the
+                                  primary database and application of the redo data
+                                  on the standby database, as computed by the reporting
+                                  database.  Example: 1 second'
+                                type: string
+                              applyRate:
+                                description: 'The rate at which redo logs are synced
+                                  between the associated databases.  Example: 102.96
+                                  MByte/s'
+                                type: string
+                              databaseId:
+                                description: The database OCID.
+                                type: string
+                              dbSystemId:
+                                description: The OCID of the DB system, Cloud VM cluster
+                                  or VM cluster.
+                                type: string
+                              isActiveDataGuardEnabled:
+                                description: True if active Data Guard is enabled.
+                                type: boolean
+                              role:
+                                description: The role of the reporting database in
+                                  this Data Guard association.
+                                type: string
+                              transportLag:
+                                description: 'The rate at which redo logs are transported
+                                  between the associated databases.  Example: 1 second'
+                                type: string
+                              transportLagRefresh:
+                                description: The date and time when last redo transport
+                                  has been done.
+                                type: string
+                              transportType:
+                                description: 'The redo transport type to use for this
+                                  Data Guard association.  Valid values depend on
+                                  the specified protectionMode:'
+                                type: string
+                            type: object
+                          type: array
+                        protectionMode:
+                          description: The protection mode of this Data Guard. For
+                            more information, see Oracle Data Guard Protection Modes
+                            in the Oracle Data Guard documentation.
+                          type: string
+                      type: object
+                    type: array
+                  databaseId:
+                    description: The database OCID.
+                    type: string
+                  databaseManagementConfig:
+                    description: The configuration of the Database Management service.
+                    items:
+                      properties:
+                        managementStatus:
+                          description: The status of the Database Management service.
+                          type: string
+                        managementType:
+                          description: The Database Management type.
+                          type: string
+                      type: object
+                    type: array
+                  databaseSoftwareImageId:
+                    description: The database software image OCID
+                    type: string
+                  dbBackupConfig:
+                    description: Backup Options To use any of the API operations,
+                      you must be authorized in an IAM policy. If you're not authorized,
+                      talk to an administrator. If you're an administrator who needs
+                      to write policies to give users access, see Getting Started
+                      with Policies.
+                    items:
+                      properties:
+                        autoBackupEnabled:
+                          description: If set to true, configures automatic backups.
+                            If you previously used RMAN or dbcli to configure backups
+                            and then you switch to using the Console or the API for
+                            backups, a new backup configuration is created and associated
+                            with your database. This means that you can no longer
+                            rely on your previously configured unmanaged backups to
+                            work.
+                          type: boolean
+                        autoBackupWindow:
+                          description: 'Time window selected for initiating automatic
+                            backup for the database system. There are twelve available
+                            two-hour time windows. If no option is selected, a start
+                            time between 12:00 AM to 7:00 AM in the region of the
+                            database is automatically chosen. For example, if the
+                            user selects SLOT_TWO from the enum list, the automatic
+                            backup job will start in between 2:00 AM (inclusive) to
+                            4:00 AM (exclusive).  Example: SLOT_TWO'
+                          type: string
+                        autoFullBackupDay:
+                          description: Day of the week the full backup should be applied
+                            on the database system. If no option is selected, the
+                            value is null and we will default to Sunday.
+                          type: string
+                        autoFullBackupWindow:
+                          description: 'Time window selected for initiating full backup
+                            for the database system. There are twelve available two-hour
+                            time windows. If no option is selected, the value is null
+                            and a start time between 12:00 AM to 7:00 AM in the region
+                            of the database is automatically chosen. For example,
+                            if the user selects SLOT_TWO from the enum list, the automatic
+                            backup job will start in between 2:00 AM (inclusive) to
+                            4:00 AM (exclusive).  Example: SLOT_TWO'
+                          type: string
+                        backupDeletionPolicy:
+                          description: This defines when the backups will be deleted.
+                            - DELETE_IMMEDIATELY option keep the backup for predefined
+                            time i.e 72 hours and then delete permanently... - DELETE_AFTER_RETENTION_PERIOD
+                            will keep the backups as per the policy defined for database
+                            backups.
+                          type: string
+                        backupDestinationDetails:
+                          description: Backup destination details.
+                          items:
+                            properties:
+                              dbrsPolicyId:
+                                description: The OCID of the DBRS policy used for
+                                  backup.
+                                type: string
+                              id:
+                                description: The OCID of the backup destination.
+                                type: string
+                              internetProxy:
+                                description: Proxy URL to connect to object store.
+                                type: string
+                              type:
+                                description: Type of the database backup destination.
+                                type: string
+                              vpcPassword:
+                                description: For a RECOVERY_APPLIANCE backup destination,
+                                  the password for the VPC user that is used to access
+                                  the Recovery Appliance.
+                                type: string
+                              vpcUser:
+                                description: For a RECOVERY_APPLIANCE backup destination,
+                                  the Virtual Private Catalog (VPC) user that is used
+                                  to access the Recovery Appliance.
+                                type: string
+                            type: object
+                          type: array
+                        recoveryWindowInDays:
+                          description: Number of days between the current and the
+                            earliest point of recoverability covered by automatic
+                            backups. This value applies to automatic backups only.
+                            After a new automatic backup has been created, Oracle
+                            removes old automatic backups that are created before
+                            the window. When the value is updated, it is applied to
+                            all existing automatic backups.
+                          type: number
+                        runImmediateFullBackup:
+                          description: If set to true, configures automatic full backups
+                            in the local region (the region of the DB system) for
+                            the first backup run immediately.
+                          type: boolean
+                      type: object
+                    type: array
+                  dbHomeId:
+                    description: The OCID of the Database Home.
+                    type: string
+                  dbName:
+                    description: The database name.
+                    type: string
+                  dbSystemId:
+                    description: The OCID of the DB system, Cloud VM cluster or VM
+                      cluster.
+                    type: string
+                  dbUniqueName:
+                    description: A system-generated name for the database to ensure
+                      uniqueness within an Oracle Data Guard group (a primary database
+                      and its standby databases). The unique name cannot be changed.
+                    type: string
+                  dbWorkload:
+                    description: Deprecated. The dbWorkload field has been deprecated
+                      for Exadata Database Service on Dedicated Infrastructure, Exadata
+                      Database Service on Cloud@Customer, and Base Database Service.
+                      Support for this attribute will end in November 2023. You may
+                      choose to update your custom scripts to exclude the dbWorkload
+                      attribute. After November 2023 if you pass a value to the dbWorkload
+                      attribute, it will be ignored.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Free-form tags for this resource. Each tag is a
+                      simple key-value pair with no predefined name, type, or namespace.
+                      For more information, see Resource Tags.  Example: {"Department":
+                      "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the backup destination.
+                    type: string
+                  isCdb:
+                    description: True if the database is a container database.
+                    type: boolean
+                  keyStoreId:
+                    description: The OCID of the key store of Oracle Vault.
+                    type: string
+                  keyStoreWalletName:
+                    description: The wallet name for Oracle Key Vault.
+                    type: string
+                  kmsKeyId:
+                    description: The OCID of the key container that is used as the
+                      master encryption key in database transparent data encryption
+                      (TDE) operations.
+                    type: string
+                  kmsKeyVersionId:
+                    description: The OCID of the key container version that is used
+                      in database transparent data encryption (TDE) operations KMS
+                      Key can have multiple key versions. If none is specified, the
+                      current key version (latest) of the Key Id is used for the operation.
+                      Autonomous Database Serverless does not use key versions, hence
+                      is not applicable for Autonomous Database Serverless instances.
+                    type: string
+                  lastBackupDurationInSeconds:
+                    description: The duration when the latest database backup created.
+                    type: number
+                  lastBackupTimestamp:
+                    description: The date and time when the latest database backup
+                      was created.
+                    type: string
+                  lastFailedBackupTimestamp:
+                    description: The date and time when the latest database backup
+                      failed.
+                    type: string
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycle
+                      state.
+                    type: string
+                  ncharacterSet:
+                    description: The national character set for the database.
+                    type: string
+                  pdbName:
+                    description: The name of the pluggable database. The name must
+                      begin with an alphabetic character and can contain a maximum
+                      of thirty alphanumeric characters. Special characters are not
+                      permitted. Pluggable database should not be same as database
+                      name.
+                    type: string
+                  sidPrefix:
+                    description: Specifies a prefix for the Oracle SID of the database
+                      to be created.
+                    type: string
+                  snapshotDurationInDays:
+                    description: SnapshotDurationInDays is the duration in day(s)
+                      after which the Snapshot Standby Database will get converted
+                      back to Physical Standby. The minimum value of snapshotDurationInDays
+                      is 3 days and maximum value is 14 days. Default value will be
+                      7 days if not provided in the Request.
+                    type: number
+                  sourceDatabasePointInTimeRecoveryTimestamp:
+                    description: Point in time recovery timeStamp of the source database
+                      at which cloned database system is cloned from the source database
+                      system, as described in RFC 3339
+                    type: string
+                  standbyConversionType:
+                    description: Defines the conversion type of the standby database.
+                      Specify this to convert a physical standby to a snapshot standby
+                      and vice versa.
+                    type: string
+                  state:
+                    description: The current state of the database.
+                    type: string
+                  timeCreated:
+                    description: The date and time the database was created.
+                    type: string
+                  vaultId:
+                    description: The OCID of the Oracle Cloud Infrastructure vault.
+                      This parameter and secretId are required for Customer Managed
+                      Keys.
+                    type: string
+                  vmClusterId:
+                    description: The OCID of the VM cluster.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

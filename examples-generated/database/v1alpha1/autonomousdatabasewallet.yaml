@@ -1,0 +1,20 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseWallet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasewallet
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_wallet
+  name: test-autonomous-database-wallet
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    base64EncodeContent: "false"
+    generateType: ${var.autonomous_database_wallet_generate_type}
+    isRegional: ${var.autonomous_database_wallet_is_regional}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

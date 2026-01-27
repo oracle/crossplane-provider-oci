@@ -1,0 +1,59 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure
+  name: test-exadata-infrastructure
+spec:
+  forProvider:
+    activationFile: ${var.exadata_infrastructure_activation_file}
+    adminNetworkCidr: ${var.exadata_infrastructure_admin_network_cidr}
+    cloudControlPlaneServer1: ${var.exadata_infrastructure_cloud_control_plane_server1}
+    cloudControlPlaneServer2: ${var.exadata_infrastructure_cloud_control_plane_server2}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: ${var.exadata_infrastructure_compute_count}
+    contacts:
+    - email: ${var.exadata_infrastructure_contacts_email}
+      isContactMosValidated: ${var.exadata_infrastructure_contacts_is_contact_mos_validated}
+      isPrimary: ${var.exadata_infrastructure_contacts_is_primary}
+      name: ${var.exadata_infrastructure_contacts_name}
+      phoneNumber: ${var.exadata_infrastructure_contacts_phone_number}
+    corporateProxy: ${var.exadata_infrastructure_corporate_proxy}
+    databaseServerType: ${var.exadata_infrastructure_database_server_type}
+    definedTags: ${var.exadata_infrastructure_defined_tags}
+    displayName: ${var.exadata_infrastructure_display_name}
+    dnsServer: ${var.exadata_infrastructure_dns_server}
+    freeformTags:
+      Department: Finance
+    gateway: ${var.exadata_infrastructure_gateway}
+    infiniBandNetworkCidr: ${var.exadata_infrastructure_infini_band_network_cidr}
+    isCpsOfflineReportEnabled: ${var.exadata_infrastructure_is_cps_offline_report_enabled}
+    isMultiRackDeployment: ${var.exadata_infrastructure_is_multi_rack_deployment}
+    maintenanceWindow:
+    - customActionTimeoutInMins: ${var.exadata_infrastructure_maintenance_window_custom_action_timeout_in_mins}
+      daysOfWeek:
+      - name: ${var.exadata_infrastructure_maintenance_window_days_of_week_name}
+      hoursOfDay: ${var.exadata_infrastructure_maintenance_window_hours_of_day}
+      isCustomActionTimeoutEnabled: ${var.exadata_infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+      isMonthlyPatchingEnabled: ${var.exadata_infrastructure_maintenance_window_is_monthly_patching_enabled}
+      leadTimeInWeeks: ${var.exadata_infrastructure_maintenance_window_lead_time_in_weeks}
+      months:
+      - name: ${var.exadata_infrastructure_maintenance_window_months_name}
+      patchingMode: ${var.exadata_infrastructure_maintenance_window_patching_mode}
+      preference: ${var.exadata_infrastructure_maintenance_window_preference}
+      weeksOfMonth: ${var.exadata_infrastructure_maintenance_window_weeks_of_month}
+    multiRackConfigurationFile: ${var.exadata_infrastructure_multi_rack_configuration_file}
+    netmask: ${var.exadata_infrastructure_netmask}
+    networkBondingModeDetails:
+    - backupNetworkBondingMode: ${var.exadata_infrastructure_network_bonding_mode_details_backup_network_bonding_mode}
+      clientNetworkBondingMode: ${var.exadata_infrastructure_network_bonding_mode_details_client_network_bonding_mode}
+      drNetworkBondingMode: ${var.exadata_infrastructure_network_bonding_mode_details_dr_network_bonding_mode}
+    ntpServer: ${var.exadata_infrastructure_ntp_server}
+    shape: ${var.exadata_infrastructure_shape}
+    storageCount: ${var.exadata_infrastructure_storage_count}
+    storageServerType: ${var.exadata_infrastructure_storage_server_type}
+    timeZone: ${var.exadata_infrastructure_time_zone}

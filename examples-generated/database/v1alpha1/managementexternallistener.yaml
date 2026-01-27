@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalListener
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternallistener
+  labels:
+    testing.upbound.io/example-name: test_external_listener
+  name: test-external-listener
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    externalConnectorId: ${oci_database_management_external_connector.test_external_connector.id}
+    externalListenerId: ${oci_database_management_external_listener.test_external_listener.id}
+    freeformTags:
+      Department: Finance

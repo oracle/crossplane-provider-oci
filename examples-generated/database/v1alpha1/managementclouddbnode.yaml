@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementCloudDbNode
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementclouddbnode
+  labels:
+    testing.upbound.io/example-name: test_cloud_db_node
+  name: test-cloud-db-node
+spec:
+  forProvider:
+    cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
+    cloudDbNodeId: ${oci_database_management_cloud_db_node.test_cloud_db_node.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance

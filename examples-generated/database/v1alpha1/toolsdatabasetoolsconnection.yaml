@@ -1,0 +1,50 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsconnection
+  labels:
+    testing.upbound.io/example-name: test_database_tools_connection
+  name: test-database-tools-connection
+spec:
+  forProvider:
+    advancedProperties: ${var.database_tools_connection_advanced_properties}
+    compartmentId: ${var.compartment_id}
+    connectionString: ${var.database_tools_connection_connection_string}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.database_tools_connection_display_name}
+    freeformTags:
+      bar-key: value
+    keyStores:
+    - keyStoreContent:
+      - secretId: ${oci_vault_secret.test_secret.id}
+        valueType: ${var.database_tools_connection_key_stores_key_store_content_value_type}
+      keyStorePassword:
+      - secretId: ${oci_vault_secret.test_secret.id}
+        valueType: ${var.database_tools_connection_key_stores_key_store_password_value_type}
+      keyStoreType: ${var.database_tools_connection_key_stores_key_store_type}
+    locks:
+    - message: ${var.database_tools_connection_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.database_tools_connection_locks_time_created}
+      type: ${var.database_tools_connection_locks_type}
+    privateEndpointId: ${oci_database_tools_database_tools_private_endpoint.test_database_tools_private_endpoint.id}
+    proxyClient:
+    - proxyAuthenticationType: ${var.database_tools_connection_proxy_client_proxy_authentication_type}
+      roles: ${var.database_tools_connection_proxy_client_roles}
+      userName: ${var.user_name}
+      userPassword:
+      - secretId: ${oci_vault_secret.test_secret.id}
+        valueType: ${var.database_tools_connection_proxy_client_user_password_value_type}
+    relatedResource:
+    - entityType: ${var.database_tools_connection_related_resource_entity_type}
+      identifier: ${var.database_tools_connection_related_resource_identifier}
+    runtimeIdentity: ${var.database_tools_connection_runtime_identity}
+    runtimeSupport: ${var.database_tools_connection_runtime_support}
+    type: ${var.database_tools_connection_type}
+    url: ${var.database_tools_connection_url}
+    userName: ${var.user_name}
+    userPassword:
+    - secretId: ${oci_vault_secret.test_secret.id}
+      valueType: ${var.database_tools_connection_user_password_value_type}

@@ -1,0 +1,37 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementManagedDatabasesChangeDatabaseParameter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementmanageddatabaseschangedatabaseparameter
+  labels:
+    testing.upbound.io/example-name: test_managed_databases_change_database_parameter
+  name: test-managed-databases-change-database-parameter
+spec:
+  forProvider:
+    credentials:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      role: ${var.managed_databases_change_database_parameter_credentials_role}
+      secretId: ${oci_vault_secret.test_secret.id}
+      userName: ${var.user_name}
+    databaseCredential:
+    - credentialType: ${var.managed_databases_change_database_parameter_database_credential_credential_type}
+      namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      role: ${var.managed_databases_change_database_parameter_database_credential_role}
+      username: ${var.managed_databases_change_database_parameter_database_credential_username}
+    managedDatabaseId: ${oci_database_management_managed_database.test_managed_database.id}
+    parameters:
+    - name: ${var.managed_databases_change_database_parameter_parameters_name}
+      updateComment: ${var.managed_databases_change_database_parameter_parameters_update_comment}
+      value: ${var.managed_databases_change_database_parameter_parameters_value}
+    scope: ${var.managed_databases_change_database_parameter_scope}

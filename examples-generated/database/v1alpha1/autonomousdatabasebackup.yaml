@@ -1,0 +1,30 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasebackup
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_backup
+  name: test-autonomous-database-backup
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    backupDestinationDetails:
+    - backupRetentionPolicyOnTerminate: ${var.autonomous_database_backup_backup_destination_details_backup_retention_policy_on_terminate}
+      dbrs_policy_id: ${oci_identity_policy.test_policy.id}
+      id: ${var.autonomous_database_backup_backup_destination_details_id}
+      internetProxy: ${var.autonomous_database_backup_backup_destination_details_internet_proxy}
+      isRemote: ${var.autonomous_database_backup_backup_destination_details_is_remote}
+      isRetentionLockEnabled: ${var.autonomous_database_backup_backup_destination_details_is_retention_lock_enabled}
+      remoteRegion: ${var.autonomous_database_backup_backup_destination_details_remote_region}
+      type: ${var.autonomous_database_backup_backup_destination_details_type}
+      vpcPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      vpcUser: ${var.autonomous_database_backup_backup_destination_details_vpc_user}
+    displayName: ${var.autonomous_database_backup_display_name}
+    isLongTermBackup: ${var.autonomous_database_backup_is_long_term_backup}
+    retentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}
