@@ -1,0 +1,217 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: simpledatabase-dbsystem
+  labels:
+    provider: oci
+    service: database
+    type: dbsystem
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: database.crossplane.io/v1alpha1
+    kind: SimpleDatabase
+  patchSets:
+  - name: common-fields
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.compartmentId
+      toFieldPath: spec.forProvider.compartmentId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.freeformTags
+      toFieldPath: spec.forProvider.freeformTags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.definedTags
+      toFieldPath: spec.forProvider.definedTags
+
+  resources:
+  # DbSystem - Traditional Oracle Database on VM
+  - name: db-system
+    base:
+      apiVersion: database.oci.upbound.io/v1alpha1
+      kind: DbSystem
+      spec:
+        forProvider:
+          # Shape configuration
+          shape: "VM.Standard.E4.Flex"
+          cpuCoreCount: 1
+          nodeCount: 1
+          
+          # Storage configuration
+          dataStorageSizeInGb: 256
+          dataStoragePercentage: 80
+          storageVolumePerformanceMode: "BALANCED"
+          
+          # Database edition and licensing
+          databaseEdition: "ENTERPRISE_EDITION"
+          licenseModel: "LICENSE_INCLUDED"
+          
+          # DB Home configuration
+          dbHome:
+          - dbVersion: "19.0.0.0"
+            database:
+            - dbName: "SIMPLEDB1"
+              dbWorkload: "OLTP"
+              characterSet: "AL32UTF8"
+              ncharacterSet: "AL16UTF16"
+              pdbName: "SIMPLEPDB1"
+              dbBackupConfig:
+              - autoBackupEnabled: true
+                autoBackupWindow: "SLOT_TWO"
+                recoveryWindowInDays: 7
+          
+          # System configuration
+          hostname: "dbsystem1"
+          domain: "subnet.vcn.oraclevcn.com"
+          timeZone: "UTC"
+          
+          # Options
+          dbSystemOptions:
+          - storageManagement: "ASM"
+          
+          # Data collection (disabled for VM DB systems)
+          dataCollectionOptions:
+          - isDiagnosticsEventsEnabled: false
+            isHealthMonitoringEnabled: false
+            isIncidentLogsEnabled: false
+        
+        providerConfigRef:
+          name: default
+    
+    patches:
+    - type: PatchSet
+      patchSetName: common-fields
+    
+    # Availability domain
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.availabilityDomain
+      toFieldPath: spec.forProvider.availabilityDomain
+    
+    # Shape and compute
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.shape
+      toFieldPath: spec.forProvider.shape
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.cpuCoreCount
+      toFieldPath: spec.forProvider.cpuCoreCount
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.nodeCount
+      toFieldPath: spec.forProvider.nodeCount
+    
+    # Storage
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.dataStorageSizeInGBs
+      toFieldPath: spec.forProvider.dataStorageSizeInGb
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.storagePerformance
+      toFieldPath: spec.forProvider.storageVolumePerformanceMode
+    
+    # Database edition and licensing
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.databaseEdition
+      toFieldPath: spec.forProvider.databaseEdition
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.licenseModel
+      toFieldPath: spec.forProvider.licenseModel
+    
+    # Network
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.subnetId
+      toFieldPath: spec.forProvider.subnetId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.hostname
+      toFieldPath: spec.forProvider.hostname
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.domain
+      toFieldPath: spec.forProvider.domain
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.timeZone
+      toFieldPath: spec.forProvider.timeZone
+    
+    # SSH Keys
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.sshPublicKeys
+      toFieldPath: spec.forProvider.sshPublicKeys
+    
+    # Database configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.version
+      toFieldPath: spec.forProvider.dbHome[0].dbVersion
+      transforms:
+      - type: map
+        map:
+          "19c": "19.0.0.0"
+          "21c": "21.0.0.0"
+          "23ai": "23.0.0.0"
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.displayName
+      toFieldPath: spec.forProvider.dbHome[0].displayName
+      transforms:
+      - type: string
+        string:
+          fmt: "%s Home"
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.displayName
+      toFieldPath: spec.forProvider.displayName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.name
+      toFieldPath: spec.forProvider.dbHome[0].database[0].dbName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.workload
+      toFieldPath: spec.forProvider.dbHome[0].database[0].dbWorkload
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.characterSet
+      toFieldPath: spec.forProvider.dbHome[0].database[0].characterSet
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.nCharacterSet
+      toFieldPath: spec.forProvider.dbHome[0].database[0].ncharacterSet
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.dbSystemConfig.pdbName
+      toFieldPath: spec.forProvider.dbHome[0].database[0].pdbName
+    
+    # Admin password from secret
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretName
+      toFieldPath: spec.forProvider.dbHome[0].database[0].adminPasswordSecretRef.name
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretNamespace
+      toFieldPath: spec.forProvider.dbHome[0].database[0].adminPasswordSecretRef.namespace
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.adminPassword.secretKey
+      toFieldPath: spec.forProvider.dbHome[0].database[0].adminPasswordSecretRef.key
+    
+    # Backup configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.enableBackup
+      toFieldPath: spec.forProvider.dbHome[0].database[0].dbBackupConfig[0].autoBackupEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.databaseConfig.backupRetentionDays
+      toFieldPath: spec.forProvider.dbHome[0].database[0].dbBackupConfig[0].recoveryWindowInDays
+    
+    # Export database information to status
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.id
+      toFieldPath: status.databaseId
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.dbHome[0].database[0].connectionStrings[0].cdbDefault
+      toFieldPath: status.connectionString
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.state
+      toFieldPath: status.state
+    # Set ready status based on database state
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.state
+      toFieldPath: status.ready
+      transforms:
+      - type: map
+        map:
+          AVAILABLE: true
+          PROVISIONING: false
+          UPDATING: false
+          TERMINATING: false
+          TERMINATED: false
+          FAILED: false
+          MIGRATED: false
+          MAINTENANCE_IN_PROGRESS: false
+          NEEDS_ATTENTION: false
+          UPGRADING: false

@@ -1,0 +1,15 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-oci-database
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  package: ghcr.io/oracle/provider-oci-database:v0.0.2
+  packagePullPolicy: IfNotPresent
+  revisionActivationPolicy: Automatic
+  revisionHistoryLimit: 1
+  # This provider depends on the family provider
+  skipDependencyResolution: false
+  runtimeConfigRef:
+    name: oci-providers-runtime-config

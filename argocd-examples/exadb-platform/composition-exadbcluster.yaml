@@ -1,0 +1,282 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: exadbcluster
+  labels:
+    provider: oci
+    service: database
+    infrastructure: exadata
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: database.crossplane.io/v1alpha1
+    kind: ExaDBCluster
+
+  resources:
+  # CloudExadataInfrastructure - The dedicated Exadata infrastructure
+  - name: cloud-exadata-infrastructure
+    base:
+      apiVersion: database.oci.upbound.io/v1alpha1
+      kind: CloudExadataInfrastructure
+      spec:
+        forProvider:
+          computeCount: 2
+          storageCount: 3
+          maintenanceWindow:
+          - preference: "NO_PREFERENCE"
+            patchingMode: "ROLLING"
+            leadTimeInWeeks: 1
+            daysOfWeek:
+            - name: "SUNDAY"
+            hoursOfDay: [2]
+        providerConfigRef:
+          name: default
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.compartmentId
+      toFieldPath: spec.forProvider.compartmentId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.availabilityDomain
+      toFieldPath: spec.forProvider.availabilityDomain
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.displayName
+      toFieldPath: spec.forProvider.displayName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.shape
+      toFieldPath: spec.forProvider.shape
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.computeCount
+      toFieldPath: spec.forProvider.computeCount
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.storageCount
+      toFieldPath: spec.forProvider.storageCount
+    # Maintenance window configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.maintenanceWindow.preference
+      toFieldPath: spec.forProvider.maintenanceWindow[0].preference
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.maintenanceWindow.patchingMode
+      toFieldPath: spec.forProvider.maintenanceWindow[0].patchingMode
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.maintenanceWindow.leadTimeInWeeks
+      toFieldPath: spec.forProvider.maintenanceWindow[0].leadTimeInWeeks
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.infrastructure.maintenanceWindow.hoursOfDay
+      toFieldPath: spec.forProvider.maintenanceWindow[0].hoursOfDay
+    # Tags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.freeformTags
+      toFieldPath: spec.forProvider.freeformTags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.definedTags
+      toFieldPath: spec.forProvider.definedTags
+    # Export infrastructure ID
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.id
+      toFieldPath: status.infrastructureId
+
+  # CloudVmCluster - VM Cluster within the Exadata infrastructure
+  - name: cloud-vm-cluster
+    base:
+      apiVersion: database.oci.upbound.io/v1alpha1
+      kind: CloudVmCluster
+      spec:
+        forProvider:
+          cloudExadataInfrastructureIdSelector:
+            matchControllerRef: true
+          cpuCoreCount: 4
+          dataStorageSizeInTbs: 2
+          dbNodeStorageSizeInGbs: 180
+          memorySizeInGbs: 60
+          giVersion: "19.0.0.0"
+          licenseModel: "LICENSE_INCLUDED"
+          isLocalBackupEnabled: true
+          isSparseDiskgroupEnabled: false
+          dataCollectionOptions:
+          - isDiagnosticsEventsEnabled: true
+            isHealthMonitoringEnabled: true
+            isIncidentLogsEnabled: true
+        providerConfigRef:
+          name: default
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.compartmentId
+      toFieldPath: spec.forProvider.compartmentId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.displayName
+      toFieldPath: spec.forProvider.displayName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.clusterName
+      toFieldPath: spec.forProvider.clusterName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.cpuCoreCount
+      toFieldPath: spec.forProvider.cpuCoreCount
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.dataStorageSizeInTbs
+      toFieldPath: spec.forProvider.dataStorageSizeInTbs
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.dbNodeStorageSizeInGbs
+      toFieldPath: spec.forProvider.dbNodeStorageSizeInGbs
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.memorySizeInGbs
+      toFieldPath: spec.forProvider.memorySizeInGbs
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.giVersion
+      toFieldPath: spec.forProvider.giVersion
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.hostname
+      toFieldPath: spec.forProvider.hostname
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.domain
+      toFieldPath: spec.forProvider.domain
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.sshPublicKeys
+      toFieldPath: spec.forProvider.sshPublicKeys
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.licenseModel
+      toFieldPath: spec.forProvider.licenseModel
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.isLocalBackupEnabled
+      toFieldPath: spec.forProvider.isLocalBackupEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.isSparseDiskgroupEnabled
+      toFieldPath: spec.forProvider.isSparseDiskgroupEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.vmCluster.timeZone
+      toFieldPath: spec.forProvider.timeZone
+    # Networking
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.networking.subnetId
+      toFieldPath: spec.forProvider.subnetId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.networking.backupSubnetId
+      toFieldPath: spec.forProvider.backupSubnetId
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.networking.nsgIds
+      toFieldPath: spec.forProvider.nsgIds
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.networking.backupNetworkNsgIds
+      toFieldPath: spec.forProvider.backupNetworkNsgIds
+    # Tags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.freeformTags
+      toFieldPath: spec.forProvider.freeformTags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.definedTags
+      toFieldPath: spec.forProvider.definedTags
+    # Export VM cluster ID
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.id
+      toFieldPath: status.vmClusterId
+
+  # DbHome - Database Home within the VM Cluster
+  - name: database-home
+    base:
+      apiVersion: database.oci.upbound.io/v1alpha1
+      kind: DbHome
+      spec:
+        forProvider:
+          vmClusterIdSelector:
+            matchControllerRef: true
+          database:
+          - dbName: "EXADB1"
+            dbWorkload: "OLTP"
+            characterSet: "AL32UTF8"
+            ncharacterSet: "AL16UTF16"
+            pdbName: "EXAPDB1"
+            dbBackupConfig:
+            - autoBackupEnabled: true
+              recoveryWindowInDays: 30
+              autoBackupWindow: "SLOT_TWO"
+              autoFullBackupStartTime:
+              - hours: 2
+                minutes: 0
+        providerConfigRef:
+          name: default
+    patches:
+    # Database version
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.dbVersion
+      toFieldPath: spec.forProvider.dbVersion
+    # Database configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.dbName
+      toFieldPath: spec.forProvider.database[0].dbName
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.dbWorkload
+      toFieldPath: spec.forProvider.database[0].dbWorkload
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.characterSet
+      toFieldPath: spec.forProvider.database[0].characterSet
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.nCharacterSet
+      toFieldPath: spec.forProvider.database[0].ncharacterSet
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.pdbName
+      toFieldPath: spec.forProvider.database[0].pdbName
+    # Admin password from secret
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.adminPassword.secretName
+      toFieldPath: spec.forProvider.database[0].adminPasswordSecretRef.name
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.adminPassword.secretNamespace
+      toFieldPath: spec.forProvider.database[0].adminPasswordSecretRef.namespace
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.adminPassword.secretKey
+      toFieldPath: spec.forProvider.database[0].adminPasswordSecretRef.key
+    # Backup configuration
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.autoBackupEnabled
+      toFieldPath: spec.forProvider.database[0].dbBackupConfig[0].autoBackupEnabled
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.database.recoveryWindowInDays
+      toFieldPath: spec.forProvider.database[0].dbBackupConfig[0].recoveryWindowInDays
+    # Display name
+    - type: CombineFromComposite
+      combine:
+        variables:
+        - fromFieldPath: spec.database.dbName
+        - fromFieldPath: spec.database.dbVersion
+        strategy: string
+        string:
+          fmt: "%s-home-%s"
+      toFieldPath: spec.forProvider.displayName
+    # Tags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.freeformTags
+      toFieldPath: spec.forProvider.freeformTags
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.tags.definedTags
+      toFieldPath: spec.forProvider.definedTags
+    # Export database home ID
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.id
+      toFieldPath: status.dbHomeId
+    # Export database ID (first database in the home)
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.database[0].id
+      toFieldPath: status.databaseId
+    # Export connection strings
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.database[0].connectionStrings[0].cdbDefault
+      toFieldPath: status.connectionStrings.cdbDefault
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.database[0].connectionStrings[0].allConnectionStrings.pdbDefault
+      toFieldPath: status.connectionStrings.pdbDefault
+    # Export state
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.database[0].lifecycleState
+      toFieldPath: status.state
+    # Set ready status based on database state
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.database[0].lifecycleState
+      toFieldPath: status.ready
+      transforms:
+      - type: map
+        map:
+          AVAILABLE: true
+          PROVISIONING: false
+          UPDATING: false
+          TERMINATING: false
+          TERMINATED: false
+          FAILED: false

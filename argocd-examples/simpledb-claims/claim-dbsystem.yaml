@@ -1,0 +1,85 @@
+apiVersion: database.crossplane.io/v1alpha1
+kind: SimpleDatabaseClaim
+metadata:
+  name: poc-dbsystem
+  annotations:
+    crossplane.io/external-name: poc-dbsystem
+spec:
+  # OCI Compartment where the database will be created
+  compartmentId: "${COMPARTMENT_ID}"
+
+  # OCI region
+  region: "us-ashburn-1"
+
+  # Database type - using traditional DB System (VM-based)
+  databaseType: "dbsystem"
+
+  # Common database configuration
+  databaseConfig:
+    name: "POCDB"           # Database name (max 8 characters)
+    displayName: "POC DB System Database"
+    version: "19c"          # Oracle Database 19c
+    workload: "OLTP"        # Transaction processing workload
+    adminPassword:
+      # Create this secret first with:
+      # kubectl create secret generic db-admin-password \
+      #   --from-literal=password='YourStrongPassword123!' \
+      #   -n crossplane-system
+      secretName: "db-admin-password"
+      secretNamespace: "crossplane-system"
+      secretKey: "password"
+    characterSet: "AL32UTF8"
+    nCharacterSet: "AL16UTF16"
+    enableBackup: false
+    backupRetentionDays: 7
+
+  # DB System specific configuration
+  dbSystemConfig:
+    # Availability domain - Update for your region
+    availabilityDomain: "ekzo:US-ASHBURN-AD-1"
+
+    # VM Shape - Flexible shape allows custom CPU/memory
+    shape: "VM.Standard.E4.Flex"
+    cpuCoreCount: 1        # Minimum for POC (can scale to 64)
+    nodeCount: 1            # Single instance (2 for RAC)
+
+    # Storage configuration
+    dataStorageSizeInGBs: 256  # Minimum 256GB
+    storagePerformance: "BALANCED"  # BALANCED or HIGH_PERFORMANCE
+
+    # Database edition
+    databaseEdition: "ENTERPRISE_EDITION"
+    licenseModel: "LICENSE_INCLUDED"
+
+    # Network configuration - Update with your subnet OCID
+    subnetId: "${SUBNET_ID}"
+
+    # Hostname and domain
+    hostname: "pocdbhost2"  # Changed to avoid conflict with existing DB System
+    domain: "dbcomplete.dbvcn.oraclevcn.com"
+
+    # SSH public key for database node access
+    sshPublicKeys:
+      # Using a dummy SSH key - replace with your actual key for SSH access
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8z/fJ891VaQYhER17BpgBq8Zkbeba66Mq7dKW2iAx1 david.d.cruz@oracle.com"
+
+    # Time zone
+    timeZone: "America/New_York"
+
+    # Pluggable database name
+    pdbName: "POCPDB"
+
+  # Resource tags
+  tags:
+    freeformTags:
+      Environment: "POC"
+      Type: "DBSystem"
+      ManagedBy: "Crossplane"
+    # definedTags:
+    #   CostCenter:
+    #     Department: "Engineering"
+
+  # Select the composition to use
+  compositionSelector:
+    matchLabels:
+      type: dbsystem

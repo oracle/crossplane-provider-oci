@@ -1,0 +1,137 @@
+---
+# Complete networking setup for Database with proper routing
+# This creates VCN, Internet Gateway, Route Table, Security List, and Subnet
+# All with direct IDs to avoid reference issues
+
+---
+# Internet Gateway for existing VCN
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  name: db-igw-complete
+spec:
+  forProvider:
+    compartmentId: "ocid1.compartment.oc1..aaaaaaaahkmcqkcdnvjxdykdiai4ncm5f4o3n3gmtbpy6cnvey2nspef6k5a"
+    displayName: "Database Internet Gateway Complete"
+    enabled: true
+    # Using the existing VCN ID directly
+    vcnId: "ocid1.vcn.oc1.iad.amaaaaaayivjetiaqqp5vpkgf3axoe4rsit2u7spq36jutw64mgq7lkkjo3q"
+    freeformTags:
+      Environment: "POC"
+      Type: "Database"
+      ManagedBy: "Crossplane"
+  providerConfigRef:
+    name: default
+
+---
+# Wait for IGW to be ready, then create Route Table
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  name: db-rt-complete
+  annotations:
+    # Add a small delay to ensure IGW is ready
+    crossplane.io/external-name: db-rt-complete
+spec:
+  forProvider:
+    compartmentId: "${COMPARTMENT_ID}"
+    displayName: "Database Internet Gateway Complete"
+    # Using the existing VCN ID directly
+    vcnId: "${VCN_ID}"
+    # Route rules will be added after IGW is created
+    routeRules: []
+    freeformTags:
+      Environment: "POC"
+      Type: "Database"
+      ManagedBy: "Crossplane"
+  providerConfigRef:
+    name: default
+
+---
+# Security List with database-specific rules
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  name: db-sl-complete
+spec:
+  forProvider:
+    compartmentId: "${COMPARTMENT_ID}"
+    displayName: "Database Route Table Complete"
+    # Using the existing VCN ID directly
+    vcnId: "${VCN_ID}"
+    
+    # Ingress rules
+    ingressSecurityRules:
+      # Allow SSH
+      - protocol: "6"  # TCP
+        source: "0.0.0.0/0"
+        stateless: false
+        description: "Allow SSH traffic"
+        tcpOptions:
+          - min: 22
+            max: 22
+      
+      # Allow Oracle DB port
+      - protocol: "6"  # TCP
+        source: "0.0.0.0/0"
+        stateless: false
+        description: "Allow Oracle Database traffic"
+        tcpOptions:
+          - min: 1521
+            max: 1521
+      
+      # Allow all traffic within VCN
+      - protocol: "all"
+        source: "10.0.0.0/16"
+        stateless: false
+        description: "Allow all traffic within VCN"
+    
+    # Egress rules
+    egressSecurityRules:
+      # Allow all outbound traffic (required for Object Storage)
+      - protocol: "all"
+        destination: "0.0.0.0/0"
+        stateless: false
+        description: "Allow all outbound traffic"
+    
+    freeformTags:
+      Environment: "POC"
+      Type: "Database"
+      ManagedBy: "Crossplane"
+  providerConfigRef:
+    name: default
+
+---
+# Subnet with proper references - will be created last
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  name: db-subnet-complete
+  annotations:
+    crossplane.io/external-name: db-subnet-complete
+spec:
+  forProvider:
+    compartmentId: "${COMPARTMENT_ID}"
+    displayName: "Database Security List Complete"
+    # Using the existing VCN ID directly
+    vcnId: "${VCN_ID}"
+    compartmentId: "${COMPARTMENT_ID}"
+    displayName: "Database Subnet Complete"
+    # Using the existing VCN ID directly
+    vcnId: "${VCN_ID}"
+    cidrBlock: "10.0.3.0/24"
+    dnsLabel: "dbcomplete"
+    # Reference the route table and security list
+    routeTableIdRef:
+      name: db-rt-complete
+    securityListIdRefs:
+      - name: db-sl-complete
+    # Public subnet for POC
+    prohibitInternetIngress: false
+    prohibitPublicIpOnVnic: false
+    freeformTags:
+      Environment: "POC"
+      Type: "Database"
+      ManagedBy: "Crossplane"
+  providerConfigRef:
+    name: default

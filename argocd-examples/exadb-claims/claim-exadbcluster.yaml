@@ -1,0 +1,89 @@
+apiVersion: database.crossplane.io/v1alpha1
+kind: ExaDBClusterClaim
+metadata:
+  name: exadbcluster1
+  annotations:
+    crossplane.io/external-name: exadbcluster1
+  # ArgoCD will deploy to default namespace as specified in the app
+spec:
+  # OCI Compartment where all ExaDB-D resources will be created
+  compartmentId: "${COMPARTMENT_ID}"
+  
+  # Availability domain for the infrastructure
+  availabilityDomain: "${AVAILABILITY_DOMAIN}"
+  
+  # OCI region
+  region: "{REGION}"
+  
+  # Exadata Infrastructure configuration
+  infrastructure:
+    displayName: "infrastructure1"
+    shape: "Exadata.X9M"  # Latest generation for best performance
+    computeCount: 2       # Minimum for POC (production would use 4+)
+    storageCount: 3       # Minimum required
+    maintenanceWindow:
+      preference: "NO_PREFERENCE"
+      patchingMode: "ROLLING"  # No downtime patching
+      leadTimeInWeeks: 1
+      daysOfWeek: ["SUNDAY"]
+      hoursOfDay: [2]  # 2 AM maintenance window
+  
+  # VM Cluster configuration
+  vmCluster:
+    displayName: "vmcluster1"
+    clusterName: "vmcluster1"
+    cpuCoreCount: 4           # Minimum for POC
+    dataStorageSizeInTbs: 2    # 2TB for POC
+    dbNodeStorageSizeInGbs: 180
+    memorySizeInGbs: 60
+    giVersion: "19.0.0.0"      # Latest 19c Grid Infrastructure
+    hostname: "vmcluster1"
+    domain: "subnet.vcn.oraclevcn.com"
+    sshPublicKeys:
+      # Replace with your actual SSH public key for node access
+      - "${SSH_PUBLIC_KEY}"
+    licenseModel: "LICENSE_INCLUDED"  # Oracle manages licensing
+    isLocalBackupEnabled: true
+    isSparseDiskgroupEnabled: false
+    timeZone: "America/New_York"
+  
+  # Network configuration
+  # These should be pre-created subnets in your VCN
+  networking:
+    # Client subnet for database connections
+    subnetId: "${SUBNET_ID}"  # Replace with actual subnet OCID
+    # Backup subnet for backup traffic (optional, can be same as client subnet)
+    backupSubnetId: "${BACKUP_SUBNET_ID}"  # Replace with actual subnet OCID
+    # Network Security Groups (optional)
+    nsgIds: []
+    backupNetworkNsgIds: []
+  
+  # Database configuration
+  database:
+    dbName: "EXADB1"          # Up to 8 characters
+    dbVersion: "19.0.0.0"     # Oracle Database 19c
+    dbWorkload: "OLTP"        # OLTP, DW, DSS, or MIXED
+    adminPassword:
+      # Create this secret first with: 
+      # kubectl create secret generic exadb-admin-password \
+      #   --from-literal=password='YourStrongPassword123!' \
+      #   -n crossplane-system
+      secretName: "exadb-admin-password"
+      secretNamespace: "crossplane-system"
+      secretKey: "password"
+    characterSet: "AL32UTF8"
+    nCharacterSet: "AL16UTF16"
+    pdbName: "EXAPDB1"        # Pluggable database name
+    autoBackupEnabled: true
+    recoveryWindowInDays: 7   # 7 days for POC (production would use 30+)
+  
+  # Tags for resource organization
+  tags:
+    freeformTags:
+      Environment: "POC"
+      Project: "ExaDB-D-Crossplane"
+      ManagedBy: "Crossplane"
+      Owner: "Platform-Team"
+    # definedTags:
+    #   CostCenter:
+    #     Department: "Engineering"

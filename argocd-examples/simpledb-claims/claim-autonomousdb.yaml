@@ -1,0 +1,88 @@
+apiVersion: database.crossplane.io/v1alpha1
+kind: SimpleDatabaseClaim
+metadata:
+  name: autonomousdb1
+  annotations:
+    crossplane.io/external-name: autonomousdb1
+spec:
+  # OCI Compartment where the database will be created
+  compartmentId: "${COMPARTMENT_ID}"
+  
+  # OCI region
+  region: "us-ashburn-1"
+  
+  # Database type - using Autonomous Database (serverless)
+  databaseType: "autonomous"
+  
+  # Common database configuration
+  databaseConfig:
+    name: "SIMPLEDB1"       # Database name (max 14 characters)
+    displayName: "autonomousdb1"
+    version: "19c"          # Oracle Database 19c
+    workload: "OLTP"        # ATP - Autonomous Transaction Processing
+    adminPassword:
+      # Create this secret first with:
+      # kubectl create secret generic adb-admin-password \
+      #   --from-literal=password='YourPassword#123_' \
+      #   -n crossplane-system
+      secretName: "adb-admin-password"
+      secretNamespace: "crossplane-system"
+      secretKey: "password"
+    characterSet: "AL32UTF8"
+    nCharacterSet: "AL16UTF16"
+    enableBackup: true
+    backupRetentionDays: 7
+  
+  # Autonomous Database specific configuration
+  autonomousConfig:
+    # Free tier - set to true for Always Free database
+    isFreeTier: false
+    
+    # Compute configuration
+    cpuCoreCount: 1         # Minimum 1 OCPU (scales in increments of 1)
+    dataStorageSizeInTBs: 1 # 1 TB storage
+    computeModel: "OCPU"    # OCPU or ECPU
+    
+    # Auto-scaling options
+    isAutoScalingEnabled: false
+    isAutoScalingForStorageEnabled: false
+    
+    # Licensing
+    licenseModel: "LICENSE_INCLUDED"
+    
+    # Access control
+    # Leave empty to allow access from anywhere, or specify IP addresses
+    whitelistedIps: []
+    # whitelistedIps:
+    #   - "192.168.1.0/24"
+    #   - "10.0.0.0/16"
+    
+    # Security
+    isMtlsConnectionRequired: true  # Mutual TLS required for connections
+    
+    # Optional: Private endpoint configuration
+    # Uncomment to use private endpoint instead of public
+    # subnetId: "${SUBNET_ID}"
+    # nsgIds:
+    #   - "${NSG_ID_1}"
+    # privateEndpointLabel: "pocadb"
+    
+    # High availability
+    isDataGuardEnabled: false
+    isDedicated: false  # Set to true for dedicated infrastructure
+  
+  # Resource tags
+  tags:
+    freeformTags:
+      Environment: "POC"
+      Type: "AutonomousDatabase"
+      ManagedBy: "Crossplane"
+      Workload: "ATP"
+    # definedTags:
+    #   CostCenter:
+    #     Department: "Engineering"
+  
+  # Select the composition to use
+  compositionSelector:
+    matchLabels:
+      type: autonomous
