@@ -1,0 +1,20 @@
+apiVersion: certificatesmanagement.oci.upbound.io/v1alpha1
+kind: Certificate
+metadata:
+  labels:
+    testing.upbound.io/example-name: certificate_label_1
+  name: certificate1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: certificate1
+    certificateConfig:
+      - configType: ISSUED_BY_INTERNAL_CA
+        certificateProfileType: "TLS_SERVER_OR_CLIENT_AUTH"
+        subject:
+          - commonName: "example.oracle.com"
+        issuerCertificateAuthorityIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: certificateauthority_label_1
