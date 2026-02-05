@@ -61,6 +61,7 @@ var providerSchema string
 var providerMetadata string
 
 var ServiceWildcards = []string{
+	"oci_certificates_management_.*",
 	"oci_containerengine_.*",
 	"oci_database_.*",
 	"oci_core_.*",

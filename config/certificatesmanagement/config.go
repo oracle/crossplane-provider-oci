@@ -21,12 +21,6 @@ import "github.com/crossplane/upjet/pkg/config"
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("oci_certificates_management_certificate_authority", func(r *config.Resource) {
-		r.ExternalName = config.IdentifierFromProvider
-		r.Version = "v1alpha1"
-		// we need to override the default group that terrajet generated for
-
-		r.ShortGroup = "certificatesmanagement"
-		r.Kind = "CertificateAuthority"
 
 		r.References["compartment_id"] = config.Reference{
 			TerraformName: "oci_identity_compartment",
@@ -35,5 +29,24 @@ func Configure(p *config.Provider) {
 		r.References["kms_key_id"] = config.Reference{
 			TerraformName: "oci_kms_key",
 		}
+	})
+
+	p.AddResourceConfigurator("oci_certificates_management_ca_bundle", func(r *config.Resource) {
+
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+	})
+
+	p.AddResourceConfigurator("oci_certificates_management_certificate", func(r *config.Resource) {
+
+		r.References["compartment_id"] = config.Reference{
+			TerraformName: "oci_identity_compartment",
+		}
+
+		r.References["certificate_config.issuer_certificate_authority_id"] = config.Reference{
+			TerraformName: "oci_certificates_management_certificate_authority",
+		}
+		
 	})
 }

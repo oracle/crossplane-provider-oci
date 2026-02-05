@@ -425,6 +425,12 @@ var GroupMap = map[string]GroupKindCalculator{
 	"oci_certificates_management_certificate_authority": func(name string) (string, string) {
 		return "certificatesmanagement", "CertificateAuthority"
 	},
+	"oci_certificates_management_certificate": func(name string) (string, string) {
+		return "certificatesmanagement", "Certificate"
+	},
+	"oci_certificates_management_ca_bundle": func(name string) (string, string) {
+		return "certificatesmanagement", "CaBundle"
+	},
 
 	// File Storage Service
 	"oci_file_storage_file_system": func(name string) (string, string) {
