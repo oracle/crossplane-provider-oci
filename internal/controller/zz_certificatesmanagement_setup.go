@@ -9,6 +9,8 @@ import (
 
 	"github.com/crossplane/upjet/pkg/controller"
 
+	cabundle "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/cabundle"
+	certificate "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/certificate"
 	certificateauthority "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/certificateauthority"
 )
 
@@ -16,6 +18,8 @@ import (
 // the supplied manager.
 func Setup_certificatesmanagement(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		cabundle.Setup,
+		certificate.Setup,
 		certificateauthority.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

@@ -22,6 +22,8 @@ import (
 	volumebackuppolicyassignment "github.com/oracle/provider-oci/internal/controller/blockstorage/volumebackuppolicyassignment"
 	volumegroup "github.com/oracle/provider-oci/internal/controller/blockstorage/volumegroup"
 	volumegroupbackup "github.com/oracle/provider-oci/internal/controller/blockstorage/volumegroupbackup"
+	cabundle "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/cabundle"
+	certificate "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/certificate"
 	certificateauthority "github.com/oracle/provider-oci/internal/controller/certificatesmanagement/certificateauthority"
 	appcataloglistingresourceversionagreement "github.com/oracle/provider-oci/internal/controller/compute/appcataloglistingresourceversionagreement"
 	appcatalogsubscription "github.com/oracle/provider-oci/internal/controller/compute/appcatalogsubscription"
@@ -284,7 +286,7 @@ import (
 	verify "github.com/oracle/provider-oci/internal/controller/kms/verify"
 	backend "github.com/oracle/provider-oci/internal/controller/loadbalancer/backend"
 	backendset "github.com/oracle/provider-oci/internal/controller/loadbalancer/backendset"
-	certificate "github.com/oracle/provider-oci/internal/controller/loadbalancer/certificate"
+	certificateloadbalancer "github.com/oracle/provider-oci/internal/controller/loadbalancer/certificate"
 	lbhostname "github.com/oracle/provider-oci/internal/controller/loadbalancer/lbhostname"
 	listener "github.com/oracle/provider-oci/internal/controller/loadbalancer/listener"
 	loadbalancer "github.com/oracle/provider-oci/internal/controller/loadbalancer/loadbalancer"
@@ -394,6 +396,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		volumebackuppolicyassignment.Setup,
 		volumegroup.Setup,
 		volumegroupbackup.Setup,
+		cabundle.Setup,
+		certificate.Setup,
 		certificateauthority.Setup,
 		appcataloglistingresourceversionagreement.Setup,
 		appcatalogsubscription.Setup,
@@ -656,7 +660,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		verify.Setup,
 		backend.Setup,
 		backendset.Setup,
-		certificate.Setup,
+		certificateloadbalancer.Setup,
 		lbhostname.Setup,
 		listener.Setup,
 		loadbalancer.Setup,
