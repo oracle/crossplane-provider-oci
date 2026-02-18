@@ -38,7 +38,9 @@ spec:
       username: ${var.channel_source_username}
     target:
     - applierUsername: ${var.channel_target_applier_username}
-      channelName: ${oci_mysql_channel.test_channel.name}
+      channelNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_channel
       dbSystemIdSelector:
         matchLabels:
           testing.upbound.io/example-name: test_db_system

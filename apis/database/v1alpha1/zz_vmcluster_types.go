@@ -197,7 +197,16 @@ type VmClusterInitParameters struct {
 	CloudAutomationUpdateDetails []VmClusterCloudAutomationUpdateDetailsInitParameters `json:"cloudAutomationUpdateDetails,omitempty" tf:"cloud_automation_update_details,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The local node storage to be allocated in GBs.
 	DBNodeStorageSizeInGbs *float64 `json:"dbNodeStorageSizeInGbs,omitempty" tf:"db_node_storage_size_in_gbs,omitempty"`
@@ -222,10 +231,30 @@ type VmClusterInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the Exadata infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExadataInfrastructureID *string `json:"exadataInfrastructureId,omitempty" tf:"exadata_infrastructure_id,omitempty"`
 
+	// Reference to a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDRef *v1.Reference `json:"exadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDSelector *v1.Selector `json:"exadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the Exadata Database Storage Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExascaleDbStorageVault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExascaleDBStorageVaultID *string `json:"exascaleDbStorageVaultId,omitempty" tf:"exascale_db_storage_vault_id,omitempty"`
+
+	// Reference to a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDRef *v1.Reference `json:"exascaleDbStorageVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDSelector *v1.Selector `json:"exascaleDbStorageVaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details of the file system configuration of the VM cluster.
 	FileSystemConfigurationDetails []VmClusterFileSystemConfigurationDetailsInitParameters `json:"fileSystemConfigurationDetails,omitempty" tf:"file_system_configuration_details,omitempty"`
@@ -262,7 +291,17 @@ type VmClusterInitParameters struct {
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// The OCID of the VM cluster network.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmClusterNetwork
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VMClusterNetworkID *string `json:"vmClusterNetworkId,omitempty" tf:"vm_cluster_network_id,omitempty"`
+
+	// Reference to a VmClusterNetwork in database to populate vmClusterNetworkId.
+	// +kubebuilder:validation:Optional
+	VMClusterNetworkIDRef *v1.Reference `json:"vmClusterNetworkIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmClusterNetwork in database to populate vmClusterNetworkId.
+	// +kubebuilder:validation:Optional
+	VMClusterNetworkIDSelector *v1.Selector `json:"vmClusterNetworkIdSelector,omitempty" tf:"-"`
 
 	// The vmcluster type for the VM cluster/Cloud VM cluster.
 	VMClusterType *string `json:"vmClusterType,omitempty" tf:"vm_cluster_type,omitempty"`
@@ -396,8 +435,17 @@ type VmClusterParameters struct {
 	CloudAutomationUpdateDetails []VmClusterCloudAutomationUpdateDetailsParameters `json:"cloudAutomationUpdateDetails,omitempty" tf:"cloud_automation_update_details,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The local node storage to be allocated in GBs.
 	// +kubebuilder:validation:Optional
@@ -429,12 +477,32 @@ type VmClusterParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the Exadata infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExadataInfrastructureID *string `json:"exadataInfrastructureId,omitempty" tf:"exadata_infrastructure_id,omitempty"`
 
+	// Reference to a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDRef *v1.Reference `json:"exadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDSelector *v1.Selector `json:"exadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the Exadata Database Storage Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExascaleDbStorageVault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExascaleDBStorageVaultID *string `json:"exascaleDbStorageVaultId,omitempty" tf:"exascale_db_storage_vault_id,omitempty"`
+
+	// Reference to a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDRef *v1.Reference `json:"exascaleDbStorageVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDSelector *v1.Selector `json:"exascaleDbStorageVaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details of the file system configuration of the VM cluster.
 	// +kubebuilder:validation:Optional
@@ -482,8 +550,18 @@ type VmClusterParameters struct {
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
 	// The OCID of the VM cluster network.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmClusterNetwork
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VMClusterNetworkID *string `json:"vmClusterNetworkId,omitempty" tf:"vm_cluster_network_id,omitempty"`
+
+	// Reference to a VmClusterNetwork in database to populate vmClusterNetworkId.
+	// +kubebuilder:validation:Optional
+	VMClusterNetworkIDRef *v1.Reference `json:"vmClusterNetworkIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmClusterNetwork in database to populate vmClusterNetworkId.
+	// +kubebuilder:validation:Optional
+	VMClusterNetworkIDSelector *v1.Selector `json:"vmClusterNetworkIdSelector,omitempty" tf:"-"`
 
 	// The vmcluster type for the VM cluster/Cloud VM cluster.
 	// +kubebuilder:validation:Optional
@@ -526,13 +604,10 @@ type VmClusterStatus struct {
 type VmCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cpuCoreCount) || (has(self.initProvider) && has(self.initProvider.cpuCoreCount))",message="spec.forProvider.cpuCoreCount is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.exadataInfrastructureId) || (has(self.initProvider) && has(self.initProvider.exadataInfrastructureId))",message="spec.forProvider.exadataInfrastructureId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.giVersion) || (has(self.initProvider) && has(self.initProvider.giVersion))",message="spec.forProvider.giVersion is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sshPublicKeys) || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))",message="spec.forProvider.sshPublicKeys is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vmClusterNetworkId) || (has(self.initProvider) && has(self.initProvider.vmClusterNetworkId))",message="spec.forProvider.vmClusterNetworkId is a required parameter"
 	Spec   VmClusterSpec   `json:"spec"`
 	Status VmClusterStatus `json:"status,omitempty"`
 }

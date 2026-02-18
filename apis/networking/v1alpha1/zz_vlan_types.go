@@ -49,7 +49,17 @@ type VlanInitParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Updatable) The OCID of the route table the VLAN will use. If you don't provide a value, the VLAN uses the VCN's default route table.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN to contain the VLAN.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -155,8 +165,18 @@ type VlanParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Updatable) The OCID of the route table the VLAN will use. If you don't provide a value, the VLAN uses the VCN's default route table.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN to contain the VLAN.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn

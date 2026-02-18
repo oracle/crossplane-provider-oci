@@ -8,7 +8,9 @@ metadata:
   name: test-key-version
 spec:
   forProvider:
-    externalKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+    externalKeyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     keyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_key

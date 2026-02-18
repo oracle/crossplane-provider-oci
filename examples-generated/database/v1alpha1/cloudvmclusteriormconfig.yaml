@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-vm-cluster-iorm-config
 spec:
   forProvider:
-    cloudVmClusterId: ${oci_database_cloud_vm_cluster.test_cloud_vm_cluster.id}
+    cloudVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_vm_cluster
     dbPlans:
     - dbName: ${var.cloud_vm_cluster_iorm_config_db_plans_db_name}
       share: ${var.cloud_vm_cluster_iorm_config_db_plans_share}

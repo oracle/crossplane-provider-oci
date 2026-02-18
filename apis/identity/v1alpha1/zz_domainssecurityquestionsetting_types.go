@@ -100,7 +100,17 @@ type DomainsSecurityQuestionSettingInitParameters struct {
 	Schemas []*string `json:"schemas,omitempty" tf:"schemas,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsSecurityQuestionSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecurityQuestionSettingID *string `json:"securityQuestionSettingId,omitempty" tf:"security_question_setting_id,omitempty"`
+
+	// Reference to a DomainsSecurityQuestionSetting in identity to populate securityQuestionSettingId.
+	// +kubebuilder:validation:Optional
+	SecurityQuestionSettingIDRef *v1.Reference `json:"securityQuestionSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsSecurityQuestionSetting in identity to populate securityQuestionSettingId.
+	// +kubebuilder:validation:Optional
+	SecurityQuestionSettingIDSelector *v1.Selector `json:"securityQuestionSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of tags on this resource.
 	Tags []DomainsSecurityQuestionSettingTagsInitParameters `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -256,8 +266,18 @@ type DomainsSecurityQuestionSettingParameters struct {
 	Schemas []*string `json:"schemas,omitempty" tf:"schemas,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsSecurityQuestionSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecurityQuestionSettingID *string `json:"securityQuestionSettingId,omitempty" tf:"security_question_setting_id,omitempty"`
+
+	// Reference to a DomainsSecurityQuestionSetting in identity to populate securityQuestionSettingId.
+	// +kubebuilder:validation:Optional
+	SecurityQuestionSettingIDRef *v1.Reference `json:"securityQuestionSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsSecurityQuestionSetting in identity to populate securityQuestionSettingId.
+	// +kubebuilder:validation:Optional
+	SecurityQuestionSettingIDSelector *v1.Selector `json:"securityQuestionSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of tags on this resource.
 	// +kubebuilder:validation:Optional
@@ -335,7 +355,6 @@ type DomainsSecurityQuestionSetting struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.numQuestionsToAns) || (has(self.initProvider) && has(self.initProvider.numQuestionsToAns))",message="spec.forProvider.numQuestionsToAns is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.numQuestionsToSetup) || (has(self.initProvider) && has(self.initProvider.numQuestionsToSetup))",message="spec.forProvider.numQuestionsToSetup is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemas) || (has(self.initProvider) && has(self.initProvider.schemas))",message="spec.forProvider.schemas is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.securityQuestionSettingId) || (has(self.initProvider) && has(self.initProvider.securityQuestionSettingId))",message="spec.forProvider.securityQuestionSettingId is a required parameter"
 	Spec   DomainsSecurityQuestionSettingSpec   `json:"spec"`
 	Status DomainsSecurityQuestionSettingStatus `json:"status,omitempty"`
 }

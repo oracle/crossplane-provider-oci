@@ -19,7 +19,9 @@ spec:
       bar-key: value
     isDeleteProtected: ${var.replica_is_delete_protected}
     replicaOverrides:
-    - configurationId: ${oci_mysql_mysql_configuration.test_mysql_configuration.id}
+    - configurationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mysql_configuration
       mysqlVersion: ${var.replica_replica_overrides_mysql_version}
       nsgIds: ${var.replica_replica_overrides_nsg_ids}
       securityAttributes: ${var.replica_replica_overrides_security_attributes}

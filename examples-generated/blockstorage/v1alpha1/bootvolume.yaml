@@ -16,23 +16,37 @@ spec:
     bootVolumeReplicas:
     - availabilityDomain: ${var.boot_volume_boot_volume_replicas_availability_domain}
       displayName: ${var.boot_volume_boot_volume_replicas_display_name}
-      xrrKmsKeyId: ${oci_kms_key.test_key.id}
+      xrrKmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
     bootVolumeReplicasDeletion: true
-    clusterPlacementGroupId: ${oci_identity_group.test_group.id}
-    compartmentId: ${var.compartment_id}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.boot_volume_display_name}
     freeformTags:
       Department: Finance
     isAutoTuneEnabled: ${var.boot_volume_is_auto_tune_enabled}
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     sizeInGbs: ${var.boot_volume_size_in_gbs}
     sourceDetails:
     - changeBlockSizeInBytes: ${var.boot_volume_source_details_change_block_size_in_bytes}
-      firstBackupId: ${oci_database_backup.test_backup.id}
+      firstBackupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       id: ${var.boot_volume_source_details_id}
-      secondBackupId: ${oci_database_backup.test_backup.id}
+      secondBackupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       type: ${var.boot_volume_source_details_type}
     vpusPerGb: ${var.boot_volume_vpus_per_gb}
-    xrcKmsKeyId: ${oci_kms_key.test_key.id}
+    xrcKmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key

@@ -15,9 +15,15 @@ spec:
     arePrimaryWhitelistedIpsUsed: ${var.autonomous_database_are_primary_whitelisted_ips_used}
     autoRefreshFrequencyInSeconds: ${var.autonomous_database_auto_refresh_frequency_in_seconds}
     autoRefreshPointLagInSeconds: ${var.autonomous_database_auto_refresh_point_lag_in_seconds}
-    autonomousContainerDatabaseId: ${oci_database_autonomous_container_database.test_autonomous_container_database.id}
-    autonomousDatabaseBackupId: ${oci_database_autonomous_database_backup.test_autonomous_database_backup.id}
-    autonomousDatabaseId: ${oci_database_autonomous_database.test_autonomous_database.id}
+    autonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
+    autonomousDatabaseBackupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database_backup
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
     autonomousMaintenanceScheduleType: ${var.autonomous_database_autonomous_maintenance_schedule_type}
     backupRetentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}
     byolComputeCountLimit: ${var.autonomous_database_byol_compute_count_limit}
@@ -55,16 +61,22 @@ spec:
       directoryName: ${var.autonomous_database_encryption_key_directory_name}
       externalId: ${oci_database_external.test_external.id}
       keyArn: ${var.autonomous_database_encryption_key_key_arn}
-      keyName: ${oci_kms_key.test_key.name}
+      keyNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       keyRing: ${var.autonomous_database_encryption_key_key_ring}
-      kmsKeyId: ${oci_kms_key.test_key.id}
+      kmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       kmsRestEndpoint: ${var.autonomous_database_encryption_key_kms_rest_endpoint}
       location: ${var.autonomous_database_encryption_key_location}
       okvKmsKey: ${var.autonomous_database_encryption_key_okv_kms_key}
       okvUri: ${var.autonomous_database_encryption_key_okv_uri}
       project: ${var.autonomous_database_encryption_key_project}
       serviceEndpointUri: ${var.autonomous_database_encryption_key_service_endpoint_uri}
-      vaultId: ${oci_kms_vault.test_vault.id}
+      vaultIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vault
       vaultUri: ${var.autonomous_database_encryption_key_vault_uri}
     freeformTags:
       Department: Finance
@@ -81,7 +93,9 @@ spec:
     isMtlsConnectionRequired: ${var.autonomous_database_is_mtls_connection_required}
     isPreviewVersionWithServiceTermsAccepted: ${var.autonomous_database_is_preview_version_with_service_terms_accepted}
     isReplicateAutomaticBackups: ${var.autonomous_database_is_replicate_automatic_backups}
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     licenseModel: ${var.autonomous_database_license_model}
     ncharacterSet: ${var.autonomous_database_ncharacter_set}
     nsgIds: ${var.autonomous_database_nsg_ids}
@@ -100,16 +114,22 @@ spec:
       - name: ${var.autonomous_database_scheduled_operations_day_of_week_name}
       scheduledStartTime: ${var.autonomous_database_scheduled_operations_scheduled_start_time}
       scheduledStopTime: ${var.autonomous_database_scheduled_operations_scheduled_stop_time}
-    secretId: ${oci_vault_secret.test_secret.id}
+    secretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
     secretVersionNumber: ${var.autonomous_database_secret_version_number}
     securityAttributes: ${var.autonomous_database_security_attributes}
     source: ${var.autonomous_database_source}
     sourceId: ${oci_database_source.test_source.id}
     standbyWhitelistedIps: ${var.autonomous_database_standby_whitelisted_ips}
-    subnetId: ${oci_core_subnet.test_subnet.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
     timeOfAutoRefreshStart: ${var.autonomous_database_time_of_auto_refresh_start}
     timestamp: ${var.autonomous_database_timestamp}
     useLatestAvailableBackupTimeStamp: ${var.autonomous_database_use_latest_available_backup_time_stamp}
-    vaultId: ${oci_kms_vault.test_vault.id}
+    vaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
     whitelistedIps: ${var.autonomous_database_whitelisted_ips}

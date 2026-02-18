@@ -16,7 +16,17 @@ import (
 type ManagementCloudDbHomeInitParameters struct {
 
 	// The OCID of the cloud database home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudDBHomeID *string `json:"cloudDbHomeId,omitempty" tf:"cloud_db_home_id,omitempty"`
+
+	// Reference to a ManagementCloudDbHome in database to populate cloudDbHomeId.
+	// +kubebuilder:validation:Optional
+	CloudDBHomeIDRef *v1.Reference `json:"cloudDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbHome in database to populate cloudDbHomeId.
+	// +kubebuilder:validation:Optional
+	CloudDBHomeIDSelector *v1.Selector `json:"cloudDbHomeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -85,8 +95,18 @@ type ManagementCloudDbHomeObservation struct {
 type ManagementCloudDbHomeParameters struct {
 
 	// The OCID of the cloud database home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudDBHomeID *string `json:"cloudDbHomeId,omitempty" tf:"cloud_db_home_id,omitempty"`
+
+	// Reference to a ManagementCloudDbHome in database to populate cloudDbHomeId.
+	// +kubebuilder:validation:Optional
+	CloudDBHomeIDRef *v1.Reference `json:"cloudDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbHome in database to populate cloudDbHomeId.
+	// +kubebuilder:validation:Optional
+	CloudDBHomeIDSelector *v1.Selector `json:"cloudDbHomeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -135,9 +155,8 @@ type ManagementCloudDbHomeStatus struct {
 type ManagementCloudDbHome struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudDbHomeId) || (has(self.initProvider) && has(self.initProvider.cloudDbHomeId))",message="spec.forProvider.cloudDbHomeId is a required parameter"
-	Spec   ManagementCloudDbHomeSpec   `json:"spec"`
-	Status ManagementCloudDbHomeStatus `json:"status,omitempty"`
+	Spec              ManagementCloudDbHomeSpec   `json:"spec"`
+	Status            ManagementCloudDbHomeStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

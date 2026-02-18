@@ -8,7 +8,9 @@ metadata:
   name: test-listener
 spec:
   forProvider:
-    defaultBackendSetName: ${var.backend_set_name}
+    defaultBackendSetNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_backend_set
     ipVersion: ${var.listener_ip_version}
     isPpv2Enabled: ${var.listener_is_ppv2enabled}
     l3ipIdleTimeout: ${var.listener_l3ip_idle_timeout}

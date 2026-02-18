@@ -11,7 +11,9 @@ spec:
     areOperationallyActiveBackendsPreferred: ${var.backend_set_are_operationally_active_backends_preferred}
     healthChecker:
     - dns:
-      - domainName: ${oci_identity_domain.test_domain.name}
+      - domainNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_domain
         queryClass: ${var.backend_set_health_checker_dns_query_class}
         queryType: ${var.backend_set_health_checker_dns_query_type}
         rcodes: ${var.backend_set_health_checker_dns_rcodes}

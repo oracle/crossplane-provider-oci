@@ -82,7 +82,17 @@ type DomainsIdentitySettingInitParameters struct {
 	IdcsEndpoint *string `json:"idcsEndpoint,omitempty" tf:"idcs_endpoint,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsIdentitySetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IdentitySettingID *string `json:"identitySettingId,omitempty" tf:"identity_setting_id,omitempty"`
+
+	// Reference to a DomainsIdentitySetting in identity to populate identitySettingId.
+	// +kubebuilder:validation:Optional
+	IdentitySettingIDRef *v1.Reference `json:"identitySettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsIdentitySetting in identity to populate identitySettingId.
+	// +kubebuilder:validation:Optional
+	IdentitySettingIDSelector *v1.Selector `json:"identitySettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Whether to allow users to update their own profile.
 	MyProfile []MyProfileInitParameters `json:"myProfile,omitempty" tf:"my_profile,omitempty"`
@@ -259,8 +269,18 @@ type DomainsIdentitySettingParameters struct {
 	IdcsEndpoint *string `json:"idcsEndpoint,omitempty" tf:"idcs_endpoint,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsIdentitySetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IdentitySettingID *string `json:"identitySettingId,omitempty" tf:"identity_setting_id,omitempty"`
+
+	// Reference to a DomainsIdentitySetting in identity to populate identitySettingId.
+	// +kubebuilder:validation:Optional
+	IdentitySettingIDRef *v1.Reference `json:"identitySettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsIdentitySetting in identity to populate identitySettingId.
+	// +kubebuilder:validation:Optional
+	IdentitySettingIDSelector *v1.Selector `json:"identitySettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Whether to allow users to update their own profile.
 	// +kubebuilder:validation:Optional
@@ -509,7 +529,6 @@ type DomainsIdentitySetting struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.idcsEndpoint) || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))",message="spec.forProvider.idcsEndpoint is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.identitySettingId) || (has(self.initProvider) && has(self.initProvider.identitySettingId))",message="spec.forProvider.identitySettingId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemas) || (has(self.initProvider) && has(self.initProvider.schemas))",message="spec.forProvider.schemas is a required parameter"
 	Spec   DomainsIdentitySettingSpec   `json:"spec"`
 	Status DomainsIdentitySettingStatus `json:"status,omitempty"`

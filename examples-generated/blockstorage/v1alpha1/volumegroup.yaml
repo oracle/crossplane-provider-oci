@@ -10,7 +10,9 @@ spec:
   forProvider:
     availabilityDomain: ${var.volume_group_availability_domain}
     backupPolicyId: ${data.oci_core_volume_backup_policies.test_volume_backup_policies.volume_backup_policies.0.id}
-    clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
@@ -26,7 +28,11 @@ spec:
     volumeGroupReplicas:
     - availabilityDomain: ${var.volume_group_volume_group_replicas_availability_domain}
       displayName: ${var.volume_group_volume_group_replicas_display_name}
-      xrrKmsKeyId: ${oci_kms_key.test_key.id}
+      xrrKmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
     volumeIds:
     - ${var.volume_group_source_id}
-    xrcKmsKeyId: ${oci_kms_key.test_key.id}
+    xrcKmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key

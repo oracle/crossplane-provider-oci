@@ -64,7 +64,17 @@ type CloudExadataInfrastructureConfigureExascaleManagementExascaleConfigParamete
 type CloudExadataInfrastructureConfigureExascaleManagementInitParameters struct {
 
 	// The cloud Exadata infrastructure OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudExadataInfrastructureID *string `json:"cloudExadataInfrastructureId,omitempty" tf:"cloud_exadata_infrastructure_id,omitempty"`
+
+	// Reference to a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	CloudExadataInfrastructureIDRef *v1.Reference `json:"cloudExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	CloudExadataInfrastructureIDSelector *v1.Selector `json:"cloudExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// Storage size needed for Exascale in GBs.
 	TotalStorageInGbs *float64 `json:"totalStorageInGbs,omitempty" tf:"total_storage_in_gbs,omitempty"`
@@ -265,8 +275,18 @@ type CloudExadataInfrastructureConfigureExascaleManagementObservation struct {
 type CloudExadataInfrastructureConfigureExascaleManagementParameters struct {
 
 	// The cloud Exadata infrastructure OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudExadataInfrastructureID *string `json:"cloudExadataInfrastructureId,omitempty" tf:"cloud_exadata_infrastructure_id,omitempty"`
+
+	// Reference to a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	CloudExadataInfrastructureIDRef *v1.Reference `json:"cloudExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudExadataInfrastructure in database to populate cloudExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	CloudExadataInfrastructureIDSelector *v1.Selector `json:"cloudExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// Storage size needed for Exascale in GBs.
 	// +kubebuilder:validation:Optional
@@ -309,7 +329,6 @@ type CloudExadataInfrastructureConfigureExascaleManagementStatus struct {
 type CloudExadataInfrastructureConfigureExascaleManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudExadataInfrastructureId) || (has(self.initProvider) && has(self.initProvider.cloudExadataInfrastructureId))",message="spec.forProvider.cloudExadataInfrastructureId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.totalStorageInGbs) || (has(self.initProvider) && has(self.initProvider.totalStorageInGbs))",message="spec.forProvider.totalStorageInGbs is a required parameter"
 	Spec   CloudExadataInfrastructureConfigureExascaleManagementSpec   `json:"spec"`
 	Status CloudExadataInfrastructureConfigureExascaleManagementStatus `json:"status,omitempty"`

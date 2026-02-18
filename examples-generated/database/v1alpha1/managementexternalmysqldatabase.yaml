@@ -8,5 +8,7 @@ metadata:
   name: test-external-my-sql-database
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     dbName: ${var.external_my_sql_database_db_name}

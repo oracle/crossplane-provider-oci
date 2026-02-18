@@ -2813,6 +2813,16 @@ func (in *RedisClusterInitParameters) DeepCopyInto(out *RedisClusterInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.OciCacheConfigSetIDRef != nil {
+		in, out := &in.OciCacheConfigSetIDRef, &out.OciCacheConfigSetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OciCacheConfigSetIDSelector != nil {
+		in, out := &in.OciCacheConfigSetIDSelector, &out.OciCacheConfigSetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecurityAttributes != nil {
 		in, out := &in.SecurityAttributes, &out.SecurityAttributes
 		*out = make(map[string]*string, len(*in))
@@ -3180,6 +3190,16 @@ func (in *RedisClusterParameters) DeepCopyInto(out *RedisClusterParameters) {
 		in, out := &in.OciCacheConfigSetID, &out.OciCacheConfigSetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.OciCacheConfigSetIDRef != nil {
+		in, out := &in.OciCacheConfigSetIDRef, &out.OciCacheConfigSetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OciCacheConfigSetIDSelector != nil {
+		in, out := &in.OciCacheConfigSetIDSelector, &out.OciCacheConfigSetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SecurityAttributes != nil {
 		in, out := &in.SecurityAttributes, &out.SecurityAttributes

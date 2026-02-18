@@ -128,7 +128,17 @@ type ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagementIn
 	EnableExternalContainerDbmFeature *bool `json:"enableExternalContainerDbmFeature,omitempty" tf:"enable_external_container_dbm_feature,omitempty"`
 
 	// The OCID of the external container database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalContainerDatabaseID *string `json:"externalContainerDatabaseId,omitempty" tf:"external_container_database_id,omitempty"`
+
+	// Reference to a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDRef *v1.Reference `json:"externalContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDSelector *v1.Selector `json:"externalContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The name of the Database Management feature.
 	Feature *string `json:"feature,omitempty" tf:"feature,omitempty"`
@@ -165,8 +175,18 @@ type ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagementPa
 	EnableExternalContainerDbmFeature *bool `json:"enableExternalContainerDbmFeature,omitempty" tf:"enable_external_container_dbm_feature,omitempty"`
 
 	// The OCID of the external container database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalContainerDatabaseID *string `json:"externalContainerDatabaseId,omitempty" tf:"external_container_database_id,omitempty"`
+
+	// Reference to a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDRef *v1.Reference `json:"externalContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDSelector *v1.Selector `json:"externalContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The name of the Database Management feature.
 	// +kubebuilder:validation:Optional
@@ -214,7 +234,6 @@ type ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagement s
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableExternalContainerDbmFeature) || (has(self.initProvider) && has(self.initProvider.enableExternalContainerDbmFeature))",message="spec.forProvider.enableExternalContainerDbmFeature is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalContainerDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalContainerDatabaseId))",message="spec.forProvider.externalContainerDatabaseId is a required parameter"
 	Spec   ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagementSpec   `json:"spec"`
 	Status ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagementStatus `json:"status,omitempty"`
 }

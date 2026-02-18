@@ -97,7 +97,17 @@ type ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementIn
 	EnableExternalPluggableDbmFeature *bool `json:"enableExternalPluggableDbmFeature,omitempty" tf:"enable_external_pluggable_dbm_feature,omitempty"`
 
 	// The OCID of the external pluggable database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalPluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalPluggableDatabaseID *string `json:"externalPluggableDatabaseId,omitempty" tf:"external_pluggable_database_id,omitempty"`
+
+	// Reference to a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDRef *v1.Reference `json:"externalPluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDSelector *v1.Selector `json:"externalPluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The name of the Database Management feature.
 	Feature *string `json:"feature,omitempty" tf:"feature,omitempty"`
@@ -130,8 +140,18 @@ type ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementPa
 	EnableExternalPluggableDbmFeature *bool `json:"enableExternalPluggableDbmFeature,omitempty" tf:"enable_external_pluggable_dbm_feature,omitempty"`
 
 	// The OCID of the external pluggable database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalPluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalPluggableDatabaseID *string `json:"externalPluggableDatabaseId,omitempty" tf:"external_pluggable_database_id,omitempty"`
+
+	// Reference to a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDRef *v1.Reference `json:"externalPluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDSelector *v1.Selector `json:"externalPluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The name of the Database Management feature.
 	// +kubebuilder:validation:Optional
@@ -179,7 +199,6 @@ type ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagement s
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableExternalPluggableDbmFeature) || (has(self.initProvider) && has(self.initProvider.enableExternalPluggableDbmFeature))",message="spec.forProvider.enableExternalPluggableDbmFeature is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalPluggableDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalPluggableDatabaseId))",message="spec.forProvider.externalPluggableDatabaseId is a required parameter"
 	Spec   ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementSpec   `json:"spec"`
 	Status ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementStatus `json:"status,omitempty"`
 }

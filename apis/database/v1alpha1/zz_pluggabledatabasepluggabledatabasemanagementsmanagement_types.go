@@ -19,7 +19,17 @@ type CredentialDetailsInitParameters struct {
 	PasswordSecretIDSecretRef v1.SecretKeySelector `json:"passwordSecretIdSecretRef" tf:"-"`
 
 	// The name of the Oracle Database user that will be used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type CredentialDetailsObservation struct {
@@ -35,8 +45,18 @@ type CredentialDetailsParameters struct {
 	PasswordSecretIDSecretRef v1.SecretKeySelector `json:"passwordSecretIdSecretRef" tf:"-"`
 
 	// The name of the Oracle Database user that will be used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
-	UserName *string `json:"userName" tf:"user_name,omitempty"`
+	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type PluggableDatabasePluggabledatabasemanagementsManagementConnectionStringsInitParameters struct {
@@ -70,7 +90,17 @@ type PluggableDatabasePluggabledatabasemanagementsManagementInitParameters struc
 	EnablePluggabledatabasemanagement *bool `json:"enablePluggabledatabasemanagement,omitempty" tf:"enable_pluggabledatabasemanagement,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The port used to connect to the pluggable database.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -85,7 +115,17 @@ type PluggableDatabasePluggabledatabasemanagementsManagementInitParameters struc
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// The name of the Oracle Database service that will be used to connect to the database.
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
@@ -173,8 +213,18 @@ type PluggableDatabasePluggabledatabasemanagementsManagementParameters struct {
 	EnablePluggabledatabasemanagement *bool `json:"enablePluggabledatabasemanagement,omitempty" tf:"enable_pluggabledatabasemanagement,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The port used to connect to the pluggable database.
 	// +kubebuilder:validation:Optional
@@ -193,8 +243,18 @@ type PluggableDatabasePluggabledatabasemanagementsManagementParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// The name of the Oracle Database service that will be used to connect to the database.
 	// +kubebuilder:validation:Optional
@@ -254,7 +314,6 @@ type PluggableDatabasePluggabledatabasemanagementsManagement struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.credentialDetails) || (has(self.initProvider) && has(self.initProvider.credentialDetails))",message="spec.forProvider.credentialDetails is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enablePluggabledatabasemanagement) || (has(self.initProvider) && has(self.initProvider.enablePluggabledatabasemanagement))",message="spec.forProvider.enablePluggabledatabasemanagement is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pluggableDatabaseId) || (has(self.initProvider) && has(self.initProvider.pluggableDatabaseId))",message="spec.forProvider.pluggableDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.privateEndPointId) || (has(self.initProvider) && has(self.initProvider.privateEndPointId))",message="spec.forProvider.privateEndPointId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serviceName) || (has(self.initProvider) && has(self.initProvider.serviceName))",message="spec.forProvider.serviceName is a required parameter"
 	Spec   PluggableDatabasePluggabledatabasemanagementsManagementSpec   `json:"spec"`

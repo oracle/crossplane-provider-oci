@@ -9,9 +9,13 @@ metadata:
 spec:
   forProvider:
     action: ${var.database_upgrade_action}
-    databaseId: ${oci_database_database.test_database.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     databaseUpgradeSourceDetails:
-    - databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+    - databaseSoftwareImageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_database_software_image
       db_home_id: ${oci_database_db_home.test_db_home.id}
       dbVersion: ${var.database_upgrade_database_upgrade_source_details_db_version}
       options: ${var.database_upgrade_database_upgrade_source_details_options}

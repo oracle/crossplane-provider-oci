@@ -20,7 +20,17 @@ type DbNodeSnapshotManagementInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The Exadata VM cluster OCID on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadbVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExadbVMClusterID *string `json:"exadbVmClusterId,omitempty" tf:"exadb_vm_cluster_id,omitempty"`
+
+	// Reference to a ExadbVmCluster in database to populate exadbVmClusterId.
+	// +kubebuilder:validation:Optional
+	ExadbVMClusterIDRef *v1.Reference `json:"exadbVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadbVmCluster in database to populate exadbVmClusterId.
+	// +kubebuilder:validation:Optional
+	ExadbVMClusterIDSelector *v1.Selector `json:"exadbVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Free-form tags for the Exadata Database Node Snapshots. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -69,8 +79,18 @@ type DbNodeSnapshotManagementParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The Exadata VM cluster OCID on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadbVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExadbVMClusterID *string `json:"exadbVmClusterId,omitempty" tf:"exadb_vm_cluster_id,omitempty"`
+
+	// Reference to a ExadbVmCluster in database to populate exadbVmClusterId.
+	// +kubebuilder:validation:Optional
+	ExadbVMClusterIDRef *v1.Reference `json:"exadbVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadbVmCluster in database to populate exadbVmClusterId.
+	// +kubebuilder:validation:Optional
+	ExadbVMClusterIDSelector *v1.Selector `json:"exadbVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Free-form tags for the Exadata Database Node Snapshots. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -204,7 +224,6 @@ type DbNodeSnapshotManagementStatus struct {
 type DbNodeSnapshotManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.exadbVmClusterId) || (has(self.initProvider) && has(self.initProvider.exadbVmClusterId))",message="spec.forProvider.exadbVmClusterId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sourceDbnodeIds) || (has(self.initProvider) && has(self.initProvider.sourceDbnodeIds))",message="spec.forProvider.sourceDbnodeIds is a required parameter"
 	Spec   DbNodeSnapshotManagementSpec   `json:"spec"`

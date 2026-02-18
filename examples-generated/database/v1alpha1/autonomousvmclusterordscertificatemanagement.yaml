@@ -8,8 +8,14 @@ metadata:
   name: test-autonomous-vm-cluster-ords-certificate-management
 spec:
   forProvider:
-    autonomousVmClusterId: ${oci_database_autonomous_vm_cluster.test_autonomous_vm_cluster.id}
-    caBundleId: ${oci_certificates_management_ca_bundle.test_ca_bundle.id}
-    certificateAuthorityId: ${oci_certificates_management_certificate_authority.test_certificate_authority.id}
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    caBundleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ca_bundle
+    certificateAuthorityIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_certificate_authority
     certificateGenerationType: ${var.autonomous_vm_cluster_ords_certificate_management_certificate_generation_type}
     certificateId: ${oci_apigateway_certificate.test_certificate.id}

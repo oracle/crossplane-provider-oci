@@ -16,7 +16,17 @@ import (
 type AppInitParameters struct {
 
 	// App identifier
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsApp
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+
+	// Reference to a DomainsApp in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueRef *v1.Reference `json:"valueRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsApp in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueSelector *v1.Selector `json:"valueSelector,omitempty" tf:"-"`
 }
 
 type AppObservation struct {
@@ -40,8 +50,18 @@ type AppObservation struct {
 type AppParameters struct {
 
 	// App identifier
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsApp
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	Value *string `json:"value" tf:"value,omitempty"`
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+
+	// Reference to a DomainsApp in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueRef *v1.Reference `json:"valueRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsApp in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueSelector *v1.Selector `json:"valueSelector,omitempty" tf:"-"`
 }
 
 type DomainsAppRoleIdcsCreatedByInitParameters struct {

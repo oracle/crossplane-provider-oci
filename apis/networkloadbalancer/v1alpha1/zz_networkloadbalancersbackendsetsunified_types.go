@@ -16,7 +16,16 @@ import (
 type HealthCheckerDNSInitParameters struct {
 
 	// (Updatable) The absolute fully-qualified domain name to perform periodic DNS queries. If not provided, an extra dot will be added at the end of a domain name during the query.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Domain
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+	// Reference to a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+
+	// Selector for a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The class the dns health check query to use; either IN or CH.  Example: IN
 	QueryClass *string `json:"queryClass,omitempty" tf:"query_class,omitempty"`
@@ -52,8 +61,17 @@ type HealthCheckerDNSObservation struct {
 type HealthCheckerDNSParameters struct {
 
 	// (Updatable) The absolute fully-qualified domain name to perform periodic DNS queries. If not provided, an extra dot will be added at the end of a domain name during the query.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Domain
 	// +kubebuilder:validation:Optional
-	DomainName *string `json:"domainName" tf:"domain_name,omitempty"`
+	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+	// Reference to a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+
+	// Selector for a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The class the dns health check query to use; either IN or CH.  Example: IN
 	// +kubebuilder:validation:Optional

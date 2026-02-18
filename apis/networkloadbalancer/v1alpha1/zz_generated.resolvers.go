@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -25,6 +26,25 @@ func (mg *Backend) ResolveReferences(ctx context.Context, c client.Reader) error
 
 	var rsp reference.ResolutionResponse
 	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.BackendSetName),
+			Extract:      resource.ExtractParamPath("name", false),
+			Reference:    mg.Spec.ForProvider.BackendSetNameRef,
+			Selector:     mg.Spec.ForProvider.BackendSetNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.BackendSetName")
+	}
+	mg.Spec.ForProvider.BackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BackendSetNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
@@ -44,6 +64,25 @@ func (mg *Backend) ResolveReferences(ctx context.Context, c client.Reader) error
 	}
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BackendSetName),
+			Extract:      resource.ExtractParamPath("name", false),
+			Reference:    mg.Spec.InitProvider.BackendSetNameRef,
+			Selector:     mg.Spec.InitProvider.BackendSetNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BackendSetName")
+	}
+	mg.Spec.InitProvider.BackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BackendSetNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
@@ -75,12 +114,35 @@ func (mg *BackendSet) ResolveReferences(ctx context.Context, c client.Reader) er
 
 	var rsp reference.ResolutionResponse
 	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.HealthChecker); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.HealthChecker[i3].DNS); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Domain", "DomainList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameRef,
+					Selector:     mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName")
+			}
+			mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkLoadBalancerID),
 			Extract:      reference.ExternalName(),
@@ -94,12 +156,35 @@ func (mg *BackendSet) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.HealthChecker); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.HealthChecker[i3].DNS); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Domain", "DomainList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameRef,
+					Selector:     mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName")
+			}
+			mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkLoadBalancerID),
 			Extract:      reference.ExternalName(),
@@ -126,6 +211,25 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var rsp reference.ResolutionResponse
 	var err error
 	{
+		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DefaultBackendSetName),
+			Extract:      resource.ExtractParamPath("name", false),
+			Reference:    mg.Spec.ForProvider.DefaultBackendSetNameRef,
+			Selector:     mg.Spec.ForProvider.DefaultBackendSetNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DefaultBackendSetName")
+	}
+	mg.Spec.ForProvider.DefaultBackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DefaultBackendSetNameRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -144,6 +248,25 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DefaultBackendSetName),
+			Extract:      resource.ExtractParamPath("name", false),
+			Reference:    mg.Spec.InitProvider.DefaultBackendSetNameRef,
+			Selector:     mg.Spec.InitProvider.DefaultBackendSetNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DefaultBackendSetName")
+	}
+	mg.Spec.InitProvider.DefaultBackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DefaultBackendSetNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
@@ -263,12 +386,35 @@ func (mg *NetworkLoadBalancersBackendSetsUnified) ResolveReferences(ctx context.
 
 	var rsp reference.ResolutionResponse
 	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.HealthChecker); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.HealthChecker[i3].DNS); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Domain", "DomainList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameRef,
+					Selector:     mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName")
+			}
+			mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.HealthChecker[i3].DNS[i4].DomainNameRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkLoadBalancerID),
 			Extract:      reference.ExternalName(),
@@ -282,12 +428,35 @@ func (mg *NetworkLoadBalancersBackendSetsUnified) ResolveReferences(ctx context.
 	}
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.HealthChecker); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.HealthChecker[i3].DNS); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Domain", "DomainList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameRef,
+					Selector:     mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName")
+			}
+			mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.HealthChecker[i3].DNS[i4].DomainNameRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "NetworkLoadBalancer", "NetworkLoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkLoadBalancerID),
 			Extract:      reference.ExternalName(),

@@ -22,10 +22,30 @@ type CredentialsInitParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the secret containing the user password.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
+
 	// The database user name used to perform management activity.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type CredentialsObservation struct {
@@ -51,12 +71,32 @@ type CredentialsParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the secret containing the user password.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
+
 	// The database user name used to perform management activity.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type ManagementManagedDatabasesChangeDatabaseParameterDatabaseCredentialInitParameters struct {
@@ -65,7 +105,17 @@ type ManagementManagedDatabasesChangeDatabaseParameterDatabaseCredentialInitPara
 	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
 
 	// The OCID of the named credential where the database password metadata is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementNamedCredential
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
+
+	// Reference to a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDRef *v1.Reference `json:"namedCredentialIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDSelector *v1.Selector `json:"namedCredentialIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Secret where the database password is stored.
 	PasswordSecretIDSecretRef *v1.SecretKeySelector `json:"passwordSecretIdSecretRef,omitempty" tf:"-"`
@@ -102,8 +152,18 @@ type ManagementManagedDatabasesChangeDatabaseParameterDatabaseCredentialParamete
 	CredentialType *string `json:"credentialType" tf:"credential_type,omitempty"`
 
 	// The OCID of the named credential where the database password metadata is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementNamedCredential
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
+
+	// Reference to a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDRef *v1.Reference `json:"namedCredentialIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDSelector *v1.Selector `json:"namedCredentialIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Secret where the database password is stored.
 	// +kubebuilder:validation:Optional
@@ -131,7 +191,17 @@ type ManagementManagedDatabasesChangeDatabaseParameterInitParameters struct {
 	DatabaseCredential []ManagementManagedDatabasesChangeDatabaseParameterDatabaseCredentialInitParameters `json:"databaseCredential,omitempty" tf:"database_credential,omitempty"`
 
 	// The OCID of the Managed Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementManagedDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ManagedDatabaseID *string `json:"managedDatabaseId,omitempty" tf:"managed_database_id,omitempty"`
+
+	// Reference to a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDRef *v1.Reference `json:"managedDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDSelector *v1.Selector `json:"managedDatabaseIdSelector,omitempty" tf:"-"`
 
 	// A list of database parameters and their values.
 	Parameters []ParametersInitParameters `json:"parameters,omitempty" tf:"parameters,omitempty"`
@@ -171,8 +241,18 @@ type ManagementManagedDatabasesChangeDatabaseParameterParameters struct {
 	DatabaseCredential []ManagementManagedDatabasesChangeDatabaseParameterDatabaseCredentialParameters `json:"databaseCredential,omitempty" tf:"database_credential,omitempty"`
 
 	// The OCID of the Managed Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementManagedDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ManagedDatabaseID *string `json:"managedDatabaseId,omitempty" tf:"managed_database_id,omitempty"`
+
+	// Reference to a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDRef *v1.Reference `json:"managedDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDSelector *v1.Selector `json:"managedDatabaseIdSelector,omitempty" tf:"-"`
 
 	// A list of database parameters and their values.
 	// +kubebuilder:validation:Optional
@@ -258,7 +338,6 @@ type ManagementManagedDatabasesChangeDatabaseParameterStatus struct {
 type ManagementManagedDatabasesChangeDatabaseParameter struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.managedDatabaseId) || (has(self.initProvider) && has(self.initProvider.managedDatabaseId))",message="spec.forProvider.managedDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parameters) || (has(self.initProvider) && has(self.initProvider.parameters))",message="spec.forProvider.parameters is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scope) || (has(self.initProvider) && has(self.initProvider.scope))",message="spec.forProvider.scope is a required parameter"
 	Spec   ManagementManagedDatabasesChangeDatabaseParameterSpec   `json:"spec"`

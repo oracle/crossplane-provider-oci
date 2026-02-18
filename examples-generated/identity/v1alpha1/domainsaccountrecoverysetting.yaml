@@ -8,7 +8,9 @@ metadata:
   name: test-account-recovery-setting
 spec:
   forProvider:
-    accountRecoverySettingId: ${oci_identity_domains_account_recovery_setting.test_account_recovery_setting.id}
+    accountRecoverySettingIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_account_recovery_setting
     attributeSets:
     - all
     attributes: ""

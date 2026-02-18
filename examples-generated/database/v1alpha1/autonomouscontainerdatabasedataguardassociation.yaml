@@ -8,13 +8,17 @@ metadata:
   name: test-autonomous-container-database-dataguard-association
 spec:
   forProvider:
-    autonomousContainerDatabaseId: ${oci_database_autonomous_container_database.test_autonomous_container_database.id}
+    autonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
     fastStartFailOverLagLimitInSeconds: ${var.autonomous_container_database_dataguard_association_fast_start_fail_over_lag_limit_in_seconds}
     isAutomaticFailoverEnabled: ${var.autonomous_container_database_dataguard_association_is_automatic_failover_enabled}
     peerAutonomousContainerDatabaseBackupConfig:
     - backupDestinationDetails:
       - backupRetentionPolicyOnTerminate: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_backup_destination_details_backup_retention_policy_on_terminate}
-        dbrsPolicyId: ${oci_identity_policy.test_policy.id}
+        dbrsPolicyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_policy
         id: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_backup_destination_details_id}
         internetProxy: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_backup_destination_details_internet_proxy}
         isRemote: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_backup_destination_details_is_remote}
@@ -27,10 +31,16 @@ spec:
           namespace: upbound-system
         vpcUser: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_backup_destination_details_vpc_user}
       recoveryWindowInDays: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_backup_config_recovery_window_in_days}
-    peerAutonomousContainerDatabaseCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    peerAutonomousContainerDatabaseCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
     peerAutonomousContainerDatabaseDisplayName: ${var.autonomous_container_database_dataguard_association_peer_autonomous_container_database_display_name}
-    peerAutonomousVmClusterId: ${oci_database_autonomous_vm_cluster.test_autonomous_vm_cluster.id}
-    peerCloudAutonomousVmClusterId: ${oci_database_cloud_autonomous_vm_cluster.test_cloud_autonomous_vm_cluster.id}
+    peerAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    peerCloudAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
     peerDbUniqueName: ${var.autonomous_container_database_dataguard_association_peer_db_unique_name}
     protectionMode: ${var.autonomous_container_database_dataguard_association_protection_mode}
     standbyMaintenanceBufferInDays: ${var.autonomous_container_database_dataguard_association_standby_maintenance_buffer_in_days}

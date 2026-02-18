@@ -22,7 +22,17 @@ type BlockVolumeReplicasInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the cross region block volume replicas, which will be used in the destination region to encrypt the block volume replica's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	XrrKMSKeyID *string `json:"xrrKmsKeyId,omitempty" tf:"xrr_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDRef *v1.Reference `json:"xrrKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDSelector *v1.Selector `json:"xrrKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type BlockVolumeReplicasObservation struct {
@@ -54,8 +64,18 @@ type BlockVolumeReplicasParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the cross region block volume replicas, which will be used in the destination region to encrypt the block volume replica's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	XrrKMSKeyID *string `json:"xrrKmsKeyId,omitempty" tf:"xrr_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDRef *v1.Reference `json:"xrrKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDSelector *v1.Selector `json:"xrrKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeAutotunePoliciesInitParameters struct {
@@ -104,7 +124,17 @@ type VolumeInitParameters struct {
 	BlockVolumeReplicasDeletion *bool `json:"blockVolumeReplicasDeletion,omitempty" tf:"block_volume_replicas_deletion,omitempty"`
 
 	// The clusterPlacementGroup Id of the volume for volume placement.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment that contains the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -136,7 +166,17 @@ type VolumeInitParameters struct {
 	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The size of the volume in GBs.
 	SizeInGbs *string `json:"sizeInGbs,omitempty" tf:"size_in_gbs,omitempty"`
@@ -154,7 +194,17 @@ type VolumeInitParameters struct {
 	VpusPerGb *string `json:"vpusPerGb,omitempty" tf:"vpus_per_gb,omitempty"`
 
 	// The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	XrcKMSKeyID *string `json:"xrcKmsKeyId,omitempty" tf:"xrc_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDRef *v1.Reference `json:"xrcKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDSelector *v1.Selector `json:"xrcKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeObservation struct {
@@ -262,8 +312,18 @@ type VolumeParameters struct {
 	BlockVolumeReplicasDeletion *bool `json:"blockVolumeReplicasDeletion,omitempty" tf:"block_volume_replicas_deletion,omitempty"`
 
 	// The clusterPlacementGroup Id of the volume for volume placement.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment that contains the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -301,8 +361,18 @@ type VolumeParameters struct {
 	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The size of the volume in GBs.
 	// +kubebuilder:validation:Optional
@@ -325,8 +395,18 @@ type VolumeParameters struct {
 	VpusPerGb *string `json:"vpusPerGb,omitempty" tf:"vpus_per_gb,omitempty"`
 
 	// The OCID of the Vault service key which is the master encryption key for the block volume cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	XrcKMSKeyID *string `json:"xrcKmsKeyId,omitempty" tf:"xrc_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDRef *v1.Reference `json:"xrcKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDSelector *v1.Selector `json:"xrcKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeSourceDetailsInitParameters struct {
@@ -335,13 +415,33 @@ type VolumeSourceDetailsInitParameters struct {
 	ChangeBlockSizeInBytes *string `json:"changeBlockSizeInBytes,omitempty" tf:"change_block_size_in_bytes,omitempty"`
 
 	// The OCID of the first volume backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FirstBackupID *string `json:"firstBackupId,omitempty" tf:"first_backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate firstBackupId.
+	// +kubebuilder:validation:Optional
+	FirstBackupIDRef *v1.Reference `json:"firstBackupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate firstBackupId.
+	// +kubebuilder:validation:Optional
+	FirstBackupIDSelector *v1.Selector `json:"firstBackupIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the block volume replica.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The OCID of the second volume backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecondBackupID *string `json:"secondBackupId,omitempty" tf:"second_backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate secondBackupId.
+	// +kubebuilder:validation:Optional
+	SecondBackupIDRef *v1.Reference `json:"secondBackupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate secondBackupId.
+	// +kubebuilder:validation:Optional
+	SecondBackupIDSelector *v1.Selector `json:"secondBackupIdSelector,omitempty" tf:"-"`
 
 	// The type can be one of these values: blockVolumeReplica, volume, volumeBackup, volumeBackupDelta
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -372,16 +472,36 @@ type VolumeSourceDetailsParameters struct {
 	ChangeBlockSizeInBytes *string `json:"changeBlockSizeInBytes,omitempty" tf:"change_block_size_in_bytes,omitempty"`
 
 	// The OCID of the first volume backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FirstBackupID *string `json:"firstBackupId,omitempty" tf:"first_backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate firstBackupId.
+	// +kubebuilder:validation:Optional
+	FirstBackupIDRef *v1.Reference `json:"firstBackupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate firstBackupId.
+	// +kubebuilder:validation:Optional
+	FirstBackupIDSelector *v1.Selector `json:"firstBackupIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the block volume replica.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The OCID of the second volume backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecondBackupID *string `json:"secondBackupId,omitempty" tf:"second_backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate secondBackupId.
+	// +kubebuilder:validation:Optional
+	SecondBackupIDRef *v1.Reference `json:"secondBackupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate secondBackupId.
+	// +kubebuilder:validation:Optional
+	SecondBackupIDSelector *v1.Selector `json:"secondBackupIdSelector,omitempty" tf:"-"`
 
 	// The type can be one of these values: blockVolumeReplica, volume, volumeBackup, volumeBackupDelta
 	// +kubebuilder:validation:Optional

@@ -337,7 +337,17 @@ type DomainsAuthenticationFactorSettingInitParameters struct {
 	Attributes *string `json:"attributes,omitempty" tf:"attributes,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsAuthenticationFactorSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AuthenticationFactorSettingID *string `json:"authenticationFactorSettingId,omitempty" tf:"authentication_factor_setting_id,omitempty"`
+
+	// Reference to a DomainsAuthenticationFactorSetting in identity to populate authenticationFactorSettingId.
+	// +kubebuilder:validation:Optional
+	AuthenticationFactorSettingIDRef *v1.Reference `json:"authenticationFactorSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsAuthenticationFactorSetting in identity to populate authenticationFactorSettingId.
+	// +kubebuilder:validation:Optional
+	AuthenticationFactorSettingIDSelector *v1.Selector `json:"authenticationFactorSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
 	Authorization *string `json:"authorization,omitempty" tf:"authorization,omitempty"`
@@ -600,8 +610,18 @@ type DomainsAuthenticationFactorSettingParameters struct {
 	Attributes *string `json:"attributes,omitempty" tf:"attributes,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsAuthenticationFactorSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AuthenticationFactorSettingID *string `json:"authenticationFactorSettingId,omitempty" tf:"authentication_factor_setting_id,omitempty"`
+
+	// Reference to a DomainsAuthenticationFactorSetting in identity to populate authenticationFactorSettingId.
+	// +kubebuilder:validation:Optional
+	AuthenticationFactorSettingIDRef *v1.Reference `json:"authenticationFactorSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsAuthenticationFactorSetting in identity to populate authenticationFactorSettingId.
+	// +kubebuilder:validation:Optional
+	AuthenticationFactorSettingIDSelector *v1.Selector `json:"authenticationFactorSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Authorization field value consists of credentials containing the authentication information of the user agent for the realm of the resource being requested.
 	// +kubebuilder:validation:Optional
@@ -1230,7 +1250,6 @@ type DomainsAuthenticationFactorSettingStatus struct {
 type DomainsAuthenticationFactorSetting struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.authenticationFactorSettingId) || (has(self.initProvider) && has(self.initProvider.authenticationFactorSettingId))",message="spec.forProvider.authenticationFactorSettingId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bypassCodeEnabled) || (has(self.initProvider) && has(self.initProvider.bypassCodeEnabled))",message="spec.forProvider.bypassCodeEnabled is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.bypassCodeSettings) || (has(self.initProvider) && has(self.initProvider.bypassCodeSettings))",message="spec.forProvider.bypassCodeSettings is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clientAppSettings) || (has(self.initProvider) && has(self.initProvider.clientAppSettings))",message="spec.forProvider.clientAppSettings is a required parameter"

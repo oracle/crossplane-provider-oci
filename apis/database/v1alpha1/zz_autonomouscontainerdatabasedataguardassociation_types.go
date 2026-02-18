@@ -19,7 +19,17 @@ type AutonomousContainerDatabaseDataguardAssociationInitParameters struct {
 	AutonomousContainerDatabaseDataguardAssociationID *string `json:"autonomousContainerDatabaseDataguardAssociationId,omitempty" tf:"autonomous_container_database_dataguard_association_id,omitempty"`
 
 	// The Autonomous Container Database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AutonomousContainerDatabaseID *string `json:"autonomousContainerDatabaseId,omitempty" tf:"autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDRef *v1.Reference `json:"autonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDSelector *v1.Selector `json:"autonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The lag time for my preference based on data loss tolerance in seconds.
 	FastStartFailOverLagLimitInSeconds *float64 `json:"fastStartFailOverLagLimitInSeconds,omitempty" tf:"fast_start_fail_over_lag_limit_in_seconds,omitempty"`
@@ -34,16 +44,46 @@ type AutonomousContainerDatabaseDataguardAssociationInitParameters struct {
 	PeerAutonomousContainerDatabaseBackupConfig []AutonomousContainerDatabaseDataguardAssociationPeerAutonomousContainerDatabaseBackupConfigInitParameters `json:"peerAutonomousContainerDatabaseBackupConfig,omitempty" tf:"peer_autonomous_container_database_backup_config,omitempty"`
 
 	// The OCID of the compartment where the standby Autonomous Container Database will be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerAutonomousContainerDatabaseCompartmentID *string `json:"peerAutonomousContainerDatabaseCompartmentId,omitempty" tf:"peer_autonomous_container_database_compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDRef *v1.Reference `json:"peerAutonomousContainerDatabaseCompartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDSelector *v1.Selector `json:"peerAutonomousContainerDatabaseCompartmentIdSelector,omitempty" tf:"-"`
 
 	// The display name for the peer Autonomous Container Database.
 	PeerAutonomousContainerDatabaseDisplayName *string `json:"peerAutonomousContainerDatabaseDisplayName,omitempty" tf:"peer_autonomous_container_database_display_name,omitempty"`
 
 	// The OCID of the peer Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerAutonomousVMClusterID *string `json:"peerAutonomousVmClusterId,omitempty" tf:"peer_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDRef *v1.Reference `json:"peerAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDSelector *v1.Selector `json:"peerAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerCloudAutonomousVMClusterID *string `json:"peerCloudAutonomousVmClusterId,omitempty" tf:"peer_cloud_autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDRef *v1.Reference `json:"peerCloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDSelector *v1.Selector `json:"peerCloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Specifies the DB_UNIQUE_NAME of the peer database to be created.
 	PeerDBUniqueName *string `json:"peerDbUniqueName,omitempty" tf:"peer_db_unique_name,omitempty"`
@@ -146,8 +186,18 @@ type AutonomousContainerDatabaseDataguardAssociationParameters struct {
 	AutonomousContainerDatabaseDataguardAssociationID *string `json:"autonomousContainerDatabaseDataguardAssociationId,omitempty" tf:"autonomous_container_database_dataguard_association_id,omitempty"`
 
 	// The Autonomous Container Database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AutonomousContainerDatabaseID *string `json:"autonomousContainerDatabaseId,omitempty" tf:"autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDRef *v1.Reference `json:"autonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDSelector *v1.Selector `json:"autonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The lag time for my preference based on data loss tolerance in seconds.
 	// +kubebuilder:validation:Optional
@@ -166,20 +216,50 @@ type AutonomousContainerDatabaseDataguardAssociationParameters struct {
 	PeerAutonomousContainerDatabaseBackupConfig []AutonomousContainerDatabaseDataguardAssociationPeerAutonomousContainerDatabaseBackupConfigParameters `json:"peerAutonomousContainerDatabaseBackupConfig,omitempty" tf:"peer_autonomous_container_database_backup_config,omitempty"`
 
 	// The OCID of the compartment where the standby Autonomous Container Database will be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerAutonomousContainerDatabaseCompartmentID *string `json:"peerAutonomousContainerDatabaseCompartmentId,omitempty" tf:"peer_autonomous_container_database_compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDRef *v1.Reference `json:"peerAutonomousContainerDatabaseCompartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDSelector *v1.Selector `json:"peerAutonomousContainerDatabaseCompartmentIdSelector,omitempty" tf:"-"`
 
 	// The display name for the peer Autonomous Container Database.
 	// +kubebuilder:validation:Optional
 	PeerAutonomousContainerDatabaseDisplayName *string `json:"peerAutonomousContainerDatabaseDisplayName,omitempty" tf:"peer_autonomous_container_database_display_name,omitempty"`
 
 	// The OCID of the peer Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerAutonomousVMClusterID *string `json:"peerAutonomousVmClusterId,omitempty" tf:"peer_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDRef *v1.Reference `json:"peerAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDSelector *v1.Selector `json:"peerAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerCloudAutonomousVMClusterID *string `json:"peerCloudAutonomousVmClusterId,omitempty" tf:"peer_cloud_autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDRef *v1.Reference `json:"peerCloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDSelector *v1.Selector `json:"peerCloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Specifies the DB_UNIQUE_NAME of the peer database to be created.
 	// +kubebuilder:validation:Optional
@@ -200,7 +280,17 @@ type AutonomousContainerDatabaseDataguardAssociationPeerAutonomousContainerDatab
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the backup destination.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -264,8 +354,18 @@ type AutonomousContainerDatabaseDataguardAssociationPeerAutonomousContainerDatab
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the backup destination.
 	// +kubebuilder:validation:Optional
@@ -365,7 +465,6 @@ type AutonomousContainerDatabaseDataguardAssociationStatus struct {
 type AutonomousContainerDatabaseDataguardAssociation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.autonomousContainerDatabaseId) || (has(self.initProvider) && has(self.initProvider.autonomousContainerDatabaseId))",message="spec.forProvider.autonomousContainerDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.peerAutonomousContainerDatabaseDisplayName) || (has(self.initProvider) && has(self.initProvider.peerAutonomousContainerDatabaseDisplayName))",message="spec.forProvider.peerAutonomousContainerDatabaseDisplayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protectionMode) || (has(self.initProvider) && has(self.initProvider.protectionMode))",message="spec.forProvider.protectionMode is a required parameter"
 	Spec   AutonomousContainerDatabaseDataguardAssociationSpec   `json:"spec"`

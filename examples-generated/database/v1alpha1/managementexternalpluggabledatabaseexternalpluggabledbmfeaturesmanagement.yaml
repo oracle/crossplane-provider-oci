@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     enableExternalPluggableDbmFeature: ${var.enable_external_pluggable_dbm_feature}
-    externalPluggableDatabaseId: ${oci_database_external_pluggable_database.test_external_pluggable_database.id}
+    externalPluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_pluggable_database
     featureDetails:
     - connectorDetails:
       - connectorType: ${var.externalpluggabledatabase_external_pluggable_dbm_features_management_feature_details_connector_details_connector_type}

@@ -33,7 +33,17 @@ type InstanceMaintenanceEventInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance maintenance event.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceMaintenanceEvent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceMaintenanceEventID *string `json:"instanceMaintenanceEventId,omitempty" tf:"instance_maintenance_event_id,omitempty"`
+
+	// Reference to a InstanceMaintenanceEvent in compute to populate instanceMaintenanceEventId.
+	// +kubebuilder:validation:Optional
+	InstanceMaintenanceEventIDRef *v1.Reference `json:"instanceMaintenanceEventIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceMaintenanceEvent in compute to populate instanceMaintenanceEventId.
+	// +kubebuilder:validation:Optional
+	InstanceMaintenanceEventIDSelector *v1.Selector `json:"instanceMaintenanceEventIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The beginning of the time window when Maintenance is scheduled to begin. The Maintenance will not begin before this time.
 	TimeWindowStart *string `json:"timeWindowStart,omitempty" tf:"time_window_start,omitempty"`
@@ -148,8 +158,18 @@ type InstanceMaintenanceEventParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the instance maintenance event.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceMaintenanceEvent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceMaintenanceEventID *string `json:"instanceMaintenanceEventId,omitempty" tf:"instance_maintenance_event_id,omitempty"`
+
+	// Reference to a InstanceMaintenanceEvent in compute to populate instanceMaintenanceEventId.
+	// +kubebuilder:validation:Optional
+	InstanceMaintenanceEventIDRef *v1.Reference `json:"instanceMaintenanceEventIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceMaintenanceEvent in compute to populate instanceMaintenanceEventId.
+	// +kubebuilder:validation:Optional
+	InstanceMaintenanceEventIDSelector *v1.Selector `json:"instanceMaintenanceEventIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The beginning of the time window when Maintenance is scheduled to begin. The Maintenance will not begin before this time.
 	// +kubebuilder:validation:Optional
@@ -192,9 +212,8 @@ type InstanceMaintenanceEventStatus struct {
 type InstanceMaintenanceEvent struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instanceMaintenanceEventId) || (has(self.initProvider) && has(self.initProvider.instanceMaintenanceEventId))",message="spec.forProvider.instanceMaintenanceEventId is a required parameter"
-	Spec   InstanceMaintenanceEventSpec   `json:"spec"`
-	Status InstanceMaintenanceEventStatus `json:"status,omitempty"`
+	Spec              InstanceMaintenanceEventSpec   `json:"spec"`
+	Status            InstanceMaintenanceEventStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

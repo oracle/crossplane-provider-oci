@@ -16,7 +16,9 @@ spec:
         name: example-secret
         namespace: upbound-system
       role: ${var.external_database_connector_connection_credentials_role}
-      sslSecretId: ${oci_vault_secret.test_secret.id}
+      sslSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
       username: ${var.external_database_connector_connection_credentials_username}
     connectionString:
     - hostname: ${var.external_database_connector_connection_string_hostname}
@@ -27,6 +29,8 @@ spec:
     connectorType: ${var.external_database_connector_connector_type}
     definedTags: ${var.external_database_connector_defined_tags}
     displayName: ${var.external_database_connector_display_name}
-    externalDatabaseId: ${oci_database_database.test_database.id}
+    externalDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     freeformTags:
       Department: Finance

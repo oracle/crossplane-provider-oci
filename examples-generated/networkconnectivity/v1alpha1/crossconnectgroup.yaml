@@ -8,7 +8,9 @@ metadata:
   name: test-cross-connect-group
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     customerReferenceName: ${var.cross_connect_group_customer_reference_name}
     definedTags:
       Operations.CostCenter: "42"
@@ -19,6 +21,10 @@ spec:
     - encryptionCipher: ${var.cross_connect_group_macsec_properties_encryption_cipher}
       isUnprotectedTrafficAllowed: ${var.cross_connect_group_macsec_properties_is_unprotected_traffic_allowed}
       primaryKey:
-      - connectivityAssociationKeySecretId: ${oci_vault_secret.test_secret.id}
-        connectivityAssociationNameSecretId: ${oci_vault_secret.test_secret.id}
+      - connectivityAssociationKeySecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        connectivityAssociationNameSecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
       state: ${var.cross_connect_group_macsec_properties_state}

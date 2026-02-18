@@ -16,7 +16,17 @@ import (
 type ManagementCloudDbSystemCloudDatabaseManagementsManagementInitParameters struct {
 
 	// The OCID of the cloud DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudDBSystemID *string `json:"cloudDbSystemId,omitempty" tf:"cloud_db_system_id,omitempty"`
+
+	// Reference to a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDRef *v1.Reference `json:"cloudDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDSelector *v1.Selector `json:"cloudDbSystemIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	EnableCloudDatabaseManagement *bool `json:"enableCloudDatabaseManagement,omitempty" tf:"enable_cloud_database_management,omitempty"`
@@ -48,8 +58,18 @@ type ManagementCloudDbSystemCloudDatabaseManagementsManagementObservation struct
 type ManagementCloudDbSystemCloudDatabaseManagementsManagementParameters struct {
 
 	// The OCID of the cloud DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudDBSystemID *string `json:"cloudDbSystemId,omitempty" tf:"cloud_db_system_id,omitempty"`
+
+	// Reference to a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDRef *v1.Reference `json:"cloudDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDSelector *v1.Selector `json:"cloudDbSystemIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	// +kubebuilder:validation:Optional
@@ -100,7 +120,6 @@ type ManagementCloudDbSystemCloudDatabaseManagementsManagementStatus struct {
 type ManagementCloudDbSystemCloudDatabaseManagementsManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudDbSystemId) || (has(self.initProvider) && has(self.initProvider.cloudDbSystemId))",message="spec.forProvider.cloudDbSystemId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableCloudDatabaseManagement) || (has(self.initProvider) && has(self.initProvider.enableCloudDatabaseManagement))",message="spec.forProvider.enableCloudDatabaseManagement is a required parameter"
 	Spec   ManagementCloudDbSystemCloudDatabaseManagementsManagementSpec   `json:"spec"`
 	Status ManagementCloudDbSystemCloudDatabaseManagementsManagementStatus `json:"status,omitempty"`

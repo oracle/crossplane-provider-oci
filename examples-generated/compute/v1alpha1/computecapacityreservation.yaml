@@ -21,7 +21,9 @@ spec:
     - clusterConfig:
       - hpcIslandId: ${oci_core_hpc_island.test_hpc_island.id}
         networkBlockIds: ${var.compute_capacity_reservation_instance_reservation_configs_cluster_config_network_block_ids}
-      clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+      clusterPlacementGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_group
       faultDomain: ${var.compute_capacity_reservation_instance_reservation_configs_fault_domain}
       instanceShape: ${var.compute_capacity_reservation_instance_reservation_configs_instance_shape}
       instanceShapeConfig:

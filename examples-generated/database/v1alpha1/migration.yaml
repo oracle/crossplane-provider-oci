@@ -8,4 +8,6 @@ metadata:
   name: test-migration
 spec:
   forProvider:
-    dbSystemId: ${oci_database_db_system.test_db_system.id}
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system

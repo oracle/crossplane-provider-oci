@@ -38,7 +38,17 @@ type EncryptedDataInitParameters struct {
 	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the key version used to encrypt the ciphertext.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyVersionID *string `json:"keyVersionId,omitempty" tf:"key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDRef *v1.Reference `json:"keyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDSelector *v1.Selector `json:"keyVersionIdSelector,omitempty" tf:"-"`
 
 	// Information that provides context for audit logging. You can provide this additional data as key-value pairs to include in the audit logs when audit logging is enabled.
 	// +mapType=granular
@@ -108,8 +118,18 @@ type EncryptedDataParameters struct {
 	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the key version used to encrypt the ciphertext.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyVersionID *string `json:"keyVersionId,omitempty" tf:"key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDRef *v1.Reference `json:"keyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDSelector *v1.Selector `json:"keyVersionIdSelector,omitempty" tf:"-"`
 
 	// Information that provides context for audit logging. You can provide this additional data as key-value pairs to include in the audit logs when audit logging is enabled.
 	// +kubebuilder:validation:Optional

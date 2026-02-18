@@ -12,4 +12,6 @@ spec:
     freeformTags:
       Department: Finance
     name: ${var.pluggable_database_snapshot_name}
-    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database

@@ -8,7 +8,9 @@ metadata:
   name: test-app-catalog-subscription
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     eulaLink: ${var.app_catalog_subscription_eula_link}
     listingId: ${data.oci_core_app_catalog_listing.test_listing.id}
     listingResourceVersion: ${var.app_catalog_subscription_listing_resource_version}

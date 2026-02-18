@@ -35,7 +35,17 @@ type DBHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the backup destination.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -84,8 +94,18 @@ type DBHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the backup destination.
 	// +kubebuilder:validation:Optional
@@ -203,7 +223,17 @@ type DBHomeDatabaseInitParameters struct {
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DATABASE | DB_BACKUP) The password to open the TDE wallet.
 	BackupTdePasswordSecretRef *v1.SecretKeySelector `json:"backupTdePasswordSecretRef,omitempty" tf:"-"`
@@ -227,10 +257,30 @@ type DBHomeDatabaseInitParameters struct {
 	DBWorkload *string `json:"dbWorkload,omitempty" tf:"db_workload,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE) (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -241,10 +291,30 @@ type DBHomeDatabaseInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The national character set for the database.  The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.
 	NcharacterSet *string `json:"ncharacterSet,omitempty" tf:"ncharacter_set,omitempty"`
@@ -262,7 +332,17 @@ type DBHomeDatabaseInitParameters struct {
 	TimeStampForPointInTimeRecovery *string `json:"timeStampForPointInTimeRecovery,omitempty" tf:"time_stamp_for_point_in_time_recovery,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 }
 
 type DBHomeDatabaseObservation struct {
@@ -345,8 +425,18 @@ type DBHomeDatabaseParameters struct {
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DATABASE | DB_BACKUP) The password to open the TDE wallet.
 	// +kubebuilder:validation:Optional
@@ -377,12 +467,32 @@ type DBHomeDatabaseParameters struct {
 	DBWorkload *string `json:"dbWorkload,omitempty" tf:"db_workload,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE) (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -395,12 +505,32 @@ type DBHomeDatabaseParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The national character set for the database.  The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.
 	// +kubebuilder:validation:Optional
@@ -423,8 +553,18 @@ type DBHomeDatabaseParameters struct {
 	TimeStampForPointInTimeRecovery *string `json:"timeStampForPointInTimeRecovery,omitempty" tf:"time_stamp_for_point_in_time_recovery,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 }
 
 type DBHomeInitParameters struct {
@@ -437,7 +577,17 @@ type DBHomeInitParameters struct {
 	Database []DBHomeDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE) (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -512,8 +662,18 @@ type DBHomeParameters struct {
 	Database []DBHomeDatabaseParameters `json:"database" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | DB_SYSTEM | NONE) (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -602,7 +762,17 @@ type DbSystemInitParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 	CPUCoreCount *float64 `json:"cpuCoreCount,omitempty" tf:"cpu_core_count,omitempty"`
@@ -614,7 +784,16 @@ type DbSystemInitParameters struct {
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment the DB system  belongs in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of compute servers for the DB system.
 	ComputeCount *float64 `json:"computeCount,omitempty" tf:"compute_count,omitempty"`
@@ -664,10 +843,30 @@ type DbSystemInitParameters struct {
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.
 	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
@@ -706,7 +905,17 @@ type DbSystemInitParameters struct {
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
 	// The OCID of the DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourceDBSystemID *string `json:"sourceDbSystemId,omitempty" tf:"source_db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate sourceDbSystemId.
+	// +kubebuilder:validation:Optional
+	SourceDBSystemIDRef *v1.Reference `json:"sourceDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate sourceDbSystemId.
+	// +kubebuilder:validation:Optional
+	SourceDBSystemIDSelector *v1.Selector `json:"sourceDbSystemIdSelector,omitempty" tf:"-"`
 
 	// If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured. Only applied for Exadata shape.
 	SparseDiskgroup *bool `json:"sparseDiskgroup,omitempty" tf:"sparse_diskgroup,omitempty"`
@@ -715,7 +924,17 @@ type DbSystemInitParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// The OCID of the subnet the DB system is associated with.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the backup destination.
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
@@ -1182,8 +1401,18 @@ type DbSystemParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of CPU cores to enable for a bare metal or Exadata DB system or AMD VMDB Systems. The valid values depend on the specified shape:
 	// +kubebuilder:validation:Optional
@@ -1198,8 +1427,17 @@ type DbSystemParameters struct {
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
 
 	// (Updatable) The OCID of the compartment the DB system  belongs in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of compute servers for the DB system.
 	// +kubebuilder:validation:Optional
@@ -1264,12 +1502,32 @@ type DbSystemParameters struct {
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.
 	// +kubebuilder:validation:Optional
@@ -1319,8 +1577,18 @@ type DbSystemParameters struct {
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
 	// The OCID of the DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SourceDBSystemID *string `json:"sourceDbSystemId,omitempty" tf:"source_db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate sourceDbSystemId.
+	// +kubebuilder:validation:Optional
+	SourceDBSystemIDRef *v1.Reference `json:"sourceDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate sourceDbSystemId.
+	// +kubebuilder:validation:Optional
+	SourceDBSystemIDSelector *v1.Selector `json:"sourceDbSystemIdSelector,omitempty" tf:"-"`
 
 	// If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured. Only applied for Exadata shape.
 	// +kubebuilder:validation:Optional
@@ -1331,8 +1599,18 @@ type DbSystemParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// The OCID of the subnet the DB system is associated with.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_SYSTEM | NONE) The OCID of the backup destination.
 	// +kubebuilder:validation:Optional
@@ -1398,12 +1676,10 @@ type DbSystem struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.availabilityDomain) || (has(self.initProvider) && has(self.initProvider.availabilityDomain))",message="spec.forProvider.availabilityDomain is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbHome) || (has(self.initProvider) && has(self.initProvider.dbHome))",message="spec.forProvider.dbHome is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.shape) || (has(self.initProvider) && has(self.initProvider.shape))",message="spec.forProvider.shape is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sshPublicKeys) || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))",message="spec.forProvider.sshPublicKeys is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
 	Spec   DbSystemSpec   `json:"spec"`
 	Status DbSystemStatus `json:"status,omitempty"`
 }

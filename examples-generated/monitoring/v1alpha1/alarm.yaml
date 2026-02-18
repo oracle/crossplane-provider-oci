@@ -15,8 +15,8 @@ spec:
         testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
-    destinations:
-    - ${oci_ons_notification_topic.test_notification_topic.id}
+    destinationsRefs:
+    - name: test_notification_topic
     displayName: ${var.alarm_display_name}
     evaluationSlackDuration: ${var.alarm_evaluation_slack_duration}
     freeformTags:
@@ -35,14 +35,18 @@ spec:
     - body: ${var.alarm_overrides_body}
       pendingDuration: ${var.alarm_overrides_pending_duration}
       query: ${var.alarm_overrides_query}
-      ruleName: ${oci_events_rule.test_rule.name}
+      ruleNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_rule
       severity: ${var.alarm_overrides_severity}
     pendingDuration: ${var.alarm_pending_duration}
     query: ${var.alarm_query}
     repeatNotificationDuration: ${var.alarm_repeat_notification_duration}
     resolution: ${var.alarm_resolution}
     resourceGroup: ${var.alarm_resource_group}
-    ruleName: ${oci_events_rule.test_rule.name}
+    ruleNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_rule
     severity: ${var.alarm_severity}
     suppression:
     - description: ${var.alarm_suppression_description}

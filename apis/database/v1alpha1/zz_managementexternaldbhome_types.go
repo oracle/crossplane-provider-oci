@@ -20,7 +20,17 @@ type ManagementExternalDbHomeInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external database home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDBHomeID *string `json:"externalDbHomeId,omitempty" tf:"external_db_home_id,omitempty"`
+
+	// Reference to a ManagementExternalDbHome in database to populate externalDbHomeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBHomeIDRef *v1.Reference `json:"externalDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbHome in database to populate externalDbHomeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBHomeIDSelector *v1.Selector `json:"externalDbHomeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -87,8 +97,18 @@ type ManagementExternalDbHomeParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external database home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDBHomeID *string `json:"externalDbHomeId,omitempty" tf:"external_db_home_id,omitempty"`
+
+	// Reference to a ManagementExternalDbHome in database to populate externalDbHomeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBHomeIDRef *v1.Reference `json:"externalDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbHome in database to populate externalDbHomeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBHomeIDSelector *v1.Selector `json:"externalDbHomeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -132,9 +152,8 @@ type ManagementExternalDbHomeStatus struct {
 type ManagementExternalDbHome struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDbHomeId) || (has(self.initProvider) && has(self.initProvider.externalDbHomeId))",message="spec.forProvider.externalDbHomeId is a required parameter"
-	Spec   ManagementExternalDbHomeSpec   `json:"spec"`
-	Status ManagementExternalDbHomeStatus `json:"status,omitempty"`
+	Spec              ManagementExternalDbHomeSpec   `json:"spec"`
+	Status            ManagementExternalDbHomeStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

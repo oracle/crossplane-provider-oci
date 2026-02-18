@@ -169,7 +169,17 @@ type InstanceReservationConfigsInitParameters struct {
 	ClusterConfig []ClusterConfigInitParameters `json:"clusterConfig,omitempty" tf:"cluster_config,omitempty"`
 
 	// (Updatable) The OCID of the cluster placement group for this instance reservation capacity configuration.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The fault domain to use for instances created using this capacity configuration. For more information, see Fault Domains. If you do not specify the fault domain, the capacity is available for an instance that does not specify a fault domain. To change the fault domain for a reservation, delete the reservation and create a new one in the preferred fault domain.
 	FaultDomain *string `json:"faultDomain,omitempty" tf:"fault_domain,omitempty"`
@@ -244,8 +254,18 @@ type InstanceReservationConfigsParameters struct {
 	ClusterConfig []ClusterConfigParameters `json:"clusterConfig,omitempty" tf:"cluster_config,omitempty"`
 
 	// (Updatable) The OCID of the cluster placement group for this instance reservation capacity configuration.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The fault domain to use for instances created using this capacity configuration. For more information, see Fault Domains. If you do not specify the fault domain, the capacity is available for an instance that does not specify a fault domain. To change the fault domain for a reservation, delete the reservation and create a new one in the preferred fault domain.
 	// +kubebuilder:validation:Optional

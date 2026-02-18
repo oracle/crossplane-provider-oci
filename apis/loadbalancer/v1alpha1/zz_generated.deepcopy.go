@@ -2768,6 +2768,16 @@ func (in *ListenerSSLConfigurationInitParameters) DeepCopyInto(out *ListenerSSLC
 		*out = new(string)
 		**out = **in
 	}
+	if in.CertificateNameRef != nil {
+		in, out := &in.CertificateNameRef, &out.CertificateNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateNameSelector != nil {
+		in, out := &in.CertificateNameSelector, &out.CertificateNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CipherSuiteName != nil {
 		in, out := &in.CipherSuiteName, &out.CipherSuiteName
 		*out = new(string)
@@ -2923,6 +2933,16 @@ func (in *ListenerSSLConfigurationParameters) DeepCopyInto(out *ListenerSSLConfi
 		in, out := &in.CertificateName, &out.CertificateName
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateNameRef != nil {
+		in, out := &in.CertificateNameRef, &out.CertificateNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateNameSelector != nil {
+		in, out := &in.CertificateNameSelector, &out.CertificateNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CipherSuiteName != nil {
 		in, out := &in.CipherSuiteName, &out.CipherSuiteName
@@ -5065,6 +5085,16 @@ func (in *SSLConfigurationInitParameters) DeepCopyInto(out *SSLConfigurationInit
 		*out = new(string)
 		**out = **in
 	}
+	if in.CertificateNameRef != nil {
+		in, out := &in.CertificateNameRef, &out.CertificateNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateNameSelector != nil {
+		in, out := &in.CertificateNameSelector, &out.CertificateNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CipherSuiteName != nil {
 		in, out := &in.CipherSuiteName, &out.CipherSuiteName
 		*out = new(string)
@@ -5210,6 +5240,16 @@ func (in *SSLConfigurationParameters) DeepCopyInto(out *SSLConfigurationParamete
 		in, out := &in.CertificateName, &out.CertificateName
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateNameRef != nil {
+		in, out := &in.CertificateNameRef, &out.CertificateNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateNameSelector != nil {
+		in, out := &in.CertificateNameSelector, &out.CertificateNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CipherSuiteName != nil {
 		in, out := &in.CipherSuiteName, &out.CipherSuiteName

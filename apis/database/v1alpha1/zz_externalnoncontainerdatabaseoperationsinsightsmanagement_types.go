@@ -19,10 +19,30 @@ type ExternalNonContainerDatabaseOperationsInsightsManagementInitParameters stru
 	EnableOperationsInsights *bool `json:"enableOperationsInsights,omitempty" tf:"enable_operations_insights,omitempty"`
 
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
 
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
+
 	// The external non-container database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalNonContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalNonContainerDatabaseID *string `json:"externalNonContainerDatabaseId,omitempty" tf:"external_non_container_database_id,omitempty"`
+
+	// Reference to a ExternalNonContainerDatabase in database to populate externalNonContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalNonContainerDatabaseIDRef *v1.Reference `json:"externalNonContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalNonContainerDatabase in database to populate externalNonContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalNonContainerDatabaseIDSelector *v1.Selector `json:"externalNonContainerDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalNonContainerDatabaseOperationsInsightsManagementObservation struct {
@@ -46,12 +66,32 @@ type ExternalNonContainerDatabaseOperationsInsightsManagementParameters struct {
 	EnableOperationsInsights *bool `json:"enableOperationsInsights,omitempty" tf:"enable_operations_insights,omitempty"`
 
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
 
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
+
 	// The external non-container database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalNonContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalNonContainerDatabaseID *string `json:"externalNonContainerDatabaseId,omitempty" tf:"external_non_container_database_id,omitempty"`
+
+	// Reference to a ExternalNonContainerDatabase in database to populate externalNonContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalNonContainerDatabaseIDRef *v1.Reference `json:"externalNonContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalNonContainerDatabase in database to populate externalNonContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalNonContainerDatabaseIDSelector *v1.Selector `json:"externalNonContainerDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 // ExternalNonContainerDatabaseOperationsInsightsManagementSpec defines the desired state of ExternalNonContainerDatabaseOperationsInsightsManagement
@@ -91,8 +131,6 @@ type ExternalNonContainerDatabaseOperationsInsightsManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableOperationsInsights) || (has(self.initProvider) && has(self.initProvider.enableOperationsInsights))",message="spec.forProvider.enableOperationsInsights is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDatabaseConnectorId) || (has(self.initProvider) && has(self.initProvider.externalDatabaseConnectorId))",message="spec.forProvider.externalDatabaseConnectorId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalNonContainerDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalNonContainerDatabaseId))",message="spec.forProvider.externalNonContainerDatabaseId is a required parameter"
 	Spec   ExternalNonContainerDatabaseOperationsInsightsManagementSpec   `json:"spec"`
 	Status ExternalNonContainerDatabaseOperationsInsightsManagementStatus `json:"status,omitempty"`
 }

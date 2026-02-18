@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
@@ -24,6 +25,25 @@ func (mg *MysqlBackup) ResolveReferences( // ResolveReferences of this MysqlBack
 
 	var rsp reference.ResolutionResponse
 	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlDbSystem", "MysqlDbSystemList")
 		if err != nil {
@@ -43,6 +63,25 @@ func (mg *MysqlBackup) ResolveReferences( // ResolveReferences of this MysqlBack
 	}
 	mg.Spec.ForProvider.DBSystemID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DBSystemIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlDbSystem", "MysqlDbSystemList")
 		if err != nil {
@@ -96,6 +135,27 @@ func (mg *MysqlChannel) ResolveReferences(ctx context.Context, c client.Reader) 
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Target); i3++ {
 		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Target[i3].ChannelName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Target[i3].ChannelNameRef,
+				Selector:     mg.Spec.ForProvider.Target[i3].ChannelNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Target[i3].ChannelName")
+		}
+		mg.Spec.ForProvider.Target[i3].ChannelName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Target[i3].ChannelNameRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Target); i3++ {
+		{
 			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlDbSystem", "MysqlDbSystemList")
 			if err != nil {
 				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -134,6 +194,27 @@ func (mg *MysqlChannel) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Target); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Target[i3].ChannelName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.InitProvider.Target[i3].ChannelNameRef,
+				Selector:     mg.Spec.InitProvider.Target[i3].ChannelNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Target[i3].ChannelName")
+		}
+		mg.Spec.InitProvider.Target[i3].ChannelName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Target[i3].ChannelNameRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Target); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlDbSystem", "MysqlDbSystemList")
@@ -236,12 +317,54 @@ func (mg *MysqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.EncryptData); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.EncryptData[i3].KeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.EncryptData[i3].KeyIDRef,
+				Selector:     mg.Spec.ForProvider.EncryptData[i3].KeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.EncryptData[i3].KeyID")
+		}
+		mg.Spec.ForProvider.EncryptData[i3].KeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.EncryptData[i3].KeyIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Source); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlBackup", "MysqlBackupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Source[i3].BackupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.Source[i3].BackupIDRef,
+				Selector:     mg.Spec.ForProvider.Source[i3].BackupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Source[i3].BackupID")
+		}
+		mg.Spec.ForProvider.Source[i3].BackupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Source[i3].BackupIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetID),
 			Extract:      reference.ExternalName(),
@@ -274,12 +397,54 @@ func (mg *MysqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.EncryptData); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.EncryptData[i3].KeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.EncryptData[i3].KeyIDRef,
+				Selector:     mg.Spec.InitProvider.EncryptData[i3].KeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.EncryptData[i3].KeyID")
+		}
+		mg.Spec.InitProvider.EncryptData[i3].KeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.EncryptData[i3].KeyIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Source); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlBackup", "MysqlBackupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Source[i3].BackupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.Source[i3].BackupIDRef,
+				Selector:     mg.Spec.InitProvider.Source[i3].BackupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Source[i3].BackupID")
+		}
+		mg.Spec.InitProvider.Source[i3].BackupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Source[i3].BackupIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
 			Extract:      reference.ExternalName(),
@@ -374,12 +539,33 @@ func (mg *MysqlReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.DBSystemID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DBSystemIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ReplicaOverrides); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlConfiguration", "MysqlConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationIDRef,
+				Selector:     mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationID")
+		}
+		mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.ReplicaOverrides[i3].ConfigurationIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlDbSystem", "MysqlDbSystemList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DBSystemID),
 			Extract:      reference.ExternalName(),
@@ -393,6 +579,28 @@ func (mg *MysqlReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.InitProvider.DBSystemID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DBSystemIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ReplicaOverrides); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlConfiguration", "MysqlConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationIDRef,
+				Selector:     mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationID")
+		}
+		mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.ReplicaOverrides[i3].ConfigurationIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

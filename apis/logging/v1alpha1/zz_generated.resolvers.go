@@ -218,6 +218,29 @@ func (mg *UnifiedAgentConfiguration) ResolveReferences(ctx context.Context, c cl
 
 		}
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ServiceConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameRef,
+					Selector:     mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName")
+			}
+			mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
@@ -257,6 +280,29 @@ func (mg *UnifiedAgentConfiguration) ResolveReferences(ctx context.Context, c cl
 			}
 			mg.Spec.InitProvider.ServiceConfiguration[i3].Destination[i4].LogObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 			mg.Spec.InitProvider.ServiceConfiguration[i3].Destination[i4].LogObjectIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ServiceConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameRef,
+					Selector:     mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName")
+			}
+			mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyName = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.ServiceConfiguration[i3].UnifiedAgentConfigurationFilter[i4].KeyNameRef = rsp.ResolvedReference
 
 		}
 	}

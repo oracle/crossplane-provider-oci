@@ -52,7 +52,9 @@ spec:
     displayName: ${var.mysql_db_system_display_name}
     encryptData:
     - keyGenerationType: ${var.mysql_db_system_encrypt_data_key_generation_type}
-      keyId: ${oci_kms_key.test_key.id}
+      keyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
     faultDomain: ${var.mysql_db_system_fault_domain}
     freeformTags:
       bar-key: value
@@ -81,7 +83,9 @@ spec:
     securityAttributes: ${var.mysql_db_system_security_attributes}
     shapeName: ${var.mysql_shape_name}
     source:
-    - backupId: ${oci_mysql_mysql_backup.test_backup.id}
+    - backupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       sourceType: ${var.mysql_db_system_source_source_type}
     subnetIdSelector:
       matchLabels:

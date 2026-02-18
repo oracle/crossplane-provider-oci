@@ -16,5 +16,9 @@ spec:
       ttl: ${var.rrset_items_ttl}
     rtype: ${var.rrset_rtype}
     scope: ${var.rrset_scope}
-    viewId: ${oci_dns_view.test_view.id}
-    zoneNameOrId: ${oci_dns_zone.test_zone.id}
+    viewIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_view
+    zoneNameOrIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_zone

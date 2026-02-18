@@ -81,7 +81,17 @@ type MigrationJobInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the job
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.MigrationJob
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	JobID *string `json:"jobId,omitempty" tf:"job_id,omitempty"`
+
+	// Reference to a MigrationJob in database to populate jobId.
+	// +kubebuilder:validation:Optional
+	JobIDRef *v1.Reference `json:"jobIdRef,omitempty" tf:"-"`
+
+	// Selector for a MigrationJob in database to populate jobId.
+	// +kubebuilder:validation:Optional
+	JobIDSelector *v1.Selector `json:"jobIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Suspend. Could be set to any integer value.
 	SuspendTrigger *float64 `json:"suspendTrigger,omitempty" tf:"suspend_trigger,omitempty"`
@@ -161,8 +171,18 @@ type MigrationJobParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the job
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.MigrationJob
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	JobID *string `json:"jobId,omitempty" tf:"job_id,omitempty"`
+
+	// Reference to a MigrationJob in database to populate jobId.
+	// +kubebuilder:validation:Optional
+	JobIDRef *v1.Reference `json:"jobIdRef,omitempty" tf:"-"`
+
+	// Selector for a MigrationJob in database to populate jobId.
+	// +kubebuilder:validation:Optional
+	JobIDSelector *v1.Selector `json:"jobIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Suspend. Could be set to any integer value.
 	// +kubebuilder:validation:Optional
@@ -322,9 +342,8 @@ type MigrationJobStatus struct {
 type MigrationJob struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.jobId) || (has(self.initProvider) && has(self.initProvider.jobId))",message="spec.forProvider.jobId is a required parameter"
-	Spec   MigrationJobSpec   `json:"spec"`
-	Status MigrationJobStatus `json:"status,omitempty"`
+	Spec              MigrationJobSpec   `json:"spec"`
+	Status            MigrationJobStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

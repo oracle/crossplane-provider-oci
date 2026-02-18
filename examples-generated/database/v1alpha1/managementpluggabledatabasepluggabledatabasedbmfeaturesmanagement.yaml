@@ -20,14 +20,20 @@ spec:
       - connectionCredentials:
         - credentialName: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_name}
           credentialType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_type}
-          namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
           passwordSecretIdSecretRef:
             key: attribute.id
             name: example-vault-secret
             namespace: upbound-system
           role: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_role}
-          sslSecretId: ${oci_vault_secret.test_secret.id}
-          userName: ${var.user_name}
+          sslSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
         connectionString:
         - connectionType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_connection_type}
           port: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_database_connection_details_connection_string_port}
@@ -37,4 +43,6 @@ spec:
       feature: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_feature}
       isAutoEnablePluggableDatabase: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_is_auto_enable_pluggable_database}
       managementType: ${var.pluggabledatabase_pluggable_database_dbm_features_management_feature_details_management_type}
-    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database

@@ -10,7 +10,9 @@ spec:
   forProvider:
     attributeSets: []
     attributes: ""
-    authenticationFactorSettingId: ${oci_identity_domains_authentication_factor_setting.test_authentication_factor_setting.id}
+    authenticationFactorSettingIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_authentication_factor_setting
     authorization: ${var.authentication_factor_setting_authorization}
     autoEnrollEmailFactorDisabled: ${var.authentication_factor_setting_auto_enroll_email_factor_disabled}
     bypassCodeEnabled: ${var.authentication_factor_setting_bypass_code_enabled}

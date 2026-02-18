@@ -26,7 +26,9 @@ spec:
       currentKeyTabSecretVersion: ${var.mount_target_kerberos_current_key_tab_secret_version}
       isKerberosEnabled: ${var.mount_target_kerberos_is_kerberos_enabled}
       kerberosRealm: ${var.mount_target_kerberos_kerberos_realm}
-      keyTabSecretId: ${oci_vault_secret.test_secret.id}
+      keyTabSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
     ldapIdmap:
     - cacheLifetimeSeconds: ${var.mount_target_ldap_idmap_cache_lifetime_seconds}
       cacheRefreshIntervalSeconds: ${var.mount_target_ldap_idmap_cache_refresh_interval_seconds}

@@ -195,6 +195,16 @@ func (in *BucketInitParameters) DeepCopyInto(out *BucketInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Metadata != nil {
 		in, out := &in.Metadata, &out.Metadata
 		*out = make(map[string]*string, len(*in))
@@ -516,6 +526,16 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Metadata != nil {
 		in, out := &in.Metadata, &out.Metadata
@@ -2060,6 +2080,16 @@ func (in *PrivateEndpointInitParameters) DeepCopyInto(out *PrivateEndpointInitPa
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -2414,6 +2444,16 @@ func (in *PrivateEndpointParameters) DeepCopyInto(out *PrivateEndpointParameters
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags

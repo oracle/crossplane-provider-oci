@@ -8,7 +8,9 @@ metadata:
   name: test-addon
 spec:
   forProvider:
-    addonName: ${oci_containerengine_addon.test_addon.name}
+    addonNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_addon
     clusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_cluster

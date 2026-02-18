@@ -105,10 +105,30 @@ type DataGuardAssociationInitParameters struct {
 	DatabaseFreeformTags map[string]*string `json:"databaseFreeformTags,omitempty" tf:"database_freeform_tags,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
+
 	// The database software image OCID. Applicable only when creationType=ExistingDbSystem and when the existing database has Exadata shape.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) if set to true the destroy operation will destroy the standby dbHome/dbSystem that is referenced in the Data Guard Association. The Data Guard Association gets destroyed when standby dbHome/dbSystem is terminated. Only true is supported at this time.
 	DeleteStandbyDBHomeOnDelete *string `json:"deleteStandbyDbHomeOnDelete,omitempty" tf:"delete_standby_db_home_on_delete,omitempty"`
@@ -142,10 +162,30 @@ type DataGuardAssociationInitParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Applicable when creation_type=ExistingDbSystem | ExistingVmCluster) The OCID of the DB home in which to create the standby database. You must supply this value to create standby database with an existing DB home
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerDBHomeID *string `json:"peerDbHomeId,omitempty" tf:"peer_db_home_id,omitempty"`
 
+	// Reference to a DbHome in database to populate peerDbHomeId.
+	// +kubebuilder:validation:Optional
+	PeerDBHomeIDRef *v1.Reference `json:"peerDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate peerDbHomeId.
+	// +kubebuilder:validation:Optional
+	PeerDBHomeIDSelector *v1.Selector `json:"peerDbHomeIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when creation_type=ExistingDbSystem) The OCID of the DB system in which to create the standby database. You must supply this value if creationType is ExistingDbSystem.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerDBSystemID *string `json:"peerDbSystemId,omitempty" tf:"peer_db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate peerDbSystemId.
+	// +kubebuilder:validation:Optional
+	PeerDBSystemIDRef *v1.Reference `json:"peerDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate peerDbSystemId.
+	// +kubebuilder:validation:Optional
+	PeerDBSystemIDSelector *v1.Selector `json:"peerDbSystemIdSelector,omitempty" tf:"-"`
 
 	// Specifies the DB_UNIQUE_NAME of the peer database to be created.
 	PeerDBUniqueName *string `json:"peerDbUniqueName,omitempty" tf:"peer_db_unique_name,omitempty"`
@@ -154,7 +194,17 @@ type DataGuardAssociationInitParameters struct {
 	PeerSidPrefix *string `json:"peerSidPrefix,omitempty" tf:"peer_sid_prefix,omitempty"`
 
 	// (Applicable when creation_type=ExistingVmCluster) The OCID of the VM Cluster in which to create the standby database. You must supply this value if creationType is ExistingVmCluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerVMClusterID *string `json:"peerVmClusterId,omitempty" tf:"peer_vm_cluster_id,omitempty"`
+
+	// Reference to a VmCluster in database to populate peerVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerVMClusterIDRef *v1.Reference `json:"peerVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmCluster in database to populate peerVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerVMClusterIDSelector *v1.Selector `json:"peerVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when creation_type=NewDbSystem) The IPv4 address from the provided Oracle Cloud Infrastructure subnet which needs to be assigned to the VNIC. If not provided, it will be auto-assigned with an available IPv4 address from the subnet.
 	PrivateIP *string `json:"privateIp,omitempty" tf:"private_ip,omitempty"`
@@ -172,7 +222,17 @@ type DataGuardAssociationInitParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// (Applicable when creation_type=NewDbSystem) The OCID of the subnet the DB system is associated with. Subnet Restrictions:
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Data Guard association.
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
@@ -411,12 +471,32 @@ type DataGuardAssociationParameters struct {
 	DatabaseFreeformTags map[string]*string `json:"databaseFreeformTags,omitempty" tf:"database_freeform_tags,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
+
 	// The database software image OCID. Applicable only when creationType=ExistingDbSystem and when the existing database has Exadata shape.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) if set to true the destroy operation will destroy the standby dbHome/dbSystem that is referenced in the Data Guard Association. The Data Guard Association gets destroyed when standby dbHome/dbSystem is terminated. Only true is supported at this time.
 	// +kubebuilder:validation:Optional
@@ -460,12 +540,32 @@ type DataGuardAssociationParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Applicable when creation_type=ExistingDbSystem | ExistingVmCluster) The OCID of the DB home in which to create the standby database. You must supply this value to create standby database with an existing DB home
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerDBHomeID *string `json:"peerDbHomeId,omitempty" tf:"peer_db_home_id,omitempty"`
 
+	// Reference to a DbHome in database to populate peerDbHomeId.
+	// +kubebuilder:validation:Optional
+	PeerDBHomeIDRef *v1.Reference `json:"peerDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate peerDbHomeId.
+	// +kubebuilder:validation:Optional
+	PeerDBHomeIDSelector *v1.Selector `json:"peerDbHomeIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when creation_type=ExistingDbSystem) The OCID of the DB system in which to create the standby database. You must supply this value if creationType is ExistingDbSystem.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerDBSystemID *string `json:"peerDbSystemId,omitempty" tf:"peer_db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate peerDbSystemId.
+	// +kubebuilder:validation:Optional
+	PeerDBSystemIDRef *v1.Reference `json:"peerDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate peerDbSystemId.
+	// +kubebuilder:validation:Optional
+	PeerDBSystemIDSelector *v1.Selector `json:"peerDbSystemIdSelector,omitempty" tf:"-"`
 
 	// Specifies the DB_UNIQUE_NAME of the peer database to be created.
 	// +kubebuilder:validation:Optional
@@ -476,8 +576,18 @@ type DataGuardAssociationParameters struct {
 	PeerSidPrefix *string `json:"peerSidPrefix,omitempty" tf:"peer_sid_prefix,omitempty"`
 
 	// (Applicable when creation_type=ExistingVmCluster) The OCID of the VM Cluster in which to create the standby database. You must supply this value if creationType is ExistingVmCluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerVMClusterID *string `json:"peerVmClusterId,omitempty" tf:"peer_vm_cluster_id,omitempty"`
+
+	// Reference to a VmCluster in database to populate peerVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerVMClusterIDRef *v1.Reference `json:"peerVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmCluster in database to populate peerVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerVMClusterIDSelector *v1.Selector `json:"peerVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when creation_type=NewDbSystem) The IPv4 address from the provided Oracle Cloud Infrastructure subnet which needs to be assigned to the VNIC. If not provided, it will be auto-assigned with an available IPv4 address from the subnet.
 	// +kubebuilder:validation:Optional
@@ -500,8 +610,18 @@ type DataGuardAssociationParameters struct {
 	StorageVolumePerformanceMode *string `json:"storageVolumePerformanceMode,omitempty" tf:"storage_volume_performance_mode,omitempty"`
 
 	// (Applicable when creation_type=NewDbSystem) The OCID of the subnet the DB system is associated with. Subnet Restrictions:
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Data Guard association.
 	// +kubebuilder:validation:Optional
@@ -554,7 +674,6 @@ type DataGuardAssociation struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.creationType) || (has(self.initProvider) && has(self.initProvider.creationType))",message="spec.forProvider.creationType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseAdminPasswordSecretRef)",message="spec.forProvider.databaseAdminPasswordSecretRef is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseId) || (has(self.initProvider) && has(self.initProvider.databaseId))",message="spec.forProvider.databaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.deleteStandbyDbHomeOnDelete) || (has(self.initProvider) && has(self.initProvider.deleteStandbyDbHomeOnDelete))",message="spec.forProvider.deleteStandbyDbHomeOnDelete is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protectionMode) || (has(self.initProvider) && has(self.initProvider.protectionMode))",message="spec.forProvider.protectionMode is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.transportType) || (has(self.initProvider) && has(self.initProvider.transportType))",message="spec.forProvider.transportType is a required parameter"

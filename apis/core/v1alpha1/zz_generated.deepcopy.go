@@ -9,6 +9,7 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -51,6 +52,16 @@ func (in *ByoasnInitParameters) DeepCopyInto(out *ByoasnInitParameters) {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
@@ -244,6 +255,16 @@ func (in *ByoasnParameters) DeepCopyInto(out *ByoasnParameters) {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
@@ -721,6 +742,16 @@ func (in *VirtualNetworkInitParameters) DeepCopyInto(out *VirtualNetworkInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DNSLabel != nil {
 		in, out := &in.DNSLabel, &out.DNSLabel
 		*out = new(string)
@@ -1053,6 +1084,16 @@ func (in *VirtualNetworkParameters) DeepCopyInto(out *VirtualNetworkParameters) 
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DNSLabel != nil {
 		in, out := &in.DNSLabel, &out.DNSLabel

@@ -22,7 +22,17 @@ type VolumeGroupInitParameters struct {
 	BackupPolicyID *string `json:"backupPolicyId,omitempty" tf:"backup_policy_id,omitempty"`
 
 	// The clusterPlacementGroup Id of the volume group for volume group placement.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment that contains the volume group.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -61,7 +71,17 @@ type VolumeGroupInitParameters struct {
 	VolumeIds []*string `json:"volumeIds,omitempty" tf:"volume_ids,omitempty"`
 
 	// The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	XrcKMSKeyID *string `json:"xrcKmsKeyId,omitempty" tf:"xrc_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDRef *v1.Reference `json:"xrcKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDSelector *v1.Selector `json:"xrcKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeGroupObservation struct {
@@ -135,8 +155,18 @@ type VolumeGroupParameters struct {
 	BackupPolicyID *string `json:"backupPolicyId,omitempty" tf:"backup_policy_id,omitempty"`
 
 	// The clusterPlacementGroup Id of the volume group for volume group placement.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment that contains the volume group.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -184,8 +214,18 @@ type VolumeGroupParameters struct {
 	VolumeIds []*string `json:"volumeIds,omitempty" tf:"volume_ids,omitempty"`
 
 	// The OCID of the Vault service key which is the master encryption key for the volume's cross region backups, which will be used in the destination region to encrypt the backup's encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	XrcKMSKeyID *string `json:"xrcKmsKeyId,omitempty" tf:"xrc_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDRef *v1.Reference `json:"xrcKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrcKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrcKMSKeyIDSelector *v1.Selector `json:"xrcKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeGroupReplicasInitParameters struct {
@@ -197,7 +237,17 @@ type VolumeGroupReplicasInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the cross region volume group's replicas, which will be used in the destination region to encrypt the volume group's replicas encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	XrrKMSKeyID *string `json:"xrrKmsKeyId,omitempty" tf:"xrr_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDRef *v1.Reference `json:"xrrKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDSelector *v1.Selector `json:"xrrKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeGroupReplicasObservation struct {
@@ -226,8 +276,18 @@ type VolumeGroupReplicasParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the cross region volume group's replicas, which will be used in the destination region to encrypt the volume group's replicas encryption keys. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	XrrKMSKeyID *string `json:"xrrKmsKeyId,omitempty" tf:"xrr_kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDRef *v1.Reference `json:"xrrKmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate xrrKmsKeyId.
+	// +kubebuilder:validation:Optional
+	XrrKMSKeyIDSelector *v1.Selector `json:"xrrKmsKeyIdSelector,omitempty" tf:"-"`
 }
 
 type VolumeGroupSourceDetailsInitParameters struct {

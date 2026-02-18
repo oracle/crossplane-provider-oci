@@ -8,5 +8,7 @@ metadata:
   name: test-backup-cancel-management
 spec:
   forProvider:
-    backupId: ${oci_database_backup.test_backup.id}
+    backupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_backup
     cancelBackupTrigger: 1

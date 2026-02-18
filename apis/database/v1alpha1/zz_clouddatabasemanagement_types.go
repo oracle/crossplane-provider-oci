@@ -17,7 +17,17 @@ type CloudDatabaseManagementInitParameters struct {
 	Credentialdetails []CredentialdetailsInitParameters `json:"credentialdetails,omitempty" tf:"credentialdetails,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Use this flag to enable/disable database management
 	EnableManagement *bool `json:"enableManagement,omitempty" tf:"enable_management,omitempty"`
@@ -39,7 +49,17 @@ type CloudDatabaseManagementInitParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// The name of the Oracle Database service that will be used to connect to the database.
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
@@ -86,8 +106,18 @@ type CloudDatabaseManagementParameters struct {
 	Credentialdetails []CredentialdetailsParameters `json:"credentialdetails,omitempty" tf:"credentialdetails,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Use this flag to enable/disable database management
 	// +kubebuilder:validation:Optional
@@ -115,8 +145,18 @@ type CloudDatabaseManagementParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// The name of the Oracle Database service that will be used to connect to the database.
 	// +kubebuilder:validation:Optional
@@ -189,7 +229,6 @@ type CloudDatabaseManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.credentialdetails) || (has(self.initProvider) && has(self.initProvider.credentialdetails))",message="spec.forProvider.credentialdetails is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseId) || (has(self.initProvider) && has(self.initProvider.databaseId))",message="spec.forProvider.databaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableManagement) || (has(self.initProvider) && has(self.initProvider.enableManagement))",message="spec.forProvider.enableManagement is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.managementType) || (has(self.initProvider) && has(self.initProvider.managementType))",message="spec.forProvider.managementType is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.privateEndPointId) || (has(self.initProvider) && has(self.initProvider.privateEndPointId))",message="spec.forProvider.privateEndPointId is a required parameter"

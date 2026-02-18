@@ -16,7 +16,16 @@ import (
 type SchedulingPlanInitParameters struct {
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -33,7 +42,17 @@ type SchedulingPlanInitParameters struct {
 	ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
 
 	// The OCID of the Scheduling Policy.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SchedulingPolicyID *string `json:"schedulingPolicyId,omitempty" tf:"scheduling_policy_id,omitempty"`
+
+	// Reference to a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDRef *v1.Reference `json:"schedulingPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDSelector *v1.Selector `json:"schedulingPolicyIdSelector,omitempty" tf:"-"`
 
 	// The service type of the Scheduling Plan.
 	ServiceType *string `json:"serviceType,omitempty" tf:"service_type,omitempty"`
@@ -96,8 +115,17 @@ type SchedulingPlanObservation struct {
 type SchedulingPlanParameters struct {
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -118,8 +146,18 @@ type SchedulingPlanParameters struct {
 	ResourceID *string `json:"resourceId,omitempty" tf:"resource_id,omitempty"`
 
 	// The OCID of the Scheduling Policy.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SchedulingPolicyID *string `json:"schedulingPolicyId,omitempty" tf:"scheduling_policy_id,omitempty"`
+
+	// Reference to a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDRef *v1.Reference `json:"schedulingPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDSelector *v1.Selector `json:"schedulingPolicyIdSelector,omitempty" tf:"-"`
 
 	// The service type of the Scheduling Plan.
 	// +kubebuilder:validation:Optional
@@ -162,9 +200,7 @@ type SchedulingPlanStatus struct {
 type SchedulingPlan struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resourceId) || (has(self.initProvider) && has(self.initProvider.resourceId))",message="spec.forProvider.resourceId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schedulingPolicyId) || (has(self.initProvider) && has(self.initProvider.schedulingPolicyId))",message="spec.forProvider.schedulingPolicyId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.serviceType) || (has(self.initProvider) && has(self.initProvider.serviceType))",message="spec.forProvider.serviceType is a required parameter"
 	Spec   SchedulingPlanSpec   `json:"spec"`
 	Status SchedulingPlanStatus `json:"status,omitempty"`

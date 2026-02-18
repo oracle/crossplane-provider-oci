@@ -16,7 +16,17 @@ import (
 type ManagementCloudClusterInitParameters struct {
 
 	// The OCID of the cloud cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudClusterID *string `json:"cloudClusterId,omitempty" tf:"cloud_cluster_id,omitempty"`
+
+	// Reference to a ManagementCloudCluster in database to populate cloudClusterId.
+	// +kubebuilder:validation:Optional
+	CloudClusterIDRef *v1.Reference `json:"cloudClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudCluster in database to populate cloudClusterId.
+	// +kubebuilder:validation:Optional
+	CloudClusterIDSelector *v1.Selector `json:"cloudClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
@@ -109,8 +119,18 @@ type ManagementCloudClusterObservation struct {
 type ManagementCloudClusterParameters struct {
 
 	// The OCID of the cloud cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudClusterID *string `json:"cloudClusterId,omitempty" tf:"cloud_cluster_id,omitempty"`
+
+	// Reference to a ManagementCloudCluster in database to populate cloudClusterId.
+	// +kubebuilder:validation:Optional
+	CloudClusterIDRef *v1.Reference `json:"cloudClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudCluster in database to populate cloudClusterId.
+	// +kubebuilder:validation:Optional
+	CloudClusterIDSelector *v1.Selector `json:"cloudClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	// +kubebuilder:validation:Optional
@@ -220,9 +240,8 @@ type ManagementCloudClusterStatus struct {
 type ManagementCloudCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudClusterId) || (has(self.initProvider) && has(self.initProvider.cloudClusterId))",message="spec.forProvider.cloudClusterId is a required parameter"
-	Spec   ManagementCloudClusterSpec   `json:"spec"`
-	Status ManagementCloudClusterStatus `json:"status,omitempty"`
+	Spec              ManagementCloudClusterSpec   `json:"spec"`
+	Status            ManagementCloudClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

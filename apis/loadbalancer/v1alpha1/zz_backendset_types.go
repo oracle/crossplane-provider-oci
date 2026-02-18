@@ -344,7 +344,16 @@ type SSLConfigurationInitParameters struct {
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
 	// (Updatable) A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.  Example: example_certificate_bundle
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.Certificate
 	CertificateName *string `json:"certificateName,omitempty" tf:"certificate_name,omitempty"`
+
+	// Reference to a Certificate in loadbalancer to populate certificateName.
+	// +kubebuilder:validation:Optional
+	CertificateNameRef *v1.Reference `json:"certificateNameRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in loadbalancer to populate certificateName.
+	// +kubebuilder:validation:Optional
+	CertificateNameSelector *v1.Selector `json:"certificateNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The name of the cipher suite to use for HTTPS or SSL connections.
 	CipherSuiteName *string `json:"cipherSuiteName,omitempty" tf:"cipher_suite_name,omitempty"`
@@ -399,8 +408,17 @@ type SSLConfigurationParameters struct {
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
 	// (Updatable) A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.  Example: example_certificate_bundle
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.Certificate
 	// +kubebuilder:validation:Optional
 	CertificateName *string `json:"certificateName,omitempty" tf:"certificate_name,omitempty"`
+
+	// Reference to a Certificate in loadbalancer to populate certificateName.
+	// +kubebuilder:validation:Optional
+	CertificateNameRef *v1.Reference `json:"certificateNameRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in loadbalancer to populate certificateName.
+	// +kubebuilder:validation:Optional
+	CertificateNameSelector *v1.Selector `json:"certificateNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The name of the cipher suite to use for HTTPS or SSL connections.
 	// +kubebuilder:validation:Optional

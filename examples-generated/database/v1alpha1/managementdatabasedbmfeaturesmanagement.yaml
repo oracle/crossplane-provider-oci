@@ -8,7 +8,9 @@ metadata:
   name: test-database-dbm-features-management
 spec:
   forProvider:
-    databaseId: ${oci_database_database.test_database.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     enableDatabaseDbmFeature: ${var.enable_database_dbm_feature}
     featureDetails:
     - canEnableAllCurrentPdbs: ${var.database_dbm_features_management_feature_details_can_enable_all_current_pdbs}
@@ -21,14 +23,20 @@ spec:
       - connectionCredentials:
         - credentialName: ${var.database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_name}
           credentialType: ${var.database_dbm_features_management_feature_details_database_connection_details_connection_credentials_credential_type}
-          namedCredentialId: ${oci_database_management_named_credential.test_named_credential.id}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
           passwordSecretIdSecretRef:
             key: attribute.id
             name: example-vault-secret
             namespace: upbound-system
           role: ${var.database_dbm_features_management_feature_details_database_connection_details_connection_credentials_role}
-          sslSecretId: ${oci_vault_secret.test_secret.id}
-          userName: ${var.user_name}
+          sslSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
         connectionString:
         - connectionType: ${var.database_dbm_features_management_feature_details_database_connection_details_connection_string_connection_type}
           port: ${var.database_dbm_features_management_feature_details_database_connection_details_connection_string_port}

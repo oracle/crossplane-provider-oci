@@ -159,7 +159,17 @@ type IpsecConnectionTunnelManagementInitParameters struct {
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`
 
 	// The OCID of the IPSec connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.Ipsec
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IpsecID *string `json:"ipsecId,omitempty" tf:"ipsec_id,omitempty"`
+
+	// Reference to a Ipsec in networkconnectivity to populate ipsecId.
+	// +kubebuilder:validation:Optional
+	IpsecIDRef *v1.Reference `json:"ipsecIdRef,omitempty" tf:"-"`
+
+	// Selector for a Ipsec in networkconnectivity to populate ipsecId.
+	// +kubebuilder:validation:Optional
+	IpsecIDSelector *v1.Selector `json:"ipsecIdSelector,omitempty" tf:"-"`
 
 	// By default (the AUTO setting), IKE sends packets with a source and destination port set to 500, and when it detects that the port used to forward packets has changed (most likely because a NAT device is between the CPE device and the Oracle VPN headend) it will try to negotiate the use of NAT-T.
 	NATTranslationEnabled *string `json:"natTranslationEnabled,omitempty" tf:"nat_translation_enabled,omitempty"`
@@ -276,8 +286,18 @@ type IpsecConnectionTunnelManagementParameters struct {
 	IkeVersion *string `json:"ikeVersion,omitempty" tf:"ike_version,omitempty"`
 
 	// The OCID of the IPSec connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.Ipsec
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IpsecID *string `json:"ipsecId,omitempty" tf:"ipsec_id,omitempty"`
+
+	// Reference to a Ipsec in networkconnectivity to populate ipsecId.
+	// +kubebuilder:validation:Optional
+	IpsecIDRef *v1.Reference `json:"ipsecIdRef,omitempty" tf:"-"`
+
+	// Selector for a Ipsec in networkconnectivity to populate ipsecId.
+	// +kubebuilder:validation:Optional
+	IpsecIDSelector *v1.Selector `json:"ipsecIdSelector,omitempty" tf:"-"`
 
 	// By default (the AUTO setting), IKE sends packets with a source and destination port set to 500, and when it detects that the port used to forward packets has changed (most likely because a NAT device is between the CPE device and the Oracle VPN headend) it will try to negotiate the use of NAT-T.
 	// +kubebuilder:validation:Optional
@@ -514,7 +534,6 @@ type IpsecConnectionTunnelManagementStatus struct {
 type IpsecConnectionTunnelManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.ipsecId) || (has(self.initProvider) && has(self.initProvider.ipsecId))",message="spec.forProvider.ipsecId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.tunnelId) || (has(self.initProvider) && has(self.initProvider.tunnelId))",message="spec.forProvider.tunnelId is a required parameter"
 	Spec   IpsecConnectionTunnelManagementSpec   `json:"spec"`
 	Status IpsecConnectionTunnelManagementStatus `json:"status,omitempty"`

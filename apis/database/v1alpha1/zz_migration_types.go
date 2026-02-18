@@ -34,7 +34,17 @@ type AdditionalMigrationsParameters struct {
 type MigrationInitParameters struct {
 
 	// The DB system OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 }
 
 type MigrationObservation struct {
@@ -57,8 +67,18 @@ type MigrationObservation struct {
 type MigrationParameters struct {
 
 	// The DB system OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 }
 
 // MigrationSpec defines the desired state of Migration
@@ -97,9 +117,8 @@ type MigrationStatus struct {
 type Migration struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbSystemId) || (has(self.initProvider) && has(self.initProvider.dbSystemId))",message="spec.forProvider.dbSystemId is a required parameter"
-	Spec   MigrationSpec   `json:"spec"`
-	Status MigrationStatus `json:"status,omitempty"`
+	Spec              MigrationSpec   `json:"spec"`
+	Status            MigrationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

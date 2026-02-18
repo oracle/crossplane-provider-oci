@@ -17,11 +17,17 @@ spec:
     detachedModeTimeoutInSeconds: ${var.function_detached_mode_timeout_in_seconds}
     displayName: ${var.function_display_name}
     failureDestination:
-    - channelId: ${oci_mysql_channel.test_channel.id}
+    - channelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_channel
       kind: ${var.function_failure_destination_kind}
       queueId: ${oci_queue_queue.test_queue.id}
-      streamId: ${oci_streaming_stream.test_stream.id}
-      topicId: ${oci_ons_notification_topic.test_notification_topic.id}
+      streamIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+      topicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_notification_topic
     freeformTags:
       Department: Finance
     image: ${var.function_image}
@@ -34,11 +40,17 @@ spec:
     - pbfListingId: ${oci_functions_pbf_listing.test_pbf_listing.id}
       sourceType: ${var.function_source_details_source_type}
     successDestination:
-    - channelId: ${oci_mysql_channel.test_channel.id}
+    - channelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_channel
       kind: ${var.function_success_destination_kind}
       queueId: ${oci_queue_queue.test_queue.id}
-      streamId: ${oci_streaming_stream.test_stream.id}
-      topicId: ${oci_ons_notification_topic.test_notification_topic.id}
+      streamIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+      topicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_notification_topic
     timeoutInSeconds: ${var.function_timeout_in_seconds}
     traceConfig:
     - isEnabled: ${var.function_trace_config_is_enabled}

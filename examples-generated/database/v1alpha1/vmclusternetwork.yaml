@@ -8,7 +8,9 @@ metadata:
   name: test-vm-cluster-network
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.vm_cluster_network_defined_tags}
     displayName: ${var.vm_cluster_network_display_name}
     dns: ${var.vm_cluster_network_dns}
@@ -16,7 +18,9 @@ spec:
     - hostname: ${var.vm_cluster_network_dr_scans_hostname}
       ips: ${var.vm_cluster_network_dr_scans_ips}
       scanListenerPortTcp: ${var.vm_cluster_network_dr_scans_scan_listener_port_tcp}
-    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
     freeformTags:
       Department: Finance
     ntp: ${var.vm_cluster_network_ntp}
@@ -28,7 +32,9 @@ spec:
       scanListenerPortTcpSsl: ${var.vm_cluster_network_scans_scan_listener_port_tcp_ssl}
     validateVmClusterNetwork: ${var.vm_cluster_network_validate_vm_cluster_network}
     vmNetworks:
-    - domainName: ${oci_identity_domain.test_domain.name}
+    - domainNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_domain
       gateway: ${var.vm_cluster_network_vm_networks_gateway}
       netmask: ${var.vm_cluster_network_vm_networks_netmask}
       networkType: ${var.vm_cluster_network_vm_networks_network_type}

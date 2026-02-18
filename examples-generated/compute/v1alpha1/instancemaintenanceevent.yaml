@@ -15,5 +15,7 @@ spec:
     displayName: ${var.instance_maintenance_event_display_name}
     freeformTags:
       Department: Finance
-    instanceMaintenanceEventId: ${oci_core_instance_maintenance_event.test_instance_maintenance_event.id}
+    instanceMaintenanceEventIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance_maintenance_event
     timeWindowStart: ${var.instance_maintenance_event_time_window_start}

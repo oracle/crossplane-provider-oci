@@ -76,10 +76,29 @@ type DomainsOauthPartnerCertificateInitParameters struct {
 	IdcsEndpoint *string `json:"idcsEndpoint,omitempty" tf:"idcs_endpoint,omitempty"`
 
 	// Key store ID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyStoreID *string `json:"keyStoreId,omitempty" tf:"key_store_id,omitempty"`
 
+	// Reference to a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDRef *v1.Reference `json:"keyStoreIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDSelector *v1.Selector `json:"keyStoreIdSelector,omitempty" tf:"-"`
+
 	// Key store name
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
 	KeyStoreName *string `json:"keyStoreName,omitempty" tf:"key_store_name,omitempty"`
+
+	// Reference to a KeyStore in database to populate keyStoreName.
+	// +kubebuilder:validation:Optional
+	KeyStoreNameRef *v1.Reference `json:"keyStoreNameRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreName.
+	// +kubebuilder:validation:Optional
+	KeyStoreNameSelector *v1.Selector `json:"keyStoreNameSelector,omitempty" tf:"-"`
 
 	// Key store password
 	KeyStorePasswordSecretRef *v1.SecretKeySelector `json:"keyStorePasswordSecretRef,omitempty" tf:"-"`
@@ -227,12 +246,31 @@ type DomainsOauthPartnerCertificateParameters struct {
 	IdcsEndpoint *string `json:"idcsEndpoint,omitempty" tf:"idcs_endpoint,omitempty"`
 
 	// Key store ID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyStoreID *string `json:"keyStoreId,omitempty" tf:"key_store_id,omitempty"`
 
+	// Reference to a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDRef *v1.Reference `json:"keyStoreIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDSelector *v1.Selector `json:"keyStoreIdSelector,omitempty" tf:"-"`
+
 	// Key store name
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
 	// +kubebuilder:validation:Optional
 	KeyStoreName *string `json:"keyStoreName,omitempty" tf:"key_store_name,omitempty"`
+
+	// Reference to a KeyStore in database to populate keyStoreName.
+	// +kubebuilder:validation:Optional
+	KeyStoreNameRef *v1.Reference `json:"keyStoreNameRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreName.
+	// +kubebuilder:validation:Optional
+	KeyStoreNameSelector *v1.Selector `json:"keyStoreNameSelector,omitempty" tf:"-"`
 
 	// Key store password
 	// +kubebuilder:validation:Optional

@@ -183,7 +183,16 @@ type ScansParameters struct {
 type VMNetworksInitParameters struct {
 
 	// (Updatable) The network domain name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Domain
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+	// Reference to a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+
+	// Selector for a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The network gateway.
 	Gateway *string `json:"gateway,omitempty" tf:"gateway,omitempty"`
@@ -225,8 +234,17 @@ type VMNetworksObservation struct {
 type VMNetworksParameters struct {
 
 	// (Updatable) The network domain name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Domain
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
+
+	// Reference to a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameRef *v1.Reference `json:"domainNameRef,omitempty" tf:"-"`
+
+	// Selector for a Domain in identity to populate domainName.
+	// +kubebuilder:validation:Optional
+	DomainNameSelector *v1.Selector `json:"domainNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The network gateway.
 	// +kubebuilder:validation:Optional
@@ -253,7 +271,16 @@ type VmClusterNetworkInitParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The list of DNS server IP addresses. Maximum of 3 allowed.
 	DNS []*string `json:"dns,omitempty" tf:"dns,omitempty"`
@@ -269,7 +296,17 @@ type VmClusterNetworkInitParameters struct {
 	DrScans []DrScansInitParameters `json:"drScans,omitempty" tf:"dr_scans,omitempty"`
 
 	// The Exadata infrastructure OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExadataInfrastructureID *string `json:"exadataInfrastructureId,omitempty" tf:"exadata_infrastructure_id,omitempty"`
+
+	// Reference to a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDRef *v1.Reference `json:"exadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDSelector *v1.Selector `json:"exadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -352,8 +389,17 @@ type VmClusterNetworkParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The list of DNS server IP addresses. Maximum of 3 allowed.
 	// +kubebuilder:validation:Optional
@@ -373,8 +419,18 @@ type VmClusterNetworkParameters struct {
 	DrScans []DrScansParameters `json:"drScans,omitempty" tf:"dr_scans,omitempty"`
 
 	// The Exadata infrastructure OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExadataInfrastructureID *string `json:"exadataInfrastructureId,omitempty" tf:"exadata_infrastructure_id,omitempty"`
+
+	// Reference to a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDRef *v1.Reference `json:"exadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExadataInfrastructure in database to populate exadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExadataInfrastructureIDSelector *v1.Selector `json:"exadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -434,9 +490,7 @@ type VmClusterNetworkStatus struct {
 type VmClusterNetwork struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.exadataInfrastructureId) || (has(self.initProvider) && has(self.initProvider.exadataInfrastructureId))",message="spec.forProvider.exadataInfrastructureId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scans) || (has(self.initProvider) && has(self.initProvider.scans))",message="spec.forProvider.scans is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vmNetworks) || (has(self.initProvider) && has(self.initProvider.vmNetworks))",message="spec.forProvider.vmNetworks is a required parameter"
 	Spec   VmClusterNetworkSpec   `json:"spec"`

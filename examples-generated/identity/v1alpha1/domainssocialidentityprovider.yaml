@@ -12,7 +12,9 @@ spec:
     accountLinkingEnabled: ${var.social_identity_provider_account_linking_enabled}
     adminScope: ${var.social_identity_provider_admin_scope}
     appleDevId: ${oci_identity_domains_apple_dev.test_apple_dev.id}
-    appleKeyId: ${oci_kms_key.test_key.id}
+    appleKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     authorization: ${var.social_identity_provider_authorization}
     authzUrl: ${var.social_identity_provider_authz_url}
     autoRedirectEnabled: ${var.social_identity_provider_auto_redirect_enabled}

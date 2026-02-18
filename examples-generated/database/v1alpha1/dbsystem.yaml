@@ -10,9 +10,13 @@ spec:
   forProvider:
     availabilityDomain: ${var.db_system_availability_domain}
     backupNetworkNsgIds: ${var.db_system_backup_network_nsg_ids}
-    backupSubnetId: ${oci_core_subnet.test_subnet.id}
+    backupSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     clusterName: ${var.db_system_cluster_name}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     computeCount: ${var.db_system_compute_count}
     computeModel: ${var.db_system_compute_model}
     cpuCoreCount: ${var.db_system_cpu_core_count}
@@ -29,14 +33,20 @@ spec:
           key: example-key
           name: example-secret
           namespace: upbound-system
-        backupId: ${oci_database_backup.test_backup.id}
+        backupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_backup
         backupTdePasswordSecretRef:
           key: example-key
           name: example-secret
           namespace: upbound-system
         characterSet: ${var.db_system_db_home_database_character_set}
-        databaseId: ${oci_database_database.test_database.id}
-        databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+        databaseIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_database
+        databaseSoftwareImageIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_database_software_image
         dbBackupConfig:
         - autoBackupEnabled: ${var.db_system_db_home_database_db_backup_config_auto_backup_enabled}
           autoBackupWindow: ${var.db_system_db_home_database_db_backup_config_auto_backup_window}
@@ -45,7 +55,9 @@ spec:
           backupDeletionPolicy: ${var.db_system_db_home_database_db_backup_config_backup_deletion_policy}
           backupDestinationDetails:
           - backupRetentionPolicyOnTerminate: ${var.db_system_db_home_database_db_backup_config_backup_destination_details_backup_retention_policy_on_terminate}
-            dbrsPolicyId: ${oci_identity_policy.test_policy.id}
+            dbrsPolicyIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_policy
             id: ${var.db_system_db_home_database_db_backup_config_backup_destination_details_id}
             isRemote: ${var.db_system_db_home_database_db_backup_config_backup_destination_details_is_remote}
             isRetentionLockEnabled: ${var.db_system_db_home_database_db_backup_config_backup_destination_details_is_retention_lock_enabled}
@@ -63,8 +75,12 @@ spec:
           provider_type: ${var.db_system_db_home_database_encryption_key_location_details_provider_type}
         freeformTags: ${var.db_system_db_home_database_freeform_tags}
         key_store_id: ${oci_database_key_store.test_key_store.id}
-        kmsKeyId: ${oci_kms_key.test_key.id}
-        kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+        kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        kmsKeyVersionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key_version
         ncharacterSet: ${var.db_system_db_home_database_ncharacter_set}
         pdbName: ${var.db_system_db_home_database_pdb_name}
         pluggableDatabases: ${var.db_system_db_home_database_pluggable_databases}
@@ -78,8 +94,12 @@ spec:
           name: example-secret
           namespace: upbound-system
         timeStampForPointInTimeRecovery: ${var.db_system_db_home_database_time_stamp_for_point_in_time_recovery}
-        vaultId: ${oci_kms_vault.test_vault.id}
-      databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      databaseSoftwareImageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_database_software_image
       dbVersion: ${var.db_system_db_home_db_version}
       definedTags: ${var.db_system_db_home_defined_tags}
       displayName: ${var.db_system_db_home_display_name}
@@ -95,8 +115,12 @@ spec:
     freeformTags:
       Department: Finance
     hostname: ${var.db_system_hostname}
-    kmsKeyId: ${oci_kms_key.test_key.id}
-    kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    kmsKeyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     licenseModel: ${var.db_system_license_model}
     maintenanceWindowDetails:
     - customActionTimeoutInMins: ${var.db_system_maintenance_window_details_custom_action_timeout_in_mins}
@@ -119,9 +143,13 @@ spec:
     securityAttributes: ${var.db_system_security_attributes}
     shape: ${var.db_system_shape}
     source: ${var.db_system_source}
-    sourceDbSystemId: ${oci_database_db_system.test_db_system.id}
+    sourceDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
     sparseDiskgroup: ${var.db_system_sparse_diskgroup}
     sshPublicKeys: ${var.db_system_ssh_public_keys}
     storageVolumePerformanceMode: ${var.db_system_storage_volume_performance_mode}
-    subnetId: ${oci_core_subnet.test_subnet.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     timeZone: ${var.db_system_time_zone}

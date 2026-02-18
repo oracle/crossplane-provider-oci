@@ -17,6 +17,12 @@ spec:
     ipAddress: ${var.ipv6_ip_address}
     ipv6subnetCidr: ${var.ipv6_ipv6subnet_cidr}
     lifetime: ${var.ipv6_lifetime}
-    routeTableId: ${oci_core_route_table.test_route_table.id}
-    subnetId: ${oci_core_subnet.test_subnet.id}
-    vnicId: ${oci_core_vnic_attachment.test_vnic_attachment.id}
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vnicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vnic_attachment

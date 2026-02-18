@@ -37,10 +37,29 @@ type EstimatedPatchingTimeParameters struct {
 type MaintenanceRunInitParameters struct {
 
 	// The OCID of the compartment containing the Maintenance Run.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
+
 	// The Autonomous AI Database Software Image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.
 	IsDstFileUpdateEnabled *bool `json:"isDstFileUpdateEnabled,omitempty" tf:"is_dst_file_update_enabled,omitempty"`
@@ -170,12 +189,31 @@ type MaintenanceRunObservation struct {
 type MaintenanceRunParameters struct {
 
 	// The OCID of the compartment containing the Maintenance Run.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
+
 	// The Autonomous AI Database Software Image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// Indicates if an automatic DST Time Zone file update is enabled for the Autonomous Container Database. If enabled along with Release Update, patching will be done in a Non-Rolling manner.
 	// +kubebuilder:validation:Optional

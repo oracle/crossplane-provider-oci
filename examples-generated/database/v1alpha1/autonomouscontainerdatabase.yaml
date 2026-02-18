@@ -9,8 +9,12 @@ metadata:
 spec:
   forProvider:
     autonomousContainerDatabaseBackupId: ${oci_database_autonomous_container_database_backup.test_autonomous_container_database_backup.id}
-    autonomousExadataInfrastructureId: ${oci_database_autonomous_exadata_infrastructure.test_autonomous_exadata_infrastructure.id}
-    autonomousVmClusterId: ${oci_database_autonomous_vm_cluster.test_autonomous_vm_cluster.id}
+    autonomousExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
     backupConfig:
     - backupDestinationDetails:
       - backupRetentionPolicyOnTerminate: ${var.autonomous_container_database_backup_config_backup_destination_details_backup_retention_policy_on_terminate}
@@ -27,11 +31,17 @@ spec:
           namespace: upbound-system
         vpcUser: ${var.autonomous_container_database_backup_config_backup_destination_details_vpc_user}
       recoveryWindowInDays: ${var.autonomous_container_database_backup_config_recovery_window_in_days}
-    cloudAutonomousVmClusterId: ${oci_database_cloud_autonomous_vm_cluster.test_cloud_autonomous_vm_cluster.id}
-    compartmentId: ${var.compartment_id}
+    cloudAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     customerContacts:
     - email: ${var.autonomous_container_database_customer_contacts_email}
-    databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+    databaseSoftwareImageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database_software_image
     dbName: ${var.autonomous_container_database_db_name}
     dbSplitThreshold: ${var.autonomous_container_database_db_split_threshold}
     dbUniqueName: ${var.autonomous_container_database_db_unique_name}
@@ -45,8 +55,12 @@ spec:
       Department: Finance
     isAutomaticFailoverEnabled: ${var.autonomous_container_database_is_automatic_failover_enabled}
     isDstFileUpdateEnabled: ${var.autonomous_container_database_is_dst_file_update_enabled}
-    keyStoreId: ${oci_database_key_store.test_key_store.id}
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    keyStoreIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_store
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     maintenanceWindowDetails:
     - customActionTimeoutInMins: ${var.autonomous_container_database_maintenance_window_details_custom_action_timeout_in_mins}
       daysOfWeek:
@@ -62,7 +76,9 @@ spec:
       skipRu: ${var.autonomous_container_database_maintenance_window_details_skip_ru}
       weeksOfMonth: ${var.autonomous_container_database_maintenance_window_details_weeks_of_month}
     netServicesArchitecture: ${var.autonomous_container_database_net_services_architecture}
-    okvEndPointGroupName: ${var.group_name}
+    okvEndPointGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
     patchModel: ${var.autonomous_container_database_patch_model}
     peerAutonomousContainerDatabaseBackupConfig:
     - backupDestinationDetails:
@@ -80,16 +96,26 @@ spec:
           namespace: upbound-system
         vpcUser: ${var.autonomous_container_database_peer_autonomous_container_database_backup_config_backup_destination_details_vpc_user}
       recoveryWindowInDays: ${var.autonomous_container_database_peer_autonomous_container_database_backup_config_recovery_window_in_days}
-    peerAutonomousContainerDatabaseCompartmentId: ${oci_identity_compartment.test_compartment.id}
+    peerAutonomousContainerDatabaseCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
     peerAutonomousContainerDatabaseDisplayName: ${var.autonomous_container_database_peer_autonomous_container_database_display_name}
-    peerAutonomousExadataInfrastructureId: ${oci_database_autonomous_exadata_infrastructure.test_autonomous_exadata_infrastructure.id}
-    peerAutonomousVmClusterId: ${oci_database_autonomous_vm_cluster.test_autonomous_vm_cluster.id}
-    peerCloudAutonomousVmClusterId: ${oci_database_cloud_autonomous_vm_cluster.test_cloud_autonomous_vm_cluster.id}
+    peerAutonomousExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
+    peerAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    peerCloudAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
     peerDbUniqueName: ${var.autonomous_container_database_peer_db_unique_name}
     protectionMode: ${var.autonomous_container_database_protection_mode}
     serviceLevelAgreementType: ${var.autonomous_container_database_service_level_agreement_type}
     source: ${var.autonomous_container_database_source}
     standbyMaintenanceBufferInDays: ${var.autonomous_container_database_standby_maintenance_buffer_in_days}
-    vaultId: ${oci_kms_vault.test_vault.id}
+    vaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
     versionPreference: ${var.autonomous_container_database_version_preference}
     vmFailoverReservation: ${var.autonomous_container_database_vm_failover_reservation}

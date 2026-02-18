@@ -8,9 +8,15 @@ metadata:
   name: test-application-vip
 spec:
   forProvider:
-    cloudVmClusterId: ${oci_database_cloud_vm_cluster.test_cloud_vm_cluster.id}
-    dbNodeId: ${oci_database_db_node.test_db_node.id}
+    cloudVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_vm_cluster
+    dbNodeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_node
     hostnameLabel: ${var.application_vip_hostname_label}
     ipAddress: ${var.application_vip_ip_address}
     ipv6address: ${var.application_vip_ipv6address}
-    subnetId: ${oci_core_subnet.test_subnet.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

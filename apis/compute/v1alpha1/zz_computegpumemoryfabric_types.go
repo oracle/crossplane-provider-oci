@@ -16,10 +16,29 @@ import (
 type ComputeGpuMemoryFabricInitParameters struct {
 
 	// (Updatable) The OCID for the compartment. This should always be the root compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the compute GPU memory fabric.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeGpuMemoryFabric
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ComputeGpuMemoryFabricID *string `json:"computeGpuMemoryFabricId,omitempty" tf:"compute_gpu_memory_fabric_id,omitempty"`
+
+	// Reference to a ComputeGpuMemoryFabric in compute to populate computeGpuMemoryFabricId.
+	// +kubebuilder:validation:Optional
+	ComputeGpuMemoryFabricIDRef *v1.Reference `json:"computeGpuMemoryFabricIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeGpuMemoryFabric in compute to populate computeGpuMemoryFabricId.
+	// +kubebuilder:validation:Optional
+	ComputeGpuMemoryFabricIDSelector *v1.Selector `json:"computeGpuMemoryFabricIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -118,12 +137,31 @@ type ComputeGpuMemoryFabricObservation struct {
 type ComputeGpuMemoryFabricParameters struct {
 
 	// (Updatable) The OCID for the compartment. This should always be the root compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the compute GPU memory fabric.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeGpuMemoryFabric
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ComputeGpuMemoryFabricID *string `json:"computeGpuMemoryFabricId,omitempty" tf:"compute_gpu_memory_fabric_id,omitempty"`
+
+	// Reference to a ComputeGpuMemoryFabric in compute to populate computeGpuMemoryFabricId.
+	// +kubebuilder:validation:Optional
+	ComputeGpuMemoryFabricIDRef *v1.Reference `json:"computeGpuMemoryFabricIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeGpuMemoryFabric in compute to populate computeGpuMemoryFabricId.
+	// +kubebuilder:validation:Optional
+	ComputeGpuMemoryFabricIDSelector *v1.Selector `json:"computeGpuMemoryFabricIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -209,9 +247,8 @@ type ComputeGpuMemoryFabricStatus struct {
 type ComputeGpuMemoryFabric struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.computeGpuMemoryFabricId) || (has(self.initProvider) && has(self.initProvider.computeGpuMemoryFabricId))",message="spec.forProvider.computeGpuMemoryFabricId is a required parameter"
-	Spec   ComputeGpuMemoryFabricSpec   `json:"spec"`
-	Status ComputeGpuMemoryFabricStatus `json:"status,omitempty"`
+	Spec              ComputeGpuMemoryFabricSpec   `json:"spec"`
+	Status            ComputeGpuMemoryFabricStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

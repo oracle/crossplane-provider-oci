@@ -34,10 +34,30 @@ type PdbCreationTypeDetailsInitParameters struct {
 	SourceContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"sourceContainerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the Source Pluggable Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourcePluggableDatabaseID *string `json:"sourcePluggableDatabaseId,omitempty" tf:"source_pluggable_database_id,omitempty"`
 
+	// Reference to a PluggableDatabase in database to populate sourcePluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseIDRef *v1.Reference `json:"sourcePluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate sourcePluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseIDSelector *v1.Selector `json:"sourcePluggableDatabaseIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when creation_type=LOCAL_CLONE_PDB | REMOTE_CLONE_PDB) The OCID of the Source Pluggable Database Snapshot id.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabaseSnapshot
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourcePluggableDatabaseSnapshotID *string `json:"sourcePluggableDatabaseSnapshotId,omitempty" tf:"source_pluggable_database_snapshot_id,omitempty"`
+
+	// Reference to a PluggableDatabaseSnapshot in database to populate sourcePluggableDatabaseSnapshotId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseSnapshotIDRef *v1.Reference `json:"sourcePluggableDatabaseSnapshotIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabaseSnapshot in database to populate sourcePluggableDatabaseSnapshotId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseSnapshotIDSelector *v1.Selector `json:"sourcePluggableDatabaseSnapshotIdSelector,omitempty" tf:"-"`
 }
 
 type PdbCreationTypeDetailsObservation struct {
@@ -88,12 +108,32 @@ type PdbCreationTypeDetailsParameters struct {
 	SourceContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"sourceContainerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the Source Pluggable Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SourcePluggableDatabaseID *string `json:"sourcePluggableDatabaseId" tf:"source_pluggable_database_id,omitempty"`
+	SourcePluggableDatabaseID *string `json:"sourcePluggableDatabaseId,omitempty" tf:"source_pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate sourcePluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseIDRef *v1.Reference `json:"sourcePluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate sourcePluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseIDSelector *v1.Selector `json:"sourcePluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when creation_type=LOCAL_CLONE_PDB | REMOTE_CLONE_PDB) The OCID of the Source Pluggable Database Snapshot id.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabaseSnapshot
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SourcePluggableDatabaseSnapshotID *string `json:"sourcePluggableDatabaseSnapshotId,omitempty" tf:"source_pluggable_database_snapshot_id,omitempty"`
+
+	// Reference to a PluggableDatabaseSnapshot in database to populate sourcePluggableDatabaseSnapshotId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseSnapshotIDRef *v1.Reference `json:"sourcePluggableDatabaseSnapshotIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabaseSnapshot in database to populate sourcePluggableDatabaseSnapshotId.
+	// +kubebuilder:validation:Optional
+	SourcePluggableDatabaseSnapshotIDSelector *v1.Selector `json:"sourcePluggableDatabaseSnapshotIdSelector,omitempty" tf:"-"`
 }
 
 type PdbNodeLevelDetailsInitParameters struct {
@@ -136,7 +176,17 @@ type PluggableDatabaseInitParameters struct {
 	ContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"containerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the CDB
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ContainerDatabaseID *string `json:"containerDatabaseId,omitempty" tf:"container_database_id,omitempty"`
+
+	// Reference to a Database in database to populate containerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ContainerDatabaseIDRef *v1.Reference `json:"containerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate containerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ContainerDatabaseIDSelector *v1.Selector `json:"containerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Convert To Regular. Could be set to any integer value.
 	ConvertToRegularTrigger *float64 `json:"convertToRegularTrigger,omitempty" tf:"convert_to_regular_trigger,omitempty"`
@@ -150,7 +200,17 @@ type PluggableDatabaseInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	PdbAdminPasswordSecretRef *v1.SecretKeySelector `json:"pdbAdminPasswordSecretRef,omitempty" tf:"-"`
@@ -273,8 +333,18 @@ type PluggableDatabaseParameters struct {
 	ContainerDatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"containerDatabaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The OCID of the CDB
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ContainerDatabaseID *string `json:"containerDatabaseId,omitempty" tf:"container_database_id,omitempty"`
+
+	// Reference to a Database in database to populate containerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ContainerDatabaseIDRef *v1.Reference `json:"containerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate containerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ContainerDatabaseIDSelector *v1.Selector `json:"containerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) An optional property when incremented triggers Convert To Regular. Could be set to any integer value.
 	// +kubebuilder:validation:Optional
@@ -291,8 +361,18 @@ type PluggableDatabaseParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// A strong password for PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	// +kubebuilder:validation:Optional
@@ -395,7 +475,6 @@ type PluggableDatabaseStatus struct {
 type PluggableDatabase struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.containerDatabaseId) || (has(self.initProvider) && has(self.initProvider.containerDatabaseId))",message="spec.forProvider.containerDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pdbName) || (has(self.initProvider) && has(self.initProvider.pdbName))",message="spec.forProvider.pdbName is a required parameter"
 	Spec   PluggableDatabaseSpec   `json:"spec"`
 	Status PluggableDatabaseStatus `json:"status,omitempty"`

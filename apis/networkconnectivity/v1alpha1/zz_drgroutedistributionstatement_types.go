@@ -98,7 +98,17 @@ type MatchCriteriaInitParameters struct {
 	AttachmentType *string `json:"attachmentType,omitempty" tf:"attachment_type,omitempty"`
 
 	// The OCID of the DRG attachment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.DrgAttachment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DrgAttachmentID *string `json:"drgAttachmentId,omitempty" tf:"drg_attachment_id,omitempty"`
+
+	// Reference to a DrgAttachment in networkconnectivity to populate drgAttachmentId.
+	// +kubebuilder:validation:Optional
+	DrgAttachmentIDRef *v1.Reference `json:"drgAttachmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgAttachment in networkconnectivity to populate drgAttachmentId.
+	// +kubebuilder:validation:Optional
+	DrgAttachmentIDSelector *v1.Selector `json:"drgAttachmentIdSelector,omitempty" tf:"-"`
 
 	// The type of the match criteria for a route distribution statement. Can take three values- DRG_ATTACHMENT_TYPE, DRG_ATTACHMENT_ID and MATCH_ALL.
 	MatchType *string `json:"matchType,omitempty" tf:"match_type,omitempty"`
@@ -123,8 +133,18 @@ type MatchCriteriaParameters struct {
 	AttachmentType *string `json:"attachmentType,omitempty" tf:"attachment_type,omitempty"`
 
 	// The OCID of the DRG attachment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.DrgAttachment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DrgAttachmentID *string `json:"drgAttachmentId,omitempty" tf:"drg_attachment_id,omitempty"`
+
+	// Reference to a DrgAttachment in networkconnectivity to populate drgAttachmentId.
+	// +kubebuilder:validation:Optional
+	DrgAttachmentIDRef *v1.Reference `json:"drgAttachmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgAttachment in networkconnectivity to populate drgAttachmentId.
+	// +kubebuilder:validation:Optional
+	DrgAttachmentIDSelector *v1.Selector `json:"drgAttachmentIdSelector,omitempty" tf:"-"`
 
 	// The type of the match criteria for a route distribution statement. Can take three values- DRG_ATTACHMENT_TYPE, DRG_ATTACHMENT_ID and MATCH_ALL.
 	// +kubebuilder:validation:Optional

@@ -153,7 +153,17 @@ type ManagementManagedDatabaseInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the Managed Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementManagedDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ManagedDatabaseID *string `json:"managedDatabaseId,omitempty" tf:"managed_database_id,omitempty"`
+
+	// Reference to a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDRef *v1.Reference `json:"managedDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDSelector *v1.Selector `json:"managedDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 type ManagementManagedDatabaseObservation struct {
@@ -245,8 +255,18 @@ type ManagementManagedDatabaseParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the Managed Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementManagedDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ManagedDatabaseID *string `json:"managedDatabaseId,omitempty" tf:"managed_database_id,omitempty"`
+
+	// Reference to a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDRef *v1.Reference `json:"managedDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementManagedDatabase in database to populate managedDatabaseId.
+	// +kubebuilder:validation:Optional
+	ManagedDatabaseIDSelector *v1.Selector `json:"managedDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 // ManagementManagedDatabaseSpec defines the desired state of ManagementManagedDatabase
@@ -285,9 +305,8 @@ type ManagementManagedDatabaseStatus struct {
 type ManagementManagedDatabase struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.managedDatabaseId) || (has(self.initProvider) && has(self.initProvider.managedDatabaseId))",message="spec.forProvider.managedDatabaseId is a required parameter"
-	Spec   ManagementManagedDatabaseSpec   `json:"spec"`
-	Status ManagementManagedDatabaseStatus `json:"status,omitempty"`
+	Spec              ManagementManagedDatabaseSpec   `json:"spec"`
+	Status            ManagementManagedDatabaseStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

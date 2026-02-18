@@ -38,7 +38,9 @@ spec:
         street: ${var.certificate_certificate_config_subject_street}
         surname: ${var.certificate_certificate_config_subject_surname}
         title: ${var.certificate_certificate_config_subject_title}
-        userId: ${oci_identity_user.test_user.id}
+        userIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
       subjectAlternativeNames:
       - type: ${var.certificate_certificate_config_subject_alternative_names_type}
         value: ${var.certificate_certificate_config_subject_alternative_names_value}

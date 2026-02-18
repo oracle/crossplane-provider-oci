@@ -16,7 +16,16 @@ import (
 type CrossConnectGroupInitParameters struct {
 
 	// (Updatable) The OCID of the compartment to contain the cross-connect group.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A reference name or identifier for the physical fiber connection that this cross-connect group uses.
 	CustomerReferenceName *string `json:"customerReferenceName,omitempty" tf:"customer_reference_name,omitempty"`
@@ -126,8 +135,17 @@ type CrossConnectGroupObservation struct {
 type CrossConnectGroupParameters struct {
 
 	// (Updatable) The OCID of the compartment to contain the cross-connect group.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A reference name or identifier for the physical fiber connection that this cross-connect group uses.
 	// +kubebuilder:validation:Optional
@@ -155,13 +173,33 @@ type CrossConnectGroupParameters struct {
 type MacsecPropertiesPrimaryKeyInitParameters struct {
 
 	// (Updatable) Secret OCID containing the Connectivity Association Key (CAK) of this MACsec key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ConnectivityAssociationKeySecretID *string `json:"connectivityAssociationKeySecretId,omitempty" tf:"connectivity_association_key_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate connectivityAssociationKeySecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationKeySecretIDRef *v1.Reference `json:"connectivityAssociationKeySecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate connectivityAssociationKeySecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationKeySecretIDSelector *v1.Selector `json:"connectivityAssociationKeySecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The secret version of the connectivity_association_key_secret_id secret in Vault.
 	ConnectivityAssociationKeySecretVersion *string `json:"connectivityAssociationKeySecretVersion,omitempty" tf:"connectivity_association_key_secret_version,omitempty"`
 
 	// (Updatable) Secret OCID containing the Connectivity association Key Name (CKN) of this MACsec key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ConnectivityAssociationNameSecretID *string `json:"connectivityAssociationNameSecretId,omitempty" tf:"connectivity_association_name_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate connectivityAssociationNameSecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationNameSecretIDRef *v1.Reference `json:"connectivityAssociationNameSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate connectivityAssociationNameSecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationNameSecretIDSelector *v1.Selector `json:"connectivityAssociationNameSecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The secret version of the connectivity_association_name_secret_id secret in Vault.
 	ConnectivityAssociationNameSecretVersion *string `json:"connectivityAssociationNameSecretVersion,omitempty" tf:"connectivity_association_name_secret_version,omitempty"`
@@ -185,16 +223,36 @@ type MacsecPropertiesPrimaryKeyObservation struct {
 type MacsecPropertiesPrimaryKeyParameters struct {
 
 	// (Updatable) Secret OCID containing the Connectivity Association Key (CAK) of this MACsec key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	ConnectivityAssociationKeySecretID *string `json:"connectivityAssociationKeySecretId" tf:"connectivity_association_key_secret_id,omitempty"`
+	ConnectivityAssociationKeySecretID *string `json:"connectivityAssociationKeySecretId,omitempty" tf:"connectivity_association_key_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate connectivityAssociationKeySecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationKeySecretIDRef *v1.Reference `json:"connectivityAssociationKeySecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate connectivityAssociationKeySecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationKeySecretIDSelector *v1.Selector `json:"connectivityAssociationKeySecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The secret version of the connectivity_association_key_secret_id secret in Vault.
 	// +kubebuilder:validation:Optional
 	ConnectivityAssociationKeySecretVersion *string `json:"connectivityAssociationKeySecretVersion,omitempty" tf:"connectivity_association_key_secret_version,omitempty"`
 
 	// (Updatable) Secret OCID containing the Connectivity association Key Name (CKN) of this MACsec key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	ConnectivityAssociationNameSecretID *string `json:"connectivityAssociationNameSecretId" tf:"connectivity_association_name_secret_id,omitempty"`
+	ConnectivityAssociationNameSecretID *string `json:"connectivityAssociationNameSecretId,omitempty" tf:"connectivity_association_name_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate connectivityAssociationNameSecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationNameSecretIDRef *v1.Reference `json:"connectivityAssociationNameSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate connectivityAssociationNameSecretId.
+	// +kubebuilder:validation:Optional
+	ConnectivityAssociationNameSecretIDSelector *v1.Selector `json:"connectivityAssociationNameSecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The secret version of the connectivity_association_name_secret_id secret in Vault.
 	// +kubebuilder:validation:Optional
@@ -237,9 +295,8 @@ type CrossConnectGroupStatus struct {
 type CrossConnectGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
-	Spec   CrossConnectGroupSpec   `json:"spec"`
-	Status CrossConnectGroupStatus `json:"status,omitempty"`
+	Spec              CrossConnectGroupSpec   `json:"spec"`
+	Status            CrossConnectGroupStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

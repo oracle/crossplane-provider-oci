@@ -19,7 +19,17 @@ type DBBackupConfigBackupDestinationDetailsInitParameters struct {
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The OCID of the backup destination.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -74,8 +84,18 @@ type DBBackupConfigBackupDestinationDetailsParameters struct {
 	BackupRetentionPolicyOnTerminate *string `json:"backupRetentionPolicyOnTerminate,omitempty" tf:"backup_retention_policy_on_terminate,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the DBRS policy used for backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DbrsPolicyID *string `json:"dbrsPolicyId,omitempty" tf:"dbrs_policy_id,omitempty"`
+
+	// Reference to a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDRef *v1.Reference `json:"dbrsPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate dbrsPolicyId.
+	// +kubebuilder:validation:Optional
+	DbrsPolicyIDSelector *v1.Selector `json:"dbrsPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The OCID of the backup destination.
 	// +kubebuilder:validation:Optional
@@ -300,7 +320,17 @@ type DatabaseDatabaseInitParameters struct {
 	AdminPasswordSecretRef *v1.SecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP) The password to open the TDE wallet.
 	BackupTdePasswordSecretRef *v1.SecretKeySelector `json:"backupTdePasswordSecretRef,omitempty" tf:"-"`
@@ -324,7 +354,17 @@ type DatabaseDatabaseInitParameters struct {
 	DatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"databaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -341,10 +381,30 @@ type DatabaseDatabaseInitParameters struct {
 	IsActiveDataGuardEnabled *bool `json:"isActiveDataGuardEnabled,omitempty" tf:"is_active_data_guard_enabled,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The national character set for the database.  The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.
 	NcharacterSet *string `json:"ncharacterSet,omitempty" tf:"ncharacter_set,omitempty"`
@@ -362,7 +422,17 @@ type DatabaseDatabaseInitParameters struct {
 	SidPrefix *string `json:"sidPrefix,omitempty" tf:"sid_prefix,omitempty"`
 
 	// The OCID of the source database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourceDatabaseID *string `json:"sourceDatabaseId,omitempty" tf:"source_database_id,omitempty"`
+
+	// Reference to a Database in database to populate sourceDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceDatabaseIDRef *v1.Reference `json:"sourceDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate sourceDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceDatabaseIDSelector *v1.Selector `json:"sourceDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DATAGUARD | DB_BACKUP) Types of providers supported for managing database encryption keys
 	SourceEncryptionKeyLocationDetails []SourceEncryptionKeyLocationDetailsInitParameters `json:"sourceEncryptionKeyLocationDetails,omitempty" tf:"source_encryption_key_location_details,omitempty"`
@@ -380,7 +450,17 @@ type DatabaseDatabaseInitParameters struct {
 	TransportType *string `json:"transportType,omitempty" tf:"transport_type,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 }
 
 type DatabaseDatabaseObservation struct {
@@ -464,8 +544,18 @@ type DatabaseDatabaseParameters struct {
 	AdminPasswordSecretRef *v1.SecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP) The password to open the TDE wallet.
 	// +kubebuilder:validation:Optional
@@ -496,8 +586,18 @@ type DatabaseDatabaseParameters struct {
 	DatabaseAdminPasswordSecretRef *v1.SecretKeySelector `json:"databaseAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The database software image OCID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -518,12 +618,32 @@ type DatabaseDatabaseParameters struct {
 	IsActiveDataGuardEnabled *bool `json:"isActiveDataGuardEnabled,omitempty" tf:"is_active_data_guard_enabled,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The national character set for the database.  The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.
 	// +kubebuilder:validation:Optional
@@ -546,8 +666,18 @@ type DatabaseDatabaseParameters struct {
 	SidPrefix *string `json:"sidPrefix,omitempty" tf:"sid_prefix,omitempty"`
 
 	// The OCID of the source database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SourceDatabaseID *string `json:"sourceDatabaseId,omitempty" tf:"source_database_id,omitempty"`
+
+	// Reference to a Database in database to populate sourceDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceDatabaseIDRef *v1.Reference `json:"sourceDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate sourceDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceDatabaseIDSelector *v1.Selector `json:"sourceDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=DATAGUARD | DB_BACKUP) Types of providers supported for managing database encryption keys
 	// +kubebuilder:validation:Optional
@@ -570,20 +700,60 @@ type DatabaseDatabaseParameters struct {
 	TransportType *string `json:"transportType,omitempty" tf:"transport_type,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 }
 
 type DatabaseEncryptionKeyLocationDetailsInitParameters struct {
 
 	// Provide the key OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDRef *v1.Reference `json:"awsEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDSelector *v1.Selector `json:"awsEncryptionKeyIdSelector,omitempty" tf:"-"`
+
 	// Provide the key OCID of a registered Azure key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate azureEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AzureEncryptionKeyIDRef *v1.Reference `json:"azureEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate azureEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AzureEncryptionKeyIDSelector *v1.Selector `json:"azureEncryptionKeyIdSelector,omitempty" tf:"-"`
+
 	// Provide the key OCID of a registered GCP key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	GoogleCloudProviderEncryptionKeyID *string `json:"googleCloudProviderEncryptionKeyId,omitempty" tf:"google_cloud_provider_encryption_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate googleCloudProviderEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	GoogleCloudProviderEncryptionKeyIDRef *v1.Reference `json:"googleCloudProviderEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate googleCloudProviderEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	GoogleCloudProviderEncryptionKeyIDSelector *v1.Selector `json:"googleCloudProviderEncryptionKeyIdSelector,omitempty" tf:"-"`
 
 	// Provide the HSM password as you would in RDBMS for External HSM.
 	HSMPasswordSecretRef *v1.SecretKeySelector `json:"hsmPasswordSecretRef,omitempty" tf:"-"`
@@ -610,16 +780,46 @@ type DatabaseEncryptionKeyLocationDetailsObservation struct {
 type DatabaseEncryptionKeyLocationDetailsParameters struct {
 
 	// Provide the key OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDRef *v1.Reference `json:"awsEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDSelector *v1.Selector `json:"awsEncryptionKeyIdSelector,omitempty" tf:"-"`
+
 	// Provide the key OCID of a registered Azure key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate azureEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AzureEncryptionKeyIDRef *v1.Reference `json:"azureEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate azureEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AzureEncryptionKeyIDSelector *v1.Selector `json:"azureEncryptionKeyIdSelector,omitempty" tf:"-"`
+
 	// Provide the key OCID of a registered GCP key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	GoogleCloudProviderEncryptionKeyID *string `json:"googleCloudProviderEncryptionKeyId,omitempty" tf:"google_cloud_provider_encryption_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate googleCloudProviderEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	GoogleCloudProviderEncryptionKeyIDRef *v1.Reference `json:"googleCloudProviderEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate googleCloudProviderEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	GoogleCloudProviderEncryptionKeyIDSelector *v1.Selector `json:"googleCloudProviderEncryptionKeyIdSelector,omitempty" tf:"-"`
 
 	// Provide the HSM password as you would in RDBMS for External HSM.
 	// +kubebuilder:validation:Optional
@@ -634,7 +834,17 @@ type DatabaseInitParameters struct {
 	ActionTrigger *float64 `json:"actionTrigger,omitempty" tf:"action_trigger,omitempty"`
 
 	// The OCID of the Database Home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DBHomeID *string `json:"dbHomeId,omitempty" tf:"db_home_id,omitempty"`
+
+	// Reference to a DbHome in database to populate dbHomeId.
+	// +kubebuilder:validation:Optional
+	DBHomeIDRef *v1.Reference `json:"dbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate dbHomeId.
+	// +kubebuilder:validation:Optional
+	DBHomeIDSelector *v1.Selector `json:"dbHomeIdSelector,omitempty" tf:"-"`
 
 	// A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
@@ -645,14 +855,34 @@ type DatabaseInitParameters struct {
 	Database []DatabaseDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	KMSKeyMigration *bool `json:"kmsKeyMigration,omitempty" tf:"kms_key_migration,omitempty"`
 
 	KMSKeyRotation *float64 `json:"kmsKeyRotation,omitempty" tf:"kms_key_rotation,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The OCID of the key store of Oracle Vault.
 	KeyStoreID *string `json:"keyStoreId,omitempty" tf:"key_store_id,omitempty"`
@@ -809,8 +1039,18 @@ type DatabaseParameters struct {
 	ActionTrigger *float64 `json:"actionTrigger,omitempty" tf:"action_trigger,omitempty"`
 
 	// The OCID of the Database Home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBHomeID *string `json:"dbHomeId,omitempty" tf:"db_home_id,omitempty"`
+
+	// Reference to a DbHome in database to populate dbHomeId.
+	// +kubebuilder:validation:Optional
+	DBHomeIDRef *v1.Reference `json:"dbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate dbHomeId.
+	// +kubebuilder:validation:Optional
+	DBHomeIDSelector *v1.Selector `json:"dbHomeIdSelector,omitempty" tf:"-"`
 
 	// A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
 	// +kubebuilder:validation:Optional
@@ -824,8 +1064,18 @@ type DatabaseParameters struct {
 	Database []DatabaseDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	KMSKeyMigration *bool `json:"kmsKeyMigration,omitempty" tf:"kms_key_migration,omitempty"`
@@ -834,8 +1084,18 @@ type DatabaseParameters struct {
 	KMSKeyRotation *float64 `json:"kmsKeyRotation,omitempty" tf:"kms_key_rotation,omitempty"`
 
 	// (Applicable when source=NONE) The OCID of the key container version that is used in database transparent data encryption (TDE) operations KMS Key can have multiple key versions. If none is specified, the current key version (latest) of the Key Id is used for the operation. Autonomous AI Database Serverless does not use key versions, hence is not applicable for Autonomous AI Database Serverless instances.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyVersionID *string `json:"kmsKeyVersionId,omitempty" tf:"kms_key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDRef *v1.Reference `json:"kmsKeyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate kmsKeyVersionId.
+	// +kubebuilder:validation:Optional
+	KMSKeyVersionIDSelector *v1.Selector `json:"kmsKeyVersionIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source=NONE) The OCID of the key store of Oracle Vault.
 	// +kubebuilder:validation:Optional
@@ -1017,7 +1277,6 @@ type Database struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.database) || (has(self.initProvider) && has(self.initProvider.database))",message="spec.forProvider.database is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbHomeId) || (has(self.initProvider) && has(self.initProvider.dbHomeId))",message="spec.forProvider.dbHomeId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.source) || (has(self.initProvider) && has(self.initProvider.source))",message="spec.forProvider.source is a required parameter"
 	Spec   DatabaseSpec   `json:"spec"`
 	Status DatabaseStatus `json:"status,omitempty"`

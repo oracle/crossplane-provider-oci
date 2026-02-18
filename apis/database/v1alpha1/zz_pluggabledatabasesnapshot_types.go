@@ -27,7 +27,17 @@ type PluggableDatabaseSnapshotInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The OCID of the Exadata Pluggable Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 type PluggableDatabaseSnapshotObservation struct {
@@ -86,8 +96,18 @@ type PluggableDatabaseSnapshotParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The OCID of the Exadata Pluggable Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 // PluggableDatabaseSnapshotSpec defines the desired state of PluggableDatabaseSnapshot
@@ -127,7 +147,6 @@ type PluggableDatabaseSnapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pluggableDatabaseId) || (has(self.initProvider) && has(self.initProvider.pluggableDatabaseId))",message="spec.forProvider.pluggableDatabaseId is a required parameter"
 	Spec   PluggableDatabaseSnapshotSpec   `json:"spec"`
 	Status PluggableDatabaseSnapshotStatus `json:"status,omitempty"`
 }

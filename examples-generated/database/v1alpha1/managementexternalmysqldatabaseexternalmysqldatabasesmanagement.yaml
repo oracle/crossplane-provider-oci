@@ -10,4 +10,6 @@ spec:
   forProvider:
     connectorId: ${oci_database_management_connector.test_connector.id}
     enableExternalMysqlDatabase: ${var.enable_external_mysql_database}
-    externalMySqlDatabaseId: ${oci_database_management_external_my_sql_database.test_external_my_sql_database.id}
+    externalMySqlDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_my_sql_database

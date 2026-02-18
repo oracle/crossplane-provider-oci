@@ -20,7 +20,9 @@ spec:
       weight: ${var.network_load_balancers_backend_sets_unified_backends_weight}
     healthChecker:
     - dns:
-      - domainName: ${oci_identity_domain.test_domain.name}
+      - domainNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_domain
         queryClass: ${var.network_load_balancers_backend_sets_unified_health_checker_dns_query_class}
         queryType: ${var.network_load_balancers_backend_sets_unified_health_checker_dns_query_type}
         rcodes: ${var.network_load_balancers_backend_sets_unified_health_checker_dns_rcodes}

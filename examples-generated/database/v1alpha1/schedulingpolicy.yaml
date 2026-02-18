@@ -11,7 +11,9 @@ spec:
     cadence: ${var.scheduling_policy_cadence}
     cadenceStartMonth:
     - name: ${var.scheduling_policy_cadence_start_month_name}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.scheduling_policy_defined_tags}
     displayName: ${var.scheduling_policy_display_name}
     freeformTags:

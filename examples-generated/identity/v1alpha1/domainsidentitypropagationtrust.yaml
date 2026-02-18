@@ -24,7 +24,9 @@ spec:
     impersonationServiceUsers:
     - ocid: ${var.identity_propagation_trust_impersonation_service_users_ocid}
       rule: ${var.identity_propagation_trust_impersonation_service_users_rule}
-      value: ${oci_identity_domains_user.test_identity_propagation_trust_user.id}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_identity_propagation_trust_user
     issuer: ${var.identity_propagation_trust_issuer}
     keytab:
     - secretOcid: ${var.identity_propagation_trust_keytab_secret_ocid}

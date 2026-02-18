@@ -8,7 +8,9 @@ metadata:
   name: test-compute-gpu-memory-fabric
 spec:
   forProvider:
-    computeGpuMemoryFabricId: ${oci_core_compute_gpu_memory_fabric.test_compute_gpu_memory_fabric.id}
+    computeGpuMemoryFabricIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compute_gpu_memory_fabric
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.compute_gpu_memory_fabric_display_name}

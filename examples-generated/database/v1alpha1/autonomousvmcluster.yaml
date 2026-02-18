@@ -9,13 +9,17 @@ metadata:
 spec:
   forProvider:
     autonomousDataStorageSizeInTbs: ${var.autonomous_vm_cluster_autonomous_data_storage_size_in_tbs}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     computeModel: ${var.autonomous_vm_cluster_compute_model}
     cpuCoreCountPerNode: ${var.autonomous_vm_cluster_cpu_core_count_per_node}
     dbServers: ${var.autonomous_vm_cluster_db_servers}
     definedTags: ${var.autonomous_vm_cluster_defined_tags}
     displayName: ${var.autonomous_vm_cluster_display_name}
-    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
     freeformTags:
       Department: Finance
     isLocalBackupEnabled: ${var.autonomous_vm_cluster_is_local_backup_enabled}
@@ -36,4 +40,6 @@ spec:
     scanListenerPortTls: ${var.autonomous_vm_cluster_scan_listener_port_tls}
     timeZone: ${var.autonomous_vm_cluster_time_zone}
     totalContainerDatabases: ${var.autonomous_vm_cluster_total_container_databases}
-    vmClusterNetworkId: ${oci_database_vm_cluster_network.test_vm_cluster_network.id}
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network

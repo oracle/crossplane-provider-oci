@@ -24,5 +24,9 @@ spec:
     urnietfparamsscimschemasoracleidcsextensionselfChangeUser:
     - allowSelfChange: ${var.api_key_urnietfparamsscimschemasoracleidcsextensionself_change_user_allow_self_change}
     user:
-    - ocid: ${var.user_ocid}
-      value: ${oci_identity_domains_user.test_user.id}
+    - ocidSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user

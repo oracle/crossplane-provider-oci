@@ -232,7 +232,17 @@ type ManagementExternalDbSystemConnectorInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -320,8 +330,18 @@ type ManagementExternalDbSystemConnectorParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -366,7 +386,6 @@ type ManagementExternalDbSystemConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorType) || (has(self.initProvider) && has(self.initProvider.connectorType))",message="spec.forProvider.connectorType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDbSystemId) || (has(self.initProvider) && has(self.initProvider.externalDbSystemId))",message="spec.forProvider.externalDbSystemId is a required parameter"
 	Spec   ManagementExternalDbSystemConnectorSpec   `json:"spec"`
 	Status ManagementExternalDbSystemConnectorStatus `json:"status,omitempty"`
 }

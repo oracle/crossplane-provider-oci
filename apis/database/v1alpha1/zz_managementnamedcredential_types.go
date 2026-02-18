@@ -28,7 +28,17 @@ type ContentInitParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Updatable) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type ContentObservation struct {
@@ -62,8 +72,18 @@ type ContentParameters struct {
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// (Updatable) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
-	UserName *string `json:"userName" tf:"user_name,omitempty"`
+	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type ManagementNamedCredentialInitParameters struct {
@@ -72,7 +92,16 @@ type ManagementNamedCredentialInitParameters struct {
 	AssociatedResource *string `json:"associatedResource,omitempty" tf:"associated_resource,omitempty"`
 
 	// (Updatable) The OCID of the compartment in which the named credential resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The details of the named credential.
 	Content []ContentInitParameters `json:"content,omitempty" tf:"content,omitempty"`
@@ -156,8 +185,17 @@ type ManagementNamedCredentialParameters struct {
 	AssociatedResource *string `json:"associatedResource,omitempty" tf:"associated_resource,omitempty"`
 
 	// (Updatable) The OCID of the compartment in which the named credential resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The details of the named credential.
 	// +kubebuilder:validation:Optional
@@ -226,7 +264,6 @@ type ManagementNamedCredentialStatus struct {
 type ManagementNamedCredential struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.content) || (has(self.initProvider) && has(self.initProvider.content))",message="spec.forProvider.content is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scope) || (has(self.initProvider) && has(self.initProvider.scope))",message="spec.forProvider.scope is a required parameter"

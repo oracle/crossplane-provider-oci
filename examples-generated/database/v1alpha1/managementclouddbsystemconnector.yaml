@@ -8,6 +8,8 @@ metadata:
   name: test-cloud-db-system-connector
 spec:
   forProvider:
-    cloudDbSystemId: ${oci_database_management_cloud_db_system.test_cloud_db_system.id}
+    cloudDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_db_system
     connectorType: ${var.cloud_db_system_connector_connector_type}
     displayName: ${var.cloud_db_system_connector_display_name}

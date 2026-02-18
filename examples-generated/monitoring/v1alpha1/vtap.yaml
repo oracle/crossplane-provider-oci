@@ -8,8 +8,12 @@ metadata:
   name: test-vtap
 spec:
   forProvider:
-    captureFilterId: ${oci_core_capture_filter.test_capture_filter.id}
-    compartmentId: ${var.compartment_id}
+    captureFilterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_capture_filter
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.vtap_display_name}
@@ -20,11 +24,15 @@ spec:
     maxPacketSize: ${var.vtap_max_packet_size}
     sourceId: ${oci_core_source.test_source.id}
     sourcePrivateEndpointIp: ${var.vtap_source_private_endpoint_ip}
-    sourcePrivateEndpointSubnetId: ${oci_core_subnet.test_subnet.id}
+    sourcePrivateEndpointSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     sourceType: ${var.vtap_source_type}
     targetId: ${oci_cloud_guard_target.test_target.id}
     targetIp: ${var.vtap_target_ip}
     targetType: ${var.vtap_target_type}
     trafficMode: ${var.vtap_traffic_mode}
-    vcnId: ${oci_core_vcn.test_vcn.id}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
     vxlanNetworkIdentifier: ${var.vtap_vxlan_network_identifier}

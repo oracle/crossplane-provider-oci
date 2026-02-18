@@ -48,6 +48,16 @@ func (in *BackendInitParameters) DeepCopyInto(out *BackendInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BackendSetNameRef != nil {
+		in, out := &in.BackendSetNameRef, &out.BackendSetNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BackendSetNameSelector != nil {
+		in, out := &in.BackendSetNameSelector, &out.BackendSetNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IPAddress != nil {
 		in, out := &in.IPAddress, &out.IPAddress
 		*out = new(string)
@@ -224,6 +234,16 @@ func (in *BackendParameters) DeepCopyInto(out *BackendParameters) {
 		in, out := &in.BackendSetName, &out.BackendSetName
 		*out = new(string)
 		**out = **in
+	}
+	if in.BackendSetNameRef != nil {
+		in, out := &in.BackendSetNameRef, &out.BackendSetNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BackendSetNameSelector != nil {
+		in, out := &in.BackendSetNameSelector, &out.BackendSetNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.IPAddress != nil {
 		in, out := &in.IPAddress, &out.IPAddress
@@ -747,6 +767,16 @@ func (in *DNSInitParameters) DeepCopyInto(out *DNSInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainNameRef != nil {
+		in, out := &in.DomainNameRef, &out.DomainNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainNameSelector != nil {
+		in, out := &in.DomainNameSelector, &out.DomainNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.QueryClass != nil {
 		in, out := &in.QueryClass, &out.QueryClass
 		*out = new(string)
@@ -839,6 +869,16 @@ func (in *DNSParameters) DeepCopyInto(out *DNSParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DomainNameRef != nil {
+		in, out := &in.DomainNameRef, &out.DomainNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainNameSelector != nil {
+		in, out := &in.DomainNameSelector, &out.DomainNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.QueryClass != nil {
 		in, out := &in.QueryClass, &out.QueryClass
 		*out = new(string)
@@ -884,6 +924,16 @@ func (in *HealthCheckerDNSInitParameters) DeepCopyInto(out *HealthCheckerDNSInit
 		in, out := &in.DomainName, &out.DomainName
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainNameRef != nil {
+		in, out := &in.DomainNameRef, &out.DomainNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainNameSelector != nil {
+		in, out := &in.DomainNameSelector, &out.DomainNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.QueryClass != nil {
 		in, out := &in.QueryClass, &out.QueryClass
@@ -976,6 +1026,16 @@ func (in *HealthCheckerDNSParameters) DeepCopyInto(out *HealthCheckerDNSParamete
 		in, out := &in.DomainName, &out.DomainName
 		*out = new(string)
 		**out = **in
+	}
+	if in.DomainNameRef != nil {
+		in, out := &in.DomainNameRef, &out.DomainNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DomainNameSelector != nil {
+		in, out := &in.DomainNameSelector, &out.DomainNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.QueryClass != nil {
 		in, out := &in.QueryClass, &out.QueryClass
@@ -1333,6 +1393,16 @@ func (in *ListenerInitParameters) DeepCopyInto(out *ListenerInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DefaultBackendSetNameRef != nil {
+		in, out := &in.DefaultBackendSetNameRef, &out.DefaultBackendSetNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefaultBackendSetNameSelector != nil {
+		in, out := &in.DefaultBackendSetNameSelector, &out.DefaultBackendSetNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IPVersion != nil {
 		in, out := &in.IPVersion, &out.IPVersion
 		*out = new(string)
@@ -1509,6 +1579,16 @@ func (in *ListenerParameters) DeepCopyInto(out *ListenerParameters) {
 		in, out := &in.DefaultBackendSetName, &out.DefaultBackendSetName
 		*out = new(string)
 		**out = **in
+	}
+	if in.DefaultBackendSetNameRef != nil {
+		in, out := &in.DefaultBackendSetNameRef, &out.DefaultBackendSetNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefaultBackendSetNameSelector != nil {
+		in, out := &in.DefaultBackendSetNameSelector, &out.DefaultBackendSetNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.IPVersion != nil {
 		in, out := &in.IPVersion, &out.IPVersion

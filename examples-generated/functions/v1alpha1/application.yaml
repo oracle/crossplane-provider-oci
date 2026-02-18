@@ -20,7 +20,9 @@ spec:
     imagePolicyConfig:
     - isPolicyEnabled: ${var.application_image_policy_config_is_policy_enabled}
       keyDetails:
-      - kmsKeyId: ${oci_kms_key.test_key.id}
+      - kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
     networkSecurityGroupIdsSelector:
       matchLabels:
         testing.upbound.io/example-name: example

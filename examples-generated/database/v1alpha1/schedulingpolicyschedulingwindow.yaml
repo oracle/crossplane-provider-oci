@@ -8,11 +8,15 @@ metadata:
   name: test-scheduling-policy-scheduling-window
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.scheduling_policy_scheduling_window_defined_tags}
     freeformTags:
       Department: Finance
-    schedulingPolicyId: ${oci_database_scheduling_policy.test_scheduling_policy.id}
+    schedulingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_policy
     windowPreference:
     - daysOfWeek:
       - name: ${var.scheduling_policy_scheduling_window_window_preference_days_of_week_name}

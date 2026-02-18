@@ -343,7 +343,16 @@ type TargetInitParameters struct {
 	ApplierUsername *string `json:"applierUsername,omitempty" tf:"applier_username,omitempty"`
 
 	// (Updatable) The case-insensitive name that identifies the replication channel. Channel names must follow the rules defined for MySQL identifiers. The names of non-Deleted Channels must be unique for each DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlChannel
 	ChannelName *string `json:"channelName,omitempty" tf:"channel_name,omitempty"`
+
+	// Reference to a MysqlChannel in mysql to populate channelName.
+	// +kubebuilder:validation:Optional
+	ChannelNameRef *v1.Reference `json:"channelNameRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlChannel in mysql to populate channelName.
+	// +kubebuilder:validation:Optional
+	ChannelNameSelector *v1.Selector `json:"channelNameSelector,omitempty" tf:"-"`
 
 	// The OCID of the target DB System.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlDbSystem
@@ -401,8 +410,17 @@ type TargetParameters struct {
 	ApplierUsername *string `json:"applierUsername,omitempty" tf:"applier_username,omitempty"`
 
 	// (Updatable) The case-insensitive name that identifies the replication channel. Channel names must follow the rules defined for MySQL identifiers. The names of non-Deleted Channels must be unique for each DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlChannel
 	// +kubebuilder:validation:Optional
 	ChannelName *string `json:"channelName,omitempty" tf:"channel_name,omitempty"`
+
+	// Reference to a MysqlChannel in mysql to populate channelName.
+	// +kubebuilder:validation:Optional
+	ChannelNameRef *v1.Reference `json:"channelNameRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlChannel in mysql to populate channelName.
+	// +kubebuilder:validation:Optional
+	ChannelNameSelector *v1.Selector `json:"channelNameSelector,omitempty" tf:"-"`
 
 	// The OCID of the target DB System.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlDbSystem

@@ -85,7 +85,17 @@ type DomainsKmsiSettingInitParameters struct {
 	KmsiPromptEnabled *bool `json:"kmsiPromptEnabled,omitempty" tf:"kmsi_prompt_enabled,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsKmsiSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KmsiSettingID *string `json:"kmsiSettingId,omitempty" tf:"kmsi_setting_id,omitempty"`
+
+	// Reference to a DomainsKmsiSetting in identity to populate kmsiSettingId.
+	// +kubebuilder:validation:Optional
+	KmsiSettingIDRef *v1.Reference `json:"kmsiSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsKmsiSetting in identity to populate kmsiSettingId.
+	// +kubebuilder:validation:Optional
+	KmsiSettingIDSelector *v1.Selector `json:"kmsiSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Timestamp of when the KmsiSettings was enabled last time.
 	LastEnabledOn *string `json:"lastEnabledOn,omitempty" tf:"last_enabled_on,omitempty"`
@@ -254,8 +264,18 @@ type DomainsKmsiSettingParameters struct {
 	KmsiPromptEnabled *bool `json:"kmsiPromptEnabled,omitempty" tf:"kmsi_prompt_enabled,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsKmsiSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KmsiSettingID *string `json:"kmsiSettingId,omitempty" tf:"kmsi_setting_id,omitempty"`
+
+	// Reference to a DomainsKmsiSetting in identity to populate kmsiSettingId.
+	// +kubebuilder:validation:Optional
+	KmsiSettingIDRef *v1.Reference `json:"kmsiSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsKmsiSetting in identity to populate kmsiSettingId.
+	// +kubebuilder:validation:Optional
+	KmsiSettingIDSelector *v1.Selector `json:"kmsiSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Timestamp of when the KmsiSettings was enabled last time.
 	// +kubebuilder:validation:Optional
@@ -360,7 +380,6 @@ type DomainsKmsiSetting struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.idcsEndpoint) || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))",message="spec.forProvider.idcsEndpoint is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.kmsiSettingId) || (has(self.initProvider) && has(self.initProvider.kmsiSettingId))",message="spec.forProvider.kmsiSettingId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemas) || (has(self.initProvider) && has(self.initProvider.schemas))",message="spec.forProvider.schemas is a required parameter"
 	Spec   DomainsKmsiSettingSpec   `json:"spec"`
 	Status DomainsKmsiSettingStatus `json:"status,omitempty"`

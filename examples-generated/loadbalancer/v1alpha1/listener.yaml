@@ -33,7 +33,9 @@ spec:
     - name: test_rule_set
     sslConfiguration:
     - certificateIds: ${var.listener_ssl_configuration_certificate_ids}
-      certificateName: ${oci_load_balancer_certificate.test_certificate.name}
+      certificateNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate
       cipherSuiteName: ${var.listener_ssl_configuration_cipher_suite_name}
       hasSessionResumption: ${var.listener_ssl_configuration_has_session_resumption}
       protocols: ${var.listener_ssl_configuration_protocols}

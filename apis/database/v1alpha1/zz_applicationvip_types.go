@@ -16,10 +16,30 @@ import (
 type ApplicationVipInitParameters struct {
 
 	// The OCID of the cloud VM cluster associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudVMClusterID *string `json:"cloudVmClusterId,omitempty" tf:"cloud_vm_cluster_id,omitempty"`
 
+	// Reference to a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDRef *v1.Reference `json:"cloudVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDSelector *v1.Selector `json:"cloudVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the DB node associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DBNodeID *string `json:"dbNodeId,omitempty" tf:"db_node_id,omitempty"`
+
+	// Reference to a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDRef *v1.Reference `json:"dbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDSelector *v1.Selector `json:"dbNodeIdSelector,omitempty" tf:"-"`
 
 	// The hostname of the application virtual IP (VIP) address.
 	HostnameLabel *string `json:"hostnameLabel,omitempty" tf:"hostname_label,omitempty"`
@@ -31,7 +51,17 @@ type ApplicationVipInitParameters struct {
 	Ipv6Address *string `json:"ipv6address,omitempty" tf:"ipv6address,omitempty"`
 
 	// The OCID of the subnet associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type ApplicationVipObservation struct {
@@ -81,12 +111,32 @@ type ApplicationVipObservation struct {
 type ApplicationVipParameters struct {
 
 	// The OCID of the cloud VM cluster associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudVMClusterID *string `json:"cloudVmClusterId,omitempty" tf:"cloud_vm_cluster_id,omitempty"`
 
+	// Reference to a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDRef *v1.Reference `json:"cloudVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDSelector *v1.Selector `json:"cloudVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the DB node associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBNodeID *string `json:"dbNodeId,omitempty" tf:"db_node_id,omitempty"`
+
+	// Reference to a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDRef *v1.Reference `json:"dbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDSelector *v1.Selector `json:"dbNodeIdSelector,omitempty" tf:"-"`
 
 	// The hostname of the application virtual IP (VIP) address.
 	// +kubebuilder:validation:Optional
@@ -101,8 +151,18 @@ type ApplicationVipParameters struct {
 	Ipv6Address *string `json:"ipv6address,omitempty" tf:"ipv6address,omitempty"`
 
 	// The OCID of the subnet associated with the application virtual IP (VIP) address.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 // ApplicationVipSpec defines the desired state of ApplicationVip
@@ -141,9 +201,7 @@ type ApplicationVipStatus struct {
 type ApplicationVip struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudVmClusterId) || (has(self.initProvider) && has(self.initProvider.cloudVmClusterId))",message="spec.forProvider.cloudVmClusterId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostnameLabel) || (has(self.initProvider) && has(self.initProvider.hostnameLabel))",message="spec.forProvider.hostnameLabel is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
 	Spec   ApplicationVipSpec   `json:"spec"`
 	Status ApplicationVipStatus `json:"status,omitempty"`
 }

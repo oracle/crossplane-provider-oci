@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
-    cloudListenerId: ${oci_database_management_cloud_listener.test_cloud_listener.id}
+    cloudListenerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_listener
     definedTags:
       Operations.CostCenter: "42"
     freeformTags:

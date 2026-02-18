@@ -14,9 +14,13 @@ spec:
       memberOrder: ${var.scheduled_action_action_members_member_order}
     actionParams: ${var.scheduled_action_action_params}
     actionType: ${var.scheduled_action_action_type}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.scheduled_action_defined_tags}
     freeformTags:
       Department: Finance
-    schedulingPlanId: ${oci_database_scheduling_plan.test_scheduling_plan.id}
+    schedulingPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_plan
     schedulingWindowId: ${oci_database_scheduling_window.test_scheduling_window.id}

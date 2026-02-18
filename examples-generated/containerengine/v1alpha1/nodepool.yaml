@@ -29,7 +29,9 @@ spec:
       freeformTags:
         Department: Finance
       isPvEncryptionInTransitEnabled: ${var.node_pool_node_config_details_is_pv_encryption_in_transit_enabled}
-      kmsKeyId: ${oci_kms_key.test_key.id}
+      kmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       nodePoolPodNetworkOptionDetails:
       - cniType: ${var.node_pool_node_config_details_node_pool_pod_network_option_details_cni_type}
         maxPodsPerNode: ${var.node_pool_node_config_details_node_pool_pod_network_option_details_max_pods_per_node}
@@ -54,7 +56,9 @@ spec:
     - evictionGraceDuration: ${var.node_pool_node_eviction_node_pool_settings_eviction_grace_duration}
       isForceActionAfterGraceDuration: ${var.node_pool_node_eviction_node_pool_settings_is_force_action_after_grace_duration}
       isForceDeleteAfterGraceDuration: ${var.node_pool_node_eviction_node_pool_settings_is_force_delete_after_grace_duration}
-    nodeImageName: ${oci_core_image.test_image.name}
+    nodeImageNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_image
     nodeMetadata: ${var.node_pool_node_metadata}
     nodePoolCyclingDetails:
     - cycleModes: ${var.node_pool_node_pool_cycling_details_cycle_modes}
@@ -67,7 +71,9 @@ spec:
       ocpus: ${var.node_pool_node_shape_config_ocpus}
     nodeSourceDetails:
     - bootVolumeSizeInGbs: ${var.node_pool_node_source_details_boot_volume_size_in_gbs}
-      imageId: ${oci_core_image.test_image.id}
+      imageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_image
       sourceType: ${var.node_pool_node_source_details_source_type}
     quantityPerSubnet: ${var.node_pool_quantity_per_subnet}
     sshPublicKey: ${var.node_pool_ssh_public_key}

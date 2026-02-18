@@ -12,4 +12,6 @@ spec:
       Operations.CostCenter: "42"
     freeformTags:
       Department: Finance
-    managedDatabaseId: ${oci_database_management_managed_database.test_managed_database.id}
+    managedDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_database

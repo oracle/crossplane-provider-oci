@@ -77,10 +77,30 @@ type DatabaseConnectionDetailsConnectionCredentialsInitParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Applicable when credential_type=SSL_DETAILS) The OCID of the secret containing the SSL keystore and truststore details.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type DatabaseConnectionDetailsConnectionCredentialsObservation struct {
@@ -120,12 +140,32 @@ type DatabaseConnectionDetailsConnectionCredentialsParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Applicable when credential_type=SSL_DETAILS) The OCID of the secret containing the SSL keystore and truststore details.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type DatabaseConnectionDetailsConnectionStringInitParameters struct {
@@ -248,7 +288,17 @@ type FeatureDetailsParameters struct {
 type ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementInitParameters struct {
 
 	// The OCID of the Autonomous Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AutonomousDatabaseID *string `json:"autonomousDatabaseId,omitempty" tf:"autonomous_database_id,omitempty"`
+
+	// Reference to a AutonomousDatabase in database to populate autonomousDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousDatabaseIDRef *v1.Reference `json:"autonomousDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousDatabase in database to populate autonomousDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousDatabaseIDSelector *v1.Selector `json:"autonomousDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	EnableAutonomousDatabaseDbmFeature *bool `json:"enableAutonomousDatabaseDbmFeature,omitempty" tf:"enable_autonomous_database_dbm_feature,omitempty"`
@@ -274,8 +324,18 @@ type ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementObservat
 type ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementParameters struct {
 
 	// The OCID of the Autonomous Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AutonomousDatabaseID *string `json:"autonomousDatabaseId,omitempty" tf:"autonomous_database_id,omitempty"`
+
+	// Reference to a AutonomousDatabase in database to populate autonomousDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousDatabaseIDRef *v1.Reference `json:"autonomousDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousDatabase in database to populate autonomousDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousDatabaseIDSelector *v1.Selector `json:"autonomousDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	// +kubebuilder:validation:Optional
@@ -322,7 +382,6 @@ type ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementStatus s
 type ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.autonomousDatabaseId) || (has(self.initProvider) && has(self.initProvider.autonomousDatabaseId))",message="spec.forProvider.autonomousDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableAutonomousDatabaseDbmFeature) || (has(self.initProvider) && has(self.initProvider.enableAutonomousDatabaseDbmFeature))",message="spec.forProvider.enableAutonomousDatabaseDbmFeature is a required parameter"
 	Spec   ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementSpec   `json:"spec"`
 	Status ManagementAutonomousDatabaseAutonomousDatabaseDbmFeaturesManagementStatus `json:"status,omitempty"`

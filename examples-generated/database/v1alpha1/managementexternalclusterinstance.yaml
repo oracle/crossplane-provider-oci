@@ -10,7 +10,9 @@ spec:
   forProvider:
     definedTags:
       Operations.CostCenter: "42"
-    externalClusterInstanceId: ${oci_database_management_external_cluster_instance.test_external_cluster_instance.id}
+    externalClusterInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_cluster_instance
     externalConnectorId: ${oci_database_management_external_connector.test_external_connector.id}
     freeformTags:
       Department: Finance

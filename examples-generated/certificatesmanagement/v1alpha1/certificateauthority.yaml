@@ -10,7 +10,9 @@ spec:
   forProvider:
     certificateAuthorityConfig:
     - configType: ${var.certificate_authority_certificate_authority_config_config_type}
-      issuerCertificateAuthorityId: ${oci_certificates_management_certificate_authority.test_certificate_authority.id}
+      issuerCertificateAuthorityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate_authority
       signingAlgorithm: ${var.certificate_authority_certificate_authority_config_signing_algorithm}
       subject:
       - commonName: ${var.certificate_authority_certificate_authority_config_subject_common_name}
@@ -29,7 +31,9 @@ spec:
         street: ${var.certificate_authority_certificate_authority_config_subject_street}
         surname: ${var.certificate_authority_certificate_authority_config_subject_surname}
         title: ${var.certificate_authority_certificate_authority_config_subject_title}
-        userId: ${oci_identity_user.test_user.id}
+        userIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
       validity:
       - timeOfValidityNotAfter: ${var.certificate_authority_certificate_authority_config_validity_time_of_validity_not_after}
         timeOfValidityNotBefore: ${var.certificate_authority_certificate_authority_config_validity_time_of_validity_not_before}
@@ -41,7 +45,9 @@ spec:
     certificateRevocationListDetails:
     - customFormattedUrls: ${var.certificate_authority_certificate_revocation_list_details_custom_formatted_urls}
       objectStorageConfig:
-      - objectStorageBucketName: ${var.bucket_name}
+      - objectStorageBucketNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_bucket
         objectStorageNamespace: ${var.certificate_authority_certificate_revocation_list_details_object_storage_config_object_storage_namespace}
         objectStorageObjectNameFormat: ${var.certificate_authority_certificate_revocation_list_details_object_storage_config_object_storage_object_name_format}
     compartmentIdSelector:

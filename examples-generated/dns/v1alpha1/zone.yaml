@@ -16,11 +16,15 @@ spec:
     externalDownstreams:
     - address: ${var.zone_external_downstreams_address}
       port: ${var.zone_external_downstreams_port}
-      tsigKeyId: ${oci_dns_tsig_key.test_tsig_key.id}
+      tsigKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_tsig_key
     externalMasters:
     - address: ${var.zone_external_masters_address}
       port: ${var.zone_external_masters_port}
-      tsigKeyId: ${oci_dns_tsig_key.test_tsig_key.id}
+      tsigKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_tsig_key
     freeformTags: ${var.zone_freeform_tags}
     name: ${var.zone_name}
     scope: ${var.zone_scope}

@@ -8,7 +8,9 @@ metadata:
   name: test-group
 spec:
   forProvider:
-    compartmentId: ${var.tenancy_ocid}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     description: ${var.group_description}

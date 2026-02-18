@@ -48,7 +48,17 @@ type CertificateAuthorityConfigInitParameters struct {
 	ConfigType *string `json:"configType,omitempty" tf:"config_type,omitempty"`
 
 	// The OCID of the private CA.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CertificateAuthority
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	IssuerCertificateAuthorityID *string `json:"issuerCertificateAuthorityId,omitempty" tf:"issuer_certificate_authority_id,omitempty"`
+
+	// Reference to a CertificateAuthority in certificatesmanagement to populate issuerCertificateAuthorityId.
+	// +kubebuilder:validation:Optional
+	IssuerCertificateAuthorityIDRef *v1.Reference `json:"issuerCertificateAuthorityIdRef,omitempty" tf:"-"`
+
+	// Selector for a CertificateAuthority in certificatesmanagement to populate issuerCertificateAuthorityId.
+	// +kubebuilder:validation:Optional
+	IssuerCertificateAuthorityIDSelector *v1.Selector `json:"issuerCertificateAuthorityIdSelector,omitempty" tf:"-"`
 
 	// The algorithm used to sign public key certificates that the CA issues.
 	SigningAlgorithm *string `json:"signingAlgorithm,omitempty" tf:"signing_algorithm,omitempty"`
@@ -91,8 +101,18 @@ type CertificateAuthorityConfigParameters struct {
 	ConfigType *string `json:"configType" tf:"config_type,omitempty"`
 
 	// The OCID of the private CA.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CertificateAuthority
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	IssuerCertificateAuthorityID *string `json:"issuerCertificateAuthorityId,omitempty" tf:"issuer_certificate_authority_id,omitempty"`
+
+	// Reference to a CertificateAuthority in certificatesmanagement to populate issuerCertificateAuthorityId.
+	// +kubebuilder:validation:Optional
+	IssuerCertificateAuthorityIDRef *v1.Reference `json:"issuerCertificateAuthorityIdRef,omitempty" tf:"-"`
+
+	// Selector for a CertificateAuthority in certificatesmanagement to populate issuerCertificateAuthorityId.
+	// +kubebuilder:validation:Optional
+	IssuerCertificateAuthorityIDSelector *v1.Selector `json:"issuerCertificateAuthorityIdSelector,omitempty" tf:"-"`
 
 	// The algorithm used to sign public key certificates that the CA issues.
 	// +kubebuilder:validation:Optional
@@ -162,7 +182,17 @@ type CertificateAuthorityConfigSubjectInitParameters struct {
 	Title *string `json:"title,omitempty" tf:"title,omitempty"`
 
 	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a User in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 type CertificateAuthorityConfigSubjectObservation struct {
@@ -286,8 +316,18 @@ type CertificateAuthorityConfigSubjectParameters struct {
 	Title *string `json:"title,omitempty" tf:"title,omitempty"`
 
 	// (Applicable when config_type=ROOT_CA_GENERATED_INTERNALLY | SUBORDINATE_CA_ISSUED_BY_INTERNAL_CA) User ID (RDN UID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// Reference to a User in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDRef *v1.Reference `json:"userIdRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userId.
+	// +kubebuilder:validation:Optional
+	UserIDSelector *v1.Selector `json:"userIdSelector,omitempty" tf:"-"`
 }
 
 type CertificateAuthorityConfigValidityInitParameters struct {
@@ -646,7 +686,17 @@ type CertificateAuthoritySubjectParameters struct {
 type CertificateRevocationListDetailsObjectStorageConfigInitParameters struct {
 
 	// (Updatable) The name of the bucket where the CRL is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	ObjectStorageBucketName *string `json:"objectStorageBucketName,omitempty" tf:"object_storage_bucket_name,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate objectStorageBucketName.
+	// +kubebuilder:validation:Optional
+	ObjectStorageBucketNameRef *v1.Reference `json:"objectStorageBucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate objectStorageBucketName.
+	// +kubebuilder:validation:Optional
+	ObjectStorageBucketNameSelector *v1.Selector `json:"objectStorageBucketNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The tenancy of the bucket where the CRL is stored.
 	ObjectStorageNamespace *string `json:"objectStorageNamespace,omitempty" tf:"object_storage_namespace,omitempty"`
@@ -670,8 +720,18 @@ type CertificateRevocationListDetailsObjectStorageConfigObservation struct {
 type CertificateRevocationListDetailsObjectStorageConfigParameters struct {
 
 	// (Updatable) The name of the bucket where the CRL is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Bucket
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
-	ObjectStorageBucketName *string `json:"objectStorageBucketName" tf:"object_storage_bucket_name,omitempty"`
+	ObjectStorageBucketName *string `json:"objectStorageBucketName,omitempty" tf:"object_storage_bucket_name,omitempty"`
+
+	// Reference to a Bucket in objectstorage to populate objectStorageBucketName.
+	// +kubebuilder:validation:Optional
+	ObjectStorageBucketNameRef *v1.Reference `json:"objectStorageBucketNameRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket in objectstorage to populate objectStorageBucketName.
+	// +kubebuilder:validation:Optional
+	ObjectStorageBucketNameSelector *v1.Selector `json:"objectStorageBucketNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The tenancy of the bucket where the CRL is stored.
 	// +kubebuilder:validation:Optional

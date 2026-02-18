@@ -19,7 +19,17 @@ type ManagementExternalDbSystemStackMonitoringsManagementInitParameters struct {
 	EnableStackMonitoring *bool `json:"enableStackMonitoring,omitempty" tf:"enable_stack_monitoring,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The status of the associated service.
 	IsEnabled *bool `json:"isEnabled,omitempty" tf:"is_enabled,omitempty"`
@@ -52,8 +62,18 @@ type ManagementExternalDbSystemStackMonitoringsManagementParameters struct {
 	EnableStackMonitoring *bool `json:"enableStackMonitoring,omitempty" tf:"enable_stack_monitoring,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The status of the associated service.
 	// +kubebuilder:validation:Optional
@@ -101,7 +121,6 @@ type ManagementExternalDbSystemStackMonitoringsManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableStackMonitoring) || (has(self.initProvider) && has(self.initProvider.enableStackMonitoring))",message="spec.forProvider.enableStackMonitoring is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDbSystemId) || (has(self.initProvider) && has(self.initProvider.externalDbSystemId))",message="spec.forProvider.externalDbSystemId is a required parameter"
 	Spec   ManagementExternalDbSystemStackMonitoringsManagementSpec   `json:"spec"`
 	Status ManagementExternalDbSystemStackMonitoringsManagementStatus `json:"status,omitempty"`
 }

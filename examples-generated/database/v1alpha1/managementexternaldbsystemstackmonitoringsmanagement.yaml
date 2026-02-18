@@ -9,6 +9,8 @@ metadata:
 spec:
   forProvider:
     enableStackMonitoring: ${var.enable_stack_monitoring}
-    externalDbSystemId: ${oci_database_management_external_db_system.test_external_db_system.id}
+    externalDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_db_system
     isEnabled: ${var.external_db_system_stack_monitorings_management_is_enabled}
     metadata: ${var.external_db_system_stack_monitorings_management_metadata}

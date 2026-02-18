@@ -174,7 +174,9 @@ spec:
         isRenewRecordEnabled: ${var.unified_agent_configuration_service_configuration_unified_agent_configuration_filter_is_renew_record_enabled}
         isRubyEnabled: ${var.unified_agent_configuration_service_configuration_unified_agent_configuration_filter_is_ruby_enabled}
         keepKeys: ${var.unified_agent_configuration_service_configuration_unified_agent_configuration_filter_keep_keys}
-        keyName: ${oci_kms_key.test_key.name}
+        keyNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
         name: ${var.unified_agent_configuration_service_configuration_unified_agent_configuration_filter_name}
         params: ${var.unified_agent_configuration_service_configuration_unified_agent_configuration_filter_params}
         parser:

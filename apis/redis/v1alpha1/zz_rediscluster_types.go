@@ -82,7 +82,17 @@ type RedisClusterInitParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Updatable) The ID of the corresponding Oracle Cloud Infrastructure Cache Config Set for the cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/redis/v1alpha1.OciCacheConfigSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	OciCacheConfigSetID *string `json:"ociCacheConfigSetId,omitempty" tf:"oci_cache_config_set_id,omitempty"`
+
+	// Reference to a OciCacheConfigSet in redis to populate ociCacheConfigSetId.
+	// +kubebuilder:validation:Optional
+	OciCacheConfigSetIDRef *v1.Reference `json:"ociCacheConfigSetIdRef,omitempty" tf:"-"`
+
+	// Selector for a OciCacheConfigSet in redis to populate ociCacheConfigSetId.
+	// +kubebuilder:validation:Optional
+	OciCacheConfigSetIDSelector *v1.Selector `json:"ociCacheConfigSetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Security attributes for redis cluster resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +mapType=granular
@@ -240,8 +250,18 @@ type RedisClusterParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// (Updatable) The ID of the corresponding Oracle Cloud Infrastructure Cache Config Set for the cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/redis/v1alpha1.OciCacheConfigSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	OciCacheConfigSetID *string `json:"ociCacheConfigSetId,omitempty" tf:"oci_cache_config_set_id,omitempty"`
+
+	// Reference to a OciCacheConfigSet in redis to populate ociCacheConfigSetId.
+	// +kubebuilder:validation:Optional
+	OciCacheConfigSetIDRef *v1.Reference `json:"ociCacheConfigSetIdRef,omitempty" tf:"-"`
+
+	// Selector for a OciCacheConfigSet in redis to populate ociCacheConfigSetId.
+	// +kubebuilder:validation:Optional
+	OciCacheConfigSetIDSelector *v1.Selector `json:"ociCacheConfigSetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Security attributes for redis cluster resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +kubebuilder:validation:Optional

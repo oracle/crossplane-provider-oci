@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -63,6 +64,405 @@ func (mg *Cpe) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this CrossConnect.
+func (mg *CrossConnect) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.CrossConnectGroupIDRef,
+			Selector:     mg.Spec.ForProvider.CrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CrossConnectGroupID")
+	}
+	mg.Spec.ForProvider.CrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CrossConnectGroupIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupIDRef,
+			Selector:     mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupID")
+	}
+	mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FarCrossConnectOrCrossConnectGroupIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef,
+					Selector:     mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID")
+			}
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef,
+					Selector:     mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID")
+			}
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupIDRef,
+			Selector:     mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupID")
+	}
+	mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NearCrossConnectOrCrossConnectGroupIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.CrossConnectGroupIDRef,
+			Selector:     mg.Spec.InitProvider.CrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CrossConnectGroupID")
+	}
+	mg.Spec.InitProvider.CrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CrossConnectGroupIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupIDRef,
+			Selector:     mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupID")
+	}
+	mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FarCrossConnectOrCrossConnectGroupIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef,
+					Selector:     mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID")
+			}
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef,
+					Selector:     mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID")
+			}
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "CrossConnectGroup", "CrossConnectGroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupIDRef,
+			Selector:     mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupID")
+	}
+	mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NearCrossConnectOrCrossConnectGroupIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this CrossConnectGroup.
+func (mg *CrossConnectGroup) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef,
+					Selector:     mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID")
+			}
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef,
+					Selector:     mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID")
+			}
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef,
+					Selector:     mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID")
+			}
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationKeySecretIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.MacsecProperties); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef,
+					Selector:     mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID")
+			}
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.MacsecProperties[i3].PrimaryKey[i4].ConnectivityAssociationNameSecretIDRef = rsp.ResolvedReference
+
+		}
+	}
 
 	return nil
 }
@@ -581,12 +981,33 @@ func (mg *DrgRouteDistributionStatement) ResolveReferences(ctx context.Context, 
 	}
 	mg.Spec.ForProvider.DrgRouteDistributionID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DrgRouteDistributionIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.MatchCriteria); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "DrgAttachment", "DrgAttachmentList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentIDRef,
+				Selector:     mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentID")
+		}
+		mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.MatchCriteria[i3].DrgAttachmentIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "DrgRouteDistribution", "DrgRouteDistributionList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DrgRouteDistributionID),
 			Extract:      reference.ExternalName(),
@@ -600,6 +1021,28 @@ func (mg *DrgRouteDistributionStatement) ResolveReferences(ctx context.Context, 
 	}
 	mg.Spec.InitProvider.DrgRouteDistributionID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DrgRouteDistributionIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.MatchCriteria); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "DrgAttachment", "DrgAttachmentList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentIDRef,
+				Selector:     mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentID")
+		}
+		mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.MatchCriteria[i3].DrgAttachmentIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }
@@ -787,6 +1230,7 @@ func (mg *Ipsec) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
@@ -845,12 +1289,54 @@ func (mg *Ipsec) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.ForProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DrgIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.TunnelConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "VirtualCircuit", "VirtualCircuitList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits),
+				Extract:       resource.ExtractResourceID(),
+				References:    mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsRefs,
+				Selector:      mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits")
+		}
+		mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.ForProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsRefs = mrsp.ResolvedReferences
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.TunnelConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableIDRef,
+				Selector:     mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableID")
+		}
+		mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.TunnelConfiguration[i3].DrgRouteTableIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -902,6 +1388,149 @@ func (mg *Ipsec) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DrgIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.TunnelConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "VirtualCircuit", "VirtualCircuitList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits),
+				Extract:       resource.ExtractResourceID(),
+				References:    mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsRefs,
+				Selector:      mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits")
+		}
+		mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuits = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.InitProvider.TunnelConfiguration[i3].AssociatedVirtualCircuitsRefs = mrsp.ResolvedReferences
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.TunnelConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableIDRef,
+				Selector:     mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableID")
+		}
+		mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.TunnelConfiguration[i3].DrgRouteTableIDRef = rsp.ResolvedReference
+
+	}
+
+	return nil
+}
+
+// ResolveReferences of this IpsecConnectionTunnelManagement.
+func (mg *IpsecConnectionTunnelManagement) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "Ipsec", "IpsecList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.IpsecID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.IpsecIDRef,
+			Selector:     mg.Spec.ForProvider.IpsecIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.IpsecID")
+	}
+	mg.Spec.ForProvider.IpsecID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.IpsecIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.upbound.io", "v1alpha1", "Ipsec", "IpsecList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.IpsecID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.IpsecIDRef,
+			Selector:     mg.Spec.InitProvider.IpsecIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.IpsecID")
+	}
+	mg.Spec.InitProvider.IpsecID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.IpsecIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this VirtualCircuit.
+func (mg *VirtualCircuit) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 
 	return nil
 }

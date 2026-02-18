@@ -847,7 +847,17 @@ type UrnietfparamsscimschemasoracleidcsextensionsocialIdentityProviderInitParame
 	AppleDevID *string `json:"appleDevId,omitempty" tf:"apple_dev_id,omitempty"`
 
 	// (Updatable) Apple Private Key ID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AppleKeyID *string `json:"appleKeyId,omitempty" tf:"apple_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate appleKeyId.
+	// +kubebuilder:validation:Optional
+	AppleKeyIDRef *v1.Reference `json:"appleKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate appleKeyId.
+	// +kubebuilder:validation:Optional
+	AppleKeyIDSelector *v1.Selector `json:"appleKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Social IDP Authorization URL
 	AuthzURL *string `json:"authzUrl,omitempty" tf:"authz_url,omitempty"`
@@ -989,8 +999,18 @@ type UrnietfparamsscimschemasoracleidcsextensionsocialIdentityProviderParameters
 	AppleDevID *string `json:"appleDevId,omitempty" tf:"apple_dev_id,omitempty"`
 
 	// (Updatable) Apple Private Key ID
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AppleKeyID *string `json:"appleKeyId,omitempty" tf:"apple_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate appleKeyId.
+	// +kubebuilder:validation:Optional
+	AppleKeyIDRef *v1.Reference `json:"appleKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate appleKeyId.
+	// +kubebuilder:validation:Optional
+	AppleKeyIDSelector *v1.Selector `json:"appleKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Social IDP Authorization URL
 	// +kubebuilder:validation:Optional

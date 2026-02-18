@@ -396,7 +396,16 @@ type MysqlBackupInitParameters struct {
 	BackupType *string `json:"backupType,omitempty" tf:"backup_type,omitempty"`
 
 	// (Updatable) The OCID of the compartment the backup exists in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB System the Backup is associated with.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlDbSystem
@@ -545,8 +554,17 @@ type MysqlBackupParameters struct {
 	BackupType *string `json:"backupType,omitempty" tf:"backup_type,omitempty"`
 
 	// (Updatable) The OCID of the compartment the backup exists in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB System the Backup is associated with.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlDbSystem

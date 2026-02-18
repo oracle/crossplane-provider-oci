@@ -19,7 +19,17 @@ type ManagementExternalDbSystemDatabaseManagementsManagementInitParameters struc
 	EnableDatabaseManagement *bool `json:"enableDatabaseManagement,omitempty" tf:"enable_database_management,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model that applies to the external database.
 	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
@@ -46,8 +56,18 @@ type ManagementExternalDbSystemDatabaseManagementsManagementParameters struct {
 	EnableDatabaseManagement *bool `json:"enableDatabaseManagement,omitempty" tf:"enable_database_management,omitempty"`
 
 	// The OCID of the external DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDBSystemID *string `json:"externalDbSystemId,omitempty" tf:"external_db_system_id,omitempty"`
+
+	// Reference to a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDRef *v1.Reference `json:"externalDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbSystem in database to populate externalDbSystemId.
+	// +kubebuilder:validation:Optional
+	ExternalDBSystemIDSelector *v1.Selector `json:"externalDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model that applies to the external database.
 	// +kubebuilder:validation:Optional
@@ -91,7 +111,6 @@ type ManagementExternalDbSystemDatabaseManagementsManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableDatabaseManagement) || (has(self.initProvider) && has(self.initProvider.enableDatabaseManagement))",message="spec.forProvider.enableDatabaseManagement is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDbSystemId) || (has(self.initProvider) && has(self.initProvider.externalDbSystemId))",message="spec.forProvider.externalDbSystemId is a required parameter"
 	Spec   ManagementExternalDbSystemDatabaseManagementsManagementSpec   `json:"spec"`
 	Status ManagementExternalDbSystemDatabaseManagementsManagementStatus `json:"status,omitempty"`
 }

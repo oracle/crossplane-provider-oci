@@ -8,13 +8,19 @@ metadata:
   name: test-cross-connect
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
-    crossConnectGroupId: ${oci_core_cross_connect_group.test_cross_connect_group.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    crossConnectGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cross_connect_group
     customerReferenceName: ${var.cross_connect_customer_reference_name}
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.cross_connect_display_name}
-    farCrossConnectOrCrossConnectGroupId: ${oci_core_cross_connect_group.test_cross_connect_group.id}
+    farCrossConnectOrCrossConnectGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cross_connect_group
     freeformTags:
       Department: Finance
     locationName: ${var.cross_connect_location_name}
@@ -22,8 +28,14 @@ spec:
     - encryptionCipher: ${var.cross_connect_macsec_properties_encryption_cipher}
       isUnprotectedTrafficAllowed: ${var.cross_connect_macsec_properties_is_unprotected_traffic_allowed}
       primaryKey:
-      - connectivityAssociationKeySecretId: ${oci_vault_secret.test_secret.id}
-        connectivityAssociationNameSecretId: ${oci_vault_secret.test_secret.id}
+      - connectivityAssociationKeySecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        connectivityAssociationNameSecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
       state: ${var.cross_connect_macsec_properties_state}
-    nearCrossConnectOrCrossConnectGroupId: ${oci_core_cross_connect_group.test_cross_connect_group.id}
+    nearCrossConnectOrCrossConnectGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cross_connect_group
     portSpeedShapeName: ${var.cross_connect_port_speed_shape_name}

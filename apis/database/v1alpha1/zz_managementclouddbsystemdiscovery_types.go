@@ -556,7 +556,16 @@ type ManagementCloudDbSystemDiscoveryInitParameters struct {
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
 
 	// The OCID of the compartment in which the cloud DB system resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the parent cloud DB Infrastructure. For VM Dbsystems , it will be the DBSystem Id. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.
 	DbaasParentInfrastructureID *string `json:"dbaasParentInfrastructureId,omitempty" tf:"dbaas_parent_infrastructure_id,omitempty"`
@@ -645,8 +654,17 @@ type ManagementCloudDbSystemDiscoveryParameters struct {
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
 
 	// The OCID of the compartment in which the cloud DB system resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the parent cloud DB Infrastructure. For VM Dbsystems , it will be the DBSystem Id. For ExaCS and ExaCC,  it will be the cloudVmClusterId and vmClusterId respectively.
 	// +kubebuilder:validation:Optional
@@ -1139,7 +1157,6 @@ type ManagementCloudDbSystemDiscovery struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.agentId) || (has(self.initProvider) && has(self.initProvider.agentId))",message="spec.forProvider.agentId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbaasParentInfrastructureId) || (has(self.initProvider) && has(self.initProvider.dbaasParentInfrastructureId))",message="spec.forProvider.dbaasParentInfrastructureId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.deploymentType) || (has(self.initProvider) && has(self.initProvider.deploymentType))",message="spec.forProvider.deploymentType is a required parameter"
 	Spec   ManagementCloudDbSystemDiscoverySpec   `json:"spec"`

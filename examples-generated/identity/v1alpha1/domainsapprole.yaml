@@ -10,7 +10,9 @@ spec:
   forProvider:
     adminRole: ${var.app_role_admin_role}
     app:
-    - value: ${oci_identity_domains_app.test_app.id}
+    - valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_app
     attributeSets:
     - all
     attributes: ""

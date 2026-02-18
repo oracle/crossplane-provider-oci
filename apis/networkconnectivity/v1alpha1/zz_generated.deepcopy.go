@@ -555,6 +555,16 @@ func (in *CrossConnectGroupInitParameters) DeepCopyInto(out *CrossConnectGroupIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CustomerReferenceName != nil {
 		in, out := &in.CustomerReferenceName, &out.CustomerReferenceName
 		*out = new(string)
@@ -861,6 +871,16 @@ func (in *CrossConnectGroupParameters) DeepCopyInto(out *CrossConnectGroupParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CustomerReferenceName != nil {
 		in, out := &in.CustomerReferenceName, &out.CustomerReferenceName
 		*out = new(string)
@@ -965,10 +985,30 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CrossConnectGroupID != nil {
 		in, out := &in.CrossConnectGroupID, &out.CrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CrossConnectGroupIDRef != nil {
+		in, out := &in.CrossConnectGroupIDRef, &out.CrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CrossConnectGroupIDSelector != nil {
+		in, out := &in.CrossConnectGroupIDSelector, &out.CrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CustomerReferenceName != nil {
 		in, out := &in.CustomerReferenceName, &out.CustomerReferenceName
@@ -1000,6 +1040,16 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 		in, out := &in.FarCrossConnectOrCrossConnectGroupID, &out.FarCrossConnectOrCrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FarCrossConnectOrCrossConnectGroupIDRef != nil {
+		in, out := &in.FarCrossConnectOrCrossConnectGroupIDRef, &out.FarCrossConnectOrCrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FarCrossConnectOrCrossConnectGroupIDSelector != nil {
+		in, out := &in.FarCrossConnectOrCrossConnectGroupIDSelector, &out.FarCrossConnectOrCrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -1038,6 +1088,16 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 		in, out := &in.NearCrossConnectOrCrossConnectGroupID, &out.NearCrossConnectOrCrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NearCrossConnectOrCrossConnectGroupIDRef != nil {
+		in, out := &in.NearCrossConnectOrCrossConnectGroupIDRef, &out.NearCrossConnectOrCrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NearCrossConnectOrCrossConnectGroupIDSelector != nil {
+		in, out := &in.NearCrossConnectOrCrossConnectGroupIDSelector, &out.NearCrossConnectOrCrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PortSpeedShapeName != nil {
 		in, out := &in.PortSpeedShapeName, &out.PortSpeedShapeName
@@ -1375,10 +1435,30 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CrossConnectGroupID != nil {
 		in, out := &in.CrossConnectGroupID, &out.CrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CrossConnectGroupIDRef != nil {
+		in, out := &in.CrossConnectGroupIDRef, &out.CrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CrossConnectGroupIDSelector != nil {
+		in, out := &in.CrossConnectGroupIDSelector, &out.CrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CustomerReferenceName != nil {
 		in, out := &in.CustomerReferenceName, &out.CustomerReferenceName
@@ -1410,6 +1490,16 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 		in, out := &in.FarCrossConnectOrCrossConnectGroupID, &out.FarCrossConnectOrCrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FarCrossConnectOrCrossConnectGroupIDRef != nil {
+		in, out := &in.FarCrossConnectOrCrossConnectGroupIDRef, &out.FarCrossConnectOrCrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FarCrossConnectOrCrossConnectGroupIDSelector != nil {
+		in, out := &in.FarCrossConnectOrCrossConnectGroupIDSelector, &out.FarCrossConnectOrCrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.FreeformTags != nil {
 		in, out := &in.FreeformTags, &out.FreeformTags
@@ -1448,6 +1538,16 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 		in, out := &in.NearCrossConnectOrCrossConnectGroupID, &out.NearCrossConnectOrCrossConnectGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NearCrossConnectOrCrossConnectGroupIDRef != nil {
+		in, out := &in.NearCrossConnectOrCrossConnectGroupIDRef, &out.NearCrossConnectOrCrossConnectGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NearCrossConnectOrCrossConnectGroupIDSelector != nil {
+		in, out := &in.NearCrossConnectOrCrossConnectGroupIDSelector, &out.NearCrossConnectOrCrossConnectGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PortSpeedShapeName != nil {
 		in, out := &in.PortSpeedShapeName, &out.PortSpeedShapeName
@@ -4655,6 +4755,16 @@ func (in *IpsecConnectionTunnelManagementInitParameters) DeepCopyInto(out *Ipsec
 		*out = new(string)
 		**out = **in
 	}
+	if in.IpsecIDRef != nil {
+		in, out := &in.IpsecIDRef, &out.IpsecIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IpsecIDSelector != nil {
+		in, out := &in.IpsecIDSelector, &out.IpsecIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NATTranslationEnabled != nil {
 		in, out := &in.NATTranslationEnabled, &out.NATTranslationEnabled
 		*out = new(string)
@@ -4922,6 +5032,16 @@ func (in *IpsecConnectionTunnelManagementParameters) DeepCopyInto(out *IpsecConn
 		in, out := &in.IpsecID, &out.IpsecID
 		*out = new(string)
 		**out = **in
+	}
+	if in.IpsecIDRef != nil {
+		in, out := &in.IpsecIDRef, &out.IpsecIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IpsecIDSelector != nil {
+		in, out := &in.IpsecIDSelector, &out.IpsecIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NATTranslationEnabled != nil {
 		in, out := &in.NATTranslationEnabled, &out.NATTranslationEnabled
@@ -5560,6 +5680,16 @@ func (in *MacsecPropertiesPrimaryKeyInitParameters) DeepCopyInto(out *MacsecProp
 		*out = new(string)
 		**out = **in
 	}
+	if in.ConnectivityAssociationKeySecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDRef, &out.ConnectivityAssociationKeySecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationKeySecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDSelector, &out.ConnectivityAssociationKeySecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ConnectivityAssociationKeySecretVersion != nil {
 		in, out := &in.ConnectivityAssociationKeySecretVersion, &out.ConnectivityAssociationKeySecretVersion
 		*out = new(string)
@@ -5569,6 +5699,16 @@ func (in *MacsecPropertiesPrimaryKeyInitParameters) DeepCopyInto(out *MacsecProp
 		in, out := &in.ConnectivityAssociationNameSecretID, &out.ConnectivityAssociationNameSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ConnectivityAssociationNameSecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDRef, &out.ConnectivityAssociationNameSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationNameSecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDSelector, &out.ConnectivityAssociationNameSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ConnectivityAssociationNameSecretVersion != nil {
 		in, out := &in.ConnectivityAssociationNameSecretVersion, &out.ConnectivityAssociationNameSecretVersion
@@ -5630,6 +5770,16 @@ func (in *MacsecPropertiesPrimaryKeyParameters) DeepCopyInto(out *MacsecProperti
 		*out = new(string)
 		**out = **in
 	}
+	if in.ConnectivityAssociationKeySecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDRef, &out.ConnectivityAssociationKeySecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationKeySecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDSelector, &out.ConnectivityAssociationKeySecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ConnectivityAssociationKeySecretVersion != nil {
 		in, out := &in.ConnectivityAssociationKeySecretVersion, &out.ConnectivityAssociationKeySecretVersion
 		*out = new(string)
@@ -5639,6 +5789,16 @@ func (in *MacsecPropertiesPrimaryKeyParameters) DeepCopyInto(out *MacsecProperti
 		in, out := &in.ConnectivityAssociationNameSecretID, &out.ConnectivityAssociationNameSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ConnectivityAssociationNameSecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDRef, &out.ConnectivityAssociationNameSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationNameSecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDSelector, &out.ConnectivityAssociationNameSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ConnectivityAssociationNameSecretVersion != nil {
 		in, out := &in.ConnectivityAssociationNameSecretVersion, &out.ConnectivityAssociationNameSecretVersion
@@ -5669,6 +5829,16 @@ func (in *MatchCriteriaInitParameters) DeepCopyInto(out *MatchCriteriaInitParame
 		in, out := &in.DrgAttachmentID, &out.DrgAttachmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DrgAttachmentIDRef != nil {
+		in, out := &in.DrgAttachmentIDRef, &out.DrgAttachmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgAttachmentIDSelector != nil {
+		in, out := &in.DrgAttachmentIDSelector, &out.DrgAttachmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MatchType != nil {
 		in, out := &in.MatchType, &out.MatchType
@@ -5729,6 +5899,16 @@ func (in *MatchCriteriaParameters) DeepCopyInto(out *MatchCriteriaParameters) {
 		in, out := &in.DrgAttachmentID, &out.DrgAttachmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DrgAttachmentIDRef != nil {
+		in, out := &in.DrgAttachmentIDRef, &out.DrgAttachmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgAttachmentIDSelector != nil {
+		in, out := &in.DrgAttachmentIDSelector, &out.DrgAttachmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MatchType != nil {
 		in, out := &in.MatchType, &out.MatchType
@@ -6251,6 +6431,16 @@ func (in *PrimaryKeyInitParameters) DeepCopyInto(out *PrimaryKeyInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.ConnectivityAssociationKeySecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDRef, &out.ConnectivityAssociationKeySecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationKeySecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDSelector, &out.ConnectivityAssociationKeySecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ConnectivityAssociationKeySecretVersion != nil {
 		in, out := &in.ConnectivityAssociationKeySecretVersion, &out.ConnectivityAssociationKeySecretVersion
 		*out = new(string)
@@ -6260,6 +6450,16 @@ func (in *PrimaryKeyInitParameters) DeepCopyInto(out *PrimaryKeyInitParameters) 
 		in, out := &in.ConnectivityAssociationNameSecretID, &out.ConnectivityAssociationNameSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ConnectivityAssociationNameSecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDRef, &out.ConnectivityAssociationNameSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationNameSecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDSelector, &out.ConnectivityAssociationNameSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ConnectivityAssociationNameSecretVersion != nil {
 		in, out := &in.ConnectivityAssociationNameSecretVersion, &out.ConnectivityAssociationNameSecretVersion
@@ -6321,6 +6521,16 @@ func (in *PrimaryKeyParameters) DeepCopyInto(out *PrimaryKeyParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ConnectivityAssociationKeySecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDRef, &out.ConnectivityAssociationKeySecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationKeySecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationKeySecretIDSelector, &out.ConnectivityAssociationKeySecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ConnectivityAssociationKeySecretVersion != nil {
 		in, out := &in.ConnectivityAssociationKeySecretVersion, &out.ConnectivityAssociationKeySecretVersion
 		*out = new(string)
@@ -6330,6 +6540,16 @@ func (in *PrimaryKeyParameters) DeepCopyInto(out *PrimaryKeyParameters) {
 		in, out := &in.ConnectivityAssociationNameSecretID, &out.ConnectivityAssociationNameSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ConnectivityAssociationNameSecretIDRef != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDRef, &out.ConnectivityAssociationNameSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConnectivityAssociationNameSecretIDSelector != nil {
+		in, out := &in.ConnectivityAssociationNameSecretIDSelector, &out.ConnectivityAssociationNameSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ConnectivityAssociationNameSecretVersion != nil {
 		in, out := &in.ConnectivityAssociationNameSecretVersion, &out.ConnectivityAssociationNameSecretVersion
@@ -6422,10 +6642,32 @@ func (in *TunnelConfigurationInitParameters) DeepCopyInto(out *TunnelConfigurati
 			}
 		}
 	}
+	if in.AssociatedVirtualCircuitsRefs != nil {
+		in, out := &in.AssociatedVirtualCircuitsRefs, &out.AssociatedVirtualCircuitsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.AssociatedVirtualCircuitsSelector != nil {
+		in, out := &in.AssociatedVirtualCircuitsSelector, &out.AssociatedVirtualCircuitsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DrgRouteTableID != nil {
 		in, out := &in.DrgRouteTableID, &out.DrgRouteTableID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DrgRouteTableIDRef != nil {
+		in, out := &in.DrgRouteTableIDRef, &out.DrgRouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgRouteTableIDSelector != nil {
+		in, out := &in.DrgRouteTableIDSelector, &out.DrgRouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OracleTunnelIP != nil {
 		in, out := &in.OracleTunnelIP, &out.OracleTunnelIP
@@ -6494,10 +6736,32 @@ func (in *TunnelConfigurationParameters) DeepCopyInto(out *TunnelConfigurationPa
 			}
 		}
 	}
+	if in.AssociatedVirtualCircuitsRefs != nil {
+		in, out := &in.AssociatedVirtualCircuitsRefs, &out.AssociatedVirtualCircuitsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.AssociatedVirtualCircuitsSelector != nil {
+		in, out := &in.AssociatedVirtualCircuitsSelector, &out.AssociatedVirtualCircuitsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DrgRouteTableID != nil {
 		in, out := &in.DrgRouteTableID, &out.DrgRouteTableID
 		*out = new(string)
 		**out = **in
+	}
+	if in.DrgRouteTableIDRef != nil {
+		in, out := &in.DrgRouteTableIDRef, &out.DrgRouteTableIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgRouteTableIDSelector != nil {
+		in, out := &in.DrgRouteTableIDSelector, &out.DrgRouteTableIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OracleTunnelIP != nil {
 		in, out := &in.OracleTunnelIP, &out.OracleTunnelIP
@@ -6560,6 +6824,16 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CrossConnectMappings != nil {
 		in, out := &in.CrossConnectMappings, &out.CrossConnectMappings
@@ -6933,6 +7207,16 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CrossConnectMappings != nil {
 		in, out := &in.CrossConnectMappings, &out.CrossConnectMappings

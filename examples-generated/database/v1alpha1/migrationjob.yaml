@@ -12,4 +12,6 @@ spec:
       foo-namespace.bar-key: value
     displayName: ${var.job_display_name}
     freeformTags: ${var.job_freeform_tags}
-    jobId: ${oci_database_migration_job.test_job.id}
+    jobIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_job

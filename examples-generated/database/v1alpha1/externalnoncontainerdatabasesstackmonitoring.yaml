@@ -9,5 +9,9 @@ metadata:
 spec:
   forProvider:
     enableStackMonitoring: true
-    externalDatabaseConnectorId: ${oci_database_external_database_connector.test_external_database_connector.id}
-    externalNonContainerDatabaseId: ${oci_database_external_non_container_database.test_external_non_container_database.id}
+    externalDatabaseConnectorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_database_connector
+    externalNonContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_non_container_database

@@ -1319,7 +1319,16 @@ type ServiceConfigurationUnifiedAgentConfigurationFilterInitParameters struct {
 	KeepKeys []*string `json:"keepKeys,omitempty" tf:"keep_keys,omitempty"`
 
 	// (Updatable) The field name in the record to parse.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
+
+	// Reference to a Key in kms to populate keyName.
+	// +kubebuilder:validation:Optional
+	KeyNameRef *v1.Reference `json:"keyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate keyName.
+	// +kubebuilder:validation:Optional
+	KeyNameSelector *v1.Selector `json:"keyNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) Unique name for the source.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -1477,8 +1486,17 @@ type ServiceConfigurationUnifiedAgentConfigurationFilterParameters struct {
 	KeepKeys []*string `json:"keepKeys,omitempty" tf:"keep_keys,omitempty"`
 
 	// (Updatable) The field name in the record to parse.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
 	// +kubebuilder:validation:Optional
 	KeyName *string `json:"keyName,omitempty" tf:"key_name,omitempty"`
+
+	// Reference to a Key in kms to populate keyName.
+	// +kubebuilder:validation:Optional
+	KeyNameRef *v1.Reference `json:"keyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate keyName.
+	// +kubebuilder:validation:Optional
+	KeyNameSelector *v1.Selector `json:"keyNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) Unique name for the source.
 	// +kubebuilder:validation:Optional

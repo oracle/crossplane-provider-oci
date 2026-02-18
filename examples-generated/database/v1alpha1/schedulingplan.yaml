@@ -8,11 +8,15 @@ metadata:
   name: test-scheduling-plan
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.scheduling_plan_defined_tags}
     freeformTags:
       Department: Finance
     isUsingRecommendedScheduledActions: ${var.scheduling_plan_is_using_recommended_scheduled_actions}
     resourceId: ${oci_cloud_guard_resource.test_resource.id}
-    schedulingPolicyId: ${oci_database_scheduling_policy.test_scheduling_policy.id}
+    schedulingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_policy
     serviceType: ${var.scheduling_plan_service_type}

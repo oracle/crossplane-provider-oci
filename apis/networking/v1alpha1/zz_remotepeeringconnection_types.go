@@ -51,7 +51,17 @@ type RemotePeeringConnectionInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// and a peer_region_name creates a connection to the specified RPC ID. Both peer_id and peer_region_name are optional for creating the resource but are required for the connection to succeed. If only one of them is present the connection will not succeed.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RemotePeeringConnection
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerID *string `json:"peerId,omitempty" tf:"peer_id,omitempty"`
+
+	// Reference to a RemotePeeringConnection in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDRef *v1.Reference `json:"peerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RemotePeeringConnection in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDSelector *v1.Selector `json:"peerIdSelector,omitempty" tf:"-"`
 
 	// The name of the region that contains the RPC you want to peer with.  Example: us-ashburn-1
 	PeerRegionName *string `json:"peerRegionName,omitempty" tf:"peer_region_name,omitempty"`
@@ -144,8 +154,18 @@ type RemotePeeringConnectionParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// and a peer_region_name creates a connection to the specified RPC ID. Both peer_id and peer_region_name are optional for creating the resource but are required for the connection to succeed. If only one of them is present the connection will not succeed.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RemotePeeringConnection
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerID *string `json:"peerId,omitempty" tf:"peer_id,omitempty"`
+
+	// Reference to a RemotePeeringConnection in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDRef *v1.Reference `json:"peerIdRef,omitempty" tf:"-"`
+
+	// Selector for a RemotePeeringConnection in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDSelector *v1.Selector `json:"peerIdSelector,omitempty" tf:"-"`
 
 	// The name of the region that contains the RPC you want to peer with.  Example: us-ashburn-1
 	// +kubebuilder:validation:Optional

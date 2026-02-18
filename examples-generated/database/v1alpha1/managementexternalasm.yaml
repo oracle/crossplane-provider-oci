@@ -10,7 +10,9 @@ spec:
   forProvider:
     definedTags:
       Operations.CostCenter: "42"
-    externalAsmId: ${oci_database_management_external_asm.test_external_asm.id}
+    externalAsmIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_asm
     externalConnectorId: ${oci_database_management_external_connector.test_external_connector.id}
     freeformTags:
       Department: Finance

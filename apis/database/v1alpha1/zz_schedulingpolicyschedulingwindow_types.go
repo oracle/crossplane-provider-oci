@@ -16,7 +16,16 @@ import (
 type SchedulingPolicySchedulingWindowInitParameters struct {
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -27,7 +36,17 @@ type SchedulingPolicySchedulingWindowInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The Scheduling Policy OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SchedulingPolicyID *string `json:"schedulingPolicyId,omitempty" tf:"scheduling_policy_id,omitempty"`
+
+	// Reference to a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDRef *v1.Reference `json:"schedulingPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDSelector *v1.Selector `json:"schedulingPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Single Scheduling Window details.
 	WindowPreference []WindowPreferenceInitParameters `json:"windowPreference,omitempty" tf:"window_preference,omitempty"`
@@ -77,8 +96,17 @@ type SchedulingPolicySchedulingWindowObservation struct {
 type SchedulingPolicySchedulingWindowParameters struct {
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -91,8 +119,18 @@ type SchedulingPolicySchedulingWindowParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The Scheduling Policy OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SchedulingPolicyID *string `json:"schedulingPolicyId,omitempty" tf:"scheduling_policy_id,omitempty"`
+
+	// Reference to a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDRef *v1.Reference `json:"schedulingPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPolicy in database to populate schedulingPolicyId.
+	// +kubebuilder:validation:Optional
+	SchedulingPolicyIDSelector *v1.Selector `json:"schedulingPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The Single Scheduling Window details.
 	// +kubebuilder:validation:Optional
@@ -242,7 +280,6 @@ type SchedulingPolicySchedulingWindowStatus struct {
 type SchedulingPolicySchedulingWindow struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schedulingPolicyId) || (has(self.initProvider) && has(self.initProvider.schedulingPolicyId))",message="spec.forProvider.schedulingPolicyId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.windowPreference) || (has(self.initProvider) && has(self.initProvider.windowPreference))",message="spec.forProvider.windowPreference is a required parameter"
 	Spec   SchedulingPolicySchedulingWindowSpec   `json:"spec"`
 	Status SchedulingPolicySchedulingWindowStatus `json:"status,omitempty"`

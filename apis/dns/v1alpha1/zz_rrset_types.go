@@ -99,10 +99,30 @@ type RrsetInitParameters struct {
 	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// The OCID of the view the zone is associated with. Required when accessing a private zone by name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
 
+	// Reference to a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDRef *v1.Reference `json:"viewIdRef,omitempty" tf:"-"`
+
+	// Selector for a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDSelector *v1.Selector `json:"viewIdSelector,omitempty" tf:"-"`
+
 	// The name or OCID of the target zone.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Zone
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ZoneNameOrID *string `json:"zoneNameOrId,omitempty" tf:"zone_name_or_id,omitempty"`
+
+	// Reference to a Zone in dns to populate zoneNameOrId.
+	// +kubebuilder:validation:Optional
+	ZoneNameOrIDRef *v1.Reference `json:"zoneNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone in dns to populate zoneNameOrId.
+	// +kubebuilder:validation:Optional
+	ZoneNameOrIDSelector *v1.Selector `json:"zoneNameOrIdSelector,omitempty" tf:"-"`
 }
 
 type RrsetObservation struct {
@@ -165,12 +185,32 @@ type RrsetParameters struct {
 	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
 
 	// The OCID of the view the zone is associated with. Required when accessing a private zone by name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
 
+	// Reference to a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDRef *v1.Reference `json:"viewIdRef,omitempty" tf:"-"`
+
+	// Selector for a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDSelector *v1.Selector `json:"viewIdSelector,omitempty" tf:"-"`
+
 	// The name or OCID of the target zone.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Zone
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ZoneNameOrID *string `json:"zoneNameOrId,omitempty" tf:"zone_name_or_id,omitempty"`
+
+	// Reference to a Zone in dns to populate zoneNameOrId.
+	// +kubebuilder:validation:Optional
+	ZoneNameOrIDRef *v1.Reference `json:"zoneNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone in dns to populate zoneNameOrId.
+	// +kubebuilder:validation:Optional
+	ZoneNameOrIDSelector *v1.Selector `json:"zoneNameOrIdSelector,omitempty" tf:"-"`
 }
 
 // RrsetSpec defines the desired state of Rrset
@@ -211,7 +251,6 @@ type Rrset struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.domain) || (has(self.initProvider) && has(self.initProvider.domain))",message="spec.forProvider.domain is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.rtype) || (has(self.initProvider) && has(self.initProvider.rtype))",message="spec.forProvider.rtype is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zoneNameOrId) || (has(self.initProvider) && has(self.initProvider.zoneNameOrId))",message="spec.forProvider.zoneNameOrId is a required parameter"
 	Spec   RrsetSpec   `json:"spec"`
 	Status RrsetStatus `json:"status,omitempty"`
 }

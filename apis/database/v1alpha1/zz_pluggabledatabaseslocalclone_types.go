@@ -41,7 +41,17 @@ type PluggableDatabasesLocalCloneInitParameters struct {
 	PdbAdminPasswordSecretRef *v1.SecretKeySelector `json:"pdbAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.
 	ShouldPdbAdminAccountBeLocked *bool `json:"shouldPdbAdminAccountBeLocked,omitempty" tf:"should_pdb_admin_account_be_locked,omitempty"`
@@ -124,8 +134,18 @@ type PluggableDatabasesLocalCloneParameters struct {
 	PdbAdminPasswordSecretRef *v1.SecretKeySelector `json:"pdbAdminPasswordSecretRef,omitempty" tf:"-"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.PluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PluggableDatabaseID *string `json:"pluggableDatabaseId,omitempty" tf:"pluggable_database_id,omitempty"`
+
+	// Reference to a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDRef *v1.Reference `json:"pluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a PluggableDatabase in database to populate pluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	PluggableDatabaseIDSelector *v1.Selector `json:"pluggableDatabaseIdSelector,omitempty" tf:"-"`
 
 	// The locked mode of the pluggable database admin account. If false, the user needs to provide the PDB Admin Password to connect to it. If true, the pluggable database will be locked and user cannot login to it.
 	// +kubebuilder:validation:Optional
@@ -212,7 +232,6 @@ type PluggableDatabasesLocalClone struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.clonedPdbName) || (has(self.initProvider) && has(self.initProvider.clonedPdbName))",message="spec.forProvider.clonedPdbName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.pluggableDatabaseId) || (has(self.initProvider) && has(self.initProvider.pluggableDatabaseId))",message="spec.forProvider.pluggableDatabaseId is a required parameter"
 	Spec   PluggableDatabasesLocalCloneSpec   `json:"spec"`
 	Status PluggableDatabasesLocalCloneStatus `json:"status,omitempty"`
 }

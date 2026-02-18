@@ -16,13 +16,32 @@ import (
 type ToolsDatabaseToolsIdentityInitParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the Database Tools identity.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The name of the credential object created in the Oracle Database.
 	CredentialKey *string `json:"credentialKey,omitempty" tf:"credential_key,omitempty"`
 
 	// The OCID of the related Database Tools connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ToolsDatabaseToolsConnection
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseToolsConnectionID *string `json:"databaseToolsConnectionId,omitempty" tf:"database_tools_connection_id,omitempty"`
+
+	// Reference to a ToolsDatabaseToolsConnection in database to populate databaseToolsConnectionId.
+	// +kubebuilder:validation:Optional
+	DatabaseToolsConnectionIDRef *v1.Reference `json:"databaseToolsConnectionIdRef,omitempty" tf:"-"`
+
+	// Selector for a ToolsDatabaseToolsConnection in database to populate databaseToolsConnectionId.
+	// +kubebuilder:validation:Optional
+	DatabaseToolsConnectionIDSelector *v1.Selector `json:"databaseToolsConnectionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key": "value"}
 	// +mapType=granular
@@ -128,16 +147,35 @@ type ToolsDatabaseToolsIdentityObservation struct {
 type ToolsDatabaseToolsIdentityParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the Database Tools identity.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The name of the credential object created in the Oracle Database.
 	// +kubebuilder:validation:Optional
 	CredentialKey *string `json:"credentialKey,omitempty" tf:"credential_key,omitempty"`
 
 	// The OCID of the related Database Tools connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ToolsDatabaseToolsConnection
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseToolsConnectionID *string `json:"databaseToolsConnectionId,omitempty" tf:"database_tools_connection_id,omitempty"`
+
+	// Reference to a ToolsDatabaseToolsConnection in database to populate databaseToolsConnectionId.
+	// +kubebuilder:validation:Optional
+	DatabaseToolsConnectionIDRef *v1.Reference `json:"databaseToolsConnectionIdRef,omitempty" tf:"-"`
+
+	// Selector for a ToolsDatabaseToolsConnection in database to populate databaseToolsConnectionId.
+	// +kubebuilder:validation:Optional
+	DatabaseToolsConnectionIDSelector *v1.Selector `json:"databaseToolsConnectionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key": "value"}
 	// +kubebuilder:validation:Optional
@@ -198,9 +236,7 @@ type ToolsDatabaseToolsIdentityStatus struct {
 type ToolsDatabaseToolsIdentity struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.credentialKey) || (has(self.initProvider) && has(self.initProvider.credentialKey))",message="spec.forProvider.credentialKey is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseToolsConnectionId) || (has(self.initProvider) && has(self.initProvider.databaseToolsConnectionId))",message="spec.forProvider.databaseToolsConnectionId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   ToolsDatabaseToolsIdentitySpec   `json:"spec"`

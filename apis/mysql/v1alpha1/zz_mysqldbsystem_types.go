@@ -411,7 +411,17 @@ type MysqlDbSystemEncryptDataInitParameters struct {
 	KeyGenerationType *string `json:"keyGenerationType,omitempty" tf:"key_generation_type,omitempty"`
 
 	// (Updatable) The OCID of the key to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// Reference to a Key in kms to populate keyId.
+	// +kubebuilder:validation:Optional
+	KeyIDRef *v1.Reference `json:"keyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate keyId.
+	// +kubebuilder:validation:Optional
+	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 }
 
 type MysqlDbSystemEncryptDataObservation struct {
@@ -430,8 +440,18 @@ type MysqlDbSystemEncryptDataParameters struct {
 	KeyGenerationType *string `json:"keyGenerationType" tf:"key_generation_type,omitempty"`
 
 	// (Updatable) The OCID of the key to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// Reference to a Key in kms to populate keyId.
+	// +kubebuilder:validation:Optional
+	KeyIDRef *v1.Reference `json:"keyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate keyId.
+	// +kubebuilder:validation:Optional
+	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 }
 
 type MysqlDbSystemEndpointsInitParameters struct {
@@ -1093,7 +1113,17 @@ type MysqlDbSystemSecureConnectionsParameters struct {
 type MysqlDbSystemSourceInitParameters struct {
 
 	// The OCID of the backup to be used as the source for the new DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlBackup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a MysqlBackup in mysql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlBackup in mysql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB System from which a backup shall be selected to be restored when creating the new DB System. Use this together with recovery point to perform a point in time recovery operation.
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
@@ -1126,8 +1156,18 @@ type MysqlDbSystemSourceObservation struct {
 type MysqlDbSystemSourceParameters struct {
 
 	// The OCID of the backup to be used as the source for the new DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlBackup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a MysqlBackup in mysql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlBackup in mysql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB System from which a backup shall be selected to be restored when creating the new DB System. Use this together with recovery point to perform a point in time recovery operation.
 	// +kubebuilder:validation:Optional

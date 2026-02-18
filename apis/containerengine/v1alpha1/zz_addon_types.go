@@ -34,7 +34,16 @@ type AddonErrorParameters struct {
 type AddonInitParameters struct {
 
 	// The name of the addon.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/containerengine/v1alpha1.Addon
 	AddonName *string `json:"addonName,omitempty" tf:"addon_name,omitempty"`
+
+	// Reference to a Addon in containerengine to populate addonName.
+	// +kubebuilder:validation:Optional
+	AddonNameRef *v1.Reference `json:"addonNameRef,omitempty" tf:"-"`
+
+	// Selector for a Addon in containerengine to populate addonName.
+	// +kubebuilder:validation:Optional
+	AddonNameSelector *v1.Selector `json:"addonNameSelector,omitempty" tf:"-"`
 
 	// The OCID of the cluster.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/containerengine/v1alpha1.Cluster
@@ -99,8 +108,17 @@ type AddonObservation struct {
 type AddonParameters struct {
 
 	// The name of the addon.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/containerengine/v1alpha1.Addon
 	// +kubebuilder:validation:Optional
 	AddonName *string `json:"addonName,omitempty" tf:"addon_name,omitempty"`
+
+	// Reference to a Addon in containerengine to populate addonName.
+	// +kubebuilder:validation:Optional
+	AddonNameRef *v1.Reference `json:"addonNameRef,omitempty" tf:"-"`
+
+	// Selector for a Addon in containerengine to populate addonName.
+	// +kubebuilder:validation:Optional
+	AddonNameSelector *v1.Selector `json:"addonNameSelector,omitempty" tf:"-"`
 
 	// The OCID of the cluster.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/containerengine/v1alpha1.Cluster
@@ -197,7 +215,6 @@ type AddonStatus struct {
 type Addon struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.addonName) || (has(self.initProvider) && has(self.initProvider.addonName))",message="spec.forProvider.addonName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.removeAddonResourcesOnDelete) || (has(self.initProvider) && has(self.initProvider.removeAddonResourcesOnDelete))",message="spec.forProvider.removeAddonResourcesOnDelete is a required parameter"
 	Spec   AddonSpec   `json:"spec"`
 	Status AddonStatus `json:"status,omitempty"`
