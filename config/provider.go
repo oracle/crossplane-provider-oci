@@ -20,7 +20,7 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	ujconfig "github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config"
 
 	"github.com/oracle/provider-oci/config/artifacts"
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
@@ -46,6 +46,8 @@ import (
 	"github.com/oracle/provider-oci/config/redis"
 	"github.com/oracle/provider-oci/config/streaming"
 	"github.com/oracle/provider-oci/config/vault"
+
+	"github.com/crossplane/upjet/pkg/registry/reference"
 	"github.com/oracle/provider-oci/hack"
 )
 
@@ -76,23 +78,27 @@ var ServiceWildcards = []string{
 }
 
 // GetProvider returns provider configuration
-func GetProvider() *ujconfig.Provider {
-	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("oci.upbound.io"),
+func GetProvider() *config.Provider {
+	pc := config.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
+		config.WithRootGroup("oci.upbound.io"),
 		// This will include manually configured resources + resources corresponding to services listed in wildcards
-		ujconfig.WithIncludeList(append(ExternalNameConfigured(), ServiceWildcards...)),
-		ujconfig.WithSkipList(ProblematicResources()),
-		ujconfig.WithDefaultResourceOptions(
+		config.WithIncludeList(append(ExternalNameConfigured(), ServiceWildcards...)),
+		config.WithSkipList(ProblematicResources()),
+		config.WithDefaultResourceOptions(
 			GroupKindOverrides(),
 			ExternalNameConfigurations(),
 			AutoExternalNameConfiguration(), // Automatic external name for unconfigured resources
 
 		),
-		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithMainTemplate(hack.MainTemplate),
+		config.WithReferenceInjectors([]config.ReferenceInjector{
+			reference.NewInjector(modulePath),
+			NewStaticReferenceInjector(),
+		}),
+		config.WithFeaturesPackage("internal/features"),
+		config.WithMainTemplate(hack.MainTemplate),
 	)
 
-	for _, configure := range []func(provider *ujconfig.Provider){
+	for _, configure := range []func(provider *config.Provider){
 		// add custom config functions
 		objectstorage.Configure,
 		identity.Configure,
