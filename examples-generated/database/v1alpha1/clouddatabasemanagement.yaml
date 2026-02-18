@@ -11,7 +11,9 @@ spec:
     credentialdetails:
     - passwordSecretId: ${var.database_cloud_database_management_details_password_secret_id}
       userName: ${var.database_cloud_database_management_details_user_name}
-    databaseId: ${oci_database_database.test_database.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     enableManagement: ${var.database_cloud_database_management_details_enable_management}
     managementType: ${var.database_cloud_database_management_details_management_type}
     port: ${var.cloud_database_management_port}
@@ -19,4 +21,6 @@ spec:
     protocol: ${var.cloud_database_management_protocol}
     role: ${var.cloud_database_management_role}
     serviceName: ${var.database_cloud_database_management_details_service_name}
-    sslSecretId: ${oci_vault_secret.test_secret.id}
+    sslSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret

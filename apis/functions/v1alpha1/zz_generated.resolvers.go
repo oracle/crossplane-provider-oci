@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
@@ -44,12 +45,35 @@ func (mg *Application) ResolveReferences( // ResolveReferences of this Applicati
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ImagePolicyConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID")
+			}
+			mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "NetworkSecurityGroup", "NetworkSecurityGroupList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.NetworkSecurityGroupIds),
 			Extract:       reference.ExternalName(),
@@ -101,12 +125,35 @@ func (mg *Application) ResolveReferences( // ResolveReferences of this Applicati
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ImagePolicyConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID")
+			}
+			mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "NetworkSecurityGroup", "NetworkSecurityGroupList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.NetworkSecurityGroupIds),
 			Extract:       reference.ExternalName(),
@@ -170,12 +217,138 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FailureDestination[i3].ChannelID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.FailureDestination[i3].ChannelIDRef,
+				Selector:     mg.Spec.ForProvider.FailureDestination[i3].ChannelIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.FailureDestination[i3].ChannelID")
+		}
+		mg.Spec.ForProvider.FailureDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.FailureDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FailureDestination[i3].StreamID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.FailureDestination[i3].StreamIDRef,
+				Selector:     mg.Spec.ForProvider.FailureDestination[i3].StreamIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.FailureDestination[i3].StreamID")
+		}
+		mg.Spec.ForProvider.FailureDestination[i3].StreamID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.FailureDestination[i3].StreamIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("ons.oci.upbound.io", "v1alpha1", "NotificationTopic", "NotificationTopicList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FailureDestination[i3].TopicID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.FailureDestination[i3].TopicIDRef,
+				Selector:     mg.Spec.ForProvider.FailureDestination[i3].TopicIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.FailureDestination[i3].TopicID")
+		}
+		mg.Spec.ForProvider.FailureDestination[i3].TopicID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.FailureDestination[i3].TopicIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SuccessDestination[i3].ChannelID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.SuccessDestination[i3].ChannelIDRef,
+				Selector:     mg.Spec.ForProvider.SuccessDestination[i3].ChannelIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SuccessDestination[i3].ChannelID")
+		}
+		mg.Spec.ForProvider.SuccessDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SuccessDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SuccessDestination[i3].StreamID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.SuccessDestination[i3].StreamIDRef,
+				Selector:     mg.Spec.ForProvider.SuccessDestination[i3].StreamIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SuccessDestination[i3].StreamID")
+		}
+		mg.Spec.ForProvider.SuccessDestination[i3].StreamID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SuccessDestination[i3].StreamIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("ons.oci.upbound.io", "v1alpha1", "NotificationTopic", "NotificationTopicList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SuccessDestination[i3].TopicID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.SuccessDestination[i3].TopicIDRef,
+				Selector:     mg.Spec.ForProvider.SuccessDestination[i3].TopicIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SuccessDestination[i3].TopicID")
+		}
+		mg.Spec.ForProvider.SuccessDestination[i3].TopicID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SuccessDestination[i3].TopicIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("functions.oci.upbound.io", "v1alpha1", "Application", "ApplicationList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
 			Extract:      reference.ExternalName(),
@@ -189,6 +362,133 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FailureDestination[i3].ChannelID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.FailureDestination[i3].ChannelIDRef,
+				Selector:     mg.Spec.InitProvider.FailureDestination[i3].ChannelIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.FailureDestination[i3].ChannelID")
+		}
+		mg.Spec.InitProvider.FailureDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.FailureDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FailureDestination[i3].StreamID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.FailureDestination[i3].StreamIDRef,
+				Selector:     mg.Spec.InitProvider.FailureDestination[i3].StreamIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.FailureDestination[i3].StreamID")
+		}
+		mg.Spec.InitProvider.FailureDestination[i3].StreamID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.FailureDestination[i3].StreamIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.FailureDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("ons.oci.upbound.io", "v1alpha1", "NotificationTopic", "NotificationTopicList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FailureDestination[i3].TopicID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.FailureDestination[i3].TopicIDRef,
+				Selector:     mg.Spec.InitProvider.FailureDestination[i3].TopicIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.FailureDestination[i3].TopicID")
+		}
+		mg.Spec.InitProvider.FailureDestination[i3].TopicID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.FailureDestination[i3].TopicIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("mysql.oci.upbound.io", "v1alpha1", "MysqlChannel", "MysqlChannelList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SuccessDestination[i3].ChannelID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.SuccessDestination[i3].ChannelIDRef,
+				Selector:     mg.Spec.InitProvider.SuccessDestination[i3].ChannelIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SuccessDestination[i3].ChannelID")
+		}
+		mg.Spec.InitProvider.SuccessDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SuccessDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SuccessDestination[i3].StreamID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.SuccessDestination[i3].StreamIDRef,
+				Selector:     mg.Spec.InitProvider.SuccessDestination[i3].StreamIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SuccessDestination[i3].StreamID")
+		}
+		mg.Spec.InitProvider.SuccessDestination[i3].StreamID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SuccessDestination[i3].StreamIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("ons.oci.upbound.io", "v1alpha1", "NotificationTopic", "NotificationTopicList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SuccessDestination[i3].TopicID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.SuccessDestination[i3].TopicIDRef,
+				Selector:     mg.Spec.InitProvider.SuccessDestination[i3].TopicIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SuccessDestination[i3].TopicID")
+		}
+		mg.Spec.InitProvider.SuccessDestination[i3].TopicID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SuccessDestination[i3].TopicIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

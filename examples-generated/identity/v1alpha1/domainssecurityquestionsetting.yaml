@@ -22,7 +22,9 @@ spec:
     resourceTypeSchemaVersion: ${var.security_question_setting_resource_type_schema_version}
     schemas:
     - urn:ietf:params:scim:schemas:oracle:idcs:SecurityQuestionSettings
-    securityQuestionSettingId: ${oci_identity_domains_security_question_setting.test_security_question_setting.id}
+    securityQuestionSettingIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_question_setting
     tags:
     - key: ${var.security_question_setting_tags_key}
       value: ${var.security_question_setting_tags_value}

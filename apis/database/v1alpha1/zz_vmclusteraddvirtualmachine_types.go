@@ -122,7 +122,17 @@ type VmClusterAddVirtualMachineInitParameters struct {
 	DBServers []DBServersInitParameters `json:"dbServers,omitempty" tf:"db_servers,omitempty"`
 
 	// The VM cluster OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VMClusterID *string `json:"vmClusterId,omitempty" tf:"vm_cluster_id,omitempty"`
+
+	// Reference to a VmCluster in database to populate vmClusterId.
+	// +kubebuilder:validation:Optional
+	VMClusterIDRef *v1.Reference `json:"vmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmCluster in database to populate vmClusterId.
+	// +kubebuilder:validation:Optional
+	VMClusterIDSelector *v1.Selector `json:"vmClusterIdSelector,omitempty" tf:"-"`
 }
 
 type VmClusterAddVirtualMachineObservation struct {
@@ -242,8 +252,18 @@ type VmClusterAddVirtualMachineParameters struct {
 	DBServers []DBServersParameters `json:"dbServers,omitempty" tf:"db_servers,omitempty"`
 
 	// The VM cluster OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.VmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VMClusterID *string `json:"vmClusterId,omitempty" tf:"vm_cluster_id,omitempty"`
+
+	// Reference to a VmCluster in database to populate vmClusterId.
+	// +kubebuilder:validation:Optional
+	VMClusterIDRef *v1.Reference `json:"vmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a VmCluster in database to populate vmClusterId.
+	// +kubebuilder:validation:Optional
+	VMClusterIDSelector *v1.Selector `json:"vmClusterIdSelector,omitempty" tf:"-"`
 }
 
 // VmClusterAddVirtualMachineSpec defines the desired state of VmClusterAddVirtualMachine
@@ -283,7 +303,6 @@ type VmClusterAddVirtualMachine struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbServers) || (has(self.initProvider) && has(self.initProvider.dbServers))",message="spec.forProvider.dbServers is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vmClusterId) || (has(self.initProvider) && has(self.initProvider.vmClusterId))",message="spec.forProvider.vmClusterId is a required parameter"
 	Spec   VmClusterAddVirtualMachineSpec   `json:"spec"`
 	Status VmClusterAddVirtualMachineStatus `json:"status,omitempty"`
 }

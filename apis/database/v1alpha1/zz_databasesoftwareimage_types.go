@@ -16,7 +16,16 @@ import (
 type DatabaseSoftwareImageInitParameters struct {
 
 	// (Updatable) The OCID of the compartment the database software image  belongs in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// List of one-off patches for Database Homes.
 	DatabaseSoftwareImageOneOffPatches []*string `json:"databaseSoftwareImageOneOffPatches,omitempty" tf:"database_software_image_one_off_patches,omitempty"`
@@ -48,7 +57,17 @@ type DatabaseSoftwareImageInitParameters struct {
 	PatchSet *string `json:"patchSet,omitempty" tf:"patch_set,omitempty"`
 
 	// The OCID of the Database Home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourceDBHomeID *string `json:"sourceDbHomeId,omitempty" tf:"source_db_home_id,omitempty"`
+
+	// Reference to a DbHome in database to populate sourceDbHomeId.
+	// +kubebuilder:validation:Optional
+	SourceDBHomeIDRef *v1.Reference `json:"sourceDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate sourceDbHomeId.
+	// +kubebuilder:validation:Optional
+	SourceDBHomeIDSelector *v1.Selector `json:"sourceDbHomeIdSelector,omitempty" tf:"-"`
 }
 
 type DatabaseSoftwareImageObservation struct {
@@ -117,8 +136,17 @@ type DatabaseSoftwareImageObservation struct {
 type DatabaseSoftwareImageParameters struct {
 
 	// (Updatable) The OCID of the compartment the database software image  belongs in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// List of one-off patches for Database Homes.
 	// +kubebuilder:validation:Optional
@@ -159,8 +187,18 @@ type DatabaseSoftwareImageParameters struct {
 	PatchSet *string `json:"patchSet,omitempty" tf:"patch_set,omitempty"`
 
 	// The OCID of the Database Home.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbHome
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SourceDBHomeID *string `json:"sourceDbHomeId,omitempty" tf:"source_db_home_id,omitempty"`
+
+	// Reference to a DbHome in database to populate sourceDbHomeId.
+	// +kubebuilder:validation:Optional
+	SourceDBHomeIDRef *v1.Reference `json:"sourceDbHomeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbHome in database to populate sourceDbHomeId.
+	// +kubebuilder:validation:Optional
+	SourceDBHomeIDSelector *v1.Selector `json:"sourceDbHomeIdSelector,omitempty" tf:"-"`
 }
 
 // DatabaseSoftwareImageSpec defines the desired state of DatabaseSoftwareImage
@@ -199,7 +237,6 @@ type DatabaseSoftwareImageStatus struct {
 type DatabaseSoftwareImage struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	Spec   DatabaseSoftwareImageSpec   `json:"spec"`
 	Status DatabaseSoftwareImageStatus `json:"status,omitempty"`

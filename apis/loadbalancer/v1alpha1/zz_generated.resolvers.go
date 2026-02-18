@@ -132,12 +132,33 @@ func (mg *BackendSet) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.ForProvider.LoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.LoadBalancerIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SSLConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameRef,
+				Selector:     mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName")
+		}
+		mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "LoadBalancer", "LoadBalancerList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadBalancerID),
 			Extract:      reference.ExternalName(),
@@ -151,6 +172,28 @@ func (mg *BackendSet) ResolveReferences(ctx context.Context, c client.Reader) er
 	}
 	mg.Spec.InitProvider.LoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.LoadBalancerIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SSLConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameRef,
+				Selector:     mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName")
+		}
+		mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }
@@ -378,12 +421,33 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.RuleSetNames = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.RuleSetNamesRefs = mrsp.ResolvedReferences
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SSLConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameRef,
+				Selector:     mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName")
+		}
+		mg.Spec.ForProvider.SSLConfiguration[i3].CertificateName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SSLConfiguration[i3].CertificateNameRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DefaultBackendSetName),
 			Extract:      reference.ExternalName(),
@@ -492,6 +556,28 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.RuleSetNames = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.InitProvider.RuleSetNamesRefs = mrsp.ResolvedReferences
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SSLConfiguration); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameRef,
+				Selector:     mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName")
+		}
+		mg.Spec.InitProvider.SSLConfiguration[i3].CertificateName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SSLConfiguration[i3].CertificateNameRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

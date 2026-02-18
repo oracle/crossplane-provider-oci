@@ -19,5 +19,7 @@ spec:
         testing.upbound.io/example-name: test_drg
     freeformTags:
       Department: Finance
-    peerId: ${oci_core_remote_peering_connection.test_remote_peering_connection2.id}
+    peerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_remote_peering_connection2
     peerRegionName: ${var.remote_peering_connection_peer_region_name}

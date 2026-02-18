@@ -31,7 +31,17 @@ type DbSystemsUpgradeInitParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The DB system OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 
 	// If true, rollback time is updated even if operating system upgrade history contains errors.
 	IsSnapshotRetentionDaysForceUpdated *bool `json:"isSnapshotRetentionDaysForceUpdated,omitempty" tf:"is_snapshot_retention_days_force_updated,omitempty"`
@@ -303,8 +313,18 @@ type DbSystemsUpgradeParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The DB system OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBSystemID *string `json:"dbSystemId,omitempty" tf:"db_system_id,omitempty"`
+
+	// Reference to a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDRef *v1.Reference `json:"dbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbSystem in database to populate dbSystemId.
+	// +kubebuilder:validation:Optional
+	DBSystemIDSelector *v1.Selector `json:"dbSystemIdSelector,omitempty" tf:"-"`
 
 	// If true, rollback time is updated even if operating system upgrade history contains errors.
 	// +kubebuilder:validation:Optional
@@ -360,7 +380,6 @@ type DbSystemsUpgrade struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.action) || (has(self.initProvider) && has(self.initProvider.action))",message="spec.forProvider.action is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbSystemId) || (has(self.initProvider) && has(self.initProvider.dbSystemId))",message="spec.forProvider.dbSystemId is a required parameter"
 	Spec   DbSystemsUpgradeSpec   `json:"spec"`
 	Status DbSystemsUpgradeStatus `json:"status,omitempty"`
 }

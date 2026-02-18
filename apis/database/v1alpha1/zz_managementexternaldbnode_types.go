@@ -23,7 +23,17 @@ type ManagementExternalDbNodeInitParameters struct {
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
 
 	// The OCID of the external database node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDBNodeID *string `json:"externalDbNodeId,omitempty" tf:"external_db_node_id,omitempty"`
+
+	// Reference to a ManagementExternalDbNode in database to populate externalDbNodeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBNodeIDRef *v1.Reference `json:"externalDbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbNode in database to populate externalDbNodeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBNodeIDSelector *v1.Selector `json:"externalDbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -106,8 +116,18 @@ type ManagementExternalDbNodeParameters struct {
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
 
 	// The OCID of the external database node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalDbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDBNodeID *string `json:"externalDbNodeId,omitempty" tf:"external_db_node_id,omitempty"`
+
+	// Reference to a ManagementExternalDbNode in database to populate externalDbNodeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBNodeIDRef *v1.Reference `json:"externalDbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalDbNode in database to populate externalDbNodeId.
+	// +kubebuilder:validation:Optional
+	ExternalDBNodeIDSelector *v1.Selector `json:"externalDbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -151,9 +171,8 @@ type ManagementExternalDbNodeStatus struct {
 type ManagementExternalDbNode struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDbNodeId) || (has(self.initProvider) && has(self.initProvider.externalDbNodeId))",message="spec.forProvider.externalDbNodeId is a required parameter"
-	Spec   ManagementExternalDbNodeSpec   `json:"spec"`
-	Status ManagementExternalDbNodeStatus `json:"status,omitempty"`
+	Spec              ManagementExternalDbNodeSpec   `json:"spec"`
+	Status            ManagementExternalDbNodeStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

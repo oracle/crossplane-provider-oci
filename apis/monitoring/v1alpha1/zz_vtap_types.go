@@ -16,10 +16,29 @@ import (
 type VtapInitParameters struct {
 
 	// (Updatable) The capture filter's Oracle ID (OCID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/monitoring/v1alpha1.CaptureFilter
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CaptureFilterID *string `json:"captureFilterId,omitempty" tf:"capture_filter_id,omitempty"`
 
+	// Reference to a CaptureFilter in monitoring to populate captureFilterId.
+	// +kubebuilder:validation:Optional
+	CaptureFilterIDRef *v1.Reference `json:"captureFilterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CaptureFilter in monitoring to populate captureFilterId.
+	// +kubebuilder:validation:Optional
+	CaptureFilterIDSelector *v1.Selector `json:"captureFilterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the compartment containing the Vtap resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -48,7 +67,17 @@ type VtapInitParameters struct {
 	SourcePrivateEndpointIP *string `json:"sourcePrivateEndpointIp,omitempty" tf:"source_private_endpoint_ip,omitempty"`
 
 	// (Updatable) The OCID of the subnet that source private endpoint belongs to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SourcePrivateEndpointSubnetID *string `json:"sourcePrivateEndpointSubnetId,omitempty" tf:"source_private_endpoint_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate sourcePrivateEndpointSubnetId.
+	// +kubebuilder:validation:Optional
+	SourcePrivateEndpointSubnetIDRef *v1.Reference `json:"sourcePrivateEndpointSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate sourcePrivateEndpointSubnetId.
+	// +kubebuilder:validation:Optional
+	SourcePrivateEndpointSubnetIDSelector *v1.Selector `json:"sourcePrivateEndpointSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The source type for the VTAP.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
@@ -66,7 +95,17 @@ type VtapInitParameters struct {
 	TrafficMode *string `json:"trafficMode,omitempty" tf:"traffic_mode,omitempty"`
 
 	// The OCID of the VCN containing the Vtap resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VcnID *string `json:"vcnId,omitempty" tf:"vcn_id,omitempty"`
+
+	// Reference to a Vcn in networking to populate vcnId.
+	// +kubebuilder:validation:Optional
+	VcnIDRef *v1.Reference `json:"vcnIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vcn in networking to populate vcnId.
+	// +kubebuilder:validation:Optional
+	VcnIDSelector *v1.Selector `json:"vcnIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The virtual extensible LAN (VXLAN) network identifier (or VXLAN segment ID) that uniquely identifies the VXLAN.
 	VxlanNetworkIdentifier *string `json:"vxlanNetworkIdentifier,omitempty" tf:"vxlan_network_identifier,omitempty"`
@@ -146,12 +185,31 @@ type VtapObservation struct {
 type VtapParameters struct {
 
 	// (Updatable) The capture filter's Oracle ID (OCID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/monitoring/v1alpha1.CaptureFilter
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CaptureFilterID *string `json:"captureFilterId,omitempty" tf:"capture_filter_id,omitempty"`
 
+	// Reference to a CaptureFilter in monitoring to populate captureFilterId.
+	// +kubebuilder:validation:Optional
+	CaptureFilterIDRef *v1.Reference `json:"captureFilterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CaptureFilter in monitoring to populate captureFilterId.
+	// +kubebuilder:validation:Optional
+	CaptureFilterIDSelector *v1.Selector `json:"captureFilterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the compartment containing the Vtap resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -188,8 +246,18 @@ type VtapParameters struct {
 	SourcePrivateEndpointIP *string `json:"sourcePrivateEndpointIp,omitempty" tf:"source_private_endpoint_ip,omitempty"`
 
 	// (Updatable) The OCID of the subnet that source private endpoint belongs to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SourcePrivateEndpointSubnetID *string `json:"sourcePrivateEndpointSubnetId,omitempty" tf:"source_private_endpoint_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate sourcePrivateEndpointSubnetId.
+	// +kubebuilder:validation:Optional
+	SourcePrivateEndpointSubnetIDRef *v1.Reference `json:"sourcePrivateEndpointSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate sourcePrivateEndpointSubnetId.
+	// +kubebuilder:validation:Optional
+	SourcePrivateEndpointSubnetIDSelector *v1.Selector `json:"sourcePrivateEndpointSubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The source type for the VTAP.
 	// +kubebuilder:validation:Optional
@@ -212,8 +280,18 @@ type VtapParameters struct {
 	TrafficMode *string `json:"trafficMode,omitempty" tf:"traffic_mode,omitempty"`
 
 	// The OCID of the VCN containing the Vtap resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VcnID *string `json:"vcnId,omitempty" tf:"vcn_id,omitempty"`
+
+	// Reference to a Vcn in networking to populate vcnId.
+	// +kubebuilder:validation:Optional
+	VcnIDRef *v1.Reference `json:"vcnIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vcn in networking to populate vcnId.
+	// +kubebuilder:validation:Optional
+	VcnIDSelector *v1.Selector `json:"vcnIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The virtual extensible LAN (VXLAN) network identifier (or VXLAN segment ID) that uniquely identifies the VXLAN.
 	// +kubebuilder:validation:Optional
@@ -256,10 +334,7 @@ type VtapStatus struct {
 type Vtap struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.captureFilterId) || (has(self.initProvider) && has(self.initProvider.captureFilterId))",message="spec.forProvider.captureFilterId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sourceId) || (has(self.initProvider) && has(self.initProvider.sourceId))",message="spec.forProvider.sourceId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.vcnId) || (has(self.initProvider) && has(self.initProvider.vcnId))",message="spec.forProvider.vcnId is a required parameter"
 	Spec   VtapSpec   `json:"spec"`
 	Status VtapStatus `json:"status,omitempty"`
 }

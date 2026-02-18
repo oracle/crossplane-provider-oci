@@ -45,13 +45,33 @@ type ReplicationConfigParameters struct {
 type ReplicationTargetsInitParameters struct {
 
 	// (Updatable) The OCID of the target region KMS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TargetKeyID *string `json:"targetKeyId,omitempty" tf:"target_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate targetKeyId.
+	// +kubebuilder:validation:Optional
+	TargetKeyIDRef *v1.Reference `json:"targetKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate targetKeyId.
+	// +kubebuilder:validation:Optional
+	TargetKeyIDSelector *v1.Selector `json:"targetKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The name of the target's region.
 	TargetRegion *string `json:"targetRegion,omitempty" tf:"target_region,omitempty"`
 
 	// (Updatable) The OCID of the target region's Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TargetVaultID *string `json:"targetVaultId,omitempty" tf:"target_vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate targetVaultId.
+	// +kubebuilder:validation:Optional
+	TargetVaultIDRef *v1.Reference `json:"targetVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate targetVaultId.
+	// +kubebuilder:validation:Optional
+	TargetVaultIDSelector *v1.Selector `json:"targetVaultIdSelector,omitempty" tf:"-"`
 }
 
 type ReplicationTargetsObservation struct {
@@ -69,16 +89,36 @@ type ReplicationTargetsObservation struct {
 type ReplicationTargetsParameters struct {
 
 	// (Updatable) The OCID of the target region KMS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	TargetKeyID *string `json:"targetKeyId" tf:"target_key_id,omitempty"`
+	TargetKeyID *string `json:"targetKeyId,omitempty" tf:"target_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate targetKeyId.
+	// +kubebuilder:validation:Optional
+	TargetKeyIDRef *v1.Reference `json:"targetKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate targetKeyId.
+	// +kubebuilder:validation:Optional
+	TargetKeyIDSelector *v1.Selector `json:"targetKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The name of the target's region.
 	// +kubebuilder:validation:Optional
 	TargetRegion *string `json:"targetRegion" tf:"target_region,omitempty"`
 
 	// (Updatable) The OCID of the target region's Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	TargetVaultID *string `json:"targetVaultId" tf:"target_vault_id,omitempty"`
+	TargetVaultID *string `json:"targetVaultId,omitempty" tf:"target_vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate targetVaultId.
+	// +kubebuilder:validation:Optional
+	TargetVaultIDRef *v1.Reference `json:"targetVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate targetVaultId.
+	// +kubebuilder:validation:Optional
+	TargetVaultIDSelector *v1.Selector `json:"targetVaultIdSelector,omitempty" tf:"-"`
 }
 
 type RotationConfigInitParameters struct {
@@ -275,7 +315,16 @@ type SecretInitParameters struct {
 	SecretGenerationContext []SecretGenerationContextInitParameters `json:"secretGenerationContext,omitempty" tf:"secret_generation_context,omitempty"`
 
 	// A user-friendly name for the secret. Secret names should be unique within a vault. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
+
+	// Reference to a Secret in vault to populate secretName.
+	// +kubebuilder:validation:Optional
+	SecretNameRef *v1.Reference `json:"secretNameRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretName.
+	// +kubebuilder:validation:Optional
+	SecretNameSelector *v1.Selector `json:"secretNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of rules to control how the secret is used and managed.
 	SecretRules []SecretRulesInitParameters `json:"secretRules,omitempty" tf:"secret_rules,omitempty"`
@@ -448,8 +497,17 @@ type SecretParameters struct {
 	SecretGenerationContext []SecretGenerationContextParameters `json:"secretGenerationContext,omitempty" tf:"secret_generation_context,omitempty"`
 
 	// A user-friendly name for the secret. Secret names should be unique within a vault. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
 	// +kubebuilder:validation:Optional
 	SecretName *string `json:"secretName,omitempty" tf:"secret_name,omitempty"`
+
+	// Reference to a Secret in vault to populate secretName.
+	// +kubebuilder:validation:Optional
+	SecretNameRef *v1.Reference `json:"secretNameRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretName.
+	// +kubebuilder:validation:Optional
+	SecretNameSelector *v1.Selector `json:"secretNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of rules to control how the secret is used and managed.
 	// +kubebuilder:validation:Optional
@@ -552,7 +610,17 @@ type TargetSystemDetailsInitParameters struct {
 	AdbID *string `json:"adbId,omitempty" tf:"adb_id,omitempty"`
 
 	// (Updatable) The unique identifier (OCID) of the Oracle Cloud Infrastructure Functions that vault secret connects to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Function
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FunctionID *string `json:"functionId,omitempty" tf:"function_id,omitempty"`
+
+	// Reference to a Function in functions to populate functionId.
+	// +kubebuilder:validation:Optional
+	FunctionIDRef *v1.Reference `json:"functionIdRef,omitempty" tf:"-"`
+
+	// Selector for a Function in functions to populate functionId.
+	// +kubebuilder:validation:Optional
+	FunctionIDSelector *v1.Selector `json:"functionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Unique identifier of the target system that Vault Secret connects to.
 	TargetSystemType *string `json:"targetSystemType,omitempty" tf:"target_system_type,omitempty"`
@@ -577,8 +645,18 @@ type TargetSystemDetailsParameters struct {
 	AdbID *string `json:"adbId,omitempty" tf:"adb_id,omitempty"`
 
 	// (Updatable) The unique identifier (OCID) of the Oracle Cloud Infrastructure Functions that vault secret connects to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Function
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FunctionID *string `json:"functionId,omitempty" tf:"function_id,omitempty"`
+
+	// Reference to a Function in functions to populate functionId.
+	// +kubebuilder:validation:Optional
+	FunctionIDRef *v1.Reference `json:"functionIdRef,omitempty" tf:"-"`
+
+	// Selector for a Function in functions to populate functionId.
+	// +kubebuilder:validation:Optional
+	FunctionIDSelector *v1.Selector `json:"functionIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Unique identifier of the target system that Vault Secret connects to.
 	// +kubebuilder:validation:Optional
@@ -621,9 +699,8 @@ type SecretStatus struct {
 type Secret struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.secretName) || (has(self.initProvider) && has(self.initProvider.secretName))",message="spec.forProvider.secretName is a required parameter"
-	Spec   SecretSpec   `json:"spec"`
-	Status SecretStatus `json:"status,omitempty"`
+	Spec              SecretSpec   `json:"spec"`
+	Status            SecretStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

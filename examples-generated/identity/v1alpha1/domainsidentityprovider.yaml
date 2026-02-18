@@ -71,7 +71,9 @@ spec:
       accountLinkingEnabled: ${var.identity_provider_urnietfparamsscimschemasoracleidcsextensionsocial_identity_provider_account_linking_enabled}
       adminScope: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_admin_scope}
       appleDevId: ${oci_identity_domains_apple_dev.test_apple_dev.id}
-      appleKeyId: ${oci_kms_key.test_key.id}
+      appleKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       authzUrl: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_authz_url}
       autoRedirectEnabled: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_auto_redirect_enabled}
       clientCredentialInPayload: ${var.identity_provider_urn_ietf_params_scim_schemas_oracle_idcs_extension_social_identity_provider_client_credential_in_payload}

@@ -10,7 +10,9 @@ spec:
   forProvider:
     bandwidthShapeName: ${var.virtual_circuit_bandwidth_shape_name}
     bgpAdminState: ${var.virtual_circuit_bgp_admin_state}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     crossConnectMappings:
     - bgpMd5AuthKey: ${var.virtual_circuit_cross_connect_mappings_bgp_md5auth_key}
       crossConnectOrCrossConnectGroupId: ${oci_core_cross_connect_or_cross_connect_group.test_cross_connect_or_cross_connect_group.id}

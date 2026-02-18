@@ -12,11 +12,15 @@ spec:
     autoscaleLimitInGbs: ${var.exascale_db_storage_vault_autoscale_limit_in_gbs}
     availabilityDomain: ${var.exascale_db_storage_vault_availability_domain}
     clusterPlacementGroupId: ${oci_cluster_placement_groups_cluster_placement_group.test_cluster_placement_group.id}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.exascale_db_storage_vault_defined_tags}
     description: ${var.exascale_db_storage_vault_description}
     displayName: ${var.exascale_db_storage_vault_display_name}
-    exadataInfrastructureId: ${oci_database_exadata_infrastructure.test_exadata_infrastructure.id}
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
     freeformTags:
       Department: Finance
     highCapacityDatabaseStorage:

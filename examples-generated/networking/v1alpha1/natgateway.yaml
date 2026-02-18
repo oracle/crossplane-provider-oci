@@ -17,8 +17,12 @@ spec:
     displayName: ${var.nat_gateway_display_name}
     freeformTags:
       Department: Finance
-    publicIpId: ${oci_core_public_ip.test_public_ip.id}
-    routeTableId: ${oci_core_route_table.test_route_table.id}
+    publicIpIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_public_ip
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
     vcnIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_vcn

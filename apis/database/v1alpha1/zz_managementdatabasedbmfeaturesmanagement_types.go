@@ -71,7 +71,17 @@ type FeatureDetailsDatabaseConnectionDetailsConnectionCredentialsInitParameters 
 	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
 
 	// (Applicable when credential_type=NAMED_CREDENTIAL) The OCID of the Named Credential where the database password metadata is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementNamedCredential
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
+
+	// Reference to a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDRef *v1.Reference `json:"namedCredentialIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDSelector *v1.Selector `json:"namedCredentialIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The OCID of the secret containing the user password.
 	PasswordSecretIDSecretRef *v1.SecretKeySelector `json:"passwordSecretIdSecretRef,omitempty" tf:"-"`
@@ -80,10 +90,30 @@ type FeatureDetailsDatabaseConnectionDetailsConnectionCredentialsInitParameters 
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Applicable when credential_type=SSL_DETAILS) The OCID of the secret containing the SSL keystore and truststore details.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type FeatureDetailsDatabaseConnectionDetailsConnectionCredentialsObservation struct {
@@ -118,8 +148,18 @@ type FeatureDetailsDatabaseConnectionDetailsConnectionCredentialsParameters stru
 	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
 
 	// (Applicable when credential_type=NAMED_CREDENTIAL) The OCID of the Named Credential where the database password metadata is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementNamedCredential
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
+
+	// Reference to a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDRef *v1.Reference `json:"namedCredentialIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementNamedCredential in database to populate namedCredentialId.
+	// +kubebuilder:validation:Optional
+	NamedCredentialIDSelector *v1.Selector `json:"namedCredentialIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The OCID of the secret containing the user password.
 	// +kubebuilder:validation:Optional
@@ -130,12 +170,32 @@ type FeatureDetailsDatabaseConnectionDetailsConnectionCredentialsParameters stru
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Applicable when credential_type=SSL_DETAILS) The OCID of the secret containing the SSL keystore and truststore details.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
 
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
+
 	// (Applicable when credential_type=DETAILS | SSL_DETAILS) The user name used to connect to the database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 }
 
 type FeatureDetailsDatabaseConnectionDetailsConnectionStringInitParameters struct {
@@ -289,7 +349,17 @@ type ManagementDatabaseDbmFeaturesManagementInitParameters struct {
 	CanDisableAllPdbs *bool `json:"canDisableAllPdbs,omitempty" tf:"can_disable_all_pdbs,omitempty"`
 
 	// The OCID of the Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	EnableDatabaseDbmFeature *bool `json:"enableDatabaseDbmFeature,omitempty" tf:"enable_database_dbm_feature,omitempty"`
@@ -331,8 +401,18 @@ type ManagementDatabaseDbmFeaturesManagementParameters struct {
 	CanDisableAllPdbs *bool `json:"canDisableAllPdbs,omitempty" tf:"can_disable_all_pdbs,omitempty"`
 
 	// The OCID of the Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	// +kubebuilder:validation:Optional
@@ -387,7 +467,6 @@ type ManagementDatabaseDbmFeaturesManagementStatus struct {
 type ManagementDatabaseDbmFeaturesManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseId) || (has(self.initProvider) && has(self.initProvider.databaseId))",message="spec.forProvider.databaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableDatabaseDbmFeature) || (has(self.initProvider) && has(self.initProvider.enableDatabaseDbmFeature))",message="spec.forProvider.enableDatabaseDbmFeature is a required parameter"
 	Spec   ManagementDatabaseDbmFeaturesManagementSpec   `json:"spec"`
 	Status ManagementDatabaseDbmFeaturesManagementStatus `json:"status,omitempty"`

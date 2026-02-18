@@ -17,7 +17,9 @@ spec:
     - cpeTrafficSelector: ${var.ip_sec_connection_tunnel_management_encryption_domain_config_cpe_traffic_selector}
       oracleTrafficSelector: ${var.ip_sec_connection_tunnel_management_encryption_domain_config_oracle_traffic_selector}
     ikeVersion: V1
-    ipsecId: ${oci_core_ipsec.test_ipsec.id}
+    ipsecIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ipsec
     routing: ${var.ip_sec_connection_tunnel_management_routing}
     sharedSecretSecretRef:
       key: example-key

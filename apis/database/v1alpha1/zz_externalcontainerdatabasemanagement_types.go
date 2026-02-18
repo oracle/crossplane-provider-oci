@@ -17,10 +17,30 @@ type ExternalContainerDatabaseManagementInitParameters struct {
 	EnableManagement *bool `json:"enableManagement,omitempty" tf:"enable_management,omitempty"`
 
 	// The ExternalContainerDatabase OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalContainerDatabaseID *string `json:"externalContainerDatabaseId,omitempty" tf:"external_container_database_id,omitempty"`
 
+	// Reference to a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDRef *v1.Reference `json:"externalContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDSelector *v1.Selector `json:"externalContainerDatabaseIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
+
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model that applies to the external database. Required only for enabling database management.
 	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
@@ -47,12 +67,32 @@ type ExternalContainerDatabaseManagementParameters struct {
 	EnableManagement *bool `json:"enableManagement,omitempty" tf:"enable_management,omitempty"`
 
 	// The ExternalContainerDatabase OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalContainerDatabaseID *string `json:"externalContainerDatabaseId,omitempty" tf:"external_container_database_id,omitempty"`
 
+	// Reference to a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDRef *v1.Reference `json:"externalContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalContainerDatabase in database to populate externalContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalContainerDatabaseIDSelector *v1.Selector `json:"externalContainerDatabaseIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
+
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model that applies to the external database. Required only for enabling database management.
 	// +kubebuilder:validation:Optional
@@ -96,8 +136,6 @@ type ExternalContainerDatabaseManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableManagement) || (has(self.initProvider) && has(self.initProvider.enableManagement))",message="spec.forProvider.enableManagement is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalContainerDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalContainerDatabaseId))",message="spec.forProvider.externalContainerDatabaseId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDatabaseConnectorId) || (has(self.initProvider) && has(self.initProvider.externalDatabaseConnectorId))",message="spec.forProvider.externalDatabaseConnectorId is a required parameter"
 	Spec   ExternalContainerDatabaseManagementSpec   `json:"spec"`
 	Status ExternalContainerDatabaseManagementStatus `json:"status,omitempty"`
 }

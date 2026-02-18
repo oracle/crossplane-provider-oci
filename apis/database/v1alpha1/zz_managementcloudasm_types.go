@@ -16,7 +16,17 @@ import (
 type ManagementCloudAsmInitParameters struct {
 
 	// The OCID of the cloud ASM.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudAsm
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudAsmID *string `json:"cloudAsmId,omitempty" tf:"cloud_asm_id,omitempty"`
+
+	// Reference to a ManagementCloudAsm in database to populate cloudAsmId.
+	// +kubebuilder:validation:Optional
+	CloudAsmIDRef *v1.Reference `json:"cloudAsmIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudAsm in database to populate cloudAsmId.
+	// +kubebuilder:validation:Optional
+	CloudAsmIDSelector *v1.Selector `json:"cloudAsmIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
@@ -103,8 +113,18 @@ type ManagementCloudAsmObservation struct {
 type ManagementCloudAsmParameters struct {
 
 	// The OCID of the cloud ASM.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudAsm
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudAsmID *string `json:"cloudAsmId,omitempty" tf:"cloud_asm_id,omitempty"`
+
+	// Reference to a ManagementCloudAsm in database to populate cloudAsmId.
+	// +kubebuilder:validation:Optional
+	CloudAsmIDRef *v1.Reference `json:"cloudAsmIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudAsm in database to populate cloudAsmId.
+	// +kubebuilder:validation:Optional
+	CloudAsmIDSelector *v1.Selector `json:"cloudAsmIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	// +kubebuilder:validation:Optional
@@ -193,9 +213,8 @@ type ManagementCloudAsmStatus struct {
 type ManagementCloudAsm struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudAsmId) || (has(self.initProvider) && has(self.initProvider.cloudAsmId))",message="spec.forProvider.cloudAsmId is a required parameter"
-	Spec   ManagementCloudAsmSpec   `json:"spec"`
-	Status ManagementCloudAsmStatus `json:"status,omitempty"`
+	Spec              ManagementCloudAsmSpec   `json:"spec"`
+	Status            ManagementCloudAsmStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

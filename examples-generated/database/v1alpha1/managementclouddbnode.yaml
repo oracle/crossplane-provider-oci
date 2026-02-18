@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
-    cloudDbNodeId: ${oci_database_management_cloud_db_node.test_cloud_db_node.id}
+    cloudDbNodeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_db_node
     definedTags:
       Operations.CostCenter: "42"
     freeformTags:

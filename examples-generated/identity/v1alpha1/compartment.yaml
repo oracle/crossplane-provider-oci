@@ -8,7 +8,9 @@ metadata:
   name: test-compartment
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     description: ${var.compartment_description}

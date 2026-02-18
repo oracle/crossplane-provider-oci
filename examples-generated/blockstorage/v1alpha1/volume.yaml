@@ -16,9 +16,13 @@ spec:
     blockVolumeReplicas:
     - availabilityDomain: ${var.volume_block_volume_replicas_availability_domain}
       displayName: ${var.volume_block_volume_replicas_display_name}
-      xrrKmsKeyId: ${oci_kms_key.test_key.id}
+      xrrKmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
     blockVolumeReplicasDeletion: true
-    clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
@@ -29,14 +33,22 @@ spec:
       Department: Finance
     isAutoTuneEnabled: ${var.volume_is_auto_tune_enabled}
     isReservationsEnabled: ${var.volume_is_reservations_enabled}
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     sizeInGbs: ${var.volume_size_in_gbs}
     sizeInMbs: ${var.volume_size_in_mbs}
     sourceDetails:
     - changeBlockSizeInBytes: ${var.volume_source_details_change_block_size_in_bytes}
-      firstBackupId: ${oci_database_backup.test_backup.id}
+      firstBackupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       id: ${var.volume_source_details_id}
-      secondBackupId: ${oci_database_backup.test_backup.id}
+      secondBackupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       type: ${var.volume_source_details_type}
     vpusPerGb: ${var.volume_vpus_per_gb}
-    xrcKmsKeyId: ${oci_kms_key.test_key.id}
+    xrcKmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key

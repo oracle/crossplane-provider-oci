@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     agentId: ${oci_cloud_bridge_agent.test_agent.id}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.external_db_system_discovery_display_name}

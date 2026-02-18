@@ -37,7 +37,17 @@ type ManagementExternalMySqlDatabaseConnectorConnectorDetailsInitParameters stru
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) If using existing SSL secret to connect, OCID for the secret resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 }
 
 type ManagementExternalMySqlDatabaseConnectorConnectorDetailsObservation struct {
@@ -98,8 +108,18 @@ type ManagementExternalMySqlDatabaseConnectorConnectorDetailsParameters struct {
 	Port *float64 `json:"port" tf:"port,omitempty"`
 
 	// (Updatable) If using existing SSL secret to connect, OCID for the secret resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SSLSecretID *string `json:"sslSecretId" tf:"ssl_secret_id,omitempty"`
+	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 }
 
 type ManagementExternalMySqlDatabaseConnectorInitParameters struct {
@@ -108,7 +128,16 @@ type ManagementExternalMySqlDatabaseConnectorInitParameters struct {
 	CheckConnectionStatusTrigger *float64 `json:"checkConnectionStatusTrigger,omitempty" tf:"check_connection_status_trigger,omitempty"`
 
 	// (Updatable) OCID of compartment for the External MySQL Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Create Details of external database connector.
 	ConnectorDetails []ManagementExternalMySqlDatabaseConnectorConnectorDetailsInitParameters `json:"connectorDetails,omitempty" tf:"connector_details,omitempty"`
@@ -196,8 +225,17 @@ type ManagementExternalMySqlDatabaseConnectorParameters struct {
 	CheckConnectionStatusTrigger *float64 `json:"checkConnectionStatusTrigger,omitempty" tf:"check_connection_status_trigger,omitempty"`
 
 	// (Updatable) OCID of compartment for the External MySQL Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Create Details of external database connector.
 	// +kubebuilder:validation:Optional
@@ -244,7 +282,6 @@ type ManagementExternalMySqlDatabaseConnectorStatus struct {
 type ManagementExternalMySqlDatabaseConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorDetails) || (has(self.initProvider) && has(self.initProvider.connectorDetails))",message="spec.forProvider.connectorDetails is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.isTestConnectionParam) || (has(self.initProvider) && has(self.initProvider.isTestConnectionParam))",message="spec.forProvider.isTestConnectionParam is a required parameter"
 	Spec   ManagementExternalMySqlDatabaseConnectorSpec   `json:"spec"`

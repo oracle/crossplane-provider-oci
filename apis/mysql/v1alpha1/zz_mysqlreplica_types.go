@@ -205,7 +205,17 @@ type MysqlReplicaSecureConnectionsParameters struct {
 type ReplicaOverridesInitParameters struct {
 
 	// (Updatable) The OCID of the Configuration to be used by the read replica.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ConfigurationID *string `json:"configurationId,omitempty" tf:"configuration_id,omitempty"`
+
+	// Reference to a MysqlConfiguration in mysql to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDRef *v1.Reference `json:"configurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlConfiguration in mysql to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDSelector *v1.Selector `json:"configurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The MySQL version to be used by the read replica.
 	MySQLVersion *string `json:"mysqlVersion,omitempty" tf:"mysql_version,omitempty"`
@@ -245,8 +255,18 @@ type ReplicaOverridesObservation struct {
 type ReplicaOverridesParameters struct {
 
 	// (Updatable) The OCID of the Configuration to be used by the read replica.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/mysql/v1alpha1.MysqlConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ConfigurationID *string `json:"configurationId,omitempty" tf:"configuration_id,omitempty"`
+
+	// Reference to a MysqlConfiguration in mysql to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDRef *v1.Reference `json:"configurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a MysqlConfiguration in mysql to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDSelector *v1.Selector `json:"configurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The MySQL version to be used by the read replica.
 	// +kubebuilder:validation:Optional

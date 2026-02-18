@@ -8,5 +8,7 @@ metadata:
   name: test-backup
 spec:
   forProvider:
-    databaseId: ${oci_database_database.test_database.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     displayName: ${var.backup_display_name}

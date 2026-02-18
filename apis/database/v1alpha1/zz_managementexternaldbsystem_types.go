@@ -35,7 +35,16 @@ type ManagementExternalDbSystemDatabaseManagementConfigParameters struct {
 type ManagementExternalDbSystemInitParameters struct {
 
 	// (Updatable) The OCID of the compartment in which the external DB system resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB system discovery.
 	DBSystemDiscoveryID *string `json:"dbSystemDiscoveryId,omitempty" tf:"db_system_discovery_id,omitempty"`
@@ -115,8 +124,17 @@ type ManagementExternalDbSystemObservation struct {
 type ManagementExternalDbSystemParameters struct {
 
 	// (Updatable) The OCID of the compartment in which the external DB system resides.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the DB system discovery.
 	// +kubebuilder:validation:Optional
@@ -210,7 +228,6 @@ type ManagementExternalDbSystemStatus struct {
 type ManagementExternalDbSystem struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbSystemDiscoveryId) || (has(self.initProvider) && has(self.initProvider.dbSystemDiscoveryId))",message="spec.forProvider.dbSystemDiscoveryId is a required parameter"
 	Spec   ManagementExternalDbSystemSpec   `json:"spec"`
 	Status ManagementExternalDbSystemStatus `json:"status,omitempty"`

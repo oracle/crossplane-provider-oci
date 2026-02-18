@@ -52,7 +52,17 @@ type ExternalDownstreamsInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalDownstreamsObservation struct {
@@ -78,8 +88,18 @@ type ExternalDownstreamsParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalMastersInitParameters struct {
@@ -91,7 +111,17 @@ type ExternalMastersInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalMastersObservation struct {
@@ -117,8 +147,18 @@ type ExternalMastersParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
 }
 
 type KskDNSSECKeyVersionsInitParameters struct {

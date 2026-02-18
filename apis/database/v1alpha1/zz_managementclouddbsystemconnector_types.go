@@ -189,7 +189,17 @@ type ManagementCloudDbSystemConnectorInitParameters struct {
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
 
 	// The OCID of the cloud DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudDBSystemID *string `json:"cloudDbSystemId,omitempty" tf:"cloud_db_system_id,omitempty"`
+
+	// Reference to a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDRef *v1.Reference `json:"cloudDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDSelector *v1.Selector `json:"cloudDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The connection details required to connect to a cloud DB system component.
 	ConnectionInfo []ConnectionInfoInitParameters `json:"connectionInfo,omitempty" tf:"connection_info,omitempty"`
@@ -273,8 +283,18 @@ type ManagementCloudDbSystemConnectorParameters struct {
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
 
 	// The OCID of the cloud DB system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbSystem
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudDBSystemID *string `json:"cloudDbSystemId,omitempty" tf:"cloud_db_system_id,omitempty"`
+
+	// Reference to a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDRef *v1.Reference `json:"cloudDbSystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbSystem in database to populate cloudDbSystemId.
+	// +kubebuilder:validation:Optional
+	CloudDBSystemIDSelector *v1.Selector `json:"cloudDbSystemIdSelector,omitempty" tf:"-"`
 
 	// The connection details required to connect to a cloud DB system component.
 	// +kubebuilder:validation:Optional
@@ -335,7 +355,6 @@ type ManagementCloudDbSystemConnectorStatus struct {
 type ManagementCloudDbSystemConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudDbSystemId) || (has(self.initProvider) && has(self.initProvider.cloudDbSystemId))",message="spec.forProvider.cloudDbSystemId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorType) || (has(self.initProvider) && has(self.initProvider.connectorType))",message="spec.forProvider.connectorType is a required parameter"
 	Spec   ManagementCloudDbSystemConnectorSpec   `json:"spec"`
 	Status ManagementCloudDbSystemConnectorStatus `json:"status,omitempty"`

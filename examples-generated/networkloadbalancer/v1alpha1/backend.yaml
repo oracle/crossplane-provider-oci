@@ -8,7 +8,9 @@ metadata:
   name: test-backend
 spec:
   forProvider:
-    backendSetName: ${var.backend_set_name}
+    backendSetNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_backend_set
     ipAddress: ${var.backend_ip_address}
     isBackup: ${var.backend_is_backup}
     isDrain: ${var.backend_is_drain}

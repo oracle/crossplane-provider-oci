@@ -100,7 +100,17 @@ type ExternalKeyReferenceDetailsParameters struct {
 type ExternalKeyReferenceInitParameters struct {
 
 	// ExternalKeyId refers to the globally unique key Id associated with the key created in external vault in CTM
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalKeyID *string `json:"externalKeyId,omitempty" tf:"external_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate externalKeyId.
+	// +kubebuilder:validation:Optional
+	ExternalKeyIDRef *v1.Reference `json:"externalKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate externalKeyId.
+	// +kubebuilder:validation:Optional
+	ExternalKeyIDSelector *v1.Selector `json:"externalKeyIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalKeyReferenceObservation struct {
@@ -112,8 +122,18 @@ type ExternalKeyReferenceObservation struct {
 type ExternalKeyReferenceParameters struct {
 
 	// ExternalKeyId refers to the globally unique key Id associated with the key created in external vault in CTM
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	ExternalKeyID *string `json:"externalKeyId" tf:"external_key_id,omitempty"`
+	ExternalKeyID *string `json:"externalKeyId,omitempty" tf:"external_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate externalKeyId.
+	// +kubebuilder:validation:Optional
+	ExternalKeyIDRef *v1.Reference `json:"externalKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate externalKeyId.
+	// +kubebuilder:validation:Optional
+	ExternalKeyIDSelector *v1.Selector `json:"externalKeyIdSelector,omitempty" tf:"-"`
 }
 
 type KeyInitParameters struct {

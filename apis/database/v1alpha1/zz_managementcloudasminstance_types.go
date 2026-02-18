@@ -16,7 +16,17 @@ import (
 type ManagementCloudAsmInstanceInitParameters struct {
 
 	// The OCID of the cloud ASM instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudAsmInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudAsmInstanceID *string `json:"cloudAsmInstanceId,omitempty" tf:"cloud_asm_instance_id,omitempty"`
+
+	// Reference to a ManagementCloudAsmInstance in database to populate cloudAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudAsmInstanceIDRef *v1.Reference `json:"cloudAsmInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudAsmInstance in database to populate cloudAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudAsmInstanceIDSelector *v1.Selector `json:"cloudAsmInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -90,8 +100,18 @@ type ManagementCloudAsmInstanceObservation struct {
 type ManagementCloudAsmInstanceParameters struct {
 
 	// The OCID of the cloud ASM instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudAsmInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudAsmInstanceID *string `json:"cloudAsmInstanceId,omitempty" tf:"cloud_asm_instance_id,omitempty"`
+
+	// Reference to a ManagementCloudAsmInstance in database to populate cloudAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudAsmInstanceIDRef *v1.Reference `json:"cloudAsmInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudAsmInstance in database to populate cloudAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudAsmInstanceIDSelector *v1.Selector `json:"cloudAsmInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -140,9 +160,8 @@ type ManagementCloudAsmInstanceStatus struct {
 type ManagementCloudAsmInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudAsmInstanceId) || (has(self.initProvider) && has(self.initProvider.cloudAsmInstanceId))",message="spec.forProvider.cloudAsmInstanceId is a required parameter"
-	Spec   ManagementCloudAsmInstanceSpec   `json:"spec"`
-	Status ManagementCloudAsmInstanceStatus `json:"status,omitempty"`
+	Spec              ManagementCloudAsmInstanceSpec   `json:"spec"`
+	Status            ManagementCloudAsmInstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

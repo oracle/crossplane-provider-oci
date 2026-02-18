@@ -22,7 +22,9 @@ spec:
           key: example-key
           name: example-secret
           namespace: upbound-system
-        secretId: ${oci_vault_secret.test_secret.id}
+        secretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
         secretVersion: ${var.db_system_credentials_password_details_secret_version}
       username: ${var.db_system_credentials_username}
     dbVersion: ${var.db_system_db_version}
@@ -64,7 +66,9 @@ spec:
       value: ${var.db_system_patch_operations_value}
     shape: ${var.db_system_shape}
     source:
-    - backupId: ${oci_psql_backup.test_backup.id}
+    - backupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       isHavingRestoreConfigOverrides: ${var.db_system_source_is_having_restore_config_overrides}
       sourceType: ${var.db_system_source_source_type}
     storageDetails:

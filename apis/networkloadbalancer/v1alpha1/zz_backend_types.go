@@ -16,7 +16,17 @@ import (
 type BackendInitParameters struct {
 
 	// The name of the backend set to which to add the backend server.  Example: example_backend_set
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkloadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	BackendSetName *string `json:"backendSetName,omitempty" tf:"backend_set_name,omitempty"`
+
+	// Reference to a BackendSet in networkloadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameRef *v1.Reference `json:"backendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in networkloadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameSelector *v1.Selector `json:"backendSetNameSelector,omitempty" tf:"-"`
 
 	// The IP address of the backend server. Example: 10.0.0.3
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
@@ -93,8 +103,18 @@ type BackendObservation struct {
 type BackendParameters struct {
 
 	// The name of the backend set to which to add the backend server.  Example: example_backend_set
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkloadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	BackendSetName *string `json:"backendSetName,omitempty" tf:"backend_set_name,omitempty"`
+
+	// Reference to a BackendSet in networkloadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameRef *v1.Reference `json:"backendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in networkloadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameSelector *v1.Selector `json:"backendSetNameSelector,omitempty" tf:"-"`
 
 	// The IP address of the backend server. Example: 10.0.0.3
 	// +kubebuilder:validation:Optional
@@ -178,7 +198,6 @@ type BackendStatus struct {
 type Backend struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.backendSetName) || (has(self.initProvider) && has(self.initProvider.backendSetName))",message="spec.forProvider.backendSetName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.port) || (has(self.initProvider) && has(self.initProvider.port))",message="spec.forProvider.port is a required parameter"
 	Spec   BackendSpec   `json:"spec"`
 	Status BackendStatus `json:"status,omitempty"`

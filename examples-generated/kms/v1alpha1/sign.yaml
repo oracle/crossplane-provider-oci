@@ -12,7 +12,9 @@ spec:
     keyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_key
-    keyVersionId: ${oci_kms_key_version.test_key_version.id}
+    keyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     logging_context: ${var.sign_logging_context}
     message: ${var.sign_message}
     messageType: ${var.sign_message_type}

@@ -13,12 +13,18 @@ spec:
         key: attribute.id
         name: example-vault-secret
         namespace: upbound-system
-      userName: ${var.user_name}
+      userNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
     enablePluggabledatabasemanagement: ${var.enable_pluggabledatabasemanagement}
-    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database
     port: ${var.pluggable_database_pluggabledatabasemanagements_management_port}
     privateEndPointId: ${oci_database_private_end_point.test_private_end_point.id}
     protocol: ${var.pluggable_database_pluggabledatabasemanagements_management_protocol}
     role: ${var.pluggable_database_pluggabledatabasemanagements_management_role}
     serviceName: ${oci_core_service.test_service.name}
-    sslSecretId: ${oci_vault_secret.test_secret.id}
+    sslSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret

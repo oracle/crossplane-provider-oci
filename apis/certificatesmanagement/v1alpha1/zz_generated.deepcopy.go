@@ -53,6 +53,16 @@ func (in *CertificateAuthorityConfigInitParameters) DeepCopyInto(out *Certificat
 		*out = new(string)
 		**out = **in
 	}
+	if in.IssuerCertificateAuthorityIDRef != nil {
+		in, out := &in.IssuerCertificateAuthorityIDRef, &out.IssuerCertificateAuthorityIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IssuerCertificateAuthorityIDSelector != nil {
+		in, out := &in.IssuerCertificateAuthorityIDSelector, &out.IssuerCertificateAuthorityIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SigningAlgorithm != nil {
 		in, out := &in.SigningAlgorithm, &out.SigningAlgorithm
 		*out = new(string)
@@ -150,6 +160,16 @@ func (in *CertificateAuthorityConfigParameters) DeepCopyInto(out *CertificateAut
 		in, out := &in.IssuerCertificateAuthorityID, &out.IssuerCertificateAuthorityID
 		*out = new(string)
 		**out = **in
+	}
+	if in.IssuerCertificateAuthorityIDRef != nil {
+		in, out := &in.IssuerCertificateAuthorityIDRef, &out.IssuerCertificateAuthorityIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IssuerCertificateAuthorityIDSelector != nil {
+		in, out := &in.IssuerCertificateAuthorityIDSelector, &out.IssuerCertificateAuthorityIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SigningAlgorithm != nil {
 		in, out := &in.SigningAlgorithm, &out.SigningAlgorithm
@@ -1099,6 +1119,16 @@ func (in *ObjectStorageConfigInitParameters) DeepCopyInto(out *ObjectStorageConf
 		*out = new(string)
 		**out = **in
 	}
+	if in.ObjectStorageBucketNameRef != nil {
+		in, out := &in.ObjectStorageBucketNameRef, &out.ObjectStorageBucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ObjectStorageBucketNameSelector != nil {
+		in, out := &in.ObjectStorageBucketNameSelector, &out.ObjectStorageBucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ObjectStorageNamespace != nil {
 		in, out := &in.ObjectStorageNamespace, &out.ObjectStorageNamespace
 		*out = new(string)
@@ -1158,6 +1188,16 @@ func (in *ObjectStorageConfigParameters) DeepCopyInto(out *ObjectStorageConfigPa
 		in, out := &in.ObjectStorageBucketName, &out.ObjectStorageBucketName
 		*out = new(string)
 		**out = **in
+	}
+	if in.ObjectStorageBucketNameRef != nil {
+		in, out := &in.ObjectStorageBucketNameRef, &out.ObjectStorageBucketNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ObjectStorageBucketNameSelector != nil {
+		in, out := &in.ObjectStorageBucketNameSelector, &out.ObjectStorageBucketNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ObjectStorageNamespace != nil {
 		in, out := &in.ObjectStorageNamespace, &out.ObjectStorageNamespace
@@ -1323,6 +1363,16 @@ func (in *SubjectInitParameters) DeepCopyInto(out *SubjectInitParameters) {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1523,6 +1573,16 @@ func (in *SubjectParameters) DeepCopyInto(out *SubjectParameters) {
 		in, out := &in.UserID, &out.UserID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserIDRef != nil {
+		in, out := &in.UserIDRef, &out.UserIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.UserIDSelector != nil {
+		in, out := &in.UserIDSelector, &out.UserIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

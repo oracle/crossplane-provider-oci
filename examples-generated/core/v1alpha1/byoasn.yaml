@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     asn: ${var.byoasn_asn}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.byoasn_display_name}

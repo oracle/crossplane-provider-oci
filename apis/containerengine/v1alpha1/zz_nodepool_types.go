@@ -74,7 +74,17 @@ type NodeConfigDetailsInitParameters struct {
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
 	// (Updatable) The OCID of the Key Management Service key assigned to the boot volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The CNI related configuration of pods in the node pool.
 	NodePoolPodNetworkOptionDetails []NodePoolPodNetworkOptionDetailsInitParameters `json:"nodePoolPodNetworkOptionDetails,omitempty" tf:"node_pool_pod_network_option_details,omitempty"`
@@ -146,8 +156,18 @@ type NodeConfigDetailsParameters struct {
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
 	// (Updatable) The OCID of the Key Management Service key assigned to the boot volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The CNI related configuration of pods in the node pool.
 	// +kubebuilder:validation:Optional
@@ -317,7 +337,16 @@ type NodePoolInitParameters struct {
 	NodeImageID *string `json:"nodeImageId,omitempty" tf:"node_image_id,omitempty"`
 
 	// Deprecated. Use nodeSourceDetails instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool. Cannot be used when node_image_id is specified.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
 	NodeImageName *string `json:"nodeImageName,omitempty" tf:"node_image_name,omitempty"`
+
+	// Reference to a Image in compute to populate nodeImageName.
+	// +kubebuilder:validation:Optional
+	NodeImageNameRef *v1.Reference `json:"nodeImageNameRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate nodeImageName.
+	// +kubebuilder:validation:Optional
+	NodeImageNameSelector *v1.Selector `json:"nodeImageNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of key/value pairs to add to each underlying Oracle Cloud Infrastructure instance in the node pool on launch.
 	// +mapType=granular
@@ -488,8 +517,17 @@ type NodePoolParameters struct {
 	NodeImageID *string `json:"nodeImageId,omitempty" tf:"node_image_id,omitempty"`
 
 	// Deprecated. Use nodeSourceDetails instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool. Cannot be used when node_image_id is specified.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
 	// +kubebuilder:validation:Optional
 	NodeImageName *string `json:"nodeImageName,omitempty" tf:"node_image_name,omitempty"`
+
+	// Reference to a Image in compute to populate nodeImageName.
+	// +kubebuilder:validation:Optional
+	NodeImageNameRef *v1.Reference `json:"nodeImageNameRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate nodeImageName.
+	// +kubebuilder:validation:Optional
+	NodeImageNameSelector *v1.Selector `json:"nodeImageNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) A list of key/value pairs to add to each underlying Oracle Cloud Infrastructure instance in the node pool on launch.
 	// +kubebuilder:validation:Optional
@@ -610,7 +648,17 @@ type NodeSourceDetailsInitParameters struct {
 	BootVolumeSizeInGbs *string `json:"bootVolumeSizeInGbs,omitempty" tf:"boot_volume_size_in_gbs,omitempty"`
 
 	// (Updatable) The OCID of the image used to boot the node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The source type for the node. Use IMAGE when specifying an OCID of an image.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
@@ -635,8 +683,18 @@ type NodeSourceDetailsParameters struct {
 	BootVolumeSizeInGbs *string `json:"bootVolumeSizeInGbs,omitempty" tf:"boot_volume_size_in_gbs,omitempty"`
 
 	// (Updatable) The OCID of the image used to boot the node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	ImageID *string `json:"imageId" tf:"image_id,omitempty"`
+	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
+
+	// Reference to a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDRef *v1.Reference `json:"imageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate imageId.
+	// +kubebuilder:validation:Optional
+	ImageIDSelector *v1.Selector `json:"imageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The source type for the node. Use IMAGE when specifying an OCID of an image.
 	// +kubebuilder:validation:Optional

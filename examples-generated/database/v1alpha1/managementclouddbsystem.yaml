@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-db-system
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     databaseManagementConfig:
     - isEnabled: ${var.cloud_db_system_database_management_config_is_enabled}
       metadata: ${var.cloud_db_system_database_management_config_metadata}

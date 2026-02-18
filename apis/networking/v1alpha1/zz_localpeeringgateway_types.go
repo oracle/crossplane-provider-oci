@@ -39,10 +39,30 @@ type LocalPeeringGatewayInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// should only be specified in one of the LPGs.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.LocalPeeringGateway
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerID *string `json:"peerId,omitempty" tf:"peer_id,omitempty"`
 
+	// Reference to a LocalPeeringGateway in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDRef *v1.Reference `json:"peerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LocalPeeringGateway in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDSelector *v1.Selector `json:"peerIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the route table the LPG will use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN the LPG belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -137,12 +157,32 @@ type LocalPeeringGatewayParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// should only be specified in one of the LPGs.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.LocalPeeringGateway
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerID *string `json:"peerId,omitempty" tf:"peer_id,omitempty"`
 
+	// Reference to a LocalPeeringGateway in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDRef *v1.Reference `json:"peerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LocalPeeringGateway in networking to populate peerId.
+	// +kubebuilder:validation:Optional
+	PeerIDSelector *v1.Selector `json:"peerIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the route table the LPG will use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN the LPG belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn

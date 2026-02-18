@@ -64,7 +64,16 @@ type ExadataInfrastructureStorageInitParameters struct {
 
 	CloudControlPlaneServer2 *string `json:"cloudControlPlaneServer2,omitempty" tf:"cloud_control_plane_server2,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	ComputeCount *float64 `json:"computeCount,omitempty" tf:"compute_count,omitempty"`
 
@@ -270,8 +279,17 @@ type ExadataInfrastructureStorageParameters struct {
 	// +kubebuilder:validation:Optional
 	CloudControlPlaneServer2 *string `json:"cloudControlPlaneServer2,omitempty" tf:"cloud_control_plane_server2,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	ComputeCount *float64 `json:"computeCount,omitempty" tf:"compute_count,omitempty"`
@@ -363,7 +381,6 @@ type ExadataInfrastructureStorage struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.adminNetworkCidr) || (has(self.initProvider) && has(self.initProvider.adminNetworkCidr))",message="spec.forProvider.adminNetworkCidr is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudControlPlaneServer1) || (has(self.initProvider) && has(self.initProvider.cloudControlPlaneServer1))",message="spec.forProvider.cloudControlPlaneServer1 is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudControlPlaneServer2) || (has(self.initProvider) && has(self.initProvider.cloudControlPlaneServer2))",message="spec.forProvider.cloudControlPlaneServer2 is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dnsServer) || (has(self.initProvider) && has(self.initProvider.dnsServer))",message="spec.forProvider.dnsServer is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.gateway) || (has(self.initProvider) && has(self.initProvider.gateway))",message="spec.forProvider.gateway is a required parameter"

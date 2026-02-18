@@ -16,7 +16,17 @@ import (
 type ManagementCloudClusterInstanceInitParameters struct {
 
 	// The OCID of the cloud cluster instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudClusterInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudClusterInstanceID *string `json:"cloudClusterInstanceId,omitempty" tf:"cloud_cluster_instance_id,omitempty"`
+
+	// Reference to a ManagementCloudClusterInstance in database to populate cloudClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudClusterInstanceIDRef *v1.Reference `json:"cloudClusterInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudClusterInstance in database to populate cloudClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudClusterInstanceIDSelector *v1.Selector `json:"cloudClusterInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
@@ -102,8 +112,18 @@ type ManagementCloudClusterInstanceObservation struct {
 type ManagementCloudClusterInstanceParameters struct {
 
 	// The OCID of the cloud cluster instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudClusterInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudClusterInstanceID *string `json:"cloudClusterInstanceId,omitempty" tf:"cloud_cluster_instance_id,omitempty"`
+
+	// Reference to a ManagementCloudClusterInstance in database to populate cloudClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudClusterInstanceIDRef *v1.Reference `json:"cloudClusterInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudClusterInstance in database to populate cloudClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	CloudClusterInstanceIDSelector *v1.Selector `json:"cloudClusterInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the cloud connector.
 	// +kubebuilder:validation:Optional
@@ -156,9 +176,8 @@ type ManagementCloudClusterInstanceStatus struct {
 type ManagementCloudClusterInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudClusterInstanceId) || (has(self.initProvider) && has(self.initProvider.cloudClusterInstanceId))",message="spec.forProvider.cloudClusterInstanceId is a required parameter"
-	Spec   ManagementCloudClusterInstanceSpec   `json:"spec"`
-	Status ManagementCloudClusterInstanceStatus `json:"status,omitempty"`
+	Spec              ManagementCloudClusterInstanceSpec   `json:"spec"`
+	Status            ManagementCloudClusterInstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -16,7 +16,17 @@ import (
 type DomainsAccountRecoverySettingInitParameters struct {
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsAccountRecoverySetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AccountRecoverySettingID *string `json:"accountRecoverySettingId,omitempty" tf:"account_recovery_setting_id,omitempty"`
+
+	// Reference to a DomainsAccountRecoverySetting in identity to populate accountRecoverySettingId.
+	// +kubebuilder:validation:Optional
+	AccountRecoverySettingIDRef *v1.Reference `json:"accountRecoverySettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsAccountRecoverySetting in identity to populate accountRecoverySettingId.
+	// +kubebuilder:validation:Optional
+	AccountRecoverySettingIDSelector *v1.Selector `json:"accountRecoverySettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.
 	AttributeSets []*string `json:"attributeSets,omitempty" tf:"attribute_sets,omitempty"`
@@ -130,8 +140,18 @@ type DomainsAccountRecoverySettingObservation struct {
 type DomainsAccountRecoverySettingParameters struct {
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsAccountRecoverySetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AccountRecoverySettingID *string `json:"accountRecoverySettingId,omitempty" tf:"account_recovery_setting_id,omitempty"`
+
+	// Reference to a DomainsAccountRecoverySetting in identity to populate accountRecoverySettingId.
+	// +kubebuilder:validation:Optional
+	AccountRecoverySettingIDRef *v1.Reference `json:"accountRecoverySettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsAccountRecoverySetting in identity to populate accountRecoverySettingId.
+	// +kubebuilder:validation:Optional
+	AccountRecoverySettingIDSelector *v1.Selector `json:"accountRecoverySettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) A multi-valued list of strings indicating the return type of attribute definition. The specified set of attributes can be fetched by the return type of the attribute. One or more values can be given together to fetch more than one group of attributes. If 'attributes' query parameter is also available, union of the two is fetched. Valid values - all, always, never, request, default. Values are case-insensitive.
 	// +kubebuilder:validation:Optional
@@ -319,7 +339,6 @@ type DomainsAccountRecoverySettingStatus struct {
 type DomainsAccountRecoverySetting struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.accountRecoverySettingId) || (has(self.initProvider) && has(self.initProvider.accountRecoverySettingId))",message="spec.forProvider.accountRecoverySettingId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.factors) || (has(self.initProvider) && has(self.initProvider.factors))",message="spec.forProvider.factors is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.idcsEndpoint) || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))",message="spec.forProvider.idcsEndpoint is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.lockoutDuration) || (has(self.initProvider) && has(self.initProvider.lockoutDuration))",message="spec.forProvider.lockoutDuration is a required parameter"

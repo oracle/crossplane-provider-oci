@@ -8,7 +8,9 @@ metadata:
   name: test-external-my-sql-database-connector
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     connectorDetails:
     - credentialType: ${var.external_my_sql_database_connector_connector_details_credential_type}
       displayName: ${var.external_my_sql_database_connector_connector_details_display_name}
@@ -17,5 +19,7 @@ spec:
       macsAgentId: ${oci_cloud_bridge_agent.test_agent.id}
       networkProtocol: ${var.external_my_sql_database_connector_connector_details_network_protocol}
       port: ${var.external_my_sql_database_connector_connector_details_port}
-      sslSecretId: ${oci_vault_secret.test_secret.id}
+      sslSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
     isTestConnectionParam: ${var.external_my_sql_database_connector_is_test_connection_param}

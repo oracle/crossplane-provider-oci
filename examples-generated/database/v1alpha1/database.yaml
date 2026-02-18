@@ -13,7 +13,9 @@ spec:
         key: example-key
         name: example-secret
         namespace: upbound-system
-      backupId: ${oci_database_backup.test_backup.id}
+      backupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_backup
       backupTdePasswordSecretRef:
         key: example-key
         name: example-secret
@@ -23,7 +25,9 @@ spec:
         key: example-key
         name: example-secret
         namespace: upbound-system
-      databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+      databaseSoftwareImageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_database_software_image
       dbBackupConfig:
       - autoBackupEnabled: ${var.database_database_db_backup_config_auto_backup_enabled}
         autoBackupWindow: ${var.database_database_db_backup_config_auto_backup_window}
@@ -32,7 +36,9 @@ spec:
         backupDeletionPolicy: ${var.database_database_db_backup_config_backup_deletion_policy}
         backupDestinationDetails:
         - backupRetentionPolicyOnTerminate: ${var.database_database_db_backup_config_backup_destination_details_backup_retention_policy_on_terminate}
-          dbrsPolicyId: ${oci_identity_policy.test_policy.id}
+          dbrsPolicyIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_policy
           id: ${var.database_database_db_backup_config_backup_destination_details_id}
           isRemote: ${var.database_database_db_backup_config_backup_destination_details_is_remote}
           isRetentionLockEnabled: ${var.database_database_db_backup_config_backup_destination_details_is_retention_lock_enabled}
@@ -45,9 +51,15 @@ spec:
       dbWorkload: ${var.database_database_db_workload}
       definedTags: ${var.database_database_defined_tags}
       encryptionKeyLocationDetails:
-      - awsEncryptionKeyId: ${oci_kms_key.test_key.id}
-        azureEncryptionKeyId: ${oci_kms_key.test_key.id}
-        googleCloudProviderEncryptionKeyId: ${oci_kms_key.test_key.id}
+      - awsEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        azureEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        googleCloudProviderEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
         hsmPasswordSecretRef:
           key: example-key
           name: example-secret
@@ -56,14 +68,20 @@ spec:
       freeformTags: ${var.database_database_freeform_tags}
       isActiveDataGuardEnabled: ${var.database_database_is_active_data_guard_enabled}
       key_store_id: ${oci_database_key_store.test_key_store.id}
-      kmsKeyId: ${oci_kms_key.test_key.id}
-      kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+      kmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
+      kmsKeyVersionIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key_version
       ncharacterSet: ${var.database_database_ncharacter_set}
       pdbName: ${var.database_database_pdb_name}
       pluggableDatabases: ${var.database_database_pluggable_databases}
       protectionMode: ${var.database_database_protection_mode}
       sidPrefix: ${var.database_database_sid_prefix}
-      sourceDatabaseId: ${oci_database_database.test_database.id}
+      sourceDatabaseIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_database
       sourceEncryptionKeyLocationDetails:
       - aws_encryption_key_id: ${oci_kms_key.test_key.id}
         azure_encryption_key_id: ${oci_kms_key.test_key.id}
@@ -85,9 +103,17 @@ spec:
         name: example-secret
         namespace: upbound-system
       transportType: ${var.database_database_transport_type}
-      vaultId: ${oci_kms_vault.test_vault.id}
-    dbHomeId: ${oci_database_db_home.test_db_home.id}
+      vaultIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vault
+    dbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_home
     dbVersion: ${var.database_db_version}
-    kmsKeyId: ${oci_kms_key.test_key.id}
-    kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    kmsKeyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     source: ${var.database_source}

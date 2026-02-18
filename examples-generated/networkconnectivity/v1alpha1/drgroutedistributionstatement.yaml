@@ -14,6 +14,8 @@ spec:
         testing.upbound.io/example-name: test_drg_route_distribution
     matchCriteria:
     - attachmentType: ${var.drg_route_distribution_statement_statements_match_criteria_attachment_type}
-      drgAttachmentId: ${oci_core_drg_attachment.test_drg_attachment.id}
+      drgAttachmentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_drg_attachment
       matchType: ${var.drg_route_distribution_statement_statements_match_criteria_match_type}
     priority: ${var.drg_route_distribution_statement_statements_priority}

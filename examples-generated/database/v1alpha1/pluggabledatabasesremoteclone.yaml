@@ -13,13 +13,17 @@ spec:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database
     shouldPdbAdminAccountBeLocked: ${var.pluggable_databases_remote_clone_should_pdb_admin_account_be_locked}
     sourceContainerDbAdminPasswordSecretRef:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    targetContainerDatabaseId: ${oci_database_database.test_database.id}
+    targetContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     targetTdeWalletPasswordSecretRef:
       key: example-key
       name: example-secret

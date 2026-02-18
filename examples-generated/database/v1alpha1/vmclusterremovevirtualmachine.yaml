@@ -10,4 +10,6 @@ spec:
   forProvider:
     dbServers:
     - dbServerId: ${oci_database_db_server.test_db_server.id}
-    vmClusterId: ${oci_database_vm_cluster.test_vm_cluster.id}
+    vmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster

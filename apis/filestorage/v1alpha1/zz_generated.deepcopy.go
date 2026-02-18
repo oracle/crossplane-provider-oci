@@ -873,6 +873,16 @@ func (in *FileSystemInitParameters) DeepCopyInto(out *FileSystemInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Locks != nil {
 		in, out := &in.Locks, &out.Locks
 		*out = make([]FileSystemLocksInitParameters, len(*in))
@@ -884,6 +894,16 @@ func (in *FileSystemInitParameters) DeepCopyInto(out *FileSystemInitParameters) 
 		in, out := &in.SourceSnapshotID, &out.SourceSnapshotID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SourceSnapshotIDRef != nil {
+		in, out := &in.SourceSnapshotIDRef, &out.SourceSnapshotIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourceSnapshotIDSelector != nil {
+		in, out := &in.SourceSnapshotIDSelector, &out.SourceSnapshotIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1311,6 +1331,16 @@ func (in *FileSystemParameters) DeepCopyInto(out *FileSystemParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Locks != nil {
 		in, out := &in.Locks, &out.Locks
 		*out = make([]FileSystemLocksParameters, len(*in))
@@ -1322,6 +1352,16 @@ func (in *FileSystemParameters) DeepCopyInto(out *FileSystemParameters) {
 		in, out := &in.SourceSnapshotID, &out.SourceSnapshotID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SourceSnapshotIDRef != nil {
+		in, out := &in.SourceSnapshotIDRef, &out.SourceSnapshotIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourceSnapshotIDSelector != nil {
+		in, out := &in.SourceSnapshotIDSelector, &out.SourceSnapshotIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1397,6 +1437,16 @@ func (in *KerberosInitParameters) DeepCopyInto(out *KerberosInitParameters) {
 		in, out := &in.KeyTabSecretID, &out.KeyTabSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.KeyTabSecretIDRef != nil {
+		in, out := &in.KeyTabSecretIDRef, &out.KeyTabSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyTabSecretIDSelector != nil {
+		in, out := &in.KeyTabSecretIDSelector, &out.KeyTabSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -1477,6 +1527,16 @@ func (in *KerberosParameters) DeepCopyInto(out *KerberosParameters) {
 		in, out := &in.KeyTabSecretID, &out.KeyTabSecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.KeyTabSecretIDRef != nil {
+		in, out := &in.KeyTabSecretIDRef, &out.KeyTabSecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyTabSecretIDSelector != nil {
+		in, out := &in.KeyTabSecretIDSelector, &out.KeyTabSecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

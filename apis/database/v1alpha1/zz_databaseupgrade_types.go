@@ -179,7 +179,17 @@ type DatabaseUpgradeInitParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// Details for the database upgrade source.
 	DatabaseUpgradeSourceDetails []DatabaseUpgradeSourceDetailsInitParameters `json:"databaseUpgradeSourceDetails,omitempty" tf:"database_upgrade_source_details,omitempty"`
@@ -303,8 +313,18 @@ type DatabaseUpgradeParameters struct {
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
 	// The database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
+
+	// Reference to a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDRef *v1.Reference `json:"databaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate databaseId.
+	// +kubebuilder:validation:Optional
+	DatabaseIDSelector *v1.Selector `json:"databaseIdSelector,omitempty" tf:"-"`
 
 	// Details for the database upgrade source.
 	// +kubebuilder:validation:Optional
@@ -317,7 +337,17 @@ type DatabaseUpgradeSourceDetailsInitParameters struct {
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// The database software image OCID of the image to be used to upgrade a database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: "-upgradeTimezone false -keepEvents"
 	Options *string `json:"options,omitempty" tf:"options,omitempty"`
@@ -348,8 +378,18 @@ type DatabaseUpgradeSourceDetailsParameters struct {
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// The database software image OCID of the image to be used to upgrade a database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// Additional upgrade options supported by DBUA(Database Upgrade Assistant). Example: "-upgradeTimezone false -keepEvents"
 	// +kubebuilder:validation:Optional
@@ -397,7 +437,6 @@ type DatabaseUpgrade struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.action) || (has(self.initProvider) && has(self.initProvider.action))",message="spec.forProvider.action is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.databaseId) || (has(self.initProvider) && has(self.initProvider.databaseId))",message="spec.forProvider.databaseId is a required parameter"
 	Spec   DatabaseUpgradeSpec   `json:"spec"`
 	Status DatabaseUpgradeStatus `json:"status,omitempty"`
 }

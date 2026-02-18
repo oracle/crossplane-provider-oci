@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
@@ -16,8 +17,243 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-func (mg *ComputeCapacityReport) ResolveReferences( // ResolveReferences of this ComputeCapacityReport.
+func (mg *AppCatalogSubscription) ResolveReferences( // ResolveReferences of this AppCatalogSubscription.
 	ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ClusterNetwork.
+func (mg *ClusterNetwork) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstancePools); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationIDRef,
+				Selector:     mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationID")
+		}
+		mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.InstancePools[i3].InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstancePools); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationIDRef,
+				Selector:     mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationID")
+		}
+		mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.InstancePools[i3].InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.PlacementConfiguration[i3].PrimaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConfiguration); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.PlacementConfiguration[i3].SecondaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+
+	return nil
+}
+
+// ResolveReferences of this ComputeCapacityReport.
+func (mg *ComputeCapacityReport) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
 	var l xpresource.ManagedList
 	r := reference.NewAPIResolver(c, mg)
@@ -93,12 +329,33 @@ func (mg *ComputeCapacityReservation) ResolveReferences(ctx context.Context, c c
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceReservationConfigs); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDRef,
+				Selector:     mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID")
+		}
+		mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -112,6 +369,28 @@ func (mg *ComputeCapacityReservation) ResolveReferences(ctx context.Context, c c
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceReservationConfigs); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDRef,
+				Selector:     mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID")
+		}
+		mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.InstanceReservationConfigs[i3].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }
@@ -338,6 +617,144 @@ func (mg *ComputeGpuMemoryCluster) ResolveReferences(ctx context.Context, c clie
 	}
 	mg.Spec.InitProvider.InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ComputeGpuMemoryFabric.
+func (mg *ComputeGpuMemoryFabric) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeGpuMemoryFabric", "ComputeGpuMemoryFabricList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ComputeGpuMemoryFabricID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ComputeGpuMemoryFabricIDRef,
+			Selector:     mg.Spec.ForProvider.ComputeGpuMemoryFabricIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ComputeGpuMemoryFabricID")
+	}
+	mg.Spec.ForProvider.ComputeGpuMemoryFabricID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ComputeGpuMemoryFabricIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeGpuMemoryFabric", "ComputeGpuMemoryFabricList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ComputeGpuMemoryFabricID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ComputeGpuMemoryFabricIDRef,
+			Selector:     mg.Spec.InitProvider.ComputeGpuMemoryFabricIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ComputeGpuMemoryFabricID")
+	}
+	mg.Spec.InitProvider.ComputeGpuMemoryFabricID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ComputeGpuMemoryFabricIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ComputeHost.
+func (mg *ComputeHost) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHost", "ComputeHostList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ComputeHostID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ComputeHostIDRef,
+			Selector:     mg.Spec.ForProvider.ComputeHostIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ComputeHostID")
+	}
+	mg.Spec.ForProvider.ComputeHostID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ComputeHostIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHost", "ComputeHostList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ComputeHostID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ComputeHostIDRef,
+			Selector:     mg.Spec.InitProvider.ComputeHostIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ComputeHostID")
+	}
+	mg.Spec.InitProvider.ComputeHostID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ComputeHostIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -678,6 +1095,25 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var mrsp reference.MultiResolutionResponse
 	var err error
 	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClusterPlacementGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ClusterPlacementGroupIDRef,
+			Selector:     mg.Spec.ForProvider.ClusterPlacementGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClusterPlacementGroupID")
+	}
+	mg.Spec.ForProvider.ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClusterPlacementGroupIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -696,6 +1132,25 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ComputeClusterID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ComputeClusterIDRef,
+			Selector:     mg.Spec.ForProvider.ComputeClusterIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ComputeClusterID")
+	}
+	mg.Spec.ForProvider.ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ComputeClusterIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.CreateVnicDetails); i3++ {
 		{
@@ -778,7 +1233,112 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DedicatedVMHostIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
 
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceConfigurationID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.InstanceConfigurationIDRef,
+			Selector:     mg.Spec.ForProvider.InstanceConfigurationIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstanceConfigurationID")
+	}
+	mg.Spec.ForProvider.InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.LaunchVolumeAttachments); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID")
+			}
+			mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.LaunchVolumeAttachments); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeIDRef,
+				Selector:     mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeID")
+		}
+		mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.LaunchVolumeAttachments[i3].VolumeIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConstraintDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDRef,
+				Selector:     mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupID")
+		}
+		mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SourceDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SourceDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.SourceDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.ForProvider.SourceDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SourceDetails[i3].KMSKeyID")
+		}
+		mg.Spec.ForProvider.SourceDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SourceDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.SourceDetails); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
@@ -801,10 +1361,29 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 	}
 	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClusterPlacementGroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ClusterPlacementGroupIDRef,
+			Selector:     mg.Spec.InitProvider.ClusterPlacementGroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClusterPlacementGroupID")
+	}
+	mg.Spec.InitProvider.ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClusterPlacementGroupIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
+
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -818,6 +1397,25 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ComputeClusterID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ComputeClusterIDRef,
+			Selector:     mg.Spec.InitProvider.ComputeClusterIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ComputeClusterID")
+	}
+	mg.Spec.InitProvider.ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ComputeClusterIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.CreateVnicDetails); i3++ {
 		{
@@ -900,7 +1498,112 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DedicatedVMHostIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
 
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceConfigurationID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.InstanceConfigurationIDRef,
+			Selector:     mg.Spec.InitProvider.InstanceConfigurationIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstanceConfigurationID")
+	}
+	mg.Spec.InitProvider.InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.LaunchVolumeAttachments); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID")
+			}
+			mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.LaunchVolumeAttachments[i3].LaunchCreateVolumeDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.LaunchVolumeAttachments); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeIDRef,
+				Selector:     mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeID")
+		}
+		mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.LaunchVolumeAttachments[i3].VolumeIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConstraintDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDRef,
+				Selector:     mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupID")
+		}
+		mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.PlacementConstraintDetails[i3].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SourceDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SourceDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.SourceDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.InitProvider.SourceDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SourceDetails[i3].KMSKeyID")
+		}
+		mg.Spec.InitProvider.SourceDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SourceDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.SourceDetails); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
@@ -953,6 +1656,606 @@ func (mg *InstanceConfiguration) ResolveReferences(ctx context.Context, c client
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDRef,
+					Selector:     mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID")
+			}
+			mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDRef,
+					Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID")
+			}
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDRef,
+					Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID")
+			}
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "DedicatedVmHost", "DedicatedVmHostList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDRef,
+					Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID")
+			}
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHostGroup", "ComputeHostGroupList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "BootVolume", "BootVolumeList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "DedicatedVmHost", "DedicatedVmHostList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHostGroup", "ComputeHostGroupList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "BootVolume", "BootVolumeList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDRef,
+							Selector:     mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID")
+					}
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDRef,
+						Selector:     mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID")
+				}
+				mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Instance", "InstanceList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.InstanceIDRef,
+			Selector:     mg.Spec.ForProvider.InstanceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstanceID")
+	}
+	mg.Spec.ForProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstanceIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
@@ -972,6 +2275,606 @@ func (mg *InstanceConfiguration) ResolveReferences(ctx context.Context, c client
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].KMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails[i5].XrcKMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDRef,
+					Selector:     mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID")
+			}
+			mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].VolumeIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDRef,
+					Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID")
+			}
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDRef,
+					Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID")
+			}
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].ComputeClusterIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].CreateVnicDetails[i5].SubnetIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "DedicatedVmHost", "DedicatedVmHostList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDRef,
+					Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID")
+			}
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].DedicatedVMHostIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHostGroup", "ComputeHostGroupList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].PlacementConstraintDetails[i5].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "BootVolume", "BootVolumeList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].BootVolumeIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].ImageIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].LaunchDetails[i4].SourceDetails[i5].KMSKeyIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].KMSKeyIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].CreateDetails[i6].XrcKMSKeyIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "Volume", "VolumeList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].BlockVolumes[i5].VolumeIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ClusterPlacementGroupIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeCluster", "ComputeClusterList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].ComputeClusterIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].CreateVnicDetails[i6].SubnetIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "DedicatedVmHost", "DedicatedVmHostList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].DedicatedVMHostIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "ComputeHostGroup", "ComputeHostGroupList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].PlacementConstraintDetails[i6].ComputeHostGroupIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("blockstorage.oci.upbound.io", "v1alpha1", "BootVolume", "BootVolumeList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].BootVolumeIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].LaunchDetails[i5].SourceDetails[i6].ImageIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID),
+							Extract:      resource.ExtractResourceID(),
+							Reference:    mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDRef,
+							Selector:     mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID")
+					}
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.InstanceDetails[i3].Options[i4].SecondaryVnics[i5].CreateVnicDetails[i6].SubnetIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID),
+						Extract:      resource.ExtractResourceID(),
+						Reference:    mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDRef,
+						Selector:     mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID")
+				}
+				mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.InstanceDetails[i3].SecondaryVnics[i4].CreateVnicDetails[i5].SubnetIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Instance", "InstanceList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.InstanceIDRef,
+			Selector:     mg.Spec.InitProvider.InstanceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstanceID")
+	}
+	mg.Spec.InitProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstanceIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -1026,6 +2929,56 @@ func (mg *InstanceConsoleConnection) ResolveReferences(ctx context.Context, c cl
 	return nil
 }
 
+// ResolveReferences of this InstanceMaintenanceEvent.
+func (mg *InstanceMaintenanceEvent) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceMaintenanceEvent", "InstanceMaintenanceEventList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstanceMaintenanceEventID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.InstanceMaintenanceEventIDRef,
+			Selector:     mg.Spec.ForProvider.InstanceMaintenanceEventIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstanceMaintenanceEventID")
+	}
+	mg.Spec.ForProvider.InstanceMaintenanceEventID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstanceMaintenanceEventIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceMaintenanceEvent", "InstanceMaintenanceEventList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstanceMaintenanceEventID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.InstanceMaintenanceEventIDRef,
+			Selector:     mg.Spec.InitProvider.InstanceMaintenanceEventIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstanceMaintenanceEventID")
+	}
+	mg.Spec.InitProvider.InstanceMaintenanceEventID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstanceMaintenanceEventIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this InstancePool.
 func (mg *InstancePool) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
@@ -1072,12 +3025,121 @@ func (mg *InstancePool) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.LoadBalancers); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoadBalancers[i3].BackendSetName),
+				Extract:      resource.ExtractParamPath("name", false),
+				Reference:    mg.Spec.ForProvider.LoadBalancers[i3].BackendSetNameRef,
+				Selector:     mg.Spec.ForProvider.LoadBalancers[i3].BackendSetNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.LoadBalancers[i3].BackendSetName")
+		}
+		mg.Spec.ForProvider.LoadBalancers[i3].BackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.LoadBalancers[i3].BackendSetNameRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.LoadBalancers); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "LoadBalancer", "LoadBalancerList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerIDRef,
+				Selector:     mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerID")
+		}
+		mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.LoadBalancers[i3].LoadBalancerIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConfigurations); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetIDRef,
+				Selector:     mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetID")
+		}
+		mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.PlacementConfigurations[i3].PrimarySubnetIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConfigurations); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.PlacementConfigurations); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -1111,6 +3173,116 @@ func (mg *InstancePool) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.InitProvider.InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.InstanceConfigurationIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.LoadBalancers); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadBalancers[i3].BackendSetName),
+				Extract:      resource.ExtractParamPath("name", false),
+				Reference:    mg.Spec.InitProvider.LoadBalancers[i3].BackendSetNameRef,
+				Selector:     mg.Spec.InitProvider.LoadBalancers[i3].BackendSetNameSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.LoadBalancers[i3].BackendSetName")
+		}
+		mg.Spec.InitProvider.LoadBalancers[i3].BackendSetName = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.LoadBalancers[i3].BackendSetNameRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.LoadBalancers); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("loadbalancer.oci.upbound.io", "v1alpha1", "LoadBalancer", "LoadBalancerList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerIDRef,
+				Selector:     mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerID")
+		}
+		mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.LoadBalancers[i3].LoadBalancerIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConfigurations); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetIDRef,
+				Selector:     mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetID")
+		}
+		mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.PlacementConfigurations[i3].PrimarySubnetIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConfigurations); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.PlacementConfigurations[i3].PrimaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.PlacementConfigurations); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDRef,
+					Selector:     mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID")
+			}
+			mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.PlacementConfigurations[i3].SecondaryVnicSubnets[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
+
 	return nil
 }
 
@@ -1142,6 +3314,25 @@ func (mg *InstancePoolInstance) ResolveReferences(ctx context.Context, c client.
 	mg.Spec.ForProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.InstanceIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstancePool", "InstancePoolList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.InstancePoolID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.InstancePoolIDRef,
+			Selector:     mg.Spec.ForProvider.InstancePoolIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.InstancePoolID")
+	}
+	mg.Spec.ForProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.InstancePoolIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Instance", "InstanceList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -1160,6 +3351,25 @@ func (mg *InstancePoolInstance) ResolveReferences(ctx context.Context, c client.
 	}
 	mg.Spec.InitProvider.InstanceID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.InstanceIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstancePool", "InstancePoolList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.InstancePoolID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.InstancePoolIDRef,
+			Selector:     mg.Spec.InitProvider.InstancePoolIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.InstancePoolID")
+	}
+	mg.Spec.InitProvider.InstancePoolID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.InstancePoolIDRef = rsp.ResolvedReference
 
 	return nil
 }

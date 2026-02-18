@@ -95,6 +95,18 @@ func (in *AlarmInitParameters) DeepCopyInto(out *AlarmInitParameters) {
 			}
 		}
 	}
+	if in.DestinationsRefs != nil {
+		in, out := &in.DestinationsRefs, &out.DestinationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DestinationsSelector != nil {
+		in, out := &in.DestinationsSelector, &out.DestinationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DisplayName != nil {
 		in, out := &in.DisplayName, &out.DisplayName
 		*out = new(string)
@@ -207,6 +219,16 @@ func (in *AlarmInitParameters) DeepCopyInto(out *AlarmInitParameters) {
 		in, out := &in.RuleName, &out.RuleName
 		*out = new(string)
 		**out = **in
+	}
+	if in.RuleNameRef != nil {
+		in, out := &in.RuleNameRef, &out.RuleNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RuleNameSelector != nil {
+		in, out := &in.RuleNameSelector, &out.RuleNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Severity != nil {
 		in, out := &in.Severity, &out.Severity
@@ -511,6 +533,18 @@ func (in *AlarmParameters) DeepCopyInto(out *AlarmParameters) {
 			}
 		}
 	}
+	if in.DestinationsRefs != nil {
+		in, out := &in.DestinationsRefs, &out.DestinationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.DestinationsSelector != nil {
+		in, out := &in.DestinationsSelector, &out.DestinationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DisplayName != nil {
 		in, out := &in.DisplayName, &out.DisplayName
 		*out = new(string)
@@ -623,6 +657,16 @@ func (in *AlarmParameters) DeepCopyInto(out *AlarmParameters) {
 		in, out := &in.RuleName, &out.RuleName
 		*out = new(string)
 		**out = **in
+	}
+	if in.RuleNameRef != nil {
+		in, out := &in.RuleNameRef, &out.RuleNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RuleNameSelector != nil {
+		in, out := &in.RuleNameSelector, &out.RuleNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Severity != nil {
 		in, out := &in.Severity, &out.Severity
@@ -1441,6 +1485,16 @@ func (in *OverridesInitParameters) DeepCopyInto(out *OverridesInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.RuleNameRef != nil {
+		in, out := &in.RuleNameRef, &out.RuleNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RuleNameSelector != nil {
+		in, out := &in.RuleNameSelector, &out.RuleNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Severity != nil {
 		in, out := &in.Severity, &out.Severity
 		*out = new(string)
@@ -1520,6 +1574,16 @@ func (in *OverridesParameters) DeepCopyInto(out *OverridesParameters) {
 		in, out := &in.RuleName, &out.RuleName
 		*out = new(string)
 		**out = **in
+	}
+	if in.RuleNameRef != nil {
+		in, out := &in.RuleNameRef, &out.RuleNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.RuleNameSelector != nil {
+		in, out := &in.RuleNameSelector, &out.RuleNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Severity != nil {
 		in, out := &in.Severity, &out.Severity
@@ -2794,10 +2858,30 @@ func (in *VtapInitParameters) DeepCopyInto(out *VtapInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CaptureFilterIDRef != nil {
+		in, out := &in.CaptureFilterIDRef, &out.CaptureFilterIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CaptureFilterIDSelector != nil {
+		in, out := &in.CaptureFilterIDSelector, &out.CaptureFilterIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
@@ -2866,6 +2950,16 @@ func (in *VtapInitParameters) DeepCopyInto(out *VtapInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SourcePrivateEndpointSubnetIDRef != nil {
+		in, out := &in.SourcePrivateEndpointSubnetIDRef, &out.SourcePrivateEndpointSubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourcePrivateEndpointSubnetIDSelector != nil {
+		in, out := &in.SourcePrivateEndpointSubnetIDSelector, &out.SourcePrivateEndpointSubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SourceType != nil {
 		in, out := &in.SourceType, &out.SourceType
 		*out = new(string)
@@ -2895,6 +2989,16 @@ func (in *VtapInitParameters) DeepCopyInto(out *VtapInitParameters) {
 		in, out := &in.VcnID, &out.VcnID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VcnIDRef != nil {
+		in, out := &in.VcnIDRef, &out.VcnIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VcnIDSelector != nil {
+		in, out := &in.VcnIDSelector, &out.VcnIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VxlanNetworkIdentifier != nil {
 		in, out := &in.VxlanNetworkIdentifier, &out.VxlanNetworkIdentifier
@@ -3100,10 +3204,30 @@ func (in *VtapParameters) DeepCopyInto(out *VtapParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CaptureFilterIDRef != nil {
+		in, out := &in.CaptureFilterIDRef, &out.CaptureFilterIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CaptureFilterIDSelector != nil {
+		in, out := &in.CaptureFilterIDSelector, &out.CaptureFilterIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
@@ -3172,6 +3296,16 @@ func (in *VtapParameters) DeepCopyInto(out *VtapParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SourcePrivateEndpointSubnetIDRef != nil {
+		in, out := &in.SourcePrivateEndpointSubnetIDRef, &out.SourcePrivateEndpointSubnetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourcePrivateEndpointSubnetIDSelector != nil {
+		in, out := &in.SourcePrivateEndpointSubnetIDSelector, &out.SourcePrivateEndpointSubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SourceType != nil {
 		in, out := &in.SourceType, &out.SourceType
 		*out = new(string)
@@ -3201,6 +3335,16 @@ func (in *VtapParameters) DeepCopyInto(out *VtapParameters) {
 		in, out := &in.VcnID, &out.VcnID
 		*out = new(string)
 		**out = **in
+	}
+	if in.VcnIDRef != nil {
+		in, out := &in.VcnIDRef, &out.VcnIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VcnIDSelector != nil {
+		in, out := &in.VcnIDSelector, &out.VcnIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.VxlanNetworkIdentifier != nil {
 		in, out := &in.VxlanNetworkIdentifier, &out.VxlanNetworkIdentifier

@@ -84,7 +84,17 @@ type ManagementExternalExadataStorageServerInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the Exadata storage server.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataStorageServer
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalExadataStorageServerID *string `json:"externalExadataStorageServerId,omitempty" tf:"external_exadata_storage_server_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataStorageServer in database to populate externalExadataStorageServerId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageServerIDRef *v1.Reference `json:"externalExadataStorageServerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataStorageServer in database to populate externalExadataStorageServerId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageServerIDSelector *v1.Selector `json:"externalExadataStorageServerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -184,8 +194,18 @@ type ManagementExternalExadataStorageServerParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the Exadata storage server.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataStorageServer
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalExadataStorageServerID *string `json:"externalExadataStorageServerId,omitempty" tf:"external_exadata_storage_server_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataStorageServer in database to populate externalExadataStorageServerId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageServerIDRef *v1.Reference `json:"externalExadataStorageServerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataStorageServer in database to populate externalExadataStorageServerId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageServerIDSelector *v1.Selector `json:"externalExadataStorageServerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -229,9 +249,8 @@ type ManagementExternalExadataStorageServerStatus struct {
 type ManagementExternalExadataStorageServer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalExadataStorageServerId) || (has(self.initProvider) && has(self.initProvider.externalExadataStorageServerId))",message="spec.forProvider.externalExadataStorageServerId is a required parameter"
-	Spec   ManagementExternalExadataStorageServerSpec   `json:"spec"`
-	Status ManagementExternalExadataStorageServerStatus `json:"status,omitempty"`
+	Spec              ManagementExternalExadataStorageServerSpec   `json:"spec"`
+	Status            ManagementExternalExadataStorageServerStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

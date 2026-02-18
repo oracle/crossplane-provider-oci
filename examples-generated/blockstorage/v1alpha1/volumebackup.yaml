@@ -13,7 +13,9 @@ spec:
     displayName: ${var.volume_backup_display_name}
     freeformTags:
       Department: Finance
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     type: ${var.volume_backup_type}
     volumeIdSelector:
       matchLabels:

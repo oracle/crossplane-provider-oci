@@ -85,14 +85,33 @@ type ExecutionActionInitParameters struct {
 	ActionType *string `json:"actionType,omitempty" tf:"action_type,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) The OCID of the execution window resource the execution action belongs to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExecutionWindow
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExecutionWindowID *string `json:"executionWindowId,omitempty" tf:"execution_window_id,omitempty"`
+
+	// Reference to a ExecutionWindow in database to populate executionWindowId.
+	// +kubebuilder:validation:Optional
+	ExecutionWindowIDRef *v1.Reference `json:"executionWindowIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExecutionWindow in database to populate executionWindowId.
+	// +kubebuilder:validation:Optional
+	ExecutionWindowIDSelector *v1.Selector `json:"executionWindowIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -175,8 +194,17 @@ type ExecutionActionParameters struct {
 	ActionType *string `json:"actionType,omitempty" tf:"action_type,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -184,8 +212,18 @@ type ExecutionActionParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) The OCID of the execution window resource the execution action belongs to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExecutionWindow
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExecutionWindowID *string `json:"executionWindowId,omitempty" tf:"execution_window_id,omitempty"`
+
+	// Reference to a ExecutionWindow in database to populate executionWindowId.
+	// +kubebuilder:validation:Optional
+	ExecutionWindowIDRef *v1.Reference `json:"executionWindowIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExecutionWindow in database to populate executionWindowId.
+	// +kubebuilder:validation:Optional
+	ExecutionWindowIDSelector *v1.Selector `json:"executionWindowIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -230,7 +268,6 @@ type ExecutionAction struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.actionType) || (has(self.initProvider) && has(self.initProvider.actionType))",message="spec.forProvider.actionType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.executionWindowId) || (has(self.initProvider) && has(self.initProvider.executionWindowId))",message="spec.forProvider.executionWindowId is a required parameter"
 	Spec   ExecutionActionSpec   `json:"spec"`
 	Status ExecutionActionStatus `json:"status,omitempty"`
 }

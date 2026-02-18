@@ -20,7 +20,17 @@ type ManagementExternalExadataStorageGridInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the Exadata storage grid.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataStorageGrid
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalExadataStorageGridID *string `json:"externalExadataStorageGridId,omitempty" tf:"external_exadata_storage_grid_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataStorageGrid in database to populate externalExadataStorageGridId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageGridIDRef *v1.Reference `json:"externalExadataStorageGridIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataStorageGrid in database to populate externalExadataStorageGridId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageGridIDSelector *v1.Selector `json:"externalExadataStorageGridIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -96,8 +106,18 @@ type ManagementExternalExadataStorageGridParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the Exadata storage grid.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataStorageGrid
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalExadataStorageGridID *string `json:"externalExadataStorageGridId,omitempty" tf:"external_exadata_storage_grid_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataStorageGrid in database to populate externalExadataStorageGridId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageGridIDRef *v1.Reference `json:"externalExadataStorageGridIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataStorageGrid in database to populate externalExadataStorageGridId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataStorageGridIDSelector *v1.Selector `json:"externalExadataStorageGridIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -223,9 +243,8 @@ type ManagementExternalExadataStorageGridStatus struct {
 type ManagementExternalExadataStorageGrid struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalExadataStorageGridId) || (has(self.initProvider) && has(self.initProvider.externalExadataStorageGridId))",message="spec.forProvider.externalExadataStorageGridId is a required parameter"
-	Spec   ManagementExternalExadataStorageGridSpec   `json:"spec"`
-	Status ManagementExternalExadataStorageGridStatus `json:"status,omitempty"`
+	Spec              ManagementExternalExadataStorageGridSpec   `json:"spec"`
+	Status            ManagementExternalExadataStorageGridStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

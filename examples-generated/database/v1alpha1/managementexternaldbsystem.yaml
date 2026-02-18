@@ -8,7 +8,9 @@ metadata:
   name: test-external-db-system
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     databaseManagementConfig:
     - licenseModel: ${var.external_db_system_database_management_config_license_model}
     dbSystemDiscoveryId: ${oci_database_management_db_system_discovery.test_db_system_discovery.id}

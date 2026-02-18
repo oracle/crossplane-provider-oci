@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-cluster
 spec:
   forProvider:
-    cloudClusterId: ${oci_database_management_cloud_cluster.test_cloud_cluster.id}
+    cloudClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_cluster
     cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
     definedTags:
       Operations.CostCenter: "42"

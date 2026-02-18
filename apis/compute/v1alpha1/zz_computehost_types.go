@@ -40,7 +40,17 @@ type ComputeHostInitParameters struct {
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
 
 	// The OCID of the compute host.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeHost
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ComputeHostID *string `json:"computeHostId,omitempty" tf:"compute_host_id,omitempty"`
+
+	// Reference to a ComputeHost in compute to populate computeHostId.
+	// +kubebuilder:validation:Optional
+	ComputeHostIDRef *v1.Reference `json:"computeHostIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeHost in compute to populate computeHostId.
+	// +kubebuilder:validation:Optional
+	ComputeHostIDSelector *v1.Selector `json:"computeHostIdSelector,omitempty" tf:"-"`
 }
 
 type ComputeHostObservation struct {
@@ -137,8 +147,18 @@ type ComputeHostParameters struct {
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
 
 	// The OCID of the compute host.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeHost
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ComputeHostID *string `json:"computeHostId,omitempty" tf:"compute_host_id,omitempty"`
+
+	// Reference to a ComputeHost in compute to populate computeHostId.
+	// +kubebuilder:validation:Optional
+	ComputeHostIDRef *v1.Reference `json:"computeHostIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeHost in compute to populate computeHostId.
+	// +kubebuilder:validation:Optional
+	ComputeHostIDSelector *v1.Selector `json:"computeHostIdSelector,omitempty" tf:"-"`
 }
 
 type ConfigurationDataInitParameters struct {
@@ -207,9 +227,8 @@ type ComputeHostStatus struct {
 type ComputeHost struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.computeHostId) || (has(self.initProvider) && has(self.initProvider.computeHostId))",message="spec.forProvider.computeHostId is a required parameter"
-	Spec   ComputeHostSpec   `json:"spec"`
-	Status ComputeHostStatus `json:"status,omitempty"`
+	Spec              ComputeHostSpec   `json:"spec"`
+	Status            ComputeHostStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

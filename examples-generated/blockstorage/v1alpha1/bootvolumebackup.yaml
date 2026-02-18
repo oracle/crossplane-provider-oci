@@ -8,11 +8,15 @@ metadata:
   name: test-boot-volume-backup
 spec:
   forProvider:
-    bootVolumeId: ${oci_core_boot_volume.test_boot_volume.id}
+    bootVolumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_boot_volume
     definedTags:
       Operations.CostCenter: "42"
     displayName: ${var.boot_volume_backup_display_name}
     freeformTags:
       Department: Finance
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     type: ${var.boot_volume_backup_type}

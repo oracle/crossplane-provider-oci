@@ -65,7 +65,16 @@ type ScheduledActionInitParameters struct {
 	ActionType *string `json:"actionType,omitempty" tf:"action_type,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -76,7 +85,17 @@ type ScheduledActionInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the Scheduling Plan.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPlan
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SchedulingPlanID *string `json:"schedulingPlanId,omitempty" tf:"scheduling_plan_id,omitempty"`
+
+	// Reference to a SchedulingPlan in database to populate schedulingPlanId.
+	// +kubebuilder:validation:Optional
+	SchedulingPlanIDRef *v1.Reference `json:"schedulingPlanIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPlan in database to populate schedulingPlanId.
+	// +kubebuilder:validation:Optional
+	SchedulingPlanIDSelector *v1.Selector `json:"schedulingPlanIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Scheduling Window.
 	SchedulingWindowID *string `json:"schedulingWindowId,omitempty" tf:"scheduling_window_id,omitempty"`
@@ -153,8 +172,17 @@ type ScheduledActionParameters struct {
 	ActionType *string `json:"actionType,omitempty" tf:"action_type,omitempty"`
 
 	// The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -167,8 +195,18 @@ type ScheduledActionParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the Scheduling Plan.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.SchedulingPlan
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SchedulingPlanID *string `json:"schedulingPlanId,omitempty" tf:"scheduling_plan_id,omitempty"`
+
+	// Reference to a SchedulingPlan in database to populate schedulingPlanId.
+	// +kubebuilder:validation:Optional
+	SchedulingPlanIDRef *v1.Reference `json:"schedulingPlanIdRef,omitempty" tf:"-"`
+
+	// Selector for a SchedulingPlan in database to populate schedulingPlanId.
+	// +kubebuilder:validation:Optional
+	SchedulingPlanIDSelector *v1.Selector `json:"schedulingPlanIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Scheduling Window.
 	// +kubebuilder:validation:Optional
@@ -212,8 +250,6 @@ type ScheduledAction struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.actionType) || (has(self.initProvider) && has(self.initProvider.actionType))",message="spec.forProvider.actionType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schedulingPlanId) || (has(self.initProvider) && has(self.initProvider.schedulingPlanId))",message="spec.forProvider.schedulingPlanId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schedulingWindowId) || (has(self.initProvider) && has(self.initProvider.schedulingWindowId))",message="spec.forProvider.schedulingWindowId is a required parameter"
 	Spec   ScheduledActionSpec   `json:"spec"`
 	Status ScheduledActionStatus `json:"status,omitempty"`

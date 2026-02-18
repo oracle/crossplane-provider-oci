@@ -47,7 +47,17 @@ type ManagementExternalListenerInitParameters struct {
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
 
 	// The OCID of the external listener.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalListener
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalListenerID *string `json:"externalListenerId,omitempty" tf:"external_listener_id,omitempty"`
+
+	// Reference to a ManagementExternalListener in database to populate externalListenerId.
+	// +kubebuilder:validation:Optional
+	ExternalListenerIDRef *v1.Reference `json:"externalListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalListener in database to populate externalListenerId.
+	// +kubebuilder:validation:Optional
+	ExternalListenerIDSelector *v1.Selector `json:"externalListenerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -160,8 +170,18 @@ type ManagementExternalListenerParameters struct {
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
 
 	// The OCID of the external listener.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalListener
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalListenerID *string `json:"externalListenerId,omitempty" tf:"external_listener_id,omitempty"`
+
+	// Reference to a ManagementExternalListener in database to populate externalListenerId.
+	// +kubebuilder:validation:Optional
+	ExternalListenerIDRef *v1.Reference `json:"externalListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalListener in database to populate externalListenerId.
+	// +kubebuilder:validation:Optional
+	ExternalListenerIDSelector *v1.Selector `json:"externalListenerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -253,9 +273,8 @@ type ManagementExternalListenerStatus struct {
 type ManagementExternalListener struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalListenerId) || (has(self.initProvider) && has(self.initProvider.externalListenerId))",message="spec.forProvider.externalListenerId is a required parameter"
-	Spec   ManagementExternalListenerSpec   `json:"spec"`
-	Status ManagementExternalListenerStatus `json:"status,omitempty"`
+	Spec              ManagementExternalListenerSpec   `json:"spec"`
+	Status            ManagementExternalListenerStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

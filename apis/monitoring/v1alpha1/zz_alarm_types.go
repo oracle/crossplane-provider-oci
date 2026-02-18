@@ -38,7 +38,17 @@ type AlarmInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) A list of destinations for alarm notifications. Each destination is represented by the OCID of a related resource, such as a topic. Supported destination services: Notifications, Streaming. Limit: One destination per supported destination service.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/ons/v1alpha1.NotificationTopic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// References to NotificationTopic in ons to populate destinations.
+	// +kubebuilder:validation:Optional
+	DestinationsRefs []v1.Reference `json:"destinationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of NotificationTopic in ons to populate destinations.
+	// +kubebuilder:validation:Optional
+	DestinationsSelector *v1.Selector `json:"destinationsSelector,omitempty" tf:"-"`
 
 	// (Updatable) A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
@@ -102,7 +112,16 @@ type AlarmInitParameters struct {
 	ResourceGroup *string `json:"resourceGroup,omitempty" tf:"resource_group,omitempty"`
 
 	// (Updatable) A user-friendly description for this alarm override. Must be unique across all ruleName values for the alarm.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/events/v1alpha1.Rule
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
+
+	// Reference to a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameRef *v1.Reference `json:"ruleNameRef,omitempty" tf:"-"`
+
+	// Selector for a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameSelector *v1.Selector `json:"ruleNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The perceived severity of the alarm with regard to the affected system.  Example: CRITICAL
 	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
@@ -232,8 +251,18 @@ type AlarmParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) A list of destinations for alarm notifications. Each destination is represented by the OCID of a related resource, such as a topic. Supported destination services: Notifications, Streaming. Limit: One destination per supported destination service.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/ons/v1alpha1.NotificationTopic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Destinations []*string `json:"destinations,omitempty" tf:"destinations,omitempty"`
+
+	// References to NotificationTopic in ons to populate destinations.
+	// +kubebuilder:validation:Optional
+	DestinationsRefs []v1.Reference `json:"destinationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of NotificationTopic in ons to populate destinations.
+	// +kubebuilder:validation:Optional
+	DestinationsSelector *v1.Selector `json:"destinationsSelector,omitempty" tf:"-"`
 
 	// (Updatable) A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 	// +kubebuilder:validation:Optional
@@ -314,8 +343,17 @@ type AlarmParameters struct {
 	ResourceGroup *string `json:"resourceGroup,omitempty" tf:"resource_group,omitempty"`
 
 	// (Updatable) A user-friendly description for this alarm override. Must be unique across all ruleName values for the alarm.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/events/v1alpha1.Rule
 	// +kubebuilder:validation:Optional
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
+
+	// Reference to a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameRef *v1.Reference `json:"ruleNameRef,omitempty" tf:"-"`
+
+	// Selector for a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameSelector *v1.Selector `json:"ruleNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The perceived severity of the alarm with regard to the affected system.  Example: CRITICAL
 	// +kubebuilder:validation:Optional
@@ -338,7 +376,16 @@ type OverridesInitParameters struct {
 	Query *string `json:"query,omitempty" tf:"query,omitempty"`
 
 	// (Updatable) A user-friendly description for this alarm override. Must be unique across all ruleName values for the alarm.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/events/v1alpha1.Rule
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
+
+	// Reference to a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameRef *v1.Reference `json:"ruleNameRef,omitempty" tf:"-"`
+
+	// Selector for a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameSelector *v1.Selector `json:"ruleNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The perceived severity of the alarm with regard to the affected system.  Example: CRITICAL
 	Severity *string `json:"severity,omitempty" tf:"severity,omitempty"`
@@ -377,8 +424,17 @@ type OverridesParameters struct {
 	Query *string `json:"query,omitempty" tf:"query,omitempty"`
 
 	// (Updatable) A user-friendly description for this alarm override. Must be unique across all ruleName values for the alarm.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/events/v1alpha1.Rule
 	// +kubebuilder:validation:Optional
 	RuleName *string `json:"ruleName,omitempty" tf:"rule_name,omitempty"`
+
+	// Reference to a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameRef *v1.Reference `json:"ruleNameRef,omitempty" tf:"-"`
+
+	// Selector for a Rule in events to populate ruleName.
+	// +kubebuilder:validation:Optional
+	RuleNameSelector *v1.Selector `json:"ruleNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) The perceived severity of the alarm with regard to the affected system.  Example: CRITICAL
 	// +kubebuilder:validation:Optional
@@ -460,7 +516,6 @@ type AlarmStatus struct {
 type Alarm struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.destinations) || (has(self.initProvider) && has(self.initProvider.destinations))",message="spec.forProvider.destinations is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.isEnabled) || (has(self.initProvider) && has(self.initProvider.isEnabled))",message="spec.forProvider.isEnabled is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.__namespace__) || (has(self.initProvider) && has(self.initProvider.__namespace__))",message="spec.forProvider.namespace is a required parameter"

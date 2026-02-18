@@ -16,7 +16,17 @@ import (
 type AttachedViewsInitParameters struct {
 
 	// (Updatable) The OCID of the view.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
+
+	// Reference to a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDRef *v1.Reference `json:"viewIdRef,omitempty" tf:"-"`
+
+	// Selector for a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDSelector *v1.Selector `json:"viewIdSelector,omitempty" tf:"-"`
 }
 
 type AttachedViewsObservation struct {
@@ -28,8 +38,18 @@ type AttachedViewsObservation struct {
 type AttachedViewsParameters struct {
 
 	// (Updatable) The OCID of the view.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	ViewID *string `json:"viewId" tf:"view_id,omitempty"`
+	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
+
+	// Reference to a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDRef *v1.Reference `json:"viewIdRef,omitempty" tf:"-"`
+
+	// Selector for a View in dns to populate viewId.
+	// +kubebuilder:validation:Optional
+	ViewIDSelector *v1.Selector `json:"viewIdSelector,omitempty" tf:"-"`
 }
 
 type EndpointsInitParameters struct {
@@ -106,7 +126,17 @@ type ResolverInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the target resolver.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Resolver
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ResolverID *string `json:"resolverId,omitempty" tf:"resolver_id,omitempty"`
+
+	// Reference to a Resolver in dns to populate resolverId.
+	// +kubebuilder:validation:Optional
+	ResolverIDRef *v1.Reference `json:"resolverIdRef,omitempty" tf:"-"`
+
+	// Selector for a Resolver in dns to populate resolverId.
+	// +kubebuilder:validation:Optional
+	ResolverIDSelector *v1.Selector `json:"resolverIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Rules for the resolver. Rules are evaluated in order.
 	Rules []RulesInitParameters `json:"rules,omitempty" tf:"rules,omitempty"`
@@ -205,8 +235,18 @@ type ResolverParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the target resolver.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Resolver
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ResolverID *string `json:"resolverId,omitempty" tf:"resolver_id,omitempty"`
+
+	// Reference to a Resolver in dns to populate resolverId.
+	// +kubebuilder:validation:Optional
+	ResolverIDRef *v1.Reference `json:"resolverIdRef,omitempty" tf:"-"`
+
+	// Selector for a Resolver in dns to populate resolverId.
+	// +kubebuilder:validation:Optional
+	ResolverIDSelector *v1.Selector `json:"resolverIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Rules for the resolver. Rules are evaluated in order.
 	// +kubebuilder:validation:Optional
@@ -312,9 +352,8 @@ type ResolverStatus struct {
 type Resolver struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resolverId) || (has(self.initProvider) && has(self.initProvider.resolverId))",message="spec.forProvider.resolverId is a required parameter"
-	Spec   ResolverSpec   `json:"spec"`
-	Status ResolverStatus `json:"status,omitempty"`
+	Spec              ResolverSpec   `json:"spec"`
+	Status            ResolverStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

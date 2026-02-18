@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
@@ -182,6 +183,29 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Credentials); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Credentials[i3].PasswordDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretIDRef,
+					Selector:     mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretID")
+			}
+			mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Credentials[i3].PasswordDetails[i4].SecretIDRef = rsp.ResolvedReference
+
+		}
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.NetworkDetails); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
@@ -203,6 +227,27 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 		mg.Spec.ForProvider.NetworkDetails[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Source); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("psql.oci.upbound.io", "v1alpha1", "PsqlBackup", "PsqlBackupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Source[i3].BackupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.Source[i3].BackupIDRef,
+				Selector:     mg.Spec.ForProvider.Source[i3].BackupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Source[i3].BackupID")
+		}
+		mg.Spec.ForProvider.Source[i3].BackupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Source[i3].BackupIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
@@ -222,6 +267,29 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Credentials); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Credentials[i3].PasswordDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretIDRef,
+					Selector:     mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretID")
+			}
+			mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Credentials[i3].PasswordDetails[i4].SecretIDRef = rsp.ResolvedReference
+
+		}
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.NetworkDetails); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
@@ -241,6 +309,27 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 		}
 		mg.Spec.InitProvider.NetworkDetails[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.NetworkDetails[i3].SubnetIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Source); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("psql.oci.upbound.io", "v1alpha1", "PsqlBackup", "PsqlBackupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Source[i3].BackupID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.Source[i3].BackupIDRef,
+				Selector:     mg.Spec.InitProvider.Source[i3].BackupIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Source[i3].BackupID")
+		}
+		mg.Spec.InitProvider.Source[i3].BackupID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Source[i3].BackupIDRef = rsp.ResolvedReference
 
 	}
 

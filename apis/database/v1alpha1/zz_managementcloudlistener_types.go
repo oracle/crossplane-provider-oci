@@ -43,7 +43,17 @@ type ManagementCloudListenerInitParameters struct {
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
 
 	// The OCID of the cloud listener.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudListener
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudListenerID *string `json:"cloudListenerId,omitempty" tf:"cloud_listener_id,omitempty"`
+
+	// Reference to a ManagementCloudListener in database to populate cloudListenerId.
+	// +kubebuilder:validation:Optional
+	CloudListenerIDRef *v1.Reference `json:"cloudListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudListener in database to populate cloudListenerId.
+	// +kubebuilder:validation:Optional
+	CloudListenerIDSelector *v1.Selector `json:"cloudListenerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -158,8 +168,18 @@ type ManagementCloudListenerParameters struct {
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
 
 	// The OCID of the cloud listener.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudListener
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudListenerID *string `json:"cloudListenerId,omitempty" tf:"cloud_listener_id,omitempty"`
+
+	// Reference to a ManagementCloudListener in database to populate cloudListenerId.
+	// +kubebuilder:validation:Optional
+	CloudListenerIDRef *v1.Reference `json:"cloudListenerIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudListener in database to populate cloudListenerId.
+	// +kubebuilder:validation:Optional
+	CloudListenerIDSelector *v1.Selector `json:"cloudListenerIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -259,9 +279,8 @@ type ManagementCloudListenerStatus struct {
 type ManagementCloudListener struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudListenerId) || (has(self.initProvider) && has(self.initProvider.cloudListenerId))",message="spec.forProvider.cloudListenerId is a required parameter"
-	Spec   ManagementCloudListenerSpec   `json:"spec"`
-	Status ManagementCloudListenerStatus `json:"status,omitempty"`
+	Spec              ManagementCloudListenerSpec   `json:"spec"`
+	Status            ManagementCloudListenerStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

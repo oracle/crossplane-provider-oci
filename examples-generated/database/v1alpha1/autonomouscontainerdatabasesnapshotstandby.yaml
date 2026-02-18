@@ -8,6 +8,8 @@ metadata:
   name: test-autonomous-container-database-snapshot-standby
 spec:
   forProvider:
-    autonomousContainerDatabaseId: ${oci_database_autonomous_container_database.test_autonomous_container_database.id}
+    autonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
     connectionStringsType: ${var.autonomous_container_database_snapshot_standby_connection_strings_type}
     role: ${var.autonomous_container_database_snapshot_standby_role}

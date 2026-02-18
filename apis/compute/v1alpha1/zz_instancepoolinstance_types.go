@@ -31,7 +31,17 @@ type InstancePoolInstanceInitParameters struct {
 	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstancePool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
+
+	// Reference to a InstancePool in compute to populate instancePoolId.
+	// +kubebuilder:validation:Optional
+	InstancePoolIDRef *v1.Reference `json:"instancePoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstancePool in compute to populate instancePoolId.
+	// +kubebuilder:validation:Optional
+	InstancePoolIDSelector *v1.Selector `json:"instancePoolIdSelector,omitempty" tf:"-"`
 }
 
 type InstancePoolInstanceObservation struct {
@@ -101,8 +111,18 @@ type InstancePoolInstanceParameters struct {
 	InstanceIDSelector *v1.Selector `json:"instanceIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstancePool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstancePoolID *string `json:"instancePoolId,omitempty" tf:"instance_pool_id,omitempty"`
+
+	// Reference to a InstancePool in compute to populate instancePoolId.
+	// +kubebuilder:validation:Optional
+	InstancePoolIDRef *v1.Reference `json:"instancePoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstancePool in compute to populate instancePoolId.
+	// +kubebuilder:validation:Optional
+	InstancePoolIDSelector *v1.Selector `json:"instancePoolIdSelector,omitempty" tf:"-"`
 }
 
 type LoadBalancerBackendsInitParameters struct {
@@ -165,9 +185,8 @@ type InstancePoolInstanceStatus struct {
 type InstancePoolInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instancePoolId) || (has(self.initProvider) && has(self.initProvider.instancePoolId))",message="spec.forProvider.instancePoolId is a required parameter"
-	Spec   InstancePoolInstanceSpec   `json:"spec"`
-	Status InstancePoolInstanceStatus `json:"status,omitempty"`
+	Spec              InstancePoolInstanceSpec   `json:"spec"`
+	Status            InstancePoolInstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

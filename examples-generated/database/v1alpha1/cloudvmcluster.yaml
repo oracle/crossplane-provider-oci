@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     backupNetworkNsgIds: ${var.cloud_vm_cluster_backup_network_nsg_ids}
-    backupSubnetId: ${oci_core_subnet.test_subnet.id}
+    backupSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     cloudAutomationUpdateDetails:
     - applyUpdateTimePreference:
       - applyUpdatePreferredEndTime: ${var.cloud_vm_cluster_cloud_automation_update_details_apply_update_time_preference_apply_update_preferred_end_time}
@@ -19,9 +21,13 @@ spec:
         freezePeriodStartTime: ${var.cloud_vm_cluster_cloud_automation_update_details_freeze_period_freeze_period_start_time}
       isEarlyAdoptionEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_early_adoption_enabled}
       isFreezePeriodEnabled: ${var.cloud_vm_cluster_cloud_automation_update_details_is_freeze_period_enabled}
-    cloudExadataInfrastructureId: ${oci_database_cloud_exadata_infrastructure.test_cloud_exadata_infrastructure.id}
+    cloudExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_exadata_infrastructure
     clusterName: ${var.cloud_vm_cluster_cluster_name}
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     cpuCoreCount: ${var.cloud_vm_cluster_cpu_core_count}
     dataCollectionOptions:
     - isDiagnosticsEventsEnabled: ${var.cloud_vm_cluster_data_collection_options_is_diagnostics_events_enabled}
@@ -34,7 +40,9 @@ spec:
     definedTags: ${var.cloud_vm_cluster_defined_tags}
     displayName: ${var.cloud_vm_cluster_display_name}
     domain: ${var.cloud_vm_cluster_domain}
-    exascaleDbStorageVaultId: ${oci_database_exascale_db_storage_vault.test_exascale_db_storage_vault.id}
+    exascaleDbStorageVaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exascale_db_storage_vault
     fileSystemConfigurationDetails:
     - fileSystemSizeGb: ${var.cloud_vm_cluster_file_system_configuration_details_file_system_size_gb}
       mountPoint: ${var.cloud_vm_cluster_file_system_configuration_details_mount_point}
@@ -48,12 +56,16 @@ spec:
     memorySizeInGbs: ${var.cloud_vm_cluster_memory_size_in_gbs}
     nsgIds: ${var.cloud_vm_cluster_nsg_ids}
     ocpuCount: ${var.cloud_vm_cluster_ocpu_count}
-    privateZoneId: ${oci_dns_zone.test_zone.id}
+    privateZoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_zone
     scanListenerPortTcp: ${var.cloud_vm_cluster_scan_listener_port_tcp}
     scanListenerPortTcpSsl: ${var.cloud_vm_cluster_scan_listener_port_tcp_ssl}
     securityAttributes: ${var.cloud_vm_cluster_security_attributes}
     sshPublicKeys: ${var.cloud_vm_cluster_ssh_public_keys}
-    subnetId: ${oci_core_subnet.test_subnet.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     subscriptionId: ${var.tenant_subscription_id}
     systemVersion: ${var.cloud_vm_cluster_system_version}
     timeZone: ${var.cloud_vm_cluster_time_zone}

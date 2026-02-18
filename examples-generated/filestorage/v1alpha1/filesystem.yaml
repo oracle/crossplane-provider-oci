@@ -20,10 +20,14 @@ spec:
     filesystemSnapshotPolicyId: ${oci_file_storage_filesystem_snapshot_policy.test_filesystem_snapshot_policy.id}
     freeformTags:
       Department: Finance
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     locks:
     - message: ${var.file_system_locks_message}
       relatedResourceId: ${oci_cloud_guard_resource.test_resource.id}
       timeCreated: ${var.file_system_locks_time_created}
       type: ${var.file_system_locks_type}
-    sourceSnapshotId: ${oci_file_storage_snapshot.test_snapshot.id}
+    sourceSnapshotIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_snapshot

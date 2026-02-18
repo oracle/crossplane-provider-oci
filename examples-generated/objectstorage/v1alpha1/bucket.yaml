@@ -17,7 +17,9 @@ spec:
       Operations.CostCenter: "42"
     freeformTags:
       Department: Finance
-    kmsKeyId: ${oci_kms_key.test_key.id}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
     metadata: ${var.bucket_metadata}
     name: ${var.bucket_name}
     namespace: ${var.bucket_namespace}

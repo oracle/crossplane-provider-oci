@@ -16,7 +16,17 @@ import (
 type KeyStoreContentInitParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	ValueType *string `json:"valueType,omitempty" tf:"value_type,omitempty"`
@@ -34,8 +44,18 @@ type KeyStoreContentObservation struct {
 type KeyStoreContentParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	// +kubebuilder:validation:Optional
@@ -45,7 +65,17 @@ type KeyStoreContentParameters struct {
 type KeyStorePasswordInitParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	ValueType *string `json:"valueType,omitempty" tf:"value_type,omitempty"`
@@ -63,8 +93,18 @@ type KeyStorePasswordObservation struct {
 type KeyStorePasswordParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	// +kubebuilder:validation:Optional
@@ -168,7 +208,17 @@ type ProxyClientInitParameters struct {
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
 	// (Updatable) The user name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 
 	// (Applicable when proxy_authentication_type=USER_NAME) (Updatable) The database user password.
 	UserPassword []UserPasswordInitParameters `json:"userPassword,omitempty" tf:"user_password,omitempty"`
@@ -200,8 +250,18 @@ type ProxyClientParameters struct {
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
 	// (Updatable) The user name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 
 	// (Applicable when proxy_authentication_type=USER_NAME) (Updatable) The database user password.
 	// +kubebuilder:validation:Optional
@@ -244,7 +304,16 @@ type ToolsDatabaseToolsConnectionInitParameters struct {
 	AdvancedProperties map[string]*string `json:"advancedProperties,omitempty" tf:"advanced_properties,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the Database Tools connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The connect descriptor or Easy Connect Naming method use to connect to the database.
 	ConnectionString *string `json:"connectionString,omitempty" tf:"connection_string,omitempty"`
@@ -267,7 +336,17 @@ type ToolsDatabaseToolsConnectionInitParameters struct {
 	Locks []LocksInitParameters `json:"locks,omitempty" tf:"locks,omitempty"`
 
 	// (Applicable when type=MYSQL | ORACLE_DATABASE | POSTGRESQL) (Updatable) The OCID of the Database Tools private endpoint used to access the database in the customer VCN.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ToolsDatabaseToolsPrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PrivateEndpointID *string `json:"privateEndpointId,omitempty" tf:"private_endpoint_id,omitempty"`
+
+	// Reference to a ToolsDatabaseToolsPrivateEndpoint in database to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDRef *v1.Reference `json:"privateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a ToolsDatabaseToolsPrivateEndpoint in database to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDSelector *v1.Selector `json:"privateEndpointIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when type=ORACLE_DATABASE) (Updatable) The proxy client information.
 	ProxyClient []ProxyClientInitParameters `json:"proxyClient,omitempty" tf:"proxy_client,omitempty"`
@@ -288,7 +367,17 @@ type ToolsDatabaseToolsConnectionInitParameters struct {
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 
 	// (Updatable) The user name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 
 	// (Applicable when proxy_authentication_type=USER_NAME) (Updatable) The database user password.
 	UserPassword []ToolsDatabaseToolsConnectionUserPasswordInitParameters `json:"userPassword,omitempty" tf:"user_password,omitempty"`
@@ -381,8 +470,17 @@ type ToolsDatabaseToolsConnectionParameters struct {
 	AdvancedProperties map[string]*string `json:"advancedProperties,omitempty" tf:"advanced_properties,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the Database Tools connection.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The connect descriptor or Easy Connect Naming method use to connect to the database.
 	// +kubebuilder:validation:Optional
@@ -411,8 +509,18 @@ type ToolsDatabaseToolsConnectionParameters struct {
 	Locks []LocksParameters `json:"locks,omitempty" tf:"locks,omitempty"`
 
 	// (Applicable when type=MYSQL | ORACLE_DATABASE | POSTGRESQL) (Updatable) The OCID of the Database Tools private endpoint used to access the database in the customer VCN.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ToolsDatabaseToolsPrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PrivateEndpointID *string `json:"privateEndpointId,omitempty" tf:"private_endpoint_id,omitempty"`
+
+	// Reference to a ToolsDatabaseToolsPrivateEndpoint in database to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDRef *v1.Reference `json:"privateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a ToolsDatabaseToolsPrivateEndpoint in database to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDSelector *v1.Selector `json:"privateEndpointIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when type=ORACLE_DATABASE) (Updatable) The proxy client information.
 	// +kubebuilder:validation:Optional
@@ -439,8 +547,18 @@ type ToolsDatabaseToolsConnectionParameters struct {
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
 
 	// (Updatable) The user name.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
+
+	// Reference to a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameRef *v1.Reference `json:"userNameRef,omitempty" tf:"-"`
+
+	// Selector for a User in identity to populate userName.
+	// +kubebuilder:validation:Optional
+	UserNameSelector *v1.Selector `json:"userNameSelector,omitempty" tf:"-"`
 
 	// (Applicable when proxy_authentication_type=USER_NAME) (Updatable) The database user password.
 	// +kubebuilder:validation:Optional
@@ -450,7 +568,17 @@ type ToolsDatabaseToolsConnectionParameters struct {
 type ToolsDatabaseToolsConnectionUserPasswordInitParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	ValueType *string `json:"valueType,omitempty" tf:"value_type,omitempty"`
@@ -468,8 +596,18 @@ type ToolsDatabaseToolsConnectionUserPasswordObservation struct {
 type ToolsDatabaseToolsConnectionUserPasswordParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SecretID *string `json:"secretId" tf:"secret_id,omitempty"`
+	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	// +kubebuilder:validation:Optional
@@ -479,7 +617,17 @@ type ToolsDatabaseToolsConnectionUserPasswordParameters struct {
 type UserPasswordInitParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	ValueType *string `json:"valueType,omitempty" tf:"value_type,omitempty"`
@@ -497,8 +645,18 @@ type UserPasswordObservation struct {
 type UserPasswordParameters struct {
 
 	// (Updatable) The OCID of the secret containing the key store.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SecretID *string `json:"secretId" tf:"secret_id,omitempty"`
+	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The value type of the key store content.
 	// +kubebuilder:validation:Optional
@@ -541,10 +699,8 @@ type ToolsDatabaseToolsConnectionStatus struct {
 type ToolsDatabaseToolsConnection struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userName) || (has(self.initProvider) && has(self.initProvider.userName))",message="spec.forProvider.userName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userPassword) || (has(self.initProvider) && has(self.initProvider.userPassword))",message="spec.forProvider.userPassword is a required parameter"
 	Spec   ToolsDatabaseToolsConnectionSpec   `json:"spec"`
 	Status ToolsDatabaseToolsConnectionStatus `json:"status,omitempty"`

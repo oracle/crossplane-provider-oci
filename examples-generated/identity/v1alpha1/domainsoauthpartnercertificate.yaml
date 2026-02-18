@@ -12,8 +12,12 @@ spec:
     certificateAlias: ${var.oauth_partner_certificate_certificate_alias}
     externalId: externalId
     idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
-    keyStoreId: ${oci_database_key_store.test_key_store.id}
-    keyStoreName: ${oci_database_key_store.test_key_store.name}
+    keyStoreIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_store
+    keyStoreNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_store
     keyStorePasswordSecretRef:
       key: example-key
       name: example-secret

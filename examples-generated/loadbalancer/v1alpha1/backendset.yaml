@@ -37,7 +37,9 @@ spec:
       disableFallback: ${var.backend_set_session_persistence_configuration_disable_fallback}
     sslConfiguration:
     - certificateIds: ${var.backend_set_ssl_configuration_certificate_ids}
-      certificateName: ${oci_load_balancer_certificate.test_certificate.name}
+      certificateNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate
       cipherSuiteName: ${var.backend_set_ssl_configuration_cipher_suite_name}
       protocols: ${var.backend_set_ssl_configuration_protocols}
       serverOrderPreference: ${var.backend_set_ssl_configuration_server_order_preference}

@@ -16,8 +16,12 @@ spec:
     displayName: ${var.local_peering_gateway_display_name}
     freeformTags:
       Department: Finance
-    peerId: ${oci_core_local_peering_gateway.test_local_peering_gateway2.id}
-    routeTableId: ${oci_core_route_table.test_route_table.id}
+    peerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_local_peering_gateway2
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
     vcnIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_vcn

@@ -39,13 +39,43 @@ type Ipv6InitParameters struct {
 	Lifetime *string `json:"lifetime,omitempty" tf:"lifetime,omitempty"`
 
 	// (Updatable) The OCID of the route table the IP address or VNIC will use. For more information, see Source Based Routing.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the subnet from which the IPv6 is to be drawn. The IP address, if supplied, must be valid for the given subnet, only valid for reserved IPs currently.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.VnicAttachment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VnicID *string `json:"vnicId,omitempty" tf:"vnic_id,omitempty"`
+
+	// Reference to a VnicAttachment in networking to populate vnicId.
+	// +kubebuilder:validation:Optional
+	VnicIDRef *v1.Reference `json:"vnicIdRef,omitempty" tf:"-"`
+
+	// Selector for a VnicAttachment in networking to populate vnicId.
+	// +kubebuilder:validation:Optional
+	VnicIDSelector *v1.Selector `json:"vnicIdSelector,omitempty" tf:"-"`
 }
 
 type Ipv6Observation struct {
@@ -131,16 +161,46 @@ type Ipv6Parameters struct {
 	Lifetime *string `json:"lifetime,omitempty" tf:"lifetime,omitempty"`
 
 	// (Updatable) The OCID of the route table the IP address or VNIC will use. For more information, see Source Based Routing.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the subnet from which the IPv6 is to be drawn. The IP address, if supplied, must be valid for the given subnet, only valid for reserved IPs currently.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.VnicAttachment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VnicID *string `json:"vnicId,omitempty" tf:"vnic_id,omitempty"`
+
+	// Reference to a VnicAttachment in networking to populate vnicId.
+	// +kubebuilder:validation:Optional
+	VnicIDRef *v1.Reference `json:"vnicIdRef,omitempty" tf:"-"`
+
+	// Selector for a VnicAttachment in networking to populate vnicId.
+	// +kubebuilder:validation:Optional
+	VnicIDSelector *v1.Selector `json:"vnicIdSelector,omitempty" tf:"-"`
 }
 
 // Ipv6Spec defines the desired state of Ipv6

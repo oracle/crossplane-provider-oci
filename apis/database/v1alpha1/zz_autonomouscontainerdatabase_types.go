@@ -64,19 +64,58 @@ type AutonomousContainerDatabaseInitParameters struct {
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AutonomousExadataInfrastructureID *string `json:"autonomousExadataInfrastructureId,omitempty" tf:"autonomous_exadata_infrastructure_id,omitempty"`
 
+	// Reference to a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	AutonomousExadataInfrastructureIDRef *v1.Reference `json:"autonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	AutonomousExadataInfrastructureIDSelector *v1.Selector `json:"autonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the Autonomous VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AutonomousVMClusterID *string `json:"autonomousVmClusterId,omitempty" tf:"autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a AutonomousVmCluster in database to populate autonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	AutonomousVMClusterIDRef *v1.Reference `json:"autonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate autonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	AutonomousVMClusterIDSelector *v1.Selector `json:"autonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Backup options for the Autonomous Container Database.
 	BackupConfig []BackupConfigInitParameters `json:"backupConfig,omitempty" tf:"backup_config,omitempty"`
 
 	// The OCID of the cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudAutonomousVMClusterID *string `json:"cloudAutonomousVmClusterId,omitempty" tf:"cloud_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a CloudAutonomousVmCluster in database to populate cloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudAutonomousVMClusterIDRef *v1.Reference `json:"cloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate cloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudAutonomousVMClusterIDSelector *v1.Selector `json:"cloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the compartment containing the Autonomous Container Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Customer Contacts. Setting this to an empty list removes all customer contacts.
 	CustomerContacts []CustomerContactsInitParameters `json:"customerContacts,omitempty" tf:"customer_contacts,omitempty"`
@@ -94,7 +133,17 @@ type AutonomousContainerDatabaseInitParameters struct {
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// The Autonomous AI Database Software Image OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -123,10 +172,30 @@ type AutonomousContainerDatabaseInitParameters struct {
 	IsDstFileUpdateEnabled *bool `json:"isDstFileUpdateEnabled,omitempty" tf:"is_dst_file_update_enabled,omitempty"`
 
 	// The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the key store of Oracle Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyStoreID *string `json:"keyStoreId,omitempty" tf:"key_store_id,omitempty"`
+
+	// Reference to a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDRef *v1.Reference `json:"keyStoreIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDSelector *v1.Selector `json:"keyStoreIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the backup destination.
 	KeyVersionID *string `json:"keyVersionId,omitempty" tf:"key_version_id,omitempty"`
@@ -138,7 +207,17 @@ type AutonomousContainerDatabaseInitParameters struct {
 	NetServicesArchitecture *string `json:"netServicesArchitecture,omitempty" tf:"net_services_architecture,omitempty"`
 
 	// (Updatable) The OKV End Point Group name for the Autonomous Container Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	OkvEndPointGroupName *string `json:"okvEndPointGroupName,omitempty" tf:"okv_end_point_group_name,omitempty"`
+
+	// Reference to a Group in identity to populate okvEndPointGroupName.
+	// +kubebuilder:validation:Optional
+	OkvEndPointGroupNameRef *v1.Reference `json:"okvEndPointGroupNameRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate okvEndPointGroupName.
+	// +kubebuilder:validation:Optional
+	OkvEndPointGroupNameSelector *v1.Selector `json:"okvEndPointGroupNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) Database Patch model preference.
 	PatchModel *string `json:"patchModel,omitempty" tf:"patch_model,omitempty"`
@@ -147,19 +226,59 @@ type AutonomousContainerDatabaseInitParameters struct {
 	PeerAutonomousContainerDatabaseBackupConfig []PeerAutonomousContainerDatabaseBackupConfigInitParameters `json:"peerAutonomousContainerDatabaseBackupConfig,omitempty" tf:"peer_autonomous_container_database_backup_config,omitempty"`
 
 	// The OCID of the compartment where the standby Autonomous Container Database will be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerAutonomousContainerDatabaseCompartmentID *string `json:"peerAutonomousContainerDatabaseCompartmentId,omitempty" tf:"peer_autonomous_container_database_compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDRef *v1.Reference `json:"peerAutonomousContainerDatabaseCompartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDSelector *v1.Selector `json:"peerAutonomousContainerDatabaseCompartmentIdSelector,omitempty" tf:"-"`
 
 	// The display name for the peer Autonomous Container Database.
 	PeerAutonomousContainerDatabaseDisplayName *string `json:"peerAutonomousContainerDatabaseDisplayName,omitempty" tf:"peer_autonomous_container_database_display_name,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a peerCloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerAutonomousExadataInfrastructureID *string `json:"peerAutonomousExadataInfrastructureId,omitempty" tf:"peer_autonomous_exadata_infrastructure_id,omitempty"`
 
+	// Reference to a AutonomousExadataInfrastructure in database to populate peerAutonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousExadataInfrastructureIDRef *v1.Reference `json:"peerAutonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousExadataInfrastructure in database to populate peerAutonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousExadataInfrastructureIDSelector *v1.Selector `json:"peerAutonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerAutonomousVMClusterID *string `json:"peerAutonomousVmClusterId,omitempty" tf:"peer_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDRef *v1.Reference `json:"peerAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDSelector *v1.Selector `json:"peerAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PeerCloudAutonomousVMClusterID *string `json:"peerCloudAutonomousVmClusterId,omitempty" tf:"peer_cloud_autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDRef *v1.Reference `json:"peerCloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDSelector *v1.Selector `json:"peerCloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Deprecated. The DB_UNIQUE_NAME of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter.
 	PeerDBUniqueName *string `json:"peerDbUniqueName,omitempty" tf:"peer_db_unique_name,omitempty"`
@@ -188,7 +307,17 @@ type AutonomousContainerDatabaseInitParameters struct {
 	VMFailoverReservation *float64 `json:"vmFailoverReservation,omitempty" tf:"vm_failover_reservation,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The next maintenance version preference.
 	VersionPreference *string `json:"versionPreference,omitempty" tf:"version_preference,omitempty"`
@@ -446,24 +575,63 @@ type AutonomousContainerDatabaseParameters struct {
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AutonomousExadataInfrastructureID *string `json:"autonomousExadataInfrastructureId,omitempty" tf:"autonomous_exadata_infrastructure_id,omitempty"`
 
+	// Reference to a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	AutonomousExadataInfrastructureIDRef *v1.Reference `json:"autonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousExadataInfrastructure in database to populate autonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	AutonomousExadataInfrastructureIDSelector *v1.Selector `json:"autonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the Autonomous VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AutonomousVMClusterID *string `json:"autonomousVmClusterId,omitempty" tf:"autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a AutonomousVmCluster in database to populate autonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	AutonomousVMClusterIDRef *v1.Reference `json:"autonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate autonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	AutonomousVMClusterIDSelector *v1.Selector `json:"autonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Backup options for the Autonomous Container Database.
 	// +kubebuilder:validation:Optional
 	BackupConfig []BackupConfigParameters `json:"backupConfig,omitempty" tf:"backup_config,omitempty"`
 
 	// The OCID of the cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudAutonomousVMClusterID *string `json:"cloudAutonomousVmClusterId,omitempty" tf:"cloud_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a CloudAutonomousVmCluster in database to populate cloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudAutonomousVMClusterIDRef *v1.Reference `json:"cloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate cloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudAutonomousVMClusterIDSelector *v1.Selector `json:"cloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the compartment containing the Autonomous Container Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Customer Contacts. Setting this to an empty list removes all customer contacts.
 	// +kubebuilder:validation:Optional
@@ -486,8 +654,18 @@ type AutonomousContainerDatabaseParameters struct {
 	DBVersion *string `json:"dbVersion,omitempty" tf:"db_version,omitempty"`
 
 	// The Autonomous AI Database Software Image OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DatabaseSoftwareImage
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DatabaseSoftwareImageID *string `json:"databaseSoftwareImageId,omitempty" tf:"database_software_image_id,omitempty"`
+
+	// Reference to a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDRef *v1.Reference `json:"databaseSoftwareImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a DatabaseSoftwareImage in database to populate databaseSoftwareImageId.
+	// +kubebuilder:validation:Optional
+	DatabaseSoftwareImageIDSelector *v1.Selector `json:"databaseSoftwareImageIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -524,12 +702,32 @@ type AutonomousContainerDatabaseParameters struct {
 	IsDstFileUpdateEnabled *bool `json:"isDstFileUpdateEnabled,omitempty" tf:"is_dst_file_update_enabled,omitempty"`
 
 	// The OCID of the key container that is used as the master encryption key in database transparent data encryption (TDE) operations.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the key store of Oracle Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.KeyStore
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyStoreID *string `json:"keyStoreId,omitempty" tf:"key_store_id,omitempty"`
+
+	// Reference to a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDRef *v1.Reference `json:"keyStoreIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyStore in database to populate keyStoreId.
+	// +kubebuilder:validation:Optional
+	KeyStoreIDSelector *v1.Selector `json:"keyStoreIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the backup destination.
 	// +kubebuilder:validation:Optional
@@ -544,8 +742,18 @@ type AutonomousContainerDatabaseParameters struct {
 	NetServicesArchitecture *string `json:"netServicesArchitecture,omitempty" tf:"net_services_architecture,omitempty"`
 
 	// (Updatable) The OKV End Point Group name for the Autonomous Container Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	OkvEndPointGroupName *string `json:"okvEndPointGroupName,omitempty" tf:"okv_end_point_group_name,omitempty"`
+
+	// Reference to a Group in identity to populate okvEndPointGroupName.
+	// +kubebuilder:validation:Optional
+	OkvEndPointGroupNameRef *v1.Reference `json:"okvEndPointGroupNameRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate okvEndPointGroupName.
+	// +kubebuilder:validation:Optional
+	OkvEndPointGroupNameSelector *v1.Selector `json:"okvEndPointGroupNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) Database Patch model preference.
 	// +kubebuilder:validation:Optional
@@ -556,24 +764,64 @@ type AutonomousContainerDatabaseParameters struct {
 	PeerAutonomousContainerDatabaseBackupConfig []PeerAutonomousContainerDatabaseBackupConfigParameters `json:"peerAutonomousContainerDatabaseBackupConfig,omitempty" tf:"peer_autonomous_container_database_backup_config,omitempty"`
 
 	// The OCID of the compartment where the standby Autonomous Container Database will be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerAutonomousContainerDatabaseCompartmentID *string `json:"peerAutonomousContainerDatabaseCompartmentId,omitempty" tf:"peer_autonomous_container_database_compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDRef *v1.Reference `json:"peerAutonomousContainerDatabaseCompartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate peerAutonomousContainerDatabaseCompartmentId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousContainerDatabaseCompartmentIDSelector *v1.Selector `json:"peerAutonomousContainerDatabaseCompartmentIdSelector,omitempty" tf:"-"`
 
 	// The display name for the peer Autonomous Container Database.
 	// +kubebuilder:validation:Optional
 	PeerAutonomousContainerDatabaseDisplayName *string `json:"peerAutonomousContainerDatabaseDisplayName,omitempty" tf:"peer_autonomous_container_database_display_name,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a peerCloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerAutonomousExadataInfrastructureID *string `json:"peerAutonomousExadataInfrastructureId,omitempty" tf:"peer_autonomous_exadata_infrastructure_id,omitempty"`
 
+	// Reference to a AutonomousExadataInfrastructure in database to populate peerAutonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousExadataInfrastructureIDRef *v1.Reference `json:"peerAutonomousExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousExadataInfrastructure in database to populate peerAutonomousExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousExadataInfrastructureIDSelector *v1.Selector `json:"peerAutonomousExadataInfrastructureIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerAutonomousVMClusterID *string `json:"peerAutonomousVmClusterId,omitempty" tf:"peer_autonomous_vm_cluster_id,omitempty"`
 
+	// Reference to a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDRef *v1.Reference `json:"peerAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousVmCluster in database to populate peerAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerAutonomousVMClusterIDSelector *v1.Selector `json:"peerAutonomousVmClusterIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the peer cloud Autonomous Exadata VM Cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudAutonomousVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PeerCloudAutonomousVMClusterID *string `json:"peerCloudAutonomousVmClusterId,omitempty" tf:"peer_cloud_autonomous_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDRef *v1.Reference `json:"peerCloudAutonomousVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudAutonomousVmCluster in database to populate peerCloudAutonomousVmClusterId.
+	// +kubebuilder:validation:Optional
+	PeerCloudAutonomousVMClusterIDSelector *v1.Selector `json:"peerCloudAutonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// Deprecated. The DB_UNIQUE_NAME of the peer Autonomous Container Database in a Data Guard association is set by Oracle Cloud Infrastructure.  Do not specify a value for this parameter.
 	// +kubebuilder:validation:Optional
@@ -611,8 +859,18 @@ type AutonomousContainerDatabaseParameters struct {
 	VMFailoverReservation *float64 `json:"vmFailoverReservation,omitempty" tf:"vm_failover_reservation,omitempty"`
 
 	// The OCID of the Oracle Cloud Infrastructure vault. This parameter and secretId are required for Customer Managed Keys.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Vault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VaultID *string `json:"vaultId,omitempty" tf:"vault_id,omitempty"`
+
+	// Reference to a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDRef *v1.Reference `json:"vaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a Vault in kms to populate vaultId.
+	// +kubebuilder:validation:Optional
+	VaultIDSelector *v1.Selector `json:"vaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The next maintenance version preference.
 	// +kubebuilder:validation:Optional

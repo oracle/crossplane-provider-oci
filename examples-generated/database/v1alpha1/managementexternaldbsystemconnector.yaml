@@ -10,4 +10,6 @@ spec:
   forProvider:
     connectorType: ${var.external_db_system_connector_connector_type}
     displayName: ${var.external_db_system_connector_display_name}
-    externalDbSystemId: ${oci_database_management_external_db_system.test_external_db_system.id}
+    externalDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_db_system

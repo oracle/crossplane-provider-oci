@@ -11,7 +11,9 @@ spec:
     adminEmail: ${var.domain_admin_email}
     adminFirstName: ${var.domain_admin_first_name}
     adminLastName: ${var.domain_admin_last_name}
-    adminUserName: ${var.user_name}
+    adminUserNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

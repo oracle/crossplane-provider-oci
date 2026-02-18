@@ -62,13 +62,32 @@ type ExadbVmClusterInitParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet associated with the Exadata VM cluster on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
 	DataCollectionOptions []ExadbVmClusterDataCollectionOptionsInitParameters `json:"dataCollectionOptions,omitempty" tf:"data_collection_options,omitempty"`
@@ -84,14 +103,34 @@ type ExadbVmClusterInitParameters struct {
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
 	// The OCID of the Exadata Database Storage Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExascaleDbStorageVault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExascaleDBStorageVaultID *string `json:"exascaleDbStorageVaultId,omitempty" tf:"exascale_db_storage_vault_id,omitempty"`
+
+	// Reference to a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDRef *v1.Reference `json:"exascaleDbStorageVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDSelector *v1.Selector `json:"exascaleDbStorageVaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) Grid Setup will be done using this grid image id.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	GridImageID *string `json:"gridImageId,omitempty" tf:"grid_image_id,omitempty"`
+
+	// Reference to a Image in compute to populate gridImageId.
+	// +kubebuilder:validation:Optional
+	GridImageIDRef *v1.Reference `json:"gridImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate gridImageId.
+	// +kubebuilder:validation:Optional
+	GridImageIDSelector *v1.Selector `json:"gridImageIdSelector,omitempty" tf:"-"`
 
 	// The hostname for the Exadata VM cluster on Exascale Infrastructure. The hostname must begin with an alphabetic character, and  can contain alphanumeric characters and hyphens (-). For Exadata systems, the maximum length of the hostname is 12 characters.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
@@ -110,7 +149,17 @@ type ExadbVmClusterInitParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// The private zone ID in which you want DNS records to be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Zone
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PrivateZoneID *string `json:"privateZoneId,omitempty" tf:"private_zone_id,omitempty"`
+
+	// Reference to a Zone in dns to populate privateZoneId.
+	// +kubebuilder:validation:Optional
+	PrivateZoneIDRef *v1.Reference `json:"privateZoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone in dns to populate privateZoneId.
+	// +kubebuilder:validation:Optional
+	PrivateZoneIDSelector *v1.Selector `json:"privateZoneIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure.
 	SSHPublicKeys []*string `json:"sshPublicKeys,omitempty" tf:"ssh_public_keys,omitempty"`
@@ -132,7 +181,17 @@ type ExadbVmClusterInitParameters struct {
 	ShapeAttribute *string `json:"shapeAttribute,omitempty" tf:"shape_attribute,omitempty"`
 
 	// The OCID of the subnet associated with the Exadata VM cluster on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the subscription with which resource needs to be associated with.
 	SubscriptionID *string `json:"subscriptionId,omitempty" tf:"subscription_id,omitempty"`
@@ -336,16 +395,35 @@ type ExadbVmClusterParameters struct {
 	BackupNetworkNsgIds []*string `json:"backupNetworkNsgIds,omitempty" tf:"backup_network_nsg_ids,omitempty"`
 
 	// The OCID of the backup network subnet associated with the Exadata VM cluster on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupSubnetID *string `json:"backupSubnetId,omitempty" tf:"backup_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDRef *v1.Reference `json:"backupSubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate backupSubnetId.
+	// +kubebuilder:validation:Optional
+	BackupSubnetIDSelector *v1.Selector `json:"backupSubnetIdSelector,omitempty" tf:"-"`
 
 	// The cluster name for Exadata VM cluster on Exascale Infrastructure. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.
 	// +kubebuilder:validation:Optional
 	ClusterName *string `json:"clusterName,omitempty" tf:"cluster_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS.
 	// +kubebuilder:validation:Optional
@@ -365,8 +443,18 @@ type ExadbVmClusterParameters struct {
 	Domain *string `json:"domain,omitempty" tf:"domain,omitempty"`
 
 	// The OCID of the Exadata Database Storage Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExascaleDbStorageVault
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExascaleDBStorageVaultID *string `json:"exascaleDbStorageVaultId,omitempty" tf:"exascale_db_storage_vault_id,omitempty"`
+
+	// Reference to a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDRef *v1.Reference `json:"exascaleDbStorageVaultIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExascaleDbStorageVault in database to populate exascaleDbStorageVaultId.
+	// +kubebuilder:validation:Optional
+	ExascaleDBStorageVaultIDSelector *v1.Selector `json:"exascaleDbStorageVaultIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -374,8 +462,18 @@ type ExadbVmClusterParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) Grid Setup will be done using this grid image id.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	GridImageID *string `json:"gridImageId,omitempty" tf:"grid_image_id,omitempty"`
+
+	// Reference to a Image in compute to populate gridImageId.
+	// +kubebuilder:validation:Optional
+	GridImageIDRef *v1.Reference `json:"gridImageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Image in compute to populate gridImageId.
+	// +kubebuilder:validation:Optional
+	GridImageIDSelector *v1.Selector `json:"gridImageIdSelector,omitempty" tf:"-"`
 
 	// The hostname for the Exadata VM cluster on Exascale Infrastructure. The hostname must begin with an alphabetic character, and  can contain alphanumeric characters and hyphens (-). For Exadata systems, the maximum length of the hostname is 12 characters.
 	// +kubebuilder:validation:Optional
@@ -399,8 +497,18 @@ type ExadbVmClusterParameters struct {
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
 	// The private zone ID in which you want DNS records to be created.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Zone
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PrivateZoneID *string `json:"privateZoneId,omitempty" tf:"private_zone_id,omitempty"`
+
+	// Reference to a Zone in dns to populate privateZoneId.
+	// +kubebuilder:validation:Optional
+	PrivateZoneIDRef *v1.Reference `json:"privateZoneIdRef,omitempty" tf:"-"`
+
+	// Selector for a Zone in dns to populate privateZoneId.
+	// +kubebuilder:validation:Optional
+	PrivateZoneIDSelector *v1.Selector `json:"privateZoneIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure.
 	// +kubebuilder:validation:Optional
@@ -428,8 +536,18 @@ type ExadbVmClusterParameters struct {
 	ShapeAttribute *string `json:"shapeAttribute,omitempty" tf:"shape_attribute,omitempty"`
 
 	// The OCID of the subnet associated with the Exadata VM cluster on Exascale Infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the subscription with which resource needs to be associated with.
 	// +kubebuilder:validation:Optional
@@ -557,16 +675,11 @@ type ExadbVmCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.availabilityDomain) || (has(self.initProvider) && has(self.initProvider.availabilityDomain))",message="spec.forProvider.availabilityDomain is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.backupSubnetId) || (has(self.initProvider) && has(self.initProvider.backupSubnetId))",message="spec.forProvider.backupSubnetId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.exascaleDbStorageVaultId) || (has(self.initProvider) && has(self.initProvider.exascaleDbStorageVaultId))",message="spec.forProvider.exascaleDbStorageVaultId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.gridImageId) || (has(self.initProvider) && has(self.initProvider.gridImageId))",message="spec.forProvider.gridImageId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.hostname) || (has(self.initProvider) && has(self.initProvider.hostname))",message="spec.forProvider.hostname is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nodeConfig) || (has(self.initProvider) && has(self.initProvider.nodeConfig))",message="spec.forProvider.nodeConfig is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.shape) || (has(self.initProvider) && has(self.initProvider.shape))",message="spec.forProvider.shape is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sshPublicKeys) || (has(self.initProvider) && has(self.initProvider.sshPublicKeys))",message="spec.forProvider.sshPublicKeys is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subnetId) || (has(self.initProvider) && has(self.initProvider.subnetId))",message="spec.forProvider.subnetId is a required parameter"
 	Spec   ExadbVmClusterSpec   `json:"spec"`
 	Status ExadbVmClusterStatus `json:"status,omitempty"`
 }

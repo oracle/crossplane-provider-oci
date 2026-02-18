@@ -20,7 +20,17 @@ type ManagementExternalAsmInstanceInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external ASM instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalAsmInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalAsmInstanceID *string `json:"externalAsmInstanceId,omitempty" tf:"external_asm_instance_id,omitempty"`
+
+	// Reference to a ManagementExternalAsmInstance in database to populate externalAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmInstanceIDRef *v1.Reference `json:"externalAsmInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalAsmInstance in database to populate externalAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmInstanceIDSelector *v1.Selector `json:"externalAsmInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -92,8 +102,18 @@ type ManagementExternalAsmInstanceParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external ASM instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalAsmInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalAsmInstanceID *string `json:"externalAsmInstanceId,omitempty" tf:"external_asm_instance_id,omitempty"`
+
+	// Reference to a ManagementExternalAsmInstance in database to populate externalAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmInstanceIDRef *v1.Reference `json:"externalAsmInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalAsmInstance in database to populate externalAsmInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmInstanceIDSelector *v1.Selector `json:"externalAsmInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -137,9 +157,8 @@ type ManagementExternalAsmInstanceStatus struct {
 type ManagementExternalAsmInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalAsmInstanceId) || (has(self.initProvider) && has(self.initProvider.externalAsmInstanceId))",message="spec.forProvider.externalAsmInstanceId is a required parameter"
-	Spec   ManagementExternalAsmInstanceSpec   `json:"spec"`
-	Status ManagementExternalAsmInstanceStatus `json:"status,omitempty"`
+	Spec              ManagementExternalAsmInstanceSpec   `json:"spec"`
+	Status            ManagementExternalAsmInstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -14,6 +14,8 @@ spec:
     keyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_key
-    keyVersionId: ${oci_kms_key_version.test_key_version.id}
+    keyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     loggingContext: ${var.encrypted_data_logging_context}
     plaintext: ${var.encrypted_data_plaintext}

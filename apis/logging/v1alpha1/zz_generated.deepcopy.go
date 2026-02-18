@@ -4158,6 +4158,16 @@ func (in *ServiceConfigurationUnifiedAgentConfigurationFilterInitParameters) Dee
 		*out = new(string)
 		**out = **in
 	}
+	if in.KeyNameRef != nil {
+		in, out := &in.KeyNameRef, &out.KeyNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyNameSelector != nil {
+		in, out := &in.KeyNameSelector, &out.KeyNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -4483,6 +4493,16 @@ func (in *ServiceConfigurationUnifiedAgentConfigurationFilterParameters) DeepCop
 		in, out := &in.KeyName, &out.KeyName
 		*out = new(string)
 		**out = **in
+	}
+	if in.KeyNameRef != nil {
+		in, out := &in.KeyNameRef, &out.KeyNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KeyNameSelector != nil {
+		in, out := &in.KeyNameSelector, &out.KeyNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

@@ -22,7 +22,17 @@ type ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementInitParamete
 	EnableExternalMySQLDatabase *bool `json:"enableExternalMysqlDatabase,omitempty" tf:"enable_external_mysql_database,omitempty"`
 
 	// The OCID of the External MySQL Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalMySqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalMySQLDatabaseID *string `json:"externalMySqlDatabaseId,omitempty" tf:"external_my_sql_database_id,omitempty"`
+
+	// Reference to a ManagementExternalMySqlDatabase in database to populate externalMySqlDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalMySQLDatabaseIDRef *v1.Reference `json:"externalMySqlDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalMySqlDatabase in database to populate externalMySqlDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalMySQLDatabaseIDSelector *v1.Selector `json:"externalMySqlDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 type ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementObservation struct {
@@ -50,8 +60,18 @@ type ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementParameters s
 	EnableExternalMySQLDatabase *bool `json:"enableExternalMysqlDatabase,omitempty" tf:"enable_external_mysql_database,omitempty"`
 
 	// The OCID of the External MySQL Database.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalMySqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalMySQLDatabaseID *string `json:"externalMySqlDatabaseId,omitempty" tf:"external_my_sql_database_id,omitempty"`
+
+	// Reference to a ManagementExternalMySqlDatabase in database to populate externalMySqlDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalMySQLDatabaseIDRef *v1.Reference `json:"externalMySqlDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalMySqlDatabase in database to populate externalMySqlDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalMySQLDatabaseIDSelector *v1.Selector `json:"externalMySqlDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 // ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementSpec defines the desired state of ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagement
@@ -91,7 +111,6 @@ type ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableExternalMysqlDatabase) || (has(self.initProvider) && has(self.initProvider.enableExternalMysqlDatabase))",message="spec.forProvider.enableExternalMysqlDatabase is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalMySqlDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalMySqlDatabaseId))",message="spec.forProvider.externalMySqlDatabaseId is a required parameter"
 	Spec   ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementSpec   `json:"spec"`
 	Status ManagementExternalMySqlDatabaseExternalMysqlDatabasesManagementStatus `json:"status,omitempty"`
 }

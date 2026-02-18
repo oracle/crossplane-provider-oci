@@ -16,7 +16,17 @@ import (
 type DbNodeConsoleHistoryInitParameters struct {
 
 	// The database node OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DBNodeID *string `json:"dbNodeId,omitempty" tf:"db_node_id,omitempty"`
+
+	// Reference to a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDRef *v1.Reference `json:"dbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDSelector *v1.Selector `json:"dbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -65,8 +75,18 @@ type DbNodeConsoleHistoryObservation struct {
 type DbNodeConsoleHistoryParameters struct {
 
 	// The database node OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.DbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DBNodeID *string `json:"dbNodeId,omitempty" tf:"db_node_id,omitempty"`
+
+	// Reference to a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDRef *v1.Reference `json:"dbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a DbNode in database to populate dbNodeId.
+	// +kubebuilder:validation:Optional
+	DBNodeIDSelector *v1.Selector `json:"dbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -119,7 +139,6 @@ type DbNodeConsoleHistoryStatus struct {
 type DbNodeConsoleHistory struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbNodeId) || (has(self.initProvider) && has(self.initProvider.dbNodeId))",message="spec.forProvider.dbNodeId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	Spec   DbNodeConsoleHistorySpec   `json:"spec"`
 	Status DbNodeConsoleHistoryStatus `json:"status,omitempty"`

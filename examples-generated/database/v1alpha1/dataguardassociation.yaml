@@ -24,8 +24,12 @@ spec:
       namespace: upbound-system
     databaseDefinedTags: ${var.data_guard_association_database_defined_tags}
     databaseFreeformTags: ${var.data_guard_association_database_freeform_tags}
-    databaseId: ${oci_database_database.test_database.id}
-    databaseSoftwareImageId: ${oci_database_database_software_image.test_database_software_image.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
+    databaseSoftwareImageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database_software_image
     dbSystemDefinedTags: ${var.data_guard_association_db_system_defined_tags}
     dbSystemFreeformTags: ${var.data_guard_association_db_system_freeform_tags}
     dbSystemSecurityAttributes: ${var.data_guard_association_db_system_security_attributes}
@@ -38,16 +42,24 @@ spec:
     licenseModel: ${var.data_guard_association_license_model}
     nodeCount: ${var.data_guard_association_node_count}
     nsgIds: ${var.data_guard_association_nsg_ids}
-    peerDbHomeId: ${oci_database_db_home.test_db_home.id}
-    peerDbSystemId: ${oci_database_db_system.test_db_system.id}
+    peerDbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_home
+    peerDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
     peerDbUniqueName: ${var.data_guard_association_peer_db_unique_name}
     peerSidPrefix: ${var.data_guard_association_peer_sid_prefix}
-    peerVmClusterId: ${oci_database_vm_cluster.test_vm_cluster.id}
+    peerVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster
     privateIp: ${var.data_guard_association_private_ip}
     privateIpV6: ${var.data_guard_association_private_ip_v6}
     protectionMode: ${var.data_guard_association_protection_mode}
     shape: ${var.data_guard_association_shape}
     storageVolumePerformanceMode: ${var.data_guard_association_storage_volume_performance_mode}
-    subnetId: ${oci_core_subnet.test_subnet.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
     timeZone: ${var.data_guard_association_time_zone}
     transportType: ${var.data_guard_association_transport_type}

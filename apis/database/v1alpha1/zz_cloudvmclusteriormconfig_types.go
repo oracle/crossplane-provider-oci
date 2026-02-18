@@ -48,7 +48,17 @@ type CloudVmClusterIormConfigDBPlansParameters struct {
 type CloudVmClusterIormConfigInitParameters struct {
 
 	// The Cluster OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudVMClusterID *string `json:"cloudVmClusterId,omitempty" tf:"cloud_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDRef *v1.Reference `json:"cloudVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDSelector *v1.Selector `json:"cloudVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Array of IORM Setting for all the database in this Cloud Vm Cluster
 	DBPlans []CloudVmClusterIormConfigDBPlansInitParameters `json:"dbPlans,omitempty" tf:"db_plans,omitempty"`
@@ -80,8 +90,18 @@ type CloudVmClusterIormConfigObservation struct {
 type CloudVmClusterIormConfigParameters struct {
 
 	// The Cluster OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.CloudVmCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudVMClusterID *string `json:"cloudVmClusterId,omitempty" tf:"cloud_vm_cluster_id,omitempty"`
+
+	// Reference to a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDRef *v1.Reference `json:"cloudVmClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a CloudVmCluster in database to populate cloudVmClusterId.
+	// +kubebuilder:validation:Optional
+	CloudVMClusterIDSelector *v1.Selector `json:"cloudVmClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Array of IORM Setting for all the database in this Cloud Vm Cluster
 	// +kubebuilder:validation:Optional
@@ -128,7 +148,6 @@ type CloudVmClusterIormConfigStatus struct {
 type CloudVmClusterIormConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudVmClusterId) || (has(self.initProvider) && has(self.initProvider.cloudVmClusterId))",message="spec.forProvider.cloudVmClusterId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbPlans) || (has(self.initProvider) && has(self.initProvider.dbPlans))",message="spec.forProvider.dbPlans is a required parameter"
 	Spec   CloudVmClusterIormConfigSpec   `json:"spec"`
 	Status CloudVmClusterIormConfigStatus `json:"status,omitempty"`

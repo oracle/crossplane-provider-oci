@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -63,6 +64,94 @@ func (mg *Secret) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.KeyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.KeyIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ReplicationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDRef,
+					Selector:     mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID")
+			}
+			mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ReplicationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Vault", "VaultList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDRef,
+					Selector:     mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID")
+			}
+			mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.RotationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("functions.oci.upbound.io", "v1alpha1", "Function", "FunctionList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDRef,
+					Selector:     mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID")
+			}
+			mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecretName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.SecretNameRef,
+			Selector:     mg.Spec.ForProvider.SecretNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecretName")
+	}
+	mg.Spec.ForProvider.SecretName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SecretNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Vault", "VaultList")
 		if err != nil {
@@ -120,6 +209,94 @@ func (mg *Secret) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.InitProvider.KeyID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.KeyIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ReplicationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDRef,
+					Selector:     mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID")
+			}
+			mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ReplicationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Vault", "VaultList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDRef,
+					Selector:     mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID")
+			}
+			mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.ReplicationConfig[i3].ReplicationTargets[i4].TargetVaultIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.RotationConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("functions.oci.upbound.io", "v1alpha1", "Function", "FunctionList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDRef,
+					Selector:     mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID")
+			}
+			mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.RotationConfig[i3].TargetSystemDetails[i4].FunctionIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecretName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.SecretNameRef,
+			Selector:     mg.Spec.InitProvider.SecretNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SecretName")
+	}
+	mg.Spec.InitProvider.SecretName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SecretNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Vault", "VaultList")
 		if err != nil {

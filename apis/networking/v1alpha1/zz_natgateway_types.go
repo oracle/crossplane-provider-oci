@@ -42,10 +42,30 @@ type NatGatewayInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the public IP address associated with the NAT gateway.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.PublicIp
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PublicIPID *string `json:"publicIpId,omitempty" tf:"public_ip_id,omitempty"`
 
+	// Reference to a PublicIp in networking to populate publicIpId.
+	// +kubebuilder:validation:Optional
+	PublicIPIDRef *v1.Reference `json:"publicIpIdRef,omitempty" tf:"-"`
+
+	// Selector for a PublicIp in networking to populate publicIpId.
+	// +kubebuilder:validation:Optional
+	PublicIPIDSelector *v1.Selector `json:"publicIpIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the route table used by the NAT gateway.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN the gateway belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn
@@ -135,12 +155,32 @@ type NatGatewayParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// The OCID of the public IP address associated with the NAT gateway.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.PublicIp
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PublicIPID *string `json:"publicIpId,omitempty" tf:"public_ip_id,omitempty"`
 
+	// Reference to a PublicIp in networking to populate publicIpId.
+	// +kubebuilder:validation:Optional
+	PublicIPIDRef *v1.Reference `json:"publicIpIdRef,omitempty" tf:"-"`
+
+	// Selector for a PublicIp in networking to populate publicIpId.
+	// +kubebuilder:validation:Optional
+	PublicIPIDSelector *v1.Selector `json:"publicIpIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) The OCID of the route table used by the NAT gateway.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.RouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
+
+	// Reference to a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDRef *v1.Reference `json:"routeTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a RouteTable in networking to populate routeTableId.
+	// +kubebuilder:validation:Optional
+	RouteTableIDSelector *v1.Selector `json:"routeTableIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the VCN the gateway belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Vcn

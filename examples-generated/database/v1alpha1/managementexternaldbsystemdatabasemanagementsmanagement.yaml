@@ -9,5 +9,7 @@ metadata:
 spec:
   forProvider:
     enableDatabaseManagement: ${var.enable_database_management}
-    externalDbSystemId: ${oci_database_management_external_db_system.test_external_db_system.id}
+    externalDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_db_system
     licenseModel: ${var.external_db_system_database_managements_management_license_model}

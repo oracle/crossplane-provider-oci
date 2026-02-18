@@ -308,10 +308,30 @@ type DomainsAuthTokenUrnietfparamsscimschemasoracleidcsextensionselfChangeUserPa
 type DomainsAuthTokenUserInitParameters struct {
 
 	// The OCID of the SCIM resource that represents the User or App who created this Resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsUser
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("ocid",false)
 	Ocid *string `json:"ocid,omitempty" tf:"ocid,omitempty"`
 
+	// Reference to a DomainsUser in identity to populate ocid.
+	// +kubebuilder:validation:Optional
+	OcidRef *v1.Reference `json:"ocidRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsUser in identity to populate ocid.
+	// +kubebuilder:validation:Optional
+	OcidSelector *v1.Selector `json:"ocidSelector,omitempty" tf:"-"`
+
 	// The ID of the SCIM resource that represents the User or App who created this Resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsUser
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+
+	// Reference to a DomainsUser in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueRef *v1.Reference `json:"valueRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsUser in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueSelector *v1.Selector `json:"valueSelector,omitempty" tf:"-"`
 }
 
 type DomainsAuthTokenUserObservation struct {
@@ -335,12 +355,32 @@ type DomainsAuthTokenUserObservation struct {
 type DomainsAuthTokenUserParameters struct {
 
 	// The OCID of the SCIM resource that represents the User or App who created this Resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsUser
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("ocid",false)
 	// +kubebuilder:validation:Optional
 	Ocid *string `json:"ocid,omitempty" tf:"ocid,omitempty"`
 
+	// Reference to a DomainsUser in identity to populate ocid.
+	// +kubebuilder:validation:Optional
+	OcidRef *v1.Reference `json:"ocidRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsUser in identity to populate ocid.
+	// +kubebuilder:validation:Optional
+	OcidSelector *v1.Selector `json:"ocidSelector,omitempty" tf:"-"`
+
 	// The ID of the SCIM resource that represents the User or App who created this Resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsUser
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+
+	// Reference to a DomainsUser in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueRef *v1.Reference `json:"valueRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsUser in identity to populate value.
+	// +kubebuilder:validation:Optional
+	ValueSelector *v1.Selector `json:"valueSelector,omitempty" tf:"-"`
 }
 
 // DomainsAuthTokenSpec defines the desired state of DomainsAuthToken

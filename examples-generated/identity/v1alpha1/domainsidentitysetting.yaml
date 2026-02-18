@@ -15,7 +15,9 @@ spec:
     emitLockedMessageWhenUserIsLocked: ${var.identity_setting_emit_locked_message_when_user_is_locked}
     externalId: externalId
     idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
-    identitySettingId: ${oci_identity_domains_identity_setting.test_identity_setting.id}
+    identitySettingIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_identity_setting
     myProfile:
     - allowEndUsersToChangeTheirPassword: true
       allowEndUsersToLinkTheirSupportAccount: true

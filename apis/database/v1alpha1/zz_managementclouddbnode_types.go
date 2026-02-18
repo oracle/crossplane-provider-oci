@@ -19,7 +19,17 @@ type ManagementCloudDbNodeInitParameters struct {
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
 
 	// The OCID of the cloud database node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CloudDBNodeID *string `json:"cloudDbNodeId,omitempty" tf:"cloud_db_node_id,omitempty"`
+
+	// Reference to a ManagementCloudDbNode in database to populate cloudDbNodeId.
+	// +kubebuilder:validation:Optional
+	CloudDBNodeIDRef *v1.Reference `json:"cloudDbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbNode in database to populate cloudDbNodeId.
+	// +kubebuilder:validation:Optional
+	CloudDBNodeIDSelector *v1.Selector `json:"cloudDbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -104,8 +114,18 @@ type ManagementCloudDbNodeParameters struct {
 	CloudConnectorID *string `json:"cloudConnectorId,omitempty" tf:"cloud_connector_id,omitempty"`
 
 	// The OCID of the cloud database node.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementCloudDbNode
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CloudDBNodeID *string `json:"cloudDbNodeId,omitempty" tf:"cloud_db_node_id,omitempty"`
+
+	// Reference to a ManagementCloudDbNode in database to populate cloudDbNodeId.
+	// +kubebuilder:validation:Optional
+	CloudDBNodeIDRef *v1.Reference `json:"cloudDbNodeIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementCloudDbNode in database to populate cloudDbNodeId.
+	// +kubebuilder:validation:Optional
+	CloudDBNodeIDSelector *v1.Selector `json:"cloudDbNodeIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -154,9 +174,8 @@ type ManagementCloudDbNodeStatus struct {
 type ManagementCloudDbNode struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudDbNodeId) || (has(self.initProvider) && has(self.initProvider.cloudDbNodeId))",message="spec.forProvider.cloudDbNodeId is a required parameter"
-	Spec   ManagementCloudDbNodeSpec   `json:"spec"`
-	Status ManagementCloudDbNodeStatus `json:"status,omitempty"`
+	Spec              ManagementCloudDbNodeSpec   `json:"spec"`
+	Status            ManagementCloudDbNodeStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

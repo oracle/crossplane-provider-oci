@@ -12,11 +12,15 @@ spec:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    containerDatabaseId: ${oci_database_database.test_database.id}
+    containerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     definedTags: ${var.pluggable_database_defined_tags}
     freeformTags:
       Department: Finance
-    kmsKeyVersionId: ${oci_kms_key_version.test_key_version.id}
+    kmsKeyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key_version
     pdbAdminPasswordSecretRef:
       key: example-key
       name: example-secret
@@ -35,8 +39,12 @@ spec:
         key: example-key
         name: example-secret
         namespace: upbound-system
-      sourcePluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
-      sourcePluggableDatabaseSnapshotId: ${oci_database_pluggable_database_snapshot.test_pluggable_database_snapshot.id}
+      sourcePluggableDatabaseIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_pluggable_database
+      sourcePluggableDatabaseSnapshotIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_pluggable_database_snapshot
     pdbName: ${var.pluggable_database_pdb_name}
     shouldCreatePdbBackup: ${var.pluggable_database_should_create_pdb_backup}
     shouldPdbAdminAccountBeLocked: ${var.pluggable_database_should_pdb_admin_account_be_locked}

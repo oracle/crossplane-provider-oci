@@ -88,7 +88,17 @@ type DomainsNotificationSettingInitParameters struct {
 	NotificationEnabled *bool `json:"notificationEnabled,omitempty" tf:"notification_enabled,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsNotificationSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	NotificationSettingID *string `json:"notificationSettingId,omitempty" tf:"notification_setting_id,omitempty"`
+
+	// Reference to a DomainsNotificationSetting in identity to populate notificationSettingId.
+	// +kubebuilder:validation:Optional
+	NotificationSettingIDRef *v1.Reference `json:"notificationSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsNotificationSetting in identity to populate notificationSettingId.
+	// +kubebuilder:validation:Optional
+	NotificationSettingIDSelector *v1.Selector `json:"notificationSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the SCIM resource that represents the User or App who created this Resource
 	Ocid *string `json:"ocid,omitempty" tf:"ocid,omitempty"`
@@ -258,8 +268,18 @@ type DomainsNotificationSettingParameters struct {
 	NotificationEnabled *bool `json:"notificationEnabled,omitempty" tf:"notification_enabled,omitempty"`
 
 	// ID of the resource
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.DomainsNotificationSetting
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	NotificationSettingID *string `json:"notificationSettingId,omitempty" tf:"notification_setting_id,omitempty"`
+
+	// Reference to a DomainsNotificationSetting in identity to populate notificationSettingId.
+	// +kubebuilder:validation:Optional
+	NotificationSettingIDRef *v1.Reference `json:"notificationSettingIdRef,omitempty" tf:"-"`
+
+	// Selector for a DomainsNotificationSetting in identity to populate notificationSettingId.
+	// +kubebuilder:validation:Optional
+	NotificationSettingIDSelector *v1.Selector `json:"notificationSettingIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the SCIM resource that represents the User or App who created this Resource
 	// +kubebuilder:validation:Optional
@@ -434,7 +454,6 @@ type DomainsNotificationSetting struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.fromEmailAddress) || (has(self.initProvider) && has(self.initProvider.fromEmailAddress))",message="spec.forProvider.fromEmailAddress is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.idcsEndpoint) || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))",message="spec.forProvider.idcsEndpoint is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.notificationEnabled) || (has(self.initProvider) && has(self.initProvider.notificationEnabled))",message="spec.forProvider.notificationEnabled is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.notificationSettingId) || (has(self.initProvider) && has(self.initProvider.notificationSettingId))",message="spec.forProvider.notificationSettingId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemas) || (has(self.initProvider) && has(self.initProvider.schemas))",message="spec.forProvider.schemas is a required parameter"
 	Spec   DomainsNotificationSettingSpec   `json:"spec"`
 	Status DomainsNotificationSettingStatus `json:"status,omitempty"`

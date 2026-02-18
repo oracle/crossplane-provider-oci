@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     enableExternalNonContainerDbmFeature: ${var.enable_external_non_container_dbm_feature}
-    externalNonContainerDatabaseId: ${oci_database_external_non_container_database.test_external_non_container_database.id}
+    externalNonContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_non_container_database
     featureDetails:
     - canEnableAllCurrentPdbs: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_can_enable_all_current_pdbs}
       connectorDetails:

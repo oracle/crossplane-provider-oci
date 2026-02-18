@@ -102,6 +102,16 @@ func (in *ReplicationTargetsInitParameters) DeepCopyInto(out *ReplicationTargets
 		*out = new(string)
 		**out = **in
 	}
+	if in.TargetKeyIDRef != nil {
+		in, out := &in.TargetKeyIDRef, &out.TargetKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetKeyIDSelector != nil {
+		in, out := &in.TargetKeyIDSelector, &out.TargetKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TargetRegion != nil {
 		in, out := &in.TargetRegion, &out.TargetRegion
 		*out = new(string)
@@ -111,6 +121,16 @@ func (in *ReplicationTargetsInitParameters) DeepCopyInto(out *ReplicationTargets
 		in, out := &in.TargetVaultID, &out.TargetVaultID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetVaultIDRef != nil {
+		in, out := &in.TargetVaultIDRef, &out.TargetVaultIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetVaultIDSelector != nil {
+		in, out := &in.TargetVaultIDSelector, &out.TargetVaultIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -162,6 +182,16 @@ func (in *ReplicationTargetsParameters) DeepCopyInto(out *ReplicationTargetsPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.TargetKeyIDRef != nil {
+		in, out := &in.TargetKeyIDRef, &out.TargetKeyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetKeyIDSelector != nil {
+		in, out := &in.TargetKeyIDSelector, &out.TargetKeyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TargetRegion != nil {
 		in, out := &in.TargetRegion, &out.TargetRegion
 		*out = new(string)
@@ -171,6 +201,16 @@ func (in *ReplicationTargetsParameters) DeepCopyInto(out *ReplicationTargetsPara
 		in, out := &in.TargetVaultID, &out.TargetVaultID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetVaultIDRef != nil {
+		in, out := &in.TargetVaultIDRef, &out.TargetVaultIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetVaultIDSelector != nil {
+		in, out := &in.TargetVaultIDSelector, &out.TargetVaultIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -641,6 +681,16 @@ func (in *SecretInitParameters) DeepCopyInto(out *SecretInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretNameRef != nil {
+		in, out := &in.SecretNameRef, &out.SecretNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretNameSelector != nil {
+		in, out := &in.SecretNameSelector, &out.SecretNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecretRules != nil {
 		in, out := &in.SecretRules, &out.SecretRules
 		*out = make([]SecretRulesInitParameters, len(*in))
@@ -1026,6 +1076,16 @@ func (in *SecretParameters) DeepCopyInto(out *SecretParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretNameRef != nil {
+		in, out := &in.SecretNameRef, &out.SecretNameRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretNameSelector != nil {
+		in, out := &in.SecretNameSelector, &out.SecretNameSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecretRules != nil {
 		in, out := &in.SecretRules, &out.SecretRules
 		*out = make([]SecretRulesParameters, len(*in))
@@ -1288,6 +1348,16 @@ func (in *TargetSystemDetailsInitParameters) DeepCopyInto(out *TargetSystemDetai
 		*out = new(string)
 		**out = **in
 	}
+	if in.FunctionIDRef != nil {
+		in, out := &in.FunctionIDRef, &out.FunctionIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FunctionIDSelector != nil {
+		in, out := &in.FunctionIDSelector, &out.FunctionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TargetSystemType != nil {
 		in, out := &in.TargetSystemType, &out.TargetSystemType
 		*out = new(string)
@@ -1347,6 +1417,16 @@ func (in *TargetSystemDetailsParameters) DeepCopyInto(out *TargetSystemDetailsPa
 		in, out := &in.FunctionID, &out.FunctionID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FunctionIDRef != nil {
+		in, out := &in.FunctionIDRef, &out.FunctionIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FunctionIDSelector != nil {
+		in, out := &in.FunctionIDSelector, &out.FunctionIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.TargetSystemType != nil {
 		in, out := &in.TargetSystemType, &out.TargetSystemType

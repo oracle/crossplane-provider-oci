@@ -8,7 +8,9 @@ metadata:
   name: test-autonomous-database-autonomous-database-dbm-features-management
 spec:
   forProvider:
-    autonomousDatabaseId: ${oci_database_autonomous_database.test_autonomous_database.id}
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
     enableAutonomousDatabaseDbmFeature: ${var.enable_autonomous_database_dbm_feature}
     featureDetails:
     - connectorDetails:
@@ -25,8 +27,12 @@ spec:
             name: example-vault-secret
             namespace: upbound-system
           role: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_credentials_role}
-          sslSecretId: ${oci_vault_secret.test_secret.id}
-          userName: ${var.user_name}
+          sslSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
         connectionString:
         - connectionType: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_connection_type}
           port: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_database_connection_details_connection_string_port}

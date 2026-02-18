@@ -8,4 +8,6 @@ metadata:
   name: test-compute-host
 spec:
   forProvider:
-    computeHostId: ${oci_core_compute_host.test_compute_host.id}
+    computeHostIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compute_host

@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-db-home
 spec:
   forProvider:
-    cloudDbHomeId: ${oci_database_management_cloud_db_home.test_cloud_db_home.id}
+    cloudDbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_db_home
     definedTags:
       Operations.CostCenter: "42"
     freeformTags:

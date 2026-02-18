@@ -8,7 +8,9 @@ metadata:
   name: test-db-node-console-connection
 spec:
   forProvider:
-    dbNodeId: ${oci_database_db_node.test_db_node.id}
+    dbNodeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_node
     definedTags: ${var.db_node_console_connection_defined_tags}
     freeformTags:
       Department: Finance

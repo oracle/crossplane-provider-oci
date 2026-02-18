@@ -12,6 +12,8 @@ spec:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    databaseId: ${oci_database_database.test_database.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
     snapshotDurationInDays: ${var.database_snapshot_standby_snapshot_duration_in_days}
     standbyConversionType: ${var.database_snapshot_standby_standby_conversion_type}

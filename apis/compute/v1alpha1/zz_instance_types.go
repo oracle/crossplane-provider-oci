@@ -361,7 +361,17 @@ type InstanceInitParameters struct {
 	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
 
 	// The OCID of the cluster placement group of the instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -376,7 +386,17 @@ type InstanceInitParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compute cluster that the instance will be created in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
+	// Reference to a ComputeCluster in compute to populate computeClusterId.
+	// +kubebuilder:validation:Optional
+	ComputeClusterIDRef *v1.Reference `json:"computeClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeCluster in compute to populate computeClusterId.
+	// +kubebuilder:validation:Optional
+	ComputeClusterIDSelector *v1.Selector `json:"computeClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Contains properties for a VNIC. You use this object when creating the primary VNIC during instance launch or when creating a secondary VNIC. For more information about VNICs, see Virtual Network Interface Cards (VNICs).
 	CreateVnicDetails []CreateVnicDetailsInitParameters `json:"createVnicDetails,omitempty" tf:"create_vnic_details,omitempty"`
@@ -418,7 +438,17 @@ type InstanceInitParameters struct {
 	Image *string `json:"image,omitempty" tf:"image,omitempty"`
 
 	// The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Optional mutable instance options
 	InstanceOptions []InstanceOptionsInitParameters `json:"instanceOptions,omitempty" tf:"instance_options,omitempty"`
@@ -746,8 +776,18 @@ type InstanceParameters struct {
 	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
 
 	// The OCID of the cluster placement group of the instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -763,8 +803,18 @@ type InstanceParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compute cluster that the instance will be created in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.ComputeCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ComputeClusterID *string `json:"computeClusterId,omitempty" tf:"compute_cluster_id,omitempty"`
+
+	// Reference to a ComputeCluster in compute to populate computeClusterId.
+	// +kubebuilder:validation:Optional
+	ComputeClusterIDRef *v1.Reference `json:"computeClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a ComputeCluster in compute to populate computeClusterId.
+	// +kubebuilder:validation:Optional
+	ComputeClusterIDSelector *v1.Selector `json:"computeClusterIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Contains properties for a VNIC. You use this object when creating the primary VNIC during instance launch or when creating a secondary VNIC. For more information about VNICs, see Virtual Network Interface Cards (VNICs).
 	// +kubebuilder:validation:Optional
@@ -815,8 +865,18 @@ type InstanceParameters struct {
 	Image *string `json:"image,omitempty" tf:"image,omitempty"`
 
 	// The OCID of the Instance Configuration containing instance launch details. Any other fields supplied in this instance launch request will override the details stored in the Instance Configuration for this instance launch.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Optional mutable instance options
 	// +kubebuilder:validation:Optional
@@ -905,7 +965,17 @@ type InstancePlacementConstraintDetailsInitParameters struct {
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
 	// The OCID of the compute host group attached to the host where the bare metal instance will be launched.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate computeHostGroupId.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupIDRef *v1.Reference `json:"computeHostGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate computeHostGroupId.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
 	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -930,8 +1000,18 @@ type InstancePlacementConstraintDetailsParameters struct {
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
 
 	// The OCID of the compute host group attached to the host where the bare metal instance will be launched.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
+
+	// Reference to a Group in identity to populate computeHostGroupId.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupIDRef *v1.Reference `json:"computeHostGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in identity to populate computeHostGroupId.
+	// +kubebuilder:validation:Optional
+	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
 	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
 	// +kubebuilder:validation:Optional
@@ -999,7 +1079,17 @@ type LaunchCreateVolumeDetailsInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// The size of the volume in GBs.
 	SizeInGbs *string `json:"sizeInGbs,omitempty" tf:"size_in_gbs,omitempty"`
@@ -1043,8 +1133,18 @@ type LaunchCreateVolumeDetailsParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// The size of the volume in GBs.
 	// +kubebuilder:validation:Optional
@@ -1092,7 +1192,17 @@ type LaunchVolumeAttachmentsInitParameters struct {
 	UseChap *bool `json:"useChap,omitempty" tf:"use_chap,omitempty"`
 
 	// The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/blockstorage/v1alpha1.Volume
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a Volume in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a Volume in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 }
 
 type LaunchVolumeAttachmentsObservation struct {
@@ -1174,8 +1284,18 @@ type LaunchVolumeAttachmentsParameters struct {
 	UseChap *bool `json:"useChap,omitempty" tf:"use_chap,omitempty"`
 
 	// The OCID of the volume. If CreateVolumeDetails is specified, this field must be omitted from the request.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/blockstorage/v1alpha1.Volume
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	VolumeID *string `json:"volumeId,omitempty" tf:"volume_id,omitempty"`
+
+	// Reference to a Volume in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDRef *v1.Reference `json:"volumeIdRef,omitempty" tf:"-"`
+
+	// Selector for a Volume in blockstorage to populate volumeId.
+	// +kubebuilder:validation:Optional
+	VolumeIDSelector *v1.Selector `json:"volumeIdSelector,omitempty" tf:"-"`
 }
 
 type LicensingConfigsInitParameters struct {
@@ -1527,7 +1647,17 @@ type SourceDetailsInitParameters struct {
 	IsPreserveBootVolumeEnabled *bool `json:"isPreserveBootVolumeEnabled,omitempty" tf:"is_preserve_boot_volume_enabled,omitempty"`
 
 	// The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the boot volume used to boot the instance. Updates are supported only for linux Images. The user will need to manually destroy and re-create the resource for other image types.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image
@@ -1588,8 +1718,18 @@ type SourceDetailsParameters struct {
 	IsPreserveBootVolumeEnabled *bool `json:"isPreserveBootVolumeEnabled,omitempty" tf:"is_preserve_boot_volume_enabled,omitempty"`
 
 	// The OCID of the Vault service key to assign as the master encryption key for the volume.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.Reference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the boot volume used to boot the instance. Updates are supported only for linux Images. The user will need to manually destroy and re-create the resource for other image types.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.Image

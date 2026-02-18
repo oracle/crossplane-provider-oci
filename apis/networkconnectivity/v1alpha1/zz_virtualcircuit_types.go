@@ -120,7 +120,16 @@ type VirtualCircuitInitParameters struct {
 	BandwidthShapeName *string `json:"bandwidthShapeName,omitempty" tf:"bandwidth_shape_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment to contain the virtual circuit.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Create a CrossConnectMapping for each cross-connect or cross-connect group this virtual circuit will run on.
 	CrossConnectMappings []CrossConnectMappingsInitParameters `json:"crossConnectMappings,omitempty" tf:"cross_connect_mappings,omitempty"`
@@ -279,8 +288,17 @@ type VirtualCircuitParameters struct {
 	BandwidthShapeName *string `json:"bandwidthShapeName,omitempty" tf:"bandwidth_shape_name,omitempty"`
 
 	// (Updatable) The OCID of the compartment to contain the virtual circuit.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Create a CrossConnectMapping for each cross-connect or cross-connect group this virtual circuit will run on.
 	// +kubebuilder:validation:Optional
@@ -403,7 +421,6 @@ type VirtualCircuitStatus struct {
 type VirtualCircuit struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.type) || (has(self.initProvider) && has(self.initProvider.type))",message="spec.forProvider.type is a required parameter"
 	Spec   VirtualCircuitSpec   `json:"spec"`
 	Status VirtualCircuitStatus `json:"status,omitempty"`

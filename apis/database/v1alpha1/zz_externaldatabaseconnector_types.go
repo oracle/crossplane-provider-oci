@@ -28,7 +28,17 @@ type ConnectionCredentialsInitParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Updatable) The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The username that will be used to connect to the database.
 	Username *string `json:"username,omitempty" tf:"username,omitempty"`
@@ -71,8 +81,18 @@ type ConnectionCredentialsParameters struct {
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// (Updatable) The OCID of the Oracle Cloud Infrastructure secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SSLSecretID *string `json:"sslSecretId,omitempty" tf:"ssl_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDRef *v1.Reference `json:"sslSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate sslSecretId.
+	// +kubebuilder:validation:Optional
+	SSLSecretIDSelector *v1.Selector `json:"sslSecretIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The username that will be used to connect to the database.
 	// +kubebuilder:validation:Optional
@@ -150,7 +170,17 @@ type ExternalDatabaseConnectorInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external database resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDatabaseID *string `json:"externalDatabaseId,omitempty" tf:"external_database_id,omitempty"`
+
+	// Reference to a Database in database to populate externalDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseIDRef *v1.Reference `json:"externalDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate externalDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseIDSelector *v1.Selector `json:"externalDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -239,8 +269,18 @@ type ExternalDatabaseConnectorParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The OCID of the external database resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Database
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDatabaseID *string `json:"externalDatabaseId,omitempty" tf:"external_database_id,omitempty"`
+
+	// Reference to a Database in database to populate externalDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseIDRef *v1.Reference `json:"externalDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a Database in database to populate externalDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseIDSelector *v1.Selector `json:"externalDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional
@@ -288,7 +328,6 @@ type ExternalDatabaseConnector struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectionString) || (has(self.initProvider) && has(self.initProvider.connectionString))",message="spec.forProvider.connectionString is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorAgentId) || (has(self.initProvider) && has(self.initProvider.connectorAgentId))",message="spec.forProvider.connectorAgentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalDatabaseId))",message="spec.forProvider.externalDatabaseId is a required parameter"
 	Spec   ExternalDatabaseConnectorSpec   `json:"spec"`
 	Status ExternalDatabaseConnectorStatus `json:"status,omitempty"`
 }

@@ -1195,6 +1195,16 @@ func (in *PasswordDetailsInitParameters) DeepCopyInto(out *PasswordDetailsInitPa
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretIDRef != nil {
+		in, out := &in.SecretIDRef, &out.SecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretIDSelector != nil {
+		in, out := &in.SecretIDSelector, &out.SecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecretVersion != nil {
 		in, out := &in.SecretVersion, &out.SecretVersion
 		*out = new(string)
@@ -1250,6 +1260,16 @@ func (in *PasswordDetailsParameters) DeepCopyInto(out *PasswordDetailsParameters
 		in, out := &in.SecretID, &out.SecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SecretIDRef != nil {
+		in, out := &in.SecretIDRef, &out.SecretIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretIDSelector != nil {
+		in, out := &in.SecretIDSelector, &out.SecretIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SecretVersion != nil {
 		in, out := &in.SecretVersion, &out.SecretVersion
@@ -3104,6 +3124,16 @@ func (in *SourceInitParameters) DeepCopyInto(out *SourceInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BackupIDRef != nil {
+		in, out := &in.BackupIDRef, &out.BackupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BackupIDSelector != nil {
+		in, out := &in.BackupIDSelector, &out.BackupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IsHavingRestoreConfigOverrides != nil {
 		in, out := &in.IsHavingRestoreConfigOverrides, &out.IsHavingRestoreConfigOverrides
 		*out = new(bool)
@@ -3163,6 +3193,16 @@ func (in *SourceParameters) DeepCopyInto(out *SourceParameters) {
 		in, out := &in.BackupID, &out.BackupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.BackupIDRef != nil {
+		in, out := &in.BackupIDRef, &out.BackupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.BackupIDSelector != nil {
+		in, out := &in.BackupIDSelector, &out.BackupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.IsHavingRestoreConfigOverrides != nil {
 		in, out := &in.IsHavingRestoreConfigOverrides, &out.IsHavingRestoreConfigOverrides

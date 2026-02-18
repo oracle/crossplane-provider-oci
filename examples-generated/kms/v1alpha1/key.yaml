@@ -22,7 +22,9 @@ spec:
       Operations.CostCenter: "42"
     displayName: ${var.key_display_name}
     externalKeyReference:
-    - externalKeyId: ${oci_kms_key.test_key.id}
+    - externalKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
     freeformTags:
       Department: Finance
     isAutoRotationEnabled: ${var.key_is_auto_rotation_enabled}

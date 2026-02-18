@@ -19,7 +19,17 @@ type ManagementExternalExadataInfrastructureExadataManagementInitParameters stru
 	EnableExadata *bool `json:"enableExadata,omitempty" tf:"enable_exadata,omitempty"`
 
 	// The OCID of the Exadata infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalExadataInfrastructureID *string `json:"externalExadataInfrastructureId,omitempty" tf:"external_exadata_infrastructure_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataInfrastructure in database to populate externalExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataInfrastructureIDRef *v1.Reference `json:"externalExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataInfrastructure in database to populate externalExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataInfrastructureIDSelector *v1.Selector `json:"externalExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model.
 	LicenseModel *string `json:"licenseModel,omitempty" tf:"license_model,omitempty"`
@@ -46,8 +56,18 @@ type ManagementExternalExadataInfrastructureExadataManagementParameters struct {
 	EnableExadata *bool `json:"enableExadata,omitempty" tf:"enable_exadata,omitempty"`
 
 	// The OCID of the Exadata infrastructure.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalExadataInfrastructure
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalExadataInfrastructureID *string `json:"externalExadataInfrastructureId,omitempty" tf:"external_exadata_infrastructure_id,omitempty"`
+
+	// Reference to a ManagementExternalExadataInfrastructure in database to populate externalExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataInfrastructureIDRef *v1.Reference `json:"externalExadataInfrastructureIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalExadataInfrastructure in database to populate externalExadataInfrastructureId.
+	// +kubebuilder:validation:Optional
+	ExternalExadataInfrastructureIDSelector *v1.Selector `json:"externalExadataInfrastructureIdSelector,omitempty" tf:"-"`
 
 	// The Oracle license model.
 	// +kubebuilder:validation:Optional
@@ -91,7 +111,6 @@ type ManagementExternalExadataInfrastructureExadataManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableExadata) || (has(self.initProvider) && has(self.initProvider.enableExadata))",message="spec.forProvider.enableExadata is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalExadataInfrastructureId) || (has(self.initProvider) && has(self.initProvider.externalExadataInfrastructureId))",message="spec.forProvider.externalExadataInfrastructureId is a required parameter"
 	Spec   ManagementExternalExadataInfrastructureExadataManagementSpec   `json:"spec"`
 	Status ManagementExternalExadataInfrastructureExadataManagementStatus `json:"status,omitempty"`
 }

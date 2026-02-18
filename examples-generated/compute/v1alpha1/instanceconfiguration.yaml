@@ -44,14 +44,20 @@ spec:
             Department: Finance
           is_reservations_enabled: ${var.instance_configuration_instance_details_block_volumes_create_details_is_reservations_enabled}
           isAutoTuneEnabled: ${var.instance_configuration_instance_details_block_volumes_create_details_is_auto_tune_enabled}
-          kmsKeyId: ${oci_kms_key.test_key.id}
+          kmsKeyIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_key
           sizeInGbs: ${var.instance_configuration_instance_details_block_volumes_create_details_size_in_gbs}
           sourceDetails:
           - id: ${var.instance_configuration_instance_details_block_volumes_create_details_source_details_id}
             type: ${var.instance_configuration_instance_details_block_volumes_create_details_source_details_type}
           vpusPerGb: ${var.instance_configuration_instance_details_block_volumes_create_details_vpus_per_gb}
-          xrcKmsKeyId: ${oci_kms_key.test_key.id}
-        volumeId: ${oci_core_volume.test_volume.id}
+          xrcKmsKeyIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_key
+        volumeIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_volume
       instanceType: ${var.instance_configuration_instance_details_instance_type}
       launchDetails:
       - agentConfig:
@@ -66,9 +72,13 @@ spec:
           recoveryAction: ${var.instance_configuration_instance_details_launch_details_availability_config_recovery_action}
         availabilityDomain: ${var.instance_configuration_instance_details_launch_details_availability_domain}
         capacityReservationId: ${oci_core_capacity_reservation.test_capacity_reservation.id}
-        clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+        clusterPlacementGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_group
         compartmentId: ${var.compartment_id}
-        computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
+        computeClusterIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_compute_cluster
         createVnicDetails:
         - assignIpv6Ip: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_ipv6ip}
           assignPrivateDnsRecord: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_private_dns_record}
@@ -87,8 +97,12 @@ spec:
           securityAttributes: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_security_attributes}
           skipSourceDestCheck: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_skip_source_dest_check}
           subnetCidr: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_subnet_cidr}
-          subnetId: ${oci_core_subnet.test_subnet.id}
-        dedicatedVmHostId: ${oci_core_dedicated_vm_host.test_dedicated_vm_host.id}
+          subnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_subnet
+        dedicatedVmHostIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_dedicated_vm_host
         definedTags:
           Operations.CostCenter: "42"
         displayName: ${var.instance_configuration_instance_details_launch_details_display_name}
@@ -114,7 +128,9 @@ spec:
           type: ${var.instance_configuration_instance_details_launch_details_licensing_configs_type}
         metadata: ${var.instance_configuration_instance_details_launch_details_metadata}
         placementConstraintDetails:
-        - computeHostGroupId: ${oci_core_compute_host_group.test_compute_host_group.id}
+        - computeHostGroupIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_compute_host_group
           type: ${var.instance_configuration_instance_details_launch_details_placement_constraint_details_type}
         platformConfig:
         - areVirtualInstructionsEnabled: ${var.instance_configuration_instance_details_launch_details_platform_config_are_virtual_instructions_enabled}
@@ -144,16 +160,22 @@ spec:
           resourceManagement: ${var.instance_configuration_instance_details_launch_details_shape_config_resource_management}
           vcpus: ${var.instance_configuration_instance_details_launch_details_shape_config_vcpus}
         sourceDetails:
-        - bootVolumeId: ${oci_core_boot_volume.test_boot_volume.id}
+        - bootVolumeIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_boot_volume
           bootVolumeSizeInGbs: ${var.instance_configuration_instance_details_launch_details_source_details_boot_volume_size_in_gbs}
           bootVolumeVpusPerGb: ${var.instance_configuration_instance_details_launch_details_source_details_boot_volume_vpus_per_gb}
-          imageId: ${oci_core_image.test_image.id}
+          imageIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_image
           instanceSourceImageFilterDetails:
           - compartmentId: ${var.compartment_id}
             definedTagsFilter: ${var.instance_configuration_instance_details_launch_details_source_details_instance_source_image_filter_details_defined_tags_filter}
             operatingSystem: ${var.instance_configuration_instance_details_launch_details_source_details_instance_source_image_filter_details_operating_system}
             operatingSystemVersion: ${var.instance_configuration_instance_details_launch_details_source_details_instance_source_image_filter_details_operating_system_version}
-          kmsKeyId: ${oci_kms_key.test_key.id}
+          kmsKeyIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_key
           sourceType: ${var.instance_configuration_instance_details_launch_details_source_details_source_type}
       options:
       - blockVolumes:
@@ -180,14 +202,20 @@ spec:
               Department: Finance
             is_reservations_enabled: ${var.instance_configuration_instance_details_options_block_volumes_create_details_is_reservations_enabled}
             isAutoTuneEnabled: ${var.instance_configuration_instance_details_options_block_volumes_create_details_is_auto_tune_enabled}
-            kmsKeyId: ${oci_kms_key.test_key.id}
+            kmsKeyIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_key
             sizeInGbs: ${var.instance_configuration_instance_details_options_block_volumes_create_details_size_in_gbs}
             sourceDetails:
             - id: ${var.instance_configuration_instance_details_options_block_volumes_create_details_source_details_id}
               type: ${var.instance_configuration_instance_details_options_block_volumes_create_details_source_details_type}
             vpusPerGb: ${var.instance_configuration_instance_details_options_block_volumes_create_details_vpus_per_gb}
-            xrcKmsKeyId: ${oci_kms_key.test_key.id}
-          volumeId: ${oci_core_volume.test_volume.id}
+            xrcKmsKeyIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_key
+          volumeIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_volume
         launchDetails:
         - agentConfig:
           - areAllPluginsDisabled: ${var.instance_configuration_instance_details_options_launch_details_agent_config_are_all_plugins_disabled}
@@ -200,9 +228,13 @@ spec:
           - recoveryAction: ${var.instance_configuration_instance_details_options_launch_details_availability_config_recovery_action}
           availabilityDomain: ${var.instance_configuration_instance_details_options_launch_details_availability_domain}
           capacityReservationId: ${oci_core_capacity_reservation.test_capacity_reservation.id}
-          clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+          clusterPlacementGroupIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_group
           compartmentId: ${var.compartment_id}
-          computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
+          computeClusterIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_compute_cluster
           createVnicDetails:
           - assignIpv6Ip: ${var.instance_configuration_instance_details_launch_details_create_vnic_details_assign_ipv6ip}
             assignPrivateDnsRecord: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_assign_private_dns_record}
@@ -221,8 +253,12 @@ spec:
             securityAttributes: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_security_attributes}
             skipSourceDestCheck: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_skip_source_dest_check}
             subnetCidr: ${var.instance_configuration_instance_details_options_launch_details_create_vnic_details_subnet_cidr}
-            subnetId: ${oci_core_subnet.test_subnet.id}
-          dedicatedVmHostId: ${oci_core_dedicated_vm_host.test_dedicated_vm_host.id}
+            subnetIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_subnet
+          dedicatedVmHostIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_dedicated_vm_host
           definedTags:
             Operations.CostCenter: "42"
           displayName: ${var.instance_configuration_instance_details_options_launch_details_display_name}
@@ -248,7 +284,9 @@ spec:
             type: ${var.instance_configuration_instance_details_options_launch_details_licensing_configs_type}
           metadata: ${var.instance_configuration_instance_details_options_launch_details_metadata}
           placementConstraintDetails:
-          - computeHostGroupId: ${oci_core_compute_host_group.test_compute_host_group.id}
+          - computeHostGroupIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_compute_host_group
             type: ${var.instance_configuration_instance_details_options_launch_details_placement_constraint_details_type}
           platformConfig:
           - areVirtualInstructionsEnabled: ${var.instance_configuration_instance_details_options_launch_details_platform_config_are_virtual_instructions_enabled}
@@ -277,10 +315,14 @@ spec:
             resourceManagement: ${var.instance_configuration_instance_details_options_launch_details_shape_config_resource_management}
             vcpus: ${var.instance_configuration_instance_details_options_launch_details_shape_config_vcpus}
           sourceDetails:
-          - bootVolumeId: ${oci_core_boot_volume.test_boot_volume.id}
+          - bootVolumeIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_boot_volume
             bootVolumeSizeInGbs: ${var.instance_configuration_instance_details_options_launch_details_source_details_boot_volume_size_in_gbs}
             bootVolumeVpusPerGb: ${var.instance_configuration_instance_details_options_launch_details_source_details_boot_volume_vpus_per_gb}
-            imageId: ${oci_core_image.test_image.id}
+            imageIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_image
             instanceSourceImageFilterDetails:
             - compartmentId: ${var.compartment_id}
               definedTagsFilter: ${var.instance_configuration_instance_details_options_launch_details_source_details_instance_source_image_filter_details_defined_tags_filter}
@@ -306,7 +348,9 @@ spec:
             securityAttributes: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_security_attributes}
             skipSourceDestCheck: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_skip_source_dest_check}
             subnetCidr: ${var.instance_configuration_instance_details_options_secondary_vnics_create_vnic_details_subnet_cidr}
-            subnetId: ${oci_core_subnet.test_subnet.id}
+            subnetIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_subnet
           displayName: ${var.instance_configuration_instance_details_options_secondary_vnics_display_name}
           nicIndex: ${var.instance_configuration_instance_details_options_secondary_vnics_nic_index}
       secondaryVnics:
@@ -324,8 +368,12 @@ spec:
           securityAttributes: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_security_attributes}
           skipSourceDestCheck: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_skip_source_dest_check}
           subnetCidr: ${var.instance_configuration_instance_details_secondary_vnics_create_vnic_details_subnet_cidr}
-          subnetId: ${oci_core_subnet.test_subnet.id}
+          subnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_subnet
         displayName: ${var.instance_configuration_instance_details_secondary_vnics_display_name}
         nicIndex: ${var.instance_configuration_instance_details_secondary_vnics_nic_index}
-    instanceId: ${oci_core_instance.test_instance.id}
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance
     source: ${var.instance_configuration_source}

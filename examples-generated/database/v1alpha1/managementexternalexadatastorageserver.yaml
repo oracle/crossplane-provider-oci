@@ -10,6 +10,8 @@ spec:
   forProvider:
     definedTags:
       Operations.CostCenter: "42"
-    externalExadataStorageServerId: ${oci_database_management_external_exadata_storage_server.test_external_exadata_storage_server.id}
+    externalExadataStorageServerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_exadata_storage_server
     freeformTags:
       Department: Finance

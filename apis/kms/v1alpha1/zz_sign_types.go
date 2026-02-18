@@ -31,7 +31,17 @@ type SignInitParameters struct {
 	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the key version used to sign the message.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyVersionID *string `json:"keyVersionId,omitempty" tf:"key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDRef *v1.Reference `json:"keyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDSelector *v1.Selector `json:"keyVersionIdSelector,omitempty" tf:"-"`
 
 	// The base64-encoded binary data object denoting the message or message digest to sign. You can have a message up to 4096 bytes in size. To sign a larger message, provide the message digest.
 	Message *string `json:"message,omitempty" tf:"message,omitempty"`
@@ -89,8 +99,18 @@ type SignParameters struct {
 	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the key version used to sign the message.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/kms/v1alpha1.KeyVersion
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyVersionID *string `json:"keyVersionId,omitempty" tf:"key_version_id,omitempty"`
+
+	// Reference to a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDRef *v1.Reference `json:"keyVersionIdRef,omitempty" tf:"-"`
+
+	// Selector for a KeyVersion in kms to populate keyVersionId.
+	// +kubebuilder:validation:Optional
+	KeyVersionIDSelector *v1.Selector `json:"keyVersionIdSelector,omitempty" tf:"-"`
 
 	// The base64-encoded binary data object denoting the message or message digest to sign. You can have a message up to 4096 bytes in size. To sign a larger message, provide the message digest.
 	// +kubebuilder:validation:Optional

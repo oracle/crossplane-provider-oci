@@ -16,7 +16,17 @@ import (
 type AutonomousContainerDatabaseSnapshotStandbyInitParameters struct {
 
 	// The Autonomous Container Database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AutonomousContainerDatabaseID *string `json:"autonomousContainerDatabaseId,omitempty" tf:"autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDRef *v1.Reference `json:"autonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDSelector *v1.Selector `json:"autonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// type of connection strings when converting database to snapshot mode
 	ConnectionStringsType *string `json:"connectionStringsType,omitempty" tf:"connection_strings_type,omitempty"`
@@ -43,8 +53,18 @@ type AutonomousContainerDatabaseSnapshotStandbyObservation struct {
 type AutonomousContainerDatabaseSnapshotStandbyParameters struct {
 
 	// The Autonomous Container Database OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AutonomousContainerDatabaseID *string `json:"autonomousContainerDatabaseId,omitempty" tf:"autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDRef *v1.Reference `json:"autonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate autonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	AutonomousContainerDatabaseIDSelector *v1.Selector `json:"autonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// type of connection strings when converting database to snapshot mode
 	// +kubebuilder:validation:Optional
@@ -91,7 +111,6 @@ type AutonomousContainerDatabaseSnapshotStandbyStatus struct {
 type AutonomousContainerDatabaseSnapshotStandby struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.autonomousContainerDatabaseId) || (has(self.initProvider) && has(self.initProvider.autonomousContainerDatabaseId))",message="spec.forProvider.autonomousContainerDatabaseId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
 	Spec   AutonomousContainerDatabaseSnapshotStandbySpec   `json:"spec"`
 	Status AutonomousContainerDatabaseSnapshotStandbyStatus `json:"status,omitempty"`

@@ -75,10 +75,30 @@ type InstancePoolInitParameters struct {
 type InstancePoolLoadBalancersInitParameters struct {
 
 	// The name of the backend set on the load balancer to add instances to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	BackendSetName *string `json:"backendSetName,omitempty" tf:"backend_set_name,omitempty"`
 
+	// Reference to a BackendSet in loadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameRef *v1.Reference `json:"backendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in loadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameSelector *v1.Selector `json:"backendSetNameSelector,omitempty" tf:"-"`
+
 	// The OCID of the load balancer to attach to the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.LoadBalancer
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	LoadBalancerID *string `json:"loadBalancerId,omitempty" tf:"load_balancer_id,omitempty"`
+
+	// Reference to a LoadBalancer in loadbalancer to populate loadBalancerId.
+	// +kubebuilder:validation:Optional
+	LoadBalancerIDRef *v1.Reference `json:"loadBalancerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LoadBalancer in loadbalancer to populate loadBalancerId.
+	// +kubebuilder:validation:Optional
+	LoadBalancerIDSelector *v1.Selector `json:"loadBalancerIdSelector,omitempty" tf:"-"`
 
 	// The port value to use when creating the backend set.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -114,12 +134,32 @@ type InstancePoolLoadBalancersObservation struct {
 type InstancePoolLoadBalancersParameters struct {
 
 	// The name of the backend set on the load balancer to add instances to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
-	BackendSetName *string `json:"backendSetName" tf:"backend_set_name,omitempty"`
+	BackendSetName *string `json:"backendSetName,omitempty" tf:"backend_set_name,omitempty"`
+
+	// Reference to a BackendSet in loadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameRef *v1.Reference `json:"backendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in loadbalancer to populate backendSetName.
+	// +kubebuilder:validation:Optional
+	BackendSetNameSelector *v1.Selector `json:"backendSetNameSelector,omitempty" tf:"-"`
 
 	// The OCID of the load balancer to attach to the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1.LoadBalancer
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	LoadBalancerID *string `json:"loadBalancerId" tf:"load_balancer_id,omitempty"`
+	LoadBalancerID *string `json:"loadBalancerId,omitempty" tf:"load_balancer_id,omitempty"`
+
+	// Reference to a LoadBalancer in loadbalancer to populate loadBalancerId.
+	// +kubebuilder:validation:Optional
+	LoadBalancerIDRef *v1.Reference `json:"loadBalancerIdRef,omitempty" tf:"-"`
+
+	// Selector for a LoadBalancer in loadbalancer to populate loadBalancerId.
+	// +kubebuilder:validation:Optional
+	LoadBalancerIDSelector *v1.Selector `json:"loadBalancerIdSelector,omitempty" tf:"-"`
 
 	// The port value to use when creating the backend set.
 	// +kubebuilder:validation:Optional
@@ -260,7 +300,17 @@ type InstancePoolPlacementConfigurationsInitParameters struct {
 	FaultDomains []*string `json:"faultDomains,omitempty" tf:"fault_domains,omitempty"`
 
 	// (Updatable) The OCID of the primary subnet to place instances. This field is deprecated. Use primaryVnicSubnets instead to set VNIC data for instances in the pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PrimarySubnetID *string `json:"primarySubnetId,omitempty" tf:"primary_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate primarySubnetId.
+	// +kubebuilder:validation:Optional
+	PrimarySubnetIDRef *v1.Reference `json:"primarySubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate primarySubnetId.
+	// +kubebuilder:validation:Optional
+	PrimarySubnetIDSelector *v1.Selector `json:"primarySubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details about the IPv6 primary subnet.
 	PrimaryVnicSubnets []PlacementConfigurationsPrimaryVnicSubnetsInitParameters `json:"primaryVnicSubnets,omitempty" tf:"primary_vnic_subnets,omitempty"`
@@ -298,8 +348,18 @@ type InstancePoolPlacementConfigurationsParameters struct {
 	FaultDomains []*string `json:"faultDomains,omitempty" tf:"fault_domains,omitempty"`
 
 	// (Updatable) The OCID of the primary subnet to place instances. This field is deprecated. Use primaryVnicSubnets instead to set VNIC data for instances in the pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	PrimarySubnetID *string `json:"primarySubnetId,omitempty" tf:"primary_subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate primarySubnetId.
+	// +kubebuilder:validation:Optional
+	PrimarySubnetIDRef *v1.Reference `json:"primarySubnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate primarySubnetId.
+	// +kubebuilder:validation:Optional
+	PrimarySubnetIDSelector *v1.Selector `json:"primarySubnetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Details about the IPv6 primary subnet.
 	// +kubebuilder:validation:Optional
@@ -386,7 +446,17 @@ type PlacementConfigurationsPrimaryVnicSubnetsInitParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// (Updatable) The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationsPrimaryVnicSubnetsIpv6AddressIpv6SubnetCidrPairDetailsInitParameters struct {
@@ -431,8 +501,18 @@ type PlacementConfigurationsPrimaryVnicSubnetsParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// (Updatable) The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationsSecondaryVnicSubnetsInitParameters struct {
@@ -447,7 +527,17 @@ type PlacementConfigurationsSecondaryVnicSubnetsInitParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// (Updatable) The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationsSecondaryVnicSubnetsIpv6AddressIpv6SubnetCidrPairDetailsInitParameters struct {
@@ -499,8 +589,18 @@ type PlacementConfigurationsSecondaryVnicSubnetsParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// (Updatable) The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PreTerminationInitParameters struct {

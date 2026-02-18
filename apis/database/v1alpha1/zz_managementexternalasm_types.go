@@ -20,7 +20,17 @@ type ManagementExternalAsmInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external ASM.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalAsm
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalAsmID *string `json:"externalAsmId,omitempty" tf:"external_asm_id,omitempty"`
+
+	// Reference to a ManagementExternalAsm in database to populate externalAsmId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmIDRef *v1.Reference `json:"externalAsmIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalAsm in database to populate externalAsmId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmIDSelector *v1.Selector `json:"externalAsmIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the external connector.
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
@@ -105,8 +115,18 @@ type ManagementExternalAsmParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external ASM.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalAsm
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalAsmID *string `json:"externalAsmId,omitempty" tf:"external_asm_id,omitempty"`
+
+	// Reference to a ManagementExternalAsm in database to populate externalAsmId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmIDRef *v1.Reference `json:"externalAsmIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalAsm in database to populate externalAsmId.
+	// +kubebuilder:validation:Optional
+	ExternalAsmIDSelector *v1.Selector `json:"externalAsmIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the external connector.
 	// +kubebuilder:validation:Optional
@@ -187,9 +207,8 @@ type ManagementExternalAsmStatus struct {
 type ManagementExternalAsm struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalAsmId) || (has(self.initProvider) && has(self.initProvider.externalAsmId))",message="spec.forProvider.externalAsmId is a required parameter"
-	Spec   ManagementExternalAsmSpec   `json:"spec"`
-	Status ManagementExternalAsmStatus `json:"status,omitempty"`
+	Spec              ManagementExternalAsmSpec   `json:"spec"`
+	Status            ManagementExternalAsmStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

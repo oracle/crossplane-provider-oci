@@ -20,7 +20,17 @@ type ManagementExternalClusterInstanceInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external cluster instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalClusterInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalClusterInstanceID *string `json:"externalClusterInstanceId,omitempty" tf:"external_cluster_instance_id,omitempty"`
+
+	// Reference to a ManagementExternalClusterInstance in database to populate externalClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalClusterInstanceIDRef *v1.Reference `json:"externalClusterInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalClusterInstance in database to populate externalClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalClusterInstanceIDSelector *v1.Selector `json:"externalClusterInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the external connector.
 	ExternalConnectorID *string `json:"externalConnectorId,omitempty" tf:"external_connector_id,omitempty"`
@@ -104,8 +114,18 @@ type ManagementExternalClusterInstanceParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// The OCID of the external cluster instance.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ManagementExternalClusterInstance
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalClusterInstanceID *string `json:"externalClusterInstanceId,omitempty" tf:"external_cluster_instance_id,omitempty"`
+
+	// Reference to a ManagementExternalClusterInstance in database to populate externalClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalClusterInstanceIDRef *v1.Reference `json:"externalClusterInstanceIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementExternalClusterInstance in database to populate externalClusterInstanceId.
+	// +kubebuilder:validation:Optional
+	ExternalClusterInstanceIDSelector *v1.Selector `json:"externalClusterInstanceIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the external connector.
 	// +kubebuilder:validation:Optional
@@ -153,9 +173,8 @@ type ManagementExternalClusterInstanceStatus struct {
 type ManagementExternalClusterInstance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalClusterInstanceId) || (has(self.initProvider) && has(self.initProvider.externalClusterInstanceId))",message="spec.forProvider.externalClusterInstanceId is a required parameter"
-	Spec   ManagementExternalClusterInstanceSpec   `json:"spec"`
-	Status ManagementExternalClusterInstanceStatus `json:"status,omitempty"`
+	Spec              ManagementExternalClusterInstanceSpec   `json:"spec"`
+	Status            ManagementExternalClusterInstanceStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -28,7 +28,17 @@ type KerberosInitParameters struct {
 	KerberosRealm *string `json:"kerberosRealm,omitempty" tf:"kerberos_realm,omitempty"`
 
 	// (Updatable) The OCID of the keytab Secret in the Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	KeyTabSecretID *string `json:"keyTabSecretId,omitempty" tf:"key_tab_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate keyTabSecretId.
+	// +kubebuilder:validation:Optional
+	KeyTabSecretIDRef *v1.Reference `json:"keyTabSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate keyTabSecretId.
+	// +kubebuilder:validation:Optional
+	KeyTabSecretIDSelector *v1.Selector `json:"keyTabSecretIdSelector,omitempty" tf:"-"`
 }
 
 type KerberosObservation struct {
@@ -68,8 +78,18 @@ type KerberosParameters struct {
 	KerberosRealm *string `json:"kerberosRealm" tf:"kerberos_realm,omitempty"`
 
 	// (Updatable) The OCID of the keytab Secret in the Vault.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	KeyTabSecretID *string `json:"keyTabSecretId,omitempty" tf:"key_tab_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate keyTabSecretId.
+	// +kubebuilder:validation:Optional
+	KeyTabSecretIDRef *v1.Reference `json:"keyTabSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate keyTabSecretId.
+	// +kubebuilder:validation:Optional
+	KeyTabSecretIDSelector *v1.Selector `json:"keyTabSecretIdSelector,omitempty" tf:"-"`
 }
 
 type LdapIdmapInitParameters struct {

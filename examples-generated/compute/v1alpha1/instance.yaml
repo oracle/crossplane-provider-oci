@@ -19,12 +19,16 @@ spec:
     - isLiveMigrationPreferred: ${var.instance_availability_config_is_live_migration_preferred}
       recoveryAction: ${var.instance_availability_config_recovery_action}
     availabilityDomain: ${var.instance_availability_domain}
-    clusterPlacementGroupId: ${oci_identity_group.test_group.id}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     compute_host_group_id: ${oci_core_compute_host_group.test_compute_host_group.id}
-    computeClusterId: ${oci_core_compute_cluster.test_compute_cluster.id}
+    computeClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compute_cluster
     createVnicDetails:
     - assignIpv6Ip: ${var.instance_create_vnic_details_assign_ipv6ip}
       assignPrivateDnsRecord: ${var.instance_create_vnic_details_assign_private_dns_record}
@@ -62,7 +66,9 @@ spec:
     freeformTags:
       Department: Finance
     hostnameLabel: ${var.instance_hostname_label}
-    instanceConfigurationId: ${oci_core_instance_configuration.test_instance_configuration.id}
+    instanceConfigurationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance_configuration
     instanceOptions:
     - areLegacyImdsEndpointsDisabled: ${var.instance_instance_options_are_legacy_imds_endpoints_disabled}
     ipxeScript: ${var.instance_ipxe_script}
@@ -86,20 +92,26 @@ spec:
       launchCreateVolumeDetails:
       - compartmentId: ${var.compartment_id}
         displayName: ${var.instance_launch_volume_attachments_launch_create_volume_details_display_name}
-        kmsKeyId: ${oci_kms_key.test_key.id}
+        kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
         sizeInGbs: ${var.instance_launch_volume_attachments_launch_create_volume_details_size_in_gbs}
         volumeCreationType: ${var.instance_launch_volume_attachments_launch_create_volume_details_volume_creation_type}
         vpusPerGb: ${var.instance_launch_volume_attachments_launch_create_volume_details_vpus_per_gb}
       type: ${var.instance_launch_volume_attachments_type}
       useChap: ${var.instance_launch_volume_attachments_use_chap}
-      volumeId: ${oci_core_volume.test_volume.id}
+      volumeIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_volume
     licensingConfigs:
     - licenseType: ${var.instance_licensing_configs_license_type}
       type: ${var.instance_licensing_configs_type}
     metadata: ${var.instance_metadata}
     placementConstraintDetails:
     - computeBareMetalHostId: ${oci_core_compute_bare_metal_host.test_compute_bare_metal_host.id}
-      computeHostGroupId: ${oci_identity_group.test_group.id}
+      computeHostGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_group
       type: ${var.instance_placement_constraint_details_type}
     platformConfig:
     - areVirtualInstructionsEnabled: ${var.instance_platform_config_are_virtual_instructions_enabled}
@@ -136,7 +148,9 @@ spec:
         definedTagsFilter: ${var.instance_source_details_instance_source_image_filter_details_defined_tags_filter}
         operatingSystem: ${var.instance_source_details_instance_source_image_filter_details_operating_system}
         operatingSystemVersion: ${var.instance_source_details_instance_source_image_filter_details_operating_system_version}
-      kmsKeyId: ${oci_kms_key.test_key.id}
+      kmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       sourceIdSelector:
         matchLabels:
           testing.upbound.io/example-name: test_image

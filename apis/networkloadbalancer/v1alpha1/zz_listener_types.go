@@ -16,7 +16,17 @@ import (
 type ListenerInitParameters struct {
 
 	// (Updatable) The name of the associated backend set.  Example: example_backend_set
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkloadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	DefaultBackendSetName *string `json:"defaultBackendSetName,omitempty" tf:"default_backend_set_name,omitempty"`
+
+	// Reference to a BackendSet in networkloadbalancer to populate defaultBackendSetName.
+	// +kubebuilder:validation:Optional
+	DefaultBackendSetNameRef *v1.Reference `json:"defaultBackendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in networkloadbalancer to populate defaultBackendSetName.
+	// +kubebuilder:validation:Optional
+	DefaultBackendSetNameSelector *v1.Selector `json:"defaultBackendSetNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) IP version associated with the listener.
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
@@ -93,8 +103,18 @@ type ListenerObservation struct {
 type ListenerParameters struct {
 
 	// (Updatable) The name of the associated backend set.  Example: example_backend_set
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkloadbalancer/v1alpha1.BackendSet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	DefaultBackendSetName *string `json:"defaultBackendSetName,omitempty" tf:"default_backend_set_name,omitempty"`
+
+	// Reference to a BackendSet in networkloadbalancer to populate defaultBackendSetName.
+	// +kubebuilder:validation:Optional
+	DefaultBackendSetNameRef *v1.Reference `json:"defaultBackendSetNameRef,omitempty" tf:"-"`
+
+	// Selector for a BackendSet in networkloadbalancer to populate defaultBackendSetName.
+	// +kubebuilder:validation:Optional
+	DefaultBackendSetNameSelector *v1.Selector `json:"defaultBackendSetNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) IP version associated with the listener.
 	// +kubebuilder:validation:Optional
@@ -178,7 +198,6 @@ type ListenerStatus struct {
 type Listener struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.defaultBackendSetName) || (has(self.initProvider) && has(self.initProvider.defaultBackendSetName))",message="spec.forProvider.defaultBackendSetName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.port) || (has(self.initProvider) && has(self.initProvider.port))",message="spec.forProvider.port is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.protocol) || (has(self.initProvider) && has(self.initProvider.protocol))",message="spec.forProvider.protocol is a required parameter"

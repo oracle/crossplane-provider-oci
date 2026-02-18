@@ -9,5 +9,7 @@ metadata:
 spec:
   forProvider:
     enableExadata: ${var.enable_exadata}
-    externalExadataInfrastructureId: ${oci_database_management_external_exadata_infrastructure.test_external_exadata_infrastructure.id}
+    externalExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_exadata_infrastructure
     licenseModel: ${var.external_exadata_infrastructure_exadata_management_license_model}

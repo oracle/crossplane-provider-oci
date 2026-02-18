@@ -330,7 +330,17 @@ type PasswordDetailsInitParameters struct {
 	PasswordTypeSecretRef v1.SecretKeySelector `json:"passwordTypeSecretRef" tf:"-"`
 
 	// The OCID of the secret where the password is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// The secret version of the stored password.
 	SecretVersion *string `json:"secretVersion,omitempty" tf:"secret_version,omitempty"`
@@ -356,8 +366,18 @@ type PasswordDetailsParameters struct {
 	PasswordTypeSecretRef v1.SecretKeySelector `json:"passwordTypeSecretRef" tf:"-"`
 
 	// The OCID of the secret where the password is stored.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// The secret version of the stored password.
 	// +kubebuilder:validation:Optional
@@ -686,7 +706,17 @@ type PsqlDbSystemParameters struct {
 type SourceInitParameters struct {
 
 	// The OCID of the database system backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/psql/v1alpha1.PsqlBackup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a PsqlBackup in psql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a PsqlBackup in psql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source_type=BACKUP) Deprecated. Don't use.
 	IsHavingRestoreConfigOverrides *bool `json:"isHavingRestoreConfigOverrides,omitempty" tf:"is_having_restore_config_overrides,omitempty"`
@@ -710,8 +740,18 @@ type SourceObservation struct {
 type SourceParameters struct {
 
 	// The OCID of the database system backup.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/psql/v1alpha1.PsqlBackup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a PsqlBackup in psql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a PsqlBackup in psql to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when source_type=BACKUP) Deprecated. Don't use.
 	// +kubebuilder:validation:Optional

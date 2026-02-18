@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-asm
 spec:
   forProvider:
-    cloudAsmId: ${oci_database_management_cloud_asm.test_cloud_asm.id}
+    cloudAsmIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_asm
     cloudConnectorId: ${oci_database_management_cloud_connector.test_cloud_connector.id}
     definedTags:
       Operations.CostCenter: "42"

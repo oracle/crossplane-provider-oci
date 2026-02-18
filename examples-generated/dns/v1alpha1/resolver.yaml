@@ -9,11 +9,15 @@ metadata:
 spec:
   forProvider:
     attachedViews:
-    - viewId: ${oci_dns_view.test_view.id}
+    - viewIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_view
     definedTags: ${var.resolver_defined_tags}
     displayName: ${var.resolver_display_name}
     freeformTags: ${var.resolver_freeform_tags}
-    resolverId: ${oci_dns_resolver.test_resolver.id}
+    resolverIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resolver
     rules:
     - action: ${var.resolver_rules_action}
       clientAddressConditions: ${var.resolver_rules_client_address_conditions}

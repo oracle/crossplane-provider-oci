@@ -22,7 +22,9 @@ spec:
       value: ${var.notification_setting_from_email_address_value}
     idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
     notificationEnabled: ${var.notification_setting_notification_enabled}
-    notificationSettingId: ${oci_identity_domains_notification_setting.test_notification_setting.id}
+    notificationSettingIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_setting
     ocid: ${var.notification_setting_ocid}
     resourceTypeSchemaVersion: ${var.notification_setting_resource_type_schema_version}
     schemas:

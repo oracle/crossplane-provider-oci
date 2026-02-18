@@ -19,10 +19,30 @@ type ExternalPluggableDatabaseOperationsInsightsManagementInitParameters struct 
 	EnableOperationsInsights *bool `json:"enableOperationsInsights,omitempty" tf:"enable_operations_insights,omitempty"`
 
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
 
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
+
 	// The ExternalPluggableDatabaseId OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalPluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ExternalPluggableDatabaseID *string `json:"externalPluggableDatabaseId,omitempty" tf:"external_pluggable_database_id,omitempty"`
+
+	// Reference to a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDRef *v1.Reference `json:"externalPluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDSelector *v1.Selector `json:"externalPluggableDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalPluggableDatabaseOperationsInsightsManagementObservation struct {
@@ -46,12 +66,32 @@ type ExternalPluggableDatabaseOperationsInsightsManagementParameters struct {
 	EnableOperationsInsights *bool `json:"enableOperationsInsights,omitempty" tf:"enable_operations_insights,omitempty"`
 
 	// The OCID of the external database connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalDatabaseConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalDatabaseConnectorID *string `json:"externalDatabaseConnectorId,omitempty" tf:"external_database_connector_id,omitempty"`
 
+	// Reference to a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDRef *v1.Reference `json:"externalDatabaseConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalDatabaseConnector in database to populate externalDatabaseConnectorId.
+	// +kubebuilder:validation:Optional
+	ExternalDatabaseConnectorIDSelector *v1.Selector `json:"externalDatabaseConnectorIdSelector,omitempty" tf:"-"`
+
 	// The ExternalPluggableDatabaseId OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.ExternalPluggableDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ExternalPluggableDatabaseID *string `json:"externalPluggableDatabaseId,omitempty" tf:"external_pluggable_database_id,omitempty"`
+
+	// Reference to a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDRef *v1.Reference `json:"externalPluggableDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a ExternalPluggableDatabase in database to populate externalPluggableDatabaseId.
+	// +kubebuilder:validation:Optional
+	ExternalPluggableDatabaseIDSelector *v1.Selector `json:"externalPluggableDatabaseIdSelector,omitempty" tf:"-"`
 }
 
 // ExternalPluggableDatabaseOperationsInsightsManagementSpec defines the desired state of ExternalPluggableDatabaseOperationsInsightsManagement
@@ -91,8 +131,6 @@ type ExternalPluggableDatabaseOperationsInsightsManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enableOperationsInsights) || (has(self.initProvider) && has(self.initProvider.enableOperationsInsights))",message="spec.forProvider.enableOperationsInsights is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalDatabaseConnectorId) || (has(self.initProvider) && has(self.initProvider.externalDatabaseConnectorId))",message="spec.forProvider.externalDatabaseConnectorId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.externalPluggableDatabaseId) || (has(self.initProvider) && has(self.initProvider.externalPluggableDatabaseId))",message="spec.forProvider.externalPluggableDatabaseId is a required parameter"
 	Spec   ExternalPluggableDatabaseOperationsInsightsManagementSpec   `json:"spec"`
 	Status ExternalPluggableDatabaseOperationsInsightsManagementStatus `json:"status,omitempty"`
 }

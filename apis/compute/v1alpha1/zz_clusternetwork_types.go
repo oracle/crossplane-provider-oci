@@ -48,7 +48,16 @@ type ClusterNetworkInitParameters struct {
 	ClusterConfiguration []ClusterConfigurationInitParameters `json:"clusterConfiguration,omitempty" tf:"cluster_configuration,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the cluster network.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -119,8 +128,17 @@ type ClusterNetworkParameters struct {
 	ClusterConfiguration []ClusterConfigurationParameters `json:"clusterConfiguration,omitempty" tf:"cluster_configuration,omitempty"`
 
 	// (Updatable) The OCID of the compartment containing the cluster network.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// Reference to a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDRef *v1.Reference `json:"compartmentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Compartment in identity to populate compartmentId.
+	// +kubebuilder:validation:Optional
+	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional
@@ -159,7 +177,17 @@ type InstancePoolsInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the instance configuration associated with the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of instances that should be in the instance pool.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
@@ -224,8 +252,18 @@ type InstancePoolsParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the instance configuration associated with the instance pool.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	InstanceConfigurationID *string `json:"instanceConfigurationId" tf:"instance_configuration_id,omitempty"`
+	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.Reference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.Selector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The number of instances that should be in the instance pool.
 	// +kubebuilder:validation:Optional
@@ -339,7 +377,17 @@ type PlacementConfigurationPrimaryVnicSubnetsInitParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationPrimaryVnicSubnetsObservation struct {
@@ -365,8 +413,18 @@ type PlacementConfigurationPrimaryVnicSubnetsParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationSecondaryVnicSubnetsInitParameters struct {
@@ -381,7 +439,17 @@ type PlacementConfigurationSecondaryVnicSubnetsInitParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationSecondaryVnicSubnetsIpv6AddressIpv6SubnetCidrPairDetailsInitParameters struct {
@@ -433,8 +501,18 @@ type PlacementConfigurationSecondaryVnicSubnetsParameters struct {
 	IsAssignIpv6Ip *bool `json:"isAssignIpv6Ip,omitempty" tf:"is_assign_ipv6ip,omitempty"`
 
 	// The subnet OCID for the secondary VNIC.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementConfigurationsInitParameters struct {
@@ -567,7 +645,6 @@ type ClusterNetworkStatus struct {
 type ClusterNetwork struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.compartmentId) || (has(self.initProvider) && has(self.initProvider.compartmentId))",message="spec.forProvider.compartmentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.instancePools) || (has(self.initProvider) && has(self.initProvider.instancePools))",message="spec.forProvider.instancePools is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.placementConfiguration) || (has(self.initProvider) && has(self.initProvider.placementConfiguration))",message="spec.forProvider.placementConfiguration is a required parameter"
 	Spec   ClusterNetworkSpec   `json:"spec"`

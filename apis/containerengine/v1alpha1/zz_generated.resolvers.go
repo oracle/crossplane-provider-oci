@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -25,6 +26,25 @@ func (mg *Addon) ResolveReferences(ctx context.Context, c client.Reader) error {
 
 	var rsp reference.ResolutionResponse
 	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("containerengine.oci.upbound.io", "v1alpha1", "Addon", "AddonList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AddonName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.AddonNameRef,
+			Selector:     mg.Spec.ForProvider.AddonNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AddonName")
+	}
+	mg.Spec.ForProvider.AddonName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.AddonNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("containerengine.oci.upbound.io", "v1alpha1", "Cluster", "ClusterList")
 		if err != nil {
@@ -44,6 +64,25 @@ func (mg *Addon) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.ForProvider.ClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClusterIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("containerengine.oci.upbound.io", "v1alpha1", "Addon", "AddonList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AddonName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.AddonNameRef,
+			Selector:     mg.Spec.InitProvider.AddonNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AddonName")
+	}
+	mg.Spec.InitProvider.AddonName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AddonNameRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("containerengine.oci.upbound.io", "v1alpha1", "Cluster", "ClusterList")
 		if err != nil {
@@ -138,6 +177,48 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mg.Spec.ForProvider.EndpointConfig[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ImagePolicyConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID")
+			}
+			mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSKeyID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.KMSKeyIDRef,
+			Selector:     mg.Spec.ForProvider.KMSKeyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.KMSKeyID")
+	}
+	mg.Spec.ForProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.KMSKeyIDRef = rsp.ResolvedReference
+
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Options); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
@@ -239,6 +320,48 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mg.Spec.InitProvider.EndpointConfig[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ImagePolicyConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Reference:    mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef,
+					Selector:     mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID")
+			}
+			mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.ImagePolicyConfig[i3].KeyDetails[i4].KMSKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.KMSKeyID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.KMSKeyIDRef,
+			Selector:     mg.Spec.InitProvider.KMSKeyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.KMSKeyID")
+	}
+	mg.Spec.InitProvider.KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.KMSKeyIDRef = rsp.ResolvedReference
+
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Options); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
@@ -520,6 +643,27 @@ func (mg *NodePool) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.NodeConfigDetails); i3++ {
 		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyID")
+		}
+		mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.NodeConfigDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.NodeConfigDetails); i3++ {
+		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "NetworkSecurityGroup", "NetworkSecurityGroupList")
 			if err != nil {
 				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -563,6 +707,46 @@ func (mg *NodePool) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 	}
 	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeImageName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.NodeImageNameRef,
+			Selector:     mg.Spec.ForProvider.NodeImageNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NodeImageName")
+	}
+	mg.Spec.ForProvider.NodeImageName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NodeImageNameRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.NodeSourceDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeSourceDetails[i3].ImageID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.NodeSourceDetails[i3].ImageIDRef,
+				Selector:     mg.Spec.ForProvider.NodeSourceDetails[i3].ImageIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.NodeSourceDetails[i3].ImageID")
+		}
+		mg.Spec.ForProvider.NodeSourceDetails[i3].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.NodeSourceDetails[i3].ImageIDRef = rsp.ResolvedReference
+
+	}
+	{
 		m, l, err = apisresolver.GetManagedResource("containerengine.oci.upbound.io", "v1alpha1", "Cluster", "ClusterList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -600,6 +784,27 @@ func (mg *NodePool) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.NodeConfigDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyID")
+		}
+		mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.NodeConfigDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.NodeConfigDetails); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "NetworkSecurityGroup", "NetworkSecurityGroupList")
@@ -643,6 +848,46 @@ func (mg *NodePool) ResolveReferences(ctx context.Context, c client.Reader) erro
 			mg.Spec.InitProvider.NodeConfigDetails[i3].PlacementConfigs[i4].SubnetIDRef = rsp.ResolvedReference
 
 		}
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NodeImageName),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.NodeImageNameRef,
+			Selector:     mg.Spec.InitProvider.NodeImageNameSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NodeImageName")
+	}
+	mg.Spec.InitProvider.NodeImageName = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NodeImageNameRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.NodeSourceDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "Image", "ImageList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NodeSourceDetails[i3].ImageID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.NodeSourceDetails[i3].ImageIDRef,
+				Selector:     mg.Spec.InitProvider.NodeSourceDetails[i3].ImageIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.NodeSourceDetails[i3].ImageID")
+		}
+		mg.Spec.InitProvider.NodeSourceDetails[i3].ImageID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.NodeSourceDetails[i3].ImageIDRef = rsp.ResolvedReference
+
 	}
 
 	return nil

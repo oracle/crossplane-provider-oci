@@ -113,7 +113,17 @@ type DomainsCloudGateMappingInitParameters struct {
 	Ocid *string `json:"ocid,omitempty" tf:"ocid,omitempty"`
 
 	// (Updatable) The Web Tier policy name used for the App that is mapped to the owning Cloud Gate
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
+
+	// Reference to a Policy in identity to populate policyName.
+	// +kubebuilder:validation:Optional
+	PolicyNameRef *v1.Reference `json:"policyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate policyName.
+	// +kubebuilder:validation:Optional
+	PolicyNameSelector *v1.Selector `json:"policyNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) NGINX ProxyPass entry for this Mapping
 	ProxyPass *string `json:"proxyPass,omitempty" tf:"proxy_pass,omitempty"`
@@ -287,8 +297,18 @@ type DomainsCloudGateMappingParameters struct {
 	Ocid *string `json:"ocid,omitempty" tf:"ocid,omitempty"`
 
 	// (Updatable) The Web Tier policy name used for the App that is mapped to the owning Cloud Gate
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Policy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("name",false)
 	// +kubebuilder:validation:Optional
 	PolicyName *string `json:"policyName,omitempty" tf:"policy_name,omitempty"`
+
+	// Reference to a Policy in identity to populate policyName.
+	// +kubebuilder:validation:Optional
+	PolicyNameRef *v1.Reference `json:"policyNameRef,omitempty" tf:"-"`
+
+	// Selector for a Policy in identity to populate policyName.
+	// +kubebuilder:validation:Optional
+	PolicyNameSelector *v1.Selector `json:"policyNameSelector,omitempty" tf:"-"`
 
 	// (Updatable) NGINX ProxyPass entry for this Mapping
 	// +kubebuilder:validation:Optional
@@ -473,7 +493,6 @@ type DomainsCloudGateMapping struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudGate) || (has(self.initProvider) && has(self.initProvider.cloudGate))",message="spec.forProvider.cloudGate is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.gatewayApp) || (has(self.initProvider) && has(self.initProvider.gatewayApp))",message="spec.forProvider.gatewayApp is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.idcsEndpoint) || (has(self.initProvider) && has(self.initProvider.idcsEndpoint))",message="spec.forProvider.idcsEndpoint is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.policyName) || (has(self.initProvider) && has(self.initProvider.policyName))",message="spec.forProvider.policyName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resourcePrefix) || (has(self.initProvider) && has(self.initProvider.resourcePrefix))",message="spec.forProvider.resourcePrefix is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.schemas) || (has(self.initProvider) && has(self.initProvider.schemas))",message="spec.forProvider.schemas is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.server) || (has(self.initProvider) && has(self.initProvider.server))",message="spec.forProvider.server is a required parameter"

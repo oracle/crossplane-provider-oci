@@ -13,7 +13,9 @@ spec:
       key: example-key
       name: example-secret
       namespace: upbound-system
-    pluggableDatabaseId: ${oci_database_pluggable_database.test_pluggable_database.id}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database
     shouldPdbAdminAccountBeLocked: ${var.pluggable_databases_local_clone_should_pdb_admin_account_be_locked}
     targetTdeWalletPasswordSecretRef:
       key: example-key

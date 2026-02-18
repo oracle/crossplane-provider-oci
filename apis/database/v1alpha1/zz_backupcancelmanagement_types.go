@@ -16,7 +16,17 @@ import (
 type BackupCancelManagementInitParameters struct {
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// When changed to a different integer, re-triggers cancel backup on the backup specified by the backup_id
 	CancelBackupTrigger *float64 `json:"cancelBackupTrigger,omitempty" tf:"cancel_backup_trigger,omitempty"`
@@ -36,8 +46,18 @@ type BackupCancelManagementObservation struct {
 type BackupCancelManagementParameters struct {
 
 	// The backup OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/database/v1alpha1.Backup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Reference to a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDRef *v1.Reference `json:"backupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Backup in database to populate backupId.
+	// +kubebuilder:validation:Optional
+	BackupIDSelector *v1.Selector `json:"backupIdSelector,omitempty" tf:"-"`
 
 	// When changed to a different integer, re-triggers cancel backup on the backup specified by the backup_id
 	// +kubebuilder:validation:Optional
@@ -80,9 +100,8 @@ type BackupCancelManagementStatus struct {
 type BackupCancelManagement struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.backupId) || (has(self.initProvider) && has(self.initProvider.backupId))",message="spec.forProvider.backupId is a required parameter"
-	Spec   BackupCancelManagementSpec   `json:"spec"`
-	Status BackupCancelManagementStatus `json:"status,omitempty"`
+	Spec              BackupCancelManagementSpec   `json:"spec"`
+	Status            BackupCancelManagementStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

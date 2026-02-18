@@ -14,4 +14,6 @@ spec:
     policyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_volume_backup_policy
-    xrcKmsKeyId: ${oci_kms_key.test_key.id}
+    xrcKmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key

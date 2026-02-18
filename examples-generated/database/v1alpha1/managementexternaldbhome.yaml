@@ -10,6 +10,8 @@ spec:
   forProvider:
     definedTags:
       Operations.CostCenter: "42"
-    externalDbHomeId: ${oci_database_management_external_db_home.test_external_db_home.id}
+    externalDbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_db_home
     freeformTags:
       Department: Finance

@@ -8,10 +8,14 @@ metadata:
   name: test-external-pluggable-database
 spec:
   forProvider:
-    compartmentId: ${var.compartment_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
     definedTags: ${var.external_pluggable_database_defined_tags}
     displayName: ${var.external_pluggable_database_display_name}
-    externalContainerDatabaseId: ${oci_database_external_container_database.test_external_container_database.id}
+    externalContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_container_database
     freeformTags:
       Department: Finance
     sourceId: ${oci_database_source.test_source.id}

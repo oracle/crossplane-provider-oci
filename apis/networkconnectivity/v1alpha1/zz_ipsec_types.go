@@ -195,10 +195,31 @@ type IpsecParameters struct {
 }
 
 type TunnelConfigurationInitParameters struct {
+
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.VirtualCircuit
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AssociatedVirtualCircuits []*string `json:"associatedVirtualCircuits,omitempty" tf:"associated_virtual_circuits,omitempty"`
 
+	// References to VirtualCircuit in networkconnectivity to populate associatedVirtualCircuits.
+	// +kubebuilder:validation:Optional
+	AssociatedVirtualCircuitsRefs []v1.Reference `json:"associatedVirtualCircuitsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of VirtualCircuit in networkconnectivity to populate associatedVirtualCircuits.
+	// +kubebuilder:validation:Optional
+	AssociatedVirtualCircuitsSelector *v1.Selector `json:"associatedVirtualCircuitsSelector,omitempty" tf:"-"`
+
 	// The IPSec connection's Oracle ID (OCID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.DrgRouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	DrgRouteTableID *string `json:"drgRouteTableId,omitempty" tf:"drg_route_table_id,omitempty"`
+
+	// Reference to a DrgRouteTable in networkconnectivity to populate drgRouteTableId.
+	// +kubebuilder:validation:Optional
+	DrgRouteTableIDRef *v1.Reference `json:"drgRouteTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgRouteTable in networkconnectivity to populate drgRouteTableId.
+	// +kubebuilder:validation:Optional
+	DrgRouteTableIDSelector *v1.Selector `json:"drgRouteTableIdSelector,omitempty" tf:"-"`
 
 	OracleTunnelIP *string `json:"oracleTunnelIp,omitempty" tf:"oracle_tunnel_ip,omitempty"`
 }
@@ -214,12 +235,32 @@ type TunnelConfigurationObservation struct {
 
 type TunnelConfigurationParameters struct {
 
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.VirtualCircuit
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AssociatedVirtualCircuits []*string `json:"associatedVirtualCircuits,omitempty" tf:"associated_virtual_circuits,omitempty"`
 
+	// References to VirtualCircuit in networkconnectivity to populate associatedVirtualCircuits.
+	// +kubebuilder:validation:Optional
+	AssociatedVirtualCircuitsRefs []v1.Reference `json:"associatedVirtualCircuitsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of VirtualCircuit in networkconnectivity to populate associatedVirtualCircuits.
+	// +kubebuilder:validation:Optional
+	AssociatedVirtualCircuitsSelector *v1.Selector `json:"associatedVirtualCircuitsSelector,omitempty" tf:"-"`
+
 	// The IPSec connection's Oracle ID (OCID).
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1.DrgRouteTable
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	DrgRouteTableID *string `json:"drgRouteTableId,omitempty" tf:"drg_route_table_id,omitempty"`
+
+	// Reference to a DrgRouteTable in networkconnectivity to populate drgRouteTableId.
+	// +kubebuilder:validation:Optional
+	DrgRouteTableIDRef *v1.Reference `json:"drgRouteTableIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgRouteTable in networkconnectivity to populate drgRouteTableId.
+	// +kubebuilder:validation:Optional
+	DrgRouteTableIDSelector *v1.Selector `json:"drgRouteTableIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	OracleTunnelIP *string `json:"oracleTunnelIp,omitempty" tf:"oracle_tunnel_ip,omitempty"`
