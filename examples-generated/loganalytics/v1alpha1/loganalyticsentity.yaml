@@ -1,0 +1,34 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsEntity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsentity
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_entity
+  name: test-log-analytics-entity
+spec:
+  forProvider:
+    cloudResourceId: ${oci_log_analytics_cloud_resource.test_cloud_resource.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    entityTypeName: ${var.log_analytics_entity_entity_type_name}
+    freeformTags:
+      bar-key: value
+    hostname: ${var.log_analytics_entity_hostname}
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    metadata:
+    - items:
+      - name: ${var.log_analytics_entity_metadata_items_name}
+        type: ${var.log_analytics_entity_metadata_items_type}
+        value: ${var.log_analytics_entity_metadata_items_value}
+    name: ${var.log_analytics_entity_name}
+    namespace: ${var.log_analytics_entity_namespace}
+    properties: ${var.log_analytics_entity_properties}
+    sourceId: ${oci_log_analytics_source.test_source.id}
+    timeLastDiscovered: ${var.log_analytics_entity_time_last_discovered}
+    timezoneRegion: ${var.log_analytics_entity_timezone_region}

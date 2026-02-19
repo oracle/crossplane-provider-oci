@@ -17,7 +17,9 @@ spec:
       connectorDetails:
       - connectorType: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_connector_details_connector_type}
         databaseConnectorId: ${oci_database_management_database_connector.test_database_connector.id}
-        managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+        managementAgentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_management_agent
         privateEndPointId: ${oci_database_management_private_end_point.test_private_end_point.id}
       enable_external_non_container_dbm_feature: ${var.enable_external_non_container_dbm_feature}
       feature: ${var.externalnoncontainerdatabase_external_non_container_dbm_features_management_feature_details_feature}

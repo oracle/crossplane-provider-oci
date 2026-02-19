@@ -1,0 +1,27 @@
+apiVersion: bastion.oci.upbound.io/v1alpha1
+kind: Session
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bastion/v1alpha1/session
+  labels:
+    testing.upbound.io/example-name: test_session
+  name: test-session
+spec:
+  forProvider:
+    bastionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bastion
+    displayName: ${var.session_display_name}
+    keyDetails:
+    - publicKeyContent: ${var.session_key_details_public_key_content}
+    keyType: ${var.session_key_type}
+    sessionTtlInSeconds: ${var.session_session_ttl_in_seconds}
+    targetResourceDetails:
+    - sessionType: ${var.session_target_resource_details_session_type}
+      targetResourceFqdn: ${var.session_target_resource_details_target_resource_fqdn}
+      targetResourceId: ${oci_bastion_target_resource.test_target_resource.id}
+      targetResourceOperatingSystemUserNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
+      targetResourcePort: ${var.session_target_resource_details_target_resource_port}
+      targetResourcePrivateIpAddress: ${var.session_target_resource_details_target_resource_private_ip_address}

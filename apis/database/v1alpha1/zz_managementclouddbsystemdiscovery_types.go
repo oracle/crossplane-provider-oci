@@ -553,7 +553,17 @@ type EndpointsParameters struct {
 type ManagementCloudDbSystemDiscoveryInitParameters struct {
 
 	// The OCID of the management agent used for the cloud DB system discovery.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compartment in which the cloud DB system resides.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -650,8 +660,18 @@ type ManagementCloudDbSystemDiscoveryObservation struct {
 type ManagementCloudDbSystemDiscoveryParameters struct {
 
 	// The OCID of the management agent used for the cloud DB system discovery.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compartment in which the cloud DB system resides.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -1156,7 +1176,6 @@ type ManagementCloudDbSystemDiscoveryStatus struct {
 type ManagementCloudDbSystemDiscovery struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.agentId) || (has(self.initProvider) && has(self.initProvider.agentId))",message="spec.forProvider.agentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.dbaasParentInfrastructureId) || (has(self.initProvider) && has(self.initProvider.dbaasParentInfrastructureId))",message="spec.forProvider.dbaasParentInfrastructureId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.deploymentType) || (has(self.initProvider) && has(self.initProvider.deploymentType))",message="spec.forProvider.deploymentType is a required parameter"
 	Spec   ManagementCloudDbSystemDiscoverySpec   `json:"spec"`

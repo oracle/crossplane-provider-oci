@@ -1,0 +1,43 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: StreamJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/streamjob
+  labels:
+    testing.upbound.io/example-name: test_stream_job
+  name: test-stream-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.stream_job_defined_tags}
+    displayName: ${var.stream_job_display_name}
+    features:
+    - featureType: ${var.stream_job_features_feature_type}
+      maxResults: ${var.stream_job_features_max_results}
+      shouldReturnLandmarks: ${var.stream_job_features_should_return_landmarks}
+      trackingTypes:
+      - biometricStoreCompartmentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_compartment
+        biometricStoreId: ${oci_ai_vision_biometric_store.test_biometric_store.id}
+        detectionModelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model
+        maxResults: ${var.stream_job_features_tracking_types_max_results}
+        objects: ${var.stream_job_features_tracking_types_objects}
+        shouldReturnLandmarks: ${var.stream_job_features_tracking_types_should_return_landmarks}
+        trackingModelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model
+    freeformTags: ${var.stream_job_freeform_tags}
+    streamOutputLocation:
+    - bucket: ${var.stream_job_stream_output_location_bucket}
+      namespace: ${var.stream_job_stream_output_location_namespace}
+      oboToken: ${var.stream_job_stream_output_location_obo_token}
+      outputLocationType: ${var.stream_job_stream_output_location_output_location_type}
+      prefix: ${var.stream_job_stream_output_location_prefix}
+    streamSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_stream_source

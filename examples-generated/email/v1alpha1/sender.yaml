@@ -1,0 +1,18 @@
+apiVersion: email.oci.upbound.io/v1alpha1
+kind: Sender
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/sender
+  labels:
+    testing.upbound.io/example-name: test_sender
+  name: test-sender
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    emailAddress: ${var.sender_email_address}
+    freeformTags:
+      Department: Finance

@@ -1,0 +1,14 @@
+apiVersion: tenantmanagercontrolplane.oci.upbound.io/v1alpha1
+kind: SubscriptionMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tenantmanagercontrolplane/v1alpha1/subscriptionmapping
+  labels:
+    testing.upbound.io/example-name: test_subscription_mapping
+  name: test-subscription-mapping
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    subscriptionId: ${oci_tenantmanagercontrolplane_subscription.test_subscription.id}

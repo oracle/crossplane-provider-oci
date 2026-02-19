@@ -1,0 +1,290 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/connection
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    accessKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    accountKeySecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    accountKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    accountName: ${var.connection_account_name}
+    additionalAttributes:
+    - name: ${var.connection_additional_attributes_name}
+      value: ${var.connection_additional_attributes_value}
+    authenticationMode: ${var.connection_authentication_mode}
+    authenticationType: ${var.connection_authentication_type}
+    azureAuthorityHost: ${var.connection_azure_authority_host}
+    azureTenantId: ${oci_golden_gate_azure_tenant.test_azure_tenant.id}
+    bootstrapServers:
+    - host: ${var.connection_bootstrap_servers_host}
+      port: ${var.connection_bootstrap_servers_port}
+      privateIp: ${var.connection_bootstrap_servers_private_ip}
+    catalog:
+    - branch: ${var.connection_catalog_branch}
+      catalogType: ${var.connection_catalog_catalog_type}
+      clientId: ${oci_golden_gate_client.test_client.id}
+      clientSecretSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      glueId: ${oci_golden_gate_glue.test_glue.id}
+      name: ${var.connection_catalog_name}
+      principalRole: ${var.connection_catalog_principal_role}
+      propertiesSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      uri: ${var.connection_catalog_uri}
+    clientId: ${oci_golden_gate_client.test_client.id}
+    clientSecretSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    clientSecretSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster_placement_group
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionFactory: ${var.connection_connection_factory}
+    connectionString: ${var.connection_connection_string}
+    connectionType: ${var.connection_connection_type}
+    connectionUrl: ${var.connection_connection_url}
+    consumerProperties: ${var.connection_consumer_properties}
+    coreSiteXml: ${var.connection_core_site_xml}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
+    databaseNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment
+    description: ${var.connection_description}
+    displayName: ${var.connection_display_name}
+    doesUseSecretIds: ${var.connection_does_use_secret_ids}
+    endpoint: ${var.connection_endpoint}
+    fingerprint: ${var.connection_fingerprint}
+    freeformTags:
+      bar-key: value
+    host: ${var.connection_host}
+    jndiConnectionFactory: ${var.connection_jndi_connection_factory}
+    jndiInitialContextFactory: ${var.connection_jndi_initial_context_factory}
+    jndiProviderUrl: ${var.connection_jndi_provider_url}
+    jndiSecurityCredentialsSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    jndiSecurityCredentialsSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    jndiSecurityPrincipal: ${var.connection_jndi_security_principal}
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    keyStorePasswordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    keyStorePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    keyStoreSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    keyStoreSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    locks:
+    - message: ${var.connection_locks_message}
+      type: ${var.connection_locks_type}
+    nsgIds: ${var.connection_nsg_ids}
+    passwordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    port: ${var.connection_port}
+    privateIp: ${var.connection_private_ip}
+    privateKeyFileSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    privateKeyFileSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    privateKeyPassphraseSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    privateKeyPassphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    producerProperties: ${var.connection_producer_properties}
+    publicKeyFingerprint: ${var.connection_public_key_fingerprint}
+    redisClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_redis_cluster
+    region: ${var.connection_region}
+    routingMethod: ${var.connection_routing_method}
+    sasTokenSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    sasTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    secretAccessKeySecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    secretAccessKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    securityAttributes: ${var.connection_security_attributes}
+    securityProtocol: ${var.connection_security_protocol}
+    servers: ${var.connection_servers}
+    serviceAccountKeyFileSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    serviceAccountKeyFileSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sessionMode: ${var.connection_session_mode}
+    shouldUseJndi: ${var.connection_should_use_jndi}
+    shouldUseResourcePrincipal: ${var.connection_should_use_resource_principal}
+    shouldValidateServerCertificate: ${var.connection_should_validate_server_certificate}
+    sslCa: ${var.connection_ssl_ca}
+    sslCert: ${var.connection_ssl_cert}
+    sslClientKeystashSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    sslClientKeystashSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslClientKeystoredbSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    sslClientKeystoredbSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslCrl: ${var.connection_ssl_crl}
+    sslKeyPasswordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    sslKeyPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslKeySecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    sslKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sslMode: ${var.connection_ssl_mode}
+    sslServerCertificate: ${var.connection_ssl_server_certificate}
+    storage:
+    - accessKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
+      accountKeySecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      accountName: ${var.connection_storage_account_name}
+      bucket: ${var.connection_storage_bucket}
+      container: ${var.connection_storage_container}
+      endpoint: ${var.connection_storage_endpoint}
+      projectIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_project
+      region: ${var.connection_storage_region}
+      schemeType: ${var.connection_storage_scheme_type}
+      secretAccessKeySecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      serviceAccountKeyFileSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      storageType: ${var.connection_storage_storage_type}
+    storageCredentialName: ${var.connection_storage_credential_name}
+    streamPoolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_stream_pool
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
+    technologyType: ${var.connection_technology_type}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    tenantId: ${oci_golden_gate_tenant.test_tenant.id}
+    tlsCaFile: ${var.connection_tls_ca_file}
+    tlsCertificateKeyFile: ${var.connection_tls_certificate_key_file}
+    tlsCertificateKeyFilePasswordSecretIdSecretRef:
+      key: attribute.id
+      name: example-vault-secret
+      namespace: upbound-system
+    tlsCertificateKeyFilePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    tlsCertificateKeyFileSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    trustStorePasswordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    trustStorePasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    trustStoreSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    trustStoreSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    url: ${var.connection_url}
+    userIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user
+    username: ${var.connection_username}
+    vaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
+    walletSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    walletSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

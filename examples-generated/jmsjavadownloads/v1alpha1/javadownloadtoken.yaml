@@ -1,0 +1,23 @@
+apiVersion: jmsjavadownloads.oci.upbound.io/v1alpha1
+kind: JavaDownloadToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsjavadownloads/v1alpha1/javadownloadtoken
+  labels:
+    testing.upbound.io/example-name: test_java_download_token
+  name: test-java-download-token
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.java_download_token_description}
+    displayName: ${var.java_download_token_display_name}
+    freeformTags:
+      bar-key: value
+    isDefault: ${var.java_download_token_is_default}
+    javaVersion: ${var.java_download_token_java_version}
+    licenseType: ${var.java_download_token_license_type}
+    timeExpires: ${var.java_download_token_time_expires}

@@ -1,0 +1,16 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: LifecycleStageAttachManagedInstancesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/lifecyclestageattachmanagedinstancesmanagement
+  labels:
+    testing.upbound.io/example-name: test_lifecycle_stage_attach_managed_instances_management
+  name: test-lifecycle-stage-attach-managed-instances-management
+spec:
+  forProvider:
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}
+    managedInstanceDetails:
+    - managedInstances: ${var.lifecycle_stage_attach_managed_instances_management_managed_instance_details_managed_instances}
+      workRequestDetails:
+      - description: ${var.lifecycle_stage_attach_managed_instances_management_managed_instance_details_work_request_details_description}
+        displayName: ${var.lifecycle_stage_attach_managed_instances_management_managed_instance_details_work_request_details_display_name}

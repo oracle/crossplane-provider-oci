@@ -1,0 +1,36 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceIngestTimeRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespaceingesttimerule
+  labels:
+    testing.upbound.io/example-name: test_namespace_ingest_time_rule
+  name: test-namespace-ingest-time-rule
+spec:
+  forProvider:
+    actions:
+    - compartmentId: ${var.compartment_id}
+      dimensions: ${var.namespace_ingest_time_rule_actions_dimensions}
+      metricName: ${oci_monitoring_metric.test_metric.name}
+      namespace: ${var.namespace_ingest_time_rule_actions_namespace}
+      resourceGroup: ${var.namespace_ingest_time_rule_actions_resource_group}
+      type: ${var.namespace_ingest_time_rule_actions_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    conditions:
+    - additionalConditions:
+      - conditionField: ${var.namespace_ingest_time_rule_conditions_additional_conditions_condition_field}
+        conditionOperator: ${var.namespace_ingest_time_rule_conditions_additional_conditions_condition_operator}
+        conditionValue: ${var.namespace_ingest_time_rule_conditions_additional_conditions_condition_value}
+      fieldName: ${var.namespace_ingest_time_rule_conditions_field_name}
+      fieldOperator: ${var.namespace_ingest_time_rule_conditions_field_operator}
+      fieldValue: ${var.namespace_ingest_time_rule_conditions_field_value}
+      kind: ${var.namespace_ingest_time_rule_conditions_kind}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.namespace_ingest_time_rule_description}
+    displayName: ${var.namespace_ingest_time_rule_display_name}
+    freeformTags:
+      bar-key: value
+    namespace: ${var.namespace_ingest_time_rule_namespace}

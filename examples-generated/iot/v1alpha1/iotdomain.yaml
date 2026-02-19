@@ -1,0 +1,22 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: IotDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomain
+  labels:
+    testing.upbound.io/example-name: test_iot_domain
+  name: test-iot-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.iot_domain_description}
+    displayName: ${var.iot_domain_display_name}
+    freeformTags:
+      Department: Finance
+    iotDomainGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_iot_domain_group

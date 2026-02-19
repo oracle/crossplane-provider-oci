@@ -28,7 +28,9 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: test_subnet
     sourceType: ${var.vtap_source_type}
-    targetId: ${oci_cloud_guard_target.test_target.id}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target
     targetIp: ${var.vtap_target_ip}
     targetType: ${var.vtap_target_type}
     trafficMode: ${var.vtap_traffic_mode}

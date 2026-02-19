@@ -1,0 +1,28 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MaintenanceWindow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/maintenancewindow
+  labels:
+    testing.upbound.io/example-name: test_maintenance_window
+  name: test-maintenance-window
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.maintenance_window_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.maintenance_window_name}
+    resources:
+    - areMembersIncluded: ${var.maintenance_window_resources_are_members_included}
+      resourceId: ${oci_cloud_guard_resource.test_resource.id}
+    schedule:
+    - maintenanceWindowDuration: ${var.maintenance_window_schedule_maintenance_window_duration}
+      maintenanceWindowRecurrences: ${var.maintenance_window_schedule_maintenance_window_recurrences}
+      scheduleType: ${var.maintenance_window_schedule_schedule_type}
+      timeMaintenanceWindowEnd: ${var.maintenance_window_schedule_time_maintenance_window_end}
+      timeMaintenanceWindowStart: ${var.maintenance_window_schedule_time_maintenance_window_start}

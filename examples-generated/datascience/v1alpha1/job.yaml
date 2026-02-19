@@ -1,0 +1,116 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/job
+  labels:
+    testing.upbound.io/example-name: test_job
+  name: test-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.job_description}
+    displayName: ${var.job_display_name}
+    freeformTags:
+      Department: Finance
+    jobConfigurationDetails:
+    - commandLineArguments: ${var.job_job_configuration_details_command_line_arguments}
+      environmentVariables: ${var.job_job_configuration_details_environment_variables}
+      jobType: ${var.job_job_configuration_details_job_type}
+      maximumRuntimeInMinutes: ${var.job_job_configuration_details_maximum_runtime_in_minutes}
+      startupProbeDetails:
+      - command: ${var.job_job_configuration_details_startup_probe_details_command}
+        cpu_baseline: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_cpu_baseline}
+        failureThreshold: ${var.job_job_configuration_details_startup_probe_details_failure_threshold}
+        initialDelayInSeconds: ${var.job_job_configuration_details_startup_probe_details_initial_delay_in_seconds}
+        jobProbeCheckType: ${var.job_job_configuration_details_startup_probe_details_job_probe_check_type}
+        memory_in_gbs: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_memory_in_gbs}
+        ocpus: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_ocpus}
+        periodInSeconds: ${var.job_job_configuration_details_startup_probe_details_period_in_seconds}
+    jobEnvironmentConfigurationDetails:
+    - cmd: ${var.job_job_environment_configuration_details_cmd}
+      entrypoint: ${var.job_job_environment_configuration_details_entrypoint}
+      image: ${var.job_job_environment_configuration_details_image}
+      imageDigest: ${var.job_job_environment_configuration_details_image_digest}
+      imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      jobEnvironmentType: ${var.job_job_environment_configuration_details_job_environment_type}
+    jobInfrastructureConfigurationDetails:
+    - blockStorageSizeInGbs: ${var.job_job_infrastructure_configuration_details_block_storage_size_in_gbs}
+      jobInfrastructureType: ${var.job_job_infrastructure_configuration_details_job_infrastructure_type}
+      jobShapeConfigDetails:
+      - memoryInGbs: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_memory_in_gbs}
+        ocpus: ${var.job_job_infrastructure_configuration_details_job_shape_config_details_ocpus}
+      shapeName: ${oci_core_shape.test_shape.name}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    jobLogConfigurationDetails:
+    - enableAutoLogCreation: ${var.job_job_log_configuration_details_enable_auto_log_creation}
+      enableLogging: ${var.job_job_log_configuration_details_enable_logging}
+      logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    jobNodeConfigurationDetails:
+    - jobNetworkConfiguration:
+      - jobNetworkType: ${var.job_job_node_configuration_details_job_network_configuration_job_network_type}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+      jobNodeGroupConfigurationDetailsList:
+      - jobConfigurationDetails:
+        - commandLineArguments: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_command_line_arguments}
+          environmentVariables: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_environment_variables}
+          jobType: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_job_type}
+          maximumRuntimeInMinutes: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_maximum_runtime_in_minutes}
+          startupProbeDetails:
+          - command: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_startup_probe_details_command}
+            failureThreshold: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_startup_probe_details_failure_threshold}
+            initialDelayInSeconds: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_startup_probe_details_initial_delay_in_seconds}
+            jobProbeCheckType: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_startup_probe_details_job_probe_check_type}
+            periodInSeconds: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_configuration_details_startup_probe_details_period_in_seconds}
+        jobEnvironmentConfigurationDetails:
+        - cmd: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_environment_configuration_details_cmd}
+          entrypoint: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_environment_configuration_details_entrypoint}
+          image: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_environment_configuration_details_image}
+          imageDigest: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_environment_configuration_details_image_digest}
+          imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+          jobEnvironmentType: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_environment_configuration_details_job_environment_type}
+        jobInfrastructureConfigurationDetails:
+        - blockStorageSizeInGbs: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_infrastructure_configuration_details_block_storage_size_in_gbs}
+          jobInfrastructureType: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_infrastructure_configuration_details_job_infrastructure_type}
+          jobShapeConfigDetails:
+          - memoryInGbs: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_infrastructure_configuration_details_job_shape_config_details_memory_in_gbs}
+            ocpus: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_job_infrastructure_configuration_details_job_shape_config_details_ocpus}
+          shapeName: ${oci_core_shape.test_shape.name}
+          subnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_subnet
+        minimumSuccessReplicas: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_minimum_success_replicas}
+        name: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_name}
+        replicas: ${var.job_job_node_configuration_details_job_node_group_configuration_details_list_replicas}
+      jobNodeType: ${var.job_job_node_configuration_details_job_node_type}
+      maximumRuntimeInMinutes: ${var.job_job_node_configuration_details_maximum_runtime_in_minutes}
+      startupOrder: ${var.job_job_node_configuration_details_startup_order}
+    jobStorageMountConfigurationDetailsList:
+    - bucket: ${var.job_job_storage_mount_configuration_details_list_bucket}
+      destinationDirectoryName: ${var.job_job_storage_mount_configuration_details_list_destination_directory_name}
+      destinationPath: ${var.job_job_storage_mount_configuration_details_list_destination_path}
+      exportIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_export
+      mountTargetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mount_target
+      namespace: ${var.job_job_storage_mount_configuration_details_list_namespace}
+      prefix: ${var.job_job_storage_mount_configuration_details_list_prefix}
+      storageType: ${var.job_job_storage_mount_configuration_details_list_storage_type}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

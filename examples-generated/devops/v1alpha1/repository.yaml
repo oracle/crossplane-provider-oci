@@ -1,0 +1,30 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repository
+  labels:
+    testing.upbound.io/example-name: test_repository
+  name: test-repository
+spec:
+  forProvider:
+    defaultBranch: ${var.repository_default_branch}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.repository_description}
+    freeformTags:
+      bar-key: value
+    mirrorRepositoryConfig:
+    - connectorId: ${oci_devops_connector.test_connector.id}
+      repositoryUrl: ${var.repository_mirror_repository_config_repository_url}
+      triggerSchedule:
+      - customSchedule: ${var.repository_mirror_repository_config_trigger_schedule_custom_schedule}
+        scheduleType: ${var.repository_mirror_repository_config_trigger_schedule_schedule_type}
+    name: ${var.repository_name}
+    parentRepositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    repositoryType: ${var.repository_repository_type}

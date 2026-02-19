@@ -1,0 +1,24 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: Agent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/agent
+  labels:
+    testing.upbound.io/example-name: test_agent
+  name: test-agent
+spec:
+  forProvider:
+    agentType: ${var.agent_agent_type}
+    agentVersion: ${var.agent_agent_version}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.agent_display_name}
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_environment
+    freeformTags:
+      Department: Finance
+    osVersion: ${var.agent_os_version}

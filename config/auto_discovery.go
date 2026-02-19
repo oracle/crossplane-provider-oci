@@ -46,6 +46,7 @@ func ProblematicResources() []string {
 		`oci_network_firewall_network_firewall_policy_url_list$`,         // Similar potential naming conflict
 		`oci_network_firewall_network_firewall_policy_application_list$`, // Similar potential naming conflict
 		`oci_load_balancer_backendset$`,                                  // Alias for oci_load_balancer_backend_set
+		`oci_load_balancer$`,                                             // Alias for oci_load_balancer_load_balancer
 
 		// Add more specific resources here as we discover generation issues
 	}
@@ -89,9 +90,237 @@ func ServiceGroupDetector(resourceName string) (group string, kind string) {
 		return group, generateKindName(resourceName, group)
 	}
 
-	// Special handling for multi-word services
+	// Multi-word / colliding prefixes use parts[2] to disambiguate, defaulting to
+	// the first known service for that prefix. Single-word services rely on the
+	// default fallback (group = servicePrefix) and are not listed here.
 	switch servicePrefix {
+	case "ai":
+		// Ai Data Platform, Ai Document, Ai Language, Ai Vision
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "data", "dataplatform", "data_platform":
+				group = "aidataplatform"
+			case "document":
+				group = "aidocument"
+			case "language":
+				group = "ailanguage"
+			case "vision":
+				group = "aivision"
+			default:
+				// default to first known AI service
+				group = "aidataplatform"
+			}
+		} else {
+			group = "aidataplatform"
+		}
+
+	case "announcements":
+		// "Announcements Service": "announcements_service" -> "announcementsservice"
+		group = "announcementsservice"
+
+	case "api":
+		// "API Platform": "api_platform" -> "apiplatform"
+		group = "apiplatform"
+
+	case "apm":
+		// Apm, Apm Config, Apm Synthetics, Apm Traces
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "config":
+				group = "apmconfig"
+			case "synthetics":
+				group = "apmsynthetics"
+			case "traces":
+				group = "apmtraces"
+			default:
+				group = "apm"
+			}
+		} else {
+			group = "apm"
+		}
+
+	case "capacity":
+		// "Capacity Management": "capacity_management" -> "capacitymanagement"
+		group = "capacitymanagement"
+
+	case "certificates":
+		// "Certificates Management": "certificates_management" -> "certificatesmanagement"
+		group = "certificatesmanagement"
+
+	case "cloud":
+		// Cloud Bridge, Cloud Guard, Cloud Migrations
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "bridge":
+				group = "cloudbridge"
+			case "guard":
+				group = "cloudguard"
+			case "migrations":
+				group = "cloudmigrations"
+			default:
+				group = "cloudbridge" // default to first service
+			}
+		} else {
+			group = "cloudbridge"
+		}
+
+	case "cluster":
+		// "Cluster Placement Groups": "cluster_placement_groups" -> "clusterplacementgroups"
+		group = "clusterplacementgroups"
+
+	case "compute":
+		// "Compute Cloud At Customer": "compute_cloud_at_customer" -> "computecloudatcustomer"
+		group = "computecloudatcustomer"
+
+	case "container":
+		// Container Engine, Container Instances
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "engine":
+				group = "containerengine"
+			case "instances":
+				group = "containerinstances"
+			default:
+				group = "containerengine"
+			}
+		} else {
+			group = "containerengine"
+		}
+
+	case "data":
+		// Data Labeling Service: "data_labeling_service" -> "datalabelingservice"
+		group = "datalabelingservice"
+
+	case "delegate":
+		// Delegate Access Control: "delegate_access_control" -> "delegateaccesscontrol"
+		group = "delegateaccesscontrol"
+
+	case "demand":
+		// Demand Signal: "demand_signal" -> "demandsignal"
+		group = "demandsignal"
+
+	case "disaster":
+		// Disaster Recovery: "disaster_recovery" -> "disasterrecovery"
+		group = "disasterrecovery"
+
+	case "file":
+		// "File Storage": "file_storage" -> "filestorage"
+		group = "filestorage"
+
+	case "fleet":
+		// Fleet Apps Management, Fleet Software Update
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "apps":
+				group = "fleetappsmanagement"
+			case "software":
+				group = "fleetsoftwareupdate"
+			default:
+				group = "fleetappsmanagement"
+			}
+		} else {
+			group = "fleetappsmanagement"
+		}
+
+	case "lustre":
+		// "Lustre File Storage": "lustre_file_storage" -> "lustrefilestorage"
+		group = "lustrefilestorage"
+
+	case "managed":
+		// "Managed Kafka": "managed_kafka" -> "managedkafka"
+		group = "managedkafka"
+
+	case "media":
+		// "Media Services": "media_services" -> "mediaservices"
+		group = "mediaservices"
+
+	case "metering":
+		// "Metering Computation": "metering_computation" -> "meteringcomputation"
+		group = "meteringcomputation"
+
+	case "generic":
+		// "Generic Artifacts Content": "generic_artifacts_content" -> "genericartifactscontent"
+		group = "genericartifactscontent"
+
+	case "globally":
+		// "Globally Distributed Database": "globally_distributed_database" -> "globallydistributeddatabase"
+		group = "globallydistributeddatabase"
+
+	case "golden":
+		// "Golden Gate": "golden_gate" -> "goldengate"
+		group = "goldengate"
+
+	case "fusion":
+		// "Fusion Apps": "fusion_apps" -> "fusionapps"
+		group = "fusionapps"
+
+	case "generative":
+		// Generative AI, Generative Ai Agent
+		group = "generativeai"
+
+	case "health":
+		// "Health Checks": "health_checks" -> "healthchecks"
+		group = "healthchecks"
+
+	case "identity":
+		// Identity, Identity Data Plane, Identity Domains
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "data":
+				group = "identitydataplane"
+			case "domains":
+				group = "identitydomains"
+			default:
+				group = "identity"
+			}
+		} else {
+			group = "identity"
+		}
+
+	case "jms":
+		// Jms, Jms Java Downloads, Jms Utils
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "java":
+				group = "jmsjavadownloads"
+			case "utils":
+				group = "jmsutils"
+			default:
+				group = "jms"
+			}
+		} else {
+			group = "jms"
+		}
+
+	case "license":
+		// "License Manager": "license_manager" -> "licensemanager"
+		group = "licensemanager"
+
+	case "load":
+		// "Load Balancer": "load_balancer" -> "loadbalancer"
+		group = "loadbalancer"
+
+	case "log":
+		// "Log Analytics": "log_analytics" -> "loganalytics"
+		group = "loganalytics"
+
+	case "management":
+		// Management Agent, Management Dashboard
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "agent":
+				group = "managementagent"
+			case "dashboard":
+				group = "managementdashboard"
+			default:
+				group = "managementagent"
+			}
+		} else {
+			group = "managementagent"
+		}
+
 	case "network":
+		// Network Firewall, Network Load Balancer; default networking
 		if len(parts) > 2 {
 			switch parts[2] {
 			case "firewall":
@@ -105,19 +334,69 @@ func ServiceGroupDetector(resourceName string) (group string, kind string) {
 			group = "networking"
 		}
 
-	case "load":
-		group = "loadbalancer"
+	case "osp":
+		// "Osp Gateway": "osp_gateway" -> "ospgateway"
+		group = "ospgateway"
 
-	case "file":
-		group = "filestorage"
+	case "operator":
+		// "Operator Access Control": "operator_access_control" -> "operatoraccesscontrol"
+		group = "operatoraccesscontrol"
 
-	case "health":
-		group = "healthchecks"
+	case "os":
+		// "Os Management Hub": "os_management_hub" -> "osmanagementhub"
+		group = "osmanagementhub"
 
-	case "certificates":
-		group = "certificatesmanagement"
+	case "resource":
+		// Resource Analytics, Resource Manager, Resource Scheduler
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "analytics":
+				group = "resourceanalytics"
+			case "manager":
+				group = "resourcemanager"
+			case "scheduler":
+				group = "resourcescheduler"
+			default:
+				group = "resourcemanager"
+			}
+		} else {
+			group = "resourcemanager"
+		}
+
+	case "security":
+		// "Security Attribute": "security_attribute" -> "securityattribute"
+		group = "securityattribute"
+
+	case "service":
+		// "Service Catalog": "service_catalog" -> "servicecatalog"
+		group = "servicecatalog"
+
+	case "stack":
+		// "Stack Monitoring": "stack_monitoring" -> "stackmonitoring"
+		group = "stackmonitoring"
+
+	case "usage":
+		// "Usage Proxy": "usage_proxy" -> "usageproxy"
+		group = "usageproxy"
+
+	case "vbs":
+		// "Vbs Inst": "vbs_inst" -> "vbsinst"
+		group = "vbsinst"
+
+	case "visual":
+		// "Visual Builder": "visual_builder" -> "visualbuilder"
+		group = "visualbuilder"
+
+	case "vn":
+		// "Vn Monitoring": "vn_monitoring" -> "vnmonitoring"
+		group = "vnmonitoring"
+
+	case "vulnerability":
+		// "Vulnerability Scanning": "vulnerability_scanning" -> "vulnerabilityscanning"
+		group = "vulnerabilityscanning"
 
 	default:
+		// Fallback: use the raw service prefix
 		group = servicePrefix
 	}
 

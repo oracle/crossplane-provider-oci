@@ -1,0 +1,1811 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: fsucycles.fleetsoftwareupdate.oci.upbound.io
+spec:
+  group: fleetsoftwareupdate.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: FsuCycle
+    listKind: FsuCycleList
+    plural: fsucycles
+    singular: fsucycle
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FsuCycle is the Schema for the FsuCycles API. Provides the Fsu
+          Cycle resource in Oracle Cloud Infrastructure Fleet Software Update service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FsuCycleSpec defines the desired state of FsuCycle
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  applyActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  batchingStrategy:
+                    description: (Updatable) Batching strategy details to use during
+                      PRECHECK and APPLY Cycle Actions.
+                    items:
+                      properties:
+                        isForceRolling:
+                          description: (Applicable when type=FIFTY_FIFTY | SEQUENTIAL
+                            | SERVICE_AVAILABILITY_FACTOR) (Updatable) True to force
+                            rolling patching.
+                          type: boolean
+                        isWaitForBatchResume:
+                          description: (Applicable when type=FIFTY_FIFTY) (Updatable)
+                            True to wait for customer to resume the Apply Action once
+                            the first half is done. False to automatically patch the
+                            second half.
+                          type: boolean
+                        percentage:
+                          description: (Applicable when type=SERVICE_AVAILABILITY_FACTOR)
+                            (Updatable) Percentage of availability in the service
+                            during the Patch operation.
+                          type: number
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the Compartment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diagnosticsCollection:
+                    description: (Updatable) Details to configure diagnostics collection
+                      for targets affected by this Exadata Fleet Update Maintenance
+                      Cycle.
+                    items:
+                      properties:
+                        logCollectionMode:
+                          description: (Updatable) Enable incident logs and trace
+                            collection.  Allow Oracle to collect incident logs and
+                            traces to enable fault diagnosis and issue resolution
+                            according to the selected mode.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Exadata
+                      Fleet Update Cycle.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  fsuCollectionId:
+                    description: The OCID of the Exadata Fleet Update Collection which
+                      will be updated by the Exadata Fleet Update Cycle being created.
+                    type: string
+                  fsuCollectionIdRef:
+                    description: Reference to a FsuCollection in fleetsoftwareupdate
+                      to populate fsuCollectionId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  fsuCollectionIdSelector:
+                    description: Selector for a FsuCollection in fleetsoftwareupdate
+                      to populate fsuCollectionId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  goalVersionDetails:
+                    description: (Updatable) Goal version or image details for the
+                      Exadata Fleet Update Cycle.
+                    items:
+                      properties:
+                        components:
+                          description: (Updatable) Details of goal versions for components
+                            in an Exadata software stack.
+                          items:
+                            properties:
+                              componentType:
+                                description: (Updatable) Type of component in an Exadata
+                                  software stack.
+                                type: string
+                              goalVersionDetails:
+                                description: (Updatable) Goal version or image details
+                                  for the Exadata Fleet Update Cycle.
+                                items:
+                                  properties:
+                                    goalSoftwareImageId:
+                                      description: (Updatable) The OCID of the custom
+                                        'GI' software image.
+                                      type: string
+                                    goalSoftwareImageIdRef:
+                                      description: Reference to a Image in compute
+                                        to populate goalSoftwareImageId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    goalSoftwareImageIdSelector:
+                                      description: Selector for a Image in compute
+                                        to populate goalSoftwareImageId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    goalType:
+                                      description: (Updatable) Preference to use an
+                                        Oracle released 'GI' software image or a custom
+                                        'GI' software image.
+                                      type: string
+                                    goalVersion:
+                                      description: (Updatable) Goal version string
+                                        matching an Oracle released 'GUEST_OS' software
+                                        image.
+                                      type: string
+                                  type: object
+                                type: array
+                              homePolicy:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Goal home policy to use when Staging
+                                  the Goal Version during patching. CREATE_NEW: Create
+                                  a new DBHome (for Database Collections) for the
+                                  specified image or version. USE_EXISTING: All database
+                                  targets in the same VMCluster or CloudVmCluster
+                                  will be moved to a shared database home.  If an
+                                  existing home for the selected image or version
+                                  is not found in the VM Cluster for a target database,
+                                  then a new home will be created.  If more than one
+                                  existing home for the selected image is found, then
+                                  the home with the least number of databases will
+                                  be used.  If multiple homes have the least number
+                                  of databases, then a home will be selected at random.'
+                                type: string
+                              newHomePrefix:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Prefix name used for new DB home resources
+                                  created as part of the Stage Action. Format: <specified_prefix>_
+                                  If not specified, a default Oracle Cloud Infrastructure
+                                  DB home resource will be generated for the new DB
+                                  home resources created.'
+                                type: string
+                            type: object
+                          type: array
+                        homePolicy:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Goal home policy to use when Staging the Goal Version
+                            during patching. CREATE_NEW: Create a new DBHome (for
+                            Database Collections) for the specified image or version.
+                            USE_EXISTING: All database targets in the same VMCluster
+                            or CloudVmCluster will be moved to a shared database home.  If
+                            an existing home for the selected image or version is
+                            not found in the VM Cluster for a target database, then
+                            a new home will be created.  If more than one existing
+                            home for the selected image is found, then the home with
+                            the least number of databases will be used.  If multiple
+                            homes have the least number of databases, then a home
+                            will be selected at random.'
+                          type: string
+                        newHomePrefix:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Prefix name used for new DB home resources created as
+                            part of the Stage Action. Format: <specified_prefix>_
+                            If not specified, a default Oracle Cloud Infrastructure
+                            DB home resource will be generated for the new DB home
+                            resources created.'
+                          type: string
+                        softwareImageId:
+                          description: (Updatable) The OCID of the goal database software
+                            image.
+                          type: string
+                        softwareImageIdRef:
+                          description: Reference to a Image in compute to populate
+                            softwareImageId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        softwareImageIdSelector:
+                          description: Selector for a Image in compute to populate
+                            softwareImageId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                        version:
+                          description: (Updatable) Goal version string for the Exadata
+                            Fleet Update Cycle. Applicable to Database, Grid Infrastructure,
+                            or Exadata Image software updates.
+                          type: string
+                      type: object
+                    type: array
+                  isIgnoreMissingPatches:
+                    description: (Applicable when type=PATCH) (Updatable) List of
+                      identifiers of patches to ignore. This attribute will be ignored
+                      for Exadata Image (Guest OS) maintenance update.
+                    items:
+                      type: string
+                    type: array
+                  isIgnorePatches:
+                    description: (Applicable when type=PATCH) (Updatable) Ignore patch
+                      conflicts or missing patches between the source and goal homes.
+                      This attribute will be ignored for Exadata Image (Guest OS)
+                      maintenance update.
+                    type: boolean
+                  isKeepPlacement:
+                    description: (Applicable when type=PATCH) (Updatable) Ensure that
+                      database services are online on the same VMs before and after
+                      the maintenance update.
+                    type: boolean
+                  maxDrainTimeoutInSeconds:
+                    description: (Applicable when type=PATCH) (Updatable) Timeout
+                      for session draining for database services specified in seconds.
+                    type: number
+                  stageActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  type:
+                    description: Type of scheduling strategy to use for Fleet Patching
+                      Update Action execution.
+                    type: string
+                  upgradeDetails:
+                    description: (Applicable when type=UPGRADE) (Updatable) Details
+                      of supported upgrade options for DB or GI collection.
+                    items:
+                      properties:
+                        collectionType:
+                          description: (Updatable) Type of Exadata Fleet Update collection
+                            being upgraded.
+                          type: string
+                        isIgnorePostUpgradeErrors:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore errors during post Oracle Grid Infrastructure upgrade
+                            Cluster Verification Utility (CVU) check.
+                          type: boolean
+                        isIgnorePrerequisites:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore the Cluster Verification Utility (CVU) prerequisite
+                            checks.
+                          type: boolean
+                        isRecompileInvalidObjects:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables the recompilation of invalid objects.
+                          type: boolean
+                        isTimeZoneUpgrade:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables time zone upgrade.
+                          type: boolean
+                        maxDrainTimeoutInSeconds:
+                          description: (Applicable when type=PATCH) (Updatable) Timeout
+                            for session draining for database services specified in
+                            seconds.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  applyActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  batchingStrategy:
+                    description: (Updatable) Batching strategy details to use during
+                      PRECHECK and APPLY Cycle Actions.
+                    items:
+                      properties:
+                        isForceRolling:
+                          description: (Applicable when type=FIFTY_FIFTY | SEQUENTIAL
+                            | SERVICE_AVAILABILITY_FACTOR) (Updatable) True to force
+                            rolling patching.
+                          type: boolean
+                        isWaitForBatchResume:
+                          description: (Applicable when type=FIFTY_FIFTY) (Updatable)
+                            True to wait for customer to resume the Apply Action once
+                            the first half is done. False to automatically patch the
+                            second half.
+                          type: boolean
+                        percentage:
+                          description: (Applicable when type=SERVICE_AVAILABILITY_FACTOR)
+                            (Updatable) Percentage of availability in the service
+                            during the Patch operation.
+                          type: number
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the Compartment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diagnosticsCollection:
+                    description: (Updatable) Details to configure diagnostics collection
+                      for targets affected by this Exadata Fleet Update Maintenance
+                      Cycle.
+                    items:
+                      properties:
+                        logCollectionMode:
+                          description: (Updatable) Enable incident logs and trace
+                            collection.  Allow Oracle to collect incident logs and
+                            traces to enable fault diagnosis and issue resolution
+                            according to the selected mode.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Exadata
+                      Fleet Update Cycle.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  fsuCollectionId:
+                    description: The OCID of the Exadata Fleet Update Collection which
+                      will be updated by the Exadata Fleet Update Cycle being created.
+                    type: string
+                  fsuCollectionIdRef:
+                    description: Reference to a FsuCollection in fleetsoftwareupdate
+                      to populate fsuCollectionId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  fsuCollectionIdSelector:
+                    description: Selector for a FsuCollection in fleetsoftwareupdate
+                      to populate fsuCollectionId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  goalVersionDetails:
+                    description: (Updatable) Goal version or image details for the
+                      Exadata Fleet Update Cycle.
+                    items:
+                      properties:
+                        components:
+                          description: (Updatable) Details of goal versions for components
+                            in an Exadata software stack.
+                          items:
+                            properties:
+                              componentType:
+                                description: (Updatable) Type of component in an Exadata
+                                  software stack.
+                                type: string
+                              goalVersionDetails:
+                                description: (Updatable) Goal version or image details
+                                  for the Exadata Fleet Update Cycle.
+                                items:
+                                  properties:
+                                    goalSoftwareImageId:
+                                      description: (Updatable) The OCID of the custom
+                                        'GI' software image.
+                                      type: string
+                                    goalSoftwareImageIdRef:
+                                      description: Reference to a Image in compute
+                                        to populate goalSoftwareImageId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    goalSoftwareImageIdSelector:
+                                      description: Selector for a Image in compute
+                                        to populate goalSoftwareImageId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    goalType:
+                                      description: (Updatable) Preference to use an
+                                        Oracle released 'GI' software image or a custom
+                                        'GI' software image.
+                                      type: string
+                                    goalVersion:
+                                      description: (Updatable) Goal version string
+                                        matching an Oracle released 'GUEST_OS' software
+                                        image.
+                                      type: string
+                                  type: object
+                                type: array
+                              homePolicy:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Goal home policy to use when Staging
+                                  the Goal Version during patching. CREATE_NEW: Create
+                                  a new DBHome (for Database Collections) for the
+                                  specified image or version. USE_EXISTING: All database
+                                  targets in the same VMCluster or CloudVmCluster
+                                  will be moved to a shared database home.  If an
+                                  existing home for the selected image or version
+                                  is not found in the VM Cluster for a target database,
+                                  then a new home will be created.  If more than one
+                                  existing home for the selected image is found, then
+                                  the home with the least number of databases will
+                                  be used.  If multiple homes have the least number
+                                  of databases, then a home will be selected at random.'
+                                type: string
+                              newHomePrefix:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Prefix name used for new DB home resources
+                                  created as part of the Stage Action. Format: <specified_prefix>_
+                                  If not specified, a default Oracle Cloud Infrastructure
+                                  DB home resource will be generated for the new DB
+                                  home resources created.'
+                                type: string
+                            type: object
+                          type: array
+                        homePolicy:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Goal home policy to use when Staging the Goal Version
+                            during patching. CREATE_NEW: Create a new DBHome (for
+                            Database Collections) for the specified image or version.
+                            USE_EXISTING: All database targets in the same VMCluster
+                            or CloudVmCluster will be moved to a shared database home.  If
+                            an existing home for the selected image or version is
+                            not found in the VM Cluster for a target database, then
+                            a new home will be created.  If more than one existing
+                            home for the selected image is found, then the home with
+                            the least number of databases will be used.  If multiple
+                            homes have the least number of databases, then a home
+                            will be selected at random.'
+                          type: string
+                        newHomePrefix:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Prefix name used for new DB home resources created as
+                            part of the Stage Action. Format: <specified_prefix>_
+                            If not specified, a default Oracle Cloud Infrastructure
+                            DB home resource will be generated for the new DB home
+                            resources created.'
+                          type: string
+                        softwareImageId:
+                          description: (Updatable) The OCID of the goal database software
+                            image.
+                          type: string
+                        softwareImageIdRef:
+                          description: Reference to a Image in compute to populate
+                            softwareImageId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        softwareImageIdSelector:
+                          description: Selector for a Image in compute to populate
+                            softwareImageId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                        version:
+                          description: (Updatable) Goal version string for the Exadata
+                            Fleet Update Cycle. Applicable to Database, Grid Infrastructure,
+                            or Exadata Image software updates.
+                          type: string
+                      type: object
+                    type: array
+                  isIgnoreMissingPatches:
+                    description: (Applicable when type=PATCH) (Updatable) List of
+                      identifiers of patches to ignore. This attribute will be ignored
+                      for Exadata Image (Guest OS) maintenance update.
+                    items:
+                      type: string
+                    type: array
+                  isIgnorePatches:
+                    description: (Applicable when type=PATCH) (Updatable) Ignore patch
+                      conflicts or missing patches between the source and goal homes.
+                      This attribute will be ignored for Exadata Image (Guest OS)
+                      maintenance update.
+                    type: boolean
+                  isKeepPlacement:
+                    description: (Applicable when type=PATCH) (Updatable) Ensure that
+                      database services are online on the same VMs before and after
+                      the maintenance update.
+                    type: boolean
+                  maxDrainTimeoutInSeconds:
+                    description: (Applicable when type=PATCH) (Updatable) Timeout
+                      for session draining for database services specified in seconds.
+                    type: number
+                  stageActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  type:
+                    description: Type of scheduling strategy to use for Fleet Patching
+                      Update Action execution.
+                    type: string
+                  upgradeDetails:
+                    description: (Applicable when type=UPGRADE) (Updatable) Details
+                      of supported upgrade options for DB or GI collection.
+                    items:
+                      properties:
+                        collectionType:
+                          description: (Updatable) Type of Exadata Fleet Update collection
+                            being upgraded.
+                          type: string
+                        isIgnorePostUpgradeErrors:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore errors during post Oracle Grid Infrastructure upgrade
+                            Cluster Verification Utility (CVU) check.
+                          type: boolean
+                        isIgnorePrerequisites:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore the Cluster Verification Utility (CVU) prerequisite
+                            checks.
+                          type: boolean
+                        isRecompileInvalidObjects:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables the recompilation of invalid objects.
+                          type: boolean
+                        isTimeZoneUpgrade:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables time zone upgrade.
+                          type: boolean
+                        maxDrainTimeoutInSeconds:
+                          description: (Applicable when type=PATCH) (Updatable) Timeout
+                            for session draining for database services specified in
+                            seconds.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.goalVersionDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.goalVersionDetails)
+                || (has(self.initProvider) && has(self.initProvider.goalVersionDetails))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: FsuCycleStatus defines the observed state of FsuCycle.
+            properties:
+              atProvider:
+                properties:
+                  applyActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  batchingStrategy:
+                    description: (Updatable) Batching strategy details to use during
+                      PRECHECK and APPLY Cycle Actions.
+                    items:
+                      properties:
+                        isForceRolling:
+                          description: (Applicable when type=FIFTY_FIFTY | SEQUENTIAL
+                            | SERVICE_AVAILABILITY_FACTOR) (Updatable) True to force
+                            rolling patching.
+                          type: boolean
+                        isWaitForBatchResume:
+                          description: (Applicable when type=FIFTY_FIFTY) (Updatable)
+                            True to wait for customer to resume the Apply Action once
+                            the first half is done. False to automatically patch the
+                            second half.
+                          type: boolean
+                        percentage:
+                          description: (Applicable when type=SERVICE_AVAILABILITY_FACTOR)
+                            (Updatable) Percentage of availability in the service
+                            during the Patch operation.
+                          type: number
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  collectionType:
+                    description: (Updatable) Type of Exadata Fleet Update collection
+                      being upgraded.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the Compartment.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  diagnosticsCollection:
+                    description: (Updatable) Details to configure diagnostics collection
+                      for targets affected by this Exadata Fleet Update Maintenance
+                      Cycle.
+                    items:
+                      properties:
+                        logCollectionMode:
+                          description: (Updatable) Enable incident logs and trace
+                            collection.  Allow Oracle to collect incident logs and
+                            traces to enable fault diagnosis and issue resolution
+                            according to the selected mode.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The user-friendly name for the Exadata
+                      Fleet Update Cycle.
+                    type: string
+                  executingFsuActionId:
+                    description: The OCID of the Exadata Fleet Update Action that
+                      is currently in progress, if applicable.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  fsuCollectionId:
+                    description: The OCID of the Exadata Fleet Update Collection which
+                      will be updated by the Exadata Fleet Update Cycle being created.
+                    type: string
+                  goalVersionDetails:
+                    description: (Updatable) Goal version or image details for the
+                      Exadata Fleet Update Cycle.
+                    items:
+                      properties:
+                        components:
+                          description: (Updatable) Details of goal versions for components
+                            in an Exadata software stack.
+                          items:
+                            properties:
+                              componentType:
+                                description: (Updatable) Type of component in an Exadata
+                                  software stack.
+                                type: string
+                              goalVersionDetails:
+                                description: (Updatable) Goal version or image details
+                                  for the Exadata Fleet Update Cycle.
+                                items:
+                                  properties:
+                                    goalSoftwareImageId:
+                                      description: (Updatable) The OCID of the custom
+                                        'GI' software image.
+                                      type: string
+                                    goalType:
+                                      description: (Updatable) Preference to use an
+                                        Oracle released 'GI' software image or a custom
+                                        'GI' software image.
+                                      type: string
+                                    goalVersion:
+                                      description: (Updatable) Goal version string
+                                        matching an Oracle released 'GUEST_OS' software
+                                        image.
+                                      type: string
+                                  type: object
+                                type: array
+                              homePolicy:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Goal home policy to use when Staging
+                                  the Goal Version during patching. CREATE_NEW: Create
+                                  a new DBHome (for Database Collections) for the
+                                  specified image or version. USE_EXISTING: All database
+                                  targets in the same VMCluster or CloudVmCluster
+                                  will be moved to a shared database home.  If an
+                                  existing home for the selected image or version
+                                  is not found in the VM Cluster for a target database,
+                                  then a new home will be created.  If more than one
+                                  existing home for the selected image is found, then
+                                  the home with the least number of databases will
+                                  be used.  If multiple homes have the least number
+                                  of databases, then a home will be selected at random.'
+                                type: string
+                              newHomePrefix:
+                                description: '(Applicable when component_type=GI)
+                                  (Updatable) Prefix name used for new DB home resources
+                                  created as part of the Stage Action. Format: <specified_prefix>_
+                                  If not specified, a default Oracle Cloud Infrastructure
+                                  DB home resource will be generated for the new DB
+                                  home resources created.'
+                                type: string
+                            type: object
+                          type: array
+                        homePolicy:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Goal home policy to use when Staging the Goal Version
+                            during patching. CREATE_NEW: Create a new DBHome (for
+                            Database Collections) for the specified image or version.
+                            USE_EXISTING: All database targets in the same VMCluster
+                            or CloudVmCluster will be moved to a shared database home.  If
+                            an existing home for the selected image or version is
+                            not found in the VM Cluster for a target database, then
+                            a new home will be created.  If more than one existing
+                            home for the selected image is found, then the home with
+                            the least number of databases will be used.  If multiple
+                            homes have the least number of databases, then a home
+                            will be selected at random.'
+                          type: string
+                        newHomePrefix:
+                          description: '(Applicable when component_type=GI) (Updatable)
+                            Prefix name used for new DB home resources created as
+                            part of the Stage Action. Format: <specified_prefix>_
+                            If not specified, a default Oracle Cloud Infrastructure
+                            DB home resource will be generated for the new DB home
+                            resources created.'
+                          type: string
+                        softwareImageId:
+                          description: (Updatable) The OCID of the goal database software
+                            image.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                        version:
+                          description: (Updatable) Goal version string for the Exadata
+                            Fleet Update Cycle. Applicable to Database, Grid Infrastructure,
+                            or Exadata Image software updates.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: The OCID of the Exadata Fleet Update Cycle.
+                    type: string
+                  isIgnoreMissingPatches:
+                    description: (Applicable when type=PATCH) (Updatable) List of
+                      identifiers of patches to ignore. This attribute will be ignored
+                      for Exadata Image (Guest OS) maintenance update.
+                    items:
+                      type: string
+                    type: array
+                  isIgnorePatches:
+                    description: (Applicable when type=PATCH) (Updatable) Ignore patch
+                      conflicts or missing patches between the source and goal homes.
+                      This attribute will be ignored for Exadata Image (Guest OS)
+                      maintenance update.
+                    type: boolean
+                  isKeepPlacement:
+                    description: (Applicable when type=PATCH) (Updatable) Ensure that
+                      database services are online on the same VMs before and after
+                      the maintenance update.
+                    type: boolean
+                  lastCompletedAction:
+                    description: The latest Action type that was completed in the
+                      Exadata Fleet Update Cycle. No value would indicate that the
+                      Cycle has not completed any Action yet.
+                    type: string
+                  lastCompletedActionId:
+                    description: The OCID of the latest Action  in the Exadata Fleet
+                      Update Cycle.
+                    type: string
+                  lifecycleDetails:
+                    description: A message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in Failed state.
+                    type: string
+                  maxDrainTimeoutInSeconds:
+                    description: (Applicable when type=PATCH) (Updatable) Timeout
+                      for session draining for database services specified in seconds.
+                    type: number
+                  nextActionToExecute:
+                    description: All possible Exadata Fleet Update Actions will be
+                      listed. The first element is the suggested Exadata Fleet Update
+                      Action.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  rollbackCycleState:
+                    description: Current rollback cycle state if rollback maintenance
+                      cycle action has been attempted. No value would indicate that
+                      the Cycle has not run a rollback maintenance cycle action before.
+                    type: string
+                  stageActionSchedule:
+                    description: Scheduling related details for the Exadata Fleet
+                      Update Action during create operations. The specified time should
+                      not conflict with existing Exadata Infrastructure maintenance
+                      windows. Null scheduleDetails for Stage and Apply Actions in
+                      Exadata Fleet Update Cycle creation would not create Actions.
+                      Null scheduleDetails for CreateAction would execute the Exadata
+                      Fleet Update Action as soon as possible.
+                    items:
+                      properties:
+                        timeToStart:
+                          description: The date and time the Exadata Fleet Update
+                            Action is expected to start. RFC 3339, section 14.29.
+                          type: string
+                        type:
+                          description: Type of scheduling strategy to use for Fleet
+                            Patching Update Action execution.
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The current state of the Exadata Fleet Update Cycle.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The date and time the Exadata Fleet Update Cycle
+                      was created, as described in RFC 3339, section 14.29.
+                    type: string
+                  timeFinished:
+                    description: The date and time the Exadata Fleet Update Cycle
+                      was finished, as described in RFC 3339.
+                    type: string
+                  timeUpdated:
+                    description: The date and time the Exadata Fleet Update Cycle
+                      was updated, as described in RFC 3339, section 14.29.
+                    type: string
+                  type:
+                    description: Type of scheduling strategy to use for Fleet Patching
+                      Update Action execution.
+                    type: string
+                  upgradeDetails:
+                    description: (Applicable when type=UPGRADE) (Updatable) Details
+                      of supported upgrade options for DB or GI collection.
+                    items:
+                      properties:
+                        collectionType:
+                          description: (Updatable) Type of Exadata Fleet Update collection
+                            being upgraded.
+                          type: string
+                        isIgnorePostUpgradeErrors:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore errors during post Oracle Grid Infrastructure upgrade
+                            Cluster Verification Utility (CVU) check.
+                          type: boolean
+                        isIgnorePrerequisites:
+                          description: (Applicable when collection_type=GI) (Updatable)
+                            Ignore the Cluster Verification Utility (CVU) prerequisite
+                            checks.
+                          type: boolean
+                        isRecompileInvalidObjects:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables the recompilation of invalid objects.
+                          type: boolean
+                        isTimeZoneUpgrade:
+                          description: (Applicable when collection_type=DB) (Updatable)
+                            Enables or disables time zone upgrade.
+                          type: boolean
+                        maxDrainTimeoutInSeconds:
+                          description: (Applicable when type=PATCH) (Updatable) Timeout
+                            for session draining for database services specified in
+                            seconds.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,24 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: AwrHub
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhub
+  labels:
+    testing.upbound.io/example-name: test_awr_hub
+  name: test-awr-hub
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.awr_hub_display_name}
+    freeformTags:
+      bar-key: value
+    objectStorageBucketNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bucket
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse

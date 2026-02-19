@@ -520,7 +520,17 @@ type MysqlDbSystemInitParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Configuration to be used for this DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/audit/v1alpha1.Configuration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ConfigurationID *string `json:"configurationId,omitempty" tf:"configuration_id,omitempty"`
+
+	// Reference to a Configuration in audit to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDRef *v1.Reference `json:"configurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Configuration in audit to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDSelector *v1.Selector `json:"configurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.
 	CrashRecovery *string `json:"crashRecovery,omitempty" tf:"crash_recovery,omitempty"`
@@ -866,8 +876,18 @@ type MysqlDbSystemParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Configuration to be used for this DB System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/audit/v1alpha1.Configuration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ConfigurationID *string `json:"configurationId,omitempty" tf:"configuration_id,omitempty"`
+
+	// Reference to a Configuration in audit to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDRef *v1.Reference `json:"configurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Configuration in audit to populate configurationId.
+	// +kubebuilder:validation:Optional
+	ConfigurationIDSelector *v1.Selector `json:"configurationIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Whether to run the DB System with InnoDB Redo Logs and the Double Write Buffer enabled or disabled, and whether to enable or disable syncing of the Binary Logs.
 	// +kubebuilder:validation:Optional
@@ -1087,7 +1107,17 @@ type MysqlDbSystemSecureConnectionsInitParameters struct {
 	CertificateGenerationType *string `json:"certificateGenerationType,omitempty" tf:"certificate_generation_type,omitempty"`
 
 	// (Updatable) The OCID of the certificate to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 }
 
 type MysqlDbSystemSecureConnectionsObservation struct {
@@ -1106,8 +1136,18 @@ type MysqlDbSystemSecureConnectionsParameters struct {
 	CertificateGenerationType *string `json:"certificateGenerationType" tf:"certificate_generation_type,omitempty"`
 
 	// (Updatable) The OCID of the certificate to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 }
 
 type MysqlDbSystemSourceInitParameters struct {

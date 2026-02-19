@@ -1,0 +1,23 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyDecryptionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicydecryptionrule
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_decryption_rule
+  name: test-network-firewall-policy-decryption-rule
+spec:
+  forProvider:
+    action: ${var.network_firewall_policy_decryption_rule_action}
+    condition:
+    - destinationAddress: ${var.network_firewall_policy_decryption_rule_condition_destination_address}
+      sourceAddress: ${var.network_firewall_policy_decryption_rule_condition_source_address}
+    decryptionProfile: ${var.network_firewall_policy_decryption_rule_decryption_profile}
+    name: ${var.network_firewall_policy_decryption_rule_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    position:
+    - afterRule: ${var.network_firewall_policy_decryption_rule_position_after_rule}
+      beforeRule: ${var.network_firewall_policy_decryption_rule_position_before_rule}
+    secret: ${var.network_firewall_policy_decryption_rule_secret}

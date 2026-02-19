@@ -1,0 +1,33 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSensitiveDataModel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesensitivedatamodel
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_model
+  name: test-sensitive-data-model
+spec:
+  forProvider:
+    appSuiteName: ${var.sensitive_data_model_app_suite_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sensitive_data_model_description}
+    displayName: ${var.sensitive_data_model_display_name}
+    freeformTags:
+      Department: Finance
+    isAppDefinedRelationDiscoveryEnabled: ${var.sensitive_data_model_is_app_defined_relation_discovery_enabled}
+    isIncludeAllSchemas: ${var.sensitive_data_model_is_include_all_schemas}
+    isIncludeAllSensitiveTypes: ${var.sensitive_data_model_is_include_all_sensitive_types}
+    isSampleDataCollectionEnabled: ${var.sensitive_data_model_is_sample_data_collection_enabled}
+    schemasForDiscovery: ${var.sensitive_data_model_schemas_for_discovery}
+    sensitiveTypeGroupIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_group_ids_for_discovery}
+    sensitiveTypeIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_ids_for_discovery}
+    tablesForDiscovery:
+    - schemaName: ${var.sensitive_data_model_tables_for_discovery_schema_name}
+      tableNames: ${var.sensitive_data_model_tables_for_discovery_table_names}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target

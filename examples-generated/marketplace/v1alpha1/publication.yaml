@@ -1,0 +1,38 @@
+apiVersion: marketplace.oci.upbound.io/v1alpha1
+kind: Publication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: marketplace/v1alpha1/publication
+  labels:
+    testing.upbound.io/example-name: test_publication
+  name: test-publication
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    isAgreementAcknowledged: ${var.publication_is_agreement_acknowledged}
+    listingType: ${var.publication_listing_type}
+    longDescription: ${var.publication_long_description}
+    name: ${var.publication_name}
+    packageDetails:
+    - eula:
+      - eulaType: ${var.publication_package_details_eula_eula_type}
+        licenseText: ${var.publication_package_details_eula_license_text}
+      imageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_image
+      operatingSystem:
+      - name: ${var.publication_package_details_operating_system_name}
+      packageType: ${var.publication_package_details_package_type}
+      packageVersion: ${var.publication_package_details_package_version}
+    shortDescription: ${var.publication_short_description}
+    supportContacts:
+    - email: ${var.publication_support_contacts_email}
+      name: ${var.publication_support_contacts_name}
+      phone: ${var.publication_support_contacts_phone}
+      subject: ${var.publication_support_contacts_subject}

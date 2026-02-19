@@ -1,0 +1,17 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: Event
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/event
+  labels:
+    testing.upbound.io/example-name: test_event
+  name: test-event
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    eventIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_event
+    freeformTags:
+      Department: Finance

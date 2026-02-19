@@ -1,0 +1,70 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: Sddc
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/sddc
+  labels:
+    testing.upbound.io/example-name: test_sddc
+  name: test-sddc
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.sddc_display_name}
+    freeformTags:
+      Department: Finance
+    hcxAction: ${var.hcx_action}
+    initialConfiguration:
+    - initialClusterConfigurations:
+      - capacityReservationId: ${oci_ocvp_capacity_reservation.test_capacity_reservation.id}
+        computeAvailabilityDomain: ${var.sddc_initial_configuration_initial_cluster_configurations_compute_availability_domain}
+        datastoreClusterIds: ${var.sddc_initial_configuration_initial_cluster_configurations_datastore_cluster_ids}
+        datastores:
+        - blockVolumeIds: ${var.sddc_initial_configuration_initial_cluster_configurations_datastores_block_volume_ids}
+          datastoreType: ${var.sddc_initial_configuration_initial_cluster_configurations_datastores_datastore_type}
+        displayName: ${var.sddc_initial_configuration_initial_cluster_configurations_display_name}
+        esxiHostsCount: ${var.sddc_initial_configuration_initial_cluster_configurations_esxi_hosts_count}
+        initialCommitment: ${var.sddc_initial_configuration_initial_cluster_configurations_initial_commitment}
+        initialHostOcpuCount: ${var.sddc_initial_configuration_initial_cluster_configurations_initial_host_ocpu_count}
+        initialHostShapeName: ${oci_core_shape.test_shape.name}
+        instanceDisplayNamePrefix: ${var.sddc_initial_configuration_initial_cluster_configurations_instance_display_name_prefix}
+        isShieldedInstanceEnabled: ${var.sddc_initial_configuration_initial_cluster_configurations_is_shielded_instance_enabled}
+        networkConfiguration:
+        - hcxVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          nsxEdgeUplink1VlanId: ${oci_ocvp_nsx_edge_uplink1vlan.test_nsx_edge_uplink1vlan.id}
+          nsxEdgeUplink2VlanId: ${oci_ocvp_nsx_edge_uplink2vlan.test_nsx_edge_uplink2vlan.id}
+          nsxEdgeVtepVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          nsxVtepVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          provisioningSubnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_subnet
+          provisioningVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          replicationVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          vmotionVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          vsanVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+          vsphereVlanIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vlan
+        vsphereType: ${var.sddc_initial_configuration_initial_cluster_configurations_vsphere_type}
+        workloadNetworkCidr: ${var.sddc_initial_configuration_initial_cluster_configurations_workload_network_cidr}
+    isHcxEnabled: ${var.sddc_is_hcx_enabled}
+    isSingleHostSddc: ${var.sddc_is_single_host_sddc}
+    sshAuthorizedKeys: ${var.sddc_ssh_authorized_keys}
+    vmwareSoftwareVersion: ${var.sddc_vmware_software_version}

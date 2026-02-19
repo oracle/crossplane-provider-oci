@@ -1,0 +1,38 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: Workspace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspace
+  labels:
+    testing.upbound.io/example-name: test_workspace
+  name: test-workspace
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.workspace_description}
+    displayName: ${var.workspace_display_name}
+    dnsServerIp: ${var.workspace_dns_server_ip}
+    dnsServerZone: ${var.workspace_dns_server_zone}
+    endpointCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    endpointId: ${oci_dataintegration_endpoint.test_endpoint.id}
+    endpointName: ${var.workspace_endpoint_name}
+    freeformTags:
+      Department: Finance
+    isPrivateNetworkEnabled: ${var.workspace_is_private_network_enabled}
+    registryCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    registryId: ${oci_data_connectivity_registry.test_registry.id}
+    registryName: ${oci_data_connectivity_registry.test_registry.name}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn

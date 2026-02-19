@@ -1,0 +1,24 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: StreamDistributionChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/streamdistributionchannel
+  labels:
+    testing.upbound.io/example-name: test_stream_distribution_channel
+  name: test-stream-distribution-channel
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.stream_distribution_channel_display_name}
+    freeformTags:
+      bar-key: value
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.stream_distribution_channel_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.stream_distribution_channel_locks_time_created}
+      type: ${var.stream_distribution_channel_locks_type}

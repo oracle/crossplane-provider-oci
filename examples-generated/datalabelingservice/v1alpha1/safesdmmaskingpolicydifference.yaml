@@ -1,0 +1,22 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSdmMaskingPolicyDifference
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesdmmaskingpolicydifference
+  labels:
+    testing.upbound.io/example-name: test_sdm_masking_policy_difference
+  name: test-sdm-masking-policy-difference
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    differenceType: ${var.sdm_masking_policy_difference_difference_type}
+    displayName: ${var.sdm_masking_policy_difference_display_name}
+    freeformTags:
+      Department: Finance
+    maskingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_masking_policy

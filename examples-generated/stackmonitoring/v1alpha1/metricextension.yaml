@@ -1,0 +1,55 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MetricExtension
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/metricextension
+  labels:
+    testing.upbound.io/example-name: test_metric_extension
+  name: test-metric-extension
+spec:
+  forProvider:
+    collectionRecurrences: ${var.metric_extension_collection_recurrences}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.metric_extension_description}
+    displayName: ${var.metric_extension_display_name}
+    metricList:
+    - computeExpression: ${var.metric_extension_metric_list_compute_expression}
+      dataType: ${var.metric_extension_metric_list_data_type}
+      displayName: ${var.metric_extension_metric_list_display_name}
+      isDimension: ${var.metric_extension_metric_list_is_dimension}
+      isHidden: ${var.metric_extension_metric_list_is_hidden}
+      metricCategory: ${var.metric_extension_metric_list_metric_category}
+      name: ${var.metric_extension_metric_list_name}
+      unit: ${var.metric_extension_metric_list_unit}
+    name: ${var.metric_extension_name}
+    queryProperties:
+    - arguments: ${var.metric_extension_query_properties_arguments}
+      autoRowPrefix: ${var.metric_extension_query_properties_auto_row_prefix}
+      collectionMethod: ${var.metric_extension_query_properties_collection_method}
+      command: ${var.metric_extension_query_properties_command}
+      delimiter: ${var.metric_extension_query_properties_delimiter}
+      identityMetric: ${var.metric_extension_query_properties_identity_metric}
+      inParamDetails:
+      - inParamPosition: ${var.metric_extension_query_properties_in_param_details_in_param_position}
+        inParamValue: ${var.metric_extension_query_properties_in_param_details_in_param_value}
+      isMetricServiceEnabled: ${var.metric_extension_query_properties_is_metric_service_enabled}
+      jmxAttributes: ${var.metric_extension_query_properties_jmx_attributes}
+      managedBeanQuery: ${var.metric_extension_query_properties_managed_bean_query}
+      outParamDetails:
+      - outParamName: ${var.metric_extension_query_properties_out_param_details_out_param_name}
+        outParamPosition: ${var.metric_extension_query_properties_out_param_details_out_param_position}
+        outParamType: ${var.metric_extension_query_properties_out_param_details_out_param_type}
+      protocolType: ${var.metric_extension_query_properties_protocol_type}
+      responseContentType: ${var.metric_extension_query_properties_response_content_type}
+      scriptDetails:
+      - content: ${var.metric_extension_query_properties_script_details_content}
+        name: ${var.metric_extension_query_properties_script_details_name}
+      sqlDetails:
+      - content: ${var.metric_extension_query_properties_sql_details_content}
+        scriptFileName: ${var.metric_extension_query_properties_sql_details_script_file_name}
+      sqlType: ${var.metric_extension_query_properties_sql_type}
+      startsWith: ${var.metric_extension_query_properties_starts_with}
+      url: ${var.metric_extension_query_properties_url}
+    resourceType: ${var.metric_extension_resource_type}

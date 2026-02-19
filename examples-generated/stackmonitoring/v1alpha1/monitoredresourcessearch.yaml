@@ -1,0 +1,36 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourcesSearch
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcessearch
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_search
+  name: test-monitored-resources-search
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    compartmentIds: ${var.monitored_resources_search_compartment_ids}
+    excludeFields: ${var.monitored_resources_search_exclude_fields}
+    externalId: ${oci_stack_monitoring_external.test_external.id}
+    fields: ${var.monitored_resources_search_fields}
+    hostName: ${var.monitored_resources_search_host_name}
+    hostNameContains: ${var.monitored_resources_search_host_name_contains}
+    license: ${var.monitored_resources_search_license}
+    lifecycleStates: ${var.monitored_resources_search_lifecycle_states}
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    name: ${var.monitored_resources_search_name}
+    nameContains: ${var.monitored_resources_search_name_contains}
+    propertyEquals: ${var.monitored_resources_search_property_equals}
+    resourceCategory: ${var.monitored_resources_search_resource_category}
+    resourceTimeZone: ${var.monitored_resources_search_resource_time_zone}
+    sourceType: ${var.monitored_resources_search_source_type}
+    state: ${var.monitored_resources_search_state}
+    timeCreatedGreaterThanOrEqualTo: ${var.monitored_resources_search_time_created_greater_than_or_equal_to}
+    timeCreatedLessThan: ${var.monitored_resources_search_time_created_less_than}
+    timeUpdatedGreaterThanOrEqualTo: ${var.monitored_resources_search_time_updated_greater_than_or_equal_to}
+    timeUpdatedLessThan: ${var.monitored_resources_search_time_updated_less_than}
+    type: ${var.monitored_resources_search_type}

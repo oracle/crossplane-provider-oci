@@ -1,0 +1,169 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deploystage
+  labels:
+    testing.upbound.io/example-name: test_deploy_stage
+  name: test-deploy-stage
+spec:
+  forProvider:
+    approvalPolicy:
+    - approvalPolicyType: ${var.deploy_stage_approval_policy_approval_policy_type}
+      numberOfApprovalsRequired: ${var.deploy_stage_approval_policy_number_of_approvals_required}
+    areHooksEnabled: ${var.deploy_stage_are_hooks_enabled}
+    blueBackendIps:
+    - items: ${var.deploy_stage_blue_backend_ips_items}
+    blueGreenStrategy:
+    - ingressName: ${var.deploy_stage_blue_green_strategy_ingress_name}
+      namespaceA: ${var.deploy_stage_blue_green_strategy_namespace_a}
+      namespaceB: ${var.deploy_stage_blue_green_strategy_namespace_b}
+      strategyType: ${var.deploy_stage_blue_green_strategy_strategy_type}
+    canaryStrategy:
+    - ingressName: ${var.deploy_stage_canary_strategy_ingress_name}
+      namespace: ${var.deploy_stage_canary_strategy_namespace}
+      strategyType: ${var.deploy_stage_canary_strategy_strategy_type}
+    commandSpecDeployArtifactIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_artifact
+    computeInstanceGroupBlueGreenDeploymentDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    computeInstanceGroupCanaryDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    computeInstanceGroupCanaryTrafficShiftDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    computeInstanceGroupDeployEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_environment
+    config: ${var.deploy_stage_config}
+    containerConfig:
+    - availabilityDomain: ${var.deploy_stage_container_config_availability_domain}
+      compartmentId: ${var.compartment_id}
+      containerConfigType: ${var.deploy_stage_container_config_container_config_type}
+      networkChannel:
+      - networkChannelType: ${var.deploy_stage_container_config_network_channel_network_channel_type}
+        nsgIds: ${var.deploy_stage_container_config_network_channel_nsg_ids}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+      shapeConfig:
+      - memoryInGbs: ${var.deploy_stage_container_config_shape_config_memory_in_gbs}
+        ocpus: ${var.deploy_stage_container_config_shape_config_ocpus}
+      shapeName: ${oci_core_shape.test_shape.name}
+    definedTags:
+      foo-namespace.bar-key: value
+    deployArtifactIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_artifact
+    deployArtifactIds: ${var.deploy_stage_deploy_artifact_ids}
+    deployEnvironmentIdA: ${var.deploy_stage_deploy_environment_id_a}
+    deployEnvironmentIdB: ${var.deploy_stage_deploy_environment_id_b}
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStagePredecessorCollection:
+    - items:
+      - id: ${var.deploy_stage_deploy_stage_predecessor_collection_items_id}
+    deployStageType: ${var.deploy_stage_deploy_stage_type}
+    deploymentSpecDeployArtifactIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_artifact
+    description: ${var.deploy_stage_description}
+    displayName: ${var.deploy_stage_display_name}
+    dockerImageDeployArtifactIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_artifact
+    failurePolicy:
+    - failureCount: ${var.deploy_stage_failure_policy_failure_count}
+      failurePercentage: ${var.deploy_stage_failure_policy_failure_percentage}
+      policyType: ${var.deploy_stage_failure_policy_policy_type}
+    freeformTags:
+      bar-key: value
+    functionDeployEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_environment
+    functionTimeoutInSeconds: ${var.deploy_stage_function_timeout_in_seconds}
+    greenBackendIps:
+    - items: ${var.deploy_stage_green_backend_ips_items}
+    helmChartDeployArtifactIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_artifact
+    helmCommandArtifactIds: ${var.deploy_stage_helm_command_artifact_ids}
+    isAsync: ${var.deploy_stage_is_async}
+    isDebugEnabled: ${var.deploy_stage_is_debug_enabled}
+    isForceEnabled: ${var.deploy_stage_is_force_enabled}
+    isUninstallOnStageDelete: ${var.deploy_stage_is_uninstall_on_stage_delete}
+    isValidationEnabled: ${var.deploy_stage_is_validation_enabled}
+    kubernetesManifestDeployArtifactIds: ${var.deploy_stage_kubernetes_manifest_deploy_artifact_ids}
+    loadBalancerConfig:
+    - backendPort: ${var.deploy_stage_load_balancer_config_backend_port}
+      listenerNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_listener
+      loadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+    maxHistory: ${var.deploy_stage_max_history}
+    maxMemoryInMbs: ${var.deploy_stage_max_memory_in_mbs}
+    namespace: ${var.deploy_stage_namespace}
+    okeBlueGreenDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    okeCanaryDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    okeCanaryTrafficShiftDeployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    okeClusterDeployEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_environment
+    productionLoadBalancerConfig:
+    - backendPort: ${var.deploy_stage_production_load_balancer_config_backend_port}
+      listenerNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_listener
+      loadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+    purpose: ${var.deploy_stage_purpose}
+    releaseName: ${var.deploy_stage_release_name}
+    rollbackPolicy:
+    - policyType: ${var.deploy_stage_rollback_policy_policy_type}
+    rolloutPolicy:
+    - batchCount: ${var.deploy_stage_rollout_policy_batch_count}
+      batchDelayInSeconds: ${var.deploy_stage_rollout_policy_batch_delay_in_seconds}
+      batchPercentage: ${var.deploy_stage_rollout_policy_batch_percentage}
+      policyType: ${var.deploy_stage_rollout_policy_policy_type}
+      rampLimitPercent: ${var.deploy_stage_rollout_policy_ramp_limit_percent}
+    setString:
+    - items:
+      - name: ${var.deploy_stage_set_string_items_name}
+        value: ${var.deploy_stage_set_string_items_value}
+    setValues:
+    - items:
+      - name: ${var.deploy_stage_set_values_items_name}
+        value: ${var.deploy_stage_set_values_items_value}
+    shouldCleanupOnFail: ${var.deploy_stage_should_cleanup_on_fail}
+    shouldNotWait: ${var.deploy_stage_should_not_wait}
+    shouldResetValues: ${var.deploy_stage_should_reset_values}
+    shouldReuseValues: ${var.deploy_stage_should_reuse_values}
+    shouldSkipCrds: ${var.deploy_stage_should_skip_crds}
+    shouldSkipRenderSubchartNotes: ${var.deploy_stage_should_skip_render_subchart_notes}
+    testLoadBalancerConfig:
+    - backendPort: ${var.deploy_stage_test_load_balancer_config_backend_port}
+      listenerNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_listener
+      loadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+    timeoutInSeconds: ${var.deploy_stage_timeout_in_seconds}
+    trafficShiftTarget: ${var.deploy_stage_traffic_shift_target}
+    valuesArtifactIds: ${var.deploy_stage_values_artifact_ids}
+    waitCriteria:
+    - waitDuration: ${var.deploy_stage_wait_criteria_wait_duration}
+      waitType: ${var.deploy_stage_wait_criteria_wait_type}

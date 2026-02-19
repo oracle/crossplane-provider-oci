@@ -1,0 +1,20 @@
+apiVersion: nosql.oci.upbound.io/v1alpha1
+kind: Index
+metadata:
+  annotations:
+    meta.upbound.io/example-id: nosql/v1alpha1/index
+  labels:
+    testing.upbound.io/example-name: test_index
+  name: test-index
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isIfNotExists: ${var.index_is_if_not_exists}
+    keys:
+    - columnName: ${var.index_keys_column_name}
+      jsonFieldType: ${var.index_keys_json_field_type}
+      jsonPath: ${var.index_keys_json_path}
+    name: ${var.index_name}
+    tableNameOrId: ${oci_nosql_table_name_or.test_table_name_or.id}

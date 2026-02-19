@@ -1,0 +1,51 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: PlatformConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/platformconfiguration
+  labels:
+    testing.upbound.io/example-name: test_platform_configuration
+  name: test-platform-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configCategoryDetails:
+    - compatibleProducts:
+      - displayName: ${var.platform_configuration_config_category_details_compatible_products_display_name}
+        id: ${var.platform_configuration_config_category_details_compatible_products_id}
+      components: ${var.platform_configuration_config_category_details_components}
+      configCategory: ${var.platform_configuration_config_category_details_config_category}
+      credentials:
+      - displayName: ${var.platform_configuration_config_category_details_credentials_display_name}
+        id: ${var.platform_configuration_config_category_details_credentials_id}
+      instanceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance
+      instanceNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance
+      patchTypes:
+      - displayName: ${var.platform_configuration_config_category_details_patch_types_display_name}
+        id: ${var.platform_configuration_config_category_details_patch_types_id}
+      products:
+      - displayName: ${var.platform_configuration_config_category_details_products_display_name}
+        id: ${var.platform_configuration_config_category_details_products_id}
+      subCategoryDetails:
+      - components: ${var.platform_configuration_config_category_details_sub_category_details_components}
+        credentials:
+        - displayName: ${var.platform_configuration_config_category_details_sub_category_details_credentials_display_name}
+          id: ${var.platform_configuration_config_category_details_sub_category_details_credentials_id}
+        patchTypes:
+        - displayName: ${var.platform_configuration_config_category_details_sub_category_details_patch_types_display_name}
+          id: ${var.platform_configuration_config_category_details_sub_category_details_patch_types_id}
+        subCategory: ${var.platform_configuration_config_category_details_sub_category_details_sub_category}
+        versions: ${var.platform_configuration_config_category_details_sub_category_details_versions}
+      versions: ${var.platform_configuration_config_category_details_versions}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.platform_configuration_description}
+    displayName: ${var.platform_configuration_display_name}
+    freeformTags:
+      bar-key: value

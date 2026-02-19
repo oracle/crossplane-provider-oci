@@ -1,0 +1,215 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: DrProtectionGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/drprotectiongroup
+  labels:
+    testing.upbound.io/example-name: test_dr_protection_group
+  name: test-dr-protection-group
+spec:
+  forProvider:
+    association:
+    - peerId: ${var.dr_protection_group_association_peer_id}
+      peerRegion: ${var.dr_protection_group_association_peer_region}
+      role: ${var.dr_protection_group_association_role}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    disassociateTrigger: ${var.disassociate_trigger}
+    displayName: ${var.dr_protection_group_display_name}
+    freeformTags:
+      Department: Finance
+    logLocation:
+    - bucket: ${var.dr_protection_group_log_location_bucket}
+      namespace: ${var.dr_protection_group_log_location_namespace}
+    members:
+    - autonomousDatabaseStandbyTypeForDrDrills: ${var.dr_protection_group_members_autonomous_database_standby_type_for_dr_drills}
+      backendSetMappings:
+      - destinationBackendSetNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_backend_set
+        isBackendSetForNonMovable: ${var.dr_protection_group_members_backend_set_mappings_is_backend_set_for_non_movable}
+        sourceBackendSetNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_backend_set
+      backupConfig:
+      - backupSchedule: ${var.dr_protection_group_members_backup_config_backup_schedule}
+        excludeNamespaces: ${var.dr_protection_group_members_backup_config_exclude_namespaces}
+        imageReplicationVaultSecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        maxNumberOfBackupsRetained: ${var.dr_protection_group_members_backup_config_max_number_of_backups_retained}
+        namespaces: ${var.dr_protection_group_members_backup_config_namespaces}
+        replicateImages: ${var.dr_protection_group_members_backup_config_replicate_images}
+      backupLocation:
+      - bucket: ${var.dr_protection_group_members_backup_location_bucket}
+        namespace: ${var.dr_protection_group_members_backup_location_namespace}
+      blockVolumeAttachAndMountOperations:
+      - attachments:
+        - blockVolumeIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_volume
+          volumeAttachmentReferenceInstanceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_instance
+        mounts:
+        - mountPoint: ${var.dr_protection_group_members_block_volume_attach_and_mount_operations_mounts_mount_point}
+      blockVolumeOperations:
+      - attachmentDetails:
+        - volumeAttachmentReferenceInstanceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_instance
+        blockVolumeIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_volume
+        mountDetails:
+        - mountPoint: ${var.dr_protection_group_members_block_volume_operations_mount_details_mount_point}
+      bucket: ${var.dr_protection_group_members_bucket}
+      commonDestinationKey:
+      - encryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      connectionStringType: ${var.dr_protection_group_members_connection_string_type}
+      dbSystemAdminUserDetails:
+      - passwordVaultSecretIdSecretRef:
+          key: attribute.id
+          name: example-vault-secret
+          namespace: upbound-system
+        username: ${var.dr_protection_group_members_db_system_admin_user_details_username}
+      dbSystemReplicationUserDetails:
+      - passwordVaultSecretIdSecretRef:
+          key: attribute.id
+          name: example-vault-secret
+          namespace: upbound-system
+        username: ${var.dr_protection_group_members_db_system_replication_user_details_username}
+      destinationAvailabilityDomain: ${var.dr_protection_group_members_destination_availability_domain}
+      destinationBackupPolicyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_policy
+      destinationCapacityReservationId: ${var.destination_capacity_reservation_id}
+      destinationCompartmentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_compartment
+      destinationDedicatedVmHostIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dedicated_vm_host
+      destinationEncryptionKey:
+      - encryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      destinationLoadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+      destinationNetworkLoadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_network_load_balancer
+      destinationSnapshotPolicyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_policy
+      exportMappings:
+      - destinationMountTargetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_mount_target
+        exportIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_export
+      fileSystemOperations:
+      - exportPath: ${var.dr_protection_group_members_file_system_operations_export_path}
+        mountDetails:
+        - mountTargetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_mount_target
+        mountPoint: ${var.dr_protection_group_members_file_system_operations_mount_point}
+        mountTargetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_mount_target
+        unmountDetails:
+        - mountTargetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_mount_target
+      gtidReconciliationTimeout: ${var.dr_protection_group_members_gtid_reconciliation_timeout}
+      isContinueOnGtidReconciliationTimeout: ${var.dr_protection_group_members_is_continue_on_gtid_reconciliation_timeout}
+      isMovable: ${var.dr_protection_group_members_is_movable}
+      isRetainFaultDomain: ${var.dr_protection_group_members_is_retain_fault_domain}
+      isStartStopEnabled: ${var.dr_protection_group_members_is_start_stop_enabled}
+      jumpHostId: ${oci_disaster_recovery_jump_host.test_jump_host.id}
+      loadBalancerMappings:
+      - destinationLoadBalancerIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_load_balancer
+        sourceLoadBalancerIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_load_balancer
+      managedNodePoolConfigs:
+      - id: ${var.dr_protection_group_members_managed_node_pool_configs_id}
+        maximum: ${var.dr_protection_group_members_managed_node_pool_configs_maximum}
+        minimum: ${var.dr_protection_group_members_managed_node_pool_configs_minimum}
+      memberId: ${var.dr_protection_group_members_member_id}
+      memberType: ${var.dr_protection_group_members_member_type}
+      namespace: ${var.dr_protection_group_members_namespace}
+      networkLoadBalancerMappings:
+      - destinationNetworkLoadBalancerIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_network_load_balancer
+        sourceNetworkLoadBalancerIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_network_load_balancer
+      passwordVaultSecretIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      peerClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cluster
+      peerDbSystemIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_db_system
+      sourceVolumeToDestinationEncryptionKeyMappings:
+      - destinationEncryptionKey:
+        - encryptionKeyIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_key
+          vaultIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_vault
+        sourceVolumeIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_volume
+      vaultMappings:
+      - destinationVaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+        sourceVaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      virtualNodePoolConfigs:
+      - id: ${var.dr_protection_group_members_virtual_node_pool_configs_id}
+        maximum: ${var.dr_protection_group_members_virtual_node_pool_configs_maximum}
+        minimum: ${var.dr_protection_group_members_virtual_node_pool_configs_minimum}
+      vnicMapping:
+      - destination_primary_private_ip_address: ${var.dr_protection_group_members_vnic_mapping_destination_primary_private_ip_address}
+        destination_primary_private_ip_hostname_label: ${var.dr_protection_group_members_vnic_mapping_destination_primary_private_ip_hostname_label}
+        destinationNsgIdList: ${var.dr_protection_group_members_vnic_mapping_destination_nsg_id_list}
+        destinationSubnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+        sourceVnicId: ${oci_core_vnic.test_vnic.id}
+      vnicMappings:
+      - destinationNsgIdList: ${var.dr_protection_group_members_vnic_mappings_destination_nsg_id_list}
+        destinationPrimaryPrivateIpAddress: ${var.dr_protection_group_members_vnic_mappings_destination_primary_private_ip_address}
+        destinationPrimaryPrivateIpHostnameLabel: ${var.dr_protection_group_members_vnic_mappings_destination_primary_private_ip_hostname_label}
+        destinationReservedPublicIpIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_public_ip
+        destinationSubnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+        sourceVnicId: ${oci_core_vnic.test_vnic.id}

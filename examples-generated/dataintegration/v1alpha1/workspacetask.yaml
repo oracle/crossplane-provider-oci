@@ -1,0 +1,588 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceTask
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspacetask
+  labels:
+    testing.upbound.io/example-name: test_workspace_task
+  name: test-workspace-task
+spec:
+  forProvider:
+    apiCallMode: ${var.workspace_task_api_call_mode}
+    auth_details:
+    - key: ${var.workspace_task_auth_details_key}
+      model_type: ${var.workspace_task_auth_details_model_type}
+      model_version: ${var.workspace_task_auth_details_model_version}
+      parent_ref:
+      - parent: ${var.workspace_task_auth_details_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    authConfig:
+    - key: ${var.workspace_task_auth_config_key}
+      modelType: ${var.workspace_task_auth_config_model_type}
+      modelVersion: ${var.workspace_task_auth_config_model_version}
+      parentRef:
+      - parent: ${var.workspace_task_auth_config_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      resourcePrincipalSource: ${var.workspace_task_auth_config_resource_principal_source}
+    cancel_endpoint:
+    - config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_cancel_endpoint_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_cancel_endpoint_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      expr_string: ${var.workspace_task_cancel_endpoint_expr_string}
+      key: ${var.workspace_task_cancel_endpoint_key}
+      model_type: ${var.workspace_task_cancel_endpoint_model_type}
+      model_version: ${var.workspace_task_cancel_endpoint_model_version}
+      object_status: ${var.workspace_task_cancel_endpoint_object_status}
+      parent_ref:
+      - parent: ${var.workspace_task_cancel_endpoint_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    cancel_method_type: ${var.workspace_task_cancel_method_type}
+    cancelRestCallConfig:
+    - configValues:
+      - configParamValues:
+        - int_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_cancel_rest_call_config_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_cancel_rest_call_config_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      methodType: ${var.workspace_task_cancel_rest_call_config_method_type}
+      requestHeaders: ${var.workspace_task_cancel_rest_call_config_request_headers}
+    conditional_composite_field_map:
+    - config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_conditional_composite_field_map_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_conditional_composite_field_map_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      description: ${var.workspace_task_conditional_composite_field_map_description}
+      field_map_scope:
+      - config_values:
+        - config_param_values:
+          - int_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_int_value}
+            object_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_object_value}
+            parameter_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_parameter_value}
+            ref_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_ref_value}
+            root_object_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_root_object_value}
+            string_value: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_config_param_values_string_value}
+          parent_ref:
+          - parent: ${var.workspace_task_conditional_composite_field_map_field_map_scope_config_values_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        description: ${var.workspace_task_conditional_composite_field_map_field_map_scope_description}
+        from_name: ${var.workspace_task_conditional_composite_field_map_field_map_scope_from_name}
+        is_cascade: ${var.workspace_task_conditional_composite_field_map_field_map_scope_is_cascade}
+        is_case_sensitive: ${var.workspace_task_conditional_composite_field_map_field_map_scope_is_case_sensitive}
+        is_java_regex_syntax: ${var.workspace_task_conditional_composite_field_map_field_map_scope_is_java_regex_syntax}
+        is_skip_remaining_rules_on_match: ${var.workspace_task_conditional_composite_field_map_field_map_scope_is_skip_remaining_rules_on_match}
+        key: ${var.workspace_task_conditional_composite_field_map_field_map_scope_key}
+        matching_strategy: ${var.workspace_task_conditional_composite_field_map_field_map_scope_matching_strategy}
+        model_type: ${var.workspace_task_conditional_composite_field_map_field_map_scope_model_type}
+        model_version: ${var.workspace_task_conditional_composite_field_map_field_map_scope_model_version}
+        name: ${var.workspace_task_conditional_composite_field_map_field_map_scope_name}
+        names: ${var.workspace_task_conditional_composite_field_map_field_map_scope_names}
+        object_status: ${var.workspace_task_conditional_composite_field_map_field_map_scope_object_status}
+        parent_ref:
+        - parent: ${var.workspace_task_conditional_composite_field_map_field_map_scope_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        pattern: ${var.workspace_task_conditional_composite_field_map_field_map_scope_pattern}
+        rule_type: ${var.workspace_task_conditional_composite_field_map_field_map_scope_rule_type}
+        scope: ${var.workspace_task_conditional_composite_field_map_field_map_scope_scope}
+        to_name: ${var.workspace_task_conditional_composite_field_map_field_map_scope_to_name}
+        types: ${var.workspace_task_conditional_composite_field_map_field_map_scope_types}
+      field_maps: ${var.workspace_task_conditional_composite_field_map_field_maps}
+      key: ${var.workspace_task_conditional_composite_field_map_key}
+      model_type: ${var.workspace_task_conditional_composite_field_map_model_type}
+      model_version: ${var.workspace_task_conditional_composite_field_map_model_version}
+      object_status: ${var.workspace_task_conditional_composite_field_map_object_status}
+      parent_ref:
+      - parent: ${var.workspace_task_conditional_composite_field_map_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    configProviderDelegate:
+    - bindings:
+      - root_object_value: ${var.workspace_task_config_provider_delegate_bindings_root_object_value}
+        simple_value: ${var.workspace_task_config_provider_delegate_bindings_simple_value}
+    data_flow:
+    - description: ${var.workspace_task_data_flow_description}
+      flow_config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_data_flow_flow_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_data_flow_flow_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      identifier: ${var.workspace_task_data_flow_identifier}
+      key: ${var.workspace_task_data_flow_key}
+      key_map: ${var.workspace_task_data_flow_key_map}
+      metadata:
+      - aggregator:
+        - description: ${var.workspace_task_data_flow_metadata_aggregator_description}
+          identifier: ${var.workspace_task_data_flow_metadata_aggregator_identifier}
+          key: ${var.workspace_task_data_flow_metadata_aggregator_key}
+          name: ${var.workspace_task_data_flow_metadata_aggregator_name}
+          type: ${var.workspace_task_data_flow_metadata_aggregator_type}
+        aggregator_key: ${var.workspace_task_data_flow_metadata_aggregator_key}
+        count_statistics:
+        - object_type_count_list:
+          - object_count: ${var.workspace_task_data_flow_metadata_count_statistics_object_type_count_list_object_count}
+            object_type: ${var.workspace_task_data_flow_metadata_count_statistics_object_type_count_list_object_type}
+        created_by: ${var.workspace_task_data_flow_metadata_created_by}
+        created_by_name: ${var.workspace_task_data_flow_metadata_created_by_name}
+        identifier_path: ${var.workspace_task_data_flow_metadata_identifier_path}
+        info_fields: ${var.workspace_task_data_flow_metadata_info_fields}
+        is_favorite: ${var.workspace_task_data_flow_metadata_is_favorite}
+        labels: ${var.workspace_task_data_flow_metadata_labels}
+        registry_version: ${var.workspace_task_data_flow_metadata_registry_version}
+        time_created: ${var.workspace_task_data_flow_metadata_time_created}
+        time_updated: ${var.workspace_task_data_flow_metadata_time_updated}
+        updated_by: ${var.workspace_task_data_flow_metadata_updated_by}
+        updated_by_name: ${var.workspace_task_data_flow_metadata_updated_by_name}
+      model_type: ${var.workspace_task_data_flow_model_type}
+      model_version: ${var.workspace_task_data_flow_model_version}
+      name: ${var.workspace_task_data_flow_name}
+      nodes:
+      - config_provider_delegate: ${var.workspace_task_data_flow_nodes_config_provider_delegate}
+        description: ${var.workspace_task_data_flow_nodes_description}
+        input_links:
+        - description: ${var.workspace_task_data_flow_nodes_input_links_description}
+          field_map: ${var.workspace_task_data_flow_nodes_input_links_field_map}
+          from_link: ${var.workspace_task_data_flow_nodes_input_links_from_link}
+          key: ${var.workspace_task_data_flow_nodes_input_links_key}
+          model_type: ${var.workspace_task_data_flow_nodes_input_links_model_type}
+          model_version: ${var.workspace_task_data_flow_nodes_input_links_model_version}
+          object_status: ${var.workspace_task_data_flow_nodes_input_links_object_status}
+          parent_ref:
+          - parent: ${var.workspace_task_data_flow_nodes_input_links_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+          port: ${var.workspace_task_data_flow_nodes_input_links_port}
+        key: ${var.workspace_task_data_flow_nodes_key}
+        model_type: ${var.workspace_task_data_flow_nodes_model_type}
+        model_version: ${var.workspace_task_data_flow_nodes_model_version}
+        name: ${var.workspace_task_data_flow_nodes_name}
+        object_status: ${var.workspace_task_data_flow_nodes_object_status}
+        operator: ${var.workspace_task_data_flow_nodes_operator}
+        output_links:
+        - description: ${var.workspace_task_data_flow_nodes_output_links_description}
+          key: ${var.workspace_task_data_flow_nodes_output_links_key}
+          model_type: ${var.workspace_task_data_flow_nodes_output_links_model_type}
+          model_version: ${var.workspace_task_data_flow_nodes_output_links_model_version}
+          object_status: ${var.workspace_task_data_flow_nodes_output_links_object_status}
+          parent_ref:
+          - parent: ${var.workspace_task_data_flow_nodes_output_links_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+          port: ${var.workspace_task_data_flow_nodes_output_links_port}
+          to_links: ${var.workspace_task_data_flow_nodes_output_links_to_links}
+        parent_ref:
+        - parent: ${var.workspace_task_data_flow_nodes_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        ui_properties:
+        - coordinate_x: ${var.workspace_task_data_flow_nodes_ui_properties_coordinate_x}
+          coordinate_y: ${var.workspace_task_data_flow_nodes_ui_properties_coordinate_y}
+      object_status: ${var.workspace_task_data_flow_object_status}
+      object_version: ${var.workspace_task_data_flow_object_version}
+      parameters:
+      - config_values:
+        - config_param_values:
+          - int_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_int_value}
+            object_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_object_value}
+            parameter_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_parameter_value}
+            ref_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_ref_value}
+            root_object_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_root_object_value}
+            string_value: ${var.workspace_task_data_flow_parameters_config_values_config_param_values_string_value}
+          parent_ref:
+          - parent: ${var.workspace_task_data_flow_parameters_config_values_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        default_value: ${var.workspace_task_data_flow_parameters_default_value}
+        description: ${var.workspace_task_data_flow_parameters_description}
+        is_input: ${var.workspace_task_data_flow_parameters_is_input}
+        is_output: ${var.workspace_task_data_flow_parameters_is_output}
+        key: ${var.workspace_task_data_flow_parameters_key}
+        model_type: ${var.workspace_task_data_flow_parameters_model_type}
+        model_version: ${var.workspace_task_data_flow_parameters_model_version}
+        name: ${var.workspace_task_data_flow_parameters_name}
+        object_status: ${var.workspace_task_data_flow_parameters_object_status}
+        output_aggregation_type: ${var.workspace_task_data_flow_parameters_output_aggregation_type}
+        parent_ref:
+        - parent: ${var.workspace_task_data_flow_parameters_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        root_object_default_value: ${var.workspace_task_data_flow_parameters_root_object_default_value}
+        type: ${var.workspace_task_data_flow_parameters_type}
+        type_name: ${var.workspace_task_data_flow_parameters_type_name}
+        used_for: ${var.workspace_task_data_flow_parameters_used_for}
+      parent_ref:
+      - parent: ${var.workspace_task_data_flow_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      target_field_map_summary:
+      - field_map: ${var.workspace_task_data_flow_target_field_map_summary_field_map}
+      typed_object_map:
+      - typed_object: ${var.workspace_task_data_flow_typed_object_map_typed_object}
+    dataflow_application:
+    - application_id: ${oci_dataflow_application.test_application.id}
+      compartment_id: ${var.compartment_id}
+      config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_dataflow_application_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_dataflow_application_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    description: ${var.workspace_task_description}
+    endpoint:
+    - config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_endpoint_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_endpoint_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_endpoint_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_endpoint_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_endpoint_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_endpoint_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_endpoint_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      expr_string: ${var.workspace_task_endpoint_expr_string}
+      key: ${var.workspace_task_endpoint_key}
+      model_type: ${var.workspace_task_endpoint_model_type}
+      model_version: ${var.workspace_task_endpoint_model_version}
+      object_status: ${var.workspace_task_endpoint_object_status}
+      parent_ref:
+      - parent: ${var.workspace_task_endpoint_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    executeRestCallConfig:
+    - configValues:
+      - configParamValues:
+        - int_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_execute_rest_call_config_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_execute_rest_call_config_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      methodType: ${var.workspace_task_execute_rest_call_config_method_type}
+      requestHeaders: ${var.workspace_task_execute_rest_call_config_request_headers}
+    headers: ${var.workspace_task_headers}
+    identifier: ${var.workspace_task_identifier}
+    inputPorts:
+    - configValues:
+      - configParamValues:
+        - intValue: ${var.workspace_task_input_ports_config_values_config_param_values_int_value}
+          objectValue: ${var.workspace_task_input_ports_config_values_config_param_values_object_value}
+          parameterValue: ${var.workspace_task_input_ports_config_values_config_param_values_parameter_value}
+          refValue: ${var.workspace_task_input_ports_config_values_config_param_values_ref_value}
+          rootObjectValue: ${var.workspace_task_input_ports_config_values_config_param_values_root_object_value}
+          stringValue: ${var.workspace_task_input_ports_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_input_ports_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      description: ${var.workspace_task_input_ports_description}
+      fields: ${var.workspace_task_input_ports_fields}
+      key: ${var.workspace_task_input_ports_key}
+      modelType: ${var.workspace_task_input_ports_model_type}
+      modelVersion: ${var.workspace_task_input_ports_model_version}
+      name: ${var.workspace_task_input_ports_name}
+      objectStatus: ${var.workspace_task_input_ports_object_status}
+      parentRef:
+      - parent: ${var.workspace_task_input_ports_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      portType: ${var.workspace_task_input_ports_port_type}
+    isSingleLoad: ${var.workspace_task_is_single_load}
+    json_data: ${var.workspace_task_json_data}
+    key: ${var.workspace_task_key}
+    method_type: ${var.workspace_task_method_type}
+    modelType: ${var.workspace_task_model_type}
+    modelVersion: ${var.workspace_task_model_version}
+    name: ${var.workspace_task_name}
+    objectStatus: ${var.workspace_task_object_status}
+    opConfigValues:
+    - configParamValues:
+      - int_value: ${var.workspace_task_op_config_values_config_param_values_int_value}
+        object_value: ${var.workspace_task_op_config_values_config_param_values_object_value}
+        parameter_value: ${var.workspace_task_op_config_values_config_param_values_parameter_value}
+        ref_value: ${var.workspace_task_op_config_values_config_param_values_ref_value}
+        root_object_value: ${var.workspace_task_op_config_values_config_param_values_root_object_value}
+        string_value: ${var.workspace_task_op_config_values_config_param_values_string_value}
+      parentRef:
+      - parent: ${var.workspace_task_op_config_values_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+    operation: ${var.workspace_task_operation}
+    outputPorts:
+    - configValues:
+      - configParamValues:
+        - intValue: ${var.workspace_task_output_ports_config_values_config_param_values_int_value}
+          objectValue: ${var.workspace_task_output_ports_config_values_config_param_values_object_value}
+          parameterValue: ${var.workspace_task_output_ports_config_values_config_param_values_parameter_value}
+          refValue: ${var.workspace_task_output_ports_config_values_config_param_values_ref_value}
+          rootObjectValue: ${var.workspace_task_output_ports_config_values_config_param_values_root_object_value}
+          stringValue: ${var.workspace_task_output_ports_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_output_ports_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      description: ${var.workspace_task_output_ports_description}
+      fields: ${var.workspace_task_output_ports_fields}
+      key: ${var.workspace_task_output_ports_key}
+      modelType: ${var.workspace_task_output_ports_model_type}
+      modelVersion: ${var.workspace_task_output_ports_model_version}
+      name: ${var.workspace_task_output_ports_name}
+      objectStatus: ${var.workspace_task_output_ports_object_status}
+      parentRef:
+      - parent: ${var.workspace_task_output_ports_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      portType: ${var.workspace_task_output_ports_port_type}
+    parallelLoadLimit: ${var.workspace_task_parallel_load_limit}
+    parameters:
+    - configValues:
+      - configParamValues:
+        - int_value: ${var.workspace_task_parameters_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_parameters_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_parameters_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_parameters_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_parameters_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_parameters_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_parameters_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      defaultValue: ${var.workspace_task_parameters_default_value}
+      description: ${var.workspace_task_parameters_description}
+      isInput: ${var.workspace_task_parameters_is_input}
+      isOutput: ${var.workspace_task_parameters_is_output}
+      key: ${var.workspace_task_parameters_key}
+      modelType: ${var.workspace_task_parameters_model_type}
+      modelVersion: ${var.workspace_task_parameters_model_version}
+      name: ${var.workspace_task_parameters_name}
+      objectStatus: ${var.workspace_task_parameters_object_status}
+      outputAggregationType: ${var.workspace_task_parameters_output_aggregation_type}
+      parentRef:
+      - parent: ${var.workspace_task_parameters_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      rootObjectDefaultValue: ${var.workspace_task_parameters_root_object_default_value}
+      type: ${var.workspace_task_parameters_type}
+      typeName: ${var.workspace_task_parameters_type_name}
+      usedFor: ${var.workspace_task_parameters_used_for}
+    parentRef:
+    - parent: ${var.workspace_task_parent_ref_parent}
+      rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+    pipeline:
+    - description: ${var.workspace_task_pipeline_description}
+      flow_config_values:
+      - config_param_values:
+        - int_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_pipeline_flow_config_values_config_param_values_string_value}
+        parent_ref:
+        - parent: ${var.workspace_task_pipeline_flow_config_values_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      identifier: ${var.workspace_task_pipeline_identifier}
+      key: ${var.workspace_task_pipeline_key}
+      metadata:
+      - aggregator:
+        - description: ${var.workspace_task_pipeline_metadata_aggregator_description}
+          identifier: ${var.workspace_task_pipeline_metadata_aggregator_identifier}
+          key: ${var.workspace_task_pipeline_metadata_aggregator_key}
+          name: ${var.workspace_task_pipeline_metadata_aggregator_name}
+          type: ${var.workspace_task_pipeline_metadata_aggregator_type}
+        aggregator_key: ${var.workspace_task_pipeline_metadata_aggregator_key}
+        count_statistics:
+        - object_type_count_list:
+          - object_count: ${var.workspace_task_pipeline_metadata_count_statistics_object_type_count_list_object_count}
+            object_type: ${var.workspace_task_pipeline_metadata_count_statistics_object_type_count_list_object_type}
+        created_by: ${var.workspace_task_pipeline_metadata_created_by}
+        created_by_name: ${var.workspace_task_pipeline_metadata_created_by_name}
+        identifier_path: ${var.workspace_task_pipeline_metadata_identifier_path}
+        info_fields: ${var.workspace_task_pipeline_metadata_info_fields}
+        is_favorite: ${var.workspace_task_pipeline_metadata_is_favorite}
+        labels: ${var.workspace_task_pipeline_metadata_labels}
+        registry_version: ${var.workspace_task_pipeline_metadata_registry_version}
+        time_created: ${var.workspace_task_pipeline_metadata_time_created}
+        time_updated: ${var.workspace_task_pipeline_metadata_time_updated}
+        updated_by: ${var.workspace_task_pipeline_metadata_updated_by}
+        updated_by_name: ${var.workspace_task_pipeline_metadata_updated_by_name}
+      model_type: ${var.workspace_task_pipeline_model_type}
+      model_version: ${var.workspace_task_pipeline_model_version}
+      name: ${var.workspace_task_pipeline_name}
+      nodes:
+      - config_provider_delegate: ${var.workspace_task_pipeline_nodes_config_provider_delegate}
+        description: ${var.workspace_task_pipeline_nodes_description}
+        input_links:
+        - description: ${var.workspace_task_pipeline_nodes_input_links_description}
+          field_map: ${var.workspace_task_pipeline_nodes_input_links_field_map}
+          from_link: ${var.workspace_task_pipeline_nodes_input_links_from_link}
+          key: ${var.workspace_task_pipeline_nodes_input_links_key}
+          model_type: ${var.workspace_task_pipeline_nodes_input_links_model_type}
+          model_version: ${var.workspace_task_pipeline_nodes_input_links_model_version}
+          object_status: ${var.workspace_task_pipeline_nodes_input_links_object_status}
+          parent_ref:
+          - parent: ${var.workspace_task_pipeline_nodes_input_links_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+          port: ${var.workspace_task_pipeline_nodes_input_links_port}
+        key: ${var.workspace_task_pipeline_nodes_key}
+        model_type: ${var.workspace_task_pipeline_nodes_model_type}
+        model_version: ${var.workspace_task_pipeline_nodes_model_version}
+        name: ${var.workspace_task_pipeline_nodes_name}
+        object_status: ${var.workspace_task_pipeline_nodes_object_status}
+        operator: ${var.workspace_task_pipeline_nodes_operator}
+        output_links:
+        - description: ${var.workspace_task_pipeline_nodes_output_links_description}
+          key: ${var.workspace_task_pipeline_nodes_output_links_key}
+          model_type: ${var.workspace_task_pipeline_nodes_output_links_model_type}
+          model_version: ${var.workspace_task_pipeline_nodes_output_links_model_version}
+          object_status: ${var.workspace_task_pipeline_nodes_output_links_object_status}
+          parent_ref:
+          - parent: ${var.workspace_task_pipeline_nodes_output_links_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+          port: ${var.workspace_task_pipeline_nodes_output_links_port}
+          to_links: ${var.workspace_task_pipeline_nodes_output_links_to_links}
+        parent_ref:
+        - parent: ${var.workspace_task_pipeline_nodes_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        ui_properties:
+        - coordinate_x: ${var.workspace_task_pipeline_nodes_ui_properties_coordinate_x}
+          coordinate_y: ${var.workspace_task_pipeline_nodes_ui_properties_coordinate_y}
+      object_status: ${var.workspace_task_pipeline_object_status}
+      object_version: ${var.workspace_task_pipeline_object_version}
+      parameters:
+      - config_values:
+        - config_param_values:
+          - int_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_int_value}
+            object_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_object_value}
+            parameter_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_parameter_value}
+            ref_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_ref_value}
+            root_object_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_root_object_value}
+            string_value: ${var.workspace_task_pipeline_parameters_config_values_config_param_values_string_value}
+          parent_ref:
+          - parent: ${var.workspace_task_pipeline_parameters_config_values_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        default_value: ${var.workspace_task_pipeline_parameters_default_value}
+        description: ${var.workspace_task_pipeline_parameters_description}
+        is_input: ${var.workspace_task_pipeline_parameters_is_input}
+        is_output: ${var.workspace_task_pipeline_parameters_is_output}
+        key: ${var.workspace_task_pipeline_parameters_key}
+        model_type: ${var.workspace_task_pipeline_parameters_model_type}
+        model_version: ${var.workspace_task_pipeline_parameters_model_version}
+        name: ${var.workspace_task_pipeline_parameters_name}
+        object_status: ${var.workspace_task_pipeline_parameters_object_status}
+        output_aggregation_type: ${var.workspace_task_pipeline_parameters_output_aggregation_type}
+        parent_ref:
+        - parent: ${var.workspace_task_pipeline_parameters_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        root_object_default_value: ${var.workspace_task_pipeline_parameters_root_object_default_value}
+        type: ${var.workspace_task_pipeline_parameters_type}
+        type_name: ${var.workspace_task_pipeline_parameters_type_name}
+        used_for: ${var.workspace_task_pipeline_parameters_used_for}
+      parent_ref:
+      - parent: ${var.workspace_task_pipeline_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+      variables:
+      - config_values:
+        - config_param_values:
+          - int_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_int_value}
+            object_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_object_value}
+            parameter_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_parameter_value}
+            ref_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_ref_value}
+            root_object_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_root_object_value}
+            string_value: ${var.workspace_task_pipeline_variables_config_values_config_param_values_string_value}
+          parent_ref:
+          - parent: ${var.workspace_task_pipeline_variables_config_values_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        default_value: ${var.workspace_task_pipeline_variables_default_value}
+        description: ${var.workspace_task_pipeline_variables_description}
+        identifier: ${var.workspace_task_pipeline_variables_identifier}
+        key: ${var.workspace_task_pipeline_variables_key}
+        model_type: ${var.workspace_task_pipeline_variables_model_type}
+        model_version: ${var.workspace_task_pipeline_variables_model_version}
+        name: ${var.workspace_task_pipeline_variables_name}
+        object_status: ${var.workspace_task_pipeline_variables_object_status}
+        object_version: ${var.workspace_task_pipeline_variables_object_version}
+        parent_ref:
+        - parent: ${var.workspace_task_pipeline_variables_parent_ref_parent}
+          root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        root_object_default_value:
+        - key: ${var.workspace_task_pipeline_variables_root_object_default_value_key}
+          model_type: ${var.workspace_task_pipeline_variables_root_object_default_value_model_type}
+          model_version: ${var.workspace_task_pipeline_variables_root_object_default_value_model_version}
+          object_status: ${var.workspace_task_pipeline_variables_root_object_default_value_object_status}
+          parent_ref:
+          - parent: ${var.workspace_task_pipeline_variables_root_object_default_value_parent_ref_parent}
+            root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+        type: ${var.workspace_task_pipeline_variables_type}
+    pollRestCallConfig:
+    - configValues:
+      - configParamValues:
+        - int_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_poll_rest_call_config_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_poll_rest_call_config_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      methodType: ${var.workspace_task_poll_rest_call_config_method_type}
+      requestHeaders: ${var.workspace_task_poll_rest_call_config_request_headers}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_task_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_task_registry_metadata_is_favorite}
+      key: ${var.workspace_task_registry_metadata_key}
+      labels: ${var.workspace_task_registry_metadata_labels}
+      registryVersion: ${var.workspace_task_registry_metadata_registry_version}
+    script:
+    - key: ${var.workspace_task_script_key}
+      model_type: ${var.workspace_task_script_model_type}
+      model_version: ${var.workspace_task_script_model_version}
+      object_status: ${var.workspace_task_script_object_status}
+      parent_ref:
+      - parent: ${var.workspace_task_script_parent_ref_parent}
+        root_doc_id: ${oci_dataintegration_root_doc.test_root_doc.id}
+    sql_script_type: ${var.workspace_task_sql_script_type}
+    typedExpressions:
+    - configValues:
+      - configParamValues:
+        - int_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_int_value}
+          object_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_object_value}
+          parameter_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_parameter_value}
+          ref_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_ref_value}
+          root_object_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_root_object_value}
+          string_value: ${var.workspace_task_typed_expressions_config_values_config_param_values_string_value}
+        parentRef:
+        - parent: ${var.workspace_task_typed_expressions_config_values_parent_ref_parent}
+          rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      description: ${var.workspace_task_typed_expressions_description}
+      expression: ${var.workspace_task_typed_expressions_expression}
+      key: ${var.workspace_task_typed_expressions_key}
+      modelType: ${var.workspace_task_typed_expressions_model_type}
+      modelVersion: ${var.workspace_task_typed_expressions_model_version}
+      name: ${var.workspace_task_typed_expressions_name}
+      objectStatus: ${var.workspace_task_typed_expressions_object_status}
+      parentRef:
+      - parent: ${var.workspace_task_typed_expressions_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      type: ${var.workspace_task_typed_expressions_type}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

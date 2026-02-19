@@ -1,0 +1,34 @@
+apiVersion: oce.oci.upbound.io/v1alpha1
+kind: OceInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oce/v1alpha1/oceinstance
+  labels:
+    testing.upbound.io/example-name: test_oce_instance
+  name: test-oce-instance
+spec:
+  forProvider:
+    addOnFeatures: ${var.oce_instance_add_on_features}
+    adminEmail: ${var.oce_instance_admin_email}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.oce_instance_description}
+    drRegion: ${var.oce_instance_dr_region}
+    freeformTags:
+      bar-key: value
+    idcsAccessTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    instanceAccessType: ${var.oce_instance_instance_access_type}
+    instanceLicenseType: ${var.oce_instance_instance_license_type}
+    instanceUsageType: ${var.oce_instance_instance_usage_type}
+    name: ${var.oce_instance_name}
+    objectStorageNamespace: ${var.oce_instance_object_storage_namespace}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    tenancyName: ${oci_identity_tenancy.test_tenancy.name}
+    upgradeSchedule: ${var.oce_instance_upgrade_schedule}
+    wafPrimaryDomain: ${var.oce_instance_waf_primary_domain}

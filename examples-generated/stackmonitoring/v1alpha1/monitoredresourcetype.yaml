@@ -1,0 +1,33 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourceType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcetype
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource_type
+  name: test-monitored-resource-type
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.monitored_resource_type_description}
+    displayName: ${var.monitored_resource_type_display_name}
+    freeformTags:
+      bar-key: value
+    metadata:
+    - agentProperties: ${var.monitored_resource_type_metadata_agent_properties}
+      format: ${var.monitored_resource_type_metadata_format}
+      requiredProperties: ${var.monitored_resource_type_metadata_required_properties}
+      uniquePropertySets:
+      - properties: ${var.monitored_resource_type_metadata_unique_property_sets_properties}
+      validPropertiesForCreate: ${var.monitored_resource_type_metadata_valid_properties_for_create}
+      validPropertiesForUpdate: ${var.monitored_resource_type_metadata_valid_properties_for_update}
+      validPropertyValues: ${var.monitored_resource_type_metadata_valid_property_values}
+      validSubResourceTypes: ${var.monitored_resource_type_metadata_valid_sub_resource_types}
+    metricNamespace: ${var.monitored_resource_type_metric_namespace}
+    name: ${var.monitored_resource_type_name}
+    resourceCategory: ${var.monitored_resource_type_resource_category}
+    sourceType: ${var.monitored_resource_type_source_type}

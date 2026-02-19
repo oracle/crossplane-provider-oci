@@ -1,0 +1,14 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagedInstanceGroupDetachManagedInstancesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managedinstancegroupdetachmanagedinstancesmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_detach_managed_instances_management
+  name: test-managed-instance-group-detach-managed-instances-management
+spec:
+  forProvider:
+    managedInstanceGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_instance_group
+    managedInstances: ${var.managed_instance_group_detach_managed_instances_management_managed_instances}

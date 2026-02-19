@@ -1,0 +1,69 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourceTask
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcetask
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource_task
+  name: test-monitored-resource-task
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    name: ${var.monitored_resource_task_name}
+    taskDetails:
+    - agentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_agent
+      availabilityProxyMetricCollectionInterval: ${var.monitored_resource_task_task_details_availability_proxy_metric_collection_interval}
+      availabilityProxyMetrics: ${var.monitored_resource_task_task_details_availability_proxy_metrics}
+      consolePathPrefix: ${var.monitored_resource_task_task_details_console_path_prefix}
+      externalIdMapping: ${var.monitored_resource_task_task_details_external_id_mapping}
+      handlerType: ${var.monitored_resource_task_task_details_handler_type}
+      isEnable: ${var.monitored_resource_task_task_details_is_enable}
+      lifecycleStatusMappingsForUpStatus: ${var.monitored_resource_task_task_details_lifecycle_status_mappings_for_up_status}
+      namespace: ${var.monitored_resource_task_task_details_namespace}
+      receiverProperties:
+      - listenerPort: ${var.monitored_resource_task_task_details_receiver_properties_listener_port}
+      resourceGroup: ${var.monitored_resource_task_task_details_resource_group}
+      resourceNameFilter: ${var.monitored_resource_task_task_details_resource_name_filter}
+      resourceNameMapping: ${var.monitored_resource_task_task_details_resource_name_mapping}
+      resourceTypeFilter: ${var.monitored_resource_task_task_details_resource_type_filter}
+      resourceTypeMapping: ${var.monitored_resource_task_task_details_resource_type_mapping}
+      resourceTypesConfiguration:
+      - availabilityMetricsConfig:
+        - collectionIntervalInSeconds: ${var.monitored_resource_task_task_details_resource_types_configuration_availability_metrics_config_collection_interval_in_seconds}
+          metrics: ${var.monitored_resource_task_task_details_resource_types_configuration_availability_metrics_config_metrics}
+        handlerConfig:
+        - collectdResourceNameConfig:
+          - excludeProperties: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_collectd_resource_name_config_exclude_properties}
+            includeProperties: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_collectd_resource_name_config_include_properties}
+            suffix: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_collectd_resource_name_config_suffix}
+          collectorTypes: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_collector_types}
+          handlerProperties:
+          - name: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_handler_properties_name}
+            value: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_handler_properties_value}
+          metricMappings:
+          - collectorMetricName: ${oci_monitoring_metric.test_metric.name}
+            isSkipUpload: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_metric_mappings_is_skip_upload}
+            metricUploadIntervalInSeconds: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_metric_mappings_metric_upload_interval_in_seconds}
+            telemetryMetricName: ${oci_monitoring_metric.test_metric.name}
+          metricNameConfig:
+          - excludePatternOnPrefix: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_metric_name_config_exclude_pattern_on_prefix}
+            isPrefixWithCollectorType: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_metric_name_config_is_prefix_with_collector_type}
+          metricUploadIntervalInSeconds: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_metric_upload_interval_in_seconds}
+          telegrafResourceNameConfig:
+          - excludeTags: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_telegraf_resource_name_config_exclude_tags}
+            includeTags: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_telegraf_resource_name_config_include_tags}
+            isUseTagsOnly: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_telegraf_resource_name_config_is_use_tags_only}
+          telemetryResourceGroup: ${var.monitored_resource_task_task_details_resource_types_configuration_handler_config_telemetry_resource_group}
+        resourceType: ${var.monitored_resource_task_task_details_resource_types_configuration_resource_type}
+      serviceBaseUrl: ${var.monitored_resource_task_task_details_service_base_url}
+      shouldUseMetricsFlowForStatus: ${var.monitored_resource_task_task_details_should_use_metrics_flow_for_status}
+      source: ${var.monitored_resource_task_task_details_source}
+      type: ${var.monitored_resource_task_task_details_type}

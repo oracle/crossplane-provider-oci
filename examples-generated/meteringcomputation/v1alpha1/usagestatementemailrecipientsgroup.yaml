@@ -1,0 +1,19 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: UsageStatementEmailRecipientsGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usagestatementemailrecipientsgroup
+  labels:
+    testing.upbound.io/example-name: test_usage_statement_email_recipients_group
+  name: test-usage-statement-email-recipients-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    recipientsList:
+    - emailId: ${oci_metering_computation_email.test_email.id}
+      firstName: ${var.usage_statement_email_recipients_group_recipients_list_first_name}
+      lastName: ${var.usage_statement_email_recipients_group_recipients_list_last_name}
+      state: ${var.usage_statement_email_recipients_group_recipients_list_state}
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}

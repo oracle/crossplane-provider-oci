@@ -1,0 +1,61 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: Model
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/model
+  labels:
+    testing.upbound.io/example-name: test_model
+  name: test-model
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.model_description}
+    displayName: ${var.model_display_name}
+    freeformTags:
+      bar-key: value
+    modelDetails:
+    - classificationMode:
+      - classificationMode: ${var.model_model_details_classification_mode_classification_mode}
+        version: ${var.model_model_details_classification_mode_version}
+      languageCode: ${var.model_model_details_language_code}
+      modelType: ${var.model_model_details_model_type}
+      version: ${var.model_model_details_version}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    testStrategy:
+    - strategyType: ${var.model_test_strategy_strategy_type}
+      testingDataset:
+      - datasetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_dataset
+        datasetType: ${var.model_test_strategy_testing_dataset_dataset_type}
+        locationDetails:
+        - bucket: ${var.model_test_strategy_testing_dataset_location_details_bucket}
+          locationType: ${var.model_test_strategy_testing_dataset_location_details_location_type}
+          namespace: ${var.model_test_strategy_testing_dataset_location_details_namespace}
+          objectNames: ${var.model_test_strategy_testing_dataset_location_details_object_names}
+      validationDataset:
+      - datasetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_dataset
+        datasetType: ${var.model_test_strategy_validation_dataset_dataset_type}
+        locationDetails:
+        - bucket: ${var.model_test_strategy_validation_dataset_location_details_bucket}
+          locationType: ${var.model_test_strategy_validation_dataset_location_details_location_type}
+          namespace: ${var.model_test_strategy_validation_dataset_location_details_namespace}
+          objectNames: ${var.model_test_strategy_validation_dataset_location_details_object_names}
+    trainingDataset:
+    - datasetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dataset
+      datasetType: ${var.model_training_dataset_dataset_type}
+      locationDetails:
+      - bucket: ${var.model_training_dataset_location_details_bucket}
+        locationType: ${var.model_training_dataset_location_details_location_type}
+        namespace: ${var.model_training_dataset_location_details_namespace}
+        objectNames: ${var.model_training_dataset_location_details_object_names}

@@ -1,0 +1,2220 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: containerinstances.containerinstances.oci.upbound.io
+spec:
+  group: containerinstances.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: ContainerInstance
+    listKind: ContainerInstanceList
+    plural: containerinstances
+    singular: containerinstance
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ContainerInstance is the Schema for the ContainerInstances API.
+          Provides the Container Instance resource in Oracle Cloud Infrastructure
+          Container Instances service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ContainerInstanceSpec defines the desired state of ContainerInstance
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the container instance
+                      runs.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The compartment OCID.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  containerRestartPolicy:
+                    description: Container restart policy
+                    type: string
+                  containers:
+                    description: The containers to create on this container instance.
+                    items:
+                      properties:
+                        arguments:
+                          description: A list of string arguments for a container's
+                            ENTRYPOINT process.
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          description: An optional command that overrides the ENTRYPOINT
+                            process. If you do not provide a value, the existing ENTRYPOINT
+                            process defined in the image is used.
+                          items:
+                            type: string
+                          type: array
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        environmentVariables:
+                          additionalProperties:
+                            type: string
+                          description: A map of additional environment variables to
+                            set in the environment of the container's ENTRYPOINT process.
+                            These variables are in addition to any variables already
+                            defined in the container's image.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        healthChecks:
+                          description: list of container health checks to check container
+                            status and take appropriate action if container status
+                            is failed. There are two types of health checks that we
+                            currently support HTTP and TCP.
+                          items:
+                            properties:
+                              failureAction:
+                                description: 'The action will be triggered when the
+                                  container health check fails. There are two types
+                                  of action: KILL or NONE. The default action is KILL.
+                                  If failure action is KILL, the container will be
+                                  subject to the container restart policy.'
+                                type: string
+                              failureThreshold:
+                                description: Number of consecutive failures at which
+                                  we consider the check failed.
+                                type: number
+                              headers:
+                                description: (Applicable when health_check_type=HTTP)
+                                  Container health check HTTP headers.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Container HTTP header Key.
+                                      type: string
+                                    value:
+                                      description: Container HTTP header value.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthCheckType:
+                                description: Container health check type.
+                                type: string
+                              initialDelayInSeconds:
+                                description: The initial delay in seconds before start
+                                  checking container health status.
+                                type: number
+                              intervalInSeconds:
+                                description: Number of seconds between two consecutive
+                                  runs for checking container health.
+                                type: number
+                              name:
+                                description: Container HTTP header Key.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                              port:
+                                description: Container health check HTTP port.
+                                type: number
+                              status:
+                                type: string
+                              statusDetails:
+                                type: string
+                              successThreshold:
+                                description: Number of consecutive successes at which
+                                  we consider the check succeeded again after it was
+                                  in failure state.
+                                type: number
+                              timeoutInSeconds:
+                                description: Length of waiting time in seconds before
+                                  marking health check failed.
+                                type: number
+                            type: object
+                          type: array
+                        imageUrl:
+                          description: A URL identifying the image that the container
+                            runs in, such as docker.io/library/busybox:latest. If
+                            you do not provide a tag, the tag will default to latest.
+                          type: string
+                        isResourcePrincipalDisabled:
+                          description: Determines if the container will have access
+                            to the container instance resource principal.
+                          type: boolean
+                        resourceConfig:
+                          description: The size and amount of resources available
+                            to the container.
+                          items:
+                            properties:
+                              memoryLimitInGbs:
+                                description: The maximum amount of memory that can
+                                  be consumed by the container's process.
+                                type: number
+                              vcpusLimit:
+                                description: The maximum amount of CPUs that can be
+                                  consumed by the container's process.
+                                type: number
+                            type: object
+                          type: array
+                        securityContext:
+                          description: Security context for container.
+                          items:
+                            properties:
+                              capabilities:
+                                description: Linux Container capabilities to configure
+                                  capabilities of container.
+                                items:
+                                  properties:
+                                    addCapabilities:
+                                      description: A list of additional configurable
+                                        container capabilities.
+                                      items:
+                                        type: string
+                                      type: array
+                                    dropCapabilities:
+                                      description: A list of container capabilities
+                                        that can be dropped.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              isNonRootUserCheckEnabled:
+                                description: Indicates if the container must run as
+                                  a non-root user. If true, the service validates
+                                  the container image at runtime to ensure that it
+                                  is not going to run with UID 0 (root) and fails
+                                  the container instance creation if the validation
+                                  fails.
+                                type: boolean
+                              isRootFileSystemReadonly:
+                                description: Determines if the container will have
+                                  a read-only root file system. Default value is false.
+                                type: boolean
+                              runAsGroup:
+                                description: The group ID (GID) to run the entrypoint
+                                  process of the container. Uses runtime default if
+                                  not provided.
+                                type: number
+                              runAsUser:
+                                description: The user ID (UID) to run the entrypoint
+                                  process of the container. Defaults to user specified
+                                  UID in container image metadata if not provided.
+                                  This must be provided if runAsGroup is provided.
+                                type: number
+                              securityContextType:
+                                description: The type of security context
+                                type: string
+                            type: object
+                          type: array
+                        volumeMounts:
+                          description: List of the volume mounts.
+                          items:
+                            properties:
+                              isReadOnly:
+                                description: Whether the volume was mounted in read-only
+                                  mode. By default, the volume is not read-only.
+                                type: boolean
+                              mountPath:
+                                description: The volume access path.
+                                type: string
+                              partition:
+                                description: 'If there is more than one partition
+                                  in the volume, reference this number of partitions.
+                                  Here is an example: Number  Start   End     Size    File
+                                  system  Name                  Flags 1      1049kB  106MB   105MB   fat16        EFI
+                                  System Partition  boot, esp 2      106MB   1180MB  1074MB  xfs
+                                  3      1180MB  50.0GB  48.8GB                                     lvm'
+                                type: number
+                              subPath:
+                                description: A subpath inside the referenced volume.
+                                type: string
+                              volumeName:
+                                description: The name of the volume. Avoid entering
+                                  confidential information.
+                                type: string
+                            type: object
+                          type: array
+                        workingDirectory:
+                          description: The working directory within the container's
+                            filesystem for the container process. If not specified,
+                            the default working directory from the image is used.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: A user-friendly name. Does not have to be unique,
+                      and it's changeable. Avoid entering confidential information.
+                      If you don't provide a name, a name is generated automatically.
+                    type: string
+                  dnsConfig:
+                    description: Allow customers to define DNS settings for containers.
+                      If this is not provided, the containers use the default DNS
+                      settings of the subnet.
+                    items:
+                      properties:
+                        nameservers:
+                          description: IP address of a name server that the resolver
+                            should query, either an IPv4 address (in dot notation),
+                            or an IPv6 address in colon (and possibly dot) notation.
+                            If null, uses nameservers from subnet dhcpDnsOptions.
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: 'Options allows certain internal resolver variables
+                            to be modified. Options are a list of objects in https://man7.org/linux/man-pages/man5/resolv.conf.5.html.
+                            Examples: ["ndots:n", "edns0"].'
+                          items:
+                            type: string
+                          type: array
+                        searches:
+                          description: Search list for host-name lookup. If null,
+                            we will use searches from subnet dhcpDnsOptios.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  faultDomain:
+                    description: The fault domain where the container instance runs.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  gracefulShutdownTimeoutInSeconds:
+                    description: The amount of time that processes in a container
+                      have to gracefully end when the container must be stopped. For
+                      example, when you delete a container instance. After the timeout
+                      is reached, the processes are sent a signal to be deleted.
+                    type: string
+                  imagePullSecrets:
+                    description: The image pulls secrets so you can access private
+                      registry to pull container images.
+                    items:
+                      properties:
+                        passwordSecretRef:
+                          description: The password which should be used with the
+                            registry for authentication. The value is expected in
+                            base64 format.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        registryEndpoint:
+                          description: The registry endpoint of the container image.
+                          type: string
+                        secretId:
+                          description: The OCID of the secret for registry credentials.
+                          type: string
+                        secretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            secretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        secretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            secretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        secretType:
+                          description: The type of ImagePullSecret.
+                          type: string
+                        username:
+                          description: The username which should be used with the
+                            registry for authentication. The value is expected in
+                            base64 format.
+                          type: string
+                      type: object
+                    type: array
+                  shape:
+                    description: The shape of the container instance. The shape determines
+                      the resources available to the container instance.
+                    type: string
+                  shapeConfig:
+                    description: The size and amount of resources available to the
+                      container instance.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The total amount of memory available to the
+                            container instance (GB).
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs available to the
+                            container instance.
+                          type: number
+                      type: object
+                    type: array
+                  state:
+                    description: (Updatable) The target state for the Container Instance.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                  vnics:
+                    description: The networks available to containers on this container
+                      instance.
+                    items:
+                      properties:
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        hostnameLabel:
+                          description: The hostname for the VNIC's primary private
+                            IP. Used for DNS.
+                          type: string
+                        isPublicIpAssigned:
+                          description: Whether the VNIC should be assigned a public
+                            IP address.
+                          type: boolean
+                        nsgIds:
+                          description: A list of the OCIDs of the network security
+                            groups (NSGs) to add the VNIC to.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: A private IP address of your choice to assign
+                            to the VNIC. Must be an available IP address within the
+                            subnet's CIDR.
+                          type: string
+                        skipSourceDestCheck:
+                          description: Whether the source/destination check is disabled
+                            on the VNIC.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet to create the VNIC in.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  volumes:
+                    description: A volume is a directory with data that is accessible
+                      across multiple containers in a container instance.
+                    items:
+                      properties:
+                        backingStore:
+                          description: (Applicable when volume_type=EMPTYDIR) The
+                            volume type of the empty directory, can be either File
+                            Storage or Memory.
+                          type: string
+                        configs:
+                          description: (Applicable when volume_type=CONFIGFILE) Contains
+                            key value pairs which can be mounted as individual files
+                            inside the container. The value needs to be base64 encoded.
+                            It is decoded to plain text before the mount.
+                          items:
+                            properties:
+                              data:
+                                description: The base64 encoded contents of the file.
+                                  The contents are decoded to plain text before mounted
+                                  as a file to a container inside container instance.
+                                type: string
+                              fileName:
+                                description: The name of the file. The fileName should
+                                  be unique across the volume.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: Container HTTP header Key.
+                          type: string
+                        volumeType:
+                          description: The type of volume.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the container instance
+                      runs.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The compartment OCID.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  containerRestartPolicy:
+                    description: Container restart policy
+                    type: string
+                  containers:
+                    description: The containers to create on this container instance.
+                    items:
+                      properties:
+                        arguments:
+                          description: A list of string arguments for a container's
+                            ENTRYPOINT process.
+                          items:
+                            type: string
+                          type: array
+                        command:
+                          description: An optional command that overrides the ENTRYPOINT
+                            process. If you do not provide a value, the existing ENTRYPOINT
+                            process defined in the image is used.
+                          items:
+                            type: string
+                          type: array
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        environmentVariables:
+                          additionalProperties:
+                            type: string
+                          description: A map of additional environment variables to
+                            set in the environment of the container's ENTRYPOINT process.
+                            These variables are in addition to any variables already
+                            defined in the container's image.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        healthChecks:
+                          description: list of container health checks to check container
+                            status and take appropriate action if container status
+                            is failed. There are two types of health checks that we
+                            currently support HTTP and TCP.
+                          items:
+                            properties:
+                              failureAction:
+                                description: 'The action will be triggered when the
+                                  container health check fails. There are two types
+                                  of action: KILL or NONE. The default action is KILL.
+                                  If failure action is KILL, the container will be
+                                  subject to the container restart policy.'
+                                type: string
+                              failureThreshold:
+                                description: Number of consecutive failures at which
+                                  we consider the check failed.
+                                type: number
+                              headers:
+                                description: (Applicable when health_check_type=HTTP)
+                                  Container health check HTTP headers.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Container HTTP header Key.
+                                      type: string
+                                    value:
+                                      description: Container HTTP header value.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthCheckType:
+                                description: Container health check type.
+                                type: string
+                              initialDelayInSeconds:
+                                description: The initial delay in seconds before start
+                                  checking container health status.
+                                type: number
+                              intervalInSeconds:
+                                description: Number of seconds between two consecutive
+                                  runs for checking container health.
+                                type: number
+                              name:
+                                description: Container HTTP header Key.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                              port:
+                                description: Container health check HTTP port.
+                                type: number
+                              status:
+                                type: string
+                              statusDetails:
+                                type: string
+                              successThreshold:
+                                description: Number of consecutive successes at which
+                                  we consider the check succeeded again after it was
+                                  in failure state.
+                                type: number
+                              timeoutInSeconds:
+                                description: Length of waiting time in seconds before
+                                  marking health check failed.
+                                type: number
+                            type: object
+                          type: array
+                        imageUrl:
+                          description: A URL identifying the image that the container
+                            runs in, such as docker.io/library/busybox:latest. If
+                            you do not provide a tag, the tag will default to latest.
+                          type: string
+                        isResourcePrincipalDisabled:
+                          description: Determines if the container will have access
+                            to the container instance resource principal.
+                          type: boolean
+                        resourceConfig:
+                          description: The size and amount of resources available
+                            to the container.
+                          items:
+                            properties:
+                              memoryLimitInGbs:
+                                description: The maximum amount of memory that can
+                                  be consumed by the container's process.
+                                type: number
+                              vcpusLimit:
+                                description: The maximum amount of CPUs that can be
+                                  consumed by the container's process.
+                                type: number
+                            type: object
+                          type: array
+                        securityContext:
+                          description: Security context for container.
+                          items:
+                            properties:
+                              capabilities:
+                                description: Linux Container capabilities to configure
+                                  capabilities of container.
+                                items:
+                                  properties:
+                                    addCapabilities:
+                                      description: A list of additional configurable
+                                        container capabilities.
+                                      items:
+                                        type: string
+                                      type: array
+                                    dropCapabilities:
+                                      description: A list of container capabilities
+                                        that can be dropped.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              isNonRootUserCheckEnabled:
+                                description: Indicates if the container must run as
+                                  a non-root user. If true, the service validates
+                                  the container image at runtime to ensure that it
+                                  is not going to run with UID 0 (root) and fails
+                                  the container instance creation if the validation
+                                  fails.
+                                type: boolean
+                              isRootFileSystemReadonly:
+                                description: Determines if the container will have
+                                  a read-only root file system. Default value is false.
+                                type: boolean
+                              runAsGroup:
+                                description: The group ID (GID) to run the entrypoint
+                                  process of the container. Uses runtime default if
+                                  not provided.
+                                type: number
+                              runAsUser:
+                                description: The user ID (UID) to run the entrypoint
+                                  process of the container. Defaults to user specified
+                                  UID in container image metadata if not provided.
+                                  This must be provided if runAsGroup is provided.
+                                type: number
+                              securityContextType:
+                                description: The type of security context
+                                type: string
+                            type: object
+                          type: array
+                        volumeMounts:
+                          description: List of the volume mounts.
+                          items:
+                            properties:
+                              isReadOnly:
+                                description: Whether the volume was mounted in read-only
+                                  mode. By default, the volume is not read-only.
+                                type: boolean
+                              mountPath:
+                                description: The volume access path.
+                                type: string
+                              partition:
+                                description: 'If there is more than one partition
+                                  in the volume, reference this number of partitions.
+                                  Here is an example: Number  Start   End     Size    File
+                                  system  Name                  Flags 1      1049kB  106MB   105MB   fat16        EFI
+                                  System Partition  boot, esp 2      106MB   1180MB  1074MB  xfs
+                                  3      1180MB  50.0GB  48.8GB                                     lvm'
+                                type: number
+                              subPath:
+                                description: A subpath inside the referenced volume.
+                                type: string
+                              volumeName:
+                                description: The name of the volume. Avoid entering
+                                  confidential information.
+                                type: string
+                            type: object
+                          type: array
+                        workingDirectory:
+                          description: The working directory within the container's
+                            filesystem for the container process. If not specified,
+                            the default working directory from the image is used.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: A user-friendly name. Does not have to be unique,
+                      and it's changeable. Avoid entering confidential information.
+                      If you don't provide a name, a name is generated automatically.
+                    type: string
+                  dnsConfig:
+                    description: Allow customers to define DNS settings for containers.
+                      If this is not provided, the containers use the default DNS
+                      settings of the subnet.
+                    items:
+                      properties:
+                        nameservers:
+                          description: IP address of a name server that the resolver
+                            should query, either an IPv4 address (in dot notation),
+                            or an IPv6 address in colon (and possibly dot) notation.
+                            If null, uses nameservers from subnet dhcpDnsOptions.
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: 'Options allows certain internal resolver variables
+                            to be modified. Options are a list of objects in https://man7.org/linux/man-pages/man5/resolv.conf.5.html.
+                            Examples: ["ndots:n", "edns0"].'
+                          items:
+                            type: string
+                          type: array
+                        searches:
+                          description: Search list for host-name lookup. If null,
+                            we will use searches from subnet dhcpDnsOptios.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  faultDomain:
+                    description: The fault domain where the container instance runs.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  gracefulShutdownTimeoutInSeconds:
+                    description: The amount of time that processes in a container
+                      have to gracefully end when the container must be stopped. For
+                      example, when you delete a container instance. After the timeout
+                      is reached, the processes are sent a signal to be deleted.
+                    type: string
+                  imagePullSecrets:
+                    description: The image pulls secrets so you can access private
+                      registry to pull container images.
+                    items:
+                      properties:
+                        passwordSecretRef:
+                          description: The password which should be used with the
+                            registry for authentication. The value is expected in
+                            base64 format.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        registryEndpoint:
+                          description: The registry endpoint of the container image.
+                          type: string
+                        secretId:
+                          description: The OCID of the secret for registry credentials.
+                          type: string
+                        secretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            secretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        secretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            secretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        secretType:
+                          description: The type of ImagePullSecret.
+                          type: string
+                        username:
+                          description: The username which should be used with the
+                            registry for authentication. The value is expected in
+                            base64 format.
+                          type: string
+                      type: object
+                    type: array
+                  shape:
+                    description: The shape of the container instance. The shape determines
+                      the resources available to the container instance.
+                    type: string
+                  shapeConfig:
+                    description: The size and amount of resources available to the
+                      container instance.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The total amount of memory available to the
+                            container instance (GB).
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs available to the
+                            container instance.
+                          type: number
+                      type: object
+                    type: array
+                  state:
+                    description: (Updatable) The target state for the Container Instance.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                  vnics:
+                    description: The networks available to containers on this container
+                      instance.
+                    items:
+                      properties:
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        hostnameLabel:
+                          description: The hostname for the VNIC's primary private
+                            IP. Used for DNS.
+                          type: string
+                        isPublicIpAssigned:
+                          description: Whether the VNIC should be assigned a public
+                            IP address.
+                          type: boolean
+                        nsgIds:
+                          description: A list of the OCIDs of the network security
+                            groups (NSGs) to add the VNIC to.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: A private IP address of your choice to assign
+                            to the VNIC. Must be an available IP address within the
+                            subnet's CIDR.
+                          type: string
+                        skipSourceDestCheck:
+                          description: Whether the source/destination check is disabled
+                            on the VNIC.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet to create the VNIC in.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  volumes:
+                    description: A volume is a directory with data that is accessible
+                      across multiple containers in a container instance.
+                    items:
+                      properties:
+                        backingStore:
+                          description: (Applicable when volume_type=EMPTYDIR) The
+                            volume type of the empty directory, can be either File
+                            Storage or Memory.
+                          type: string
+                        configs:
+                          description: (Applicable when volume_type=CONFIGFILE) Contains
+                            key value pairs which can be mounted as individual files
+                            inside the container. The value needs to be base64 encoded.
+                            It is decoded to plain text before the mount.
+                          items:
+                            properties:
+                              data:
+                                description: The base64 encoded contents of the file.
+                                  The contents are decoded to plain text before mounted
+                                  as a file to a container inside container instance.
+                                type: string
+                              fileName:
+                                description: The name of the file. The fileName should
+                                  be unique across the volume.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: Container HTTP header Key.
+                          type: string
+                        volumeType:
+                          description: The type of volume.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.availabilityDomain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityDomain)
+                || (has(self.initProvider) && has(self.initProvider.availabilityDomain))'
+            - message: spec.forProvider.containers is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.containers)
+                || (has(self.initProvider) && has(self.initProvider.containers))'
+            - message: spec.forProvider.shape is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shape)
+                || (has(self.initProvider) && has(self.initProvider.shape))'
+            - message: spec.forProvider.shapeConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shapeConfig)
+                || (has(self.initProvider) && has(self.initProvider.shapeConfig))'
+            - message: spec.forProvider.vnics is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.vnics)
+                || (has(self.initProvider) && has(self.initProvider.vnics))'
+          status:
+            description: ContainerInstanceStatus defines the observed state of ContainerInstance.
+            properties:
+              atProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain where the container instance
+                      runs.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The compartment OCID.
+                    type: string
+                  containerCount:
+                    description: The number of containers on the container instance.
+                    type: number
+                  containerRestartPolicy:
+                    description: Container restart policy
+                    type: string
+                  containers:
+                    description: The containers to create on this container instance.
+                    items:
+                      properties:
+                        arguments:
+                          description: A list of string arguments for a container's
+                            ENTRYPOINT process.
+                          items:
+                            type: string
+                          type: array
+                        availabilityDomain:
+                          description: The availability domain where the container
+                            instance runs.
+                          type: string
+                        command:
+                          description: An optional command that overrides the ENTRYPOINT
+                            process. If you do not provide a value, the existing ENTRYPOINT
+                            process defined in the image is used.
+                          items:
+                            type: string
+                          type: array
+                        compartmentId:
+                          description: (Updatable) The compartment OCID.
+                          type: string
+                        containerId:
+                          description: The OCID of the container.
+                          type: string
+                        containerInstanceId:
+                          description: An OCID that cannot be changed.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        environmentVariables:
+                          additionalProperties:
+                            type: string
+                          description: A map of additional environment variables to
+                            set in the environment of the container's ENTRYPOINT process.
+                            These variables are in addition to any variables already
+                            defined in the container's image.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        exitCode:
+                          type: number
+                        faultDomain:
+                          description: The fault domain where the container instance
+                            runs.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        healthChecks:
+                          description: list of container health checks to check container
+                            status and take appropriate action if container status
+                            is failed. There are two types of health checks that we
+                            currently support HTTP and TCP.
+                          items:
+                            properties:
+                              failureAction:
+                                description: 'The action will be triggered when the
+                                  container health check fails. There are two types
+                                  of action: KILL or NONE. The default action is KILL.
+                                  If failure action is KILL, the container will be
+                                  subject to the container restart policy.'
+                                type: string
+                              failureThreshold:
+                                description: Number of consecutive failures at which
+                                  we consider the check failed.
+                                type: number
+                              headers:
+                                description: (Applicable when health_check_type=HTTP)
+                                  Container health check HTTP headers.
+                                items:
+                                  properties:
+                                    name:
+                                      description: Container HTTP header Key.
+                                      type: string
+                                    value:
+                                      description: Container HTTP header value.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthCheckType:
+                                description: Container health check type.
+                                type: string
+                              initialDelayInSeconds:
+                                description: The initial delay in seconds before start
+                                  checking container health status.
+                                type: number
+                              intervalInSeconds:
+                                description: Number of seconds between two consecutive
+                                  runs for checking container health.
+                                type: number
+                              name:
+                                description: Container HTTP header Key.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                              port:
+                                description: Container health check HTTP port.
+                                type: number
+                              status:
+                                type: string
+                              statusDetails:
+                                type: string
+                              successThreshold:
+                                description: Number of consecutive successes at which
+                                  we consider the check succeeded again after it was
+                                  in failure state.
+                                type: number
+                              timeoutInSeconds:
+                                description: Length of waiting time in seconds before
+                                  marking health check failed.
+                                type: number
+                            type: object
+                          type: array
+                        imageUrl:
+                          description: A URL identifying the image that the container
+                            runs in, such as docker.io/library/busybox:latest. If
+                            you do not provide a tag, the tag will default to latest.
+                          type: string
+                        isResourcePrincipalDisabled:
+                          description: Determines if the container will have access
+                            to the container instance resource principal.
+                          type: boolean
+                        lifecycleDetails:
+                          description: A message that describes the current state
+                            of the container in more detail. Can be used to provide
+                            actionable information.
+                          type: string
+                        resourceConfig:
+                          description: The size and amount of resources available
+                            to the container.
+                          items:
+                            properties:
+                              memoryLimitInGbs:
+                                description: The maximum amount of memory that can
+                                  be consumed by the container's process.
+                                type: number
+                              vcpusLimit:
+                                description: The maximum amount of CPUs that can be
+                                  consumed by the container's process.
+                                type: number
+                            type: object
+                          type: array
+                        securityContext:
+                          description: Security context for container.
+                          items:
+                            properties:
+                              capabilities:
+                                description: Linux Container capabilities to configure
+                                  capabilities of container.
+                                items:
+                                  properties:
+                                    addCapabilities:
+                                      description: A list of additional configurable
+                                        container capabilities.
+                                      items:
+                                        type: string
+                                      type: array
+                                    dropCapabilities:
+                                      description: A list of container capabilities
+                                        that can be dropped.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              isNonRootUserCheckEnabled:
+                                description: Indicates if the container must run as
+                                  a non-root user. If true, the service validates
+                                  the container image at runtime to ensure that it
+                                  is not going to run with UID 0 (root) and fails
+                                  the container instance creation if the validation
+                                  fails.
+                                type: boolean
+                              isRootFileSystemReadonly:
+                                description: Determines if the container will have
+                                  a read-only root file system. Default value is false.
+                                type: boolean
+                              runAsGroup:
+                                description: The group ID (GID) to run the entrypoint
+                                  process of the container. Uses runtime default if
+                                  not provided.
+                                type: number
+                              runAsUser:
+                                description: The user ID (UID) to run the entrypoint
+                                  process of the container. Defaults to user specified
+                                  UID in container image metadata if not provided.
+                                  This must be provided if runAsGroup is provided.
+                                type: number
+                              securityContextType:
+                                description: The type of security context
+                                type: string
+                            type: object
+                          type: array
+                        state:
+                          description: (Updatable) The target state for the Container
+                            Instance. Could be set to ACTIVE or INACTIVE.
+                          type: string
+                        systemTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Usage of system tag keys. These predefined
+                            keys are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                            "true"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        timeCreated:
+                          description: The time the container instance was created,
+                            in the format defined by RFC 3339.
+                          type: string
+                        timeTerminated:
+                          type: string
+                        timeUpdated:
+                          description: The time the container instance was updated,
+                            in the format defined by RFC 3339.
+                          type: string
+                        volumeMounts:
+                          description: List of the volume mounts.
+                          items:
+                            properties:
+                              isReadOnly:
+                                description: Whether the volume was mounted in read-only
+                                  mode. By default, the volume is not read-only.
+                                type: boolean
+                              mountPath:
+                                description: The volume access path.
+                                type: string
+                              partition:
+                                description: 'If there is more than one partition
+                                  in the volume, reference this number of partitions.
+                                  Here is an example: Number  Start   End     Size    File
+                                  system  Name                  Flags 1      1049kB  106MB   105MB   fat16        EFI
+                                  System Partition  boot, esp 2      106MB   1180MB  1074MB  xfs
+                                  3      1180MB  50.0GB  48.8GB                                     lvm'
+                                type: number
+                              subPath:
+                                description: A subpath inside the referenced volume.
+                                type: string
+                              volumeName:
+                                description: The name of the volume. Avoid entering
+                                  confidential information.
+                                type: string
+                            type: object
+                          type: array
+                        workingDirectory:
+                          description: The working directory within the container's
+                            filesystem for the container process. If not specified,
+                            the default working directory from the image is used.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Defined tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: A user-friendly name. Does not have to be unique,
+                      and it's changeable. Avoid entering confidential information.
+                      If you don't provide a name, a name is generated automatically.
+                    type: string
+                  dnsConfig:
+                    description: Allow customers to define DNS settings for containers.
+                      If this is not provided, the containers use the default DNS
+                      settings of the subnet.
+                    items:
+                      properties:
+                        nameservers:
+                          description: IP address of a name server that the resolver
+                            should query, either an IPv4 address (in dot notation),
+                            or an IPv6 address in colon (and possibly dot) notation.
+                            If null, uses nameservers from subnet dhcpDnsOptions.
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: 'Options allows certain internal resolver variables
+                            to be modified. Options are a list of objects in https://man7.org/linux/man-pages/man5/resolv.conf.5.html.
+                            Examples: ["ndots:n", "edns0"].'
+                          items:
+                            type: string
+                          type: array
+                        searches:
+                          description: Search list for host-name lookup. If null,
+                            we will use searches from subnet dhcpDnsOptios.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  faultDomain:
+                    description: The fault domain where the container instance runs.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  gracefulShutdownTimeoutInSeconds:
+                    description: The amount of time that processes in a container
+                      have to gracefully end when the container must be stopped. For
+                      example, when you delete a container instance. After the timeout
+                      is reached, the processes are sent a signal to be deleted.
+                    type: string
+                  id:
+                    description: An OCID that cannot be changed.
+                    type: string
+                  imagePullSecrets:
+                    description: The image pulls secrets so you can access private
+                      registry to pull container images.
+                    items:
+                      properties:
+                        registryEndpoint:
+                          description: The registry endpoint of the container image.
+                          type: string
+                        secretId:
+                          description: The OCID of the secret for registry credentials.
+                          type: string
+                        secretType:
+                          description: The type of ImagePullSecret.
+                          type: string
+                        username:
+                          description: The username which should be used with the
+                            registry for authentication. The value is expected in
+                            base64 format.
+                          type: string
+                      type: object
+                    type: array
+                  lifecycleDetails:
+                    description: A message that describes the current state of the
+                      container in more detail. Can be used to provide actionable
+                      information.
+                    type: string
+                  shape:
+                    description: The shape of the container instance. The shape determines
+                      the resources available to the container instance.
+                    type: string
+                  shapeConfig:
+                    description: The size and amount of resources available to the
+                      container instance.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The total amount of memory available to the
+                            container instance (GB).
+                          type: number
+                        networkingBandwidthInGbps:
+                          description: The networking bandwidth available to the container
+                            instance, in gigabits per second.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs available to the
+                            container instance.
+                          type: number
+                        processorDescription:
+                          description: A short description of the container instance's
+                            processor (CPU).
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: (Updatable) The target state for the Container Instance.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time the container instance was created, in the
+                      format defined by RFC 3339.
+                    type: string
+                  timeUpdated:
+                    description: The time the container instance was updated, in the
+                      format defined by RFC 3339.
+                    type: string
+                  vnics:
+                    description: The networks available to containers on this container
+                      instance.
+                    items:
+                      properties:
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Defined tags for this resource. Each key is
+                            predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                            "value"}.'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: A user-friendly name. Does not have to be unique,
+                            and it's changeable. Avoid entering confidential information.
+                            If you don't provide a name, a name is generated automatically.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: 'Simple key-value pair that is applied without
+                            any predefined name, type or scope. Exists for cross-compatibility
+                            only. Example: {"bar-key": "value"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        hostnameLabel:
+                          description: The hostname for the VNIC's primary private
+                            IP. Used for DNS.
+                          type: string
+                        isPublicIpAssigned:
+                          description: Whether the VNIC should be assigned a public
+                            IP address.
+                          type: boolean
+                        nsgIds:
+                          description: A list of the OCIDs of the network security
+                            groups (NSGs) to add the VNIC to.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: A private IP address of your choice to assign
+                            to the VNIC. Must be an available IP address within the
+                            subnet's CIDR.
+                          type: string
+                        skipSourceDestCheck:
+                          description: Whether the source/destination check is disabled
+                            on the VNIC.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet to create the VNIC in.
+                          type: string
+                        vnicId:
+                          description: The identifier of the virtual network interface
+                            card (VNIC) over which the containers accessing this network
+                            can communicate with the larger virtual cloud network.
+                          type: string
+                      type: object
+                    type: array
+                  volumeCount:
+                    description: The number of volumes that are attached to the container
+                      instance.
+                    type: number
+                  volumes:
+                    description: A volume is a directory with data that is accessible
+                      across multiple containers in a container instance.
+                    items:
+                      properties:
+                        backingStore:
+                          description: (Applicable when volume_type=EMPTYDIR) The
+                            volume type of the empty directory, can be either File
+                            Storage or Memory.
+                          type: string
+                        configs:
+                          description: (Applicable when volume_type=CONFIGFILE) Contains
+                            key value pairs which can be mounted as individual files
+                            inside the container. The value needs to be base64 encoded.
+                            It is decoded to plain text before the mount.
+                          items:
+                            properties:
+                              data:
+                                description: The base64 encoded contents of the file.
+                                  The contents are decoded to plain text before mounted
+                                  as a file to a container inside container instance.
+                                type: string
+                              fileName:
+                                description: The name of the file. The fileName should
+                                  be unique across the volume.
+                                type: string
+                              path:
+                                description: Container health check HTTP path.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: Container HTTP header Key.
+                          type: string
+                        volumeType:
+                          description: The type of volume.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

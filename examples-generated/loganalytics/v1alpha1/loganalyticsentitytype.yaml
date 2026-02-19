@@ -1,0 +1,16 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsEntityType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsentitytype
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_entity_type
+  name: test-log-analytics-entity-type
+spec:
+  forProvider:
+    category: ${var.log_analytics_entity_type_category}
+    name: ${var.log_analytics_entity_type_name}
+    namespace: ${var.log_analytics_entity_type_namespace}
+    properties:
+    - description: ${var.log_analytics_entity_type_properties_description}
+      name: ${var.log_analytics_entity_type_properties_name}

@@ -1,0 +1,92 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modeldeployment
+  labels:
+    testing.upbound.io/example-name: test_model_deployment
+  name: test-model-deployment
+spec:
+  forProvider:
+    categoryLogDetails:
+    - access:
+      - logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+      predict:
+      - logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.model_deployment_description}
+    displayName: ${var.model_deployment_display_name}
+    freeformTags:
+      Department: Finance
+    modelDeploymentConfigurationDetails:
+    - deploymentType: ${var.model_deployment_model_deployment_configuration_details_deployment_type}
+      environmentConfigurationDetails:
+      - cmd: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_cmd}
+        entrypoint: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_entrypoint}
+        environmentConfigurationType: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_environment_configuration_type}
+        environmentVariables: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_environment_variables}
+        healthCheckPort: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_health_check_port}
+        image: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_image}
+        imageDigest: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_image_digest}
+        serverPort: ${var.model_deployment_model_deployment_configuration_details_environment_configuration_details_server_port}
+      modelConfigurationDetails:
+      - bandwidthMbps: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_bandwidth_mbps}
+        instanceConfiguration:
+        - instanceShapeName: ${oci_core_shape.test_shape.name}
+          modelDeploymentInstanceShapeConfigDetails:
+          - cpuBaseline: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_cpu_baseline}
+            memoryInGbs: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_memory_in_gbs}
+            ocpus: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_ocpus}
+          privateEndpointIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_private_endpoint
+          subnetIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_subnet
+        maximumBandwidthMbps: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_maximum_bandwidth_mbps}
+        modelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model
+        scalingPolicy:
+        - autoScalingPolicies:
+          - autoScalingPolicyType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_auto_scaling_policy_type}
+            initialInstanceCount: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_initial_instance_count}
+            maximumInstanceCount: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_maximum_instance_count}
+            minimumInstanceCount: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_minimum_instance_count}
+            rules:
+            - metricExpressionRuleType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_metric_expression_rule_type}
+              metricType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_metric_type}
+              scaleInConfiguration:
+              - instanceCountAdjustment: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_in_configuration_instance_count_adjustment}
+                pendingDuration: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_in_configuration_pending_duration}
+                query: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_in_configuration_query}
+                scalingConfigurationType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_in_configuration_scaling_configuration_type}
+                threshold: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_in_configuration_threshold}
+              scaleOutConfiguration:
+              - instanceCountAdjustment: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_out_configuration_instance_count_adjustment}
+                pendingDuration: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_out_configuration_pending_duration}
+                query: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_out_configuration_query}
+                scalingConfigurationType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_out_configuration_scaling_configuration_type}
+                threshold: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_auto_scaling_policies_rules_scale_out_configuration_threshold}
+          coolDownInSeconds: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_cool_down_in_seconds}
+          instanceCount: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_instance_count}
+          isEnabled: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_is_enabled}
+          policyType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_policy_type}
+    opcParentRptUrl: ${var.model_deployment_opc_parent_rpt_url}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

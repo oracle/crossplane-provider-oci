@@ -1,0 +1,19 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceResourcePrincipalConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstanceresourceprincipalconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_resource_principal_configuration
+  name: test-bds-instance-resource-principal-configuration
+spec:
+  forProvider:
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    displayName: ${var.bds_instance_resource_principal_configuration_display_name}
+    sessionTokenLifeSpanDurationInHours: ${var.bds_instance_resource_principal_configuration_session_token_life_span_duration_in_hours}

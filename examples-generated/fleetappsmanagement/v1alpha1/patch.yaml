@@ -1,0 +1,50 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Patch
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/patch
+  labels:
+    testing.upbound.io/example-name: test_patch
+  name: test-patch
+spec:
+  forProvider:
+    artifactDetails:
+    - artifact:
+      - content:
+        - bucket: ${var.patch_artifact_details_artifact_content_bucket}
+          checksum: ${var.patch_artifact_details_artifact_content_checksum}
+          namespace: ${var.patch_artifact_details_artifact_content_namespace}
+          object: ${var.patch_artifact_details_artifact_content_object}
+          sourceType: ${var.patch_artifact_details_artifact_content_source_type}
+      artifacts:
+      - architecture: ${var.patch_artifact_details_artifacts_architecture}
+        content:
+        - bucket: ${var.patch_artifact_details_artifacts_content_bucket}
+          checksum: ${var.patch_artifact_details_artifacts_content_checksum}
+          namespace: ${var.patch_artifact_details_artifacts_content_namespace}
+          object: ${var.patch_artifact_details_artifacts_content_object}
+          sourceType: ${var.patch_artifact_details_artifacts_content_source_type}
+        osType: ${var.patch_artifact_details_artifacts_os_type}
+      category: ${var.patch_artifact_details_category}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    dependentPatches:
+    - id: ${var.patch_dependent_patches_id}
+    description: ${var.patch_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.patch_name}
+    patchType:
+    - platformConfigurationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_platform_configuration
+    product:
+    - platformConfigurationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_platform_configuration
+      version: ${var.patch_product_version}
+    severity: ${var.patch_severity}
+    timeReleased: ${var.patch_time_released}

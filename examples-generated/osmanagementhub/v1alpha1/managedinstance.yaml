@@ -1,0 +1,25 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagedInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managedinstance
+  labels:
+    testing.upbound.io/example-name: test_managed_instance
+  name: test-managed-instance
+spec:
+  forProvider:
+    autonomousSettings:
+    - isDataCollectionAuthorized: ${var.managed_instance_autonomous_settings_is_data_collection_authorized}
+    description: ${var.managed_instance_description}
+    managedInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_instance
+    notificationTopicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_topic
+    primaryManagementStationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_station
+    secondaryManagementStationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_station

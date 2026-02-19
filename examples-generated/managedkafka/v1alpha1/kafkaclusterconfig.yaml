@@ -1,0 +1,24 @@
+apiVersion: managedkafka.oci.upbound.io/v1alpha1
+kind: KafkaClusterConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managedkafka/v1alpha1/kafkaclusterconfig
+  labels:
+    testing.upbound.io/example-name: test_kafka_cluster_config
+  name: test-kafka-cluster-config
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.kafka_cluster_config_display_name}
+    freeformTags:
+      Department: Finance
+    latestConfig:
+    - configIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_config
+      properties: ${var.kafka_cluster_config_latest_config_properties}
+      versionNumber: ${var.kafka_cluster_config_latest_config_version_number}

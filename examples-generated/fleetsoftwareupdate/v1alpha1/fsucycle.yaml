@@ -1,0 +1,64 @@
+apiVersion: fleetsoftwareupdate.oci.upbound.io/v1alpha1
+kind: FsuCycle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetsoftwareupdate/v1alpha1/fsucycle
+  labels:
+    testing.upbound.io/example-name: test_fsu_cycle
+  name: test-fsu-cycle
+spec:
+  forProvider:
+    applyActionSchedule:
+    - timeToStart: ${var.fsu_cycle_apply_action_schedule_time_to_start}
+      type: ${var.fsu_cycle_apply_action_schedule_type}
+    batchingStrategy:
+    - isForceRolling: ${var.fsu_cycle_batching_strategy_is_force_rolling}
+      isWaitForBatchResume: ${var.fsu_cycle_batching_strategy_is_wait_for_batch_resume}
+      percentage: ${var.fsu_cycle_batching_strategy_percentage}
+      type: ${var.fsu_cycle_batching_strategy_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    diagnosticsCollection:
+    - logCollectionMode: ${var.fsu_cycle_diagnostics_collection_log_collection_mode}
+    displayName: ${var.fsu_cycle_display_name}
+    freeformTags:
+      bar-key: value
+    fsuCollectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fsu_collection
+    goalVersionDetails:
+    - components:
+      - componentType: ${var.fsu_cycle_goal_version_details_components_component_type}
+        goalVersionDetails:
+        - goalSoftwareImageIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_image
+          goalType: ${var.fsu_cycle_goal_version_details_components_goal_version_details_goal_type}
+          goalVersion: ${var.fsu_cycle_goal_version_details_components_goal_version_details_goal_version}
+        homePolicy: ${var.fsu_cycle_goal_version_details_components_home_policy}
+        newHomePrefix: ${var.fsu_cycle_goal_version_details_components_new_home_prefix}
+      homePolicy: ${var.fsu_cycle_goal_version_details_home_policy}
+      newHomePrefix: ${var.fsu_cycle_goal_version_details_new_home_prefix}
+      softwareImageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_image
+      type: ${var.fsu_cycle_goal_version_details_type}
+      version: ${var.fsu_cycle_goal_version_details_version}
+    isIgnoreMissingPatches: ${var.fsu_cycle_is_ignore_missing_patches}
+    isIgnorePatches: ${var.fsu_cycle_is_ignore_patches}
+    isKeepPlacement: ${var.fsu_cycle_is_keep_placement}
+    maxDrainTimeoutInSeconds: ${var.fsu_cycle_max_drain_timeout_in_seconds}
+    stageActionSchedule:
+    - timeToStart: ${var.fsu_cycle_stage_action_schedule_time_to_start}
+      type: ${var.fsu_cycle_stage_action_schedule_type}
+    type: ${var.fsu_cycle_type}
+    upgradeDetails:
+    - collectionType: ${var.fsu_cycle_upgrade_details_collection_type}
+      isIgnorePostUpgradeErrors: ${var.fsu_cycle_upgrade_details_is_ignore_post_upgrade_errors}
+      isIgnorePrerequisites: ${var.fsu_cycle_upgrade_details_is_ignore_prerequisites}
+      isRecompileInvalidObjects: ${var.fsu_cycle_upgrade_details_is_recompile_invalid_objects}
+      isTimeZoneUpgrade: ${var.fsu_cycle_upgrade_details_is_time_zone_upgrade}
+      maxDrainTimeoutInSeconds: ${var.fsu_cycle_upgrade_details_max_drain_timeout_in_seconds}

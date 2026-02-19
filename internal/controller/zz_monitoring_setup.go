@@ -10,6 +10,7 @@ import (
 	"github.com/crossplane/upjet/pkg/controller"
 
 	alarm "github.com/oracle/provider-oci/internal/controller/monitoring/alarm"
+	alarmsuppression "github.com/oracle/provider-oci/internal/controller/monitoring/alarmsuppression"
 	capturefilter "github.com/oracle/provider-oci/internal/controller/monitoring/capturefilter"
 	vtap "github.com/oracle/provider-oci/internal/controller/monitoring/vtap"
 )
@@ -19,6 +20,7 @@ import (
 func Setup_monitoring(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		alarm.Setup,
+		alarmsuppression.Setup,
 		capturefilter.Setup,
 		vtap.Setup,
 	} {

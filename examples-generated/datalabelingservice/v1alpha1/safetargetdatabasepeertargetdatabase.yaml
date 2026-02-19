@@ -1,0 +1,46 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeTargetDatabasePeerTargetDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safetargetdatabasepeertargetdatabase
+  labels:
+    testing.upbound.io/example-name: test_target_database_peer_target_database
+  name: test-target-database-peer-target-database
+spec:
+  forProvider:
+    databaseDetails:
+    - autonomousDatabaseIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_autonomous_database
+      databaseType: ${var.target_database_peer_target_database_database_details_database_type}
+      dbSystemIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_db_system
+      infrastructureType: ${var.target_database_peer_target_database_database_details_infrastructure_type}
+      instanceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance
+      ipAddresses: ${var.target_database_peer_target_database_database_details_ip_addresses}
+      listenerPort: ${var.target_database_peer_target_database_database_details_listener_port}
+      pluggableDatabaseIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_pluggable_database
+      serviceName: ${oci_announcements_service_service.test_service.name}
+      vmClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vm_cluster
+    dataguardAssociationId: ${oci_certificates_management_association.test_association.id}
+    description: ${var.target_database_peer_target_database_description}
+    displayName: ${var.target_database_peer_target_database_display_name}
+    targetDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target_database
+    tlsConfig:
+    - certificateStoreType: ${var.target_database_peer_target_database_tls_config_certificate_store_type}
+      keyStoreContent: ${var.target_database_peer_target_database_tls_config_key_store_content}
+      status: ${var.target_database_peer_target_database_tls_config_status}
+      storePasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      trustStoreContent: ${var.target_database_peer_target_database_tls_config_trust_store_content}

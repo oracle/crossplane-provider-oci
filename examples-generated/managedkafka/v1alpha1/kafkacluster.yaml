@@ -1,0 +1,32 @@
+apiVersion: managedkafka.oci.upbound.io/v1alpha1
+kind: KafkaCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managedkafka/v1alpha1/kafkacluster
+  labels:
+    testing.upbound.io/example-name: test_kafka_cluster
+  name: test-kafka-cluster
+spec:
+  forProvider:
+    accessSubnets:
+    - subnets: ${var.kafka_cluster_access_subnets_subnets}
+    brokerShape:
+    - nodeCount: ${var.kafka_cluster_broker_shape_node_count}
+      ocpuCount: ${var.kafka_cluster_broker_shape_ocpu_count}
+      storageSizeInGbs: ${var.kafka_cluster_broker_shape_storage_size_in_gbs}
+    clientCertificateBundle: ${var.kafka_cluster_client_certificate_bundle}
+    clusterConfigIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_config
+    clusterConfigVersion: ${var.kafka_cluster_cluster_config_version}
+    clusterType: ${var.kafka_cluster_cluster_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    coordinationType: ${var.kafka_cluster_coordination_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.kafka_cluster_display_name}
+    freeformTags:
+      Department: Finance
+    kafkaVersion: ${var.kafka_cluster_kafka_version}

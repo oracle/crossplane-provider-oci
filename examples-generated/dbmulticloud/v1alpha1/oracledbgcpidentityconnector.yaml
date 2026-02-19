@@ -1,0 +1,33 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbGcpIdentityConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbgcpidentityconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_gcp_identity_connector
+  name: test-oracle-db-gcp-identity-connector
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_gcp_identity_connector_display_name}
+    freeformTags:
+      Department: Finance
+    gcpLocation: ${var.oracle_db_gcp_identity_connector_gcp_location}
+    gcpResourceServiceAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_agent
+    gcpWorkloadIdentityPoolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pool
+    gcpWorkloadIdentityProviderIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_identity_provider
+    issuerUrl: ${var.oracle_db_gcp_identity_connector_issuer_url}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    resourceId: ${oci_cloud_guard_resource.test_resource.id}

@@ -1,0 +1,24 @@
+apiVersion: waa.oci.upbound.io/v1alpha1
+kind: WebAppAccelerationPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappaccelerationpolicy
+  labels:
+    testing.upbound.io/example-name: test_web_app_acceleration_policy
+  name: test-web-app-acceleration-policy
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.web_app_acceleration_policy_display_name}
+    freeformTags:
+      bar-key: value
+    responseCachingPolicy:
+    - isResponseHeaderBasedCachingEnabled: ${var.web_app_acceleration_policy_response_caching_policy_is_response_header_based_caching_enabled}
+    responseCompressionPolicy:
+    - gzipCompression:
+      - isEnabled: ${var.web_app_acceleration_policy_response_compression_policy_gzip_compression_is_enabled}
+    systemTags: ${var.web_app_acceleration_policy_system_tags}

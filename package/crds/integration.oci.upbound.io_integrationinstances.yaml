@@ -1,0 +1,1657 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: integrationinstances.integration.oci.upbound.io
+spec:
+  group: integration.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: IntegrationInstance
+    listKind: IntegrationInstanceList
+    plural: integrationinstances
+    singular: integrationinstance
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: IntegrationInstance is the Schema for the IntegrationInstances
+          API. Provides the Integration Instance resource in Oracle Cloud Infrastructure
+          Integration service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: IntegrationInstanceSpec defines the desired state of IntegrationInstance
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  alternateCustomEndpoints:
+                    description: (Updatable) A list of alternate custom endpoints
+                      to be used for the integration instance URL (contact Oracle
+                      for alternateCustomEndpoints availability for a specific instance).
+                    items:
+                      properties:
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        certificateSecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  consumptionModel:
+                    description: Optional parameter specifying which entitlement to
+                      use for billing purposes. Only required if the account possesses
+                      more than one entitlement.
+                    type: string
+                  customEndpoint:
+                    description: (Updatable) Details for a custom endpoint for the
+                      integration instance (update).
+                    items:
+                      properties:
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        certificateSecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        dnsType:
+                          description: Type of DNS.
+                          type: string
+                        dnsZoneName:
+                          description: DNS Zone name
+                          type: string
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of predefined tag keys. These
+                      predefined keys are scoped to namespaces. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Integration Instance Identifier.
+                    type: string
+                  domainId:
+                    description: 'The OCID of the identity domain, that will be used
+                      to determine the corresponding Idcs Stripe and create an Idcs
+                      application within the stripe. This parameter is mutually exclusive
+                      with parameter: idcsAt, i.e only one of two parameters should
+                      be specified.'
+                    type: string
+                  domainIdRef:
+                    description: Reference to a Domain in identity to populate domainId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  domainIdSelector:
+                    description: Selector for a Domain in identity to populate domainId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  enableProcessAutomationTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Enable Process Automation. Could be set to any integer
+                      value.
+                    type: number
+                  extendDataRetentionTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Extend Data Retention. Could be set to any integer
+                      value.
+                    type: number
+                  failoverTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Failover. Could be set to any integer value.
+                    type: number
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  idcsAtSecretRef:
+                    description: (Updatable) IDCS Authentication token. This is required
+                      for all realms with IDCS. Its optional as its not required for
+                      non IDCS realms.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  integrationInstanceType:
+                    description: (Updatable) Standard or Enterprise type, Oracle Integration
+                      Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration
+                      3 uses ENTERPRISEX and STANDARDX
+                    type: string
+                  isByol:
+                    description: (Updatable) Bring your own license.
+                    type: boolean
+                  isDisasterRecoveryEnabled:
+                    description: Is Disaster Recovery enabled or not.
+                    type: boolean
+                  isFileServerEnabled:
+                    description: (Updatable) The file server is enabled or not.
+                    type: boolean
+                  isVisualBuilderEnabled:
+                    description: (Updatable) Visual Builder is enabled or not.
+                    type: boolean
+                  messagePacks:
+                    description: (Updatable) The number of configured message packs
+                    type: number
+                  networkEndpointDetails:
+                    description: Base representation of a network endpoint.
+                    items:
+                      properties:
+                        allowlistedHttpIps:
+                          description: 'Source IP addresses or IP address ranges ingress
+                            rules. (ex: "168.122.59.5", "10.20.30.0/26") An invalid
+                            IP or CIDR block will result in a 400 response.'
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        allowlistedHttpVcns:
+                          description: Virtual Cloud Networks allowed to access this
+                            network endpoint.
+                          items:
+                            properties:
+                              allowlistedIps:
+                                description: 'Source IP addresses or IP address ranges
+                                  ingress rules. (ex: "168.122.59.5", "10.20.30.0/26")
+                                  An invalid IP or CIDR block will result in a 400
+                                  response.'
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              id:
+                                description: The Virtual Cloud Network OCID.
+                                type: string
+                            type: object
+                          type: array
+                        isIntegrationVcnAllowlisted:
+                          description: The Integration service's VCN is allow-listed
+                            to allow integrations to call back into other integrations
+                          type: boolean
+                        networkEndpointType:
+                          description: The type of network endpoint.
+                          type: string
+                      type: object
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: { "oracle-zpr.sensitivity.value"
+                      = "low" "oracle-zpr.sensitivity.mode" = "enforce" }'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: Shape
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the instance. Could
+                      be set to ACTIVE or INACTIVE
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  alternateCustomEndpoints:
+                    description: (Updatable) A list of alternate custom endpoints
+                      to be used for the integration instance URL (contact Oracle
+                      for alternateCustomEndpoints availability for a specific instance).
+                    items:
+                      properties:
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        certificateSecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  consumptionModel:
+                    description: Optional parameter specifying which entitlement to
+                      use for billing purposes. Only required if the account possesses
+                      more than one entitlement.
+                    type: string
+                  customEndpoint:
+                    description: (Updatable) Details for a custom endpoint for the
+                      integration instance (update).
+                    items:
+                      properties:
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        certificateSecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            certificateSecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        dnsType:
+                          description: Type of DNS.
+                          type: string
+                        dnsZoneName:
+                          description: DNS Zone name
+                          type: string
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of predefined tag keys. These
+                      predefined keys are scoped to namespaces. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Integration Instance Identifier.
+                    type: string
+                  domainId:
+                    description: 'The OCID of the identity domain, that will be used
+                      to determine the corresponding Idcs Stripe and create an Idcs
+                      application within the stripe. This parameter is mutually exclusive
+                      with parameter: idcsAt, i.e only one of two parameters should
+                      be specified.'
+                    type: string
+                  domainIdRef:
+                    description: Reference to a Domain in identity to populate domainId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  domainIdSelector:
+                    description: Selector for a Domain in identity to populate domainId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  enableProcessAutomationTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Enable Process Automation. Could be set to any integer
+                      value.
+                    type: number
+                  extendDataRetentionTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Extend Data Retention. Could be set to any integer
+                      value.
+                    type: number
+                  failoverTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Failover. Could be set to any integer value.
+                    type: number
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  idcsAtSecretRef:
+                    description: (Updatable) IDCS Authentication token. This is required
+                      for all realms with IDCS. Its optional as its not required for
+                      non IDCS realms.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  integrationInstanceType:
+                    description: (Updatable) Standard or Enterprise type, Oracle Integration
+                      Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration
+                      3 uses ENTERPRISEX and STANDARDX
+                    type: string
+                  isByol:
+                    description: (Updatable) Bring your own license.
+                    type: boolean
+                  isDisasterRecoveryEnabled:
+                    description: Is Disaster Recovery enabled or not.
+                    type: boolean
+                  isFileServerEnabled:
+                    description: (Updatable) The file server is enabled or not.
+                    type: boolean
+                  isVisualBuilderEnabled:
+                    description: (Updatable) Visual Builder is enabled or not.
+                    type: boolean
+                  messagePacks:
+                    description: (Updatable) The number of configured message packs
+                    type: number
+                  networkEndpointDetails:
+                    description: Base representation of a network endpoint.
+                    items:
+                      properties:
+                        allowlistedHttpIps:
+                          description: 'Source IP addresses or IP address ranges ingress
+                            rules. (ex: "168.122.59.5", "10.20.30.0/26") An invalid
+                            IP or CIDR block will result in a 400 response.'
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        allowlistedHttpVcns:
+                          description: Virtual Cloud Networks allowed to access this
+                            network endpoint.
+                          items:
+                            properties:
+                              allowlistedIps:
+                                description: 'Source IP addresses or IP address ranges
+                                  ingress rules. (ex: "168.122.59.5", "10.20.30.0/26")
+                                  An invalid IP or CIDR block will result in a 400
+                                  response.'
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              id:
+                                description: The Virtual Cloud Network OCID.
+                                type: string
+                            type: object
+                          type: array
+                        isIntegrationVcnAllowlisted:
+                          description: The Integration service's VCN is allow-listed
+                            to allow integrations to call back into other integrations
+                          type: boolean
+                        networkEndpointType:
+                          description: The type of network endpoint.
+                          type: string
+                      type: object
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: { "oracle-zpr.sensitivity.value"
+                      = "low" "oracle-zpr.sensitivity.mode" = "enforce" }'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: Shape
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the instance. Could
+                      be set to ACTIVE or INACTIVE
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.integrationInstanceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.integrationInstanceType)
+                || (has(self.initProvider) && has(self.initProvider.integrationInstanceType))'
+            - message: spec.forProvider.isByol is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isByol)
+                || (has(self.initProvider) && has(self.initProvider.isByol))'
+            - message: spec.forProvider.messagePacks is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.messagePacks)
+                || (has(self.initProvider) && has(self.initProvider.messagePacks))'
+          status:
+            description: IntegrationInstanceStatus defines the observed state of IntegrationInstance.
+            properties:
+              atProvider:
+                properties:
+                  alternateCustomEndpoints:
+                    description: (Updatable) A list of alternate custom endpoints
+                      to be used for the integration instance URL (contact Oracle
+                      for alternateCustomEndpoints availability for a specific instance).
+                    items:
+                      properties:
+                        alias:
+                          description: When creating the DNS CNAME record for the
+                            custom hostname, this value must be specified in the rdata.
+                          type: string
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretVersion:
+                          description: The secret version used for the certificate-secret-id
+                            (if certificate-secret-id is specified).
+                          type: number
+                        dnsType:
+                          description: Type of DNS.
+                          type: string
+                        dnsZoneName:
+                          description: DNS Zone name
+                          type: string
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                        managedType:
+                          description: Indicates if custom endpoint is managed by
+                            oracle or customer.
+                          type: string
+                      type: object
+                    type: array
+                  attachments:
+                    description: A list of associated attachments to other services
+                    items:
+                      properties:
+                        isImplicit:
+                          type: boolean
+                        targetId:
+                          description: The OCID of the target instance (which could
+                            be any other Oracle Cloud Infrastructure PaaS/SaaS resource),
+                            to which this instance is attached.
+                          type: string
+                        targetInstanceUrl:
+                          description: The dataplane instance URL of the attached
+                            instance
+                          type: string
+                        targetRole:
+                          description: The role of the target attachment.
+                          type: string
+                        targetServiceType:
+                          description: The type of the target instance, such as "FUSION".
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier.
+                    type: string
+                  consumptionModel:
+                    description: Optional parameter specifying which entitlement to
+                      use for billing purposes. Only required if the account possesses
+                      more than one entitlement.
+                    type: string
+                  customEndpoint:
+                    description: (Updatable) Details for a custom endpoint for the
+                      integration instance (update).
+                    items:
+                      properties:
+                        alias:
+                          description: When creating the DNS CNAME record for the
+                            custom hostname, this value must be specified in the rdata.
+                          type: string
+                        certificateSecretId:
+                          description: (Updatable) Optional OCID of a vault/secret
+                            containing a private SSL certificate bundle to be used
+                            for the custom hostname. All certificates should be stored
+                            in a single base64 encoded secret Note the update will
+                            fail if this is not a valid certificate.
+                          type: string
+                        certificateSecretVersion:
+                          description: The secret version used for the certificate-secret-id
+                            (if certificate-secret-id is specified).
+                          type: number
+                        dnsType:
+                          description: Type of DNS.
+                          type: string
+                        dnsZoneName:
+                          description: DNS Zone name
+                          type: string
+                        hostname:
+                          description: (Updatable) A custom hostname to be used for
+                            the integration instance URL, in FQDN format.
+                          type: string
+                        managedType:
+                          description: Indicates if custom endpoint is managed by
+                            oracle or customer.
+                          type: string
+                      type: object
+                    type: array
+                  dataRetentionPeriod:
+                    description: Data retention period set for given integration instance
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of predefined tag keys. These
+                      predefined keys are scoped to namespaces. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  disasterRecoveryDetails:
+                    description: Disaster recovery details for the integration instance
+                      created in the region.
+                    items:
+                      properties:
+                        crossRegionIntegrationInstanceDetails:
+                          description: Details of integration instance created in
+                            cross region for disaster recovery.
+                          items:
+                            properties:
+                              id:
+                                description: The Virtual Cloud Network OCID.
+                                type: string
+                              region:
+                                description: Cross region where integration instance
+                                  is created
+                                type: string
+                              role:
+                                description: Role of the integration instance in the
+                                  region
+                                type: string
+                              timeRoleChanged:
+                                description: Time when cross region integration instance
+                                  role was changed
+                                type: string
+                            type: object
+                          type: array
+                        regionalInstanceUrl:
+                          description: Region specific instance url for the integration
+                            instance in the region
+                          type: string
+                        role:
+                          description: Role of the integration instance in the region
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) Integration Instance Identifier.
+                    type: string
+                  domainId:
+                    description: 'The OCID of the identity domain, that will be used
+                      to determine the corresponding Idcs Stripe and create an Idcs
+                      application within the stripe. This parameter is mutually exclusive
+                      with parameter: idcsAt, i.e only one of two parameters should
+                      be specified.'
+                    type: string
+                  enableProcessAutomationTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Enable Process Automation. Could be set to any integer
+                      value.
+                    type: number
+                  extendDataRetentionTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Extend Data Retention. Could be set to any integer
+                      value.
+                    type: number
+                  failoverTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Failover. Could be set to any integer value.
+                    type: number
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The Virtual Cloud Network OCID.
+                    type: string
+                  idcsInfo:
+                    description: Information for IDCS access
+                    items:
+                      properties:
+                        idcsAppDisplayName:
+                          description: The IDCS application display name associated
+                            with the instance
+                          type: string
+                        idcsAppId:
+                          description: The IDCS application ID associated with the
+                            instance
+                          type: string
+                        idcsAppLocationUrl:
+                          description: URL for the location of the IDCS Application
+                            (used by IDCS APIs)
+                          type: string
+                        idcsAppName:
+                          description: The IDCS application name associated with the
+                            instance
+                          type: string
+                        instancePrimaryAudienceUrl:
+                          description: 'The URL used as the primary audience for integration
+                            flows in this instance type: string * instance_design_time_url
+                            - The Integration Instance Design Time URL'
+                          type: string
+                      type: object
+                    type: array
+                  instanceDesignTimeUrl:
+                    type: string
+                  instanceUrl:
+                    description: The Integration Instance URL.
+                    type: string
+                  integrationInstanceType:
+                    description: (Updatable) Standard or Enterprise type, Oracle Integration
+                      Generation 2 uses ENTERPRISE and STANDARD, Oracle Integration
+                      3 uses ENTERPRISEX and STANDARDX
+                    type: string
+                  isByol:
+                    description: (Updatable) Bring your own license.
+                    type: boolean
+                  isDisasterRecoveryEnabled:
+                    description: Is Disaster Recovery enabled or not.
+                    type: boolean
+                  isFileServerEnabled:
+                    description: (Updatable) The file server is enabled or not.
+                    type: boolean
+                  isVisualBuilderEnabled:
+                    description: (Updatable) Visual Builder is enabled or not.
+                    type: boolean
+                  lifecycleDetails:
+                    description: Additional details of lifecycleState or substates
+                    type: string
+                  messagePacks:
+                    description: (Updatable) The number of configured message packs
+                    type: number
+                  networkEndpointDetails:
+                    description: Base representation of a network endpoint.
+                    items:
+                      properties:
+                        allowlistedHttpIps:
+                          description: 'Source IP addresses or IP address ranges ingress
+                            rules. (ex: "168.122.59.5", "10.20.30.0/26") An invalid
+                            IP or CIDR block will result in a 400 response.'
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        allowlistedHttpVcns:
+                          description: Virtual Cloud Networks allowed to access this
+                            network endpoint.
+                          items:
+                            properties:
+                              allowlistedIps:
+                                description: 'Source IP addresses or IP address ranges
+                                  ingress rules. (ex: "168.122.59.5", "10.20.30.0/26")
+                                  An invalid IP or CIDR block will result in a 400
+                                  response.'
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              id:
+                                description: The Virtual Cloud Network OCID.
+                                type: string
+                            type: object
+                          type: array
+                        isIntegrationVcnAllowlisted:
+                          description: The Integration service's VCN is allow-listed
+                            to allow integrations to call back into other integrations
+                          type: boolean
+                        networkEndpointType:
+                          description: The type of network endpoint.
+                          type: string
+                      type: object
+                    type: array
+                  privateEndpointOutboundConnection:
+                    description: Base representation for Outbound Connection (Reverse
+                      Connection).
+                    items:
+                      properties:
+                        nsgIds:
+                          description: One or more Network security group Ids. This
+                            is an optional argument.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        outboundConnectionType:
+                          description: The type of Outbound Connection.
+                          type: string
+                        subnetId:
+                          description: Customer Private Network VCN Subnet OCID. This
+                            is a required argument.
+                          type: string
+                      type: object
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: { "oracle-zpr.sensitivity.value"
+                      = "low" "oracle-zpr.sensitivity.mode" = "enforce" }'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  shape:
+                    description: Shape
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the instance. Could
+                      be set to ACTIVE or INACTIVE
+                    type: string
+                  stateMessage:
+                    description: An message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in Failed state.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time the the Integration Instance was created.
+                      An RFC3339 formatted datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time the IntegrationInstance was updated. An
+                      RFC3339 formatted datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

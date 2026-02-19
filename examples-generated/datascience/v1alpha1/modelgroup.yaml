@@ -1,0 +1,73 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelgroup
+  labels:
+    testing.upbound.io/example-name: test_model_group
+  name: test-model-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createType: ${var.model_group_create_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.model_group_description}
+    displayName: ${var.model_group_display_name}
+    freeformTags:
+      Department: Finance
+    memberModelEntries:
+    - memberModelDetails:
+      - inferenceKey: ${var.model_group_member_model_entries_member_model_details_inference_key}
+        modelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model
+    modelGroupCloneSourceDetails:
+    - modelGroupCloneSourceType: ${var.model_group_model_group_clone_source_details_model_group_clone_source_type}
+      modifyModelGroupDetails:
+      - definedTags: ${var.model_group_model_group_clone_source_details_modify_model_group_details_defined_tags}
+        description: ${var.model_group_model_group_clone_source_details_modify_model_group_details_description}
+        displayName: ${var.model_group_model_group_clone_source_details_modify_model_group_details_display_name}
+        freeformTags: ${var.model_group_model_group_clone_source_details_modify_model_group_details_freeform_tags}
+        modelGroupDetails:
+        - baseModelIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_model
+          customMetadataList:
+          - category: ${var.model_group_model_group_clone_source_details_modify_model_group_details_model_group_details_custom_metadata_list_category}
+            description: ${var.model_group_model_group_clone_source_details_modify_model_group_details_model_group_details_custom_metadata_list_description}
+            key: ${var.model_group_model_group_clone_source_details_modify_model_group_details_model_group_details_custom_metadata_list_key}
+            value: ${var.model_group_model_group_clone_source_details_modify_model_group_details_model_group_details_custom_metadata_list_value}
+          type: ${var.model_group_model_group_clone_source_details_modify_model_group_details_model_group_details_type}
+        modelGroupVersionHistoryIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model_group_version_history
+        versionLabel: ${var.model_group_model_group_clone_source_details_modify_model_group_details_version_label}
+      patchModelGroupMemberModelDetails:
+      - items:
+        - operation: ${var.model_group_model_group_clone_source_details_patch_model_group_member_model_details_items_operation}
+          values:
+          - inferenceKey: ${var.model_group_model_group_clone_source_details_patch_model_group_member_model_details_items_values_inference_key}
+            modelIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_model
+      sourceId: ${oci_datascience_source.test_source.id}
+    modelGroupDetails:
+    - baseModelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_model
+      customMetadataList:
+      - category: ${var.model_group_model_group_details_custom_metadata_list_category}
+        description: ${var.model_group_model_group_details_custom_metadata_list_description}
+        key: ${var.model_group_model_group_details_custom_metadata_list_key}
+        value: ${var.model_group_model_group_details_custom_metadata_list_value}
+      type: ${var.model_group_model_group_details_type}
+    modelGroupVersionHistoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model_group_version_history
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    versionLabel: ${var.model_group_version_label}

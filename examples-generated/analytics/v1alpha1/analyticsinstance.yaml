@@ -1,0 +1,52 @@
+apiVersion: analytics.oci.upbound.io/v1alpha1
+kind: AnalyticsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstance
+  labels:
+    testing.upbound.io/example-name: test_analytics_instance
+  name: test-analytics-instance
+spec:
+  forProvider:
+    adminUser: ${var.analytics_instance_admin_user}
+    capacity:
+    - capacityType: ${var.analytics_instance_capacity_capacity_type}
+      capacityValue: ${var.analytics_instance_capacity_capacity_value}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.analytics_instance_description}
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_domain
+    emailNotification: ${var.analytics_instance_email_notification}
+    featureBundle: ${var.analytics_instance_feature_bundle}
+    featureSet: ${var.analytics_instance_feature_set}
+    freeformTags:
+      Department: Finance
+    idcsAccessTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    licenseType: ${var.analytics_instance_license_type}
+    name: ${var.analytics_instance_name}
+    networkEndpointDetails:
+    - networkEndpointType: ${var.analytics_instance_network_endpoint_details_network_endpoint_type}
+      networkSecurityGroupIds: ${var.analytics_instance_network_endpoint_details_network_security_group_ids}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      vcnIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vcn
+      whitelistedIps: ${var.analytics_instance_network_endpoint_details_whitelisted_ips}
+      whitelistedServices: ${var.analytics_instance_network_endpoint_details_whitelisted_services}
+      whitelistedVcns:
+      - id: ${var.analytics_instance_network_endpoint_details_whitelisted_vcns_id}
+        whitelistedIps: ${var.analytics_instance_network_endpoint_details_whitelisted_vcns_whitelisted_ips}
+    updateChannel: ${var.analytics_instance_update_channel}

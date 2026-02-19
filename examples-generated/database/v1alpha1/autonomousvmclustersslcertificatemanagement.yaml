@@ -11,9 +11,13 @@ spec:
     autonomousVmClusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_autonomous_vm_cluster
-    caBundleId: ${oci_certificates_management_ca_bundle.test_ca_bundle.id}
+    caBundleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ca_bundle
     certificateAuthorityIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_certificate_authority
     certificateGenerationType: ${var.autonomous_vm_cluster_ssl_certificate_management_certificate_generation_type}
-    certificateId: ${oci_apigateway_certificate.test_certificate.id}
+    certificateIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_certificate

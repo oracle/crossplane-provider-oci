@@ -1,0 +1,54 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeMaskingPoliciesMaskingColumn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safemaskingpoliciesmaskingcolumn
+  labels:
+    testing.upbound.io/example-name: test_masking_policies_masking_column
+  name: test-masking-policies-masking-column
+spec:
+  forProvider:
+    columnName: ${var.masking_policies_masking_column_column_name}
+    isMaskingEnabled: ${var.masking_policies_masking_column_is_masking_enabled}
+    maskingColumnGroup: ${var.masking_policies_masking_column_masking_column_group}
+    maskingFormats:
+    - condition: ${var.masking_policies_masking_column_masking_formats_condition}
+      description: ${var.masking_policies_masking_column_masking_formats_description}
+      formatEntries:
+      - columnName: ${var.masking_policies_masking_column_masking_formats_format_entries_column_name}
+        description: ${var.masking_policies_masking_column_masking_formats_format_entries_description}
+        endDate: ${var.masking_policies_masking_column_masking_formats_format_entries_end_date}
+        endLength: ${var.masking_policies_masking_column_masking_formats_format_entries_end_length}
+        endValue: ${var.masking_policies_masking_column_masking_formats_format_entries_end_value}
+        fixedNumber: ${var.masking_policies_masking_column_masking_formats_format_entries_fixed_number}
+        fixedString: ${var.masking_policies_masking_column_masking_formats_format_entries_fixed_string}
+        groupingColumns: ${var.masking_policies_masking_column_masking_formats_format_entries_grouping_columns}
+        length: ${var.masking_policies_masking_column_masking_formats_format_entries_length}
+        libraryMaskingFormatIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_library_masking_format
+        pattern: ${var.masking_policies_masking_column_masking_formats_format_entries_pattern}
+        postProcessingFunction: ${var.masking_policies_masking_column_masking_formats_format_entries_post_processing_function}
+        randomList: ${var.masking_policies_masking_column_masking_formats_format_entries_random_list}
+        regularExpression: ${var.masking_policies_masking_column_masking_formats_format_entries_regular_expression}
+        replaceWith: ${var.masking_policies_masking_column_masking_formats_format_entries_replace_with}
+        schemaName: ${var.masking_policies_masking_column_masking_formats_format_entries_schema_name}
+        sqlExpression: ${var.masking_policies_masking_column_masking_formats_format_entries_sql_expression}
+        startDate: ${var.masking_policies_masking_column_masking_formats_format_entries_start_date}
+        startLength: ${var.masking_policies_masking_column_masking_formats_format_entries_start_length}
+        startPosition: ${var.masking_policies_masking_column_masking_formats_format_entries_start_position}
+        startValue: ${var.masking_policies_masking_column_masking_formats_format_entries_start_value}
+        tableNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_table
+        type: ${var.masking_policies_masking_column_masking_formats_format_entries_type}
+        userDefinedFunction: ${var.masking_policies_masking_column_masking_formats_format_entries_user_defined_function}
+    maskingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_masking_policy
+    object: ${var.masking_policies_masking_column_object}
+    objectType: ${var.masking_policies_masking_column_object_type}
+    schemaName: ${var.masking_policies_masking_column_schema_name}
+    sensitiveTypeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_type

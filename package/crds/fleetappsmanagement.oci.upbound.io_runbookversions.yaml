@@ -1,0 +1,1927 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: runbookversions.fleetappsmanagement.oci.upbound.io
+spec:
+  group: fleetappsmanagement.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: RunbookVersion
+    listKind: RunbookVersionList
+    plural: runbookversions
+    singular: runbookversion
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RunbookVersion is the Schema for the RunbookVersions API. Provides
+          the Runbook Version resource in Oracle Cloud Infrastructure Fleet Apps Management
+          service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RunbookVersionSpec defines the desired state of RunbookVersion
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Defined tags for this resource. Each key is predefined and scoped to a namespace. Example:
+                      {"foo-namespace.bar-key": "value"}
+                    type: object
+                    x-kubernetes-map-type: granular
+                  executionWorkflowDetails:
+                    description: |-
+                      (Updatable) Execution Workflow details.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  groups:
+                    description: (Updatable) The groups of the runbook version.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the group.
+                          type: string
+                        properties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: (Updatable) Content Source Details.
+                          type: string
+                      type: object
+                    type: array
+                  rollbackWorkflowDetails:
+                    description: (Updatable) Rollback Workflow details.
+                    items:
+                      properties:
+                        scope:
+                          description: (Updatable) rollback Scope
+                          type: string
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  runbookId:
+                    description: The OCID of the resource.
+                    type: string
+                  tasks:
+                    description: |-
+                      (Updatable) A set of tasks to execute in the runbook.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        outputVariableMappings:
+                          description: (Updatable) Mapping output variables of previous
+                            tasks to the input variables of the current task.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              outputVariableDetails:
+                                description: (Updatable) The details of the output
+                                  variable that will be used for mapping.
+                                items:
+                                  properties:
+                                    outputVariableName:
+                                      description: (Updatable) The name of the output
+                                        variable whose value has to be mapped.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        stepName:
+                          description: (Updatable) Provide StepName for the Task.
+                          type: string
+                        stepProperties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        taskRecordDetails:
+                          description: (Updatable) The details of the task.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The description of the task.
+                                type: string
+                              executionDetails:
+                                description: (Updatable) Execution details.
+                                items:
+                                  properties:
+                                    catalogId:
+                                      type: string
+                                    command:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Optional command to execute the
+                                        content. You can provide any commands/arguments
+                                        that can't be part of the script.
+                                      type: string
+                                    configFile:
+                                      type: string
+                                    content:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Content Source details.
+                                      items:
+                                        properties:
+                                          bucket:
+                                            description: (Updatable) Bucket Name.
+                                            type: string
+                                          catalogId:
+                                            type: string
+                                          checksum:
+                                            description: (Updatable) md5 checksum
+                                              of the artifact.
+                                            type: string
+                                          namespace:
+                                            description: (Updatable) Namespace.
+                                            type: string
+                                          object:
+                                            description: (Updatable) Object Name.
+                                            type: string
+                                          sourceType:
+                                            description: (Updatable) Content Source
+                                              type details.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    credentials:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Credentials required for executing
+                                        the task.
+                                      items:
+                                        properties:
+                                          displayName:
+                                            description: '(Applicable when execution_type=SCRIPT)
+                                              (Updatable) A user-friendly name. Does
+                                              not have to be unique, and it''s changeable.
+                                              Avoid entering confidential information.  Example:
+                                              My new resource'
+                                            type: string
+                                          id:
+                                            description: (Updatable) The OCID of the
+                                              resource.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    endpoint:
+                                      description: (Updatable) Endpoint to be invoked.
+                                      type: string
+                                    executionType:
+                                      description: (Updatable) The action type of
+                                        the task
+                                      type: string
+                                    isExecutableContent:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the Content an executable file?
+                                      type: boolean
+                                    isLocked:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the script locked to prevent
+                                        changes directly in Object Storage?
+                                      type: boolean
+                                    isReadOutputVariableEnabled:
+                                      description: (applicable when execution_type=provider)
+                                        (updatable) is read output variable enabled
+                                      type: boolean
+                                    targetCompartmentId:
+                                      description: (Updatable) OCID of the compartment
+                                        to which the resource belongs to.
+                                      type: string
+                                    variables:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) The variable of the task. At least
+                                        one of the dynamicArguments or output needs
+                                        to be provided.
+                                      items:
+                                        properties:
+                                          inputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The input variables for
+                                              the task.
+                                            items:
+                                              properties:
+                                                description:
+                                                  description: (Applicable when scope=LOCAL)
+                                                    (Updatable) The description of
+                                                    the task.
+                                                  type: string
+                                                name:
+                                                  description: (Updatable) The name
+                                                    of the group.
+                                                  type: string
+                                                type:
+                                                  description: (Updatable) Content
+                                                    Source Details.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          outputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The list of output variables.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              isApplySubjectTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this an Apply Subject Task? Ex. Patch Execution
+                                  Task
+                                type: boolean
+                              isCopyToLibraryEnabled:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Make a copy of this task in Library
+                                type: boolean
+                              isDiscoveryOutputTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this a discovery output task?
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              osType:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The OS for the task.
+                                type: string
+                              platform:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The platform of the runbook.
+                                type: string
+                              properties:
+                                description: (Updatable) The properties of the component.
+                                items:
+                                  properties:
+                                    numRetries:
+                                      description: (Updatable) The number of retries
+                                        allowed.
+                                      type: number
+                                    timeoutInSeconds:
+                                      description: (Updatable) The timeout in seconds
+                                        for the task.
+                                      type: number
+                                  type: object
+                                type: array
+                              scope:
+                                description: (Updatable) rollback Scope
+                                type: string
+                              taskRecordId:
+                                description: (Updatable) The ID of taskRecord.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Defined tags for this resource. Each key is predefined and scoped to a namespace. Example:
+                      {"foo-namespace.bar-key": "value"}
+                    type: object
+                    x-kubernetes-map-type: granular
+                  executionWorkflowDetails:
+                    description: |-
+                      (Updatable) Execution Workflow details.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  groups:
+                    description: (Updatable) The groups of the runbook version.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the group.
+                          type: string
+                        properties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: (Updatable) Content Source Details.
+                          type: string
+                      type: object
+                    type: array
+                  rollbackWorkflowDetails:
+                    description: (Updatable) Rollback Workflow details.
+                    items:
+                      properties:
+                        scope:
+                          description: (Updatable) rollback Scope
+                          type: string
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  runbookId:
+                    description: The OCID of the resource.
+                    type: string
+                  tasks:
+                    description: |-
+                      (Updatable) A set of tasks to execute in the runbook.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        outputVariableMappings:
+                          description: (Updatable) Mapping output variables of previous
+                            tasks to the input variables of the current task.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              outputVariableDetails:
+                                description: (Updatable) The details of the output
+                                  variable that will be used for mapping.
+                                items:
+                                  properties:
+                                    outputVariableName:
+                                      description: (Updatable) The name of the output
+                                        variable whose value has to be mapped.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        stepName:
+                          description: (Updatable) Provide StepName for the Task.
+                          type: string
+                        stepProperties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        taskRecordDetails:
+                          description: (Updatable) The details of the task.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The description of the task.
+                                type: string
+                              executionDetails:
+                                description: (Updatable) Execution details.
+                                items:
+                                  properties:
+                                    catalogId:
+                                      type: string
+                                    command:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Optional command to execute the
+                                        content. You can provide any commands/arguments
+                                        that can't be part of the script.
+                                      type: string
+                                    configFile:
+                                      type: string
+                                    content:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Content Source details.
+                                      items:
+                                        properties:
+                                          bucket:
+                                            description: (Updatable) Bucket Name.
+                                            type: string
+                                          catalogId:
+                                            type: string
+                                          checksum:
+                                            description: (Updatable) md5 checksum
+                                              of the artifact.
+                                            type: string
+                                          namespace:
+                                            description: (Updatable) Namespace.
+                                            type: string
+                                          object:
+                                            description: (Updatable) Object Name.
+                                            type: string
+                                          sourceType:
+                                            description: (Updatable) Content Source
+                                              type details.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    credentials:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Credentials required for executing
+                                        the task.
+                                      items:
+                                        properties:
+                                          displayName:
+                                            description: '(Applicable when execution_type=SCRIPT)
+                                              (Updatable) A user-friendly name. Does
+                                              not have to be unique, and it''s changeable.
+                                              Avoid entering confidential information.  Example:
+                                              My new resource'
+                                            type: string
+                                          id:
+                                            description: (Updatable) The OCID of the
+                                              resource.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    endpoint:
+                                      description: (Updatable) Endpoint to be invoked.
+                                      type: string
+                                    executionType:
+                                      description: (Updatable) The action type of
+                                        the task
+                                      type: string
+                                    isExecutableContent:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the Content an executable file?
+                                      type: boolean
+                                    isLocked:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the script locked to prevent
+                                        changes directly in Object Storage?
+                                      type: boolean
+                                    isReadOutputVariableEnabled:
+                                      description: (applicable when execution_type=provider)
+                                        (updatable) is read output variable enabled
+                                      type: boolean
+                                    targetCompartmentId:
+                                      description: (Updatable) OCID of the compartment
+                                        to which the resource belongs to.
+                                      type: string
+                                    variables:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) The variable of the task. At least
+                                        one of the dynamicArguments or output needs
+                                        to be provided.
+                                      items:
+                                        properties:
+                                          inputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The input variables for
+                                              the task.
+                                            items:
+                                              properties:
+                                                description:
+                                                  description: (Applicable when scope=LOCAL)
+                                                    (Updatable) The description of
+                                                    the task.
+                                                  type: string
+                                                name:
+                                                  description: (Updatable) The name
+                                                    of the group.
+                                                  type: string
+                                                type:
+                                                  description: (Updatable) Content
+                                                    Source Details.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          outputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The list of output variables.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              isApplySubjectTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this an Apply Subject Task? Ex. Patch Execution
+                                  Task
+                                type: boolean
+                              isCopyToLibraryEnabled:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Make a copy of this task in Library
+                                type: boolean
+                              isDiscoveryOutputTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this a discovery output task?
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              osType:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The OS for the task.
+                                type: string
+                              platform:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The platform of the runbook.
+                                type: string
+                              properties:
+                                description: (Updatable) The properties of the component.
+                                items:
+                                  properties:
+                                    numRetries:
+                                      description: (Updatable) The number of retries
+                                        allowed.
+                                      type: number
+                                    timeoutInSeconds:
+                                      description: (Updatable) The timeout in seconds
+                                        for the task.
+                                      type: number
+                                  type: object
+                                type: array
+                              scope:
+                                description: (Updatable) rollback Scope
+                                type: string
+                              taskRecordId:
+                                description: (Updatable) The ID of taskRecord.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.executionWorkflowDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.executionWorkflowDetails)
+                || (has(self.initProvider) && has(self.initProvider.executionWorkflowDetails))'
+            - message: spec.forProvider.groups is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.groups)
+                || (has(self.initProvider) && has(self.initProvider.groups))'
+            - message: spec.forProvider.runbookId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.runbookId)
+                || (has(self.initProvider) && has(self.initProvider.runbookId))'
+            - message: spec.forProvider.tasks is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.tasks)
+                || (has(self.initProvider) && has(self.initProvider.tasks))'
+          status:
+            description: RunbookVersionStatus defines the observed state of RunbookVersion.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      Defined tags for this resource. Each key is predefined and scoped to a namespace. Example:
+                      {"foo-namespace.bar-key": "value"}
+                    type: object
+                    x-kubernetes-map-type: granular
+                  executionWorkflowDetails:
+                    description: |-
+                      (Updatable) Execution Workflow details.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Simple key-value pair that is applied without any
+                      predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  groups:
+                    description: (Updatable) The groups of the runbook version.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the group.
+                          type: string
+                        properties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: (Updatable) Content Source Details.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: (Updatable) The OCID of the resource.
+                    type: string
+                  isLatest:
+                    type: boolean
+                  lifecycleDetails:
+                    description: |-
+                      A message describing the current state in more detail. For example, can be used to provide
+                      actionable information for a resource in Failed state.
+                    type: string
+                  name:
+                    description: (Updatable) The name of the group.
+                    type: string
+                  rollbackWorkflowDetails:
+                    description: (Updatable) Rollback Workflow details.
+                    items:
+                      properties:
+                        scope:
+                          description: (Updatable) rollback Scope
+                          type: string
+                        workflow:
+                          description: (Updatable) Execution Workflow for the runbook.
+                          items:
+                            properties:
+                              groupName:
+                                description: (Updatable) Name of the group.
+                                type: string
+                              steps:
+                                description: (Updatable) Steps within the Group.
+                                items:
+                                  properties:
+                                    groupName:
+                                      description: (Updatable) Name of the group.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                    steps:
+                                      description: (Updatable) Steps within the Group.
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: (Updatable) Content Source Details.
+                                      type: string
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Content Source Details.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  runbookId:
+                    description: The OCID of the resource.
+                    type: string
+                  state:
+                    description: The current state of the runbook version.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'System tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  tasks:
+                    description: |-
+                      (Updatable) A set of tasks to execute in the runbook.
+                      <<<<<<< ours
+                    items:
+                      properties:
+                        outputVariableMappings:
+                          description: (Updatable) Mapping output variables of previous
+                            tasks to the input variables of the current task.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              outputVariableDetails:
+                                description: (Updatable) The details of the output
+                                  variable that will be used for mapping.
+                                items:
+                                  properties:
+                                    outputVariableName:
+                                      description: (Updatable) The name of the output
+                                        variable whose value has to be mapped.
+                                      type: string
+                                    stepName:
+                                      description: (Updatable) Provide StepName for
+                                        the Task.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        stepName:
+                          description: (Updatable) Provide StepName for the Task.
+                          type: string
+                        stepProperties:
+                          description: (Updatable) The properties of the component.
+                          items:
+                            properties:
+                              actionOnFailure:
+                                description: (Updatable) The action to be taken in
+                                  case of a failure.
+                                type: string
+                              notificationPreferences:
+                                description: (Updatable) Preferences to send notifications
+                                  on the task activities.
+                                items:
+                                  properties:
+                                    shouldNotifyOnPause:
+                                      description: (Updatable) Enables notification
+                                        on pause.
+                                      type: boolean
+                                    shouldNotifyOnTaskFailure:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Failures.
+                                      type: boolean
+                                    shouldNotifyOnTaskSuccess:
+                                      description: (Updatable) Enables or disables
+                                        notification on Task Success.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              pauseDetails:
+                                description: (Updatable) Pause Details
+                                items:
+                                  properties:
+                                    durationInMinutes:
+                                      description: (Updatable) Time in minutes to
+                                        apply Pause.
+                                      type: number
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                  type: object
+                                type: array
+                              preCondition:
+                                description: (Updatable) Build control flow conditions
+                                  that determine the relevance of the task execution.
+                                type: string
+                              runOn:
+                                description: (Updatable) The runon conditions
+                                items:
+                                  properties:
+                                    condition:
+                                      description: (Updatable) Build control flow
+                                        conditions that determine the relevance of
+                                        the task execution against targets.
+                                      type: string
+                                    host:
+                                      description: (Updatable) OCID of the self hosted
+                                        instance.
+                                      type: string
+                                    kind:
+                                      description: (Updatable) Pause based On.
+                                      type: string
+                                    previousTaskInstanceDetails:
+                                      description: (Updatable) Previous Task Instance
+                                        Details
+                                      items:
+                                        properties:
+                                          outputVariableDetails:
+                                            description: (Updatable) The details of
+                                              the output variable that will be used
+                                              for mapping.
+                                            items:
+                                              properties:
+                                                outputVariableName:
+                                                  description: (Updatable) The name
+                                                    of the output variable whose value
+                                                    has to be mapped.
+                                                  type: string
+                                                stepName:
+                                                  description: (Updatable) Provide
+                                                    StepName for the Task.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          resourceId:
+                                            description: (Updatable) Resource Ocid.
+                                            type: string
+                                          resourceType:
+                                            description: (Applicable when kind=PREVIOUS_TASK_INSTANCES)
+                                              (Updatable) Resource Type.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        taskRecordDetails:
+                          description: (Updatable) The details of the task.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The description of the task.
+                                type: string
+                              executionDetails:
+                                description: (Updatable) Execution details.
+                                items:
+                                  properties:
+                                    catalogId:
+                                      type: string
+                                    command:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Optional command to execute the
+                                        content. You can provide any commands/arguments
+                                        that can't be part of the script.
+                                      type: string
+                                    configFile:
+                                      type: string
+                                    content:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Content Source details.
+                                      items:
+                                        properties:
+                                          bucket:
+                                            description: (Updatable) Bucket Name.
+                                            type: string
+                                          catalogId:
+                                            type: string
+                                          checksum:
+                                            description: (Updatable) md5 checksum
+                                              of the artifact.
+                                            type: string
+                                          namespace:
+                                            description: (Updatable) Namespace.
+                                            type: string
+                                          object:
+                                            description: (Updatable) Object Name.
+                                            type: string
+                                          sourceType:
+                                            description: (Updatable) Content Source
+                                              type details.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    credentials:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Credentials required for executing
+                                        the task.
+                                      items:
+                                        properties:
+                                          displayName:
+                                            description: '(Applicable when execution_type=SCRIPT)
+                                              (Updatable) A user-friendly name. Does
+                                              not have to be unique, and it''s changeable.
+                                              Avoid entering confidential information.  Example:
+                                              My new resource'
+                                            type: string
+                                          id:
+                                            description: (Updatable) The OCID of the
+                                              resource.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    endpoint:
+                                      description: (Updatable) Endpoint to be invoked.
+                                      type: string
+                                    executionType:
+                                      description: (Updatable) The action type of
+                                        the task
+                                      type: string
+                                    isExecutableContent:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the Content an executable file?
+                                      type: boolean
+                                    isLocked:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) Is the script locked to prevent
+                                        changes directly in Object Storage?
+                                      type: boolean
+                                    isReadOutputVariableEnabled:
+                                      description: (applicable when execution_type=provider)
+                                        (updatable) is read output variable enabled
+                                      type: boolean
+                                    systemVariables:
+                                      description: (Updatable) The list of system
+                                        variables.
+                                      items:
+                                        type: string
+                                      type: array
+                                    targetCompartmentId:
+                                      description: (Updatable) OCID of the compartment
+                                        to which the resource belongs to.
+                                      type: string
+                                    variables:
+                                      description: (Applicable when execution_type=SCRIPT)
+                                        (Updatable) The variable of the task. At least
+                                        one of the dynamicArguments or output needs
+                                        to be provided.
+                                      items:
+                                        properties:
+                                          inputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The input variables for
+                                              the task.
+                                            items:
+                                              properties:
+                                                description:
+                                                  description: (Applicable when scope=LOCAL)
+                                                    (Updatable) The description of
+                                                    the task.
+                                                  type: string
+                                                name:
+                                                  description: (Updatable) The name
+                                                    of the group.
+                                                  type: string
+                                                type:
+                                                  description: (Updatable) Content
+                                                    Source Details.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          outputVariables:
+                                            description: (Applicable when execution_type=SCRIPT)
+                                              (Updatable) The list of output variables.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              isApplySubjectTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this an Apply Subject Task? Ex. Patch Execution
+                                  Task
+                                type: boolean
+                              isCopyToLibraryEnabled:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Make a copy of this task in Library
+                                type: boolean
+                              isDiscoveryOutputTask:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  Is this a discovery output task?
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the group.
+                                type: string
+                              osType:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The OS for the task.
+                                type: string
+                              platform:
+                                description: (Applicable when scope=LOCAL) (Updatable)
+                                  The platform of the runbook.
+                                type: string
+                              properties:
+                                description: (Updatable) The properties of the component.
+                                items:
+                                  properties:
+                                    numRetries:
+                                      description: (Updatable) The number of retries
+                                        allowed.
+                                      type: number
+                                    timeoutInSeconds:
+                                      description: (Updatable) The timeout in seconds
+                                        for the task.
+                                      type: number
+                                  type: object
+                                type: array
+                              scope:
+                                description: (Updatable) rollback Scope
+                                type: string
+                              taskRecordId:
+                                description: (Updatable) The ID of taskRecord.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  timeCreated:
+                    description: The time this resource was created. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time this resource was last updated. An RFC3339
+                      formatted datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

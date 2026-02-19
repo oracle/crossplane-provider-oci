@@ -1,0 +1,27 @@
+apiVersion: computecloudatcustomer.oci.upbound.io/v1alpha1
+kind: CccInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_ccc_infrastructure
+  name: test-ccc-infrastructure
+spec:
+  forProvider:
+    cccUpgradeScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ccc_upgrade_schedule
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionDetails: ${var.ccc_infrastructure_connection_details}
+    connectionState: ${var.ccc_infrastructure_connection_state}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.ccc_infrastructure_description}
+    displayName: ${var.ccc_infrastructure_display_name}
+    freeformTags:
+      bar-key: value
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

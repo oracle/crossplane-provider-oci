@@ -1,0 +1,30 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/connection
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    accessToken: ${var.connection_access_token}
+    appPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    baseUrl: ${var.connection_base_url}
+    connectionType: ${var.connection_connection_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.connection_description}
+    displayName: ${var.connection_display_name}
+    freeformTags:
+      bar-key: value
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    tlsVerifyConfig:
+    - caCertificateBundleId: ${oci_devops_ca_certificate_bundle.test_ca_certificate_bundle.id}
+      tlsVerifyMode: ${var.connection_tls_verify_config_tls_verify_mode}
+    username: ${var.connection_username}

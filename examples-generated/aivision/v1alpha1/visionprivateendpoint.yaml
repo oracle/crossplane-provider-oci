@@ -1,0 +1,20 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: VisionPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/visionprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_vision_private_endpoint
+  name: test-vision-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.vision_private_endpoint_defined_tags}
+    description: ${var.vision_private_endpoint_description}
+    displayName: ${var.vision_private_endpoint_display_name}
+    freeformTags: ${var.vision_private_endpoint_freeform_tags}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

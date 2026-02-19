@@ -1,0 +1,47 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentKnowledgeBase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentknowledgebase
+  labels:
+    testing.upbound.io/example-name: test_knowledge_base
+  name: test-knowledge-base
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.knowledge_base_description}
+    displayName: ${var.knowledge_base_display_name}
+    freeformTags:
+      Department: Finance
+    indexConfig:
+    - clusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cluster
+      databaseConnection:
+      - connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_connection
+        connectionType: ${var.knowledge_base_index_config_database_connection_connection_type}
+      databaseFunctions:
+      - name: ${var.knowledge_base_index_config_database_functions_name}
+      indexConfigType: ${var.knowledge_base_index_config_index_config_type}
+      indexes:
+      - name: ${var.knowledge_base_index_config_indexes_name}
+        schema:
+        - bodyKey: ${var.knowledge_base_index_config_indexes_schema_body_key}
+          embeddingBodyKey: ${var.knowledge_base_index_config_indexes_schema_embedding_body_key}
+          titleKey: ${var.knowledge_base_index_config_indexes_schema_title_key}
+          urlKey: ${var.knowledge_base_index_config_indexes_schema_url_key}
+      secretDetail:
+      - clientId: ${oci_generative_ai_agent_client.test_client.id}
+        idcsUrl: ${var.knowledge_base_index_config_secret_detail_idcs_url}
+        scopeUrl: ${var.knowledge_base_index_config_secret_detail_scope_url}
+        type: ${var.knowledge_base_index_config_secret_detail_type}
+        vaultSecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+      shouldEnableHybridSearch: ${var.knowledge_base_index_config_should_enable_hybrid_search}

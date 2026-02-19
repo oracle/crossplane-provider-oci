@@ -1,0 +1,21 @@
+apiVersion: recovery.oci.upbound.io/v1alpha1
+kind: ProtectionPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: recovery/v1alpha1/protectionpolicy
+  labels:
+    testing.upbound.io/example-name: test_protection_policy
+  name: test-protection-policy
+spec:
+  forProvider:
+    backupRetentionPeriodInDays: ${var.protection_policy_backup_retention_period_in_days}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.protection_policy_display_name}
+    freeformTags:
+      bar-key: value
+    mustEnforceCloudLocality: ${var.protection_policy_must_enforce_cloud_locality}
+    policyLockedDateTime: ${var.protection_policy_policy_locked_date_time}

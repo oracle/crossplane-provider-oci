@@ -65,6 +65,25 @@ func (mg *Backend) ResolveReferences(ctx context.Context, c client.Reader) error
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TargetID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.TargetIDRef,
+			Selector:     mg.Spec.ForProvider.TargetIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.TargetID")
+	}
+	mg.Spec.ForProvider.TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.TargetIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networkloadbalancer.oci.upbound.io", "v1alpha1", "BackendSet", "BackendSetList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -102,6 +121,25 @@ func (mg *Backend) ResolveReferences(ctx context.Context, c client.Reader) error
 	}
 	mg.Spec.InitProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.TargetIDRef,
+			Selector:     mg.Spec.InitProvider.TargetIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetID")
+	}
+	mg.Spec.InitProvider.TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -387,6 +425,27 @@ func (mg *NetworkLoadBalancersBackendSetsUnified) ResolveReferences(ctx context.
 	var rsp reference.ResolutionResponse
 	var err error
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Backends); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Backends[i3].TargetID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.Backends[i3].TargetIDRef,
+				Selector:     mg.Spec.ForProvider.Backends[i3].TargetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Backends[i3].TargetID")
+		}
+		mg.Spec.ForProvider.Backends[i3].TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Backends[i3].TargetIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.HealthChecker); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.HealthChecker[i3].DNS); i4++ {
 			{
@@ -429,6 +488,27 @@ func (mg *NetworkLoadBalancersBackendSetsUnified) ResolveReferences(ctx context.
 	mg.Spec.ForProvider.NetworkLoadBalancerID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkLoadBalancerIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Backends); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Backends[i3].TargetID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.Backends[i3].TargetIDRef,
+				Selector:     mg.Spec.InitProvider.Backends[i3].TargetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Backends[i3].TargetID")
+		}
+		mg.Spec.InitProvider.Backends[i3].TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Backends[i3].TargetIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.HealthChecker); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.HealthChecker[i3].DNS); i4++ {
 			{

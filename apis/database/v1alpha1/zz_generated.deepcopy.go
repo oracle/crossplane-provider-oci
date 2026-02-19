@@ -12109,6 +12109,16 @@ func (in *AutonomousVmClusterOrdsCertificateManagementInitParameters) DeepCopyIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.CABundleIDRef != nil {
+		in, out := &in.CABundleIDRef, &out.CABundleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CABundleIDSelector != nil {
+		in, out := &in.CABundleIDSelector, &out.CABundleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CertificateAuthorityID != nil {
 		in, out := &in.CertificateAuthorityID, &out.CertificateAuthorityID
 		*out = new(string)
@@ -12133,6 +12143,16 @@ func (in *AutonomousVmClusterOrdsCertificateManagementInitParameters) DeepCopyIn
 		in, out := &in.CertificateID, &out.CertificateID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -12246,6 +12266,16 @@ func (in *AutonomousVmClusterOrdsCertificateManagementParameters) DeepCopyInto(o
 		*out = new(string)
 		**out = **in
 	}
+	if in.CABundleIDRef != nil {
+		in, out := &in.CABundleIDRef, &out.CABundleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CABundleIDSelector != nil {
+		in, out := &in.CABundleIDSelector, &out.CABundleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CertificateAuthorityID != nil {
 		in, out := &in.CertificateAuthorityID, &out.CertificateAuthorityID
 		*out = new(string)
@@ -12270,6 +12300,16 @@ func (in *AutonomousVmClusterOrdsCertificateManagementParameters) DeepCopyInto(o
 		in, out := &in.CertificateID, &out.CertificateID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -12556,6 +12596,16 @@ func (in *AutonomousVmClusterSslCertificateManagementInitParameters) DeepCopyInt
 		*out = new(string)
 		**out = **in
 	}
+	if in.CABundleIDRef != nil {
+		in, out := &in.CABundleIDRef, &out.CABundleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CABundleIDSelector != nil {
+		in, out := &in.CABundleIDSelector, &out.CABundleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CertificateAuthorityID != nil {
 		in, out := &in.CertificateAuthorityID, &out.CertificateAuthorityID
 		*out = new(string)
@@ -12580,6 +12630,16 @@ func (in *AutonomousVmClusterSslCertificateManagementInitParameters) DeepCopyInt
 		in, out := &in.CertificateID, &out.CertificateID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -12693,6 +12753,16 @@ func (in *AutonomousVmClusterSslCertificateManagementParameters) DeepCopyInto(ou
 		*out = new(string)
 		**out = **in
 	}
+	if in.CABundleIDRef != nil {
+		in, out := &in.CABundleIDRef, &out.CABundleIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CABundleIDSelector != nil {
+		in, out := &in.CABundleIDSelector, &out.CABundleIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CertificateAuthorityID != nil {
 		in, out := &in.CertificateAuthorityID, &out.CertificateAuthorityID
 		*out = new(string)
@@ -12717,6 +12787,16 @@ func (in *AutonomousVmClusterSslCertificateManagementParameters) DeepCopyInto(ou
 		in, out := &in.CertificateID, &out.CertificateID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -21377,6 +21457,16 @@ func (in *ConnectorDetailsInitParameters) DeepCopyInto(out *ConnectorDetailsInit
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -21446,6 +21536,16 @@ func (in *ConnectorDetailsParameters) DeepCopyInto(out *ConnectorDetailsParamete
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
@@ -39658,6 +39758,16 @@ func (in *EncryptionKeyInitParameters) DeepCopyInto(out *EncryptionKeyInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DirectoryName != nil {
 		in, out := &in.DirectoryName, &out.DirectoryName
 		*out = new(string)
@@ -39967,6 +40077,16 @@ func (in *EncryptionKeyParameters) DeepCopyInto(out *EncryptionKeyParameters) {
 		in, out := &in.CertificateID, &out.CertificateID
 		*out = new(string)
 		**out = **in
+	}
+	if in.CertificateIDRef != nil {
+		in, out := &in.CertificateIDRef, &out.CertificateIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CertificateIDSelector != nil {
+		in, out := &in.CertificateIDSelector, &out.CertificateIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.DirectoryName != nil {
 		in, out := &in.DirectoryName, &out.DirectoryName
@@ -45937,6 +46057,16 @@ func (in *ExascaleDbStorageVaultInitParameters) DeepCopyInto(out *ExascaleDbStor
 		*out = new(string)
 		**out = **in
 	}
+	if in.ClusterPlacementGroupIDRef != nil {
+		in, out := &in.ClusterPlacementGroupIDRef, &out.ClusterPlacementGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClusterPlacementGroupIDSelector != nil {
+		in, out := &in.ClusterPlacementGroupIDSelector, &out.ClusterPlacementGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -46269,6 +46399,16 @@ func (in *ExascaleDbStorageVaultParameters) DeepCopyInto(out *ExascaleDbStorageV
 		in, out := &in.ClusterPlacementGroupID, &out.ClusterPlacementGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ClusterPlacementGroupIDRef != nil {
+		in, out := &in.ClusterPlacementGroupIDRef, &out.ClusterPlacementGroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClusterPlacementGroupIDSelector != nil {
+		in, out := &in.ClusterPlacementGroupIDSelector, &out.ClusterPlacementGroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
@@ -51337,6 +51477,16 @@ func (in *FeatureDetailsConnectorDetailsInitParameters) DeepCopyInto(out *Featur
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -51406,6 +51556,16 @@ func (in *FeatureDetailsConnectorDetailsParameters) DeepCopyInto(out *FeatureDet
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
@@ -59342,6 +59502,16 @@ func (in *ManagementCloudDbSystemDiscoveryInitParameters) DeepCopyInto(out *Mana
 		*out = new(string)
 		**out = **in
 	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -59604,6 +59774,16 @@ func (in *ManagementCloudDbSystemDiscoveryParameters) DeepCopyInto(out *Manageme
 		in, out := &in.AgentID, &out.AgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
@@ -66085,6 +66265,16 @@ func (in *ManagementExternalDbSystemDiscoveryInitParameters) DeepCopyInto(out *M
 		*out = new(string)
 		**out = **in
 	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
@@ -66327,6 +66517,16 @@ func (in *ManagementExternalDbSystemDiscoveryParameters) DeepCopyInto(out *Manag
 		in, out := &in.AgentID, &out.AgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.CompartmentID != nil {
 		in, out := &in.CompartmentID, &out.CompartmentID
@@ -67927,6 +68127,16 @@ func (in *ManagementExternalExadataStorageConnectorInitParameters) DeepCopyInto(
 		*out = new(string)
 		**out = **in
 	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ConnectionURI != nil {
 		in, out := &in.ConnectionURI, &out.ConnectionURI
 		*out = new(string)
@@ -68188,6 +68398,16 @@ func (in *ManagementExternalExadataStorageConnectorParameters) DeepCopyInto(out 
 		in, out := &in.AgentID, &out.AgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.AgentIDRef != nil {
+		in, out := &in.AgentIDRef, &out.AgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AgentIDSelector != nil {
+		in, out := &in.AgentIDSelector, &out.AgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ConnectionURI != nil {
 		in, out := &in.ConnectionURI, &out.ConnectionURI
@@ -69978,6 +70198,16 @@ func (in *ManagementExternalMySqlDatabaseConnectorConnectorDetailsInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.MacsAgentIDRef != nil {
+		in, out := &in.MacsAgentIDRef, &out.MacsAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.MacsAgentIDSelector != nil {
+		in, out := &in.MacsAgentIDSelector, &out.MacsAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NetworkProtocol != nil {
 		in, out := &in.NetworkProtocol, &out.NetworkProtocol
 		*out = new(string)
@@ -70097,6 +70327,16 @@ func (in *ManagementExternalMySqlDatabaseConnectorConnectorDetailsParameters) De
 		in, out := &in.MacsAgentID, &out.MacsAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.MacsAgentIDRef != nil {
+		in, out := &in.MacsAgentIDRef, &out.MacsAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.MacsAgentIDSelector != nil {
+		in, out := &in.MacsAgentIDSelector, &out.MacsAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkProtocol != nil {
 		in, out := &in.NetworkProtocol, &out.NetworkProtocol
@@ -70854,6 +71094,16 @@ func (in *ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagem
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -70923,6 +71173,16 @@ func (in *ManagementExternalcontainerdatabaseExternalContainerDbmFeaturesManagem
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
@@ -71330,6 +71590,16 @@ func (in *ManagementExternalnoncontainerdatabaseExternalNonContainerDbmFeaturesM
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -71399,6 +71669,16 @@ func (in *ManagementExternalnoncontainerdatabaseExternalNonContainerDbmFeaturesM
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
@@ -71776,6 +72056,16 @@ func (in *ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagem
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -71845,6 +72135,16 @@ func (in *ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagem
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
@@ -74308,6 +74608,16 @@ func (in *ManagementPluggabledatabasePluggableDatabaseDbmFeaturesManagementFeatu
 		*out = new(string)
 		**out = **in
 	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID
 		*out = new(string)
@@ -74377,6 +74687,16 @@ func (in *ManagementPluggabledatabasePluggableDatabaseDbmFeaturesManagementFeatu
 		in, out := &in.ManagementAgentID, &out.ManagementAgentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ManagementAgentIDRef != nil {
+		in, out := &in.ManagementAgentIDRef, &out.ManagementAgentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ManagementAgentIDSelector != nil {
+		in, out := &in.ManagementAgentIDSelector, &out.ManagementAgentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PrivateEndPointID != nil {
 		in, out := &in.PrivateEndPointID, &out.PrivateEndPointID

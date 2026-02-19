@@ -1,0 +1,35 @@
+apiVersion: delegateaccesscontrol.oci.upbound.io/v1alpha1
+kind: DelegationControl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: delegateaccesscontrol/v1alpha1/delegationcontrol
+  labels:
+    testing.upbound.io/example-name: test_delegation_control
+  name: test-delegation-control
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    delegationSubscriptionIds: ${var.delegation_control_delegation_subscription_ids}
+    description: ${var.delegation_control_description}
+    displayName: ${var.delegation_control_display_name}
+    freeformTags:
+      Department: Finance
+    isAutoApproveDuringMaintenance: ${var.delegation_control_is_auto_approve_during_maintenance}
+    notificationMessageFormat: ${var.delegation_control_notification_message_format}
+    notificationTopicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_topic
+    numApprovalsRequired: ${var.delegation_control_num_approvals_required}
+    preApprovedServiceProviderActionNames: ${var.delegation_control_pre_approved_service_provider_action_names}
+    resourceIds: ${var.delegation_control_resource_ids}
+    resourceType: ${var.delegation_control_resource_type}
+    vaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
+    vaultKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key

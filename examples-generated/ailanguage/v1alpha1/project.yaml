@@ -1,0 +1,19 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/project
+  labels:
+    testing.upbound.io/example-name: test_project
+  name: test-project
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.project_description}
+    displayName: ${var.project_display_name}
+    freeformTags:
+      bar-key: value

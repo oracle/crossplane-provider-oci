@@ -1,0 +1,28 @@
+apiVersion: announcementsservice.oci.upbound.io/v1alpha1
+kind: AnnouncementSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: announcementsservice/v1alpha1/announcementsubscription
+  labels:
+    testing.upbound.io/example-name: test_announcement_subscription
+  name: test-announcement-subscription
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.announcement_subscription_description}
+    displayName: ${var.announcement_subscription_display_name}
+    filterGroups:
+    - filters:
+      - type: ${var.announcement_subscription_filter_groups_filters_type}
+        value: ${var.announcement_subscription_filter_groups_filters_value}
+    freeformTags:
+      bar-key: value
+    onsTopicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_topic
+    preferredLanguage: ${var.announcement_subscription_preferred_language}
+    preferredTimeZone: ${var.announcement_subscription_preferred_time_zone}

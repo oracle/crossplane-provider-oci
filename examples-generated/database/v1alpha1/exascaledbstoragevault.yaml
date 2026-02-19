@@ -11,7 +11,9 @@ spec:
     additionalFlashCacheInPercent: ${var.exascale_db_storage_vault_additional_flash_cache_in_percent}
     autoscaleLimitInGbs: ${var.exascale_db_storage_vault_autoscale_limit_in_gbs}
     availabilityDomain: ${var.exascale_db_storage_vault_availability_domain}
-    clusterPlacementGroupId: ${oci_cluster_placement_groups_cluster_placement_group.test_cluster_placement_group.id}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster_placement_group
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

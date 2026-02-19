@@ -241,6 +241,27 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.FailureDestination); i3++ {
 		{
+			m, l, err = apisresolver.GetManagedResource("queue.oci.upbound.io", "v1alpha1", "Queue", "QueueList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FailureDestination[i3].QueueID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.FailureDestination[i3].QueueIDRef,
+				Selector:     mg.Spec.ForProvider.FailureDestination[i3].QueueIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.FailureDestination[i3].QueueID")
+		}
+		mg.Spec.ForProvider.FailureDestination[i3].QueueID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.FailureDestination[i3].QueueIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.FailureDestination); i3++ {
+		{
 			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
 			if err != nil {
 				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -300,6 +321,27 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 		mg.Spec.ForProvider.SuccessDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.SuccessDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("queue.oci.upbound.io", "v1alpha1", "Queue", "QueueList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SuccessDestination[i3].QueueID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.SuccessDestination[i3].QueueIDRef,
+				Selector:     mg.Spec.ForProvider.SuccessDestination[i3].QueueIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.SuccessDestination[i3].QueueID")
+		}
+		mg.Spec.ForProvider.SuccessDestination[i3].QueueID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.SuccessDestination[i3].QueueIDRef = rsp.ResolvedReference
 
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.SuccessDestination); i3++ {
@@ -386,6 +428,27 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.FailureDestination); i3++ {
 		{
+			m, l, err = apisresolver.GetManagedResource("queue.oci.upbound.io", "v1alpha1", "Queue", "QueueList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FailureDestination[i3].QueueID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.FailureDestination[i3].QueueIDRef,
+				Selector:     mg.Spec.InitProvider.FailureDestination[i3].QueueIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.FailureDestination[i3].QueueID")
+		}
+		mg.Spec.InitProvider.FailureDestination[i3].QueueID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.FailureDestination[i3].QueueIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.FailureDestination); i3++ {
+		{
 			m, l, err = apisresolver.GetManagedResource("streaming.oci.upbound.io", "v1alpha1", "Stream", "StreamList")
 			if err != nil {
 				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -445,6 +508,27 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 		mg.Spec.InitProvider.SuccessDestination[i3].ChannelID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.SuccessDestination[i3].ChannelIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SuccessDestination); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("queue.oci.upbound.io", "v1alpha1", "Queue", "QueueList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SuccessDestination[i3].QueueID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.SuccessDestination[i3].QueueIDRef,
+				Selector:     mg.Spec.InitProvider.SuccessDestination[i3].QueueIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.SuccessDestination[i3].QueueID")
+		}
+		mg.Spec.InitProvider.SuccessDestination[i3].QueueID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.SuccessDestination[i3].QueueIDRef = rsp.ResolvedReference
 
 	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.SuccessDestination); i3++ {

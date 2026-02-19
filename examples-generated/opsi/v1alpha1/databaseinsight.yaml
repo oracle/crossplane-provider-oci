@@ -1,0 +1,84 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: DatabaseInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/databaseinsight
+  labels:
+    testing.upbound.io/example-name: test_database_insight
+  name: test-database-insight
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionCredentialDetails:
+    - credentialSourceName: ${var.database_insight_connection_credential_details_credential_source_name}
+      credentialType: ${var.database_insight_connection_credential_details_credential_type}
+      namedCredentialIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_named_credential
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      role: ${var.database_insight_connection_credential_details_role}
+      userNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
+      wallet_secret_id: ${oci_vault_secret.test_secret.id}
+    connectionDetails:
+    - hostName: ${var.database_insight_connection_details_host_name}
+      hosts:
+      - hostIp: ${var.database_insight_connection_details_hosts_host_ip}
+        port: ${var.database_insight_connection_details_hosts_port}
+      port: ${var.database_insight_connection_details_port}
+      protocol: ${var.database_insight_connection_details_protocol}
+      serviceName: ${oci_core_service.test_service.name}
+    credentialDetails:
+    - credentialSourceName: ${var.database_insight_credential_details_credential_source_name}
+      credentialType: ${var.database_insight_credential_details_credential_type}
+      namedCredentialIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_named_credential
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      role: ${var.database_insight_credential_details_role}
+      userNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
+      walletSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+    databaseConnectorId: ${oci_opsi_database_connector.test_database_connector.id}
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
+    databaseResourceType: ${var.database_insight_database_resource_type}
+    dbmPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_private_endpoint
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentType: ${var.database_insight_deployment_type}
+    enterpriseManagerBridgeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_enterprise_manager_bridge
+    enterpriseManagerEntityIdentifier: ${var.database_insight_enterprise_manager_entity_identifier}
+    enterpriseManagerIdentifier: ${var.database_insight_enterprise_manager_identifier}
+    entitySource: ${var.database_insight_entity_source}
+    exadataInsightIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_insight
+    freeformTags:
+      bar-key: value
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    opsiPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_private_endpoint
+    serviceName: ${oci_core_service.test_service.name}
+    systemTags: ${var.database_insight_system_tags}

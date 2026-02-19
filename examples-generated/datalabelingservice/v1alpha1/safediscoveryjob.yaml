@@ -1,0 +1,32 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeDiscoveryJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safediscoveryjob
+  labels:
+    testing.upbound.io/example-name: test_discovery_job
+  name: test-discovery-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    discoveryType: ${var.discovery_job_discovery_type}
+    displayName: ${var.discovery_job_display_name}
+    freeformTags:
+      Department: Finance
+    isAppDefinedRelationDiscoveryEnabled: ${var.discovery_job_is_app_defined_relation_discovery_enabled}
+    isIncludeAllSchemas: ${var.discovery_job_is_include_all_schemas}
+    isIncludeAllSensitiveTypes: ${var.discovery_job_is_include_all_sensitive_types}
+    isSampleDataCollectionEnabled: ${var.discovery_job_is_sample_data_collection_enabled}
+    schemasForDiscovery: ${var.discovery_job_schemas_for_discovery}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+    sensitiveTypeGroupIdsForDiscovery: ${var.discovery_job_sensitive_type_group_ids_for_discovery}
+    sensitiveTypeIdsForDiscovery: ${var.discovery_job_sensitive_type_ids_for_discovery}
+    tablesForDiscovery:
+    - schemaName: ${var.discovery_job_tables_for_discovery_schema_name}
+      tableNames: ${var.discovery_job_tables_for_discovery_table_names}

@@ -1,0 +1,86 @@
+apiVersion: ospgateway.oci.upbound.io/v1alpha1
+kind: Subscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospgateway/v1alpha1/subscription
+  labels:
+    testing.upbound.io/example-name: test_subscription
+  name: test-subscription
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    email: ${var.subscription_email}
+    ospHomeRegion: ${var.subscription_osp_home_region}
+    subscription:
+    - accountType: ${var.subscription_subscription_account_type}
+      billToCustAccountId: ${oci_osp_gateway_bill_to_cust_account.test_bill_to_cust_account.id}
+      billingAddress:
+      - addressKey: ${var.subscription_subscription_billing_address_address_key}
+        city: ${var.subscription_subscription_billing_address_city}
+        companyName: ${var.subscription_subscription_billing_address_company_name}
+        contributorClass: ${var.subscription_subscription_billing_address_contributor_class}
+        country: ${var.subscription_subscription_billing_address_country}
+        county: ${var.subscription_subscription_billing_address_county}
+        departmentName: ${var.subscription_subscription_billing_address_department_name}
+        emailAddress: ${var.subscription_subscription_billing_address_email_address}
+        firstName: ${var.subscription_subscription_billing_address_first_name}
+        internalNumber: ${var.subscription_subscription_billing_address_internal_number}
+        jobTitle: ${var.subscription_subscription_billing_address_job_title}
+        lastName: ${var.subscription_subscription_billing_address_last_name}
+        line1: ${var.subscription_subscription_billing_address_line1}
+        line2: ${var.subscription_subscription_billing_address_line2}
+        line3: ${var.subscription_subscription_billing_address_line3}
+        line4: ${var.subscription_subscription_billing_address_line4}
+        middleName: ${var.subscription_subscription_billing_address_middle_name}
+        municipalInscription: ${var.subscription_subscription_billing_address_municipal_inscription}
+        phoneCountryCode: ${var.subscription_subscription_billing_address_phone_country_code}
+        phoneNumber: ${var.subscription_subscription_billing_address_phone_number}
+        postalCode: ${var.subscription_subscription_billing_address_postal_code}
+        province: ${var.subscription_subscription_billing_address_province}
+        state: ${var.subscription_subscription_billing_address_state}
+        stateInscription: ${var.subscription_subscription_billing_address_state_inscription}
+        streetName: ${var.subscription_subscription_billing_address_street_name}
+        streetNumber: ${var.subscription_subscription_billing_address_street_number}
+      currencyCode: ${var.subscription_subscription_currency_code}
+      gsiOrgCode: ${var.subscription_subscription_gsi_org_code}
+      id: ${var.subscription_subscription_id}
+      isCorporateConversionAllowed: ${var.subscription_subscription_is_corporate_conversion_allowed}
+      isIntentToPay: ${var.subscription_subscription_is_intent_to_pay}
+      languageCode: ${var.subscription_subscription_language_code}
+      organizationId: ${oci_osp_gateway_organization.test_organization.id}
+      paymentGateway:
+      - merchantDefinedData:
+        - cloudAccountName: ${var.subscription_subscription_payment_gateway_merchant_defined_data_cloud_account_name}
+          promoType: ${var.subscription_subscription_payment_gateway_merchant_defined_data_promo_type}
+      paymentOptions:
+      - creditCardType: ${var.subscription_subscription_payment_options_credit_card_type}
+        emailAddress: ${var.subscription_subscription_payment_options_email_address}
+        extBillingAgreementId: ${oci_osp_gateway_ext_billing_agreement.test_ext_billing_agreement.id}
+        firstName: ${var.subscription_subscription_payment_options_first_name}
+        lastDigits: ${var.subscription_subscription_payment_options_last_digits}
+        lastName: ${var.subscription_subscription_payment_options_last_name}
+        nameOnCard: ${var.subscription_subscription_payment_options_name_on_card}
+        paymentMethod: ${var.subscription_subscription_payment_options_payment_method}
+        timeExpiration: ${var.subscription_subscription_payment_options_time_expiration}
+        walletInstrumentId: ${oci_osp_gateway_wallet_instrument.test_wallet_instrument.id}
+        walletTransactionId: ${oci_osp_gateway_wallet_transaction.test_wallet_transaction.id}
+      planType: ${var.subscription_subscription_plan_type}
+      shipToCustAcctRoleId: ${oci_osp_gateway_ship_to_cust_acct_role.test_ship_to_cust_acct_role.id}
+      shipToCustAcctSiteId: ${oci_osp_gateway_ship_to_cust_acct_site.test_ship_to_cust_acct_site.id}
+      subscriptionPlanNumber: ${var.subscription_subscription_subscription_plan_number}
+      taxInfo:
+      - noTaxReasonCode: ${var.subscription_subscription_tax_info_no_tax_reason_code}
+        noTaxReasonCodeDetails: ${var.subscription_subscription_tax_info_no_tax_reason_code_details}
+        taxCnpj: ${var.subscription_subscription_tax_info_tax_cnpj}
+        taxPayerId: ${oci_osp_gateway_tax_payer.test_tax_payer.id}
+        taxRegNumber: ${var.subscription_subscription_tax_info_tax_reg_number}
+      timePersonalToCorporateConv: ${var.subscription_subscription_time_personal_to_corporate_conv}
+      timePlanUpgrade: ${var.subscription_subscription_time_plan_upgrade}
+      timeStart: ${var.subscription_subscription_time_start}
+      upgradeState: ${var.subscription_subscription_upgrade_state}
+      upgradeStateDetails: ${var.subscription_subscription_upgrade_state_details}
+    subscriptionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subscription

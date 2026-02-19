@@ -1,0 +1,3103 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: stacks.dif.oci.upbound.io
+spec:
+  group: dif.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Stack
+    listKind: StackList
+    plural: stacks
+    singular: stack
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Stack is the Schema for the Stacks API. Provides the Stack resource
+          in Oracle Cloud Infrastructure Dif service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: StackSpec defines the desired state of Stack
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  adb:
+                    description: (Updatable) ADB details if adb is included in the
+                      services.
+                    items:
+                      properties:
+                        adminPasswordIdSecretRef:
+                          description: The Oracle Cloud Infrastructure vault secret
+                            [/Content/General/Concepts/identifiers.htm]OCID for admin
+                            password.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        dataStorageSizeInTbs:
+                          description: (Updatable) The size, in terabytes, of the
+                            data volume that will be created and attached to the database.
+                          type: number
+                        dbCredentials:
+                          description: DB credential details.
+                          items:
+                            properties:
+                              secretIdSecretRef:
+                                description: Vault secret OCID containing the corresponding
+                                  user password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            type: object
+                          type: array
+                        dbVersion:
+                          description: (Updatable) A valid Oracle Database version
+                            for Autonomous Database.
+                          type: string
+                        dbWorkload:
+                          description: DB Workload to be used with ADB. Accepted values
+                            are OLTP, DW.
+                          type: string
+                        ecpu:
+                          description: (Updatable) The compute amount (ECPUs) available
+                            to the database.
+                          type: number
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        isMtlsConnectionRequired:
+                          description: (Updatable) Specifies if the Autonomous Database
+                            requires mTLS connections.
+                          type: boolean
+                        isPublic:
+                          description: If true then subnetId should not be provided.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        toolsPublicAccess:
+                          description: This is an array of CIDR (classless inter-domain
+                            routing) notations for a subnet or VCN OCID (virtual cloud
+                            network Oracle Cloud ID). Allowed only when subnetId is
+                            provided (private ADB).
+                          type: string
+                      type: object
+                    type: array
+                  addServiceTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Add Service. Could be set to any integer value.
+                    type: number
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the Stack in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  dataflow:
+                    description: (Updatable) DATAFLOW details if dataflow is included
+                      in the services.
+                    items:
+                      properties:
+                        archiveUri:
+                          description: Contains the archive from object storage bucket
+                            which can be added as dependency to data flow application.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionDetails:
+                                description: (Updatable) Details of services to create
+                                  private endpoint.
+                                items:
+                                  properties:
+                                    difDependencies:
+                                      description: (Updatable) List of DIF Service
+                                        Dependency Details to create private endpoint.
+                                      items:
+                                        properties:
+                                          serviceInstanceId:
+                                            description: (Updatable) InstanceId of
+                                              service which is part of the Stack.
+                                            type: string
+                                          serviceType:
+                                            description: (Updatable) Supported service
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    domainNames:
+                                      description: (Updatable) An array of DNS zone
+                                        names.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              subnetId:
+                                description: The OCID of the subnet the Autonomous
+                                  Database is associated with.
+                                type: string
+                              subnetIdRef:
+                                description: Reference to a Subnet in networking to
+                                  populate subnetId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: Selector for a Subnet in networking to
+                                  populate subnetId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        driverShape:
+                          description: (Updatable) The VM shape for the driver. Sets
+                            the driver cores and memory.
+                          type: string
+                        driverShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        execute:
+                          description: Contains the main file (py/jar) along with
+                            parameters & configuration to be passed to the DataFlow
+                            run.
+                          type: string
+                        executorShape:
+                          description: (Updatable) The VM shape for the executors.
+                            Sets the executor cores and memory.
+                          type: string
+                        executorShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        logBucketInstanceId:
+                          description: (Updatable) InstanceId of log bucket created
+                            as part of objectstorage service in stack. Used for storing
+                            application run logs.
+                          type: string
+                        numExecutors:
+                          description: (Updatable) The number of executor VMs requested.
+                          type: number
+                        privateEndpointId:
+                          description: (Updatable) OCID of the already provisioned
+                            dataflow private endpoint.
+                          type: string
+                        privateEndpointIdRef:
+                          description: Reference to a PrivateEndpoint in dataflow
+                            to populate privateEndpointId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        privateEndpointIdSelector:
+                          description: Selector for a PrivateEndpoint in dataflow
+                            to populate privateEndpointId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        sparkVersion:
+                          description: (Updatable) The Spark version utilized to run
+                            the application.
+                          type: string
+                        warehouseBucketInstanceId:
+                          description: (Updatable) InstanceId of warehouse bucket
+                            created as part of objectstorage service in stack. Mandatory
+                            for SQL applications.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deployArtifactsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Deploy Artifacts. Could be set to any integer value.
+                    type: number
+                  displayName:
+                    description: A user-friendly name. Should be unique per compartment.
+                      Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  genai:
+                    description: (Updatable) GenAi Details if genai is included in
+                      services.
+                    items:
+                      properties:
+                        baseModel:
+                          description: Name of the base model.
+                          type: string
+                        clusterType:
+                          description: The dedicated AI cluster type.
+                          type: string
+                        endpoints:
+                          description: (Updatable) List of endpoints to provision
+                            for the GENAI cluster.
+                          items:
+                            properties:
+                              endpointName:
+                                description: (Updatable) Identifier for each endpoint.
+                                type: string
+                              isContentModerationEnabled:
+                                description: (Updatable) Helps remove toxic and biased
+                                  content from responses.
+                                type: boolean
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ociRegion:
+                          description: Region on which the cluster end endpoint will
+                            be provisioned.
+                          type: string
+                        unitCount:
+                          description: (Updatable) No of replicas of base model to
+                            be used for hosting.
+                          type: number
+                      type: object
+                    type: array
+                  ggcs:
+                    description: (Updatable) GGCS details if ggcs is included in the
+                      services.
+                    items:
+                      properties:
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionId:
+                                description: (Updatable) OCID of pre-created Oracle
+                                  GoldenGate connection.
+                                type: string
+                              connectionIdRef:
+                                description: Reference to a Connection in goldengate
+                                  to populate connectionId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              connectionIdSelector:
+                                description: Selector for a Connection in goldengate
+                                  to populate connectionId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              connectionName:
+                                description: (Updatable) Name of the connection to
+                                  be created.
+                                type: string
+                              connectionNameRef:
+                                description: Reference to a Connection in goldengate
+                                  to populate connectionName.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              connectionNameSelector:
+                                description: Selector for a Connection in goldengate
+                                  to populate connectionName.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              difDependencies:
+                                description: (Updatable) List of DIF Service Dependency
+                                  Details to create private endpoint.
+                                items:
+                                  properties:
+                                    serviceInstanceId:
+                                      description: (Updatable) InstanceId of service
+                                        which is part of the Stack.
+                                      type: string
+                                    serviceType:
+                                      description: (Updatable) Supported service name.
+                                      type: string
+                                  type: object
+                                type: array
+                              ggAdminSecretIdSecretRef:
+                                description: (Updatable) Vault secret OCID containing
+                                  password that Oracle GoldenGate uses to connect
+                                  the associated system of the given technology.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ocpu:
+                          description: (Updatable) The Minimum number of OCPUs to
+                            be made available for this Deployment.
+                          type: number
+                        oggVersion:
+                          description: Version of OGG.
+                          type: string
+                        passwordSecretIdSecretRef:
+                          description: The OCID of the Secret where the deployment
+                            password is stored.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        publicSubnetId:
+                          description: (Updatable) The OCID of a public subnet in
+                            the customer tenancy. Can be provided only for public
+                            GGCS deployments.
+                          type: string
+                        publicSubnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            publicSubnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        publicSubnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            publicSubnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        sources:
+                          description: Source Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartSourceOperations:
+                                description: Boolean value that determines source
+                                  operations should start or not.
+                                type: boolean
+                              sourceId:
+                                description: Ggcs source artifact id.
+                                type: string
+                              targetConnectionName:
+                                description: Name of assigned connection for the source.
+                                type: string
+                              targetUri:
+                                description: Target uri for the GoldenGate deployment
+                                  where distribution path needs to be configured.
+                                type: string
+                            type: object
+                          type: array
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        targets:
+                          description: Target Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartTargetOperations:
+                                description: Boolean value that determines target
+                                  operations should start or not.
+                                type: boolean
+                              sourceConnectionName:
+                                description: Name of assigned connection for the target.
+                                type: string
+                              sourceUri:
+                                description: Source uri for the GoldenGate deployment
+                                  from where the collector path needs to be configured.
+                                type: string
+                              targetId:
+                                description: GGCS target artifact id.
+                                type: string
+                            type: object
+                          type: array
+                        users:
+                          description: Ggcs user details to be created or updated.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              secretIdSecretRef:
+                                description: Vault secret OCID containing the corresponding
+                                  user password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  notificationEmail:
+                    description: email id to which the stack notifications would be
+                      sent.
+                    type: string
+                  objectstorage:
+                    description: (Updatable) Object Storage Details if object storage
+                      is included in services.
+                    items:
+                      properties:
+                        autoTiering:
+                          description: (Updatable) It sets the auto-tiering status
+                            on the bucket.Allowed values are "DISABLED" / "INFREQUENTACCESS"
+                          type: string
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        objectVersioning:
+                          description: (Updatable) Mentions whether the object versioning
+                            to be enabled or not,Allowed values are "ENABLED" / "DISABLED"/"SUSPENDED"
+                          type: string
+                        storageTier:
+                          description: Mentions which storage tier to use for the
+                            bucket,Allowed values are "STANDARD" / "ARCHIVE"
+                          type: string
+                      type: object
+                    type: array
+                  services:
+                    description: (Updatable) List of services to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  stackTemplates:
+                    description: (Updatable) List of templates to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  subnetId:
+                    description: The OCID of the subnet the Autonomous Database is
+                      associated with.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  adb:
+                    description: (Updatable) ADB details if adb is included in the
+                      services.
+                    items:
+                      properties:
+                        adminPasswordIdSecretRef:
+                          description: The Oracle Cloud Infrastructure vault secret
+                            [/Content/General/Concepts/identifiers.htm]OCID for admin
+                            password.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        dataStorageSizeInTbs:
+                          description: (Updatable) The size, in terabytes, of the
+                            data volume that will be created and attached to the database.
+                          type: number
+                        dbCredentials:
+                          description: DB credential details.
+                          items:
+                            properties:
+                              secretIdSecretRef:
+                                description: Vault secret OCID containing the corresponding
+                                  user password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            required:
+                            - secretIdSecretRef
+                            type: object
+                          type: array
+                        dbVersion:
+                          description: (Updatable) A valid Oracle Database version
+                            for Autonomous Database.
+                          type: string
+                        dbWorkload:
+                          description: DB Workload to be used with ADB. Accepted values
+                            are OLTP, DW.
+                          type: string
+                        ecpu:
+                          description: (Updatable) The compute amount (ECPUs) available
+                            to the database.
+                          type: number
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        isMtlsConnectionRequired:
+                          description: (Updatable) Specifies if the Autonomous Database
+                            requires mTLS connections.
+                          type: boolean
+                        isPublic:
+                          description: If true then subnetId should not be provided.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        toolsPublicAccess:
+                          description: This is an array of CIDR (classless inter-domain
+                            routing) notations for a subnet or VCN OCID (virtual cloud
+                            network Oracle Cloud ID). Allowed only when subnetId is
+                            provided (private ADB).
+                          type: string
+                      required:
+                      - adminPasswordIdSecretRef
+                      type: object
+                    type: array
+                  addServiceTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Add Service. Could be set to any integer value.
+                    type: number
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the Stack in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  dataflow:
+                    description: (Updatable) DATAFLOW details if dataflow is included
+                      in the services.
+                    items:
+                      properties:
+                        archiveUri:
+                          description: Contains the archive from object storage bucket
+                            which can be added as dependency to data flow application.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionDetails:
+                                description: (Updatable) Details of services to create
+                                  private endpoint.
+                                items:
+                                  properties:
+                                    difDependencies:
+                                      description: (Updatable) List of DIF Service
+                                        Dependency Details to create private endpoint.
+                                      items:
+                                        properties:
+                                          serviceInstanceId:
+                                            description: (Updatable) InstanceId of
+                                              service which is part of the Stack.
+                                            type: string
+                                          serviceType:
+                                            description: (Updatable) Supported service
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    domainNames:
+                                      description: (Updatable) An array of DNS zone
+                                        names.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              subnetId:
+                                description: The OCID of the subnet the Autonomous
+                                  Database is associated with.
+                                type: string
+                              subnetIdRef:
+                                description: Reference to a Subnet in networking to
+                                  populate subnetId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: Selector for a Subnet in networking to
+                                  populate subnetId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        driverShape:
+                          description: (Updatable) The VM shape for the driver. Sets
+                            the driver cores and memory.
+                          type: string
+                        driverShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        execute:
+                          description: Contains the main file (py/jar) along with
+                            parameters & configuration to be passed to the DataFlow
+                            run.
+                          type: string
+                        executorShape:
+                          description: (Updatable) The VM shape for the executors.
+                            Sets the executor cores and memory.
+                          type: string
+                        executorShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        logBucketInstanceId:
+                          description: (Updatable) InstanceId of log bucket created
+                            as part of objectstorage service in stack. Used for storing
+                            application run logs.
+                          type: string
+                        numExecutors:
+                          description: (Updatable) The number of executor VMs requested.
+                          type: number
+                        privateEndpointId:
+                          description: (Updatable) OCID of the already provisioned
+                            dataflow private endpoint.
+                          type: string
+                        privateEndpointIdRef:
+                          description: Reference to a PrivateEndpoint in dataflow
+                            to populate privateEndpointId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        privateEndpointIdSelector:
+                          description: Selector for a PrivateEndpoint in dataflow
+                            to populate privateEndpointId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        sparkVersion:
+                          description: (Updatable) The Spark version utilized to run
+                            the application.
+                          type: string
+                        warehouseBucketInstanceId:
+                          description: (Updatable) InstanceId of warehouse bucket
+                            created as part of objectstorage service in stack. Mandatory
+                            for SQL applications.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deployArtifactsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Deploy Artifacts. Could be set to any integer value.
+                    type: number
+                  displayName:
+                    description: A user-friendly name. Should be unique per compartment.
+                      Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  genai:
+                    description: (Updatable) GenAi Details if genai is included in
+                      services.
+                    items:
+                      properties:
+                        baseModel:
+                          description: Name of the base model.
+                          type: string
+                        clusterType:
+                          description: The dedicated AI cluster type.
+                          type: string
+                        endpoints:
+                          description: (Updatable) List of endpoints to provision
+                            for the GENAI cluster.
+                          items:
+                            properties:
+                              endpointName:
+                                description: (Updatable) Identifier for each endpoint.
+                                type: string
+                              isContentModerationEnabled:
+                                description: (Updatable) Helps remove toxic and biased
+                                  content from responses.
+                                type: boolean
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ociRegion:
+                          description: Region on which the cluster end endpoint will
+                            be provisioned.
+                          type: string
+                        unitCount:
+                          description: (Updatable) No of replicas of base model to
+                            be used for hosting.
+                          type: number
+                      type: object
+                    type: array
+                  ggcs:
+                    description: (Updatable) GGCS details if ggcs is included in the
+                      services.
+                    items:
+                      properties:
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionId:
+                                description: (Updatable) OCID of pre-created Oracle
+                                  GoldenGate connection.
+                                type: string
+                              connectionIdRef:
+                                description: Reference to a Connection in goldengate
+                                  to populate connectionId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              connectionIdSelector:
+                                description: Selector for a Connection in goldengate
+                                  to populate connectionId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              connectionName:
+                                description: (Updatable) Name of the connection to
+                                  be created.
+                                type: string
+                              connectionNameRef:
+                                description: Reference to a Connection in goldengate
+                                  to populate connectionName.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              connectionNameSelector:
+                                description: Selector for a Connection in goldengate
+                                  to populate connectionName.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              difDependencies:
+                                description: (Updatable) List of DIF Service Dependency
+                                  Details to create private endpoint.
+                                items:
+                                  properties:
+                                    serviceInstanceId:
+                                      description: (Updatable) InstanceId of service
+                                        which is part of the Stack.
+                                      type: string
+                                    serviceType:
+                                      description: (Updatable) Supported service name.
+                                      type: string
+                                  type: object
+                                type: array
+                              ggAdminSecretIdSecretRef:
+                                description: (Updatable) Vault secret OCID containing
+                                  password that Oracle GoldenGate uses to connect
+                                  the associated system of the given technology.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ocpu:
+                          description: (Updatable) The Minimum number of OCPUs to
+                            be made available for this Deployment.
+                          type: number
+                        oggVersion:
+                          description: Version of OGG.
+                          type: string
+                        passwordSecretIdSecretRef:
+                          description: The OCID of the Secret where the deployment
+                            password is stored.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        publicSubnetId:
+                          description: (Updatable) The OCID of a public subnet in
+                            the customer tenancy. Can be provided only for public
+                            GGCS deployments.
+                          type: string
+                        publicSubnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            publicSubnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        publicSubnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            publicSubnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        sources:
+                          description: Source Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartSourceOperations:
+                                description: Boolean value that determines source
+                                  operations should start or not.
+                                type: boolean
+                              sourceId:
+                                description: Ggcs source artifact id.
+                                type: string
+                              targetConnectionName:
+                                description: Name of assigned connection for the source.
+                                type: string
+                              targetUri:
+                                description: Target uri for the GoldenGate deployment
+                                  where distribution path needs to be configured.
+                                type: string
+                            type: object
+                          type: array
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        targets:
+                          description: Target Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartTargetOperations:
+                                description: Boolean value that determines target
+                                  operations should start or not.
+                                type: boolean
+                              sourceConnectionName:
+                                description: Name of assigned connection for the target.
+                                type: string
+                              sourceUri:
+                                description: Source uri for the GoldenGate deployment
+                                  from where the collector path needs to be configured.
+                                type: string
+                              targetId:
+                                description: GGCS target artifact id.
+                                type: string
+                            type: object
+                          type: array
+                        users:
+                          description: Ggcs user details to be created or updated.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              secretIdSecretRef:
+                                description: Vault secret OCID containing the corresponding
+                                  user password.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            required:
+                            - secretIdSecretRef
+                            type: object
+                          type: array
+                      required:
+                      - passwordSecretIdSecretRef
+                      type: object
+                    type: array
+                  notificationEmail:
+                    description: email id to which the stack notifications would be
+                      sent.
+                    type: string
+                  objectstorage:
+                    description: (Updatable) Object Storage Details if object storage
+                      is included in services.
+                    items:
+                      properties:
+                        autoTiering:
+                          description: (Updatable) It sets the auto-tiering status
+                            on the bucket.Allowed values are "DISABLED" / "INFREQUENTACCESS"
+                          type: string
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        objectVersioning:
+                          description: (Updatable) Mentions whether the object versioning
+                            to be enabled or not,Allowed values are "ENABLED" / "DISABLED"/"SUSPENDED"
+                          type: string
+                        storageTier:
+                          description: Mentions which storage tier to use for the
+                            bucket,Allowed values are "STANDARD" / "ARCHIVE"
+                          type: string
+                      type: object
+                    type: array
+                  services:
+                    description: (Updatable) List of services to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  stackTemplates:
+                    description: (Updatable) List of templates to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  subnetId:
+                    description: The OCID of the subnet the Autonomous Database is
+                      associated with.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.services is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.services)
+                || (has(self.initProvider) && has(self.initProvider.services))'
+            - message: spec.forProvider.stackTemplates is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.stackTemplates)
+                || (has(self.initProvider) && has(self.initProvider.stackTemplates))'
+          status:
+            description: StackStatus defines the observed state of Stack.
+            properties:
+              atProvider:
+                properties:
+                  adb:
+                    description: (Updatable) ADB details if adb is included in the
+                      services.
+                    items:
+                      properties:
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        dataStorageSizeInTbs:
+                          description: (Updatable) The size, in terabytes, of the
+                            data volume that will be created and attached to the database.
+                          type: number
+                        dbCredentials:
+                          description: DB credential details.
+                          items:
+                            properties:
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            type: object
+                          type: array
+                        dbVersion:
+                          description: (Updatable) A valid Oracle Database version
+                            for Autonomous Database.
+                          type: string
+                        dbWorkload:
+                          description: DB Workload to be used with ADB. Accepted values
+                            are OLTP, DW.
+                          type: string
+                        ecpu:
+                          description: (Updatable) The compute amount (ECPUs) available
+                            to the database.
+                          type: number
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        isMtlsConnectionRequired:
+                          description: (Updatable) Specifies if the Autonomous Database
+                            requires mTLS connections.
+                          type: boolean
+                        isPublic:
+                          description: If true then subnetId should not be provided.
+                          type: boolean
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        toolsPublicAccess:
+                          description: This is an array of CIDR (classless inter-domain
+                            routing) notations for a subnet or VCN OCID (virtual cloud
+                            network Oracle Cloud ID). Allowed only when subnetId is
+                            provided (private ADB).
+                          type: string
+                      type: object
+                    type: array
+                  addServiceTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Add Service. Could be set to any integer value.
+                    type: number
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the Stack in.
+                    type: string
+                  dataflow:
+                    description: (Updatable) DATAFLOW details if dataflow is included
+                      in the services.
+                    items:
+                      properties:
+                        archiveUri:
+                          description: Contains the archive from object storage bucket
+                            which can be added as dependency to data flow application.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionDetails:
+                                description: (Updatable) Details of services to create
+                                  private endpoint.
+                                items:
+                                  properties:
+                                    difDependencies:
+                                      description: (Updatable) List of DIF Service
+                                        Dependency Details to create private endpoint.
+                                      items:
+                                        properties:
+                                          serviceInstanceId:
+                                            description: (Updatable) InstanceId of
+                                              service which is part of the Stack.
+                                            type: string
+                                          serviceType:
+                                            description: (Updatable) Supported service
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    domainNames:
+                                      description: (Updatable) An array of DNS zone
+                                        names.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              subnetId:
+                                description: The OCID of the subnet the Autonomous
+                                  Database is associated with.
+                                type: string
+                            type: object
+                          type: array
+                        driverShape:
+                          description: (Updatable) The VM shape for the driver. Sets
+                            the driver cores and memory.
+                          type: string
+                        driverShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        execute:
+                          description: Contains the main file (py/jar) along with
+                            parameters & configuration to be passed to the DataFlow
+                            run.
+                          type: string
+                        executorShape:
+                          description: (Updatable) The VM shape for the executors.
+                            Sets the executor cores and memory.
+                          type: string
+                        executorShapeConfig:
+                          description: (Updatable) This is used to configure the shape
+                            of the driver or executor if a flexible shape is used.
+                          items:
+                            properties:
+                              memoryInGbs:
+                                description: (Updatable) The amount of memory used
+                                  for the driver or executors.
+                                type: number
+                              ocpus:
+                                description: (Updatable) The total number of OCPUs
+                                  used for the driver or executors. See here for details.
+                                type: number
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        logBucketInstanceId:
+                          description: (Updatable) InstanceId of log bucket created
+                            as part of objectstorage service in stack. Used for storing
+                            application run logs.
+                          type: string
+                        numExecutors:
+                          description: (Updatable) The number of executor VMs requested.
+                          type: number
+                        privateEndpointId:
+                          description: (Updatable) OCID of the already provisioned
+                            dataflow private endpoint.
+                          type: string
+                        sparkVersion:
+                          description: (Updatable) The Spark version utilized to run
+                            the application.
+                          type: string
+                        warehouseBucketInstanceId:
+                          description: (Updatable) InstanceId of warehouse bucket
+                            created as part of objectstorage service in stack. Mandatory
+                            for SQL applications.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deployArtifactsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Deploy Artifacts. Could be set to any integer value.
+                    type: number
+                  displayName:
+                    description: A user-friendly name. Should be unique per compartment.
+                      Avoid entering confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags.  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  genai:
+                    description: (Updatable) GenAi Details if genai is included in
+                      services.
+                    items:
+                      properties:
+                        baseModel:
+                          description: Name of the base model.
+                          type: string
+                        clusterType:
+                          description: The dedicated AI cluster type.
+                          type: string
+                        endpoints:
+                          description: (Updatable) List of endpoints to provision
+                            for the GENAI cluster.
+                          items:
+                            properties:
+                              endpointName:
+                                description: (Updatable) Identifier for each endpoint.
+                                type: string
+                              isContentModerationEnabled:
+                                description: (Updatable) Helps remove toxic and biased
+                                  content from responses.
+                                type: boolean
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ociRegion:
+                          description: Region on which the cluster end endpoint will
+                            be provisioned.
+                          type: string
+                        unitCount:
+                          description: (Updatable) No of replicas of base model to
+                            be used for hosting.
+                          type: number
+                      type: object
+                    type: array
+                  ggcs:
+                    description: (Updatable) GGCS details if ggcs is included in the
+                      services.
+                    items:
+                      properties:
+                        artifactObjectStoragePath:
+                          description: Object storage path for the artifacts.
+                          type: string
+                        connections:
+                          description: (Updatable) Details for connections to other
+                            services from Dataflow.
+                          items:
+                            properties:
+                              connectionId:
+                                description: (Updatable) OCID of pre-created Oracle
+                                  GoldenGate connection.
+                                type: string
+                              connectionName:
+                                description: (Updatable) Name of the connection to
+                                  be created.
+                                type: string
+                              difDependencies:
+                                description: (Updatable) List of DIF Service Dependency
+                                  Details to create private endpoint.
+                                items:
+                                  properties:
+                                    serviceInstanceId:
+                                      description: (Updatable) InstanceId of service
+                                        which is part of the Stack.
+                                      type: string
+                                    serviceType:
+                                      description: (Updatable) Supported service name.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        ocpu:
+                          description: (Updatable) The Minimum number of OCPUs to
+                            be made available for this Deployment.
+                          type: number
+                        oggVersion:
+                          description: Version of OGG.
+                          type: string
+                        publicSubnetId:
+                          description: (Updatable) The OCID of a public subnet in
+                            the customer tenancy. Can be provided only for public
+                            GGCS deployments.
+                          type: string
+                        sources:
+                          description: Source Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartSourceOperations:
+                                description: Boolean value that determines source
+                                  operations should start or not.
+                                type: boolean
+                              sourceId:
+                                description: Ggcs source artifact id.
+                                type: string
+                              targetConnectionName:
+                                description: Name of assigned connection for the source.
+                                type: string
+                              targetUri:
+                                description: Target uri for the GoldenGate deployment
+                                  where distribution path needs to be configured.
+                                type: string
+                            type: object
+                          type: array
+                        subnetId:
+                          description: The OCID of the subnet the Autonomous Database
+                            is associated with.
+                          type: string
+                        targets:
+                          description: Target Detail to configure existing or new
+                            datasource.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              shouldStartTargetOperations:
+                                description: Boolean value that determines target
+                                  operations should start or not.
+                                type: boolean
+                              sourceConnectionName:
+                                description: Name of assigned connection for the target.
+                                type: string
+                              sourceUri:
+                                description: Source uri for the GoldenGate deployment
+                                  from where the collector path needs to be configured.
+                                type: string
+                              targetId:
+                                description: GGCS target artifact id.
+                                type: string
+                            type: object
+                          type: array
+                        users:
+                          description: Ggcs user details to be created or updated.
+                          items:
+                            properties:
+                              action:
+                                description: Action to be done over the user. Allowed
+                                  values are "CREATE" or "UPDATE".
+                                type: string
+                              userName:
+                                description: Username for ADB to be created or updated.
+                                type: string
+                              userType:
+                                description: Type of the user. Allowed values are
+                                  "ADMIN" or "CUSTOM" or "GGCS".
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  id:
+                    description: The OCID of the Stack.
+                    type: string
+                  lifecycleDetails:
+                    description: A message that describes the current state of the
+                      Stack in more detail. For example, can be used to provide actionable
+                      information for a resource in the Failed state.
+                    type: string
+                  notificationEmail:
+                    description: email id to which the stack notifications would be
+                      sent.
+                    type: string
+                  objectstorage:
+                    description: (Updatable) Object Storage Details if object storage
+                      is included in services.
+                    items:
+                      properties:
+                        autoTiering:
+                          description: (Updatable) It sets the auto-tiering status
+                            on the bucket.Allowed values are "DISABLED" / "INFREQUENTACCESS"
+                          type: string
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        objectVersioning:
+                          description: (Updatable) Mentions whether the object versioning
+                            to be enabled or not,Allowed values are "ENABLED" / "DISABLED"/"SUSPENDED"
+                          type: string
+                        storageTier:
+                          description: Mentions which storage tier to use for the
+                            bucket,Allowed values are "STANDARD" / "ARCHIVE"
+                          type: string
+                      type: object
+                    type: array
+                  serviceDetails:
+                    description: Details of the service onboarded for the data intelligence
+                      stack.
+                    items:
+                      properties:
+                        additionalDetails:
+                          description: Additional details about the provisioned services
+                          items:
+                            properties:
+                              assignedConnections:
+                                description: connections assigned to Golden Gate deployment
+                                items:
+                                  properties:
+                                    connectionId:
+                                      description: (Updatable) OCID of pre-created
+                                        Oracle GoldenGate connection.
+                                      type: string
+                                    connectionName:
+                                      description: (Updatable) Name of the connection
+                                        to be created.
+                                      type: string
+                                    requestedBy:
+                                      description: Specifies who has made this connection.
+                                      type: string
+                                  type: object
+                                type: array
+                              endpointDetails:
+                                description: details of all endpoints assigned to
+                                  cluster
+                                items:
+                                  properties:
+                                    endpointId:
+                                      description: OCID of the endpoint.
+                                      type: string
+                                    endpointName:
+                                      description: (Updatable) Identifier for each
+                                        endpoint.
+                                      type: string
+                                  type: object
+                                type: array
+                              modelId:
+                                description: OCID of model
+                                type: string
+                              modelVersion:
+                                description: version of model
+                                type: string
+                              ociRegion:
+                                description: Region on which the cluster end endpoint
+                                  will be provisioned.
+                                type: string
+                              privateEndpointId:
+                                description: (Updatable) OCID of the already provisioned
+                                  dataflow private endpoint.
+                                type: string
+                            type: object
+                          type: array
+                        currentArtifactPath:
+                          description: name of the service
+                          type: string
+                        displayName:
+                          description: A user-friendly name. Should be unique per
+                            compartment. Avoid entering confidential information.
+                          type: string
+                        instanceId:
+                          description: Id for the adw instance.
+                          type: string
+                        serviceId:
+                          description: ID for the service
+                          type: string
+                        serviceType:
+                          description: (Updatable) Supported service name.
+                          type: string
+                        serviceUrl:
+                          description: url for the service
+                          type: string
+                        status:
+                          description: state of the service
+                          type: string
+                      type: object
+                    type: array
+                  services:
+                    description: (Updatable) List of services to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  stackTemplates:
+                    description: (Updatable) List of templates to be onboarded for
+                      the stack.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  state:
+                    description: The current state of the Stack.
+                    type: string
+                  subnetId:
+                    description: The OCID of the subnet the Autonomous Database is
+                      associated with.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'System tags for this resource. Each key is predefined
+                      and scoped to a namespace.  Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: 'The date and time the Stack was created, in the
+                      format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The date and time the Stack was updated, in the
+                      format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z'
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

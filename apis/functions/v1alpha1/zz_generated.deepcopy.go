@@ -628,6 +628,16 @@ func (in *FailureDestinationInitParameters) DeepCopyInto(out *FailureDestination
 		*out = new(string)
 		**out = **in
 	}
+	if in.QueueIDRef != nil {
+		in, out := &in.QueueIDRef, &out.QueueIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QueueIDSelector != nil {
+		in, out := &in.QueueIDSelector, &out.QueueIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.StreamID != nil {
 		in, out := &in.StreamID, &out.StreamID
 		*out = new(string)
@@ -737,6 +747,16 @@ func (in *FailureDestinationParameters) DeepCopyInto(out *FailureDestinationPara
 		in, out := &in.QueueID, &out.QueueID
 		*out = new(string)
 		**out = **in
+	}
+	if in.QueueIDRef != nil {
+		in, out := &in.QueueIDRef, &out.QueueIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QueueIDSelector != nil {
+		in, out := &in.QueueIDSelector, &out.QueueIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StreamID != nil {
 		in, out := &in.StreamID, &out.StreamID
@@ -2021,6 +2041,16 @@ func (in *SuccessDestinationInitParameters) DeepCopyInto(out *SuccessDestination
 		*out = new(string)
 		**out = **in
 	}
+	if in.QueueIDRef != nil {
+		in, out := &in.QueueIDRef, &out.QueueIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QueueIDSelector != nil {
+		in, out := &in.QueueIDSelector, &out.QueueIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.StreamID != nil {
 		in, out := &in.StreamID, &out.StreamID
 		*out = new(string)
@@ -2130,6 +2160,16 @@ func (in *SuccessDestinationParameters) DeepCopyInto(out *SuccessDestinationPara
 		in, out := &in.QueueID, &out.QueueID
 		*out = new(string)
 		**out = **in
+	}
+	if in.QueueIDRef != nil {
+		in, out := &in.QueueIDRef, &out.QueueIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.QueueIDSelector != nil {
+		in, out := &in.QueueIDSelector, &out.QueueIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StreamID != nil {
 		in, out := &in.StreamID, &out.StreamID

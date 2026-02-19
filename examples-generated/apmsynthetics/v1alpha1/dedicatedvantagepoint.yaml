@@ -1,0 +1,27 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: DedicatedVantagePoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/dedicatedvantagepoint
+  labels:
+    testing.upbound.io/example-name: test_dedicated_vantage_point
+  name: test-dedicated-vantage-point
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.dedicated_vantage_point_display_name}
+    dvpStackDetails:
+    - dvpStackId: ${oci_resourcemanager_stack.test_stack.id}
+      dvpStackType: ${var.dedicated_vantage_point_dvp_stack_details_dvp_stack_type}
+      dvpStreamIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+      dvpVersion: ${var.dedicated_vantage_point_dvp_stack_details_dvp_version}
+    freeformTags:
+      bar-key: value
+    region: ${var.dedicated_vantage_point_region}
+    status: ${var.dedicated_vantage_point_status}

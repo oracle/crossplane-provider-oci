@@ -1,0 +1,44 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: CatalogItem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/catalogitem
+  labels:
+    testing.upbound.io/example-name: test_catalog_item
+  name: test-catalog-item
+spec:
+  forProvider:
+    catalogSourcePayload:
+    - accessUri: ${var.catalog_item_catalog_source_payload_access_uri}
+      branchName: ${var.catalog_item_catalog_source_payload_branch_name}
+      bucket: ${var.catalog_item_catalog_source_payload_bucket}
+      configSourceType: ${var.catalog_item_catalog_source_payload_config_source_type}
+      configurationSourceProviderId: ${oci_fleet_apps_management_configuration_source_provider.test_configuration_source_provider.id}
+      description: ${var.catalog_item_catalog_source_payload_description}
+      listingId: ${oci_marketplace_listing.test_listing.id}
+      longDescription: ${var.catalog_item_catalog_source_payload_long_description}
+      namespace: ${var.catalog_item_catalog_source_payload_namespace}
+      object: ${var.catalog_item_catalog_source_payload_object}
+      repositoryUrl: ${var.catalog_item_catalog_source_payload_repository_url}
+      templateDisplayName: ${var.catalog_item_catalog_source_payload_template_display_name}
+      timeExpires: ${var.catalog_item_catalog_source_payload_time_expires}
+      version: ${var.catalog_item_catalog_source_payload_version}
+      workingDirectory: ${var.catalog_item_catalog_source_payload_working_directory}
+      zipFileBase64Encoded: ${var.catalog_item_catalog_source_payload_zip_file_base64encoded}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configSourceType: ${var.catalog_item_config_source_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.catalog_item_description}
+    displayName: ${var.catalog_item_display_name}
+    freeformTags:
+      bar-key: value
+    is_item_locked: ${var.catalog_item_is_item_locked}
+    listingId: ${oci_marketplace_listing.test_listing.id}
+    listingVersion: ${var.catalog_item_listing_version}
+    packageType: ${var.catalog_item_package_type}
+    shortDescription: ${var.catalog_item_short_description}
+    timeReleased: ${var.catalog_item_time_released}
+    versionDescription: ${var.catalog_item_version_description}

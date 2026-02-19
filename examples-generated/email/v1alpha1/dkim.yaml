@@ -1,0 +1,23 @@
+apiVersion: email.oci.upbound.io/v1alpha1
+kind: Dkim
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/dkim
+  labels:
+    testing.upbound.io/example-name: test_dkim
+  name: test-dkim
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.dkim_description}
+    emailDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_email_domain
+    freeformTags:
+      Department: Finance
+    name: ${var.dkim_name}
+    privateKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

@@ -1,0 +1,23 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: Script
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/script
+  labels:
+    testing.upbound.io/example-name: test_script
+  name: test-script
+spec:
+  forProvider:
+    apmDomainId: ${oci_apm_synthetics_apm_domain.test_apm_domain.id}
+    content: ${var.script_content}
+    contentFileName: ${var.script_content_file_name}
+    contentType: ${var.script_content_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.script_display_name}
+    freeformTags:
+      bar-key: value
+    parameters:
+    - isSecret: ${var.script_parameters_is_secret}
+      paramName: ${var.script_parameters_param_name}
+      paramValue: ${var.script_parameters_param_value}

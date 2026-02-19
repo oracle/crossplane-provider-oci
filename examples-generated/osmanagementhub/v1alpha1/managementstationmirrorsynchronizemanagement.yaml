@@ -1,0 +1,14 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagementStationMirrorSynchronizeManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managementstationmirrorsynchronizemanagement
+  labels:
+    testing.upbound.io/example-name: test_management_station_mirror_synchronize_management
+  name: test-management-station-mirror-synchronize-management
+spec:
+  forProvider:
+    managementStationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_station
+    mirrorId: ${oci_os_management_hub_mirror.test_mirror.id}

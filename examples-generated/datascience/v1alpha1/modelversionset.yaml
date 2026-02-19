@@ -1,0 +1,22 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelVersionSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelversionset
+  labels:
+    testing.upbound.io/example-name: test_model_version_set
+  name: test-model-version-set
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.model_version_set_description}
+    freeformTags:
+      Department: Finance
+    name: ${var.model_version_set_name}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

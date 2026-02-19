@@ -11,3 +11,33 @@ func (tr *NetworkFirewall) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *NetworkFirewallPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyAddressList) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyApplication) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyApplicationGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyDecryptionProfile) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyDecryptionRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyMappedSecret) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyNatRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicySecurityRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyService) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *NetworkFirewallPolicyTunnelInspectionRule) Hub() {}

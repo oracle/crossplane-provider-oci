@@ -1,0 +1,29 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazureconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_connector
+  name: test-oracle-db-azure-connector
+spec:
+  forProvider:
+    accessToken: ${var.oracle_db_azure_connector_access_token}
+    azureIdentityMechanism: ${var.oracle_db_azure_connector_azure_identity_mechanism}
+    azureResourceGroup: ${var.oracle_db_azure_connector_azure_resource_group}
+    azureSubscriptionId: ${oci_onesubscription_subscription.test_subscription.id}
+    azureTenantId: ${oci_dbmulticloud_azure_tenant.test_azure_tenant.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbClusterResourceId: ${oci_cloud_guard_resource.test_resource.id}
+    defined_tags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_azure_connector_display_name}
+    freeform_tags:
+      Department: Finance
+    new_version: ${var.oracle_db_azure_connector_new_version}
+    oracle_db_azure_connector_id: ${oci_dbmulticloud_oracle_db_azure_connector.test_oracle_db_azure_connector.id}
+    private_endpoint_dns_alias: ${var.oracle_db_azure_connector_private_endpoint_dns_alias}
+    private_endpoint_ip_address: ${var.oracle_db_azure_connector_private_endpoint_ip_address}
+    system_tags: ${var.oracle_db_azure_connector_system_tags}

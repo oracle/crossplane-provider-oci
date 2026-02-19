@@ -1,0 +1,32 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagementStation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managementstation
+  labels:
+    testing.upbound.io/example-name: test_management_station
+  name: test-management-station
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.management_station_description}
+    displayName: ${var.management_station_display_name}
+    freeformTags:
+      Department: Finance
+    hostname: ${var.management_station_hostname}
+    isAutoConfigEnabled: ${var.management_station_is_auto_config_enabled}
+    mirror:
+    - directory: ${var.management_station_mirror_directory}
+      isSslverifyEnabled: ${var.management_station_mirror_is_sslverify_enabled}
+      port: ${var.management_station_mirror_port}
+      sslcert: ${var.management_station_mirror_sslcert}
+      sslport: ${var.management_station_mirror_sslport}
+    proxy:
+    - forward: ${var.management_station_proxy_forward}
+      hosts: ${var.management_station_proxy_hosts}
+      isEnabled: ${var.management_station_proxy_is_enabled}
+      port: ${var.management_station_proxy_port}

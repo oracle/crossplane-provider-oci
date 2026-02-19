@@ -463,7 +463,17 @@ type PsqlDbSystemInitParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the configuration associated with the database system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apmconfig/v1alpha1.Config
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ConfigID *string `json:"configId,omitempty" tf:"config_id,omitempty"`
+
+	// Reference to a Config in apmconfig to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDRef *v1.Reference `json:"configIdRef,omitempty" tf:"-"`
+
+	// Selector for a Config in apmconfig to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDSelector *v1.Selector `json:"configIdSelector,omitempty" tf:"-"`
 
 	// Initial database system credentials that the database system will be provisioned with. The password details are not visible on any subsequent operation, such as GET /dbSystems/{dbSystemId}.
 	Credentials []CredentialsInitParameters `json:"credentials,omitempty" tf:"credentials,omitempty"`
@@ -629,8 +639,18 @@ type PsqlDbSystemParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the configuration associated with the database system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apmconfig/v1alpha1.Config
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ConfigID *string `json:"configId,omitempty" tf:"config_id,omitempty"`
+
+	// Reference to a Config in apmconfig to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDRef *v1.Reference `json:"configIdRef,omitempty" tf:"-"`
+
+	// Selector for a Config in apmconfig to populate configId.
+	// +kubebuilder:validation:Optional
+	ConfigIDSelector *v1.Selector `json:"configIdSelector,omitempty" tf:"-"`
 
 	// Initial database system credentials that the database system will be provisioned with. The password details are not visible on any subsequent operation, such as GET /dbSystems/{dbSystemId}.
 	// +kubebuilder:validation:Optional

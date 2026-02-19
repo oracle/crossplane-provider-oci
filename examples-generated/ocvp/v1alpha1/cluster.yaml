@@ -1,0 +1,62 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/cluster
+  labels:
+    testing.upbound.io/example-name: test_cluster
+  name: test-cluster
+spec:
+  forProvider:
+    capacityReservationId: ${oci_ocvp_capacity_reservation.test_capacity_reservation.id}
+    computeAvailabilityDomain: ${var.cluster_compute_availability_domain}
+    datastores:
+    - blockVolumeIds: ${var.cluster_datastores_block_volume_ids}
+      datastoreType: ${var.cluster_datastores_datastore_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.cluster_display_name}
+    esxiHostsCount: ${var.cluster_esxi_hosts_count}
+    esxiSoftwareVersion: ${var.cluster_esxi_software_version}
+    freeformTags:
+      Department: Finance
+    initialCommitment: ${var.cluster_initial_commitment}
+    initialHostOcpuCount: ${var.cluster_initial_host_ocpu_count}
+    initialHostShapeName: ${oci_core_shape.test_shape.name}
+    instanceDisplayNamePrefix: ${var.cluster_instance_display_name_prefix}
+    isShieldedInstanceEnabled: ${var.cluster_is_shielded_instance_enabled}
+    networkConfiguration:
+    - hcxVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      nsxEdgeUplink1VlanId: ${oci_ocvp_nsx_edge_uplink1vlan.test_nsx_edge_uplink1vlan.id}
+      nsxEdgeUplink2VlanId: ${oci_ocvp_nsx_edge_uplink2vlan.test_nsx_edge_uplink2vlan.id}
+      nsxEdgeVtepVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      nsxVtepVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      provisioningSubnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      provisioningVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      replicationVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      vmotionVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      vsanVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      vsphereVlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+    sddcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sddc
+    vmwareSoftwareVersion: ${var.cluster_vmware_software_version}
+    workloadNetworkCidr: ${var.cluster_workload_network_cidr}

@@ -1,0 +1,55 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagedInstanceGroupManageModuleStreamsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managedinstancegroupmanagemodulestreamsmanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group_manage_module_streams_management
+  name: test-managed-instance-group-manage-module-streams-management
+spec:
+  forProvider:
+    disable:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_disable_module_name}
+      softwareSourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_software_source
+      streamNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+    enable:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_enable_module_name}
+      softwareSourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_software_source
+      streamNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+    install:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_install_module_name}
+      profileNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_profile
+      softwareSourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_software_source
+      streamNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+    isDryRun: ${var.managed_instance_group_manage_module_streams_management_is_dry_run}
+    managedInstanceGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_instance_group
+    remove:
+    - moduleName: ${var.managed_instance_group_manage_module_streams_management_remove_module_name}
+      profileNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_profile
+      softwareSourceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_software_source
+      streamNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+    workRequestDetails:
+    - description: ${var.managed_instance_group_manage_module_streams_management_work_request_details_description}
+      displayName: ${var.managed_instance_group_manage_module_streams_management_work_request_details_display_name}

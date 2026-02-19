@@ -1,0 +1,12 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceStorageEnableDisableArchiving
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacestorageenabledisablearchiving
+  labels:
+    testing.upbound.io/example-name: test_namespace_storage_enable_disable_archiving
+  name: test-namespace-storage-enable-disable-archiving
+spec:
+  forProvider:
+    enableArchivingTenant: ${var.enable_archiving_tenant}
+    namespace: ${var.namespace_storage_enable_disable_archiving_namespace}

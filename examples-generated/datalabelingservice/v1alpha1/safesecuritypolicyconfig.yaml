@@ -1,0 +1,28 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSecurityPolicyConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesecuritypolicyconfig
+  labels:
+    testing.upbound.io/example-name: test_security_policy_config
+  name: test-security-policy-config
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.security_policy_config_description}
+    displayName: ${var.security_policy_config_display_name}
+    firewallConfig:
+    - excludeJob: ${var.security_policy_config_firewall_config_exclude_job}
+      status: ${var.security_policy_config_firewall_config_status}
+      violationLogAutoPurge: ${var.security_policy_config_firewall_config_violation_log_auto_purge}
+    freeformTags:
+      Department: Finance
+    securityPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_policy
+    unifiedAuditPolicyConfig:
+    - excludeDatasafeUser: ${var.security_policy_config_unified_audit_policy_config_exclude_datasafe_user}

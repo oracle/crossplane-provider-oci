@@ -182,6 +182,25 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("apmconfig.oci.upbound.io", "v1alpha1", "Config", "ConfigList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ConfigID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ConfigIDRef,
+			Selector:     mg.Spec.ForProvider.ConfigIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ConfigID")
+	}
+	mg.Spec.ForProvider.ConfigID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ConfigIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Credentials); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Credentials[i3].PasswordDetails); i4++ {
@@ -266,6 +285,25 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("apmconfig.oci.upbound.io", "v1alpha1", "Config", "ConfigList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ConfigID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ConfigIDRef,
+			Selector:     mg.Spec.InitProvider.ConfigIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ConfigID")
+	}
+	mg.Spec.InitProvider.ConfigID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ConfigIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Credentials); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.Credentials[i3].PasswordDetails); i4++ {

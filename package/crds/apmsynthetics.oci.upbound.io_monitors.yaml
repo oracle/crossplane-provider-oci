@@ -1,0 +1,2689 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: monitors.apmsynthetics.oci.upbound.io
+spec:
+  group: apmsynthetics.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Monitor
+    listKind: MonitorList
+    plural: monitors
+    singular: monitor
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Monitor is the Schema for the Monitors API. Provides the Monitor
+          resource in Oracle Cloud Infrastructure APM Availability Monitoring service
+          (aka APM Synthetics Service)
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MonitorSpec defines the desired state of Monitor
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  apmDomainId:
+                    description: (Updatable) The APM domain ID the request is intended
+                      for.
+                    type: string
+                  availabilityConfiguration:
+                    description: (Updatable) Monitor availability configuration details.
+                    items:
+                      properties:
+                        maxAllowedFailuresPerInterval:
+                          description: (Updatable) Intervals with failed runs more
+                            than this value will be classified as UNAVAILABLE.
+                          type: number
+                        minAllowedRunsPerInterval:
+                          description: (Updatable) Intervals with runs less than this
+                            value will be classified as UNKNOWN and excluded from
+                            the availability calculations.
+                          type: number
+                      type: object
+                    type: array
+                  batchIntervalInSeconds:
+                    description: (Updatable) Time interval between 2 runs in round
+                      robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).
+                    type: number
+                  configuration:
+                    description: (Updatable) Details of monitor configuration.
+                    items:
+                      properties:
+                        clientCertificateDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for client certificate.
+                          items:
+                            properties:
+                              clientCertificate:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                              privateKey:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) The private key associated with the
+                                  client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        configType:
+                          description: (Updatable) Type of configuration.
+                          type: string
+                        connectionString:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection string.
+                          type: string
+                        databaseAuthenticationDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    passwordSecretRef:
+                                      description: (Updatable) Password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    passwordTypeSecretRef:
+                                      description: (Updatable) Type of method to pass
+                                        password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        databaseConnectionType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection type. Only CUSTOM_JDBC is supported
+                            for MYSQL database type.
+                          type: string
+                        databaseRole:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database role.
+                          type: string
+                        databaseType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database type.
+                          type: string
+                        databaseWalletDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for database wallet.
+                          items:
+                            properties:
+                              databaseWallet:
+                                description: (Updatable) The database wallet configuration
+                                  zip file.
+                                type: string
+                              serviceName:
+                                description: (Updatable) Service name of the database.
+                                type: string
+                            type: object
+                          type: array
+                        dnsConfiguration:
+                          description: (Updatable) Information about the DNS settings.
+                          items:
+                            properties:
+                              isOverrideDns:
+                                description: (Updatable) If isOverrideDns is true,
+                                  then DNS settings will be overridden.
+                                type: boolean
+                              overrideDnsIp:
+                                description: (Updatable) Attribute to override the
+                                  DNS IP value. This value will be honored only if
+                                  isOverrideDns is set to true.
+                                type: string
+                            type: object
+                          type: array
+                        downloadSizeLimitInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Download size limit in Bytes, at which to stop the transfer.
+                            Maximum download size limit is 5 MiB.
+                          type: number
+                        ftpBasicAuthenticationDetails:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    passwordSecretRef:
+                                      description: (Updatable) Password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    passwordTypeSecretRef:
+                                      description: (Updatable) Type of method to pass
+                                        password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        ftpProtocol:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP protocol type.
+                          type: string
+                        ftpRequestType:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP monitor request type.
+                          type: string
+                        isActiveMode:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            If enabled, Active mode will be used for the FTP connection.
+                            Not supported for SFTP protocol.
+                          type: boolean
+                        isCertificateValidationEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | REST_CONFIG | SCRIPTED_BROWSER_CONFIG) (Updatable) If
+                            certificate validation is enabled, then the call will
+                            fail in case of certification errors.
+                          type: boolean
+                        isDefaultSnapshotEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG) (Updatable) If disabled, auto
+                            snapshots are not collected.
+                          type: boolean
+                        isFailureRetried:
+                          description: (Updatable) If isFailureRetried is enabled,
+                            then a failed call will be retried.
+                          type: boolean
+                        isQueryRecursive:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) If isQueryRecursive is enabled, then queries
+                            will be sent recursively to the target server.
+                          type: boolean
+                        isRedirectionEnabled:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            If redirection is enabled, then redirects will be allowed
+                            while accessing target URL.
+                          type: boolean
+                        nameServer:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) Name of the server that will be used to perform
+                            DNS lookup.
+                          type: string
+                        networkConfiguration:
+                          description: (Updatable) Details of the network configuration.
+                            For NETWORK monitor type, NetworkConfiguration is mandatory.
+                          items:
+                            properties:
+                              numberOfHops:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of hops.
+                                type: number
+                              probeMode:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of probe mode when TCP protocol
+                                  is selected.
+                                type: string
+                              probePerHop:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probes per hop.
+                                type: number
+                              protocol:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of protocol.
+                                type: string
+                              transmissionRate:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probe packets sent out simultaneously.
+                                type: number
+                            type: object
+                          type: array
+                        protocol:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG | REST_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Type of protocol.
+                          type: string
+                        query:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            SQL query to be executed.
+                          type: string
+                        recordType:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG) (Updatable) DNS
+                            record type.
+                          type: string
+                        reqAuthenticationDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for request HTTP authentication.
+                          items:
+                            properties:
+                              authHeaders:
+                                description: '(Applicable when config_type=REST_CONFIG)
+                                  (Updatable) List of authentication headers. Example:
+                                  [{"headerName": "content-type", "headerValue":"json"}]'
+                                items:
+                                  properties:
+                                    headerName:
+                                      description: (Updatable) Name of the header.
+                                      type: string
+                                    headerValue:
+                                      description: (Applicable when config_type=REST_CONFIG)
+                                        (Updatable) Value of the header.
+                                      type: string
+                                  type: object
+                                type: array
+                              authRequestMethod:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request method.
+                                type: string
+                              authRequestPostBody:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request post body.
+                                type: string
+                              authToken:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Authentication token.
+                                type: string
+                              authUrl:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) URL to get authentication token.
+                                type: string
+                              authUserName:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) User name for authentication.
+                                type: string
+                              authUserNameRef:
+                                description: Reference to a User in identity to populate
+                                  authUserName.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              authUserNameSelector:
+                                description: Selector for a User in identity to populate
+                                  authUserName.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              authUserPasswordSecretRef:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) User password for authentication.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              oauthScheme:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request HTTP OAuth scheme.
+                                type: string
+                            type: object
+                          type: array
+                        reqAuthenticationScheme:
+                          description: (Applicable when config_type=REST_CONFIG |
+                            SCRIPTED_REST_CONFIG) (Updatable) Request HTTP authentication
+                            scheme.
+                          type: string
+                        requestHeaders:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request headers. Example: [{"headerName":
+                            "content-type", "headerValue":"json"}]'
+                          items:
+                            properties:
+                              headerName:
+                                description: (Updatable) Name of the header.
+                                type: string
+                              headerValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of the header.
+                                type: string
+                            type: object
+                          type: array
+                        requestMethod:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request HTTP method.
+                          type: string
+                        requestPostBody:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request post body content.
+                          type: string
+                        requestQueryParams:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request query params. Example: [{"paramName":
+                            "sortOrder", "paramValue": "asc"}]'
+                          items:
+                            properties:
+                              paramName:
+                                description: (Updatable) Name of request query parameter.
+                                type: string
+                              paramValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of request query parameter.
+                                type: string
+                            type: object
+                          type: array
+                        uploadFileSizeInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            File upload size in Bytes, at which to stop the transfer.
+                            Maximum upload size is 5 MiB.
+                          type: number
+                        verifyResponseCodes:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | FTP_CONFIG | REST_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Expected HTTP response codes. For status code range, set
+                            values such as 2xx, 3xx.
+                          items:
+                            type: string
+                          type: array
+                        verifyResponseContent:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG | FTP_CONFIG |
+                            REST_CONFIG) (Updatable) Verify response content against
+                            regular expression based string. If response content does
+                            not match the verifyResponseContent value, then it will
+                            be considered a failure.
+                          type: string
+                        verifyTexts:
+                          description: (Applicable when config_type=BROWSER_CONFIG)
+                            (Updatable) Verifies all the search strings present in
+                            the response. If any search string is not present in the
+                            response, then it will be considered as a failure.
+                          items:
+                            properties:
+                              text:
+                                description: (Applicable when config_type=BROWSER_CONFIG)
+                                  (Updatable) Verification text in the response.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Unique name that can be edited. The name
+                      should not contain any confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isIpv6:
+                    description: (Updatable) If enabled, domain name will resolve
+                      to an IPv6 address.
+                    type: boolean
+                  isRunNow:
+                    description: (Updatable) If isRunNow is enabled, then the monitor
+                      will run immediately.
+                    type: boolean
+                  isRunOnce:
+                    description: (Updatable) If runOnce is enabled, then the monitor
+                      will run once.
+                    type: boolean
+                  maintenanceWindowSchedule:
+                    description: (Updatable) Details required to schedule maintenance
+                      window.
+                    items:
+                      properties:
+                        timeEnded:
+                          description: '(Updatable) End time of the maintenance window,
+                            expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
+                          type: string
+                        timeStarted:
+                          description: '(Updatable) Start time of the maintenance
+                            window, expressed in RFC 3339 timestamp format. Example:
+                            2020-02-12T22:47:12.613Z'
+                          type: string
+                      type: object
+                    type: array
+                  monitorType:
+                    description: Type of monitor.
+                    type: string
+                  repeatIntervalInSeconds:
+                    description: (Updatable) Interval in seconds after the start time
+                      when the job should be repeated. Minimum repeatIntervalInSeconds
+                      should be 300 seconds.
+                    type: number
+                  schedulingPolicy:
+                    description: (Updatable) Scheduling policy to decide the distribution
+                      of monitor executions on vantage points.
+                    type: string
+                  scriptId:
+                    description: (Updatable) The OCID of the script. scriptId is mandatory
+                      for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types.
+                      For other monitor types, it should be set to null.
+                    type: string
+                  scriptIdRef:
+                    description: Reference to a Script in apmsynthetics to populate
+                      scriptId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  scriptIdSelector:
+                    description: Selector for a Script in apmsynthetics to populate
+                      scriptId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  scriptName:
+                    description: Name of the script.
+                    type: string
+                  scriptParameters:
+                    description: '(Updatable) List of script parameters in the monitor.
+                      This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor
+                      types. For other monitor types, it should be set to null. Example:
+                      [{"paramName": "userid", "paramValue":"testuser"}]'
+                    items:
+                      properties:
+                        paramName:
+                          description: (Updatable) Name of request query parameter.
+                          type: string
+                        paramValue:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Value of request query parameter.
+                          type: string
+                      type: object
+                    type: array
+                  status:
+                    description: (Updatable) Enables or disables the monitor.
+                    type: string
+                  target:
+                    description: '(Updatable) Specify the endpoint on which to run
+                      the monitor. For BROWSER, REST, NETWORK, DNS and FTP monitor
+                      types, target is mandatory. If target is specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      (specified by scriptId in monitor) against the specified target
+                      endpoint. If target is not specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      as it is. For NETWORK monitor with TCP protocol, a port needs
+                      to be provided along with target. Example: 192.168.0.1:80.'
+                    type: string
+                  timeoutInSeconds:
+                    description: (Updatable) Timeout in seconds. If isFailureRetried
+                      is true, then timeout cannot be more than 30% of repeatIntervalInSeconds
+                      time for monitors. If isFailureRetried is false, then timeout
+                      cannot be more than 50% of repeatIntervalInSeconds time for
+                      monitors. Also, timeoutInSeconds should be a multiple of 60
+                      for Scripted REST, Scripted Browser and Browser monitors. Monitor
+                      will be allowed to run only for timeoutInSeconds time. It would
+                      be terminated after that.
+                    type: number
+                  vantagePoints:
+                    description: (Updatable) A list of vantage points from which to
+                      execute the monitor. Use /publicVantagePoints to fetch public
+                      vantage points.
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) Unique name that can be edited.
+                            The name should not contain any confidential information.
+                          type: string
+                        name:
+                          description: Name of the vantage point.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  apmDomainId:
+                    description: (Updatable) The APM domain ID the request is intended
+                      for.
+                    type: string
+                  availabilityConfiguration:
+                    description: (Updatable) Monitor availability configuration details.
+                    items:
+                      properties:
+                        maxAllowedFailuresPerInterval:
+                          description: (Updatable) Intervals with failed runs more
+                            than this value will be classified as UNAVAILABLE.
+                          type: number
+                        minAllowedRunsPerInterval:
+                          description: (Updatable) Intervals with runs less than this
+                            value will be classified as UNKNOWN and excluded from
+                            the availability calculations.
+                          type: number
+                      type: object
+                    type: array
+                  batchIntervalInSeconds:
+                    description: (Updatable) Time interval between 2 runs in round
+                      robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).
+                    type: number
+                  configuration:
+                    description: (Updatable) Details of monitor configuration.
+                    items:
+                      properties:
+                        clientCertificateDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for client certificate.
+                          items:
+                            properties:
+                              clientCertificate:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                              privateKey:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) The private key associated with the
+                                  client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        configType:
+                          description: (Updatable) Type of configuration.
+                          type: string
+                        connectionString:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection string.
+                          type: string
+                        databaseAuthenticationDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    passwordSecretRef:
+                                      description: (Updatable) Password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    passwordTypeSecretRef:
+                                      description: (Updatable) Type of method to pass
+                                        password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        databaseConnectionType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection type. Only CUSTOM_JDBC is supported
+                            for MYSQL database type.
+                          type: string
+                        databaseRole:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database role.
+                          type: string
+                        databaseType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database type.
+                          type: string
+                        databaseWalletDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for database wallet.
+                          items:
+                            properties:
+                              databaseWallet:
+                                description: (Updatable) The database wallet configuration
+                                  zip file.
+                                type: string
+                              serviceName:
+                                description: (Updatable) Service name of the database.
+                                type: string
+                            type: object
+                          type: array
+                        dnsConfiguration:
+                          description: (Updatable) Information about the DNS settings.
+                          items:
+                            properties:
+                              isOverrideDns:
+                                description: (Updatable) If isOverrideDns is true,
+                                  then DNS settings will be overridden.
+                                type: boolean
+                              overrideDnsIp:
+                                description: (Updatable) Attribute to override the
+                                  DNS IP value. This value will be honored only if
+                                  isOverrideDns is set to true.
+                                type: string
+                            type: object
+                          type: array
+                        downloadSizeLimitInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Download size limit in Bytes, at which to stop the transfer.
+                            Maximum download size limit is 5 MiB.
+                          type: number
+                        ftpBasicAuthenticationDetails:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    passwordSecretRef:
+                                      description: (Updatable) Password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    passwordTypeSecretRef:
+                                      description: (Updatable) Type of method to pass
+                                        password.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        ftpProtocol:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP protocol type.
+                          type: string
+                        ftpRequestType:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP monitor request type.
+                          type: string
+                        isActiveMode:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            If enabled, Active mode will be used for the FTP connection.
+                            Not supported for SFTP protocol.
+                          type: boolean
+                        isCertificateValidationEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | REST_CONFIG | SCRIPTED_BROWSER_CONFIG) (Updatable) If
+                            certificate validation is enabled, then the call will
+                            fail in case of certification errors.
+                          type: boolean
+                        isDefaultSnapshotEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG) (Updatable) If disabled, auto
+                            snapshots are not collected.
+                          type: boolean
+                        isFailureRetried:
+                          description: (Updatable) If isFailureRetried is enabled,
+                            then a failed call will be retried.
+                          type: boolean
+                        isQueryRecursive:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) If isQueryRecursive is enabled, then queries
+                            will be sent recursively to the target server.
+                          type: boolean
+                        isRedirectionEnabled:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            If redirection is enabled, then redirects will be allowed
+                            while accessing target URL.
+                          type: boolean
+                        nameServer:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) Name of the server that will be used to perform
+                            DNS lookup.
+                          type: string
+                        networkConfiguration:
+                          description: (Updatable) Details of the network configuration.
+                            For NETWORK monitor type, NetworkConfiguration is mandatory.
+                          items:
+                            properties:
+                              numberOfHops:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of hops.
+                                type: number
+                              probeMode:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of probe mode when TCP protocol
+                                  is selected.
+                                type: string
+                              probePerHop:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probes per hop.
+                                type: number
+                              protocol:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of protocol.
+                                type: string
+                              transmissionRate:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probe packets sent out simultaneously.
+                                type: number
+                            type: object
+                          type: array
+                        protocol:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG | REST_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Type of protocol.
+                          type: string
+                        query:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            SQL query to be executed.
+                          type: string
+                        recordType:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG) (Updatable) DNS
+                            record type.
+                          type: string
+                        reqAuthenticationDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for request HTTP authentication.
+                          items:
+                            properties:
+                              authHeaders:
+                                description: '(Applicable when config_type=REST_CONFIG)
+                                  (Updatable) List of authentication headers. Example:
+                                  [{"headerName": "content-type", "headerValue":"json"}]'
+                                items:
+                                  properties:
+                                    headerName:
+                                      description: (Updatable) Name of the header.
+                                      type: string
+                                    headerValue:
+                                      description: (Applicable when config_type=REST_CONFIG)
+                                        (Updatable) Value of the header.
+                                      type: string
+                                  type: object
+                                type: array
+                              authRequestMethod:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request method.
+                                type: string
+                              authRequestPostBody:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request post body.
+                                type: string
+                              authToken:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Authentication token.
+                                type: string
+                              authUrl:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) URL to get authentication token.
+                                type: string
+                              authUserName:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) User name for authentication.
+                                type: string
+                              authUserNameRef:
+                                description: Reference to a User in identity to populate
+                                  authUserName.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              authUserNameSelector:
+                                description: Selector for a User in identity to populate
+                                  authUserName.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              authUserPasswordSecretRef:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) User password for authentication.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              oauthScheme:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request HTTP OAuth scheme.
+                                type: string
+                            type: object
+                          type: array
+                        reqAuthenticationScheme:
+                          description: (Applicable when config_type=REST_CONFIG |
+                            SCRIPTED_REST_CONFIG) (Updatable) Request HTTP authentication
+                            scheme.
+                          type: string
+                        requestHeaders:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request headers. Example: [{"headerName":
+                            "content-type", "headerValue":"json"}]'
+                          items:
+                            properties:
+                              headerName:
+                                description: (Updatable) Name of the header.
+                                type: string
+                              headerValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of the header.
+                                type: string
+                            type: object
+                          type: array
+                        requestMethod:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request HTTP method.
+                          type: string
+                        requestPostBody:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request post body content.
+                          type: string
+                        requestQueryParams:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request query params. Example: [{"paramName":
+                            "sortOrder", "paramValue": "asc"}]'
+                          items:
+                            properties:
+                              paramName:
+                                description: (Updatable) Name of request query parameter.
+                                type: string
+                              paramValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of request query parameter.
+                                type: string
+                            type: object
+                          type: array
+                        uploadFileSizeInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            File upload size in Bytes, at which to stop the transfer.
+                            Maximum upload size is 5 MiB.
+                          type: number
+                        verifyResponseCodes:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | FTP_CONFIG | REST_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Expected HTTP response codes. For status code range, set
+                            values such as 2xx, 3xx.
+                          items:
+                            type: string
+                          type: array
+                        verifyResponseContent:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG | FTP_CONFIG |
+                            REST_CONFIG) (Updatable) Verify response content against
+                            regular expression based string. If response content does
+                            not match the verifyResponseContent value, then it will
+                            be considered a failure.
+                          type: string
+                        verifyTexts:
+                          description: (Applicable when config_type=BROWSER_CONFIG)
+                            (Updatable) Verifies all the search strings present in
+                            the response. If any search string is not present in the
+                            response, then it will be considered as a failure.
+                          items:
+                            properties:
+                              text:
+                                description: (Applicable when config_type=BROWSER_CONFIG)
+                                  (Updatable) Verification text in the response.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Unique name that can be edited. The name
+                      should not contain any confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isIpv6:
+                    description: (Updatable) If enabled, domain name will resolve
+                      to an IPv6 address.
+                    type: boolean
+                  isRunNow:
+                    description: (Updatable) If isRunNow is enabled, then the monitor
+                      will run immediately.
+                    type: boolean
+                  isRunOnce:
+                    description: (Updatable) If runOnce is enabled, then the monitor
+                      will run once.
+                    type: boolean
+                  maintenanceWindowSchedule:
+                    description: (Updatable) Details required to schedule maintenance
+                      window.
+                    items:
+                      properties:
+                        timeEnded:
+                          description: '(Updatable) End time of the maintenance window,
+                            expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
+                          type: string
+                        timeStarted:
+                          description: '(Updatable) Start time of the maintenance
+                            window, expressed in RFC 3339 timestamp format. Example:
+                            2020-02-12T22:47:12.613Z'
+                          type: string
+                      type: object
+                    type: array
+                  monitorType:
+                    description: Type of monitor.
+                    type: string
+                  repeatIntervalInSeconds:
+                    description: (Updatable) Interval in seconds after the start time
+                      when the job should be repeated. Minimum repeatIntervalInSeconds
+                      should be 300 seconds.
+                    type: number
+                  schedulingPolicy:
+                    description: (Updatable) Scheduling policy to decide the distribution
+                      of monitor executions on vantage points.
+                    type: string
+                  scriptId:
+                    description: (Updatable) The OCID of the script. scriptId is mandatory
+                      for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types.
+                      For other monitor types, it should be set to null.
+                    type: string
+                  scriptIdRef:
+                    description: Reference to a Script in apmsynthetics to populate
+                      scriptId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  scriptIdSelector:
+                    description: Selector for a Script in apmsynthetics to populate
+                      scriptId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  scriptName:
+                    description: Name of the script.
+                    type: string
+                  scriptParameters:
+                    description: '(Updatable) List of script parameters in the monitor.
+                      This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor
+                      types. For other monitor types, it should be set to null. Example:
+                      [{"paramName": "userid", "paramValue":"testuser"}]'
+                    items:
+                      properties:
+                        paramName:
+                          description: (Updatable) Name of request query parameter.
+                          type: string
+                        paramValue:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Value of request query parameter.
+                          type: string
+                      type: object
+                    type: array
+                  status:
+                    description: (Updatable) Enables or disables the monitor.
+                    type: string
+                  target:
+                    description: '(Updatable) Specify the endpoint on which to run
+                      the monitor. For BROWSER, REST, NETWORK, DNS and FTP monitor
+                      types, target is mandatory. If target is specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      (specified by scriptId in monitor) against the specified target
+                      endpoint. If target is not specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      as it is. For NETWORK monitor with TCP protocol, a port needs
+                      to be provided along with target. Example: 192.168.0.1:80.'
+                    type: string
+                  timeoutInSeconds:
+                    description: (Updatable) Timeout in seconds. If isFailureRetried
+                      is true, then timeout cannot be more than 30% of repeatIntervalInSeconds
+                      time for monitors. If isFailureRetried is false, then timeout
+                      cannot be more than 50% of repeatIntervalInSeconds time for
+                      monitors. Also, timeoutInSeconds should be a multiple of 60
+                      for Scripted REST, Scripted Browser and Browser monitors. Monitor
+                      will be allowed to run only for timeoutInSeconds time. It would
+                      be terminated after that.
+                    type: number
+                  vantagePoints:
+                    description: (Updatable) A list of vantage points from which to
+                      execute the monitor. Use /publicVantagePoints to fetch public
+                      vantage points.
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) Unique name that can be edited.
+                            The name should not contain any confidential information.
+                          type: string
+                        name:
+                          description: Name of the vantage point.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.apmDomainId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.apmDomainId)
+                || (has(self.initProvider) && has(self.initProvider.apmDomainId))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.monitorType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.monitorType)
+                || (has(self.initProvider) && has(self.initProvider.monitorType))'
+            - message: spec.forProvider.repeatIntervalInSeconds is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.repeatIntervalInSeconds)
+                || (has(self.initProvider) && has(self.initProvider.repeatIntervalInSeconds))'
+            - message: spec.forProvider.vantagePoints is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.vantagePoints)
+                || (has(self.initProvider) && has(self.initProvider.vantagePoints))'
+          status:
+            description: MonitorStatus defines the observed state of Monitor.
+            properties:
+              atProvider:
+                properties:
+                  apmDomainId:
+                    description: (Updatable) The APM domain ID the request is intended
+                      for.
+                    type: string
+                  availabilityConfiguration:
+                    description: (Updatable) Monitor availability configuration details.
+                    items:
+                      properties:
+                        maxAllowedFailuresPerInterval:
+                          description: (Updatable) Intervals with failed runs more
+                            than this value will be classified as UNAVAILABLE.
+                          type: number
+                        minAllowedRunsPerInterval:
+                          description: (Updatable) Intervals with runs less than this
+                            value will be classified as UNKNOWN and excluded from
+                            the availability calculations.
+                          type: number
+                      type: object
+                    type: array
+                  batchIntervalInSeconds:
+                    description: (Updatable) Time interval between 2 runs in round
+                      robin batch mode (*SchedulingPolicy - BATCHED_ROUND_ROBIN).
+                    type: number
+                  configuration:
+                    description: (Updatable) Details of monitor configuration.
+                    items:
+                      properties:
+                        clientCertificateDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for client certificate.
+                          items:
+                            properties:
+                              clientCertificate:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                              privateKey:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) The private key associated with the
+                                  client certificate in PEM format.
+                                items:
+                                  properties:
+                                    content:
+                                      description: (Updatable) Content of the client
+                                        certificate file.
+                                      type: string
+                                    fileName:
+                                      description: (Updatable) Name of the certificate
+                                        file. The name should not contain any confidential
+                                        information.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        configType:
+                          description: (Updatable) Type of configuration.
+                          type: string
+                        connectionString:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection string.
+                          type: string
+                        databaseAuthenticationDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        databaseConnectionType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database connection type. Only CUSTOM_JDBC is supported
+                            for MYSQL database type.
+                          type: string
+                        databaseRole:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database role.
+                          type: string
+                        databaseType:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Database type.
+                          type: string
+                        databaseWalletDetails:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            Details for database wallet.
+                          items:
+                            properties:
+                              databaseWallet:
+                                description: (Updatable) The database wallet configuration
+                                  zip file.
+                                type: string
+                              serviceName:
+                                description: (Updatable) Service name of the database.
+                                type: string
+                            type: object
+                          type: array
+                        dnsConfiguration:
+                          description: (Updatable) Information about the DNS settings.
+                          items:
+                            properties:
+                              isOverrideDns:
+                                description: (Updatable) If isOverrideDns is true,
+                                  then DNS settings will be overridden.
+                                type: boolean
+                              overrideDnsIp:
+                                description: (Updatable) Attribute to override the
+                                  DNS IP value. This value will be honored only if
+                                  isOverrideDns is set to true.
+                                type: string
+                            type: object
+                          type: array
+                        downloadSizeLimitInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Download size limit in Bytes, at which to stop the transfer.
+                            Maximum download size limit is 5 MiB.
+                          type: number
+                        ftpBasicAuthenticationDetails:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            Details for basic authentication.
+                          items:
+                            properties:
+                              password:
+                                description: (Updatable) Password.
+                                items:
+                                  properties:
+                                    vaultSecretId:
+                                      description: (Updatable) Vault secret OCID.
+                                      type: string
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) Username for authentication.
+                                type: string
+                            type: object
+                          type: array
+                        ftpProtocol:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP protocol type.
+                          type: string
+                        ftpRequestType:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            FTP monitor request type.
+                          type: string
+                        isActiveMode:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            If enabled, Active mode will be used for the FTP connection.
+                            Not supported for SFTP protocol.
+                          type: boolean
+                        isCertificateValidationEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | REST_CONFIG | SCRIPTED_BROWSER_CONFIG) (Updatable) If
+                            certificate validation is enabled, then the call will
+                            fail in case of certification errors.
+                          type: boolean
+                        isDefaultSnapshotEnabled:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG) (Updatable) If disabled, auto
+                            snapshots are not collected.
+                          type: boolean
+                        isFailureRetried:
+                          description: (Updatable) If isFailureRetried is enabled,
+                            then a failed call will be retried.
+                          type: boolean
+                        isQueryRecursive:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) If isQueryRecursive is enabled, then queries
+                            will be sent recursively to the target server.
+                          type: boolean
+                        isRedirectionEnabled:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            If redirection is enabled, then redirects will be allowed
+                            while accessing target URL.
+                          type: boolean
+                        nameServer:
+                          description: (Applicable when config_type=DNS_SERVER_CONFIG)
+                            (Updatable) Name of the server that will be used to perform
+                            DNS lookup.
+                          type: string
+                        networkConfiguration:
+                          description: (Updatable) Details of the network configuration.
+                            For NETWORK monitor type, NetworkConfiguration is mandatory.
+                          items:
+                            properties:
+                              numberOfHops:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of hops.
+                                type: number
+                              probeMode:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of probe mode when TCP protocol
+                                  is selected.
+                                type: string
+                              probePerHop:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probes per hop.
+                                type: number
+                              protocol:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Type of protocol.
+                                type: string
+                              transmissionRate:
+                                description: (Applicable when config_type=BROWSER_CONFIG
+                                  | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG
+                                  | REST_CONFIG | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG)
+                                  (Updatable) Number of probe packets sent out simultaneously.
+                                type: number
+                            type: object
+                          type: array
+                        protocol:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | DNS_SERVER_CONFIG | FTP_CONFIG | NETWORK_CONFIG | REST_CONFIG
+                            | SCRIPTED_BROWSER_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Type of protocol.
+                          type: string
+                        query:
+                          description: (Applicable when config_type=SQL_CONFIG) (Updatable)
+                            SQL query to be executed.
+                          type: string
+                        recordType:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG) (Updatable) DNS
+                            record type.
+                          type: string
+                        reqAuthenticationDetails:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Details for request HTTP authentication.
+                          items:
+                            properties:
+                              authHeaders:
+                                description: '(Applicable when config_type=REST_CONFIG)
+                                  (Updatable) List of authentication headers. Example:
+                                  [{"headerName": "content-type", "headerValue":"json"}]'
+                                items:
+                                  properties:
+                                    headerName:
+                                      description: (Updatable) Name of the header.
+                                      type: string
+                                    headerValue:
+                                      description: (Applicable when config_type=REST_CONFIG)
+                                        (Updatable) Value of the header.
+                                      type: string
+                                  type: object
+                                type: array
+                              authRequestMethod:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request method.
+                                type: string
+                              authRequestPostBody:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request post body.
+                                type: string
+                              authToken:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Authentication token.
+                                type: string
+                              authUrl:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) URL to get authentication token.
+                                type: string
+                              authUserName:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) User name for authentication.
+                                type: string
+                              oauthScheme:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Request HTTP OAuth scheme.
+                                type: string
+                            type: object
+                          type: array
+                        reqAuthenticationScheme:
+                          description: (Applicable when config_type=REST_CONFIG |
+                            SCRIPTED_REST_CONFIG) (Updatable) Request HTTP authentication
+                            scheme.
+                          type: string
+                        requestHeaders:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request headers. Example: [{"headerName":
+                            "content-type", "headerValue":"json"}]'
+                          items:
+                            properties:
+                              headerName:
+                                description: (Updatable) Name of the header.
+                                type: string
+                              headerValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of the header.
+                                type: string
+                            type: object
+                          type: array
+                        requestMethod:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request HTTP method.
+                          type: string
+                        requestPostBody:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Request post body content.
+                          type: string
+                        requestQueryParams:
+                          description: '(Applicable when config_type=REST_CONFIG)
+                            (Updatable) List of request query params. Example: [{"paramName":
+                            "sortOrder", "paramValue": "asc"}]'
+                          items:
+                            properties:
+                              paramName:
+                                description: (Updatable) Name of request query parameter.
+                                type: string
+                              paramValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of request query parameter.
+                                type: string
+                            type: object
+                          type: array
+                        uploadFileSizeInBytes:
+                          description: (Applicable when config_type=FTP_CONFIG) (Updatable)
+                            File upload size in Bytes, at which to stop the transfer.
+                            Maximum upload size is 5 MiB.
+                          type: number
+                        verifyResponseCodes:
+                          description: (Applicable when config_type=BROWSER_CONFIG
+                            | FTP_CONFIG | REST_CONFIG | SCRIPTED_REST_CONFIG) (Updatable)
+                            Expected HTTP response codes. For status code range, set
+                            values such as 2xx, 3xx.
+                          items:
+                            type: string
+                          type: array
+                        verifyResponseContent:
+                          description: (Applicable when config_type=DNSSEC_CONFIG
+                            | DNS_SERVER_CONFIG | DNS_TRACE_CONFIG | FTP_CONFIG |
+                            REST_CONFIG) (Updatable) Verify response content against
+                            regular expression based string. If response content does
+                            not match the verifyResponseContent value, then it will
+                            be considered a failure.
+                          type: string
+                        verifyTexts:
+                          description: (Applicable when config_type=BROWSER_CONFIG)
+                            (Updatable) Verifies all the search strings present in
+                            the response. If any search string is not present in the
+                            response, then it will be considered as a failure.
+                          items:
+                            properties:
+                              text:
+                                description: (Applicable when config_type=BROWSER_CONFIG)
+                                  (Updatable) Verification text in the response.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  contentType:
+                    description: Content type of the script.
+                    type: string
+                  createdBy:
+                    description: Name of the user that created the monitor.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Unique name that can be edited. The name
+                      should not contain any confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the monitor.
+                    type: string
+                  isIpv6:
+                    description: (Updatable) If enabled, domain name will resolve
+                      to an IPv6 address.
+                    type: boolean
+                  isRunNow:
+                    description: (Updatable) If isRunNow is enabled, then the monitor
+                      will run immediately.
+                    type: boolean
+                  isRunOnce:
+                    description: (Updatable) If runOnce is enabled, then the monitor
+                      will run once.
+                    type: boolean
+                  lastUpdatedBy:
+                    description: Name of the user that recently updated the monitor.
+                    type: string
+                  maintenanceWindowSchedule:
+                    description: (Updatable) Details required to schedule maintenance
+                      window.
+                    items:
+                      properties:
+                        timeEnded:
+                          description: '(Updatable) End time of the maintenance window,
+                            expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
+                          type: string
+                        timeStarted:
+                          description: '(Updatable) Start time of the maintenance
+                            window, expressed in RFC 3339 timestamp format. Example:
+                            2020-02-12T22:47:12.613Z'
+                          type: string
+                      type: object
+                    type: array
+                  monitorType:
+                    description: Type of monitor.
+                    type: string
+                  repeatIntervalInSeconds:
+                    description: (Updatable) Interval in seconds after the start time
+                      when the job should be repeated. Minimum repeatIntervalInSeconds
+                      should be 300 seconds.
+                    type: number
+                  schedulingPolicy:
+                    description: (Updatable) Scheduling policy to decide the distribution
+                      of monitor executions on vantage points.
+                    type: string
+                  scriptId:
+                    description: (Updatable) The OCID of the script. scriptId is mandatory
+                      for creation of SCRIPTED_BROWSER and SCRIPTED_REST monitor types.
+                      For other monitor types, it should be set to null.
+                    type: string
+                  scriptName:
+                    description: Name of the script.
+                    type: string
+                  scriptParameters:
+                    description: '(Updatable) List of script parameters in the monitor.
+                      This is valid only for SCRIPTED_BROWSER and SCRIPTED_REST monitor
+                      types. For other monitor types, it should be set to null. Example:
+                      [{"paramName": "userid", "paramValue":"testuser"}]'
+                    items:
+                      properties:
+                        isOverwritten:
+                          description: If parameter value is default or overwritten.
+                          type: boolean
+                        isSecret:
+                          description: Describes if  the parameter value is secret
+                            and should be kept confidential. isSecret is specified
+                            in either CreateScript or UpdateScript API.
+                          type: boolean
+                        monitorScriptParameter:
+                          description: Details of the script parameter that can be
+                            used to overwrite the parameter present in the script.
+                          items:
+                            properties:
+                              paramName:
+                                description: (Updatable) Name of request query parameter.
+                                type: string
+                              paramValue:
+                                description: (Applicable when config_type=REST_CONFIG)
+                                  (Updatable) Value of request query parameter.
+                                type: string
+                            type: object
+                          type: array
+                        paramName:
+                          description: (Updatable) Name of request query parameter.
+                          type: string
+                        paramValue:
+                          description: (Applicable when config_type=REST_CONFIG) (Updatable)
+                            Value of request query parameter.
+                          type: string
+                      type: object
+                    type: array
+                  status:
+                    description: (Updatable) Enables or disables the monitor.
+                    type: string
+                  target:
+                    description: '(Updatable) Specify the endpoint on which to run
+                      the monitor. For BROWSER, REST, NETWORK, DNS and FTP monitor
+                      types, target is mandatory. If target is specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      (specified by scriptId in monitor) against the specified target
+                      endpoint. If target is not specified in the SCRIPTED_BROWSER
+                      monitor type, then the monitor will run the selected script
+                      as it is. For NETWORK monitor with TCP protocol, a port needs
+                      to be provided along with target. Example: 192.168.0.1:80.'
+                    type: string
+                  timeCreated:
+                    description: 'The time the resource was created, expressed in
+                      RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The time the resource was updated, expressed in
+                      RFC 3339 timestamp format. Example: 2020-02-13T22:47:12.613Z'
+                    type: string
+                  timeoutInSeconds:
+                    description: (Updatable) Timeout in seconds. If isFailureRetried
+                      is true, then timeout cannot be more than 30% of repeatIntervalInSeconds
+                      time for monitors. If isFailureRetried is false, then timeout
+                      cannot be more than 50% of repeatIntervalInSeconds time for
+                      monitors. Also, timeoutInSeconds should be a multiple of 60
+                      for Scripted REST, Scripted Browser and Browser monitors. Monitor
+                      will be allowed to run only for timeoutInSeconds time. It would
+                      be terminated after that.
+                    type: number
+                  vantagePointCount:
+                    description: Number of vantage points where monitor is running.
+                    type: number
+                  vantagePoints:
+                    description: (Updatable) A list of vantage points from which to
+                      execute the monitor. Use /publicVantagePoints to fetch public
+                      vantage points.
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) Unique name that can be edited.
+                            The name should not contain any confidential information.
+                          type: string
+                        name:
+                          description: Name of the vantage point.
+                          type: string
+                        workerList:
+                          description: List of workers running the assigned monitor.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,15 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: ZoneStageDnssecKeyVersion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/zonestagednsseckeyversion
+  labels:
+    testing.upbound.io/example-name: test_zone_stage_dnssec_key_version
+  name: test-zone-stage-dnssec-key-version
+spec:
+  forProvider:
+    predecessorDnssecKeyVersionUuid: ${var.zone_stage_dnssec_key_version_predecessor_dnssec_key_version_uuid}
+    scope: ${var.zone_stage_dnssec_key_version_scope}
+    zoneIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_zone

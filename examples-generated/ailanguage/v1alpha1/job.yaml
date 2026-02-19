@@ -1,0 +1,40 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/job
+  labels:
+    testing.upbound.io/example-name: test_job
+  name: test-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.job_description}
+    displayName: ${var.job_display_name}
+    inputConfiguration:
+    - configuration:
+      - config: ${var.job_input_configuration_configuration_config}
+      documentTypes: ${var.job_input_configuration_document_types}
+    inputLocation:
+    - bucket: ${var.job_input_location_bucket}
+      locationType: ${var.job_input_location_location_type}
+      namespace: ${var.job_input_location_namespace}
+      objectNames: ${var.job_input_location_object_names}
+      prefix: ${var.job_input_location_prefix}
+    modelMetadataDetails:
+    - configuration:
+      - configuration_map: ${var.job_model_metadata_details_configuration_configuration_map}
+      endpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_endpoint
+      languageCode: ${var.job_model_metadata_details_language_code}
+      modelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_model
+      modelType: ${var.job_model_metadata_details_model_type}
+    outputLocation:
+    - bucket: ${var.job_output_location_bucket}
+      namespace: ${var.job_output_location_namespace}
+      prefix: ${var.job_output_location_prefix}

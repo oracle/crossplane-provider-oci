@@ -1,0 +1,1247 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: processorjobs.aidocument.oci.upbound.io
+spec:
+  group: aidocument.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: ProcessorJob
+    listKind: ProcessorJobList
+    plural: processorjobs
+    singular: processorjob
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ProcessorJob is the Schema for the ProcessorJobs API. Provides
+          the Processor Job resource in Oracle Cloud Infrastructure Ai Document service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ProcessorJobSpec defines the desired state of ProcessorJob
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: The compartment identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  displayName:
+                    description: The display name of the processor job.
+                    type: string
+                  inputLocation:
+                    description: The location of the inputs.
+                    items:
+                      properties:
+                        data:
+                          description: Raw document data with Base64 encoding.
+                          type: string
+                        objectLocations:
+                          description: The list of ObjectLocations.
+                          items:
+                            properties:
+                              bucket:
+                                description: The Object Storage bucket name.
+                                type: string
+                              namespace:
+                                description: The Object Storage namespace name.
+                                type: string
+                              object:
+                                description: The Object Storage object name.
+                                type: string
+                              pageRange:
+                                description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                                  The page ranges to be analysed.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        pageRange:
+                          description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                            The page ranges to be analysed.
+                          items:
+                            type: string
+                          type: array
+                        sourceType:
+                          description: 'The type of input location. The allowed values
+                            are:'
+                          type: string
+                      type: object
+                    type: array
+                  outputLocation:
+                    description: The object storage location where to store analysis
+                      results.
+                    items:
+                      properties:
+                        bucket:
+                          description: The Object Storage bucket name.
+                          type: string
+                        namespace:
+                          description: The Object Storage namespace name.
+                          type: string
+                        prefix:
+                          description: The Object Storage folder name.
+                          type: string
+                      type: object
+                    type: array
+                  processorConfig:
+                    description: The configuration of a processor.
+                    items:
+                      properties:
+                        documentType:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document type.
+                          type: string
+                        features:
+                          description: The types of document analysis requested.
+                          items:
+                            properties:
+                              featureType:
+                                description: 'The type of document analysis requested.
+                                  The allowed values are:'
+                                type: string
+                              generateSearchablePdf:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether or not to generate a searchable PDF file.
+                                type: boolean
+                              maxResults:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | LANGUAGE_CLASSIFICATION) The maximum number of
+                                  results to return.
+                                type: number
+                              modelId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                                  | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                                  custom model OCID that should be used for inference.
+                                type: string
+                              modelIdRef:
+                                description: Reference to a Model in aidocument to
+                                  populate modelId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelIdSelector:
+                                description: Selector for a Model in aidocument to
+                                  populate modelId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              selectionMarkDetection:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether checkbox detection feature is enabled or
+                                  disabled.
+                                type: boolean
+                              tenancyId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | KEY_VALUE_EXTRACTION) The custom model tenancy
+                                  ID when modelId represents aliasName.
+                                type: string
+                            type: object
+                          type: array
+                        isZipOutputEnabled:
+                          description: (Applicable when processor_type=GENERAL) Whether
+                            or not to generate a ZIP file containing the results.
+                          type: boolean
+                        language:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document language, abbreviated according to the BCP 47
+                            Language-Tag syntax.
+                          type: string
+                        modelId:
+                          description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                            | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                            | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                            custom model OCID that should be used for inference.
+                          type: string
+                        modelIdRef:
+                          description: Reference to a Model in aidocument to populate
+                            modelId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        modelIdSelector:
+                          description: Selector for a Model in aidocument to populate
+                            modelId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        normalizationFields:
+                          description: A string-to-object map where the key is the
+                            normalization field and the object contains information
+                            about the field.
+                          items:
+                            properties:
+                              map:
+                                description: (Applicable when processor_type=INVOICE)
+                                  A wrapped map.
+                                items:
+                                  properties:
+                                    normalizationType:
+                                      description: (Applicable when processor_type=INVOICE)
+                                        A string mapping to the normalization type.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        processorType:
+                          description: The type of the processor.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: The compartment identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  displayName:
+                    description: The display name of the processor job.
+                    type: string
+                  inputLocation:
+                    description: The location of the inputs.
+                    items:
+                      properties:
+                        data:
+                          description: Raw document data with Base64 encoding.
+                          type: string
+                        objectLocations:
+                          description: The list of ObjectLocations.
+                          items:
+                            properties:
+                              bucket:
+                                description: The Object Storage bucket name.
+                                type: string
+                              namespace:
+                                description: The Object Storage namespace name.
+                                type: string
+                              object:
+                                description: The Object Storage object name.
+                                type: string
+                              pageRange:
+                                description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                                  The page ranges to be analysed.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        pageRange:
+                          description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                            The page ranges to be analysed.
+                          items:
+                            type: string
+                          type: array
+                        sourceType:
+                          description: 'The type of input location. The allowed values
+                            are:'
+                          type: string
+                      type: object
+                    type: array
+                  outputLocation:
+                    description: The object storage location where to store analysis
+                      results.
+                    items:
+                      properties:
+                        bucket:
+                          description: The Object Storage bucket name.
+                          type: string
+                        namespace:
+                          description: The Object Storage namespace name.
+                          type: string
+                        prefix:
+                          description: The Object Storage folder name.
+                          type: string
+                      type: object
+                    type: array
+                  processorConfig:
+                    description: The configuration of a processor.
+                    items:
+                      properties:
+                        documentType:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document type.
+                          type: string
+                        features:
+                          description: The types of document analysis requested.
+                          items:
+                            properties:
+                              featureType:
+                                description: 'The type of document analysis requested.
+                                  The allowed values are:'
+                                type: string
+                              generateSearchablePdf:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether or not to generate a searchable PDF file.
+                                type: boolean
+                              maxResults:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | LANGUAGE_CLASSIFICATION) The maximum number of
+                                  results to return.
+                                type: number
+                              modelId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                                  | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                                  custom model OCID that should be used for inference.
+                                type: string
+                              modelIdRef:
+                                description: Reference to a Model in aidocument to
+                                  populate modelId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelIdSelector:
+                                description: Selector for a Model in aidocument to
+                                  populate modelId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              selectionMarkDetection:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether checkbox detection feature is enabled or
+                                  disabled.
+                                type: boolean
+                              tenancyId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | KEY_VALUE_EXTRACTION) The custom model tenancy
+                                  ID when modelId represents aliasName.
+                                type: string
+                            type: object
+                          type: array
+                        isZipOutputEnabled:
+                          description: (Applicable when processor_type=GENERAL) Whether
+                            or not to generate a ZIP file containing the results.
+                          type: boolean
+                        language:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document language, abbreviated according to the BCP 47
+                            Language-Tag syntax.
+                          type: string
+                        modelId:
+                          description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                            | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                            | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                            custom model OCID that should be used for inference.
+                          type: string
+                        modelIdRef:
+                          description: Reference to a Model in aidocument to populate
+                            modelId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        modelIdSelector:
+                          description: Selector for a Model in aidocument to populate
+                            modelId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        normalizationFields:
+                          description: A string-to-object map where the key is the
+                            normalization field and the object contains information
+                            about the field.
+                          items:
+                            properties:
+                              map:
+                                description: (Applicable when processor_type=INVOICE)
+                                  A wrapped map.
+                                items:
+                                  properties:
+                                    normalizationType:
+                                      description: (Applicable when processor_type=INVOICE)
+                                        A string mapping to the normalization type.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        processorType:
+                          description: The type of the processor.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.inputLocation is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.inputLocation)
+                || (has(self.initProvider) && has(self.initProvider.inputLocation))'
+            - message: spec.forProvider.outputLocation is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.outputLocation)
+                || (has(self.initProvider) && has(self.initProvider.outputLocation))'
+            - message: spec.forProvider.processorConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.processorConfig)
+                || (has(self.initProvider) && has(self.initProvider.processorConfig))'
+          status:
+            description: ProcessorJobStatus defines the observed state of ProcessorJob.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: The compartment identifier.
+                    type: string
+                  displayName:
+                    description: The display name of the processor job.
+                    type: string
+                  id:
+                    description: The id of the processor job.
+                    type: string
+                  inputLocation:
+                    description: The location of the inputs.
+                    items:
+                      properties:
+                        data:
+                          description: Raw document data with Base64 encoding.
+                          type: string
+                        objectLocations:
+                          description: The list of ObjectLocations.
+                          items:
+                            properties:
+                              bucket:
+                                description: The Object Storage bucket name.
+                                type: string
+                              namespace:
+                                description: The Object Storage namespace name.
+                                type: string
+                              object:
+                                description: The Object Storage object name.
+                                type: string
+                              pageRange:
+                                description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                                  The page ranges to be analysed.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        pageRange:
+                          description: (Applicable when source_type=OBJECT_STORAGE_LOCATIONS)
+                            The page ranges to be analysed.
+                          items:
+                            type: string
+                          type: array
+                        sourceType:
+                          description: 'The type of input location. The allowed values
+                            are:'
+                          type: string
+                      type: object
+                    type: array
+                  lifecycleDetails:
+                    description: The detailed status of FAILED state.
+                    type: string
+                  outputLocation:
+                    description: The object storage location where to store analysis
+                      results.
+                    items:
+                      properties:
+                        bucket:
+                          description: The Object Storage bucket name.
+                          type: string
+                        namespace:
+                          description: The Object Storage namespace name.
+                          type: string
+                        prefix:
+                          description: The Object Storage folder name.
+                          type: string
+                      type: object
+                    type: array
+                  percentComplete:
+                    description: How much progress the operation has made, compared
+                      to the total amount of work to be performed.
+                    type: number
+                  processorConfig:
+                    description: The configuration of a processor.
+                    items:
+                      properties:
+                        documentType:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document type.
+                          type: string
+                        features:
+                          description: The types of document analysis requested.
+                          items:
+                            properties:
+                              featureType:
+                                description: 'The type of document analysis requested.
+                                  The allowed values are:'
+                                type: string
+                              generateSearchablePdf:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether or not to generate a searchable PDF file.
+                                type: boolean
+                              maxResults:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | LANGUAGE_CLASSIFICATION) The maximum number of
+                                  results to return.
+                                type: number
+                              modelId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                                  | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                                  custom model OCID that should be used for inference.
+                                type: string
+                              selectionMarkDetection:
+                                description: (Applicable when feature_type=TEXT_EXTRACTION)
+                                  Whether checkbox detection feature is enabled or
+                                  disabled.
+                                type: boolean
+                              tenancyId:
+                                description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                                  | KEY_VALUE_EXTRACTION) The custom model tenancy
+                                  ID when modelId represents aliasName.
+                                type: string
+                            type: object
+                          type: array
+                        isZipOutputEnabled:
+                          description: (Applicable when processor_type=GENERAL) Whether
+                            or not to generate a ZIP file containing the results.
+                          type: boolean
+                        language:
+                          description: (Applicable when processor_type=GENERAL) The
+                            document language, abbreviated according to the BCP 47
+                            Language-Tag syntax.
+                          type: string
+                        modelId:
+                          description: (Applicable when feature_type=DOCUMENT_CLASSIFICATION
+                            | DOCUMENT_ELEMENTS_EXTRACTION | KEY_VALUE_EXTRACTION
+                            | TABLE_EXTRACTION | TEXT_EXTRACTION) Unique identifier
+                            custom model OCID that should be used for inference.
+                          type: string
+                        normalizationFields:
+                          description: A string-to-object map where the key is the
+                            normalization field and the object contains information
+                            about the field.
+                          items:
+                            properties:
+                              map:
+                                description: (Applicable when processor_type=INVOICE)
+                                  A wrapped map.
+                                items:
+                                  properties:
+                                    normalizationType:
+                                      description: (Applicable when processor_type=INVOICE)
+                                        A string mapping to the normalization type.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        processorType:
+                          description: The type of the processor.
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The current state of the processor job.
+                    type: string
+                  timeAccepted:
+                    description: The job acceptance time.
+                    type: string
+                  timeFinished:
+                    description: The job finish time.
+                    type: string
+                  timeStarted:
+                    description: The job start time.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

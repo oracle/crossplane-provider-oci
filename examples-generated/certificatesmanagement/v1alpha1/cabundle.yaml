@@ -1,0 +1,20 @@
+apiVersion: certificatesmanagement.oci.upbound.io/v1alpha1
+kind: CaBundle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: certificatesmanagement/v1alpha1/cabundle
+  labels:
+    testing.upbound.io/example-name: test_ca_bundle
+  name: test-ca-bundle
+spec:
+  forProvider:
+    caBundlePem: ${var.ca_bundle_ca_bundle_pem}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.ca_bundle_description}
+    freeformTags:
+      Department: Finance
+    name: ${var.ca_bundle_name}

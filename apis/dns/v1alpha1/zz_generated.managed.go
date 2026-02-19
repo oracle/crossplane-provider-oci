@@ -7,6 +7,66 @@ package v1alpha1
 
 import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 
+// GetCondition of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this ActionCreateZoneFromZoneFile.
+func (mg *ActionCreateZoneFromZoneFile) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this Record.
 func (mg *Record) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -544,5 +604,125 @@ func (mg *Zone) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo
 
 // SetWriteConnectionSecretToReference of this Zone.
 func (mg *Zone) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

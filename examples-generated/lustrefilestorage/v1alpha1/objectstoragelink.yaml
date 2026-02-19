@@ -1,0 +1,25 @@
+apiVersion: lustrefilestorage.oci.upbound.io/v1alpha1
+kind: ObjectStorageLink
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/objectstoragelink
+  labels:
+    testing.upbound.io/example-name: test_object_storage_link
+  name: test-object-storage-link
+spec:
+  forProvider:
+    availabilityDomain: ${var.object_storage_link_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.object_storage_link_display_name}
+    fileSystemPath: ${var.object_storage_link_file_system_path}
+    freeformTags:
+      Department: Finance
+    isOverwrite: ${var.object_storage_link_is_overwrite}
+    lustreFileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_lustre_file_system
+    objectStoragePrefix: ${var.object_storage_link_object_storage_prefix}

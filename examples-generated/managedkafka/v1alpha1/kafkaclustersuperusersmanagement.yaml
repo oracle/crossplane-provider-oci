@@ -1,0 +1,20 @@
+apiVersion: managedkafka.oci.upbound.io/v1alpha1
+kind: KafkaClusterSuperusersManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managedkafka/v1alpha1/kafkaclustersuperusersmanagement
+  labels:
+    testing.upbound.io/example-name: test_kafka_cluster_superusers_management
+  name: test-kafka-cluster-superusers-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    enableSuperuser: ${var.enable_superuser}
+    kafkaClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_kafka_cluster
+    secretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret

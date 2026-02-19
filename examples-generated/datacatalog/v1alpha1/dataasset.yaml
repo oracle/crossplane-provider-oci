@@ -1,0 +1,17 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: DataAsset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacatalog/v1alpha1/dataasset
+  labels:
+    testing.upbound.io/example-name: test_data_asset
+  name: test-data-asset
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_catalog
+    description: ${var.data_asset_description}
+    displayName: ${var.data_asset_display_name}
+    properties: ${var.data_asset_properties}
+    typeKey: ${var.data_asset_type_key}

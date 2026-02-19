@@ -1,0 +1,24 @@
+apiVersion: budget.oci.upbound.io/v1alpha1
+kind: AlertRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: budget/v1alpha1/alertrule
+  labels:
+    testing.upbound.io/example-name: test_alert_rule
+  name: test-alert-rule
+spec:
+  forProvider:
+    budgetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_budget
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.alert_rule_description}
+    displayName: ${var.alert_rule_display_name}
+    freeformTags:
+      Department: Finance
+    message: ${var.alert_rule_message}
+    recipients: ${var.alert_rule_recipients}
+    threshold: ${var.alert_rule_threshold}
+    thresholdType: ${var.alert_rule_threshold_type}
+    type: ${var.alert_rule_type}

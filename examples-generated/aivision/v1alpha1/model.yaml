@@ -1,0 +1,48 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: Model
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/model
+  labels:
+    testing.upbound.io/example-name: test_model
+  name: test-model
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.model_defined_tags}
+    description: ${var.model_description}
+    displayName: ${var.model_display_name}
+    freeformTags: ${var.model_freeform_tags}
+    isQuickMode: ${var.model_is_quick_mode}
+    maxTrainingDurationInHours: ${var.model_max_training_duration_in_hours}
+    modelType: ${var.model_model_type}
+    modelVersion: ${var.model_model_version}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    testingDataset:
+    - bucket: ${var.model_testing_dataset_bucket}
+      datasetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dataset
+      datasetType: ${var.model_testing_dataset_dataset_type}
+      namespaceName: ${var.model_testing_dataset_namespace}
+      object: ${var.model_testing_dataset_object}
+    trainingDataset:
+    - bucket: ${var.model_training_dataset_bucket}
+      datasetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dataset
+      datasetType: ${var.model_training_dataset_dataset_type}
+      namespaceName: ${var.model_training_dataset_namespace}
+      object: ${var.model_training_dataset_object}
+    validationDataset:
+    - bucket: ${var.model_validation_dataset_bucket}
+      datasetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dataset
+      datasetType: ${var.model_validation_dataset_dataset_type}
+      namespaceName: ${var.model_validation_dataset_namespace}
+      object: ${var.model_validation_dataset_object}

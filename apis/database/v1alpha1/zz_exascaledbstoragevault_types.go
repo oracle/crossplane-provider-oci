@@ -25,7 +25,17 @@ type ExascaleDbStorageVaultInitParameters struct {
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// The OCID of the cluster placement group of the Exadata Infrastructure or Db System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/clusterplacementgroups/v1alpha1.ClusterPlacementGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a ClusterPlacementGroup in clusterplacementgroups to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a ClusterPlacementGroup in clusterplacementgroups to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -166,8 +176,18 @@ type ExascaleDbStorageVaultParameters struct {
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// The OCID of the cluster placement group of the Exadata Infrastructure or Db System.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/clusterplacementgroups/v1alpha1.ClusterPlacementGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ClusterPlacementGroupID *string `json:"clusterPlacementGroupId,omitempty" tf:"cluster_placement_group_id,omitempty"`
+
+	// Reference to a ClusterPlacementGroup in clusterplacementgroups to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDRef *v1.Reference `json:"clusterPlacementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a ClusterPlacementGroup in clusterplacementgroups to populate clusterPlacementGroupId.
+	// +kubebuilder:validation:Optional
+	ClusterPlacementGroupIDSelector *v1.Selector `json:"clusterPlacementGroupIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment

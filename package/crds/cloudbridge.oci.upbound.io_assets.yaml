@@ -1,0 +1,1841 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: assets.cloudbridge.oci.upbound.io
+spec:
+  group: cloudbridge.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Asset
+    listKind: AssetList
+    plural: assets
+    singular: asset
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Asset is the Schema for the Assets API. Provides the Asset resource
+          in Oracle Cloud Infrastructure Cloud Bridge service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AssetSpec defines the desired state of Asset
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  assetSourceIds:
+                    description: (Updatable) List of asset source OCID.
+                    items:
+                      type: string
+                    type: array
+                  assetType:
+                    description: (Updatable) The type of asset.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that the
+                      asset belongs to.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  compute:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Compute related properties.
+                    items:
+                      properties:
+                        connectedNetworks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of connected networks.
+                          type: number
+                        coresCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of CPUs.
+                          type: number
+                        cpuModel:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) CPU model name.
+                          type: string
+                        description:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about the asset.
+                          type: string
+                        disks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Lists the set of disks belonging to the virtual
+                            machine. This list is unordered.
+                          items:
+                            properties:
+                              bootOrder:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Order of boot volumes.
+                                type: number
+                              location:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Location of the boot/data volume.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                              persistentMode:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The disk persistent mode.
+                                type: string
+                              sizeInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The size of the volume in MBs.
+                                type: string
+                              uuid:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID for the virtual disk, if available.
+                                type: string
+                              uuidLun:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID LUN for the virtual disk,
+                                  if available.
+                                type: string
+                            type: object
+                          type: array
+                        disksCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of disks.
+                          type: number
+                        dnsName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Fully Qualified DNS Name.
+                          type: string
+                        firmware:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about firmware type for this virtual
+                            machine.
+                          type: string
+                        gpuDevices:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of GPU devices attached to a virtual
+                            machine.
+                          items:
+                            properties:
+                              coresCount:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Number of CPUs.
+                                type: number
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              manufacturer:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The manufacturer of GPU.
+                                type: string
+                              memoryInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) GPU memory size in MBs.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        gpuDevicesCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of GPU devices.
+                          type: number
+                        guestState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Guest state.
+                          type: string
+                        hardwareVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hardware version.
+                          type: string
+                        hostName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name of the VM.
+                          type: string
+                        isPmemEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Pmem is enabled. Decides if NVDIMMs
+                            are used as a permanent memory.
+                          type: boolean
+                        isTpmEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Trusted Platform Module (TPM) is enabled.
+                          type: boolean
+                        latencySensitivity:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Latency sensitivity.
+                          type: string
+                        memoryInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) GPU memory size in MBs.
+                          type: string
+                        nics:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of network ethernet cards attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              ipAddresses:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) List of IP addresses.
+                                items:
+                                  type: string
+                                type: array
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              macAddress:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address of the VM.
+                                type: string
+                              macAddressType:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address type.
+                                type: string
+                              networkName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Network name.
+                                type: string
+                              switchName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Switch name.
+                                type: string
+                            type: object
+                          type: array
+                        nicsCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of network ethernet cards.
+                          type: number
+                        nvdimmController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The asset's NVDIMM configuration.
+                          items:
+                            properties:
+                              busNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Bus number.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                            type: object
+                          type: array
+                        nvdimms:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The properties of the NVDIMMs attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              controllerKey:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Controller key.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        operatingSystem:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system.
+                          type: string
+                        operatingSystemVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system version.
+                          type: string
+                        pmemInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Pmem size in MBs.
+                          type: string
+                        powerState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The current power state of the virtual machine.
+                          type: string
+                        primaryIp:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Primary IP address of the compute instance.
+                          type: string
+                        scsiController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The assets SCSI controller.
+                          items:
+                            properties:
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              sharedBus:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Shared bus.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        storageProvisionedInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Provision storage size in MBs.
+                          type: string
+                        threadsPerCoreCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of threads per core.
+                          type: number
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The defined tags associated with this
+                      resource, if any. Each key is predefined and scoped to namespaces.
+                      For more information, see Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Asset display name.
+                    type: string
+                  externalAssetKey:
+                    description: The key of the asset from the external environment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The freeform tags associated with this
+                      resource, if any. Each tag is a simple key-value pair with no
+                      predefined name, type, or namespace/scope. For more information,
+                      see Resource Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inventoryId:
+                    description: Inventory ID to which an asset belongs.
+                    type: string
+                  inventoryIdRef:
+                    description: Reference to a Inventory in cloudbridge to populate
+                      inventoryId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  inventoryIdSelector:
+                    description: Selector for a Inventory in cloudbridge to populate
+                      inventoryId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  sourceKey:
+                    description: The source key to which the asset belongs.
+                    type: string
+                  vm:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Virtual machine related properties.
+                    items:
+                      properties:
+                        hypervisorHost:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name/IP address of VM on which the host
+                            is running.
+                          type: string
+                        hypervisorVendor:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor vendor.
+                          type: string
+                        hypervisorVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor version.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVcenter:
+                    description: (Updatable) VMware vCenter related properties.
+                    items:
+                      properties:
+                        dataCenter:
+                          description: (Updatable) Data center name.
+                          type: string
+                        vcenterKey:
+                          description: (Updatable) vCenter unique key.
+                          type: string
+                        vcenterVersion:
+                          description: (Updatable) Dot-separated version string.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVm:
+                    description: (Updatable) VMware virtual machine related properties.
+                    items:
+                      properties:
+                        cluster:
+                          description: (Updatable) Cluster name.
+                          type: string
+                        customerFields:
+                          description: (Updatable) Customer fields.
+                          items:
+                            type: string
+                          type: array
+                        customerTags:
+                          description: (Updatable) Customer defined tags.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        faultToleranceBandwidth:
+                          description: (Updatable) Fault tolerance bandwidth.
+                          type: number
+                        faultToleranceSecondaryLatency:
+                          description: (Updatable) Fault tolerance to secondary latency.
+                          type: number
+                        faultToleranceState:
+                          description: (Updatable) Fault tolerance state.
+                          type: string
+                        instanceUuid:
+                          description: (Updatable) vCenter-specific identifier of
+                            the virtual machine.
+                          type: string
+                        isDisksCbtEnabled:
+                          description: (Updatable) Indicates that change tracking
+                            is supported for virtual disks of this virtual machine.
+                            However, even if change tracking is supported, it might
+                            not be available for all disks of the virtual machine.
+                          type: boolean
+                        isDisksUuidEnabled:
+                          description: (Updatable) Whether changed block tracking
+                            for this VM's disk is active.
+                          type: boolean
+                        path:
+                          description: (Updatable) Path directory of the asset.
+                          type: string
+                        vmwareToolsStatus:
+                          description: (Updatable) VMware tools status.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  assetSourceIds:
+                    description: (Updatable) List of asset source OCID.
+                    items:
+                      type: string
+                    type: array
+                  assetType:
+                    description: (Updatable) The type of asset.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that the
+                      asset belongs to.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  compute:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Compute related properties.
+                    items:
+                      properties:
+                        connectedNetworks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of connected networks.
+                          type: number
+                        coresCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of CPUs.
+                          type: number
+                        cpuModel:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) CPU model name.
+                          type: string
+                        description:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about the asset.
+                          type: string
+                        disks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Lists the set of disks belonging to the virtual
+                            machine. This list is unordered.
+                          items:
+                            properties:
+                              bootOrder:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Order of boot volumes.
+                                type: number
+                              location:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Location of the boot/data volume.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                              persistentMode:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The disk persistent mode.
+                                type: string
+                              sizeInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The size of the volume in MBs.
+                                type: string
+                              uuid:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID for the virtual disk, if available.
+                                type: string
+                              uuidLun:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID LUN for the virtual disk,
+                                  if available.
+                                type: string
+                            type: object
+                          type: array
+                        disksCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of disks.
+                          type: number
+                        dnsName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Fully Qualified DNS Name.
+                          type: string
+                        firmware:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about firmware type for this virtual
+                            machine.
+                          type: string
+                        gpuDevices:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of GPU devices attached to a virtual
+                            machine.
+                          items:
+                            properties:
+                              coresCount:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Number of CPUs.
+                                type: number
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              manufacturer:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The manufacturer of GPU.
+                                type: string
+                              memoryInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) GPU memory size in MBs.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        gpuDevicesCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of GPU devices.
+                          type: number
+                        guestState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Guest state.
+                          type: string
+                        hardwareVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hardware version.
+                          type: string
+                        hostName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name of the VM.
+                          type: string
+                        isPmemEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Pmem is enabled. Decides if NVDIMMs
+                            are used as a permanent memory.
+                          type: boolean
+                        isTpmEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Trusted Platform Module (TPM) is enabled.
+                          type: boolean
+                        latencySensitivity:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Latency sensitivity.
+                          type: string
+                        memoryInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) GPU memory size in MBs.
+                          type: string
+                        nics:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of network ethernet cards attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              ipAddresses:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) List of IP addresses.
+                                items:
+                                  type: string
+                                type: array
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              macAddress:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address of the VM.
+                                type: string
+                              macAddressType:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address type.
+                                type: string
+                              networkName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Network name.
+                                type: string
+                              switchName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Switch name.
+                                type: string
+                            type: object
+                          type: array
+                        nicsCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of network ethernet cards.
+                          type: number
+                        nvdimmController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The asset's NVDIMM configuration.
+                          items:
+                            properties:
+                              busNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Bus number.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                            type: object
+                          type: array
+                        nvdimms:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The properties of the NVDIMMs attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              controllerKey:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Controller key.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        operatingSystem:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system.
+                          type: string
+                        operatingSystemVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system version.
+                          type: string
+                        pmemInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Pmem size in MBs.
+                          type: string
+                        powerState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The current power state of the virtual machine.
+                          type: string
+                        primaryIp:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Primary IP address of the compute instance.
+                          type: string
+                        scsiController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The assets SCSI controller.
+                          items:
+                            properties:
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              sharedBus:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Shared bus.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        storageProvisionedInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Provision storage size in MBs.
+                          type: string
+                        threadsPerCoreCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of threads per core.
+                          type: number
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The defined tags associated with this
+                      resource, if any. Each key is predefined and scoped to namespaces.
+                      For more information, see Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Asset display name.
+                    type: string
+                  externalAssetKey:
+                    description: The key of the asset from the external environment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The freeform tags associated with this
+                      resource, if any. Each tag is a simple key-value pair with no
+                      predefined name, type, or namespace/scope. For more information,
+                      see Resource Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inventoryId:
+                    description: Inventory ID to which an asset belongs.
+                    type: string
+                  inventoryIdRef:
+                    description: Reference to a Inventory in cloudbridge to populate
+                      inventoryId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  inventoryIdSelector:
+                    description: Selector for a Inventory in cloudbridge to populate
+                      inventoryId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  sourceKey:
+                    description: The source key to which the asset belongs.
+                    type: string
+                  vm:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Virtual machine related properties.
+                    items:
+                      properties:
+                        hypervisorHost:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name/IP address of VM on which the host
+                            is running.
+                          type: string
+                        hypervisorVendor:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor vendor.
+                          type: string
+                        hypervisorVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor version.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVcenter:
+                    description: (Updatable) VMware vCenter related properties.
+                    items:
+                      properties:
+                        dataCenter:
+                          description: (Updatable) Data center name.
+                          type: string
+                        vcenterKey:
+                          description: (Updatable) vCenter unique key.
+                          type: string
+                        vcenterVersion:
+                          description: (Updatable) Dot-separated version string.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVm:
+                    description: (Updatable) VMware virtual machine related properties.
+                    items:
+                      properties:
+                        cluster:
+                          description: (Updatable) Cluster name.
+                          type: string
+                        customerFields:
+                          description: (Updatable) Customer fields.
+                          items:
+                            type: string
+                          type: array
+                        customerTags:
+                          description: (Updatable) Customer defined tags.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        faultToleranceBandwidth:
+                          description: (Updatable) Fault tolerance bandwidth.
+                          type: number
+                        faultToleranceSecondaryLatency:
+                          description: (Updatable) Fault tolerance to secondary latency.
+                          type: number
+                        faultToleranceState:
+                          description: (Updatable) Fault tolerance state.
+                          type: string
+                        instanceUuid:
+                          description: (Updatable) vCenter-specific identifier of
+                            the virtual machine.
+                          type: string
+                        isDisksCbtEnabled:
+                          description: (Updatable) Indicates that change tracking
+                            is supported for virtual disks of this virtual machine.
+                            However, even if change tracking is supported, it might
+                            not be available for all disks of the virtual machine.
+                          type: boolean
+                        isDisksUuidEnabled:
+                          description: (Updatable) Whether changed block tracking
+                            for this VM's disk is active.
+                          type: boolean
+                        path:
+                          description: (Updatable) Path directory of the asset.
+                          type: string
+                        vmwareToolsStatus:
+                          description: (Updatable) VMware tools status.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.assetType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.assetType)
+                || (has(self.initProvider) && has(self.initProvider.assetType))'
+            - message: spec.forProvider.externalAssetKey is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.externalAssetKey)
+                || (has(self.initProvider) && has(self.initProvider.externalAssetKey))'
+            - message: spec.forProvider.sourceKey is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.sourceKey)
+                || (has(self.initProvider) && has(self.initProvider.sourceKey))'
+          status:
+            description: AssetStatus defines the observed state of Asset.
+            properties:
+              atProvider:
+                properties:
+                  assetSourceIds:
+                    description: (Updatable) List of asset source OCID.
+                    items:
+                      type: string
+                    type: array
+                  assetType:
+                    description: (Updatable) The type of asset.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that the
+                      asset belongs to.
+                    type: string
+                  compute:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Compute related properties.
+                    items:
+                      properties:
+                        connectedNetworks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of connected networks.
+                          type: number
+                        coresCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of CPUs.
+                          type: number
+                        cpuModel:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) CPU model name.
+                          type: string
+                        description:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about the asset.
+                          type: string
+                        disks:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Lists the set of disks belonging to the virtual
+                            machine. This list is unordered.
+                          items:
+                            properties:
+                              bootOrder:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Order of boot volumes.
+                                type: number
+                              location:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Location of the boot/data volume.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                              persistentMode:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The disk persistent mode.
+                                type: string
+                              sizeInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The size of the volume in MBs.
+                                type: string
+                              uuid:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID for the virtual disk, if available.
+                                type: string
+                              uuidLun:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk UUID LUN for the virtual disk,
+                                  if available.
+                                type: string
+                            type: object
+                          type: array
+                        disksCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of disks.
+                          type: number
+                        dnsName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Fully Qualified DNS Name.
+                          type: string
+                        firmware:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Information about firmware type for this virtual
+                            machine.
+                          type: string
+                        gpuDevices:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of GPU devices attached to a virtual
+                            machine.
+                          items:
+                            properties:
+                              coresCount:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Number of CPUs.
+                                type: number
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              manufacturer:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The manufacturer of GPU.
+                                type: string
+                              memoryInMbs:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) GPU memory size in MBs.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        gpuDevicesCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of GPU devices.
+                          type: number
+                        guestState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Guest state.
+                          type: string
+                        hardwareVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hardware version.
+                          type: string
+                        hostName:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name of the VM.
+                          type: string
+                        isPmemEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Pmem is enabled. Decides if NVDIMMs
+                            are used as a permanent memory.
+                          type: boolean
+                        isTpmEnabled:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Whether Trusted Platform Module (TPM) is enabled.
+                          type: boolean
+                        latencySensitivity:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Latency sensitivity.
+                          type: string
+                        memoryInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) GPU memory size in MBs.
+                          type: string
+                        nics:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) List of network ethernet cards attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              ipAddresses:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) List of IP addresses.
+                                items:
+                                  type: string
+                                type: array
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              macAddress:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address of the VM.
+                                type: string
+                              macAddressType:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Mac address type.
+                                type: string
+                              networkName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Network name.
+                                type: string
+                              switchName:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Switch name.
+                                type: string
+                            type: object
+                          type: array
+                        nicsCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of network ethernet cards.
+                          type: number
+                        nvdimmController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The asset's NVDIMM configuration.
+                          items:
+                            properties:
+                              busNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Bus number.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                            type: object
+                          type: array
+                        nvdimms:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The properties of the NVDIMMs attached to
+                            a virtual machine.
+                          items:
+                            properties:
+                              controllerKey:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Controller key.
+                                type: number
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        operatingSystem:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system.
+                          type: string
+                        operatingSystemVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Operating system version.
+                          type: string
+                        pmemInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Pmem size in MBs.
+                          type: string
+                        powerState:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The current power state of the virtual machine.
+                          type: string
+                        primaryIp:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Primary IP address of the compute instance.
+                          type: string
+                        scsiController:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) The assets SCSI controller.
+                          items:
+                            properties:
+                              label:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Provides a label and summary information
+                                  for the device.
+                                type: string
+                              sharedBus:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Shared bus.
+                                type: string
+                              unitNumber:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) The unit number of NVDIMM.
+                                type: number
+                            type: object
+                          type: array
+                        storageProvisionedInMbs:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Provision storage size in MBs.
+                          type: string
+                        threadsPerCoreCount:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Number of threads per core.
+                          type: number
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The defined tags associated with this
+                      resource, if any. Each key is predefined and scoped to namespaces.
+                      For more information, see Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Asset display name.
+                    type: string
+                  externalAssetKey:
+                    description: The key of the asset from the external environment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The freeform tags associated with this
+                      resource, if any. Each tag is a simple key-value pair with no
+                      predefined name, type, or namespace/scope. For more information,
+                      see Resource Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: Asset OCID that is immutable on creation.
+                    type: string
+                  inventoryId:
+                    description: Inventory ID to which an asset belongs.
+                    type: string
+                  sourceKey:
+                    description: The source key to which the asset belongs.
+                    type: string
+                  state:
+                    description: The current state of the asset.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'The system tags associated with this resource, if
+                      any. The system tags are set by Oracle cloud infrastructure
+                      services. Each key is predefined and scoped to namespaces. For
+                      more information, see Resource Tags. Example: {orcl-cloud: {free-tier-retain:
+                      true}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time when the asset was created. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time when the asset was updated. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                  vm:
+                    description: (Applicable when asset_type=VM | VMWARE_VM) (Updatable)
+                      Virtual machine related properties.
+                    items:
+                      properties:
+                        hypervisorHost:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Host name/IP address of VM on which the host
+                            is running.
+                          type: string
+                        hypervisorVendor:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor vendor.
+                          type: string
+                        hypervisorVersion:
+                          description: (Applicable when asset_type=VM | VMWARE_VM)
+                            (Updatable) Hypervisor version.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVcenter:
+                    description: (Updatable) VMware vCenter related properties.
+                    items:
+                      properties:
+                        dataCenter:
+                          description: (Updatable) Data center name.
+                          type: string
+                        vcenterKey:
+                          description: (Updatable) vCenter unique key.
+                          type: string
+                        vcenterVersion:
+                          description: (Updatable) Dot-separated version string.
+                          type: string
+                      type: object
+                    type: array
+                  vmwareVm:
+                    description: (Updatable) VMware virtual machine related properties.
+                    items:
+                      properties:
+                        cluster:
+                          description: (Updatable) Cluster name.
+                          type: string
+                        customerFields:
+                          description: (Updatable) Customer fields.
+                          items:
+                            type: string
+                          type: array
+                        customerTags:
+                          description: (Updatable) Customer defined tags.
+                          items:
+                            properties:
+                              description:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Information about the asset.
+                                type: string
+                              name:
+                                description: (Applicable when asset_type=VM | VMWARE_VM)
+                                  (Updatable) Disk name.
+                                type: string
+                            type: object
+                          type: array
+                        faultToleranceBandwidth:
+                          description: (Updatable) Fault tolerance bandwidth.
+                          type: number
+                        faultToleranceSecondaryLatency:
+                          description: (Updatable) Fault tolerance to secondary latency.
+                          type: number
+                        faultToleranceState:
+                          description: (Updatable) Fault tolerance state.
+                          type: string
+                        instanceUuid:
+                          description: (Updatable) vCenter-specific identifier of
+                            the virtual machine.
+                          type: string
+                        isDisksCbtEnabled:
+                          description: (Updatable) Indicates that change tracking
+                            is supported for virtual disks of this virtual machine.
+                            However, even if change tracking is supported, it might
+                            not be available for all disks of the virtual machine.
+                          type: boolean
+                        isDisksUuidEnabled:
+                          description: (Updatable) Whether changed block tracking
+                            for this VM's disk is active.
+                          type: boolean
+                        path:
+                          description: (Updatable) Path directory of the asset.
+                          type: string
+                        vmwareToolsStatus:
+                          description: (Updatable) VMware tools status.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

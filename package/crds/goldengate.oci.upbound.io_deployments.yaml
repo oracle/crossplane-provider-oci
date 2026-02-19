@@ -1,0 +1,3320 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: deployments.goldengate.oci.upbound.io
+spec:
+  group: goldengate.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Deployment
+    listKind: DeploymentList
+    plural: deployments
+    singular: deployment
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Deployment is the Schema for the Deployments API. Provides the
+          Deployment resource in Oracle Cloud Infrastructure Golden Gate service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DeploymentSpec defines the desired state of Deployment
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain of a placement.
+                    type: string
+                  backupSchedule:
+                    description: (Updatable) Defines the backup schedule details for
+                      create operation.
+                    items:
+                      properties:
+                        bucket:
+                          description: (Updatable) Name of the bucket where the object
+                            is to be uploaded in the object storage
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment being
+                            referenced.
+                          type: string
+                        frequencyBackupScheduled:
+                          description: (Updatable) The frequency of the deployment
+                            backup schedule. Frequency can be DAILY, WEEKLY or MONTHLY.
+                          type: string
+                        isMetadataOnly:
+                          description: (Updatable) Parameter to allow users to create
+                            backup without trails
+                          type: boolean
+                        namespace:
+                          description: (Updatable) Name of namespace that serves as
+                            a container for all of your buckets
+                          type: string
+                        timeBackupScheduled:
+                          description: (Updatable) The start timestamp for the deployment
+                            backup schedule. The format is defined by RFC3339, such
+                            as 2024-10-25T18:19:29.600Z.
+                          type: string
+                      type: object
+                    type: array
+                  byolCpuCoreCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a 'Bring Your Own License' (BYOL) license type. Any CPU usage
+                      above this limit is considered as License Included and billed.
+                    type: number
+                  clusterPlacementGroupId:
+                    description: The OCID(https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the cluster placement group for the resource. Only applicable
+                      for multicloud subscriptions. The cluster placement group id
+                      must be provided when a multicloud subscription id is provided.
+                      Otherwise the cluster placement group must not be provided.
+                    type: string
+                  clusterPlacementGroupIdRef:
+                    description: Reference to a ClusterPlacementGroup in clusterplacementgroups
+                      to populate clusterPlacementGroupId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  clusterPlacementGroupIdSelector:
+                    description: Selector for a ClusterPlacementGroup in clusterplacementgroups
+                      to populate clusterPlacementGroupId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment being referenced.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  cpuCoreCount:
+                    description: (Updatable) The Minimum number of OCPUs to be made
+                      available for this Deployment.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Tags defined for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deploymentBackupId:
+                    description: The OCID of the backup being referenced.
+                    type: string
+                  deploymentBackupIdRef:
+                    description: Reference to a DeploymentBackup in goldengate to
+                      populate deploymentBackupId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  deploymentBackupIdSelector:
+                    description: Selector for a DeploymentBackup in goldengate to
+                      populate deploymentBackupId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  deploymentType:
+                    description: 'The type of deployment, which can be any one of
+                      the Allowed values.  NOTE: Use of the value ''OGG'' is maintained
+                      for backward compatibility purposes.  Its use is discouraged
+                      in favor of ''DATABASE_ORACLE''.'
+                    type: string
+                  description:
+                    description: (Updatable) Metadata about this specific object.
+                    type: string
+                  displayName:
+                    description: (Updatable) An object's Display Name.
+                    type: string
+                  environmentType:
+                    description: (Updatable) Specifies whether the deployment is used
+                      in a production or development/testing environment.
+                    type: string
+                  faultDomain:
+                    description: The fault domain of a placement.
+                    type: string
+                  fqdn:
+                    description: (Updatable) A three-label Fully Qualified Domain
+                      Name (FQDN) for a resource.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) A simple key-value pair that is applied
+                      without any predefined name, type, or scope. Exists for cross-compatibility
+                      only.  Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Deployment's CPU core count.
+                    type: boolean
+                  isByolCpuCoreCountLimitEnabled:
+                    description: (Updatable) Flag to allow to configure the 'Bring
+                      Your Own License' (BYOL) license type CPU limit. If enabled,
+                      the exact number of CPUs must be provided via byolCpuCoreCountLimit.
+                    type: boolean
+                  isLockOverride:
+                    type: boolean
+                  isPublic:
+                    description: (Updatable) True if this object is publicly available.
+                    type: boolean
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to a Deployment.
+                    type: string
+                  loadBalancerSubnetId:
+                    description: (Updatable) The OCID of a public subnet in the customer
+                      tenancy. Can be provided only for public deployments. If provided,
+                      the loadbalancer will be created in this subnet instead of the
+                      service tenancy. For backward compatibility, this is an optional
+                      property. It will become mandatory for public deployments after
+                      October 1, 2024.
+                    type: string
+                  loadBalancerSubnetIdRef:
+                    description: Reference to a Subnet in networking to populate loadBalancerSubnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  loadBalancerSubnetIdSelector:
+                    description: Selector for a Subnet in networking to populate loadBalancerSubnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  locks:
+                    description: Locks associated with this resource.
+                    items:
+                      properties:
+                        message:
+                          description: A message added by the creator of the lock.
+                            This is typically used to give an indication of why the
+                            resource is locked.
+                          type: string
+                        type:
+                          description: Type of the lock.
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceConfiguration:
+                    description: (Updatable) Defines the maintenance configuration
+                      for create operation.
+                    items:
+                      properties:
+                        bundleReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            bundle releases. Manually configured period cannot be
+                            longer than service defined period for bundle releases.
+                            This period must be shorter or equal to major release
+                            upgrade period. Not passing this field during create will
+                            equate to using the service default.
+                          type: number
+                        interimReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            interim releases. This period must be shorter or equal
+                            to bundle release upgrade period.
+                          type: number
+                        isInterimReleaseAutoUpgradeEnabled:
+                          description: (Updatable) By default auto upgrade for interim
+                            releases are not enabled. If auto-upgrade is enabled for
+                            interim release,  you have to specify interimReleaseUpgradePeriodInDays
+                            too.
+                          type: boolean
+                        majorReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            major releases. Manually configured period cannot be longer
+                            than service defined period for major releases. Not passing
+                            this field during create will equate to using the service
+                            default.
+                          type: number
+                        securityPatchUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            releases with security fix. Manually configured period
+                            cannot be longer than service defined period for security
+                            releases. Not passing this field during create will equate
+                            to using the service default.
+                          type: number
+                      type: object
+                    type: array
+                  maintenanceWindow:
+                    description: (Updatable) Defines the maintenance window for create
+                      operation, when automatic actions can be performed.
+                    items:
+                      properties:
+                        day:
+                          description: (Updatable) Days of the week.
+                          type: string
+                        startHour:
+                          description: (Updatable) Start hour for maintenance period.
+                            Hour is in UTC.
+                          type: number
+                      type: object
+                    type: array
+                  nsgIds:
+                    description: (Updatable) An array of Network Security Group OCIDs
+                      used to define network access for either Deployments or Connections.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  oggData:
+                    description: (Updatable) Deployment Data for creating an OggDeployment
+                    items:
+                      properties:
+                        adminPasswordSecretRef:
+                          description: (Updatable) The password associated with the
+                            GoldenGate deployment console username. The password must
+                            be 8 to 30 characters long and must contain at least 1
+                            uppercase, 1 lowercase, 1 numeric, and 1 special character.
+                            Special characters such as '$', '^', or '?' are not allowed.
+                            This field will be deprecated and replaced by "passwordSecretId".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        adminUsername:
+                          description: (Updatable) The GoldenGate deployment console
+                            username.
+                          type: string
+                        certificate:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the SSL certificate.
+                          type: string
+                        credentialStore:
+                          description: (Updatable) The type of credential store for
+                            OGG.
+                          type: string
+                        deploymentName:
+                          description: The name given to the GoldenGate service deployment.
+                            The name must be 1 to 32 characters long, must contain
+                            only alphanumeric characters and must start with a letter.
+                          type: string
+                        deploymentNameRef:
+                          description: Reference to a Deployment in goldengate to
+                            populate deploymentName.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        deploymentNameSelector:
+                          description: Selector for a Deployment in goldengate to
+                            populate deploymentName.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        groupToRolesMapping:
+                          description: (Updatable) Defines the IDP Groups to GoldenGate
+                            roles mapping. This field is used only for IAM deployment
+                            and does not have any impact on non-IAM deployments. For
+                            IAM deployment, when user does not specify this mapping,
+                            then it has null value and default mapping is used. User
+                            belonging to each group can only perform the actions according
+                            to the role the respective group is mapped to.
+                          items:
+                            properties:
+                              administratorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role administratorGroup.
+                                  It grants full access to the user, including the
+                                  ability to alter general, non-security related operational
+                                  parameters and profiles of the server.
+                                type: string
+                              administratorGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  administratorGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              administratorGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  administratorGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              operatorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role operatorGroup.
+                                  It allows users to perform only operational actions,
+                                  like starting and stopping resources. Operators
+                                  cannot alter the operational parameters or profiles
+                                  of the MA server.
+                                type: string
+                              operatorGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  operatorGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              operatorGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  operatorGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              securityGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role securityGroup.
+                                  It grants administration of security related objects
+                                  and invoke security related service requests. This
+                                  role has full privileges.
+                                type: string
+                              securityGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  securityGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              securityGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  securityGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              userGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role userGroup.
+                                  It allows information-only service requests, which
+                                  do not alter or affect the operation of either the
+                                  MA. Examples of query and read-only information
+                                  include performance metric information and resource
+                                  status and monitoring information
+                                type: string
+                              userGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  userGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              userGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  userGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        identityDomainId:
+                          description: (Updatable) The OCID of the Identity Domain
+                            when IAM credential store is used.
+                          type: string
+                        identityDomainIdRef:
+                          description: Reference to a Domain in identity to populate
+                            identityDomainId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        identityDomainIdSelector:
+                          description: Selector for a Domain in identity to populate
+                            identityDomainId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        key:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the private key.
+                          type: string
+                        oggVersion:
+                          description: Version of OGG
+                          type: string
+                        passwordSecretIdSecretRef:
+                          description: (Updatable) The OCID of the Secret where the
+                            deployment password is stored.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                      type: object
+                    type: array
+                  placements:
+                    description: (Updatable) An array of local peers of deployment
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: The availability domain of a placement.
+                          type: string
+                        faultDomain:
+                          description: The fault domain of a placement.
+                          type: string
+                      type: object
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sourceDeploymentId:
+                    description: The OCID of the deployment being referenced.
+                    type: string
+                  sourceDeploymentIdRef:
+                    description: Reference to a Deployment in goldengate to populate
+                      sourceDeploymentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  sourceDeploymentIdSelector:
+                    description: Selector for a Deployment in goldengate to populate
+                      sourceDeploymentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  state:
+                    description: Possible lifecycle states.
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet of the deployment's
+                      private endpoint. The subnet must be a private subnet. For backward
+                      compatibility, public subnets are allowed until May 31 2025,
+                      after which the private subnet will be enforced.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in networking to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in networking to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  availabilityDomain:
+                    description: The availability domain of a placement.
+                    type: string
+                  backupSchedule:
+                    description: (Updatable) Defines the backup schedule details for
+                      create operation.
+                    items:
+                      properties:
+                        bucket:
+                          description: (Updatable) Name of the bucket where the object
+                            is to be uploaded in the object storage
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment being
+                            referenced.
+                          type: string
+                        frequencyBackupScheduled:
+                          description: (Updatable) The frequency of the deployment
+                            backup schedule. Frequency can be DAILY, WEEKLY or MONTHLY.
+                          type: string
+                        isMetadataOnly:
+                          description: (Updatable) Parameter to allow users to create
+                            backup without trails
+                          type: boolean
+                        namespace:
+                          description: (Updatable) Name of namespace that serves as
+                            a container for all of your buckets
+                          type: string
+                        timeBackupScheduled:
+                          description: (Updatable) The start timestamp for the deployment
+                            backup schedule. The format is defined by RFC3339, such
+                            as 2024-10-25T18:19:29.600Z.
+                          type: string
+                      type: object
+                    type: array
+                  byolCpuCoreCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a 'Bring Your Own License' (BYOL) license type. Any CPU usage
+                      above this limit is considered as License Included and billed.
+                    type: number
+                  clusterPlacementGroupId:
+                    description: The OCID(https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the cluster placement group for the resource. Only applicable
+                      for multicloud subscriptions. The cluster placement group id
+                      must be provided when a multicloud subscription id is provided.
+                      Otherwise the cluster placement group must not be provided.
+                    type: string
+                  clusterPlacementGroupIdRef:
+                    description: Reference to a ClusterPlacementGroup in clusterplacementgroups
+                      to populate clusterPlacementGroupId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  clusterPlacementGroupIdSelector:
+                    description: Selector for a ClusterPlacementGroup in clusterplacementgroups
+                      to populate clusterPlacementGroupId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment being referenced.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  cpuCoreCount:
+                    description: (Updatable) The Minimum number of OCPUs to be made
+                      available for this Deployment.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Tags defined for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deploymentBackupId:
+                    description: The OCID of the backup being referenced.
+                    type: string
+                  deploymentBackupIdRef:
+                    description: Reference to a DeploymentBackup in goldengate to
+                      populate deploymentBackupId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  deploymentBackupIdSelector:
+                    description: Selector for a DeploymentBackup in goldengate to
+                      populate deploymentBackupId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  deploymentType:
+                    description: 'The type of deployment, which can be any one of
+                      the Allowed values.  NOTE: Use of the value ''OGG'' is maintained
+                      for backward compatibility purposes.  Its use is discouraged
+                      in favor of ''DATABASE_ORACLE''.'
+                    type: string
+                  description:
+                    description: (Updatable) Metadata about this specific object.
+                    type: string
+                  displayName:
+                    description: (Updatable) An object's Display Name.
+                    type: string
+                  environmentType:
+                    description: (Updatable) Specifies whether the deployment is used
+                      in a production or development/testing environment.
+                    type: string
+                  faultDomain:
+                    description: The fault domain of a placement.
+                    type: string
+                  fqdn:
+                    description: (Updatable) A three-label Fully Qualified Domain
+                      Name (FQDN) for a resource.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) A simple key-value pair that is applied
+                      without any predefined name, type, or scope. Exists for cross-compatibility
+                      only.  Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Deployment's CPU core count.
+                    type: boolean
+                  isByolCpuCoreCountLimitEnabled:
+                    description: (Updatable) Flag to allow to configure the 'Bring
+                      Your Own License' (BYOL) license type CPU limit. If enabled,
+                      the exact number of CPUs must be provided via byolCpuCoreCountLimit.
+                    type: boolean
+                  isLockOverride:
+                    type: boolean
+                  isPublic:
+                    description: (Updatable) True if this object is publicly available.
+                    type: boolean
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to a Deployment.
+                    type: string
+                  loadBalancerSubnetId:
+                    description: (Updatable) The OCID of a public subnet in the customer
+                      tenancy. Can be provided only for public deployments. If provided,
+                      the loadbalancer will be created in this subnet instead of the
+                      service tenancy. For backward compatibility, this is an optional
+                      property. It will become mandatory for public deployments after
+                      October 1, 2024.
+                    type: string
+                  loadBalancerSubnetIdRef:
+                    description: Reference to a Subnet in networking to populate loadBalancerSubnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  loadBalancerSubnetIdSelector:
+                    description: Selector for a Subnet in networking to populate loadBalancerSubnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  locks:
+                    description: Locks associated with this resource.
+                    items:
+                      properties:
+                        message:
+                          description: A message added by the creator of the lock.
+                            This is typically used to give an indication of why the
+                            resource is locked.
+                          type: string
+                        type:
+                          description: Type of the lock.
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceConfiguration:
+                    description: (Updatable) Defines the maintenance configuration
+                      for create operation.
+                    items:
+                      properties:
+                        bundleReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            bundle releases. Manually configured period cannot be
+                            longer than service defined period for bundle releases.
+                            This period must be shorter or equal to major release
+                            upgrade period. Not passing this field during create will
+                            equate to using the service default.
+                          type: number
+                        interimReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            interim releases. This period must be shorter or equal
+                            to bundle release upgrade period.
+                          type: number
+                        isInterimReleaseAutoUpgradeEnabled:
+                          description: (Updatable) By default auto upgrade for interim
+                            releases are not enabled. If auto-upgrade is enabled for
+                            interim release,  you have to specify interimReleaseUpgradePeriodInDays
+                            too.
+                          type: boolean
+                        majorReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            major releases. Manually configured period cannot be longer
+                            than service defined period for major releases. Not passing
+                            this field during create will equate to using the service
+                            default.
+                          type: number
+                        securityPatchUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            releases with security fix. Manually configured period
+                            cannot be longer than service defined period for security
+                            releases. Not passing this field during create will equate
+                            to using the service default.
+                          type: number
+                      type: object
+                    type: array
+                  maintenanceWindow:
+                    description: (Updatable) Defines the maintenance window for create
+                      operation, when automatic actions can be performed.
+                    items:
+                      properties:
+                        day:
+                          description: (Updatable) Days of the week.
+                          type: string
+                        startHour:
+                          description: (Updatable) Start hour for maintenance period.
+                            Hour is in UTC.
+                          type: number
+                      type: object
+                    type: array
+                  nsgIds:
+                    description: (Updatable) An array of Network Security Group OCIDs
+                      used to define network access for either Deployments or Connections.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  oggData:
+                    description: (Updatable) Deployment Data for creating an OggDeployment
+                    items:
+                      properties:
+                        adminPasswordSecretRef:
+                          description: (Updatable) The password associated with the
+                            GoldenGate deployment console username. The password must
+                            be 8 to 30 characters long and must contain at least 1
+                            uppercase, 1 lowercase, 1 numeric, and 1 special character.
+                            Special characters such as '$', '^', or '?' are not allowed.
+                            This field will be deprecated and replaced by "passwordSecretId".
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        adminUsername:
+                          description: (Updatable) The GoldenGate deployment console
+                            username.
+                          type: string
+                        certificate:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the SSL certificate.
+                          type: string
+                        credentialStore:
+                          description: (Updatable) The type of credential store for
+                            OGG.
+                          type: string
+                        deploymentName:
+                          description: The name given to the GoldenGate service deployment.
+                            The name must be 1 to 32 characters long, must contain
+                            only alphanumeric characters and must start with a letter.
+                          type: string
+                        deploymentNameRef:
+                          description: Reference to a Deployment in goldengate to
+                            populate deploymentName.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        deploymentNameSelector:
+                          description: Selector for a Deployment in goldengate to
+                            populate deploymentName.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        groupToRolesMapping:
+                          description: (Updatable) Defines the IDP Groups to GoldenGate
+                            roles mapping. This field is used only for IAM deployment
+                            and does not have any impact on non-IAM deployments. For
+                            IAM deployment, when user does not specify this mapping,
+                            then it has null value and default mapping is used. User
+                            belonging to each group can only perform the actions according
+                            to the role the respective group is mapped to.
+                          items:
+                            properties:
+                              administratorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role administratorGroup.
+                                  It grants full access to the user, including the
+                                  ability to alter general, non-security related operational
+                                  parameters and profiles of the server.
+                                type: string
+                              administratorGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  administratorGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              administratorGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  administratorGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              operatorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role operatorGroup.
+                                  It allows users to perform only operational actions,
+                                  like starting and stopping resources. Operators
+                                  cannot alter the operational parameters or profiles
+                                  of the MA server.
+                                type: string
+                              operatorGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  operatorGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              operatorGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  operatorGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              securityGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role securityGroup.
+                                  It grants administration of security related objects
+                                  and invoke security related service requests. This
+                                  role has full privileges.
+                                type: string
+                              securityGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  securityGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              securityGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  securityGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              userGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role userGroup.
+                                  It allows information-only service requests, which
+                                  do not alter or affect the operation of either the
+                                  MA. Examples of query and read-only information
+                                  include performance metric information and resource
+                                  status and monitoring information
+                                type: string
+                              userGroupIdRef:
+                                description: Reference to a Group in identity to populate
+                                  userGroupId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              userGroupIdSelector:
+                                description: Selector for a Group in identity to populate
+                                  userGroupId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        identityDomainId:
+                          description: (Updatable) The OCID of the Identity Domain
+                            when IAM credential store is used.
+                          type: string
+                        identityDomainIdRef:
+                          description: Reference to a Domain in identity to populate
+                            identityDomainId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        identityDomainIdSelector:
+                          description: Selector for a Domain in identity to populate
+                            identityDomainId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        key:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the private key.
+                          type: string
+                        oggVersion:
+                          description: Version of OGG
+                          type: string
+                        passwordSecretIdSecretRef:
+                          description: (Updatable) The OCID of the Secret where the
+                            deployment password is stored.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                      type: object
+                    type: array
+                  placements:
+                    description: (Updatable) An array of local peers of deployment
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: The availability domain of a placement.
+                          type: string
+                        faultDomain:
+                          description: The fault domain of a placement.
+                          type: string
+                      type: object
+                    type: array
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sourceDeploymentId:
+                    description: The OCID of the deployment being referenced.
+                    type: string
+                  sourceDeploymentIdRef:
+                    description: Reference to a Deployment in goldengate to populate
+                      sourceDeploymentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  sourceDeploymentIdSelector:
+                    description: Selector for a Deployment in goldengate to populate
+                      sourceDeploymentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  state:
+                    description: Possible lifecycle states.
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet of the deployment's
+                      private endpoint. The subnet must be a private subnet. For backward
+                      compatibility, public subnets are allowed until May 31 2025,
+                      after which the private subnet will be enforced.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in networking to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in networking to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+          status:
+            description: DeploymentStatus defines the observed state of Deployment.
+            properties:
+              atProvider:
+                properties:
+                  availabilityDomain:
+                    description: The availability domain of a placement.
+                    type: string
+                  backupSchedule:
+                    description: (Updatable) Defines the backup schedule details for
+                      create operation.
+                    items:
+                      properties:
+                        bucket:
+                          description: (Updatable) Name of the bucket where the object
+                            is to be uploaded in the object storage
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment being
+                            referenced.
+                          type: string
+                        frequencyBackupScheduled:
+                          description: (Updatable) The frequency of the deployment
+                            backup schedule. Frequency can be DAILY, WEEKLY or MONTHLY.
+                          type: string
+                        isMetadataOnly:
+                          description: (Updatable) Parameter to allow users to create
+                            backup without trails
+                          type: boolean
+                        namespace:
+                          description: (Updatable) Name of namespace that serves as
+                            a container for all of your buckets
+                          type: string
+                        timeBackupScheduled:
+                          description: (Updatable) The start timestamp for the deployment
+                            backup schedule. The format is defined by RFC3339, such
+                            as 2024-10-25T18:19:29.600Z.
+                          type: string
+                      type: object
+                    type: array
+                  byolCpuCoreCountLimit:
+                    description: (Updatable) The maximum number of CPUs allowed with
+                      a 'Bring Your Own License' (BYOL) license type. Any CPU usage
+                      above this limit is considered as License Included and billed.
+                    type: number
+                  category:
+                    description: The deployment category defines the broad separation
+                      of the deployment type into three categories. Currently the
+                      separation is 'DATA_REPLICATION', 'STREAM_ANALYTICS' and 'DATA_TRANSFORMS'.
+                    type: string
+                  clusterPlacementGroupId:
+                    description: The OCID(https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the cluster placement group for the resource. Only applicable
+                      for multicloud subscriptions. The cluster placement group id
+                      must be provided when a multicloud subscription id is provided.
+                      Otherwise the cluster placement group must not be provided.
+                    type: string
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment being referenced.
+                    type: string
+                  cpuCoreCount:
+                    description: (Updatable) The Minimum number of OCPUs to be made
+                      available for this Deployment.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Tags defined for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  deploymentBackupId:
+                    description: The OCID of the backup being referenced.
+                    type: string
+                  deploymentDiagnosticData:
+                    description: Information regarding the deployment diagnostic collection
+                    items:
+                      properties:
+                        bucket:
+                          description: (Updatable) Name of the bucket where the object
+                            is to be uploaded in the object storage
+                          type: string
+                        diagnosticState:
+                          description: The state of the deployment diagnostic collection.
+                          type: string
+                        namespace:
+                          description: (Updatable) Name of namespace that serves as
+                            a container for all of your buckets
+                          type: string
+                        object:
+                          description: Name of the diagnostic collected and uploaded
+                            to object storage
+                          type: string
+                        timeDiagnosticEnd:
+                          description: The time until which the diagnostic collection
+                            should collect the logs. The format is defined by RFC3339,
+                            such as 2016-08-25T21:10:29.600Z.
+                          type: string
+                        timeDiagnosticStart:
+                          description: The time from which the diagnostic collection
+                            should collect the logs. The format is defined by RFC3339,
+                            such as 2016-08-25T21:10:29.600Z.
+                          type: string
+                      type: object
+                    type: array
+                  deploymentRole:
+                    description: The type of the deployment role.
+                    type: string
+                  deploymentType:
+                    description: 'The type of deployment, which can be any one of
+                      the Allowed values.  NOTE: Use of the value ''OGG'' is maintained
+                      for backward compatibility purposes.  Its use is discouraged
+                      in favor of ''DATABASE_ORACLE''.'
+                    type: string
+                  deploymentUrl:
+                    description: The URL of a resource.
+                    type: string
+                  description:
+                    description: (Updatable) Metadata about this specific object.
+                    type: string
+                  displayName:
+                    description: (Updatable) An object's Display Name.
+                    type: string
+                  environmentType:
+                    description: (Updatable) Specifies whether the deployment is used
+                      in a production or development/testing environment.
+                    type: string
+                  faultDomain:
+                    description: The fault domain of a placement.
+                    type: string
+                  fqdn:
+                    description: (Updatable) A three-label Fully Qualified Domain
+                      Name (FQDN) for a resource.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) A simple key-value pair that is applied
+                      without any predefined name, type, or scope. Exists for cross-compatibility
+                      only.  Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the deployment being referenced.
+                    type: string
+                  ingressIps:
+                    description: List of ingress IP addresses from where the GoldenGate
+                      deployment connects to this connection's privateIp.  Customers
+                      may optionally set up ingress security rules to restrict traffic
+                      from these IP addresses.
+                    items:
+                      properties:
+                        ingressIp:
+                          description: A Private Endpoint IPv4 or IPv6 Address created
+                            in the customer's subnet.
+                          type: string
+                      type: object
+                    type: array
+                  isAutoScalingEnabled:
+                    description: (Updatable) Indicates if auto scaling is enabled
+                      for the Deployment's CPU core count.
+                    type: boolean
+                  isByolCpuCoreCountLimitEnabled:
+                    description: (Updatable) Flag to allow to configure the 'Bring
+                      Your Own License' (BYOL) license type CPU limit. If enabled,
+                      the exact number of CPUs must be provided via byolCpuCoreCountLimit.
+                    type: boolean
+                  isHealthy:
+                    description: True if all of the aggregate resources are working
+                      correctly.
+                    type: boolean
+                  isLatestVersion:
+                    description: Indicates if the resource is the the latest available
+                      version.
+                    type: boolean
+                  isLockOverride:
+                    type: boolean
+                  isPublic:
+                    description: (Updatable) True if this object is publicly available.
+                    type: boolean
+                  isStorageUtilizationLimitExceeded:
+                    description: 'Deprecated: This field is not updated and will be
+                      removed in future versions. If storage utilization exceeds the
+                      limit, the respective warning message will appear in deployment
+                      messages, which can be accessed through /messages?deploymentId=.
+                      Indicator will be true if the amount of storage being utilized
+                      exceeds the allowable storage utilization limit.  Exceeding
+                      the limit may be an indication of a misconfiguration of the
+                      deployment''s GoldenGate service.'
+                    type: boolean
+                  licenseModel:
+                    description: (Updatable) The Oracle license model that applies
+                      to a Deployment.
+                    type: string
+                  lifecycleDetails:
+                    description: Describes the object's current state in detail. For
+                      example, it can be used to provide actionable information for
+                      a resource in a Failed state.
+                    type: string
+                  lifecycleSubState:
+                    description: Possible GGS lifecycle sub-states.
+                    type: string
+                  loadBalancerId:
+                    description: The OCID of the loadbalancer in the customer's subnet.
+                      The loadbalancer of the public deployment created in the customer
+                      subnet.
+                    type: string
+                  loadBalancerSubnetId:
+                    description: (Updatable) The OCID of a public subnet in the customer
+                      tenancy. Can be provided only for public deployments. If provided,
+                      the loadbalancer will be created in this subnet instead of the
+                      service tenancy. For backward compatibility, this is an optional
+                      property. It will become mandatory for public deployments after
+                      October 1, 2024.
+                    type: string
+                  locks:
+                    description: Locks associated with this resource.
+                    items:
+                      properties:
+                        message:
+                          description: A message added by the creator of the lock.
+                            This is typically used to give an indication of why the
+                            resource is locked.
+                          type: string
+                        relatedResourceId:
+                          description: The id of the resource that is locking this
+                            resource. Indicates that deleting this resource will remove
+                            the lock.
+                          type: string
+                        timeCreated:
+                          description: When the lock was created.
+                          type: string
+                        type:
+                          description: Type of the lock.
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceConfiguration:
+                    description: (Updatable) Defines the maintenance configuration
+                      for create operation.
+                    items:
+                      properties:
+                        bundleReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            bundle releases. Manually configured period cannot be
+                            longer than service defined period for bundle releases.
+                            This period must be shorter or equal to major release
+                            upgrade period. Not passing this field during create will
+                            equate to using the service default.
+                          type: number
+                        interimReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            interim releases. This period must be shorter or equal
+                            to bundle release upgrade period.
+                          type: number
+                        isInterimReleaseAutoUpgradeEnabled:
+                          description: (Updatable) By default auto upgrade for interim
+                            releases are not enabled. If auto-upgrade is enabled for
+                            interim release,  you have to specify interimReleaseUpgradePeriodInDays
+                            too.
+                          type: boolean
+                        majorReleaseUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            major releases. Manually configured period cannot be longer
+                            than service defined period for major releases. Not passing
+                            this field during create will equate to using the service
+                            default.
+                          type: number
+                        securityPatchUpgradePeriodInDays:
+                          description: (Updatable) Defines auto upgrade period for
+                            releases with security fix. Manually configured period
+                            cannot be longer than service defined period for security
+                            releases. Not passing this field during create will equate
+                            to using the service default.
+                          type: number
+                      type: object
+                    type: array
+                  maintenanceWindow:
+                    description: (Updatable) Defines the maintenance window for create
+                      operation, when automatic actions can be performed.
+                    items:
+                      properties:
+                        day:
+                          description: (Updatable) Days of the week.
+                          type: string
+                        startHour:
+                          description: (Updatable) Start hour for maintenance period.
+                            Hour is in UTC.
+                          type: number
+                      type: object
+                    type: array
+                  nextMaintenanceActionType:
+                    description: Type of the next maintenance.
+                    type: string
+                  nextMaintenanceDescription:
+                    description: Description of the next maintenance.
+                    type: string
+                  nsgIds:
+                    description: (Updatable) An array of Network Security Group OCIDs
+                      used to define network access for either Deployments or Connections.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  oggData:
+                    description: (Updatable) Deployment Data for creating an OggDeployment
+                    items:
+                      properties:
+                        adminUsername:
+                          description: (Updatable) The GoldenGate deployment console
+                            username.
+                          type: string
+                        certificate:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the SSL certificate.
+                          type: string
+                        credentialStore:
+                          description: (Updatable) The type of credential store for
+                            OGG.
+                          type: string
+                        deploymentName:
+                          description: The name given to the GoldenGate service deployment.
+                            The name must be 1 to 32 characters long, must contain
+                            only alphanumeric characters and must start with a letter.
+                          type: string
+                        groupToRolesMapping:
+                          description: (Updatable) Defines the IDP Groups to GoldenGate
+                            roles mapping. This field is used only for IAM deployment
+                            and does not have any impact on non-IAM deployments. For
+                            IAM deployment, when user does not specify this mapping,
+                            then it has null value and default mapping is used. User
+                            belonging to each group can only perform the actions according
+                            to the role the respective group is mapped to.
+                          items:
+                            properties:
+                              administratorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role administratorGroup.
+                                  It grants full access to the user, including the
+                                  ability to alter general, non-security related operational
+                                  parameters and profiles of the server.
+                                type: string
+                              operatorGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role operatorGroup.
+                                  It allows users to perform only operational actions,
+                                  like starting and stopping resources. Operators
+                                  cannot alter the operational parameters or profiles
+                                  of the MA server.
+                                type: string
+                              securityGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role securityGroup.
+                                  It grants administration of security related objects
+                                  and invoke security related service requests. This
+                                  role has full privileges.
+                                type: string
+                              userGroupId:
+                                description: (Updatable) The OCID of the IDP group
+                                  which will be mapped to goldengate role userGroup.
+                                  It allows information-only service requests, which
+                                  do not alter or affect the operation of either the
+                                  MA. Examples of query and read-only information
+                                  include performance metric information and resource
+                                  status and monitoring information
+                                type: string
+                            type: object
+                          type: array
+                        identityDomainId:
+                          description: (Updatable) The OCID of the Identity Domain
+                            when IAM credential store is used.
+                          type: string
+                        key:
+                          description: (Updatable) The base64 encoded content of the
+                            PEM file containing the private key.
+                          type: string
+                        oggVersion:
+                          description: Version of OGG
+                          type: string
+                      type: object
+                    type: array
+                  placements:
+                    description: (Updatable) An array of local peers of deployment
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: The availability domain of a placement.
+                          type: string
+                        faultDomain:
+                          description: The fault domain of a placement.
+                          type: string
+                      type: object
+                    type: array
+                  privateIpAddress:
+                    description: The private IP address in the customer's VCN representing
+                      the access point for the associated endpoint service in the
+                      GoldenGate service VCN.
+                    type: string
+                  publicIpAddress:
+                    description: The public IP address representing the access point
+                      for the Deployment.
+                    type: string
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sourceDeploymentId:
+                    description: The OCID of the deployment being referenced.
+                    type: string
+                  state:
+                    description: Possible lifecycle states.
+                    type: string
+                  storageUtilizationInBytes:
+                    description: The amount of storage being utilized (in bytes)
+                    type: string
+                  subnetId:
+                    description: (Updatable) The OCID of the subnet of the deployment's
+                      private endpoint. The subnet must be a private subnet. For backward
+                      compatibility, public subnets are allowed until May 31 2025,
+                      after which the private subnet will be enforced.
+                    type: string
+                  subscriptionId:
+                    description: The OCID of the subscription with which resource
+                      needs to be associated with.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'The system tags associated with this resource, if
+                      any. The system tags are set by Oracle Cloud Infrastructure
+                      services. Each key is predefined and scoped to namespaces.  For
+                      more information, see Resource Tags.  Example: {orcl-cloud:
+                      {free-tier-retain: true}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: When the lock was created.
+                    type: string
+                  timeLastBackupScheduled:
+                    description: The timestamp of last deployment backup scheduled.
+                      The format is defined by RFC3339, such as 2024-10-25T18:19:29.600Z.
+                    type: string
+                  timeNextBackupScheduled:
+                    description: The timestamp of next deployment backup scheduled.
+                      The format is defined by RFC3339, such as 2024-10-26T20:19:29.600Z.
+                    type: string
+                  timeOfNextMaintenance:
+                    description: The time of next maintenance schedule. The format
+                      is defined by RFC3339, such as 2016-08-25T21:10:29.600Z.
+                    type: string
+                  timeOggVersionSupportedUntil:
+                    description: The time until OGG version is supported. After this
+                      date has passed OGG version will not be available anymore. The
+                      format is defined by RFC3339, such as 2016-08-25T21:10:29.600Z.
+                    type: string
+                  timeRoleChanged:
+                    description: The time of the last role change. The format is defined
+                      by RFC3339, such as 2016-08-25T21:10:29.600Z.
+                    type: string
+                  timeUpdated:
+                    description: The time the resource was last updated. The format
+                      is defined by RFC3339, such as 2016-08-25T21:10:29.600Z.
+                    type: string
+                  timeUpgradeRequired:
+                    description: 'Note: Deprecated: Use timeOfNextMaintenance instead,
+                      or related upgrade records  to check, when deployment will be
+                      forced to upgrade to a newer version. Old description: The date
+                      the existing version in use will no longer be considered as
+                      usable and an upgrade will be required.  This date is typically
+                      6 months after the version was released for use by GGS.  The
+                      format is defined by RFC3339, such as 2016-08-25T21:10:29.600Z.'
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,24 @@
+apiVersion: opa.oci.upbound.io/v1alpha1
+kind: OpaInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opa/v1alpha1/opainstance
+  labels:
+    testing.upbound.io/example-name: test_opa_instance
+  name: test-opa-instance
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    consumptionModel: ${var.opa_instance_consumption_model}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.opa_instance_description}
+    displayName: ${var.opa_instance_display_name}
+    freeformTags:
+      bar-key: value
+    idcsAt: ${var.opa_instance_idcs_at}
+    isBreakglassEnabled: ${var.opa_instance_is_breakglass_enabled}
+    meteringType: ${var.opa_instance_metering_type}
+    shapeName: ${oci_core_shape.test_shape.name}

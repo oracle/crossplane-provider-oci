@@ -1,0 +1,137 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: Monitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/monitor
+  labels:
+    testing.upbound.io/example-name: test_monitor
+  name: test-monitor
+spec:
+  forProvider:
+    apmDomainId: ${oci_apm_synthetics_apm_domain.test_apm_domain.id}
+    availabilityConfiguration:
+    - maxAllowedFailuresPerInterval: ${var.monitor_availability_configuration_max_allowed_failures_per_interval}
+      minAllowedRunsPerInterval: ${var.monitor_availability_configuration_min_allowed_runs_per_interval}
+    batchIntervalInSeconds: ${var.monitor_batch_interval_in_seconds}
+    configuration:
+    - clientCertificateDetails:
+      - clientCertificate:
+        - content: ${var.monitor_configuration_client_certificate_details_client_certificate_content}
+          fileName: ${var.monitor_configuration_client_certificate_details_client_certificate_file_name}
+        privateKey:
+        - content: ${var.monitor_configuration_client_certificate_details_private_key_content}
+          fileName: ${var.monitor_configuration_client_certificate_details_private_key_file_name}
+      configType: ${var.monitor_configuration_config_type}
+      connectionString: ${var.monitor_configuration_connection_string}
+      databaseAuthenticationDetails:
+      - password:
+        - passwordSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          passwordTypeSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          vaultSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        username: ${var.monitor_configuration_database_authentication_details_username}
+      databaseConnectionType: ${var.monitor_configuration_database_connection_type}
+      databaseRole: ${var.monitor_configuration_database_role}
+      databaseType: ${var.monitor_configuration_database_type}
+      databaseWalletDetails:
+      - databaseWallet: ${var.monitor_configuration_database_wallet_details_database_wallet}
+        serviceName: ${oci_core_service.test_service.name}
+      dnsConfiguration:
+      - isOverrideDns: ${var.monitor_configuration_dns_configuration_is_override_dns}
+        overrideDnsIp: ${var.monitor_configuration_dns_configuration_override_dns_ip}
+      downloadSizeLimitInBytes: ${var.monitor_configuration_download_size_limit_in_bytes}
+      ftpBasicAuthenticationDetails:
+      - password:
+        - passwordSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          passwordTypeSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          vaultSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        username: ${var.monitor_configuration_ftp_basic_authentication_details_username}
+      ftpProtocol: ${var.monitor_configuration_ftp_protocol}
+      ftpRequestType: ${var.monitor_configuration_ftp_request_type}
+      isActiveMode: ${var.monitor_configuration_is_active_mode}
+      isCertificateValidationEnabled: ${var.monitor_configuration_is_certificate_validation_enabled}
+      isDefaultSnapshotEnabled: ${var.monitor_configuration_is_default_snapshot_enabled}
+      isFailureRetried: ${var.monitor_configuration_is_failure_retried}
+      isQueryRecursive: ${var.monitor_configuration_is_query_recursive}
+      isRedirectionEnabled: ${var.monitor_configuration_is_redirection_enabled}
+      nameServer: ${var.monitor_configuration_name_server}
+      networkConfiguration:
+      - numberOfHops: ${var.monitor_configuration_network_configuration_number_of_hops}
+        probeMode: ${var.monitor_configuration_network_configuration_probe_mode}
+        probePerHop: ${var.monitor_configuration_network_configuration_probe_per_hop}
+        protocol: ${var.monitor_configuration_network_configuration_protocol}
+        transmissionRate: ${var.monitor_configuration_network_configuration_transmission_rate}
+      protocol: ${var.monitor_configuration_protocol}
+      query: ${var.monitor_configuration_query}
+      recordType: ${var.monitor_configuration_record_type}
+      reqAuthenticationDetails:
+      - authHeaders:
+        - headerName: ${var.monitor_configuration_req_authentication_details_auth_headers_header_name}
+          headerValue: ${var.monitor_configuration_req_authentication_details_auth_headers_header_value}
+        authRequestMethod: ${var.monitor_configuration_req_authentication_details_auth_request_method}
+        authRequestPostBody: ${var.monitor_configuration_req_authentication_details_auth_request_post_body}
+        authToken: ${var.monitor_configuration_req_authentication_details_auth_token}
+        authUrl: ${var.monitor_configuration_req_authentication_details_auth_url}
+        authUserNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
+        authUserPasswordSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        oauthScheme: ${var.monitor_configuration_req_authentication_details_oauth_scheme}
+      reqAuthenticationScheme: ${var.monitor_configuration_req_authentication_scheme}
+      requestHeaders:
+      - headerName: ${var.monitor_configuration_request_headers_header_name}
+        headerValue: ${var.monitor_configuration_request_headers_header_value}
+      requestMethod: ${var.monitor_configuration_request_method}
+      requestPostBody: ${var.monitor_configuration_request_post_body}
+      requestQueryParams:
+      - paramName: ${var.monitor_configuration_request_query_params_param_name}
+        paramValue: ${var.monitor_configuration_request_query_params_param_value}
+      uploadFileSizeInBytes: ${var.monitor_configuration_upload_file_size_in_bytes}
+      verifyResponseCodes: ${var.monitor_configuration_verify_response_codes}
+      verifyResponseContent: ${var.monitor_configuration_verify_response_content}
+      verifyTexts:
+      - text: ${var.monitor_configuration_verify_texts_text}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.monitor_display_name}
+    freeformTags:
+      bar-key: value
+    isIpv6: ${var.monitor_is_ipv6}
+    isRunNow: ${var.monitor_is_run_now}
+    isRunOnce: ${var.monitor_is_run_once}
+    maintenanceWindowSchedule:
+    - timeEnded: ${var.monitor_maintenance_window_schedule_time_ended}
+      timeStarted: ${var.monitor_maintenance_window_schedule_time_started}
+    monitorType: ${var.monitor_monitor_type}
+    repeatIntervalInSeconds: ${var.monitor_repeat_interval_in_seconds}
+    schedulingPolicy: ${var.monitor_scheduling_policy}
+    scriptIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_script
+    scriptParameters:
+    - paramName: ${var.monitor_script_parameters_param_name}
+      paramValue: ${var.monitor_script_parameters_param_value}
+    status: ${var.monitor_status}
+    target: ${var.monitor_target}
+    timeoutInSeconds: ${var.monitor_timeout_in_seconds}
+    vantagePoints:
+    - displayName: ${var.monitor_vantage_points_param_display_name}
+      name: ${var.monitor_vantage_points_name}

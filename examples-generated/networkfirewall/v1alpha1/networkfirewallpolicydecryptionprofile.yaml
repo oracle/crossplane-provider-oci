@@ -1,0 +1,24 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyDecryptionProfile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicydecryptionprofile
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_decryption_profile
+  name: test-network-firewall-policy-decryption-profile
+spec:
+  forProvider:
+    areCertificateExtensionsRestricted: ${var.network_firewall_policy_decryption_profile_are_certificate_extensions_restricted}
+    isAutoIncludeAltName: ${var.network_firewall_policy_decryption_profile_is_auto_include_alt_name}
+    isExpiredCertificateBlocked: ${var.network_firewall_policy_decryption_profile_is_expired_certificate_blocked}
+    isOutOfCapacityBlocked: ${var.network_firewall_policy_decryption_profile_is_out_of_capacity_blocked}
+    isRevocationStatusTimeoutBlocked: ${var.network_firewall_policy_decryption_profile_is_revocation_status_timeout_blocked}
+    isUnknownRevocationStatusBlocked: ${var.network_firewall_policy_decryption_profile_is_unknown_revocation_status_blocked}
+    isUnsupportedCipherBlocked: ${var.network_firewall_policy_decryption_profile_is_unsupported_cipher_blocked}
+    isUnsupportedVersionBlocked: ${var.network_firewall_policy_decryption_profile_is_unsupported_version_blocked}
+    isUntrustedIssuerBlocked: ${var.network_firewall_policy_decryption_profile_is_untrusted_issuer_blocked}
+    name: ${var.network_firewall_policy_decryption_profile_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    type: ${var.network_firewall_policy_decryption_profile_type}

@@ -1,0 +1,22 @@
+apiVersion: oda.oci.upbound.io/v1alpha1
+kind: OdaInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odainstance
+  labels:
+    testing.upbound.io/example-name: test_oda_instance
+  name: test-oda-instance
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.oda_instance_description}
+    displayName: ${var.oda_instance_display_name}
+    freeformTags:
+      bar-key: value
+    identityDomain: ${var.oda_instance_identity_domain}
+    isRoleBasedAccess: ${var.oda_instance_is_role_based_access}
+    shapeName: DEVELOPMENT

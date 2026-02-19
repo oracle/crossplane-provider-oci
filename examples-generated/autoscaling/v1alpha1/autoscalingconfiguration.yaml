@@ -1,0 +1,56 @@
+apiVersion: autoscaling.oci.upbound.io/v1alpha1
+kind: AutoScalingConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: autoscaling/v1alpha1/autoscalingconfiguration
+  labels:
+    testing.upbound.io/example-name: test_auto_scaling_configuration
+  name: test-auto-scaling-configuration
+spec:
+  forProvider:
+    autoScalingResources:
+    - id: ${var.auto_scaling_configuration_auto_scaling_resources_id}
+      type: ${var.auto_scaling_configuration_auto_scaling_resources_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    coolDownInSeconds: ${var.auto_scaling_configuration_cool_down_in_seconds}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.auto_scaling_configuration_display_name}
+    freeformTags:
+      Department: Finance
+    isEnabled: ${var.auto_scaling_configuration_is_enabled}
+    policies:
+    - capacity:
+      - initial: ${var.auto_scaling_configuration_policies_capacity_initial}
+        max: ${var.auto_scaling_configuration_policies_capacity_max}
+        min: ${var.auto_scaling_configuration_policies_capacity_min}
+      displayName: ${var.auto_scaling_configuration_policies_display_name}
+      executionSchedule:
+      - expression: ${var.auto_scaling_configuration_policies_execution_schedule_expression}
+        timezone: ${var.auto_scaling_configuration_policies_execution_schedule_timezone}
+        type: ${var.auto_scaling_configuration_policies_execution_schedule_type}
+      isEnabled: ${var.auto_scaling_configuration_policies_is_enabled}
+      policyType: ${var.auto_scaling_configuration_policies_policy_type}
+      resourceAction:
+      - action: ${var.auto_scaling_configuration_policies_resource_action_action}
+        actionType: ${var.auto_scaling_configuration_policies_resource_action_action_type}
+      rules:
+      - action:
+        - type: ${var.auto_scaling_configuration_policies_rules_action_type}
+          value: ${var.auto_scaling_configuration_policies_rules_action_value}
+        displayName: ${var.auto_scaling_configuration_policies_rules_display_name}
+        metric:
+        - metricCompartmentIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_compartment
+          metricSource: ${var.auto_scaling_configuration_policies_rules_metric_metric_source}
+          metricType: ${var.auto_scaling_configuration_policies_rules_metric_metric_type}
+          namespace: ${var.auto_scaling_configuration_policies_rules_metric_namespace}
+          pendingDuration: ${var.auto_scaling_configuration_policies_rules_metric_pending_duration}
+          query: ${var.auto_scaling_configuration_policies_rules_metric_query}
+          resourceGroup: ${var.auto_scaling_configuration_policies_rules_metric_resource_group}
+          threshold:
+          - operator: ${var.auto_scaling_configuration_policies_rules_metric_threshold_operator}
+            value: ${var.auto_scaling_configuration_policies_rules_metric_threshold_value}

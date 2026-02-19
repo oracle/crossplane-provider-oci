@@ -1,0 +1,23 @@
+apiVersion: globallydistributeddatabase.oci.upbound.io/v1alpha1
+kind: PrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: globallydistributeddatabase/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: test_private_endpoint
+  name: test-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.private_endpoint_description}
+    displayName: ${var.private_endpoint_display_name}
+    freeformTags:
+      bar-key: value
+    nsgIds: ${var.private_endpoint_nsg_ids}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

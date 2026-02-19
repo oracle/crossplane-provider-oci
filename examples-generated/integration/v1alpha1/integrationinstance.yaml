@@ -1,0 +1,54 @@
+apiVersion: integration.oci.upbound.io/v1alpha1
+kind: IntegrationInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: integration/v1alpha1/integrationinstance
+  labels:
+    testing.upbound.io/example-name: test_integration_instance
+  name: test-integration-instance
+spec:
+  forProvider:
+    alternateCustomEndpoints:
+    - certificateSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      hostname: ${var.integration_instance_alternate_custom_endpoints_hostname}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    consumptionModel: ${var.integration_instance_consumption_model}
+    customEndpoint:
+    - certificateSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      hostname: ${var.integration_instance_custom_endpoint_hostname}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.integration_instance_display_name}
+    domainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_domain
+    freeformTags:
+      bar-key: value
+    idcsAtSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    integrationInstanceType: ${var.integration_instance_integration_instance_type}
+    isByol: ${var.integration_instance_is_byol}
+    isDisasterRecoveryEnabled: ${var.integration_instance_is_disaster_recovery_enabled}
+    isFileServerEnabled: ${var.integration_instance_is_file_server_enabled}
+    isVisualBuilderEnabled: ${var.integration_instance_is_visual_builder_enabled}
+    messagePacks: ${var.integration_instance_message_packs}
+    networkEndpointDetails:
+    - allowlistedHttpIps: ${var.integration_instance_network_endpoint_details_allowlisted_http_ips}
+      allowlistedHttpVcns:
+      - allowlistedIps: ${var.integration_instance_network_endpoint_details_allowlisted_http_vcns_allowlisted_ips}
+        id: ${var.integration_instance_network_endpoint_details_allowlisted_http_vcns_id}
+      isIntegrationVcnAllowlisted: ${var.integration_instance_network_endpoint_details_is_integration_vcn_allowlisted}
+      networkEndpointType: ${var.integration_instance_network_endpoint_details_network_endpoint_type}
+    securityAttributes:
+      oracle-zpr.sensitivity.mode: enforce
+      oracle-zpr.sensitivity.value: low
+    shape: ${var.integration_instance_shape}
+    state: ${var.integration_instance_target_state}

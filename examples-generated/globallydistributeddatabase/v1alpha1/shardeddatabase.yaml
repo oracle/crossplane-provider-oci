@@ -1,0 +1,87 @@
+apiVersion: globallydistributeddatabase.oci.upbound.io/v1alpha1
+kind: ShardedDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: globallydistributeddatabase/v1alpha1/shardeddatabase
+  labels:
+    testing.upbound.io/example-name: test_sharded_database
+  name: test-sharded-database
+spec:
+  forProvider:
+    catalogDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+      computeCount: ${var.sharded_database_catalog_details_compute_count}
+      dataStorageSizeInGbs: ${var.sharded_database_catalog_details_data_storage_size_in_gbs}
+      encryptionKeyDetails:
+      - kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        kmsKeyVersionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key_version
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      isAutoScalingEnabled: ${var.sharded_database_catalog_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+    characterSet: ${var.sharded_database_character_set}
+    chunks: ${var.sharded_database_chunks}
+    clusterCertificateCommonName: ${var.sharded_database_cluster_certificate_common_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbDeploymentType: ${var.sharded_database_db_deployment_type}
+    dbVersion: ${var.sharded_database_db_version}
+    dbWorkload: ${var.sharded_database_db_workload}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.sharded_database_display_name}
+    freeformTags:
+      bar-key: value
+    listenerPort: ${var.sharded_database_listener_port}
+    listenerPortTls: ${var.sharded_database_listener_port_tls}
+    ncharacterSet: ${var.sharded_database_ncharacter_set}
+    onsPortLocal: ${var.sharded_database_ons_port_local}
+    onsPortRemote: ${var.sharded_database_ons_port_remote}
+    patchOperations:
+    - operation: ${var.sharded_database_patch_operations_operation}
+      selection: ${var.sharded_database_patch_operations_selection}
+      value: ${var.sharded_database_patch_operations_value}
+    prefix: ${var.sharded_database_prefix}
+    replicationFactor: ${var.sharded_database_replication_factor}
+    replicationMethod: ${var.sharded_database_replication_method}
+    replicationUnit: ${var.sharded_database_replication_unit}
+    shardDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+      computeCount: ${var.sharded_database_shard_details_compute_count}
+      dataStorageSizeInGbs: ${var.sharded_database_shard_details_data_storage_size_in_gbs}
+      encryptionKeyDetails:
+      - kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        kmsKeyVersionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key_version
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      isAutoScalingEnabled: ${var.sharded_database_shard_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+      shardSpace: ${var.sharded_database_shard_details_shard_space}
+    shardingMethod: ${var.sharded_database_sharding_method}

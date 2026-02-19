@@ -1,0 +1,36 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: UsagePlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/usageplan
+  labels:
+    testing.upbound.io/example-name: test_usage_plan
+  name: test-usage-plan
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.usage_plan_display_name}
+    entitlements:
+    - description: ${var.usage_plan_entitlements_description}
+      name: ${var.usage_plan_entitlements_name}
+      quota:
+      - operationOnBreach: ${var.usage_plan_entitlements_quota_operation_on_breach}
+        resetPolicy: ${var.usage_plan_entitlements_quota_reset_policy}
+        unit: ${var.usage_plan_entitlements_quota_unit}
+        value: ${var.usage_plan_entitlements_quota_value}
+      rateLimit:
+      - unit: ${var.usage_plan_entitlements_rate_limit_unit}
+        value: ${var.usage_plan_entitlements_rate_limit_value}
+      targets:
+      - deploymentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_deployment
+    freeformTags:
+      Department: Finance
+    locks:
+    - message: ${var.usage_plan_locks_message}
+      type: ${var.usage_plan_locks_type}

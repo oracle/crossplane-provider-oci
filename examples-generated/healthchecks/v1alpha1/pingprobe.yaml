@@ -1,0 +1,18 @@
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: PingProbe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: healthchecks/v1alpha1/pingprobe
+  labels:
+    testing.upbound.io/example-name: test_ping_probe
+  name: test-ping-probe
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    port: ${var.ping_probe_port}
+    protocol: ${var.ping_probe_protocol}
+    targets: ${var.ping_probe_targets}
+    timeoutInSeconds: ${var.ping_probe_timeout_in_seconds}
+    vantagePointNames: ${var.ping_probe_vantage_point_names}

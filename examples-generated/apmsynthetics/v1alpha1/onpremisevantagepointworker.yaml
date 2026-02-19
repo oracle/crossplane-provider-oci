@@ -1,0 +1,27 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: OnPremiseVantagePointWorker
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/onpremisevantagepointworker
+  labels:
+    testing.upbound.io/example-name: test_on_premise_vantage_point_worker
+  name: test-on-premise-vantage-point-worker
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    configurationDetails: ${var.on_premise_vantage_point_worker_configuration_details}
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    name: ${var.on_premise_vantage_point_worker_name}
+    onPremiseVantagePointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_on_premise_vantage_point
+    priority: ${var.on_premise_vantage_point_worker_priority}
+    resourcePrincipalTokenPublicKey: ${var.on_premise_vantage_point_worker_resource_principal_token_public_key}
+    status: ${var.on_premise_vantage_point_worker_status}
+    version: ${var.on_premise_vantage_point_worker_version}
+    workerType: ${var.on_premise_vantage_point_worker_worker_type}

@@ -21,7 +21,9 @@ spec:
         matchLabels:
           testing.upbound.io/example-name: test_channel
       kind: ${var.function_failure_destination_kind}
-      queueId: ${oci_queue_queue.test_queue.id}
+      queueIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_queue
       streamIdSelector:
         matchLabels:
           testing.upbound.io/example-name: test_stream
@@ -44,7 +46,9 @@ spec:
         matchLabels:
           testing.upbound.io/example-name: test_channel
       kind: ${var.function_success_destination_kind}
-      queueId: ${oci_queue_queue.test_queue.id}
+      queueIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_queue
       streamIdSelector:
         matchLabels:
           testing.upbound.io/example-name: test_stream

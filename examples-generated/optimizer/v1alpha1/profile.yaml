@@ -1,0 +1,36 @@
+apiVersion: optimizer.oci.upbound.io/v1alpha1
+kind: Profile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: optimizer/v1alpha1/profile
+  labels:
+    testing.upbound.io/example-name: test_profile
+  name: test-profile
+spec:
+  forProvider:
+    aggregationIntervalInDays: ${var.profile_aggregation_interval_in_days}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.profile_description}
+    freeformTags:
+      bar-key: value
+    levelsConfiguration:
+    - items:
+      - level: ${var.profile_levels_configuration_items_level}
+        recommendationIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_recommendation
+    name: ${var.profile_name}
+    targetCompartments:
+    - items: ${var.profile_target_compartments_items}
+    targetTags:
+    - items:
+      - tagDefinitionName: ${var.profile_target_tags_items_tag_definition_name}
+        tagNamespaceNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_tag_namespace
+        tagValueType: ${var.profile_target_tags_items_tag_value_type}
+        tagValues: ${var.profile_target_tags_items_tag_values}

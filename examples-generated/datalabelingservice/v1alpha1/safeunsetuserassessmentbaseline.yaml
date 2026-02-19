@@ -1,0 +1,14 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeUnsetUserAssessmentBaseline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safeunsetuserassessmentbaseline
+  labels:
+    testing.upbound.io/example-name: test_unset_user_assessment_baseline
+  name: test-unset-user-assessment-baseline
+spec:
+  forProvider:
+    targetIds: ${var.unset_user_assessment_baseline_target_ids}
+    userAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user_assessment

@@ -1,0 +1,19 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelProvenance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelprovenance
+  labels:
+    testing.upbound.io/example-name: test_model_provenance
+  name: test-model-provenance
+spec:
+  forProvider:
+    gitBranch: ${var.model_provenance_git_branch}
+    gitCommit: ${var.model_provenance_git_commit}
+    modelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model
+    repositoryUrl: ${var.model_provenance_repository_url}
+    scriptDir: ${var.model_provenance_script_dir}
+    trainingId: ${oci_datascience_training.test_training.id}
+    trainingScript: ${var.model_provenance_training_script}

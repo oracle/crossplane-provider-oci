@@ -64,7 +64,17 @@ type MysqlConfigurationInitParameters struct {
 	InitVariables []InitVariablesInitParameters `json:"initVariables,omitempty" tf:"init_variables,omitempty"`
 
 	// The OCID of the Configuration from which the new Configuration is derived. The values in CreateConfigurationDetails.variables supersede the variables of the parent Configuration.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/audit/v1alpha1.Configuration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ParentConfigurationID *string `json:"parentConfigurationId,omitempty" tf:"parent_configuration_id,omitempty"`
+
+	// Reference to a Configuration in audit to populate parentConfigurationId.
+	// +kubebuilder:validation:Optional
+	ParentConfigurationIDRef *v1.Reference `json:"parentConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Configuration in audit to populate parentConfigurationId.
+	// +kubebuilder:validation:Optional
+	ParentConfigurationIDSelector *v1.Selector `json:"parentConfigurationIdSelector,omitempty" tf:"-"`
 
 	// The name of the associated Shape.
 	ShapeName *string `json:"shapeName,omitempty" tf:"shape_name,omitempty"`
@@ -162,8 +172,18 @@ type MysqlConfigurationParameters struct {
 	InitVariables []InitVariablesParameters `json:"initVariables,omitempty" tf:"init_variables,omitempty"`
 
 	// The OCID of the Configuration from which the new Configuration is derived. The values in CreateConfigurationDetails.variables supersede the variables of the parent Configuration.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/audit/v1alpha1.Configuration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ParentConfigurationID *string `json:"parentConfigurationId,omitempty" tf:"parent_configuration_id,omitempty"`
+
+	// Reference to a Configuration in audit to populate parentConfigurationId.
+	// +kubebuilder:validation:Optional
+	ParentConfigurationIDRef *v1.Reference `json:"parentConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Configuration in audit to populate parentConfigurationId.
+	// +kubebuilder:validation:Optional
+	ParentConfigurationIDSelector *v1.Selector `json:"parentConfigurationIdSelector,omitempty" tf:"-"`
 
 	// The name of the associated Shape.
 	// +kubebuilder:validation:Optional

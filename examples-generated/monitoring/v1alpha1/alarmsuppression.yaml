@@ -1,0 +1,31 @@
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: AlarmSuppression
+metadata:
+  annotations:
+    meta.upbound.io/example-id: monitoring/v1alpha1/alarmsuppression
+  labels:
+    testing.upbound.io/example-name: test_alarm_suppression
+  name: test-alarm-suppression
+spec:
+  forProvider:
+    alarmSuppressionTarget:
+    - alarmIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_alarm
+      compartmentId: ${var.compartment_id}
+      compartmentIdInSubtree: ${var.alarm_suppression_alarm_suppression_target_compartment_id_in_subtree}
+      targetType: ${var.alarm_suppression_alarm_suppression_target_target_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.alarm_suppression_description}
+    dimensions: ${var.alarm_suppression_dimensions}
+    displayName: ${var.alarm_suppression_display_name}
+    freeformTags:
+      Department: Finance
+    level: ${var.alarm_suppression_level}
+    suppressionConditions:
+    - conditionType: ${var.alarm_suppression_suppression_conditions_condition_type}
+      suppressionDuration: ${var.alarm_suppression_suppression_conditions_suppression_duration}
+      suppressionRecurrence: ${var.alarm_suppression_suppression_conditions_suppression_recurrence}
+    timeSuppressFrom: ${var.alarm_suppression_time_suppress_from}
+    timeSuppressUntil: ${var.alarm_suppression_time_suppress_until}

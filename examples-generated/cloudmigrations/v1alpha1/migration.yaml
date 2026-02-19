@@ -1,0 +1,22 @@
+apiVersion: cloudmigrations.oci.upbound.io/v1alpha1
+kind: Migration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudmigrations/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_migration
+  name: test-migration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.migration_display_name}
+    freeformTags:
+      bar-key: value
+    isCompleted: ${var.migration_is_completed}
+    replicationScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_replication_schedule

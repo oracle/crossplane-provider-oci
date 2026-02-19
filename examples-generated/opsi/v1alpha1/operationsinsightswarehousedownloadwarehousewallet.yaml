@@ -1,0 +1,17 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouseDownloadWarehouseWallet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehousedownloadwarehousewallet
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse_download_warehouse_wallet
+  name: test-operations-insights-warehouse-download-warehouse-wallet
+spec:
+  forProvider:
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse
+    operationsInsightsWarehouseWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

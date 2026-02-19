@@ -1,0 +1,37 @@
+apiVersion: resourceanalytics.oci.upbound.io/v1alpha1
+kind: ResourceAnalyticsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourceanalytics/v1alpha1/resourceanalyticsinstance
+  labels:
+    testing.upbound.io/example-name: test_resource_analytics_instance
+  name: test-resource-analytics-instance
+spec:
+  forProvider:
+    adwAdminPassword:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      passwordTypeSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      secretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.resource_analytics_instance_description}
+    displayName: ${var.resource_analytics_instance_display_name}
+    freeformTags:
+      Department: Finance
+    isMutualTlsRequired: ${var.resource_analytics_instance_is_mutual_tls_required}
+    licenseModel: ${var.resource_analytics_instance_license_model}
+    nsgIds: ${var.resource_analytics_instance_nsg_ids}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

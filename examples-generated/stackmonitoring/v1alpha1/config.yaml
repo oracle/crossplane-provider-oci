@@ -1,0 +1,22 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_config
+  name: test-config
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configType: ${var.config_config_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.config_display_name}
+    freeformTags:
+      bar-key: value
+    isEnabled: ${var.config_is_enabled}
+    license: ${var.config_license}
+    resourceType: ${var.config_resource_type}

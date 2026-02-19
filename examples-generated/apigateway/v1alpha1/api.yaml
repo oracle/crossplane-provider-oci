@@ -1,0 +1,22 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Api
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/api
+  labels:
+    testing.upbound.io/example-name: test_api
+  name: test-api
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    content: ${var.api_content}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.api_display_name}
+    freeformTags:
+      Department: Finance
+    locks:
+    - message: ${var.api_locks_message}
+      type: ${var.api_locks_type}

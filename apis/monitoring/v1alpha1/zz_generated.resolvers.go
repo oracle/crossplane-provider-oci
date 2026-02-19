@@ -225,6 +225,61 @@ func (mg *Alarm) ResolveReferences(ctx context.Context, c client.Reader) error {
 	return nil
 }
 
+// ResolveReferences of this AlarmSuppression.
+func (mg *AlarmSuppression) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.AlarmSuppressionTarget); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("monitoring.oci.upbound.io", "v1alpha1", "Alarm", "AlarmList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmIDRef,
+				Selector:     mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmID")
+		}
+		mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.AlarmSuppressionTarget[i3].AlarmIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.AlarmSuppressionTarget); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("monitoring.oci.upbound.io", "v1alpha1", "Alarm", "AlarmList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmIDRef,
+				Selector:     mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmID")
+		}
+		mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.AlarmSuppressionTarget[i3].AlarmIDRef = rsp.ResolvedReference
+
+	}
+
+	return nil
+}
+
 // ResolveReferences of this CaptureFilter.
 func (mg *CaptureFilter) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
@@ -341,6 +396,25 @@ func (mg *Vtap) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.SourcePrivateEndpointSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.SourcePrivateEndpointSubnetIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TargetID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.TargetIDRef,
+			Selector:     mg.Spec.ForProvider.TargetIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.TargetID")
+	}
+	mg.Spec.ForProvider.TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.TargetIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Vcn", "VcnList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -416,6 +490,25 @@ func (mg *Vtap) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.SourcePrivateEndpointSubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.SourcePrivateEndpointSubnetIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("cloudguard.oci.upbound.io", "v1alpha1", "Target", "TargetList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TargetID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.TargetIDRef,
+			Selector:     mg.Spec.InitProvider.TargetIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TargetID")
+	}
+	mg.Spec.InitProvider.TargetID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TargetIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Vcn", "VcnList")
 		if err != nil {

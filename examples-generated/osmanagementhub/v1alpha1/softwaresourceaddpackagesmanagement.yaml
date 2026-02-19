@@ -1,0 +1,15 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: SoftwareSourceAddPackagesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/softwaresourceaddpackagesmanagement
+  labels:
+    testing.upbound.io/example-name: test_software_source_add_packages_management
+  name: test-software-source-add-packages-management
+spec:
+  forProvider:
+    isContinueOnMissingPackages: ${var.software_source_add_packages_management_is_continue_on_missing_packages}
+    packages: ${var.software_source_add_packages_management_packages}
+    softwareSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_software_source

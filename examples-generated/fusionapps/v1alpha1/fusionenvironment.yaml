@@ -1,0 +1,46 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironment
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment
+  name: test-fusion-environment
+spec:
+  forProvider:
+    additionalLanguagePacks: ${var.fusion_environment_additional_language_packs}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createFusionEnvironmentAdminUserDetails:
+    - emailAddress: ${var.fusion_environment_create_fusion_environment_admin_user_details_email_address}
+      firstName: ${var.fusion_environment_create_fusion_environment_admin_user_details_first_name}
+      lastName: ${var.fusion_environment_create_fusion_environment_admin_user_details_last_name}
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      username: ${var.fusion_environment_create_fusion_environment_admin_user_details_username}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.fusion_environment_display_name}
+    dnsPrefix: ${var.fusion_environment_dns_prefix}
+    freeformTags:
+      bar-key: value
+    fusionEnvironmentFamilyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment_family
+    fusionEnvironmentType: ${var.fusion_environment_fusion_environment_type}
+    isIpv6DualStackEnabled: ${var.fusion_environment_is_ipv6dual_stack_enabled}
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    maintenancePolicy:
+    - environmentMaintenanceOverride: ${var.fusion_environment_maintenance_policy_environment_maintenance_override}
+      monthlyPatchingOverride: ${var.fusion_environment_maintenance_policy_monthly_patching_override}
+    rules:
+    - action: ${var.fusion_environment_rules_action}
+      conditions:
+      - attributeName: ${var.fusion_environment_rules_conditions_attribute_name}
+        attributeValue: ${var.fusion_environment_rules_conditions_attribute_value}
+      description: ${var.fusion_environment_rules_description}

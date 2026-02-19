@@ -1,0 +1,22 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: JmsPlugin
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/jmsplugin
+  labels:
+    testing.upbound.io/example-name: test_jms_plugin
+  name: test-jms-plugin
+spec:
+  forProvider:
+    agentId: ${var.jms_plugin_agent_id}
+    agentType: ${var.jms_plugin_agent_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    fleetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fleet
+    freeformTags:
+      bar-key: value

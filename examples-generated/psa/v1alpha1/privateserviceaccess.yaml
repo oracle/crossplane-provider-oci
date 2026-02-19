@@ -1,0 +1,26 @@
+apiVersion: psa.oci.upbound.io/v1alpha1
+kind: PrivateServiceAccess
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: test_private_service_access
+  name: test-private-service-access
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.private_service_access_description}
+    displayName: ${var.private_service_access_display_name}
+    freeformTags:
+      Department: Finance
+    ipv4ip: ${var.private_service_access_ipv4ip}
+    nsgIds: ${var.private_service_access_nsg_ids}
+    securityAttributes: ${var.private_service_access_security_attributes}
+    serviceId: ${oci_psa_psa_service.test_psa_service.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

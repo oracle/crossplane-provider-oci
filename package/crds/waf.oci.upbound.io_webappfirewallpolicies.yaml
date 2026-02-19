@@ -1,0 +1,2096 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: webappfirewallpolicies.waf.oci.upbound.io
+spec:
+  group: waf.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: WebAppFirewallPolicy
+    listKind: WebAppFirewallPolicyList
+    plural: webappfirewallpolicies
+    singular: webappfirewallpolicy
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: WebAppFirewallPolicy is the Schema for the WebAppFirewallPolicys
+          API. Provides the Web App Firewall Policy resource in Oracle Cloud Infrastructure
+          Waf service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WebAppFirewallPolicySpec defines the desired state of WebAppFirewallPolicy
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  actions:
+                    description: (Updatable) Predefined actions for use in multiple
+                      different rules. Not all actions are supported in every module.
+                      Some actions terminate further execution of modules and rules
+                      in a module and some do not. Actions names must be unique within
+                      this array.
+                    items:
+                      properties:
+                        body:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Type of returned HTTP response body.
+                          items:
+                            properties:
+                              template:
+                                type: string
+                              text:
+                                description: (Updatable) Static response body text.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                        code:
+                          description: (Updatable) Response code.
+                          type: number
+                        headers:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Adds headers defined in this array for HTTP
+                            response.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              value:
+                                description: (Updatable) The value of the header field.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: (Updatable) The name of the header field.
+                          type: string
+                        type:
+                          description: (Updatable) Type of HttpResponseBody.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) WebAppFirewallPolicy display name, can
+                      be renamed.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  requestAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      request properties and to return a defined HTTP response. In
+                      this module, rules with the name 'Default Action' are not allowed,
+                      since this name is reserved for default action logs.
+                    items:
+                      properties:
+                        defaultActionName:
+                          description: '(Updatable) References an default Action to
+                            take if no AccessControlRule was matched. Allowed action
+                            types:'
+                          type: string
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for incoming HTTP requests.
+                    items:
+                      properties:
+                        bodyInspectionSizeLimitExceededActionName:
+                          description: (Updatable) References action by name from
+                            actions defined in WebAppFirewallPolicy. Executed if HTTP
+                            message body size exceeds limit set in field bodyInspectionSizeLimitInBytes.
+                          type: string
+                        bodyInspectionSizeLimitInBytes:
+                          description: (Updatable) Maximum size of inspected HTTP
+                            message body in bytes. Actions to take if this limit is
+                            exceeded are defined in bodyInspectionSizeLimitExceededActionName.
+                          type: number
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestRateLimiting:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      connection properties and to limit requests frequency for a
+                      given key.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              configurations:
+                                description: (Updatable) Rate Limiting Configurations.
+                                  Each configuration counts requests towards its own
+                                  requestsLimit.
+                                items:
+                                  properties:
+                                    actionDurationInSeconds:
+                                      description: (Updatable) Duration of block action
+                                        application in seconds when requestsLimit
+                                        is reached. Optional and can be 0 (no block
+                                        duration).
+                                      type: number
+                                    periodInSeconds:
+                                      description: (Updatable) Evaluation period in
+                                        seconds.
+                                      type: number
+                                    requestsLimit:
+                                      description: (Updatable) Requests allowed per
+                                        evaluation period.
+                                      type: number
+                                  type: object
+                                type: array
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      response properties and to return a defined HTTP response.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for HTTP responses.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of system tag keys. These predefined
+                      keys are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  actions:
+                    description: (Updatable) Predefined actions for use in multiple
+                      different rules. Not all actions are supported in every module.
+                      Some actions terminate further execution of modules and rules
+                      in a module and some do not. Actions names must be unique within
+                      this array.
+                    items:
+                      properties:
+                        body:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Type of returned HTTP response body.
+                          items:
+                            properties:
+                              template:
+                                type: string
+                              text:
+                                description: (Updatable) Static response body text.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                        code:
+                          description: (Updatable) Response code.
+                          type: number
+                        headers:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Adds headers defined in this array for HTTP
+                            response.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              value:
+                                description: (Updatable) The value of the header field.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: (Updatable) The name of the header field.
+                          type: string
+                        type:
+                          description: (Updatable) Type of HttpResponseBody.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) WebAppFirewallPolicy display name, can
+                      be renamed.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  requestAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      request properties and to return a defined HTTP response. In
+                      this module, rules with the name 'Default Action' are not allowed,
+                      since this name is reserved for default action logs.
+                    items:
+                      properties:
+                        defaultActionName:
+                          description: '(Updatable) References an default Action to
+                            take if no AccessControlRule was matched. Allowed action
+                            types:'
+                          type: string
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for incoming HTTP requests.
+                    items:
+                      properties:
+                        bodyInspectionSizeLimitExceededActionName:
+                          description: (Updatable) References action by name from
+                            actions defined in WebAppFirewallPolicy. Executed if HTTP
+                            message body size exceeds limit set in field bodyInspectionSizeLimitInBytes.
+                          type: string
+                        bodyInspectionSizeLimitInBytes:
+                          description: (Updatable) Maximum size of inspected HTTP
+                            message body in bytes. Actions to take if this limit is
+                            exceeded are defined in bodyInspectionSizeLimitExceededActionName.
+                          type: number
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestRateLimiting:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      connection properties and to limit requests frequency for a
+                      given key.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              configurations:
+                                description: (Updatable) Rate Limiting Configurations.
+                                  Each configuration counts requests towards its own
+                                  requestsLimit.
+                                items:
+                                  properties:
+                                    actionDurationInSeconds:
+                                      description: (Updatable) Duration of block action
+                                        application in seconds when requestsLimit
+                                        is reached. Optional and can be 0 (no block
+                                        duration).
+                                      type: number
+                                    periodInSeconds:
+                                      description: (Updatable) Evaluation period in
+                                        seconds.
+                                      type: number
+                                    requestsLimit:
+                                      description: (Updatable) Requests allowed per
+                                        evaluation period.
+                                      type: number
+                                  type: object
+                                type: array
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      response properties and to return a defined HTTP response.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for HTTP responses.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of system tag keys. These predefined
+                      keys are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: WebAppFirewallPolicyStatus defines the observed state of
+              WebAppFirewallPolicy.
+            properties:
+              atProvider:
+                properties:
+                  actions:
+                    description: (Updatable) Predefined actions for use in multiple
+                      different rules. Not all actions are supported in every module.
+                      Some actions terminate further execution of modules and rules
+                      in a module and some do not. Actions names must be unique within
+                      this array.
+                    items:
+                      properties:
+                        body:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Type of returned HTTP response body.
+                          items:
+                            properties:
+                              template:
+                                type: string
+                              text:
+                                description: (Updatable) Static response body text.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                        code:
+                          description: (Updatable) Response code.
+                          type: number
+                        headers:
+                          description: (Applicable when type=RETURN_HTTP_RESPONSE)
+                            (Updatable) Adds headers defined in this array for HTTP
+                            response.
+                          items:
+                            properties:
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              value:
+                                description: (Updatable) The value of the header field.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: (Updatable) The name of the header field.
+                          type: string
+                        type:
+                          description: (Updatable) Type of HttpResponseBody.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) WebAppFirewallPolicy display name, can
+                      be renamed.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the WebAppFirewallPolicy.
+                    type: string
+                  lifecycleDetails:
+                    description: A message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in FAILED state.
+                    type: string
+                  requestAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      request properties and to return a defined HTTP response. In
+                      this module, rules with the name 'Default Action' are not allowed,
+                      since this name is reserved for default action logs.
+                    items:
+                      properties:
+                        defaultActionName:
+                          description: '(Updatable) References an default Action to
+                            take if no AccessControlRule was matched. Allowed action
+                            types:'
+                          type: string
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for incoming HTTP requests.
+                    items:
+                      properties:
+                        bodyInspectionSizeLimitExceededActionName:
+                          description: (Updatable) References action by name from
+                            actions defined in WebAppFirewallPolicy. Executed if HTTP
+                            message body size exceeds limit set in field bodyInspectionSizeLimitInBytes.
+                          type: string
+                        bodyInspectionSizeLimitInBytes:
+                          description: (Updatable) Maximum size of inspected HTTP
+                            message body in bytes. Actions to take if this limit is
+                            exceeded are defined in bodyInspectionSizeLimitExceededActionName.
+                          type: number
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  requestRateLimiting:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      connection properties and to limit requests frequency for a
+                      given key.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              configurations:
+                                description: (Updatable) Rate Limiting Configurations.
+                                  Each configuration counts requests towards its own
+                                  requestsLimit.
+                                items:
+                                  properties:
+                                    actionDurationInSeconds:
+                                      description: (Updatable) Duration of block action
+                                        application in seconds when requestsLimit
+                                        is reached. Optional and can be 0 (no block
+                                        duration).
+                                      type: number
+                                    periodInSeconds:
+                                      description: (Updatable) Evaluation period in
+                                        seconds.
+                                      type: number
+                                    requestsLimit:
+                                      description: (Updatable) Requests allowed per
+                                        evaluation period.
+                                      type: number
+                                  type: object
+                                type: array
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseAccessControl:
+                    description: (Updatable) Module that allows inspection of HTTP
+                      response properties and to return a defined HTTP response.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  responseProtection:
+                    description: (Updatable) Module that allows to enable OCI-managed
+                      protection capabilities for HTTP responses.
+                    items:
+                      properties:
+                        rules:
+                          description: (Updatable) Ordered list of AccessControlRules.
+                            Rules are executed in order of appearance in this array.
+                          items:
+                            properties:
+                              actionName:
+                                description: (Updatable) References action by name
+                                  from actions defined in WebAppFirewallPolicy.
+                                type: string
+                              condition:
+                                description: (Updatable) An expression that determines
+                                  whether or not the rule action should be executed.
+                                type: string
+                              conditionLanguage:
+                                description: '(Updatable) The language used to parse
+                                  condition from field condition. Available languages:'
+                                type: string
+                              isBodyInspectionEnabled:
+                                description: (Updatable) Enables/disables body inspection
+                                  for this protection rule. Only Protection Rules
+                                  in RequestProtection can have this option enabled.
+                                  Response body inspection will be available at a
+                                  later date.
+                                type: boolean
+                              name:
+                                description: (Updatable) The name of the header field.
+                                type: string
+                              protectionCapabilities:
+                                description: (Updatable) An ordered list that references
+                                  OCI-managed protection capabilities. Referenced
+                                  protection capabilities are not necessarily executed
+                                  in order of appearance. Their execution order is
+                                  decided at runtime for improved performance. The
+                                  array cannot contain entries with the same pair
+                                  of capability key and version more than once.
+                                items:
+                                  properties:
+                                    actionName:
+                                      description: (Updatable) References action by
+                                        name from actions defined in WebAppFirewallPolicy.
+                                      type: string
+                                    collaborativeActionThreshold:
+                                      description: (Updatable) The minimum sum of
+                                        weights of associated collaborative protection
+                                        capabilities that have triggered which must
+                                        be reached in order for this capability to
+                                        trigger. This field is ignored for non-collaborative
+                                        capabilities.
+                                      type: number
+                                    collaborativeWeights:
+                                      description: (Updatable) Explicit weight values
+                                        to use for associated collaborative protection
+                                        capabilities.
+                                      items:
+                                        properties:
+                                          key:
+                                            description: (Updatable) Unique key of
+                                              collaborative capability for which weight
+                                              will be overridden.
+                                            type: string
+                                          weight:
+                                            description: (Updatable) The value of
+                                              weight to set.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    exclusions:
+                                      description: (Updatable) Identifies specific
+                                        HTTP message parameters to exclude from inspection
+                                        by a protection capability.
+                                      items:
+                                        properties:
+                                          args:
+                                            description: '(Updatable) List of URL
+                                              query parameter values from form-urlencoded
+                                              XML, JSON, AMP, or POST payloads to
+                                              exclude from inspecting. Example: If
+                                              we have query parameter ''argumentName=argumentValue''
+                                              and args=[''argumentName''], both ''argumentName''
+                                              and ''argumentValue'' will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                          requestCookies:
+                                            description: '(Updatable) List of HTTP
+                                              request cookie values (by cookie name)
+                                              to exclude from inspecting. Example:
+                                              If we have cookie ''cookieName=cookieValue''
+                                              and requestCookies=[''cookieName''],
+                                              both ''cookieName'' and ''cookieValue''
+                                              will not be inspected.'
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    key:
+                                      description: (Updatable) Unique key of collaborative
+                                        capability for which weight will be overridden.
+                                      type: string
+                                    version:
+                                      description: (Updatable) Version of referenced
+                                        protection capability.
+                                      type: number
+                                  type: object
+                                type: array
+                              protectionCapabilitySettings:
+                                description: (Updatable) Settings for protection capabilities
+                                items:
+                                  properties:
+                                    allowedHttpMethods:
+                                      description: '(Updatable) List of allowed HTTP
+                                        methods. Each value as a RFC7230 formated
+                                        token string. Used in protection capability
+                                        911100: Restrict HTTP Request Methods.'
+                                      items:
+                                        type: string
+                                      type: array
+                                    maxHttpRequestHeaderLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of headers in an HTTP request. Used in protection
+                                        capability: 9200024: Limit length of request
+                                        header size.'
+                                      type: number
+                                    maxHttpRequestHeaders:
+                                      description: '(Updatable) Maximum number of
+                                        headers allowed in an HTTP request. Used in
+                                        protection capability 9200014: Limit Number
+                                        of Request Headers.'
+                                      type: number
+                                    maxNumberOfArguments:
+                                      description: '(Updatable) Maximum number of
+                                        arguments allowed. Used in protection capability
+                                        920380: Number of Arguments Limits.'
+                                      type: number
+                                    maxSingleArgumentLength:
+                                      description: '(Updatable) Maximum allowed length
+                                        of a single argument. Used in protection capability
+                                        920370: Limit argument value length.'
+                                      type: number
+                                    maxTotalArgumentLength:
+                                      description: '(Updatable) Maximum allowed total
+                                        length of all arguments. Used in protection
+                                        capability 920390: Limit arguments total length.'
+                                      type: number
+                                  type: object
+                                type: array
+                              type:
+                                description: (Updatable) Type of HttpResponseBody.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  state:
+                    description: The current state of the WebAppFirewallPolicy.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Usage of system tag keys. These predefined
+                      keys are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time the WebAppFirewallPolicy was created. An
+                      RFC3339 formatted datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time the WebAppFirewallPolicy was updated. An
+                      RFC3339 formatted datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

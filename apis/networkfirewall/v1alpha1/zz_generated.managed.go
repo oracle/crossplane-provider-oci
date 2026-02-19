@@ -126,3 +126,603 @@ func (mg *NetworkFirewallPolicy) SetPublishConnectionDetailsTo(r *xpv1.PublishCo
 func (mg *NetworkFirewallPolicy) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyAddressList.
+func (mg *NetworkFirewallPolicyAddressList) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyApplication.
+func (mg *NetworkFirewallPolicyApplication) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyApplicationGroup.
+func (mg *NetworkFirewallPolicyApplicationGroup) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyDecryptionProfile.
+func (mg *NetworkFirewallPolicyDecryptionProfile) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyDecryptionRule.
+func (mg *NetworkFirewallPolicyDecryptionRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyMappedSecret.
+func (mg *NetworkFirewallPolicyMappedSecret) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyNatRule.
+func (mg *NetworkFirewallPolicyNatRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicySecurityRule.
+func (mg *NetworkFirewallPolicySecurityRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyService.
+func (mg *NetworkFirewallPolicyService) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this NetworkFirewallPolicyTunnelInspectionRule.
+func (mg *NetworkFirewallPolicyTunnelInspectionRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

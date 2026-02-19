@@ -1,0 +1,27 @@
+apiVersion: operatoraccesscontrol.oci.upbound.io/v1alpha1
+kind: OperatorControl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/operatorcontrol
+  labels:
+    testing.upbound.io/example-name: test_operator_control
+  name: test-operator-control
+spec:
+  forProvider:
+    approverGroupsList: ${var.operator_control_approver_groups_list}
+    approversList: ${var.operator_control_approvers_list}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.operator_control_defined_tags}
+    description: ${var.operator_control_description}
+    emailIdList: ${var.operator_control_email_id_list}
+    freeformTags: ${var.operator_control_freeform_tags}
+    isFullyPreApproved: ${var.operator_control_is_fully_pre_approved}
+    numberOfApprovers: ${var.operator_control_number_of_approvers}
+    operatorControlNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operator_control
+    preApprovedOpActionList: ${var.operator_control_pre_approved_op_action_list}
+    resourceType: ${var.operator_control_resource_type}
+    systemMessage: ${var.operator_control_system_message}

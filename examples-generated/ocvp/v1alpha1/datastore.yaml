@@ -1,0 +1,21 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: Datastore
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/datastore
+  labels:
+    testing.upbound.io/example-name: test_datastore
+  name: test-datastore
+spec:
+  forProvider:
+    availabilityDomain: ${var.datastore_availability_domain}
+    blockVolumeIds: ${var.datastore_block_volume_ids}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    datastore_cluster_id: ${oci_ocvp_datastore_cluster.test_datastore_cluster.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.datastore_display_name}
+    freeformTags:
+      Department: Finance

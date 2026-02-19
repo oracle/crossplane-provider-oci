@@ -1,0 +1,1591 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: monitoredresourcetasks.stackmonitoring.oci.upbound.io
+spec:
+  group: stackmonitoring.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: MonitoredResourceTask
+    listKind: MonitoredResourceTaskList
+    plural: monitoredresourcetasks
+    singular: monitoredresourcetask
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: MonitoredResourceTask is the Schema for the MonitoredResourceTasks
+          API. Provides the Monitored Resource Task resource in Oracle Cloud Infrastructure
+          Stack Monitoring service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MonitoredResourceTaskSpec defines the desired state of MonitoredResourceTask
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: Name of the task. If not provided by default the
+                      following names will be taken Oracle Cloud Infrastructure tasks
+                      - namespace plus timestamp.
+                    type: string
+                  taskDetails:
+                    description: The request details for the performing the task.
+                    items:
+                      properties:
+                        agentId:
+                          description: Management Agent Identifier OCID.
+                          type: string
+                        agentIdRef:
+                          description: Reference to a Agent in cloudbridge to populate
+                            agentId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        agentIdSelector:
+                          description: Selector for a Agent in cloudbridge to populate
+                            agentId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        availabilityProxyMetricCollectionInterval:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Metrics collection interval in seconds used when calculating
+                            the availability of the  resource based on metrics specified
+                            using the property 'availabilityProxyMetrics'.
+                          type: number
+                        availabilityProxyMetrics:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            List of metrics to be used to calculate the availability
+                            of the resource. Resource is considered to be up if at
+                            least one of the specified metrics is available for  the
+                            resource during the specified interval using the property  'availabilityProxyMetricCollectionInterval'.
+                            If no metrics are specified, availability will not be
+                            calculated for the resource.
+                          items:
+                            type: string
+                          type: array
+                        consolePathPrefix:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The console path prefix to use for providing service home
+                            url page navigation.  For example if the prefix provided
+                            is 'security/bastion/bastions', the URL used for navigation
+                            will be https:///security/bastion/bastions/. If not provided,
+                            service home page link  will not be shown in the stack
+                            monitoring home page.
+                          type: string
+                        externalIdMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The external resource identifier property in the metric
+                            dimensions.  Resources imported will be using this property
+                            value for external id.
+                          type: string
+                        handlerType:
+                          description: Type of the handler.
+                          type: string
+                        isEnable:
+                          description: True to enable the receiver and false to disable
+                            the receiver on the agent.
+                          type: boolean
+                        lifecycleStatusMappingsForUpStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Lifecycle states of the external resource which reflects
+                            the status of the resource being up.
+                          items:
+                            type: string
+                          type: array
+                        namespace:
+                          description: Name space to be used for Oracle Cloud Infrastructure
+                            Native service resources discovery.
+                          type: string
+                        receiverProperties:
+                          description: (Applicable when type=UPDATE_AGENT_RECEIVER)
+                            Properties for agent receiver.
+                          items:
+                            properties:
+                              listenerPort:
+                                description: Receiver listener port.
+                                type: number
+                            type: object
+                          type: array
+                        resourceGroup:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource group to use while fetching metrics from
+                            telemetry. If not specified, resource group will be skipped
+                            in the list metrics request.
+                          type: string
+                        resourceNameFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name filter. Resources matching with the
+                            resource name filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceNameMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            name.
+                          type: string
+                        resourceTypeFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type filter. Resources matching with the
+                            resource type filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceTypeMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            type. If not specified, namespace will be used for resource
+                            type.
+                          type: string
+                        resourceTypesConfiguration:
+                          description: A collection of resource type configuration
+                            details. User can provide  availability proxy metrics
+                            list for resource types along with the  telegraf/collectd
+                            handler configuration for the resource types.
+                          items:
+                            properties:
+                              availabilityMetricsConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Availability metrics details.
+                                items:
+                                  properties:
+                                    collectionIntervalInSeconds:
+                                      description: Availability metric collection
+                                        internal in seconds.
+                                      type: number
+                                    metrics:
+                                      description: List of metrics used for availability
+                                        calculation for the resource.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              handlerConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Specific resource mapping configurations for Agent
+                                  Extension Handlers.
+                                items:
+                                  properties:
+                                    collectdResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for collectd resource types.
+                                      items:
+                                        properties:
+                                          excludeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          suffix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String to be suffixed to the resource
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    collectorTypes:
+                                      description: List of collector/plugin names.
+                                      items:
+                                        type: string
+                                      type: array
+                                    handlerProperties:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of handler configuration properties
+                                      items:
+                                        properties:
+                                          name:
+                                            description: Name of the task. If not
+                                              provided by default the following names
+                                              will be taken Oracle Cloud Infrastructure
+                                              tasks - namespace plus timestamp.
+                                            type: string
+                                          value:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Property value.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricMappings:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of AgentExtensionHandlerMetricMappingDetails.
+                                      items:
+                                        properties:
+                                          collectorMetricName:
+                                            description: Metric name as defined by
+                                              the collector.
+                                            type: string
+                                          isSkipUpload:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Is ignoring this metric.
+                                            type: boolean
+                                          metricUploadIntervalInSeconds:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric upload interval in seconds. Any
+                                              metric sent by telegraf/collectd before
+                                              the  configured interval expires will
+                                              be dropped.
+                                            type: number
+                                          telemetryMetricName:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric name to be upload to telemetry.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric name generation overriding configurations.
+                                      items:
+                                        properties:
+                                          excludePatternOnPrefix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String pattern to be removed from the
+                                              prefix of the metric name.
+                                            type: string
+                                          isPrefixWithCollectorType:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              is prefixing the metric with collector
+                                              type.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    metricUploadIntervalInSeconds:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric upload interval in seconds. Any metric
+                                        sent by telegraf/collectd before the  configured
+                                        interval expires will be dropped.
+                                      type: number
+                                    telegrafResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for telegraf resource types.
+                                      items:
+                                        properties:
+                                          excludeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          isUseTagsOnly:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Flag to indicate if only tags will be
+                                              used for resource name generation.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    telemetryResourceGroup:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource group string; if not specified, the
+                                        resource group string will be generated by
+                                        the handler.
+                                      type: string
+                                  type: object
+                                type: array
+                              resourceType:
+                                description: Resource type.
+                                type: string
+                            type: object
+                          type: array
+                        serviceBaseUrl:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The base URL of the Oracle Cloud Infrastructure service
+                            to which the resource belongs to. Also this property is
+                            applicable only when source is OCI_TELEMETRY_NATIVE.
+                          type: string
+                        shouldUseMetricsFlowForStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Flag to indicate whether status is calculated using metrics
+                            or  LifeCycleState attribute of the resource in Oracle
+                            Cloud Infrastructure service.
+                          type: boolean
+                        source:
+                          description: 'Source from where the metrics pushed to telemetry.
+                            Possible values:'
+                          type: string
+                        type:
+                          description: Task type.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment identifier.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: Name of the task. If not provided by default the
+                      following names will be taken Oracle Cloud Infrastructure tasks
+                      - namespace plus timestamp.
+                    type: string
+                  taskDetails:
+                    description: The request details for the performing the task.
+                    items:
+                      properties:
+                        agentId:
+                          description: Management Agent Identifier OCID.
+                          type: string
+                        agentIdRef:
+                          description: Reference to a Agent in cloudbridge to populate
+                            agentId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        agentIdSelector:
+                          description: Selector for a Agent in cloudbridge to populate
+                            agentId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        availabilityProxyMetricCollectionInterval:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Metrics collection interval in seconds used when calculating
+                            the availability of the  resource based on metrics specified
+                            using the property 'availabilityProxyMetrics'.
+                          type: number
+                        availabilityProxyMetrics:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            List of metrics to be used to calculate the availability
+                            of the resource. Resource is considered to be up if at
+                            least one of the specified metrics is available for  the
+                            resource during the specified interval using the property  'availabilityProxyMetricCollectionInterval'.
+                            If no metrics are specified, availability will not be
+                            calculated for the resource.
+                          items:
+                            type: string
+                          type: array
+                        consolePathPrefix:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The console path prefix to use for providing service home
+                            url page navigation.  For example if the prefix provided
+                            is 'security/bastion/bastions', the URL used for navigation
+                            will be https:///security/bastion/bastions/. If not provided,
+                            service home page link  will not be shown in the stack
+                            monitoring home page.
+                          type: string
+                        externalIdMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The external resource identifier property in the metric
+                            dimensions.  Resources imported will be using this property
+                            value for external id.
+                          type: string
+                        handlerType:
+                          description: Type of the handler.
+                          type: string
+                        isEnable:
+                          description: True to enable the receiver and false to disable
+                            the receiver on the agent.
+                          type: boolean
+                        lifecycleStatusMappingsForUpStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Lifecycle states of the external resource which reflects
+                            the status of the resource being up.
+                          items:
+                            type: string
+                          type: array
+                        namespace:
+                          description: Name space to be used for Oracle Cloud Infrastructure
+                            Native service resources discovery.
+                          type: string
+                        receiverProperties:
+                          description: (Applicable when type=UPDATE_AGENT_RECEIVER)
+                            Properties for agent receiver.
+                          items:
+                            properties:
+                              listenerPort:
+                                description: Receiver listener port.
+                                type: number
+                            type: object
+                          type: array
+                        resourceGroup:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource group to use while fetching metrics from
+                            telemetry. If not specified, resource group will be skipped
+                            in the list metrics request.
+                          type: string
+                        resourceNameFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name filter. Resources matching with the
+                            resource name filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceNameMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            name.
+                          type: string
+                        resourceTypeFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type filter. Resources matching with the
+                            resource type filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceTypeMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            type. If not specified, namespace will be used for resource
+                            type.
+                          type: string
+                        resourceTypesConfiguration:
+                          description: A collection of resource type configuration
+                            details. User can provide  availability proxy metrics
+                            list for resource types along with the  telegraf/collectd
+                            handler configuration for the resource types.
+                          items:
+                            properties:
+                              availabilityMetricsConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Availability metrics details.
+                                items:
+                                  properties:
+                                    collectionIntervalInSeconds:
+                                      description: Availability metric collection
+                                        internal in seconds.
+                                      type: number
+                                    metrics:
+                                      description: List of metrics used for availability
+                                        calculation for the resource.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              handlerConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Specific resource mapping configurations for Agent
+                                  Extension Handlers.
+                                items:
+                                  properties:
+                                    collectdResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for collectd resource types.
+                                      items:
+                                        properties:
+                                          excludeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          suffix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String to be suffixed to the resource
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    collectorTypes:
+                                      description: List of collector/plugin names.
+                                      items:
+                                        type: string
+                                      type: array
+                                    handlerProperties:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of handler configuration properties
+                                      items:
+                                        properties:
+                                          name:
+                                            description: Name of the task. If not
+                                              provided by default the following names
+                                              will be taken Oracle Cloud Infrastructure
+                                              tasks - namespace plus timestamp.
+                                            type: string
+                                          value:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Property value.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricMappings:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of AgentExtensionHandlerMetricMappingDetails.
+                                      items:
+                                        properties:
+                                          collectorMetricName:
+                                            description: Metric name as defined by
+                                              the collector.
+                                            type: string
+                                          isSkipUpload:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Is ignoring this metric.
+                                            type: boolean
+                                          metricUploadIntervalInSeconds:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric upload interval in seconds. Any
+                                              metric sent by telegraf/collectd before
+                                              the  configured interval expires will
+                                              be dropped.
+                                            type: number
+                                          telemetryMetricName:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric name to be upload to telemetry.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric name generation overriding configurations.
+                                      items:
+                                        properties:
+                                          excludePatternOnPrefix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String pattern to be removed from the
+                                              prefix of the metric name.
+                                            type: string
+                                          isPrefixWithCollectorType:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              is prefixing the metric with collector
+                                              type.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    metricUploadIntervalInSeconds:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric upload interval in seconds. Any metric
+                                        sent by telegraf/collectd before the  configured
+                                        interval expires will be dropped.
+                                      type: number
+                                    telegrafResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for telegraf resource types.
+                                      items:
+                                        properties:
+                                          excludeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          isUseTagsOnly:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Flag to indicate if only tags will be
+                                              used for resource name generation.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    telemetryResourceGroup:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource group string; if not specified, the
+                                        resource group string will be generated by
+                                        the handler.
+                                      type: string
+                                  type: object
+                                type: array
+                              resourceType:
+                                description: Resource type.
+                                type: string
+                            type: object
+                          type: array
+                        serviceBaseUrl:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The base URL of the Oracle Cloud Infrastructure service
+                            to which the resource belongs to. Also this property is
+                            applicable only when source is OCI_TELEMETRY_NATIVE.
+                          type: string
+                        shouldUseMetricsFlowForStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Flag to indicate whether status is calculated using metrics
+                            or  LifeCycleState attribute of the resource in Oracle
+                            Cloud Infrastructure service.
+                          type: boolean
+                        source:
+                          description: 'Source from where the metrics pushed to telemetry.
+                            Possible values:'
+                          type: string
+                        type:
+                          description: Task type.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.taskDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.taskDetails)
+                || (has(self.initProvider) && has(self.initProvider.taskDetails))'
+          status:
+            description: MonitoredResourceTaskStatus defines the observed state of
+              MonitoredResourceTask.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment identifier.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: Task identifier OCID.
+                    type: string
+                  name:
+                    description: Name of the task. If not provided by default the
+                      following names will be taken Oracle Cloud Infrastructure tasks
+                      - namespace plus timestamp.
+                    type: string
+                  state:
+                    description: The current state of the stack monitoring resource
+                      task.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  taskDetails:
+                    description: The request details for the performing the task.
+                    items:
+                      properties:
+                        agentId:
+                          description: Management Agent Identifier OCID.
+                          type: string
+                        availabilityProxyMetricCollectionInterval:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Metrics collection interval in seconds used when calculating
+                            the availability of the  resource based on metrics specified
+                            using the property 'availabilityProxyMetrics'.
+                          type: number
+                        availabilityProxyMetrics:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            List of metrics to be used to calculate the availability
+                            of the resource. Resource is considered to be up if at
+                            least one of the specified metrics is available for  the
+                            resource during the specified interval using the property  'availabilityProxyMetricCollectionInterval'.
+                            If no metrics are specified, availability will not be
+                            calculated for the resource.
+                          items:
+                            type: string
+                          type: array
+                        consolePathPrefix:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The console path prefix to use for providing service home
+                            url page navigation.  For example if the prefix provided
+                            is 'security/bastion/bastions', the URL used for navigation
+                            will be https:///security/bastion/bastions/. If not provided,
+                            service home page link  will not be shown in the stack
+                            monitoring home page.
+                          type: string
+                        externalIdMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The external resource identifier property in the metric
+                            dimensions.  Resources imported will be using this property
+                            value for external id.
+                          type: string
+                        handlerType:
+                          description: Type of the handler.
+                          type: string
+                        isEnable:
+                          description: True to enable the receiver and false to disable
+                            the receiver on the agent.
+                          type: boolean
+                        lifecycleStatusMappingsForUpStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Lifecycle states of the external resource which reflects
+                            the status of the resource being up.
+                          items:
+                            type: string
+                          type: array
+                        namespace:
+                          description: Name space to be used for Oracle Cloud Infrastructure
+                            Native service resources discovery.
+                          type: string
+                        receiverProperties:
+                          description: (Applicable when type=UPDATE_AGENT_RECEIVER)
+                            Properties for agent receiver.
+                          items:
+                            properties:
+                              listenerPort:
+                                description: Receiver listener port.
+                                type: number
+                            type: object
+                          type: array
+                        resourceGroup:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource group to use while fetching metrics from
+                            telemetry. If not specified, resource group will be skipped
+                            in the list metrics request.
+                          type: string
+                        resourceNameFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name filter. Resources matching with the
+                            resource name filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceNameMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource name property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            name.
+                          type: string
+                        resourceTypeFilter:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type filter. Resources matching with the
+                            resource type filter will be imported. Regular expressions
+                            will be accepted.
+                          type: string
+                        resourceTypeMapping:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The resource type property in the metric dimensions.  Resources
+                            imported will be using this property value for resource
+                            type. If not specified, namespace will be used for resource
+                            type.
+                          type: string
+                        resourceTypesConfiguration:
+                          description: A collection of resource type configuration
+                            details. User can provide  availability proxy metrics
+                            list for resource types along with the  telegraf/collectd
+                            handler configuration for the resource types.
+                          items:
+                            properties:
+                              availabilityMetricsConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Availability metrics details.
+                                items:
+                                  properties:
+                                    collectionIntervalInSeconds:
+                                      description: Availability metric collection
+                                        internal in seconds.
+                                      type: number
+                                    metrics:
+                                      description: List of metrics used for availability
+                                        calculation for the resource.
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              handlerConfig:
+                                description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                  Specific resource mapping configurations for Agent
+                                  Extension Handlers.
+                                items:
+                                  properties:
+                                    collectdResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for collectd resource types.
+                                      items:
+                                        properties:
+                                          excludeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeProperties:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of property names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          suffix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String to be suffixed to the resource
+                                              name.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    collectorTypes:
+                                      description: List of collector/plugin names.
+                                      items:
+                                        type: string
+                                      type: array
+                                    handlerProperties:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of handler configuration properties
+                                      items:
+                                        properties:
+                                          name:
+                                            description: Name of the task. If not
+                                              provided by default the following names
+                                              will be taken Oracle Cloud Infrastructure
+                                              tasks - namespace plus timestamp.
+                                            type: string
+                                          value:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Property value.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricMappings:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        List of AgentExtensionHandlerMetricMappingDetails.
+                                      items:
+                                        properties:
+                                          collectorMetricName:
+                                            description: Metric name as defined by
+                                              the collector.
+                                            type: string
+                                          isSkipUpload:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Is ignoring this metric.
+                                            type: boolean
+                                          metricUploadIntervalInSeconds:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric upload interval in seconds. Any
+                                              metric sent by telegraf/collectd before
+                                              the  configured interval expires will
+                                              be dropped.
+                                            type: number
+                                          telemetryMetricName:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Metric name to be upload to telemetry.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    metricNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric name generation overriding configurations.
+                                      items:
+                                        properties:
+                                          excludePatternOnPrefix:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              String pattern to be removed from the
+                                              prefix of the metric name.
+                                            type: string
+                                          isPrefixWithCollectorType:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              is prefixing the metric with collector
+                                              type.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    metricUploadIntervalInSeconds:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Metric upload interval in seconds. Any metric
+                                        sent by telegraf/collectd before the  configured
+                                        interval expires will be dropped.
+                                      type: number
+                                    telegrafResourceNameConfig:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource name generation overriding configurations
+                                        for telegraf resource types.
+                                      items:
+                                        properties:
+                                          excludeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be excluded.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTags:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              List of tag names to be included.
+                                            items:
+                                              type: string
+                                            type: array
+                                          isUseTagsOnly:
+                                            description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                              Flag to indicate if only tags will be
+                                              used for resource name generation.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    telemetryResourceGroup:
+                                      description: (Applicable when type=UPDATE_RESOURCE_TYPE_CONFIGS)
+                                        Resource group string; if not specified, the
+                                        resource group string will be generated by
+                                        the handler.
+                                      type: string
+                                  type: object
+                                type: array
+                              resourceType:
+                                description: Resource type.
+                                type: string
+                            type: object
+                          type: array
+                        serviceBaseUrl:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            The base URL of the Oracle Cloud Infrastructure service
+                            to which the resource belongs to. Also this property is
+                            applicable only when source is OCI_TELEMETRY_NATIVE.
+                          type: string
+                        shouldUseMetricsFlowForStatus:
+                          description: (Applicable when type=IMPORT_OCI_TELEMETRY_RESOURCES)
+                            Flag to indicate whether status is calculated using metrics
+                            or  LifeCycleState attribute of the resource in Oracle
+                            Cloud Infrastructure service.
+                          type: boolean
+                        source:
+                          description: 'Source from where the metrics pushed to telemetry.
+                            Possible values:'
+                          type: string
+                        type:
+                          description: Task type.
+                          type: string
+                      type: object
+                    type: array
+                  tenantId:
+                    description: The OCID of the tenancy.
+                    type: string
+                  timeCreated:
+                    description: The date and time when the stack monitoring resource
+                      task was created, expressed in  RFC 3339 timestamp format.
+                    type: string
+                  timeUpdated:
+                    description: The date and time when the stack monitoring resource
+                      task was last updated, expressed in RFC 3339 timestamp format.
+                    type: string
+                  type:
+                    description: Task type.
+                    type: string
+                  workRequestIds:
+                    description: Identifiers OCID for work requests submitted for
+                      this task.
+                    items:
+                      type: string
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

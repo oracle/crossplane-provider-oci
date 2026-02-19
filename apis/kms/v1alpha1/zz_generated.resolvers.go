@@ -539,12 +539,33 @@ func (mg *Vault) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ExternalKeyManagerMetadata); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("dataflow.oci.upbound.io", "v1alpha1", "PrivateEndpoint", "PrivateEndpointList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDRef,
+				Selector:     mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID")
+		}
+		mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -558,6 +579,28 @@ func (mg *Vault) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ExternalKeyManagerMetadata); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("dataflow.oci.upbound.io", "v1alpha1", "PrivateEndpoint", "PrivateEndpointList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID),
+				Extract:      resource.ExtractResourceID(),
+				Reference:    mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDRef,
+				Selector:     mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID")
+		}
+		mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.ExternalKeyManagerMetadata[i3].PrivateEndpointIDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

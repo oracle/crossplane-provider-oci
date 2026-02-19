@@ -43,7 +43,7 @@ type CapabilitiesObservation struct {
 type CapabilitiesParameters struct {
 }
 
-type UserInitParameters_2 struct {
+type UserInitParameters struct {
 
 	// The OCID of the tenancy containing the user.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -75,7 +75,7 @@ type UserInitParameters_2 struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type UserObservation_2 struct {
+type UserObservation struct {
 
 	// Properties indicating how the user is allowed to authenticate.
 	Capabilities []CapabilitiesObservation `json:"capabilities,omitempty" tf:"capabilities,omitempty"`
@@ -131,7 +131,7 @@ type UserObservation_2 struct {
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 }
 
-type UserParameters_2 struct {
+type UserParameters struct {
 
 	// The OCID of the tenancy containing the user.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -172,7 +172,7 @@ type UserParameters_2 struct {
 // UserSpec defines the desired state of User
 type UserSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     UserParameters_2 `json:"forProvider"`
+	ForProvider     UserParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -183,13 +183,13 @@ type UserSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider UserInitParameters_2 `json:"initProvider,omitempty"`
+	InitProvider UserInitParameters `json:"initProvider,omitempty"`
 }
 
 // UserStatus defines the observed state of User.
 type UserStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        UserObservation_2 `json:"atProvider,omitempty"`
+	AtProvider        UserObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

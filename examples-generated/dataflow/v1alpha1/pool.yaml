@@ -1,0 +1,31 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: Pool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/pool
+  labels:
+    testing.upbound.io/example-name: test_pool
+  name: test-pool
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurations:
+    - max: ${var.pool_configurations_max}
+      min: ${var.pool_configurations_min}
+      shape: ${var.pool_configurations_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.pool_configurations_shape_config_memory_in_gbs}
+        ocpus: ${var.pool_configurations_shape_config_ocpus}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.pool_description}
+    displayName: ${var.pool_display_name}
+    freeformTags:
+      Department: Finance
+    idleTimeoutInMinutes: ${var.pool_idle_timeout_in_minutes}
+    schedules:
+    - dayOfWeek: ${var.pool_schedules_day_of_week}
+      startTime: ${var.pool_schedules_start_time}
+      stopTime: ${var.pool_schedules_stop_time}

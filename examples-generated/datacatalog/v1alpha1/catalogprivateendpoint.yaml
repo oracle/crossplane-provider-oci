@@ -1,0 +1,23 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: CatalogPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacatalog/v1alpha1/catalogprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_catalog_private_endpoint
+  name: test-catalog-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.catalog_private_endpoint_display_name}
+    dnsZones: ${var.catalog_private_endpoint_dns_zones}
+    freeformTags:
+      bar-key: value
+    securityAttributes: ${var.catalog_private_endpoint_security_attributes}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

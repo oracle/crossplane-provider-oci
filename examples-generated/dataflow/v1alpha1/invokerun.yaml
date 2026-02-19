@@ -1,0 +1,55 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: InvokeRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/invokerun
+  labels:
+    testing.upbound.io/example-name: test_invoke_run
+  name: test-invoke-run
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_application
+    applicationLogConfig:
+    - logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    archiveUri: ${var.invoke_run_archive_uri}
+    arguments: ${var.invoke_run_arguments}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configuration: ${var.invoke_run_configuration}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.invoke_run_display_name}
+    driverShape: ${var.invoke_run_driver_shape}
+    driverShapeConfig:
+    - memoryInGbs: ${var.invoke_run_driver_shape_config_memory_in_gbs}
+      ocpus: ${var.invoke_run_driver_shape_config_ocpus}
+    execute: ${var.invoke_run_execute}
+    executorShape: ${var.invoke_run_executor_shape}
+    executorShapeConfig:
+    - memoryInGbs: ${var.invoke_run_executor_shape_config_memory_in_gbs}
+      ocpus: ${var.invoke_run_executor_shape_config_ocpus}
+    freeformTags:
+      Department: Finance
+    idleTimeoutInMinutes: ${var.invoke_run_idle_timeout_in_minutes}
+    logsBucketUri: ${var.invoke_run_logs_bucket_uri}
+    maxDurationInMinutes: ${var.invoke_run_max_duration_in_minutes}
+    metastoreId: ${var.metastore_id}
+    numExecutors: ${var.invoke_run_num_executors}
+    opcParentRptUrl: ${var.invoke_run_opc_parent_rpt_url}
+    parameters:
+    - name: ${var.invoke_run_parameters_name}
+      value: ${var.invoke_run_parameters_value}
+    poolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pool
+    sparkVersion: ${var.invoke_run_spark_version}
+    type: ${var.invoke_run_type}
+    warehouseBucketUri: ${var.invoke_run_warehouse_bucket_uri}

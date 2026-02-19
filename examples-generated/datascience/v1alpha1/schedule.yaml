@@ -1,0 +1,127 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Schedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/schedule
+  labels:
+    testing.upbound.io/example-name: test_schedule
+  name: test-schedule
+spec:
+  forProvider:
+    action:
+    - actionDetails:
+      - createJobRunDetails:
+        - compartmentId: ${var.compartment_id}
+          definedTags:
+            Operations.CostCenter: "42"
+          displayName: ${var.schedule_action_action_details_create_job_run_details_display_name}
+          freeformTags:
+            Department: Finance
+          jobConfigurationOverrideDetails:
+          - commandLineArguments: ${var.schedule_action_action_details_create_job_run_details_job_configuration_override_details_command_line_arguments}
+            environmentVariables: ${var.schedule_action_action_details_create_job_run_details_job_configuration_override_details_environment_variables}
+            jobType: ${var.schedule_action_action_details_create_job_run_details_job_configuration_override_details_job_type}
+            maximumRuntimeInMinutes: ${var.schedule_action_action_details_create_job_run_details_job_configuration_override_details_maximum_runtime_in_minutes}
+          jobEnvironmentConfigurationOverrideDetails:
+          - cmd: ${var.schedule_action_action_details_create_job_run_details_job_environment_configuration_override_details_cmd}
+            entrypoint: ${var.schedule_action_action_details_create_job_run_details_job_environment_configuration_override_details_entrypoint}
+            image: ${var.schedule_action_action_details_create_job_run_details_job_environment_configuration_override_details_image}
+            imageDigest: ${var.schedule_action_action_details_create_job_run_details_job_environment_configuration_override_details_image_digest}
+            imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+            jobEnvironmentType: ${var.schedule_action_action_details_create_job_run_details_job_environment_configuration_override_details_job_environment_type}
+          jobIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_job
+          jobLogConfigurationOverrideDetails:
+          - enableAutoLogCreation: ${var.schedule_action_action_details_create_job_run_details_job_log_configuration_override_details_enable_auto_log_creation}
+            enableLogging: ${var.schedule_action_action_details_create_job_run_details_job_log_configuration_override_details_enable_logging}
+            logGroupIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_log_group
+            logIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_log
+          projectIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_project
+        createPipelineRunDetails:
+        - compartmentId: ${var.compartment_id}
+          configurationOverrideDetails:
+          - commandLineArguments: ${var.schedule_action_action_details_create_pipeline_run_details_configuration_override_details_command_line_arguments}
+            environmentVariables: ${var.schedule_action_action_details_create_pipeline_run_details_configuration_override_details_environment_variables}
+            maximumRuntimeInMinutes: ${var.schedule_action_action_details_create_pipeline_run_details_configuration_override_details_maximum_runtime_in_minutes}
+            type: ${var.schedule_action_action_details_create_pipeline_run_details_configuration_override_details_type}
+          definedTags:
+            Operations.CostCenter: "42"
+          displayName: ${var.schedule_action_action_details_create_pipeline_run_details_display_name}
+          freeformTags:
+            Department: Finance
+          logConfigurationOverrideDetails:
+          - enableAutoLogCreation: ${var.schedule_action_action_details_create_pipeline_run_details_log_configuration_override_details_enable_auto_log_creation}
+            enableLogging: ${var.schedule_action_action_details_create_pipeline_run_details_log_configuration_override_details_enable_logging}
+            logGroupIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_log_group
+            logIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_log
+          pipelineIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_pipeline
+          projectIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_project
+          stepOverrideDetails:
+          - stepConfigurationDetails:
+            - commandLineArguments: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_configuration_details_command_line_arguments}
+              environmentVariables: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_configuration_details_environment_variables}
+              maximumRuntimeInMinutes: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_configuration_details_maximum_runtime_in_minutes}
+            stepContainerConfigurationDetails:
+            - cmd: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_container_configuration_details_cmd}
+              containerType: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_container_configuration_details_container_type}
+              entrypoint: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_container_configuration_details_entrypoint}
+              image: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_container_configuration_details_image}
+              imageDigest: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_container_configuration_details_image_digest}
+              imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+            stepName: ${var.schedule_action_action_details_create_pipeline_run_details_step_override_details_step_name}
+          systemTags: ${var.schedule_action_action_details_create_pipeline_run_details_system_tags}
+        httpActionType: ${var.schedule_action_action_details_http_action_type}
+        mlApplicationInstanceViewIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_view
+        triggerMlApplicationInstanceViewFlowDetails:
+        - parameters:
+          - name: ${var.schedule_action_action_details_trigger_ml_application_instance_view_flow_details_parameters_name}
+            value: ${var.schedule_action_action_details_trigger_ml_application_instance_view_flow_details_parameters_value}
+          triggerNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_trigger
+      actionType: ${var.schedule_action_action_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.schedule_description}
+    displayName: ${var.schedule_display_name}
+    freeformTags:
+      Department: Finance
+    logDetails:
+    - logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    trigger:
+    - cronExpression: ${var.schedule_trigger_cron_expression}
+      frequency: ${var.schedule_trigger_frequency}
+      interval: ${var.schedule_trigger_interval}
+      isRandomStartTime: ${var.schedule_trigger_is_random_start_time}
+      recurrence: ${var.schedule_trigger_recurrence}
+      timeEnd: ${var.schedule_trigger_time_end}
+      timeStart: ${var.schedule_trigger_time_start}
+      triggerType: ${var.schedule_trigger_trigger_type}

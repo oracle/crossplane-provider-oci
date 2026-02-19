@@ -1,0 +1,24 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployPipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deploypipeline
+  labels:
+    testing.upbound.io/example-name: test_deploy_pipeline
+  name: test-deploy-pipeline
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    deployPipelineParameters:
+    - items:
+      - defaultValue: ${var.deploy_pipeline_deploy_pipeline_parameters_items_default_value}
+        description: ${var.deploy_pipeline_deploy_pipeline_parameters_items_description}
+        name: ${var.deploy_pipeline_deploy_pipeline_parameters_items_name}
+    description: ${var.deploy_pipeline_description}
+    displayName: ${var.deploy_pipeline_display_name}
+    freeformTags:
+      bar-key: value
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

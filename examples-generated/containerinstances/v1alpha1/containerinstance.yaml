@@ -1,0 +1,103 @@
+apiVersion: containerinstances.oci.upbound.io/v1alpha1
+kind: ContainerInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_container_instance
+  name: test-container-instance
+spec:
+  forProvider:
+    availabilityDomain: ${var.container_instance_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    containerRestartPolicy: ${var.container_instance_container_restart_policy}
+    containers:
+    - arguments: ${var.container_instance_containers_arguments}
+      command: ${var.container_instance_containers_command}
+      definedTags: ${var.container_instance_containers_defined_tags}
+      displayName: ${var.container_instance_containers_display_name}
+      environmentVariables: ${var.container_instance_containers_environment_variables}
+      freeformTags: ${var.container_instance_containers_freeform_tags}
+      healthChecks:
+      - failureAction: ${var.container_instance_containers_health_checks_failure_action}
+        failureThreshold: ${var.container_instance_containers_health_checks_failure_threshold}
+        headers:
+        - name: ${var.container_instance_containers_health_checks_headers_name}
+          value: ${var.container_instance_containers_health_checks_headers_value}
+        healthCheckType: ${var.container_instance_containers_health_checks_health_check_type}
+        initialDelayInSeconds: ${var.container_instance_containers_health_checks_initial_delay_in_seconds}
+        intervalInSeconds: ${var.container_instance_containers_health_checks_interval_in_seconds}
+        name: ${var.container_instance_containers_health_checks_name}
+        path: ${var.container_instance_containers_health_checks_path}
+        port: ${var.container_instance_containers_health_checks_port}
+        successThreshold: ${var.container_instance_containers_health_checks_success_threshold}
+        timeoutInSeconds: ${var.container_instance_containers_health_checks_timeout_in_seconds}
+      imageUrl: ${var.container_instance_containers_image_url}
+      isResourcePrincipalDisabled: ${var.container_instance_containers_is_resource_principal_disabled}
+      resourceConfig:
+      - memoryLimitInGbs: ${var.container_instance_containers_resource_config_memory_limit_in_gbs}
+        vcpusLimit: ${var.container_instance_containers_resource_config_vcpus_limit}
+      securityContext:
+      - capabilities:
+        - addCapabilities: ${var.container_instance_containers_security_context_capabilities_add_capabilities}
+          dropCapabilities: ${var.container_instance_containers_security_context_capabilities_drop_capabilities}
+        isNonRootUserCheckEnabled: ${var.container_instance_containers_security_context_is_non_root_user_check_enabled}
+        isRootFileSystemReadonly: ${var.container_instance_containers_security_context_is_root_file_system_readonly}
+        runAsGroup: ${var.container_instance_containers_security_context_run_as_group}
+        runAsUser: ${var.container_instance_containers_security_context_run_as_user}
+        securityContextType: ${var.container_instance_containers_security_context_security_context_type}
+      volumeMounts:
+      - isReadOnly: ${var.container_instance_containers_volume_mounts_is_read_only}
+        mountPath: ${var.container_instance_containers_volume_mounts_mount_path}
+        partition: ${var.container_instance_containers_volume_mounts_partition}
+        subPath: ${var.container_instance_containers_volume_mounts_sub_path}
+        volumeName: ${var.container_instance_containers_volume_mounts_volume_name}
+      workingDirectory: ${var.container_instance_containers_working_directory}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.container_instance_display_name}
+    dnsConfig:
+    - nameservers: ${var.container_instance_dns_config_nameservers}
+      options: ${var.container_instance_dns_config_options}
+      searches: ${var.container_instance_dns_config_searches}
+    faultDomain: ${var.container_instance_fault_domain}
+    freeformTags:
+      bar-key: value
+    gracefulShutdownTimeoutInSeconds: ${var.container_instance_graceful_shutdown_timeout_in_seconds}
+    imagePullSecrets:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      registryEndpoint: ${var.container_instance_image_pull_secrets_registry_endpoint}
+      secretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      secretType: ${var.container_instance_image_pull_secrets_secret_type}
+      username: ${var.container_instance_image_pull_secrets_username}
+    shape: ${var.container_instance_shape}
+    shapeConfig:
+    - memoryInGbs: ${var.container_instance_shape_config_memory_in_gbs}
+      ocpus: ${var.container_instance_shape_config_ocpus}
+    vnics:
+    - definedTags: ${var.container_instance_vnics_defined_tags}
+      displayName: ${var.container_instance_vnics_display_name}
+      freeformTags: ${var.container_instance_vnics_freeform_tags}
+      hostnameLabel: ${var.container_instance_vnics_hostname_label}
+      isPublicIpAssigned: ${var.container_instance_vnics_is_public_ip_assigned}
+      nsgIds: ${var.container_instance_vnics_nsg_ids}
+      privateIp: ${var.container_instance_vnics_private_ip}
+      skipSourceDestCheck: ${var.container_instance_vnics_skip_source_dest_check}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    volumes:
+    - backingStore: ${var.container_instance_volumes_backing_store}
+      configs:
+      - data: ${var.container_instance_volumes_configs_data}
+        fileName: ${var.container_instance_volumes_configs_file_name}
+        path: ${var.container_instance_volumes_configs_path}
+      name: ${var.container_instance_volumes_name}
+      volumeType: ${var.container_instance_volumes_volume_type}

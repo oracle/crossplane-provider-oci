@@ -1,0 +1,27 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: DigitalTwinRelationship
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwinrelationship
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_relationship
+  name: test-digital-twin-relationship
+spec:
+  forProvider:
+    content: ${var.digital_twin_relationship_content}
+    contentPath: ${var.digital_twin_relationship_content_path}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.digital_twin_relationship_description}
+    displayName: ${var.digital_twin_relationship_display_name}
+    freeformTags:
+      Department: Finance
+    iotDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_iot_domain
+    sourceDigitalTwinInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_digital_twin_instance
+    targetDigitalTwinInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_digital_twin_instance

@@ -1,0 +1,1767 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: autoscalingconfigurations.bds.oci.upbound.io
+spec:
+  group: bds.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: AutoScalingConfiguration
+    listKind: AutoScalingConfigurationList
+    plural: autoscalingconfigurations
+    singular: autoscalingconfiguration
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: AutoScalingConfiguration is the Schema for the AutoScalingConfigurations
+          API. Provides the Auto Scaling Configuration resource in Oracle Cloud Infrastructure
+          Big Data Service service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AutoScalingConfigurationSpec defines the desired state of
+              AutoScalingConfiguration
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  bdsInstanceId:
+                    description: The OCID of the cluster.
+                    type: string
+                  bdsInstanceIdRef:
+                    description: Reference to a BdsInstance in bds to populate bdsInstanceId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  bdsInstanceIdSelector:
+                    description: Selector for a BdsInstance in bds to populate bdsInstanceId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  clusterAdminPasswordSecretRef:
+                    description: (Updatable) Base-64 encoded password for the cluster
+                      (and Cloudera Manager) admin user.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  displayName:
+                    description: (Updatable) A user-friendly name. The name does not
+                      have to be unique, and it may be changed. Avoid entering confidential
+                      information.
+                    type: string
+                  isEnabled:
+                    description: (Updatable) Whether the autoscale configuration is
+                      enabled.
+                    type: boolean
+                  nodeType:
+                    description: A node type that is managed by an autoscale configuration.
+                      The only supported types are WORKER, COMPUTE_ONLY_WORKER and
+                      KAFKA_BROKER.
+                    type: string
+                  policy:
+                    description: (Updatable) This model for autoscaling policy is
+                      deprecated and not supported for ODH clusters. Use the AutoScalePolicyDetails
+                      model to manage autoscale policy details for ODH clusters.
+                    items:
+                      properties:
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        rules:
+                          description: (Updatable) The list of rules for autoscaling.
+                            If an action has multiple rules, the last rule in the
+                            array will be applied.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) The valid value are CHANGE_SHAPE_SCALE_UP
+                                  or CHANGE_SHAPE_SCALE_DOWN.
+                                type: string
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  policyDetails:
+                    description: (Updatable) Policy definition for the autoscale configuration.
+                    items:
+                      properties:
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        scaleDownConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-down
+                            policy.
+                          items:
+                            properties:
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum memory in GBs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              minOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum number of OCPUs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scaleInConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-in policy.
+                          items:
+                            properties:
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the minimum number of
+                                  nodes the cluster can be scaled-in to.
+                                type: number
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleOutConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-out policy.
+                          items:
+                            properties:
+                              maxNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the maximum number of
+                                  nodes the cluster can be scaled-out to.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleUpConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-up
+                            policy.
+                          items:
+                            properties:
+                              maxMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum memory in GBs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              maxOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum number of OCPUs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scheduleDetails:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            Details of a horizontal scaling schedule.
+                          items:
+                            properties:
+                              scheduleType:
+                                description: (Updatable) The type of schedule.
+                                type: string
+                              timeAndHorizontalScalingConfig:
+                                description: (Updatable) Time of day and horizontal
+                                  scaling configuration.
+                                items:
+                                  properties:
+                                    targetNodeCount:
+                                      description: (Updatable) This value is the desired
+                                        number of nodes in the cluster.
+                                      type: number
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeAndVerticalScalingConfig:
+                                description: (Updatable) Time of day and vertical
+                                  scaling configuration
+                                items:
+                                  properties:
+                                    targetMemoryPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        memory in GBs on each node. This value is
+                                        not used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetOcpusPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        OCPUs count on each node. This value is not
+                                        used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetShape:
+                                      description: (Updatable) For nodes with fixed
+                                        compute shapes, this value is the desired
+                                        shape of each node. This value is not used
+                                        for nodes with flexible compute shapes.
+                                      type: string
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        timezone:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            The time zone of the execution schedule, in IANA time
+                            zone database name format
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  bdsInstanceId:
+                    description: The OCID of the cluster.
+                    type: string
+                  bdsInstanceIdRef:
+                    description: Reference to a BdsInstance in bds to populate bdsInstanceId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  bdsInstanceIdSelector:
+                    description: Selector for a BdsInstance in bds to populate bdsInstanceId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  clusterAdminPasswordSecretRef:
+                    description: (Updatable) Base-64 encoded password for the cluster
+                      (and Cloudera Manager) admin user.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  displayName:
+                    description: (Updatable) A user-friendly name. The name does not
+                      have to be unique, and it may be changed. Avoid entering confidential
+                      information.
+                    type: string
+                  isEnabled:
+                    description: (Updatable) Whether the autoscale configuration is
+                      enabled.
+                    type: boolean
+                  nodeType:
+                    description: A node type that is managed by an autoscale configuration.
+                      The only supported types are WORKER, COMPUTE_ONLY_WORKER and
+                      KAFKA_BROKER.
+                    type: string
+                  policy:
+                    description: (Updatable) This model for autoscaling policy is
+                      deprecated and not supported for ODH clusters. Use the AutoScalePolicyDetails
+                      model to manage autoscale policy details for ODH clusters.
+                    items:
+                      properties:
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        rules:
+                          description: (Updatable) The list of rules for autoscaling.
+                            If an action has multiple rules, the last rule in the
+                            array will be applied.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) The valid value are CHANGE_SHAPE_SCALE_UP
+                                  or CHANGE_SHAPE_SCALE_DOWN.
+                                type: string
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  policyDetails:
+                    description: (Updatable) Policy definition for the autoscale configuration.
+                    items:
+                      properties:
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        scaleDownConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-down
+                            policy.
+                          items:
+                            properties:
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum memory in GBs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              minOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum number of OCPUs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scaleInConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-in policy.
+                          items:
+                            properties:
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the minimum number of
+                                  nodes the cluster can be scaled-in to.
+                                type: number
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleOutConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-out policy.
+                          items:
+                            properties:
+                              maxNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the maximum number of
+                                  nodes the cluster can be scaled-out to.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleUpConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-up
+                            policy.
+                          items:
+                            properties:
+                              maxMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum memory in GBs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              maxOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum number of OCPUs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scheduleDetails:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            Details of a horizontal scaling schedule.
+                          items:
+                            properties:
+                              scheduleType:
+                                description: (Updatable) The type of schedule.
+                                type: string
+                              timeAndHorizontalScalingConfig:
+                                description: (Updatable) Time of day and horizontal
+                                  scaling configuration.
+                                items:
+                                  properties:
+                                    targetNodeCount:
+                                      description: (Updatable) This value is the desired
+                                        number of nodes in the cluster.
+                                      type: number
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeAndVerticalScalingConfig:
+                                description: (Updatable) Time of day and vertical
+                                  scaling configuration
+                                items:
+                                  properties:
+                                    targetMemoryPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        memory in GBs on each node. This value is
+                                        not used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetOcpusPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        OCPUs count on each node. This value is not
+                                        used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetShape:
+                                      description: (Updatable) For nodes with fixed
+                                        compute shapes, this value is the desired
+                                        shape of each node. This value is not used
+                                        for nodes with flexible compute shapes.
+                                      type: string
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        timezone:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            The time zone of the execution schedule, in IANA time
+                            zone database name format
+                          type: string
+                      type: object
+                    type: array
+                required:
+                - clusterAdminPasswordSecretRef
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.clusterAdminPasswordSecretRef is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterAdminPasswordSecretRef)'
+            - message: spec.forProvider.isEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isEnabled)
+                || (has(self.initProvider) && has(self.initProvider.isEnabled))'
+            - message: spec.forProvider.nodeType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.nodeType)
+                || (has(self.initProvider) && has(self.initProvider.nodeType))'
+          status:
+            description: AutoScalingConfigurationStatus defines the observed state
+              of AutoScalingConfiguration.
+            properties:
+              atProvider:
+                properties:
+                  bdsInstanceId:
+                    description: The OCID of the cluster.
+                    type: string
+                  displayName:
+                    description: (Updatable) A user-friendly name. The name does not
+                      have to be unique, and it may be changed. Avoid entering confidential
+                      information.
+                    type: string
+                  id:
+                    description: The unique identifier for the autoscale configuration.
+                    type: string
+                  isEnabled:
+                    description: (Updatable) Whether the autoscale configuration is
+                      enabled.
+                    type: boolean
+                  nodeType:
+                    description: A node type that is managed by an autoscale configuration.
+                      The only supported types are WORKER, COMPUTE_ONLY_WORKER and
+                      KAFKA_BROKER.
+                    type: string
+                  policy:
+                    description: (Updatable) This model for autoscaling policy is
+                      deprecated and not supported for ODH clusters. Use the AutoScalePolicyDetails
+                      model to manage autoscale policy details for ODH clusters.
+                    items:
+                      properties:
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        rules:
+                          description: (Updatable) The list of rules for autoscaling.
+                            If an action has multiple rules, the last rule in the
+                            array will be applied.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) The valid value are CHANGE_SHAPE_SCALE_UP
+                                  or CHANGE_SHAPE_SCALE_DOWN.
+                                type: string
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  policyDetails:
+                    description: (Updatable) Policy definition for the autoscale configuration.
+                    items:
+                      properties:
+                        actionType:
+                          description: The type of autoscaling action to take.
+                          type: string
+                        policyType:
+                          description: (Updatable) Types of autoscale policies. Options
+                            are SCHEDULE-BASED or THRESHOLD-BASED. (Only THRESHOLD-BASED
+                            is supported in this release.)
+                          type: string
+                        scaleDownConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-down
+                            policy.
+                          items:
+                            properties:
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum memory in GBs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              minOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the minimum number of OCPUs each node
+                                  can be scaled-down to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scaleInConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-in policy.
+                          items:
+                            properties:
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              minNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the minimum number of
+                                  nodes the cluster can be scaled-in to.
+                                type: number
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleOutConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based horizontal
+                            scale-out policy.
+                          items:
+                            properties:
+                              maxNodeCount:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the maximum number of
+                                  nodes the cluster can be scaled-out to.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              stepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_HORIZONTAL_SCALING_POLICY)
+                                  (Updatable) This value is the number of nodes to
+                                  remove during a scale-in event.
+                                type: number
+                            type: object
+                          type: array
+                        scaleUpConfig:
+                          description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                            (Updatable) Configration for a metric based vertical scale-up
+                            policy.
+                          items:
+                            properties:
+                              maxMemoryPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum memory in GBs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              maxOcpusPerNode:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the maximum number of OCPUs each node
+                                  can be scaled-up to. This value is not used for
+                                  nodes with fixed compute shapes.
+                                type: number
+                              memoryStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the size of memory in GBs to remove
+                                  from each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                              metric:
+                                description: (Updatable) Metric and threshold details
+                                  for triggering an autoscale action.
+                                items:
+                                  properties:
+                                    metricType:
+                                      description: (Updatable) Allowed values are
+                                        CPU_UTILIZATION and MEMORY_UTILIZATION.
+                                      type: string
+                                    threshold:
+                                      description: (Updatable) An autoscale action
+                                        is triggered when a performance metric exceeds
+                                        a threshold.
+                                      items:
+                                        properties:
+                                          durationInMinutes:
+                                            description: (Updatable) This value is
+                                              the minimum period of time the metric
+                                              value exceeds the threshold value before
+                                              the action is triggered. The value is
+                                              in minutes.
+                                            type: number
+                                          operator:
+                                            description: (Updatable) The comparison
+                                              operator to use. Options are greater
+                                              than (GT) or less than (LT).
+                                            type: string
+                                          value:
+                                            description: (Updatable) Integer non-negative
+                                              value. 0 < value < 100
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ocpuStepSize:
+                                description: (Applicable when policy_type=METRIC_BASED_VERTICAL_SCALING_POLICY)
+                                  (Updatable) For nodes with flexible compute shapes,
+                                  this value is the number of OCPUs to remove from
+                                  each node during a scale-down event. This value
+                                  is not used for nodes with fixed compute shapes.
+                                type: number
+                            type: object
+                          type: array
+                        scheduleDetails:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            Details of a horizontal scaling schedule.
+                          items:
+                            properties:
+                              scheduleType:
+                                description: (Updatable) The type of schedule.
+                                type: string
+                              timeAndHorizontalScalingConfig:
+                                description: (Updatable) Time of day and horizontal
+                                  scaling configuration.
+                                items:
+                                  properties:
+                                    targetNodeCount:
+                                      description: (Updatable) This value is the desired
+                                        number of nodes in the cluster.
+                                      type: number
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeAndVerticalScalingConfig:
+                                description: (Updatable) Time of day and vertical
+                                  scaling configuration
+                                items:
+                                  properties:
+                                    targetMemoryPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        memory in GBs on each node. This value is
+                                        not used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetOcpusPerNode:
+                                      description: (Updatable) For nodes with flexible
+                                        compute shapes, this value is the desired
+                                        OCPUs count on each node. This value is not
+                                        used for nodes with fixed compute shapes.
+                                      type: number
+                                    targetShape:
+                                      description: (Updatable) For nodes with fixed
+                                        compute shapes, this value is the desired
+                                        shape of each node. This value is not used
+                                        for nodes with flexible compute shapes.
+                                      type: string
+                                    timeRecurrence:
+                                      description: (Updatable) Day/time recurrence
+                                        (specified following RFC 5545) at which to
+                                        trigger autoscaling action. Currently only
+                                        WEEKLY frequency is supported. Days of the
+                                        week are specified using BYDAY field. Time
+                                        of the day is specified using BYHOUR and BYMINUTE
+                                        fields. Other fields are not supported.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        timezone:
+                          description: (Applicable when policy_type=SCHEDULE_BASED_HORIZONTAL_SCALING_POLICY
+                            | SCHEDULE_BASED_VERTICAL_SCALING_POLICY) (Updatable)
+                            The time zone of the execution schedule, in IANA time
+                            zone database name format
+                          type: string
+                        triggerType:
+                          description: The type of autoscaling trigger.
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The state of the autoscale configuration.
+                    type: string
+                  timeCreated:
+                    description: The time the cluster was created, shown as an RFC
+                      3339 formatted datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time the autoscale configuration was updated,
+                      shown as an RFC 3339 formatted datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

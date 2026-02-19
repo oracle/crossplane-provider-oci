@@ -16,8 +16,98 @@ func (l *NetworkFirewallList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this NetworkFirewallPolicyAddressListList.
+func (l *NetworkFirewallPolicyAddressListList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyApplicationGroupList.
+func (l *NetworkFirewallPolicyApplicationGroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyApplicationList.
+func (l *NetworkFirewallPolicyApplicationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyDecryptionProfileList.
+func (l *NetworkFirewallPolicyDecryptionProfileList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyDecryptionRuleList.
+func (l *NetworkFirewallPolicyDecryptionRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this NetworkFirewallPolicyList.
 func (l *NetworkFirewallPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyMappedSecretList.
+func (l *NetworkFirewallPolicyMappedSecretList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyNatRuleList.
+func (l *NetworkFirewallPolicyNatRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicySecurityRuleList.
+func (l *NetworkFirewallPolicySecurityRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyServiceList.
+func (l *NetworkFirewallPolicyServiceList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this NetworkFirewallPolicyTunnelInspectionRuleList.
+func (l *NetworkFirewallPolicyTunnelInspectionRuleList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

@@ -1573,7 +1573,17 @@ type EncryptionKeyInitParameters struct {
 	CertificateDirectoryName *string `json:"certificateDirectoryName,omitempty" tf:"certificate_directory_name,omitempty"`
 
 	// (Applicable when provider=OKV) (Updatable) OKV certificate id
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) OKV wallet directory name
 	DirectoryName *string `json:"directoryName,omitempty" tf:"directory_name,omitempty"`
@@ -1719,8 +1729,18 @@ type EncryptionKeyParameters struct {
 	CertificateDirectoryName *string `json:"certificateDirectoryName,omitempty" tf:"certificate_directory_name,omitempty"`
 
 	// (Applicable when provider=OKV) (Updatable) OKV certificate id
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) OKV wallet directory name
 	// +kubebuilder:validation:Optional

@@ -1,0 +1,16 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ProfileAttachManagementStationManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/profileattachmanagementstationmanagement
+  labels:
+    testing.upbound.io/example-name: test_profile_attach_management_station_management
+  name: test-profile-attach-management-station-management
+spec:
+  forProvider:
+    managementStationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_station
+    profileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_profile

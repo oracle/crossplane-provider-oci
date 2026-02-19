@@ -1,0 +1,24 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: test_certificate
+  name: test-certificate
+spec:
+  forProvider:
+    certificateData: ${var.certificate_certificate_data}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.certificate_display_name}
+    freeformTags:
+      Department: Finance
+    isTrustVerificationDisabled: ${var.certificate_is_trust_verification_disabled}
+    privateKeyDataSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

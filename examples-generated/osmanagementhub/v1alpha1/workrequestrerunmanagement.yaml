@@ -1,0 +1,15 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: WorkRequestRerunManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/workrequestrerunmanagement
+  labels:
+    testing.upbound.io/example-name: test_work_request_rerun_management
+  name: test-work-request-rerun-management
+spec:
+  forProvider:
+    managedInstances: ${var.work_request_rerun_management_managed_instances}
+    workRequestDetails:
+    - description: ${var.work_request_rerun_management_work_request_details_description}
+      displayName: ${var.work_request_rerun_management_work_request_details_display_name}
+    workRequestId: ${oci_containerengine_work_request.test_work_request.id}

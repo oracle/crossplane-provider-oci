@@ -1,0 +1,13 @@
+apiVersion: managementdashboard.oci.upbound.io/v1alpha1
+kind: ManagementDashboardsImport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managementdashboard/v1alpha1/managementdashboardsimport
+  labels:
+    testing.upbound.io/example-name: test_management_dashboards_import
+  name: test-management-dashboards-import
+spec:
+  forProvider:
+    overrideDashboardCompartmentOcid: ${var.management_dashboards_import_override_dashboard_compartment_ocid}
+    overrideSameName: ${var.management_dashboards_import_override_same_name}
+    overrideSavedSearchCompartmentOcid: ${var.management_dashboards_import_override_saved_search_compartment_ocid}

@@ -1,0 +1,19 @@
+apiVersion: apiplatform.oci.upbound.io/v1alpha1
+kind: ApiPlatformInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apiplatform/v1alpha1/apiplatforminstance
+  labels:
+    testing.upbound.io/example-name: test_api_platform_instance
+  name: test-api-platform-instance
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.api_platform_instance_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.api_platform_instance_name}

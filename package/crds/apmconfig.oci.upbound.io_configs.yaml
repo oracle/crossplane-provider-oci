@@ -1,0 +1,1446 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: configs.apmconfig.oci.upbound.io
+spec:
+  group: apmconfig.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Config
+    listKind: ConfigList
+    plural: configs
+    singular: config
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Config is the Schema for the Configs API. Provides the Config
+          resource in Oracle Cloud Infrastructure Apm Config service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ConfigSpec defines the desired state of Config
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  agentVersion:
+                    description: (Updatable) The version of the referenced agent bundle.
+                    type: string
+                  apmDomainId:
+                    description: (Updatable) The APM Domain ID the request is intended
+                      for.
+                    type: string
+                  apmDomainIdRef:
+                    description: Reference to a ApmDomain in apm to populate apmDomainId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  apmDomainIdSelector:
+                    description: Selector for a ApmDomain in apm to populate apmDomainId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  attachInstallDir:
+                    description: (Updatable) The directory owned by runAsUser.
+                    type: string
+                  config:
+                    description: '(Applicable when config_type=AGENT) (Updatable)
+                      Collection of agent configuration files. For agents that use
+                      a single configuration file, this SHOULD contain a single entry
+                      and the file name MAY be an empty string. For multiple entries,
+                      you should use multiple blocks of config_map. To apply a different
+                      configuration in a subset of the agents, put this block anywhere
+                      in the body of the configuration and edit  and  {{  | default  }}
+                      Example: com.oracle.apm.agent.tracer.enable.jfr = {{ isJfrEnabled
+                      | default false }} Then, in the configuration''s overrides,
+                      specify a different value for  along with the desired agent
+                      filter. Example: "agentFilter": "ApplicationType=''Tomcat''"
+                      "overrideMap": { "isJfrEnabled": true }'
+                    items:
+                      properties:
+                        configMap:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                            Map of an agent configuration file.
+                          items:
+                            properties:
+                              body:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The Base64 encoded agent configuration file.
+                                type: string
+                              contentType:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The MIME Content-Type that describes the content
+                                  of the body field, for example, text/yaml or text/yaml;
+                                  charset=utf-8
+                                type: string
+                              fileName:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  An agent configuration file name.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  configType:
+                    description: (Updatable) The type of configuration item.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                      (Updatable) An optional string that describes what the options
+                      are intended or used for.
+                    type: string
+                  dimensions:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      A list of dimensions for the metric. This variable should not
+                      be used.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The name by which a configuration entity
+                      is displayed to the end user.
+                    type: string
+                  filterId:
+                    description: (Updatable) The OCID of a Span Filter. The filterId
+                      is mandatory for the creation of MetricGroups. A filterId is
+                      generated when a Span Filter is created.
+                    type: string
+                  filterText:
+                    description: (Updatable) The string that defines the Span Filter
+                      expression.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  group:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      A string that specifies the group that an OPTIONS item belongs
+                      to.
+                    type: string
+                  inUseBy:
+                    description: The list of configuration items that reference the
+                      span filter.
+                    items:
+                      type: object
+                    type: array
+                  managementAgentId:
+                    description: The OCID of the Management Agent that will provision
+                      the APM Agent.
+                    type: string
+                  managementAgentIdRef:
+                    description: Reference to a ManagementAgent in managementagent
+                      to populate managementAgentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  managementAgentIdSelector:
+                    description: Selector for a ManagementAgent in managementagent
+                      to populate managementAgentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  matchAgentsWithAttributeValue:
+                    description: The agent attribute VALUE by which an agent configuration
+                      is matched to an agent.  Each agent configuration object must
+                      specify a different value.  The attribute KEY corresponding
+                      to this VALUE is in the matchAgentsWithAttributeKey field.
+                    type: string
+                  metrics:
+                    description: (Updatable) The list of metrics in this group.
+                    items:
+                      properties:
+                        description:
+                          description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                            (Updatable) An optional string that describes what the
+                            options are intended or used for.
+                          type: string
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        unit:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The unit of the metric.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  namespace:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      The namespace to which the metrics are published. It must be
+                      one of several predefined namespaces.
+                    type: string
+                  opcDryRun:
+                    description: (Updatable) Indicates that the request is a dry run,
+                      if set to "true". A dry run request does not modify the configuration
+                      item details and is used only to perform validation on the submitted
+                      data.
+                    type: string
+                  options:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      The options are stored here as JSON.
+                    type: string
+                  overrides:
+                    description: (Applicable when config_type=AGENT) (Updatable) Agent
+                      configuration overrides that should apply to a subset of the
+                      agents associated with an Agent Config object.
+                    items:
+                      properties:
+                        overrideList:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                          items:
+                            properties:
+                              agentFilter:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The string that defines the Agent Filter expression.
+                                type: string
+                              overrideMap:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when config_type=AGENT)
+                                  (Updatable) A map whose key is a substitution variable
+                                  specified within the configuration''s body. For
+                                  example, if below was specified in the configuration''s
+                                  body {{ isJfrEnabled | default false }} Then a valid
+                                  map key would be "isJfrEnabled". The value is typically
+                                  different than the default specified in the configuration''s
+                                  body. Thus, in this example, the map entry could
+                                  be "isJfrEnabled": true'
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  processFilter:
+                    description: (Updatable) Filter patterns used to discover active
+                      Java processes for provisioning the APM Agent.
+                    items:
+                      type: string
+                    type: array
+                  rules:
+                    description: (Updatable)
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) The name by which a configuration
+                            entity is displayed to the end user.
+                          type: string
+                        filterText:
+                          description: (Updatable) The string that defines the Span
+                            Filter expression.
+                          type: string
+                        isApplyToErrorSpans:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether an Apdex score should be computed for
+                            error spans. Setting it to "true" means that the Apdex
+                            score is computed in the usual way. Setting it to "false"
+                            skips the Apdex computation and sets the Apdex score to
+                            "frustrating" regardless of the configured thresholds.
+                            The default is "false".
+                          type: boolean
+                        isEnabled:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether the Apdex score should be computed for
+                            spans matching the rule. This can be used to disable Apdex
+                            score for spans that do not need or require it. The default
+                            is "true".
+                          type: boolean
+                        priority:
+                          description: (Updatable) The priority controls the order
+                            in which multiple rules in a rule set are applied. Lower
+                            values indicate higher priorities. Rules with higher priority
+                            are applied first, and once a match is found, the rest
+                            of the rules are ignored. Rules within the same rule set
+                            cannot have the same priority.
+                          type: number
+                        satisfiedResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "satisfactory" for the end user.
+                          type: number
+                        toleratingResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "tolerable" for the end user. A response time beyond this
+                            threshold is considered "frustrating". This value cannot
+                            be lower than "satisfiedResponseTime".
+                          type: number
+                      type: object
+                    type: array
+                  runAsUser:
+                    description: (Updatable) The OS user that should be used to discover
+                      Java processes.
+                    type: string
+                  serviceName:
+                    description: (Updatable) The name of the service being monitored.
+                      This argument enables you to filter by service and view traces
+                      and other signals in the APM Explorer user interface.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  agentVersion:
+                    description: (Updatable) The version of the referenced agent bundle.
+                    type: string
+                  apmDomainId:
+                    description: (Updatable) The APM Domain ID the request is intended
+                      for.
+                    type: string
+                  apmDomainIdRef:
+                    description: Reference to a ApmDomain in apm to populate apmDomainId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  apmDomainIdSelector:
+                    description: Selector for a ApmDomain in apm to populate apmDomainId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  attachInstallDir:
+                    description: (Updatable) The directory owned by runAsUser.
+                    type: string
+                  config:
+                    description: '(Applicable when config_type=AGENT) (Updatable)
+                      Collection of agent configuration files. For agents that use
+                      a single configuration file, this SHOULD contain a single entry
+                      and the file name MAY be an empty string. For multiple entries,
+                      you should use multiple blocks of config_map. To apply a different
+                      configuration in a subset of the agents, put this block anywhere
+                      in the body of the configuration and edit  and  {{  | default  }}
+                      Example: com.oracle.apm.agent.tracer.enable.jfr = {{ isJfrEnabled
+                      | default false }} Then, in the configuration''s overrides,
+                      specify a different value for  along with the desired agent
+                      filter. Example: "agentFilter": "ApplicationType=''Tomcat''"
+                      "overrideMap": { "isJfrEnabled": true }'
+                    items:
+                      properties:
+                        configMap:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                            Map of an agent configuration file.
+                          items:
+                            properties:
+                              body:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The Base64 encoded agent configuration file.
+                                type: string
+                              contentType:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The MIME Content-Type that describes the content
+                                  of the body field, for example, text/yaml or text/yaml;
+                                  charset=utf-8
+                                type: string
+                              fileName:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  An agent configuration file name.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  configType:
+                    description: (Updatable) The type of configuration item.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                      (Updatable) An optional string that describes what the options
+                      are intended or used for.
+                    type: string
+                  dimensions:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      A list of dimensions for the metric. This variable should not
+                      be used.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The name by which a configuration entity
+                      is displayed to the end user.
+                    type: string
+                  filterId:
+                    description: (Updatable) The OCID of a Span Filter. The filterId
+                      is mandatory for the creation of MetricGroups. A filterId is
+                      generated when a Span Filter is created.
+                    type: string
+                  filterText:
+                    description: (Updatable) The string that defines the Span Filter
+                      expression.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  group:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      A string that specifies the group that an OPTIONS item belongs
+                      to.
+                    type: string
+                  inUseBy:
+                    description: The list of configuration items that reference the
+                      span filter.
+                    items:
+                      type: object
+                    type: array
+                  managementAgentId:
+                    description: The OCID of the Management Agent that will provision
+                      the APM Agent.
+                    type: string
+                  managementAgentIdRef:
+                    description: Reference to a ManagementAgent in managementagent
+                      to populate managementAgentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  managementAgentIdSelector:
+                    description: Selector for a ManagementAgent in managementagent
+                      to populate managementAgentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  matchAgentsWithAttributeValue:
+                    description: The agent attribute VALUE by which an agent configuration
+                      is matched to an agent.  Each agent configuration object must
+                      specify a different value.  The attribute KEY corresponding
+                      to this VALUE is in the matchAgentsWithAttributeKey field.
+                    type: string
+                  metrics:
+                    description: (Updatable) The list of metrics in this group.
+                    items:
+                      properties:
+                        description:
+                          description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                            (Updatable) An optional string that describes what the
+                            options are intended or used for.
+                          type: string
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        unit:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The unit of the metric.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  namespace:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      The namespace to which the metrics are published. It must be
+                      one of several predefined namespaces.
+                    type: string
+                  opcDryRun:
+                    description: (Updatable) Indicates that the request is a dry run,
+                      if set to "true". A dry run request does not modify the configuration
+                      item details and is used only to perform validation on the submitted
+                      data.
+                    type: string
+                  options:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      The options are stored here as JSON.
+                    type: string
+                  overrides:
+                    description: (Applicable when config_type=AGENT) (Updatable) Agent
+                      configuration overrides that should apply to a subset of the
+                      agents associated with an Agent Config object.
+                    items:
+                      properties:
+                        overrideList:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                          items:
+                            properties:
+                              agentFilter:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The string that defines the Agent Filter expression.
+                                type: string
+                              overrideMap:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when config_type=AGENT)
+                                  (Updatable) A map whose key is a substitution variable
+                                  specified within the configuration''s body. For
+                                  example, if below was specified in the configuration''s
+                                  body {{ isJfrEnabled | default false }} Then a valid
+                                  map key would be "isJfrEnabled". The value is typically
+                                  different than the default specified in the configuration''s
+                                  body. Thus, in this example, the map entry could
+                                  be "isJfrEnabled": true'
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  processFilter:
+                    description: (Updatable) Filter patterns used to discover active
+                      Java processes for provisioning the APM Agent.
+                    items:
+                      type: string
+                    type: array
+                  rules:
+                    description: (Updatable)
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) The name by which a configuration
+                            entity is displayed to the end user.
+                          type: string
+                        filterText:
+                          description: (Updatable) The string that defines the Span
+                            Filter expression.
+                          type: string
+                        isApplyToErrorSpans:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether an Apdex score should be computed for
+                            error spans. Setting it to "true" means that the Apdex
+                            score is computed in the usual way. Setting it to "false"
+                            skips the Apdex computation and sets the Apdex score to
+                            "frustrating" regardless of the configured thresholds.
+                            The default is "false".
+                          type: boolean
+                        isEnabled:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether the Apdex score should be computed for
+                            spans matching the rule. This can be used to disable Apdex
+                            score for spans that do not need or require it. The default
+                            is "true".
+                          type: boolean
+                        priority:
+                          description: (Updatable) The priority controls the order
+                            in which multiple rules in a rule set are applied. Lower
+                            values indicate higher priorities. Rules with higher priority
+                            are applied first, and once a match is found, the rest
+                            of the rules are ignored. Rules within the same rule set
+                            cannot have the same priority.
+                          type: number
+                        satisfiedResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "satisfactory" for the end user.
+                          type: number
+                        toleratingResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "tolerable" for the end user. A response time beyond this
+                            threshold is considered "frustrating". This value cannot
+                            be lower than "satisfiedResponseTime".
+                          type: number
+                      type: object
+                    type: array
+                  runAsUser:
+                    description: (Updatable) The OS user that should be used to discover
+                      Java processes.
+                    type: string
+                  serviceName:
+                    description: (Updatable) The name of the service being monitored.
+                      This argument enables you to filter by service and view traces
+                      and other signals in the APM Explorer user interface.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.configType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.configType)
+                || (has(self.initProvider) && has(self.initProvider.configType))'
+          status:
+            description: ConfigStatus defines the observed state of Config.
+            properties:
+              atProvider:
+                properties:
+                  agentVersion:
+                    description: (Updatable) The version of the referenced agent bundle.
+                    type: string
+                  apmDomainId:
+                    description: (Updatable) The APM Domain ID the request is intended
+                      for.
+                    type: string
+                  attachInstallDir:
+                    description: (Updatable) The directory owned by runAsUser.
+                    type: string
+                  config:
+                    description: '(Applicable when config_type=AGENT) (Updatable)
+                      Collection of agent configuration files. For agents that use
+                      a single configuration file, this SHOULD contain a single entry
+                      and the file name MAY be an empty string. For multiple entries,
+                      you should use multiple blocks of config_map. To apply a different
+                      configuration in a subset of the agents, put this block anywhere
+                      in the body of the configuration and edit  and  {{  | default  }}
+                      Example: com.oracle.apm.agent.tracer.enable.jfr = {{ isJfrEnabled
+                      | default false }} Then, in the configuration''s overrides,
+                      specify a different value for  along with the desired agent
+                      filter. Example: "agentFilter": "ApplicationType=''Tomcat''"
+                      "overrideMap": { "isJfrEnabled": true }'
+                    items:
+                      properties:
+                        configMap:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                            Map of an agent configuration file.
+                          items:
+                            properties:
+                              body:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The Base64 encoded agent configuration file.
+                                type: string
+                              contentType:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The MIME Content-Type that describes the content
+                                  of the body field, for example, text/yaml or text/yaml;
+                                  charset=utf-8
+                                type: string
+                              fileName:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  An agent configuration file name.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  configType:
+                    description: (Updatable) The type of configuration item.
+                    type: string
+                  createdBy:
+                    description: The OCID of a user.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                      (Updatable) An optional string that describes what the options
+                      are intended or used for.
+                    type: string
+                  dimensions:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      A list of dimensions for the metric. This variable should not
+                      be used.
+                    items:
+                      properties:
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) The name by which a configuration entity
+                      is displayed to the end user.
+                    type: string
+                  etag:
+                    description: For optimistic concurrency control. See if-match.
+                    type: string
+                  filterId:
+                    description: (Updatable) The OCID of a Span Filter. The filterId
+                      is mandatory for the creation of MetricGroups. A filterId is
+                      generated when a Span Filter is created.
+                    type: string
+                  filterText:
+                    description: (Updatable) The string that defines the Span Filter
+                      expression.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  group:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      A string that specifies the group that an OPTIONS item belongs
+                      to.
+                    type: string
+                  id:
+                    description: The OCID of the configuration item. An OCID is generated
+                      when the item is created.
+                    type: string
+                  inUseBy:
+                    description: The list of configuration items that reference the
+                      span filter.
+                    items:
+                      properties:
+                        configType:
+                          description: (Updatable) The type of configuration item.
+                          type: string
+                        displayName:
+                          description: (Updatable) The name by which a configuration
+                            entity is displayed to the end user.
+                          type: string
+                        id:
+                          description: The OCID of the configuration item. An OCID
+                            is generated when the item is created.
+                          type: string
+                        optionsGroup:
+                          description: A string that specifies the group that an OPTIONS
+                            item belongs to.
+                          type: string
+                      type: object
+                    type: array
+                  managementAgentId:
+                    description: The OCID of the Management Agent that will provision
+                      the APM Agent.
+                    type: string
+                  matchAgentsWithAttributeKey:
+                    description: The agent attribute KEY by which an Agent configuration
+                      is matched to an agent.  All agent configuration objects share
+                      the same key. It is [ServiceName, service.name] by default.  The
+                      attribute VALUE corresponding to this KEY is in the matchAgentsWithAttributeValue
+                      field.
+                    items:
+                      type: string
+                    type: array
+                  matchAgentsWithAttributeValue:
+                    description: The agent attribute VALUE by which an agent configuration
+                      is matched to an agent.  Each agent configuration object must
+                      specify a different value.  The attribute KEY corresponding
+                      to this VALUE is in the matchAgentsWithAttributeKey field.
+                    type: string
+                  metrics:
+                    description: (Updatable) The list of metrics in this group.
+                    items:
+                      properties:
+                        description:
+                          description: (Applicable when config_type=OPTIONS | SPAN_FILTER)
+                            (Updatable) An optional string that describes what the
+                            options are intended or used for.
+                          type: string
+                        name:
+                          description: (Updatable) The name of the dimension.
+                          type: string
+                        unit:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The unit of the metric.
+                          type: string
+                        valueSource:
+                          description: (Applicable when config_type=METRIC_GROUP)
+                            (Updatable) The source to populate the dimension. This
+                            must not be specified.
+                          type: string
+                      type: object
+                    type: array
+                  namespace:
+                    description: (Applicable when config_type=METRIC_GROUP) (Updatable)
+                      The namespace to which the metrics are published. It must be
+                      one of several predefined namespaces.
+                    type: string
+                  opcDryRun:
+                    description: (Updatable) Indicates that the request is a dry run,
+                      if set to "true". A dry run request does not modify the configuration
+                      item details and is used only to perform validation on the submitted
+                      data.
+                    type: string
+                  options:
+                    description: (Applicable when config_type=OPTIONS) (Updatable)
+                      The options are stored here as JSON.
+                    type: string
+                  overrides:
+                    description: (Applicable when config_type=AGENT) (Updatable) Agent
+                      configuration overrides that should apply to a subset of the
+                      agents associated with an Agent Config object.
+                    items:
+                      properties:
+                        overrideList:
+                          description: (Applicable when config_type=AGENT) (Updatable)
+                          items:
+                            properties:
+                              agentFilter:
+                                description: (Applicable when config_type=AGENT) (Updatable)
+                                  The string that defines the Agent Filter expression.
+                                type: string
+                              overrideMap:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when config_type=AGENT)
+                                  (Updatable) A map whose key is a substitution variable
+                                  specified within the configuration''s body. For
+                                  example, if below was specified in the configuration''s
+                                  body {{ isJfrEnabled | default false }} Then a valid
+                                  map key would be "isJfrEnabled". The value is typically
+                                  different than the default specified in the configuration''s
+                                  body. Thus, in this example, the map entry could
+                                  be "isJfrEnabled": true'
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  processFilter:
+                    description: (Updatable) Filter patterns used to discover active
+                      Java processes for provisioning the APM Agent.
+                    items:
+                      type: string
+                    type: array
+                  rules:
+                    description: (Updatable)
+                    items:
+                      properties:
+                        displayName:
+                          description: (Updatable) The name by which a configuration
+                            entity is displayed to the end user.
+                          type: string
+                        filterText:
+                          description: (Updatable) The string that defines the Span
+                            Filter expression.
+                          type: string
+                        isApplyToErrorSpans:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether an Apdex score should be computed for
+                            error spans. Setting it to "true" means that the Apdex
+                            score is computed in the usual way. Setting it to "false"
+                            skips the Apdex computation and sets the Apdex score to
+                            "frustrating" regardless of the configured thresholds.
+                            The default is "false".
+                          type: boolean
+                        isEnabled:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            Specifies whether the Apdex score should be computed for
+                            spans matching the rule. This can be used to disable Apdex
+                            score for spans that do not need or require it. The default
+                            is "true".
+                          type: boolean
+                        priority:
+                          description: (Updatable) The priority controls the order
+                            in which multiple rules in a rule set are applied. Lower
+                            values indicate higher priorities. Rules with higher priority
+                            are applied first, and once a match is found, the rest
+                            of the rules are ignored. Rules within the same rule set
+                            cannot have the same priority.
+                          type: number
+                        satisfiedResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "satisfactory" for the end user.
+                          type: number
+                        toleratingResponseTime:
+                          description: (Applicable when config_type=APDEX) (Updatable)
+                            The maximum response time in milliseconds that is considered
+                            "tolerable" for the end user. A response time beyond this
+                            threshold is considered "frustrating". This value cannot
+                            be lower than "satisfiedResponseTime".
+                          type: number
+                      type: object
+                    type: array
+                  runAsUser:
+                    description: (Updatable) The OS user that should be used to discover
+                      Java processes.
+                    type: string
+                  serviceName:
+                    description: (Updatable) The name of the service being monitored.
+                      This argument enables you to filter by service and view traces
+                      and other signals in the APM Explorer user interface.
+                    type: string
+                  timeCreated:
+                    description: 'The time the resource was created, expressed in
+                      RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The time the resource was updated, expressed in
+                      RFC 3339 timestamp format. Example: 2020-02-13T22:47:12.613Z'
+                    type: string
+                  updatedBy:
+                    description: The OCID of a user.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

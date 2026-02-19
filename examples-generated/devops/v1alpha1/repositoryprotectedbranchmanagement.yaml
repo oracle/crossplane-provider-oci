@@ -1,0 +1,15 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: RepositoryProtectedBranchManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositoryprotectedbranchmanagement
+  labels:
+    testing.upbound.io/example-name: test_repository_protected_branch_management
+  name: test-repository-protected-branch-management
+spec:
+  forProvider:
+    branchName: ${var.repository_protected_branch_management_branch_name}
+    protectionLevels: ${var.repository_protected_branch_management_protection_levels}
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository

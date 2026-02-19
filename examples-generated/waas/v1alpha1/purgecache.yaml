@@ -1,0 +1,14 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: PurgeCache
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/purgecache
+  labels:
+    testing.upbound.io/example-name: test_purge_cache
+  name: test-purge-cache
+spec:
+  forProvider:
+    resources: ${var.purge_cache_resources}
+    waasPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_waas_policy

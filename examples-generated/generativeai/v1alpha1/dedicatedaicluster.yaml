@@ -1,0 +1,22 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: DedicatedAiCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/dedicatedaicluster
+  labels:
+    testing.upbound.io/example-name: test_dedicated_ai_cluster
+  name: test-dedicated-ai-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.dedicated_ai_cluster_description}
+    displayName: ${var.dedicated_ai_cluster_display_name}
+    freeformTags:
+      Department: Finance
+    type: ${var.dedicated_ai_cluster_type}
+    unitCount: ${var.dedicated_ai_cluster_unit_count}
+    unitShape: ${var.dedicated_ai_cluster_unit_shape}

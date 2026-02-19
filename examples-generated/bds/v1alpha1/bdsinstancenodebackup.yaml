@@ -1,0 +1,18 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceNodeBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancenodebackup
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_backup
+  name: test-bds-instance-node-backup
+spec:
+  forProvider:
+    backupType: ${var.bds_instance_node_backup_backup_type}
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    levelTypeDetails:
+    - levelType: ${var.bds_instance_node_backup_level_type_details_level_type}
+      nodeHostName: ${var.bds_instance_node_backup_level_type_details_node_host_name}
+      nodeType: ${var.bds_instance_node_backup_level_type_details_node_type}

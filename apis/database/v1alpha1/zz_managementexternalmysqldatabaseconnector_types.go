@@ -28,7 +28,17 @@ type ManagementExternalMySqlDatabaseConnectorConnectorDetailsInitParameters stru
 	HostName *string `json:"hostName,omitempty" tf:"host_name,omitempty"`
 
 	// (Updatable) Agent Id of the MACS agent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	MacsAgentID *string `json:"macsAgentId,omitempty" tf:"macs_agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate macsAgentId.
+	// +kubebuilder:validation:Optional
+	MacsAgentIDRef *v1.Reference `json:"macsAgentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate macsAgentId.
+	// +kubebuilder:validation:Optional
+	MacsAgentIDSelector *v1.Selector `json:"macsAgentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Protocol to be used to connect to External MySQL Database; TCP, TCP with SSL or Socket.
 	NetworkProtocol *string `json:"networkProtocol,omitempty" tf:"network_protocol,omitempty"`
@@ -96,8 +106,18 @@ type ManagementExternalMySqlDatabaseConnectorConnectorDetailsParameters struct {
 	HostName *string `json:"hostName" tf:"host_name,omitempty"`
 
 	// (Updatable) Agent Id of the MACS agent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	MacsAgentID *string `json:"macsAgentId" tf:"macs_agent_id,omitempty"`
+	MacsAgentID *string `json:"macsAgentId,omitempty" tf:"macs_agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate macsAgentId.
+	// +kubebuilder:validation:Optional
+	MacsAgentIDRef *v1.Reference `json:"macsAgentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate macsAgentId.
+	// +kubebuilder:validation:Optional
+	MacsAgentIDSelector *v1.Selector `json:"macsAgentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Protocol to be used to connect to External MySQL Database; TCP, TCP with SSL or Socket.
 	// +kubebuilder:validation:Optional

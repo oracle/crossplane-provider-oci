@@ -1,0 +1,25 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: RepositorySetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositorysetting
+  labels:
+    testing.upbound.io/example-name: test_repository_setting
+  name: test-repository-setting
+spec:
+  forProvider:
+    approvalRules:
+    - items:
+      - destinationBranch: ${var.repository_setting_approval_rules_items_destination_branch}
+        minApprovalsCount: ${var.repository_setting_approval_rules_items_min_approvals_count}
+        name: ${var.repository_setting_approval_rules_items_name}
+        reviewers:
+        - principalId: ${oci_devops_principal.test_principal.id}
+    mergeChecks:
+    - lastBuildSucceeded: ${var.repository_setting_merge_checks_last_build_succeeded}
+    mergeSettings:
+    - allowedMergeStrategies: ${var.repository_setting_merge_settings_allowed_merge_strategies}
+      defaultMergeStrategy: ${var.repository_setting_merge_settings_default_merge_strategy}
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository

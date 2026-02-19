@@ -1,0 +1,37 @@
+apiVersion: recovery.oci.upbound.io/v1alpha1
+kind: ProtectedDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: recovery/v1alpha1/protecteddatabase
+  labels:
+    testing.upbound.io/example-name: test_protected_database
+  name: test-protected-database
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_database
+    databaseSize: ${var.protected_database_database_size}
+    dbUniqueName: ${var.protected_database_db_unique_name}
+    definedTags:
+      foo-namespace.bar-key: value
+    deletionSchedule: DELETE_AFTER_72_HOURS
+    displayName: ${var.protected_database_display_name}
+    freeformTags:
+      bar-key: value
+    isRedoLogsShipped: ${var.protected_database_is_redo_logs_shipped}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    protectionPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_protection_policy
+    recoveryServiceSubnets:
+    - recoveryServiceSubnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_recovery_service_subnet
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}

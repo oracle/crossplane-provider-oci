@@ -57,7 +57,9 @@ spec:
     - arnRole: ${var.autonomous_database_encryption_key_arn_role}
       autonomousDatabaseProvider: ${var.autonomous_database_encryption_key_autonomous_database_provider}
       certificateDirectoryName: ${var.autonomous_database_encryption_key_certificate_directory_name}
-      certificateId: ${oci_apigateway_certificate.test_certificate.id}
+      certificateIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate
       directoryName: ${var.autonomous_database_encryption_key_directory_name}
       externalId: ${oci_database_external.test_external.id}
       keyArn: ${var.autonomous_database_encryption_key_key_arn}

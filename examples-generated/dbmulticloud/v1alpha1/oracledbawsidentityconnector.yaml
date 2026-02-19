@@ -1,0 +1,28 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAwsIdentityConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbawsidentityconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_aws_identity_connector
+  name: test-oracle-db-aws-identity-connector
+spec:
+  forProvider:
+    awsAccountId: ${oci_dbmulticloud_aws_account.test_aws_account.id}
+    awsLocation: ${var.oracle_db_aws_identity_connector_aws_location}
+    awsStsPrivateEndpoint: ${var.oracle_db_aws_identity_connector_aws_sts_private_endpoint}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_aws_identity_connector_display_name}
+    freeformTags:
+      Department: Finance
+    issuerUrl: ${var.oracle_db_aws_identity_connector_issuer_url}
+    oidcScope: ${var.oracle_db_aws_identity_connector_oidc_scope}
+    resourceId: ${oci_cloud_guard_resource.test_resource.id}
+    serviceRoleDetails:
+    - roleArn: ${var.oracle_db_aws_identity_connector_service_role_details_role_arn}
+      servicePrivateEndpoint: ${var.oracle_db_aws_identity_connector_service_role_details_service_private_endpoint}
+      serviceType: ${var.oracle_db_aws_identity_connector_service_role_details_service_type}

@@ -1,0 +1,25 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: AgentDependency
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/agentdependency
+  labels:
+    testing.upbound.io/example-name: test_agent_dependency
+  name: test-agent-dependency
+spec:
+  forProvider:
+    bucket: ${var.agent_dependency_bucket}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    dependencyName: ${var.agent_dependency_dependency_name}
+    dependencyVersion: ${var.agent_dependency_dependency_version}
+    description: ${var.agent_dependency_description}
+    displayName: ${var.agent_dependency_display_name}
+    freeformTags:
+      Department: Finance
+    namespace: ${var.agent_dependency_namespace}
+    object: ${var.agent_dependency_object}
+    systemTags: ${var.agent_dependency_system_tags}

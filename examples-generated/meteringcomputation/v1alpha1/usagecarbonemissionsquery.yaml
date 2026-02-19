@@ -1,0 +1,35 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: UsageCarbonEmissionsQuery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usagecarbonemissionsquery
+  labels:
+    testing.upbound.io/example-name: test_usage_carbon_emissions_query
+  name: test-usage-carbon-emissions-query
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    queryDefinition:
+    - costAnalysisUi:
+      - graph: ${var.usage_carbon_emissions_query_query_definition_cost_analysis_ui_graph}
+        isCumulativeGraph: ${var.usage_carbon_emissions_query_query_definition_cost_analysis_ui_is_cumulative_graph}
+      displayName: ${var.usage_carbon_emissions_query_query_definition_display_name}
+      reportQuery:
+      - compartmentDepth: ${var.usage_carbon_emissions_query_query_definition_report_query_compartment_depth}
+        dateRangeName: ${var.usage_carbon_emissions_query_query_definition_report_query_date_range_name}
+        emissionCalculationMethod: ${var.usage_carbon_emissions_query_query_definition_report_query_emission_calculation_method}
+        emissionType: ${var.usage_carbon_emissions_query_query_definition_report_query_emission_type}
+        granularity: ${var.usage_carbon_emissions_query_query_definition_report_query_granularity}
+        groupBy: ${var.usage_carbon_emissions_query_query_definition_report_query_group_by}
+        groupByTag:
+        - key: ${var.usage_carbon_emissions_query_query_definition_report_query_group_by_tag_key}
+          namespace: ${var.usage_carbon_emissions_query_query_definition_report_query_group_by_tag_namespace}
+          value: ${var.usage_carbon_emissions_query_query_definition_report_query_group_by_tag_value}
+        isAggregateByTime: ${var.usage_carbon_emissions_query_query_definition_report_query_is_aggregate_by_time}
+        tenantId: ${oci_metering_computation_tenant.test_tenant.id}
+        timeUsageEnded: ${var.usage_carbon_emissions_query_query_definition_report_query_time_usage_ended}
+        timeUsageStarted: ${var.usage_carbon_emissions_query_query_definition_report_query_time_usage_started}
+        usageCarbonEmissionsQueryFilter: ${var.usage_carbon_emissions_query_query_definition_report_query_usage_carbon_emissions_query_filter}
+      version: ${var.usage_carbon_emissions_query_query_definition_version}

@@ -1,0 +1,16 @@
+apiVersion: marketplace.oci.upbound.io/v1alpha1
+kind: MarketplaceExternalAttestedMetadata
+metadata:
+  annotations:
+    meta.upbound.io/example-id: marketplace/v1alpha1/marketplaceexternalattestedmetadata
+  labels:
+    testing.upbound.io/example-name: test_marketplace_external_attested_metadata
+  name: test-marketplace-external-attested-metadata
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_instance

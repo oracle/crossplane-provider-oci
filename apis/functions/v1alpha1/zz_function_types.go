@@ -32,7 +32,17 @@ type FailureDestinationInitParameters struct {
 	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
 
 	// (Updatable) The OCID of the queue.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/queue/v1alpha1.Queue
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// Reference to a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDRef *v1.Reference `json:"queueIdRef,omitempty" tf:"-"`
+
+	// Selector for a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDSelector *v1.Selector `json:"queueIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the stream.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/streaming/v1alpha1.Stream
@@ -100,8 +110,18 @@ type FailureDestinationParameters struct {
 	Kind *string `json:"kind" tf:"kind,omitempty"`
 
 	// (Updatable) The OCID of the queue.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/queue/v1alpha1.Queue
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// Reference to a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDRef *v1.Reference `json:"queueIdRef,omitempty" tf:"-"`
+
+	// Selector for a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDSelector *v1.Selector `json:"queueIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the stream.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/streaming/v1alpha1.Stream
@@ -435,7 +455,17 @@ type SuccessDestinationInitParameters struct {
 	Kind *string `json:"kind,omitempty" tf:"kind,omitempty"`
 
 	// (Updatable) The OCID of the queue.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/queue/v1alpha1.Queue
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// Reference to a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDRef *v1.Reference `json:"queueIdRef,omitempty" tf:"-"`
+
+	// Selector for a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDSelector *v1.Selector `json:"queueIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the stream.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/streaming/v1alpha1.Stream
@@ -503,8 +533,18 @@ type SuccessDestinationParameters struct {
 	Kind *string `json:"kind" tf:"kind,omitempty"`
 
 	// (Updatable) The OCID of the queue.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/queue/v1alpha1.Queue
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	QueueID *string `json:"queueId,omitempty" tf:"queue_id,omitempty"`
+
+	// Reference to a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDRef *v1.Reference `json:"queueIdRef,omitempty" tf:"-"`
+
+	// Selector for a Queue in queue to populate queueId.
+	// +kubebuilder:validation:Optional
+	QueueIDSelector *v1.Selector `json:"queueIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the stream.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/streaming/v1alpha1.Stream

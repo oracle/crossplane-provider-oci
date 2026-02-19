@@ -1,0 +1,28 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceApplicationPatch
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceapplicationpatch
+  labels:
+    testing.upbound.io/example-name: test_workspace_application_patch
+  name: test-workspace-application-patch
+spec:
+  forProvider:
+    applicationKey: ${var.workspace_application_patch_application_key}
+    description: ${var.workspace_application_patch_description}
+    identifier: ${var.workspace_application_patch_identifier}
+    key: ${var.workspace_application_patch_key}
+    modelVersion: ${var.workspace_application_patch_model_version}
+    name: ${var.workspace_application_patch_name}
+    objectKeys: ${var.workspace_application_patch_object_keys}
+    objectStatus: ${var.workspace_application_patch_object_status}
+    patchType: ${var.workspace_application_patch_patch_type}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_application_patch_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_application_patch_registry_metadata_is_favorite}
+      key: ${var.workspace_application_patch_registry_metadata_key}
+      labels: ${var.workspace_application_patch_registry_metadata_labels}
+      registryVersion: ${var.workspace_application_patch_registry_metadata_registry_version}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

@@ -1,0 +1,688 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: usages.meteringcomputation.oci.upbound.io
+spec:
+  group: meteringcomputation.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Usage
+    listKind: UsageList
+    plural: usages
+    singular: usage
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Usage is the Schema for the Usages API. Provides the Usage resource
+          in Oracle Cloud Infrastructure Metering Computation service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: UsageSpec defines the desired state of Usage
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentDepth:
+                    description: The compartment depth level.
+                    type: number
+                  filter:
+                    description: The filter object for query usage.
+                    type: string
+                  forecast:
+                    description: Forecast configuration of usage/cost.
+                    items:
+                      properties:
+                        forecastType:
+                          description: BASIC uses the exponential smoothing (ETS)
+                            model to project future usage/costs based on history data.
+                            The basis for projections is a periodic set of equivalent
+                            historical days for which the projection is being made.
+                          type: string
+                        timeForecastEnded:
+                          description: The forecast end time.
+                          type: string
+                        timeForecastStarted:
+                          description: The forecast start time. Defaults to UTC-1
+                            if not specified.
+                          type: string
+                      type: object
+                    type: array
+                  granularity:
+                    description: The usage granularity. HOURLY - Hourly data aggregation.
+                      DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation.
+                      TOTAL - Not yet supported.
+                    type: string
+                  groupBy:
+                    description: 'Aggregate the result by. For example: ["tagNamespace",
+                      "tagKey", "tagValue", "service", "skuName", "skuPartNumber",
+                      "unit", "compartmentName", "compartmentPath", "compartmentId",
+                      "platform", "region", "logicalAd", "resourceId", "tenantId",
+                      "tenantName"]'
+                    items:
+                      type: string
+                    type: array
+                  groupByTag:
+                    description: 'GroupBy a specific tagKey. Provide the tagNamespace
+                      and tagKey in the tag object. Only supports one tag in the list.
+                      For example: [{"namespace":"oracle", "key":"createdBy"]'
+                    items:
+                      properties:
+                        key:
+                          description: The tag key.
+                          type: string
+                        namespace:
+                          description: The tag namespace.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
+                  isAggregateByTime:
+                    description: Specifies whether aggregated by time. If isAggregateByTime
+                      is true, all usage or cost over the query time period will be
+                      added up.
+                    type: boolean
+                  queryType:
+                    description: The query usage type. COST by default if it is missing.
+                      Usage - Query the usage data. Cost - Query the cost/billing
+                      data. Credit - Query the credit adjustments data. ExpiredCredit
+                      - Query the expired credits data. AllCredit - Query the credit
+                      adjustments and expired credit.
+                    type: string
+                  tenantId:
+                    description: Tenant ID.
+                    type: string
+                  timeUsageEnded:
+                    description: The usage end time.
+                    type: string
+                  timeUsageStarted:
+                    description: The usage start time.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentDepth:
+                    description: The compartment depth level.
+                    type: number
+                  filter:
+                    description: The filter object for query usage.
+                    type: string
+                  forecast:
+                    description: Forecast configuration of usage/cost.
+                    items:
+                      properties:
+                        forecastType:
+                          description: BASIC uses the exponential smoothing (ETS)
+                            model to project future usage/costs based on history data.
+                            The basis for projections is a periodic set of equivalent
+                            historical days for which the projection is being made.
+                          type: string
+                        timeForecastEnded:
+                          description: The forecast end time.
+                          type: string
+                        timeForecastStarted:
+                          description: The forecast start time. Defaults to UTC-1
+                            if not specified.
+                          type: string
+                      type: object
+                    type: array
+                  granularity:
+                    description: The usage granularity. HOURLY - Hourly data aggregation.
+                      DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation.
+                      TOTAL - Not yet supported.
+                    type: string
+                  groupBy:
+                    description: 'Aggregate the result by. For example: ["tagNamespace",
+                      "tagKey", "tagValue", "service", "skuName", "skuPartNumber",
+                      "unit", "compartmentName", "compartmentPath", "compartmentId",
+                      "platform", "region", "logicalAd", "resourceId", "tenantId",
+                      "tenantName"]'
+                    items:
+                      type: string
+                    type: array
+                  groupByTag:
+                    description: 'GroupBy a specific tagKey. Provide the tagNamespace
+                      and tagKey in the tag object. Only supports one tag in the list.
+                      For example: [{"namespace":"oracle", "key":"createdBy"]'
+                    items:
+                      properties:
+                        key:
+                          description: The tag key.
+                          type: string
+                        namespace:
+                          description: The tag namespace.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
+                  isAggregateByTime:
+                    description: Specifies whether aggregated by time. If isAggregateByTime
+                      is true, all usage or cost over the query time period will be
+                      added up.
+                    type: boolean
+                  queryType:
+                    description: The query usage type. COST by default if it is missing.
+                      Usage - Query the usage data. Cost - Query the cost/billing
+                      data. Credit - Query the credit adjustments data. ExpiredCredit
+                      - Query the expired credits data. AllCredit - Query the credit
+                      adjustments and expired credit.
+                    type: string
+                  tenantId:
+                    description: Tenant ID.
+                    type: string
+                  timeUsageEnded:
+                    description: The usage end time.
+                    type: string
+                  timeUsageStarted:
+                    description: The usage start time.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.granularity is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.granularity)
+                || (has(self.initProvider) && has(self.initProvider.granularity))'
+            - message: spec.forProvider.tenantId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.tenantId)
+                || (has(self.initProvider) && has(self.initProvider.tenantId))'
+            - message: spec.forProvider.timeUsageEnded is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.timeUsageEnded)
+                || (has(self.initProvider) && has(self.initProvider.timeUsageEnded))'
+            - message: spec.forProvider.timeUsageStarted is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.timeUsageStarted)
+                || (has(self.initProvider) && has(self.initProvider.timeUsageStarted))'
+          status:
+            description: UsageStatus defines the observed state of Usage.
+            properties:
+              atProvider:
+                properties:
+                  compartmentDepth:
+                    description: The compartment depth level.
+                    type: number
+                  filter:
+                    description: The filter object for query usage.
+                    type: string
+                  forecast:
+                    description: Forecast configuration of usage/cost.
+                    items:
+                      properties:
+                        forecastType:
+                          description: BASIC uses the exponential smoothing (ETS)
+                            model to project future usage/costs based on history data.
+                            The basis for projections is a periodic set of equivalent
+                            historical days for which the projection is being made.
+                          type: string
+                        timeForecastEnded:
+                          description: The forecast end time.
+                          type: string
+                        timeForecastStarted:
+                          description: The forecast start time. Defaults to UTC-1
+                            if not specified.
+                          type: string
+                      type: object
+                    type: array
+                  granularity:
+                    description: The usage granularity. HOURLY - Hourly data aggregation.
+                      DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation.
+                      TOTAL - Not yet supported.
+                    type: string
+                  groupBy:
+                    description: 'Aggregate the result by. For example: ["tagNamespace",
+                      "tagKey", "tagValue", "service", "skuName", "skuPartNumber",
+                      "unit", "compartmentName", "compartmentPath", "compartmentId",
+                      "platform", "region", "logicalAd", "resourceId", "tenantId",
+                      "tenantName"]'
+                    items:
+                      type: string
+                    type: array
+                  groupByTag:
+                    description: 'GroupBy a specific tagKey. Provide the tagNamespace
+                      and tagKey in the tag object. Only supports one tag in the list.
+                      For example: [{"namespace":"oracle", "key":"createdBy"]'
+                    items:
+                      properties:
+                        key:
+                          description: The tag key.
+                          type: string
+                        namespace:
+                          description: The tag namespace.
+                          type: string
+                        value:
+                          description: The tag value.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  isAggregateByTime:
+                    description: Specifies whether aggregated by time. If isAggregateByTime
+                      is true, all usage or cost over the query time period will be
+                      added up.
+                    type: boolean
+                  items:
+                    description: A list of usage items.
+                    items:
+                      properties:
+                        ad:
+                          description: The availability domain of the usage.
+                          type: string
+                        attributedCost:
+                          description: The attributed cost with a max value of 9999999999.999999999999
+                            and a minimum value of 0.
+                          type: string
+                        attributedUsage:
+                          description: The attributed usage with a max value of 9999999999.999999999999
+                            and a minimum value of 0.
+                          type: string
+                        compartmentId:
+                          description: The compartment OCID.
+                          type: string
+                        compartmentName:
+                          description: The compartment name.
+                          type: string
+                        compartmentPath:
+                          description: The compartment path, starting from root.
+                          type: string
+                        computedAmount:
+                          description: The computed cost.
+                          type: number
+                        computedQuantity:
+                          description: The usage number.
+                          type: number
+                        currency:
+                          description: The price currency.
+                          type: string
+                        discount:
+                          description: The discretionary discount applied to the SKU.
+                          type: number
+                        isForecast:
+                          description: The forecasted data.
+                          type: boolean
+                        listRate:
+                          description: The SKU list rate (not discount).
+                          type: number
+                        overage:
+                          description: The overage usage.
+                          type: string
+                        overagesFlag:
+                          description: The SPM OverageFlag.
+                          type: string
+                        platform:
+                          description: Platform for the cost.
+                          type: string
+                        region:
+                          description: The region of the usage.
+                          type: string
+                        resourceId:
+                          description: The resource OCID that is incurring the cost.
+                          type: string
+                        resourceName:
+                          description: The resource name that is incurring the cost.
+                          type: string
+                        service:
+                          description: The service name that is incurring the cost.
+                          type: string
+                        shape:
+                          description: The resource shape.
+                          type: string
+                        skuName:
+                          description: The SKU friendly name.
+                          type: string
+                        skuPartNumber:
+                          description: The SKU part number.
+                          type: string
+                        subscriptionId:
+                          description: The subscription ID.
+                          type: string
+                        tags:
+                          description: For grouping, a tag definition. For filtering,
+                            a definition and key.
+                          items:
+                            properties:
+                              key:
+                                description: The tag key.
+                                type: string
+                              namespace:
+                                description: The tag namespace.
+                                type: string
+                              value:
+                                description: The tag value.
+                                type: string
+                            type: object
+                          type: array
+                        tenantId:
+                          description: Tenant ID.
+                          type: string
+                        tenantName:
+                          description: The tenancy name.
+                          type: string
+                        timeUsageEnded:
+                          description: The usage end time.
+                          type: string
+                        timeUsageStarted:
+                          description: The usage start time.
+                          type: string
+                        unit:
+                          description: The usage unit.
+                          type: string
+                        unitPrice:
+                          description: The price per unit.
+                          type: number
+                        weight:
+                          description: The resource size being metered.
+                          type: number
+                      type: object
+                    type: array
+                  queryType:
+                    description: The query usage type. COST by default if it is missing.
+                      Usage - Query the usage data. Cost - Query the cost/billing
+                      data. Credit - Query the credit adjustments data. ExpiredCredit
+                      - Query the expired credits data. AllCredit - Query the credit
+                      adjustments and expired credit.
+                    type: string
+                  tenantId:
+                    description: Tenant ID.
+                    type: string
+                  timeUsageEnded:
+                    description: The usage end time.
+                    type: string
+                  timeUsageStarted:
+                    description: The usage start time.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

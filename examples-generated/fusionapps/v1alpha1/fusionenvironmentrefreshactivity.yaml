@@ -1,0 +1,18 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironmentRefreshActivity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentrefreshactivity
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_refresh_activity
+  name: test-fusion-environment-refresh-activity
+spec:
+  forProvider:
+    fusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+    isDataMaskingOpted: ${var.fusion_environment_refresh_activity_is_data_masking_opted}
+    sourceFusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+    time_scheduled_start: ${var.fusion_environment_refresh_activity_time_scheduled_start}

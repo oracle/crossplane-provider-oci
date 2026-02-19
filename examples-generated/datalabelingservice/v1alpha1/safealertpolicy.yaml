@@ -1,0 +1,25 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeAlertPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safealertpolicy
+  labels:
+    testing.upbound.io/example-name: test_alert_policy
+  name: test-alert-policy
+spec:
+  forProvider:
+    alertPolicyRuleDetails:
+    - description: ${var.alert_policy_alert_policy_rule_details_description}
+      displayName: ${var.alert_policy_alert_policy_rule_details_display_name}
+      expression: ${var.alert_policy_alert_policy_rule_details_expression}
+    alertPolicyType: ${var.alert_policy_alert_policy_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.alert_policy_description}
+    displayName: ${var.alert_policy_display_name}
+    freeformTags:
+      Department: Finance
+    severity: ${var.alert_policy_severity}

@@ -1,0 +1,24 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: EsxiHost
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_esxi_host
+  name: test-esxi-host
+spec:
+  forProvider:
+    billingDonorHostId: ${oci_ocvp_billing_donor_host.test_billing_donor_host.id}
+    capacityReservationId: ${oci_ocvp_capacity_reservation.test_capacity_reservation.id}
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    computeAvailabilityDomain: ${var.esxi_host_compute_availability_domain}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.esxi_host_display_name}
+    esxiSoftwareVersion: ${var.esxi_host_esxi_software_version}
+    freeformTags:
+      Department: Finance
+    hostOcpuCount: ${var.esxi_host_host_ocpu_count}
+    hostShapeName: ${oci_core_shape.test_shape.name}

@@ -1,0 +1,26 @@
+apiVersion: waf.oci.upbound.io/v1alpha1
+kind: WebAppFirewall
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waf/v1alpha1/webappfirewall
+  labels:
+    testing.upbound.io/example-name: test_web_app_firewall
+  name: test-web-app-firewall
+spec:
+  forProvider:
+    backendType: ${var.web_app_firewall_backend_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.web_app_firewall_display_name}
+    freeformTags:
+      bar-key: value
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_load_balancer
+    systemTags: ${var.web_app_firewall_system_tags}
+    webAppFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_web_app_firewall_policy

@@ -1,0 +1,21 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironmentAdminUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentadminuser
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_admin_user
+  name: test-fusion-environment-admin-user
+spec:
+  forProvider:
+    emailAddress: ${var.fusion_environment_admin_user_email_address}
+    firstName: ${var.fusion_environment_admin_user_first_name}
+    fusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+    lastName: ${var.fusion_environment_admin_user_last_name}
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    username: ${var.fusion_environment_admin_user_username}

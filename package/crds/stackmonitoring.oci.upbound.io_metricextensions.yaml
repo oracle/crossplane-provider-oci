@@ -1,0 +1,1160 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: metricextensions.stackmonitoring.oci.upbound.io
+spec:
+  group: stackmonitoring.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: MetricExtension
+    listKind: MetricExtensionList
+    plural: metricextensions
+    singular: metricextension
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: MetricExtension is the Schema for the MetricExtensions API. Provides
+          the Metric Extension resource in Oracle Cloud Infrastructure Stack Monitoring
+          service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MetricExtensionSpec defines the desired state of MetricExtension
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  collectionRecurrences:
+                    description: (Updatable) Schedule of metric extension should use
+                      RFC 5545 format i.e. recur-rule-part = "FREQ";INTERVAL where
+                      FREQ rule part identifies the type of recurrence rule. Valid
+                      values are "MINUTELY","HOURLY","DAILY" to specify repeating
+                      events based on an interval of a minute, an hour and a day or
+                      more. Example- FREQ=DAILY;INTERVAL=1
+                    type: string
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier OCID
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  description:
+                    description: (Updatable) Description of the metric extension.
+                    type: string
+                  displayName:
+                    description: (Updatable) Metric Extension display name.
+                    type: string
+                  metricList:
+                    description: (Updatable) List of metrics which are part of this
+                      metric extension
+                    items:
+                      properties:
+                        computeExpression:
+                          description: (Updatable) Compute Expression to calculate
+                            the value of this metric
+                          type: string
+                        dataType:
+                          description: (Updatable) Data type of value of this metric
+                          type: string
+                        displayName:
+                          description: (Updatable) Metric Extension display name.
+                          type: string
+                        isDimension:
+                          description: (Updatable) Current metric need to be included
+                            as dimension or not
+                          type: boolean
+                        isHidden:
+                          description: (Updatable) Flag to marks whether a metric
+                            has to be uploaded or not. When isHidden = false -> Metric
+                            is uploaded, isHidden = true -> Metric is NOT uploaded
+                          type: boolean
+                        metricCategory:
+                          description: (Updatable) Metric category
+                          type: string
+                        name:
+                          description: (Updatable) Name of the metric.
+                          type: string
+                        unit:
+                          description: (Updatable) Unit of metric value
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (Updatable) Name of the metric.
+                    type: string
+                  publishTrigger:
+                    description: (Updatable) An optional property when set to true
+                      triggers Publish of a metric extension. Once set to true, it
+                      cannot be changed back to false. Update of publish_trigger cannot
+                      be combined with other updates in the same request. A metric
+                      extension cannot be tested and its definition cannot be updated
+                      once it is marked published or publish_trigger is updated to
+                      true.
+                    type: boolean
+                  queryProperties:
+                    description: (Updatable) Collection method and query properties
+                      details of metric extension
+                    items:
+                      properties:
+                        arguments:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) Arguments required by either command or script
+                          type: string
+                        autoRowPrefix:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Prefix for an auto generated metric, in case multiple
+                            rows with non unique key values are returned
+                          type: string
+                        collectionMethod:
+                          description: (Updatable) Type of possible collection methods.
+                          type: string
+                        command:
+                          description: (Updatable) OS command to execute without arguments
+                          type: string
+                        delimiter:
+                          description: (Updatable) Character used to delimit multiple
+                            metric values in single line of output
+                          type: string
+                        identityMetric:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Semi-colon separated list of key properties from Managed
+                            Bean ObjectName to be used as key metrics
+                          type: string
+                        inParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            List of values and position of PL/SQL procedure IN parameters
+                          items:
+                            properties:
+                              inParamPosition:
+                                description: (Updatable) Position of IN parameter
+                                type: number
+                              inParamValue:
+                                description: (Updatable) Value of IN parameter
+                                type: string
+                            type: object
+                          type: array
+                        isMetricServiceEnabled:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Indicates if Metric Service is enabled on server domain
+                          type: boolean
+                        jmxAttributes:
+                          description: (Updatable) List of JMX attributes or Metric
+                            Service Table columns separated by semi-colon
+                          type: string
+                        managedBeanQuery:
+                          description: (Updatable) JMX Managed Bean Query or Metric
+                            Service Table name
+                          type: string
+                        outParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            Position and SQL Type of PL/SQL OUT parameter
+                          items:
+                            properties:
+                              outParamName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) Name of the Out Parameter
+                                type: string
+                              outParamPosition:
+                                description: (Updatable) Position of PL/SQL procedure
+                                  OUT parameter. The value of this property is ignored
+                                  during update, if "outParamType" is set to NO_OUT_PARAM
+                                  value.
+                                type: number
+                              outParamType:
+                                description: (Updatable) SQL Type of PL/SQL procedure
+                                  OUT parameter. During the update, to completely
+                                  remove the out parameter, use the value NO_OUT_PARAM.
+                                  In that case, the value of "outParamPosition" will
+                                  be ignored.
+                                type: string
+                            type: object
+                          type: array
+                        protocolType:
+                          description: (Applicable when collection_method=HTTP) (Updatable)
+                            Supported protocol of resources to be associated with
+                            this metric extension. This is optional and defaults to
+                            HTTPS, which uses secure connection to the URL
+                          type: string
+                        responseContentType:
+                          description: (Updatable) Type of content response given
+                            by the http(s) URL
+                          type: string
+                        scriptDetails:
+                          description: (Updatable) Script details applicable to any
+                            OS Command/HTTP based Metric Extension which needs to
+                            run a script to collect data. For removing it during OS
+                            Command based Metric Extension update, set its "content"
+                            property to an empty string. In that case, "name" property
+                            value is ignored.
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              name:
+                                description: (Updatable) Name of the metric.
+                                type: string
+                            type: object
+                          type: array
+                        sqlDetails:
+                          description: (Updatable) Details of Sql content which needs
+                            to execute to collect Metric Extension data
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              scriptFileName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) If a script needs to be executed, then
+                                  provide file name of the script
+                                type: string
+                            type: object
+                          type: array
+                        sqlType:
+                          description: (Updatable) Type of SQL data collection method
+                            i.e. either a Statement or SQL Script File
+                          type: string
+                        startsWith:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) String prefix used to identify metric output
+                            of the OS Command
+                          type: string
+                        url:
+                          description: (Updatable) Http(s) end point URL
+                          type: string
+                      type: object
+                    type: array
+                  resourceType:
+                    description: Resource type to which Metric Extension applies
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  collectionRecurrences:
+                    description: (Updatable) Schedule of metric extension should use
+                      RFC 5545 format i.e. recur-rule-part = "FREQ";INTERVAL where
+                      FREQ rule part identifies the type of recurrence rule. Valid
+                      values are "MINUTELY","HOURLY","DAILY" to specify repeating
+                      events based on an interval of a minute, an hour and a day or
+                      more. Example- FREQ=DAILY;INTERVAL=1
+                    type: string
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier OCID
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  description:
+                    description: (Updatable) Description of the metric extension.
+                    type: string
+                  displayName:
+                    description: (Updatable) Metric Extension display name.
+                    type: string
+                  metricList:
+                    description: (Updatable) List of metrics which are part of this
+                      metric extension
+                    items:
+                      properties:
+                        computeExpression:
+                          description: (Updatable) Compute Expression to calculate
+                            the value of this metric
+                          type: string
+                        dataType:
+                          description: (Updatable) Data type of value of this metric
+                          type: string
+                        displayName:
+                          description: (Updatable) Metric Extension display name.
+                          type: string
+                        isDimension:
+                          description: (Updatable) Current metric need to be included
+                            as dimension or not
+                          type: boolean
+                        isHidden:
+                          description: (Updatable) Flag to marks whether a metric
+                            has to be uploaded or not. When isHidden = false -> Metric
+                            is uploaded, isHidden = true -> Metric is NOT uploaded
+                          type: boolean
+                        metricCategory:
+                          description: (Updatable) Metric category
+                          type: string
+                        name:
+                          description: (Updatable) Name of the metric.
+                          type: string
+                        unit:
+                          description: (Updatable) Unit of metric value
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (Updatable) Name of the metric.
+                    type: string
+                  publishTrigger:
+                    description: (Updatable) An optional property when set to true
+                      triggers Publish of a metric extension. Once set to true, it
+                      cannot be changed back to false. Update of publish_trigger cannot
+                      be combined with other updates in the same request. A metric
+                      extension cannot be tested and its definition cannot be updated
+                      once it is marked published or publish_trigger is updated to
+                      true.
+                    type: boolean
+                  queryProperties:
+                    description: (Updatable) Collection method and query properties
+                      details of metric extension
+                    items:
+                      properties:
+                        arguments:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) Arguments required by either command or script
+                          type: string
+                        autoRowPrefix:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Prefix for an auto generated metric, in case multiple
+                            rows with non unique key values are returned
+                          type: string
+                        collectionMethod:
+                          description: (Updatable) Type of possible collection methods.
+                          type: string
+                        command:
+                          description: (Updatable) OS command to execute without arguments
+                          type: string
+                        delimiter:
+                          description: (Updatable) Character used to delimit multiple
+                            metric values in single line of output
+                          type: string
+                        identityMetric:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Semi-colon separated list of key properties from Managed
+                            Bean ObjectName to be used as key metrics
+                          type: string
+                        inParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            List of values and position of PL/SQL procedure IN parameters
+                          items:
+                            properties:
+                              inParamPosition:
+                                description: (Updatable) Position of IN parameter
+                                type: number
+                              inParamValue:
+                                description: (Updatable) Value of IN parameter
+                                type: string
+                            type: object
+                          type: array
+                        isMetricServiceEnabled:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Indicates if Metric Service is enabled on server domain
+                          type: boolean
+                        jmxAttributes:
+                          description: (Updatable) List of JMX attributes or Metric
+                            Service Table columns separated by semi-colon
+                          type: string
+                        managedBeanQuery:
+                          description: (Updatable) JMX Managed Bean Query or Metric
+                            Service Table name
+                          type: string
+                        outParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            Position and SQL Type of PL/SQL OUT parameter
+                          items:
+                            properties:
+                              outParamName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) Name of the Out Parameter
+                                type: string
+                              outParamPosition:
+                                description: (Updatable) Position of PL/SQL procedure
+                                  OUT parameter. The value of this property is ignored
+                                  during update, if "outParamType" is set to NO_OUT_PARAM
+                                  value.
+                                type: number
+                              outParamType:
+                                description: (Updatable) SQL Type of PL/SQL procedure
+                                  OUT parameter. During the update, to completely
+                                  remove the out parameter, use the value NO_OUT_PARAM.
+                                  In that case, the value of "outParamPosition" will
+                                  be ignored.
+                                type: string
+                            type: object
+                          type: array
+                        protocolType:
+                          description: (Applicable when collection_method=HTTP) (Updatable)
+                            Supported protocol of resources to be associated with
+                            this metric extension. This is optional and defaults to
+                            HTTPS, which uses secure connection to the URL
+                          type: string
+                        responseContentType:
+                          description: (Updatable) Type of content response given
+                            by the http(s) URL
+                          type: string
+                        scriptDetails:
+                          description: (Updatable) Script details applicable to any
+                            OS Command/HTTP based Metric Extension which needs to
+                            run a script to collect data. For removing it during OS
+                            Command based Metric Extension update, set its "content"
+                            property to an empty string. In that case, "name" property
+                            value is ignored.
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              name:
+                                description: (Updatable) Name of the metric.
+                                type: string
+                            type: object
+                          type: array
+                        sqlDetails:
+                          description: (Updatable) Details of Sql content which needs
+                            to execute to collect Metric Extension data
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              scriptFileName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) If a script needs to be executed, then
+                                  provide file name of the script
+                                type: string
+                            type: object
+                          type: array
+                        sqlType:
+                          description: (Updatable) Type of SQL data collection method
+                            i.e. either a Statement or SQL Script File
+                          type: string
+                        startsWith:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) String prefix used to identify metric output
+                            of the OS Command
+                          type: string
+                        url:
+                          description: (Updatable) Http(s) end point URL
+                          type: string
+                      type: object
+                    type: array
+                  resourceType:
+                    description: Resource type to which Metric Extension applies
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.collectionRecurrences is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.collectionRecurrences)
+                || (has(self.initProvider) && has(self.initProvider.collectionRecurrences))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.metricList is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.metricList)
+                || (has(self.initProvider) && has(self.initProvider.metricList))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.queryProperties is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.queryProperties)
+                || (has(self.initProvider) && has(self.initProvider.queryProperties))'
+            - message: spec.forProvider.resourceType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceType)
+                || (has(self.initProvider) && has(self.initProvider.resourceType))'
+          status:
+            description: MetricExtensionStatus defines the observed state of MetricExtension.
+            properties:
+              atProvider:
+                properties:
+                  collectionMethod:
+                    description: (Updatable) Type of possible collection methods.
+                    type: string
+                  collectionRecurrences:
+                    description: (Updatable) Schedule of metric extension should use
+                      RFC 5545 format i.e. recur-rule-part = "FREQ";INTERVAL where
+                      FREQ rule part identifies the type of recurrence rule. Valid
+                      values are "MINUTELY","HOURLY","DAILY" to specify repeating
+                      events based on an interval of a minute, an hour and a day or
+                      more. Example- FREQ=DAILY;INTERVAL=1
+                    type: string
+                  compartmentId:
+                    description: (Updatable) Compartment Identifier OCID
+                    type: string
+                  createdBy:
+                    description: Created by user
+                    type: string
+                  description:
+                    description: (Updatable) Description of the metric extension.
+                    type: string
+                  displayName:
+                    description: (Updatable) Metric Extension display name.
+                    type: string
+                  enabledOnResources:
+                    description: List of resource details objects having resourceIds
+                      on which this metric extension is enabled.
+                    items:
+                      properties:
+                        resourceId:
+                          description: The OCID of the resource on which Metric Extension
+                            is enabled
+                          type: string
+                      type: object
+                    type: array
+                  enabledOnResourcesCount:
+                    description: Count of resources on which this metric extension
+                      is enabled.
+                    type: number
+                  id:
+                    description: The OCID of Metric Extension resource
+                    type: string
+                  lastUpdatedBy:
+                    description: Last updated by user
+                    type: string
+                  metricList:
+                    description: (Updatable) List of metrics which are part of this
+                      metric extension
+                    items:
+                      properties:
+                        computeExpression:
+                          description: (Updatable) Compute Expression to calculate
+                            the value of this metric
+                          type: string
+                        dataType:
+                          description: (Updatable) Data type of value of this metric
+                          type: string
+                        displayName:
+                          description: (Updatable) Metric Extension display name.
+                          type: string
+                        isDimension:
+                          description: (Updatable) Current metric need to be included
+                            as dimension or not
+                          type: boolean
+                        isHidden:
+                          description: (Updatable) Flag to marks whether a metric
+                            has to be uploaded or not. When isHidden = false -> Metric
+                            is uploaded, isHidden = true -> Metric is NOT uploaded
+                          type: boolean
+                        metricCategory:
+                          description: (Updatable) Metric category
+                          type: string
+                        name:
+                          description: (Updatable) Name of the metric.
+                          type: string
+                        unit:
+                          description: (Updatable) Unit of metric value
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (Updatable) Name of the metric.
+                    type: string
+                  publishTrigger:
+                    description: (Updatable) An optional property when set to true
+                      triggers Publish of a metric extension. Once set to true, it
+                      cannot be changed back to false. Update of publish_trigger cannot
+                      be combined with other updates in the same request. A metric
+                      extension cannot be tested and its definition cannot be updated
+                      once it is marked published or publish_trigger is updated to
+                      true.
+                    type: boolean
+                  queryProperties:
+                    description: (Updatable) Collection method and query properties
+                      details of metric extension
+                    items:
+                      properties:
+                        arguments:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) Arguments required by either command or script
+                          type: string
+                        autoRowPrefix:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Prefix for an auto generated metric, in case multiple
+                            rows with non unique key values are returned
+                          type: string
+                        collectionMethod:
+                          description: (Updatable) Type of possible collection methods.
+                          type: string
+                        command:
+                          description: (Updatable) OS command to execute without arguments
+                          type: string
+                        delimiter:
+                          description: (Updatable) Character used to delimit multiple
+                            metric values in single line of output
+                          type: string
+                        identityMetric:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Semi-colon separated list of key properties from Managed
+                            Bean ObjectName to be used as key metrics
+                          type: string
+                        inParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            List of values and position of PL/SQL procedure IN parameters
+                          items:
+                            properties:
+                              inParamPosition:
+                                description: (Updatable) Position of IN parameter
+                                type: number
+                              inParamValue:
+                                description: (Updatable) Value of IN parameter
+                                type: string
+                            type: object
+                          type: array
+                        isMetricServiceEnabled:
+                          description: (Applicable when collection_method=JMX) (Updatable)
+                            Indicates if Metric Service is enabled on server domain
+                          type: boolean
+                        jmxAttributes:
+                          description: (Updatable) List of JMX attributes or Metric
+                            Service Table columns separated by semi-colon
+                          type: string
+                        managedBeanQuery:
+                          description: (Updatable) JMX Managed Bean Query or Metric
+                            Service Table name
+                          type: string
+                        outParamDetails:
+                          description: (Applicable when collection_method=SQL) (Updatable)
+                            Position and SQL Type of PL/SQL OUT parameter
+                          items:
+                            properties:
+                              outParamName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) Name of the Out Parameter
+                                type: string
+                              outParamPosition:
+                                description: (Updatable) Position of PL/SQL procedure
+                                  OUT parameter. The value of this property is ignored
+                                  during update, if "outParamType" is set to NO_OUT_PARAM
+                                  value.
+                                type: number
+                              outParamType:
+                                description: (Updatable) SQL Type of PL/SQL procedure
+                                  OUT parameter. During the update, to completely
+                                  remove the out parameter, use the value NO_OUT_PARAM.
+                                  In that case, the value of "outParamPosition" will
+                                  be ignored.
+                                type: string
+                            type: object
+                          type: array
+                        protocolType:
+                          description: (Applicable when collection_method=HTTP) (Updatable)
+                            Supported protocol of resources to be associated with
+                            this metric extension. This is optional and defaults to
+                            HTTPS, which uses secure connection to the URL
+                          type: string
+                        responseContentType:
+                          description: (Updatable) Type of content response given
+                            by the http(s) URL
+                          type: string
+                        scriptDetails:
+                          description: (Updatable) Script details applicable to any
+                            OS Command/HTTP based Metric Extension which needs to
+                            run a script to collect data. For removing it during OS
+                            Command based Metric Extension update, set its "content"
+                            property to an empty string. In that case, "name" property
+                            value is ignored.
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              name:
+                                description: (Updatable) Name of the metric.
+                                type: string
+                            type: object
+                          type: array
+                        sqlDetails:
+                          description: (Updatable) Details of Sql content which needs
+                            to execute to collect Metric Extension data
+                          items:
+                            properties:
+                              content:
+                                description: (Updatable) Content of the script/JavaScript
+                                  file as base64 encoded string
+                                type: string
+                              scriptFileName:
+                                description: (Applicable when collection_method=SQL)
+                                  (Updatable) If a script needs to be executed, then
+                                  provide file name of the script
+                                type: string
+                            type: object
+                          type: array
+                        sqlType:
+                          description: (Updatable) Type of SQL data collection method
+                            i.e. either a Statement or SQL Script File
+                          type: string
+                        startsWith:
+                          description: (Applicable when collection_method=OS_COMMAND)
+                            (Updatable) String prefix used to identify metric output
+                            of the OS Command
+                          type: string
+                        url:
+                          description: (Updatable) Http(s) end point URL
+                          type: string
+                      type: object
+                    type: array
+                  resourceType:
+                    description: Resource type to which Metric Extension applies
+                    type: string
+                  resourceUri:
+                    description: The URI path that the user can do a GET on to access
+                      the metric extension metadata
+                    type: string
+                  state:
+                    description: The current lifecycle state of the metric extension
+                    type: string
+                  status:
+                    description: The current status of the metric extension i.e. whether
+                      it is Draft or Published
+                    type: string
+                  tenantId:
+                    description: Tenant Identifier OCID
+                    type: string
+                  timeCreated:
+                    description: Metric Extension creation time. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                  timeUpdated:
+                    description: Metric Extension update time. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

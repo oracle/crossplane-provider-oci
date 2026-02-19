@@ -1,0 +1,40 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployartifact
+  labels:
+    testing.upbound.io/example-name: test_deploy_artifact
+  name: test-deploy-artifact
+spec:
+  forProvider:
+    argumentSubstitutionMode: ${var.deploy_artifact_argument_substitution_mode}
+    definedTags:
+      foo-namespace.bar-key: value
+    deployArtifactSource:
+    - base64encodedContent: ${var.deploy_artifact_deploy_artifact_source_base64encoded_content}
+      chartUrl: ${var.deploy_artifact_deploy_artifact_source_chart_url}
+      deployArtifactPath: ${var.deploy_artifact_deploy_artifact_source_deploy_artifact_path}
+      deployArtifactSourceType: ${var.deploy_artifact_deploy_artifact_source_deploy_artifact_source_type}
+      deployArtifactVersion: ${var.deploy_artifact_deploy_artifact_source_deploy_artifact_version}
+      helmArtifactSourceType: ${var.deploy_artifact_deploy_artifact_source_helm_artifact_source_type}
+      helmVerificationKeySource:
+      - currentPublicKey: ${var.deploy_artifact_deploy_artifact_source_helm_verification_key_source_current_public_key}
+        previousPublicKey: ${var.deploy_artifact_deploy_artifact_source_helm_verification_key_source_previous_public_key}
+        vaultSecretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        verificationKeySourceType: ${var.deploy_artifact_deploy_artifact_source_helm_verification_key_source_verification_key_source_type}
+      imageDigest: ${var.deploy_artifact_deploy_artifact_source_image_digest}
+      imageUri: ${var.deploy_artifact_deploy_artifact_source_image_uri}
+      repositoryIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_repository
+    deployArtifactType: ${var.deploy_artifact_deploy_artifact_type}
+    description: ${var.deploy_artifact_description}
+    displayName: ${var.deploy_artifact_display_name}
+    freeformTags:
+      bar-key: value
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

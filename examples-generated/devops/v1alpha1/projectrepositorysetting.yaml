@@ -1,0 +1,23 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: ProjectRepositorySetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/projectrepositorysetting
+  labels:
+    testing.upbound.io/example-name: test_project_repository_setting
+  name: test-project-repository-setting
+spec:
+  forProvider:
+    approvalRules:
+    - items:
+      - destinationBranch: ${var.project_repository_setting_approval_rules_items_destination_branch}
+        minApprovalsCount: ${var.project_repository_setting_approval_rules_items_min_approvals_count}
+        name: ${var.project_repository_setting_approval_rules_items_name}
+        reviewers:
+        - principalId: ${oci_devops_principal.test_principal.id}
+    mergeSettings:
+    - allowedMergeStrategies: ${var.project_repository_setting_merge_settings_allowed_merge_strategies}
+      defaultMergeStrategy: ${var.project_repository_setting_merge_settings_default_merge_strategy}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

@@ -1,0 +1,101 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstance
+  labels:
+    testing.upbound.io/example-name: test_bds_instance
+  name: test-bds-instance
+spec:
+  forProvider:
+    bdsClusterVersionSummary:
+    - bdsVersion: ${var.bds_instance_bds_cluster_version_summary_bds_version}
+      odhVersion: ${var.bds_instance_bds_cluster_version_summary_odh_version}
+    bootstrapScriptUrl: ${var.bds_instance_bootstrap_script_url}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    clusterProfile: ${var.bds_instance_cluster_profile}
+    clusterPublicKey: ${var.bds_instance_cluster_public_key}
+    clusterVersion: ${var.bds_instance_cluster_version}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeOnlyWorkerNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    definedTags: ${var.bds_instance_defined_tags}
+    displayName: ${var.bds_instance_display_name}
+    edgeNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    freeformTags: ${var.bds_instance_freeform_tags}
+    ignoreExistingNodesShape: ${var.ignore_existing_nodes_shape}
+    isHighAvailability: ${var.bds_instance_is_high_availability}
+    isSecure: ${var.bds_instance_is_secure}
+    kafkaBrokerNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      number_of_nodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    kerberosRealmName: ${var.bds_instance_kerberos_realm_name}
+    kmsKeyId: ${var.bds_instance_kms_key_id}
+    masterNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    networkConfig:
+    - cidrBlock: ${var.bds_instance_network_config_cidr_block}
+      isNatGatewayRequired: ${var.bds_instance_network_config_is_nat_gateway_required}
+    utilNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    workerNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: ${var.bds_instance_number_of_nodes}
+      shape: ${var.bds_instance_nodes_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_nodes_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_instance_nodes_shape_config_nvmes}
+        ocpus: ${var.bds_instance_nodes_shape_config_ocpus}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet

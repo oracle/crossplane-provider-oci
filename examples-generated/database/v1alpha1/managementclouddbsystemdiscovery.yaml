@@ -8,7 +8,9 @@ metadata:
   name: test-cloud-db-system-discovery
 spec:
   forProvider:
-    agentId: ${oci_cloud_bridge_agent.test_agent.id}
+    agentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_agent
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

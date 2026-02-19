@@ -1,0 +1,40 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplicationInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplicationinstance
+  labels:
+    testing.upbound.io/example-name: test_ml_application_instance
+  name: test-ml-application-instance
+spec:
+  forProvider:
+    authConfiguration:
+    - access_token: ${var.ml_application_instance_auth_configuration_access_token}
+      applicationNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_application
+      audience: ${var.ml_application_instance_auth_configuration_audience}
+      domainIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_domain
+      role_name: ${var.ml_application_instance_auth_configuration_role_name}
+      scope: ${var.ml_application_instance_auth_configuration_scope}
+      type: ${var.ml_application_instance_auth_configuration_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configuration:
+    - key: ${var.ml_application_instance_configuration_key}
+      value: ${var.ml_application_instance_configuration_value}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.ml_application_instance_display_name}
+    freeformTags:
+      Department: Finance
+    isEnabled: ${var.ml_application_instance_is_enabled}
+    mlApplicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ml_application
+    mlApplicationImplementationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ml_application_implementation

@@ -1,0 +1,27 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: Usage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usage
+  labels:
+    testing.upbound.io/example-name: test_usage
+  name: test-usage
+spec:
+  forProvider:
+    compartmentDepth: ${var.usage_compartment_depth}
+    filter: ${var.usage_filter}
+    forecast:
+    - forecastType: ${var.usage_forecast_forecast_type}
+      timeForecastEnded: ${var.usage_forecast_time_forecast_ended}
+      timeForecastStarted: ${var.usage_forecast_time_forecast_started}
+    granularity: ${var.usage_granularity}
+    groupBy: ${var.usage_group_by}
+    groupByTag:
+    - key: ${var.usage_group_by_tag_key}
+      namespace: ${var.usage_group_by_tag_namespace}
+      value: ${var.usage_group_by_tag_value}
+    isAggregateByTime: ${var.usage_is_aggregate_by_time}
+    queryType: ${var.usage_query_type}
+    tenantId: ${oci_metering_computation_tenant.test_tenant.id}
+    timeUsageEnded: ${var.usage_time_usage_ended}
+    timeUsageStarted: ${var.usage_time_usage_started}

@@ -1,0 +1,40 @@
+apiVersion: lustrefilestorage.oci.upbound.io/v1alpha1
+kind: LustreFileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: test_lustre_file_system
+  name: test-lustre-file-system
+spec:
+  forProvider:
+    availabilityDomain: ${var.lustre_file_system_availability_domain}
+    capacityInGbs: ${var.lustre_file_system_capacity_in_gbs}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster_placement_group
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.lustre_file_system_display_name}
+    fileSystemDescription: ${var.lustre_file_system_file_system_description}
+    fileSystemNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_file_system
+    freeformTags:
+      Department: Finance
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    nsgIds: ${var.lustre_file_system_nsg_ids}
+    performanceTier: ${var.lustre_file_system_performance_tier}
+    rootSquashConfiguration:
+    - clientExceptions: ${var.lustre_file_system_root_squash_configuration_client_exceptions}
+      identitySquash: ${var.lustre_file_system_root_squash_configuration_identity_squash}
+      squashGid: ${var.lustre_file_system_root_squash_configuration_squash_gid}
+      squashUid: ${var.lustre_file_system_root_squash_configuration_squash_uid}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

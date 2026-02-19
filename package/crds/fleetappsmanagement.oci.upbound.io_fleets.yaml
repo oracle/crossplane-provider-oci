@@ -1,0 +1,3041 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: fleets.fleetappsmanagement.oci.upbound.io
+spec:
+  group: fleetappsmanagement.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: Fleet
+    listKind: FleetList
+    plural: fleets
+    singular: fleet
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Fleet is the Schema for the Fleets API. Provides the Fleet resource
+          in Oracle Cloud Infrastructure Fleet Apps Management service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FleetSpec defines the desired state of Fleet
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) compartment OCID
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  credentials:
+                    description: Credentials associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        entitySpecifics:
+                          description: Credential specific Details.
+                          items:
+                            properties:
+                              credentialLevel:
+                                description: At what level the credential is provided?
+                                type: string
+                              resourceId:
+                                description: OCID of the resource associated with
+                                  the target for which the credential is created.
+                                type: string
+                              target:
+                                description: Target name for which the credential
+                                  is provided.
+                                type: string
+                              variables:
+                                description: (Applicable when credential_level=FLEET)
+                                  List of fleet credential variables.
+                                items:
+                                  properties:
+                                    name:
+                                      description: (Applicable when credential_level=FLEET)
+                                        Name of the variable.
+                                      type: string
+                                    value:
+                                      description: (Applicable when credential_level=FLEET)
+                                        The value corresponding to the variable name.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        password:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyIdRef:
+                                description: Reference to a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              keyIdSelector:
+                                description: Selector for a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretIdRef:
+                                description: Reference to a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              secretIdSelector:
+                                description: Selector for a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                              vaultIdRef:
+                                description: Reference to a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              vaultIdSelector:
+                                description: Selector for a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        user:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyIdRef:
+                                description: Reference to a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              keyIdSelector:
+                                description: Selector for a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretIdRef:
+                                description: Reference to a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              secretIdSelector:
+                                description: Selector for a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                              vaultIdRef:
+                                description: Reference to a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              vaultIdSelector:
+                                description: Selector for a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-friendly description. To provide
+                      some insight about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  details:
+                    description: Fleet Type
+                    items:
+                      properties:
+                        fleetType:
+                          description: Type of the Fleet. PRODUCT - A fleet of product-specific
+                            resources for a product type. ENVIRONMENT - A fleet of
+                            environment-specific resources for a product stack. GROUP
+                            - A fleet of a fleet of either environment or product
+                            fleets. GENERIC - A fleet of resources selected dynamically
+                            or manually for reporting purposes
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: 'A user-friendly name. Does not have to be unique,
+                      and it''s changeable. Avoid entering confidential information.  Example:
+                      My new resource'
+                    type: string
+                  environmentType:
+                    description: (Updatable) Environment Type associated with the
+                      Fleet. Applicable for ENVIRONMENT fleet types.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isTargetAutoConfirm:
+                    description: (Updatable) A value that represents if auto-confirming
+                      of the targets can be enabled. This will allow targets to be
+                      auto-confirmed in the fleet without manual intervention.
+                    type: boolean
+                  notificationPreferences:
+                    description: (Updatable) Notification Preferences associated with
+                      the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        preferences:
+                          description: (Updatable) Preferences to send notifications
+                            on the fleet activities.
+                          items:
+                            properties:
+                              onJobCanceled:
+                                description: (Updatable) Enables or disables notification
+                                  on job canceled.
+                                type: boolean
+                              onJobFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on Job Failures.
+                                type: boolean
+                              onJobScheduleChange:
+                                description: (Updatable) Enables or disables notification
+                                  on job schedule change.
+                                type: boolean
+                              onJobStart:
+                                description: (Updatable) Enables or disables notification
+                                  on job start.
+                                type: boolean
+                              onJobSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on job success.
+                                type: boolean
+                              onResourceNonCompliance:
+                                description: (Updatable) Enables or disables notification
+                                  when fleet resource becomes non compliant.
+                                type: boolean
+                              onRunbookNewerVersion:
+                                description: (Updatable) Enables or disables notification
+                                  when a newer version of runbook associated with
+                                  a fleet is available
+                                type: boolean
+                              onTaskFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on task failure.
+                                type: boolean
+                              onTaskPause:
+                                description: (Updatable) Enables or disables notification
+                                  when a task is paused.
+                                type: boolean
+                              onTaskSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on task success.
+                                type: boolean
+                              onTopologyModification:
+                                description: (Updatable) Enables or disables notification
+                                  on Environment Fleet Topology Modification.
+                                type: boolean
+                              upcomingSchedule:
+                                description: (Updatable) Enables notification on upcoming
+                                  schedule.
+                                items:
+                                  properties:
+                                    notifyBefore:
+                                      description: (Updatable) Specify when the notification
+                                        should be sent.
+                                      type: string
+                                    onUpcomingSchedule:
+                                      description: (Updatable) Enables notification
+                                        on upcoming schedule.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        topicId:
+                          description: (Updatable) Topic Id where the notifications
+                            will be directed. A topic is a communication channel for
+                            sending messages on chosen events to subscriptions.
+                          type: string
+                        topicIdRef:
+                          description: Reference to a NotificationTopic in ons to
+                            populate topicId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        topicIdSelector:
+                          description: Selector for a NotificationTopic in ons to
+                            populate topicId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  parentFleetId:
+                    description: The OCID of the fleet that would be the parent for
+                      this fleet.
+                    type: string
+                  parentFleetIdRef:
+                    description: Reference to a Fleet in fleetappsmanagement to populate
+                      parentFleetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentFleetIdSelector:
+                    description: Selector for a Fleet in fleetappsmanagement to populate
+                      parentFleetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  products:
+                    description: (Updatable) Products associated with the Fleet. Provide
+                      PlatformConfiguration Ids corresponding to all the Products
+                      that need to be managed.
+                    items:
+                      type: string
+                    type: array
+                  properties:
+                    description: Properties associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        fleetPropertyType:
+                          description: Type of the FleetProperty.
+                          type: string
+                        isRequired:
+                          description: Property is required or not.
+                          type: boolean
+                        value:
+                          description: (Applicable when credential_level=FLEET) The
+                            value corresponding to the variable name.
+                          type: string
+                      type: object
+                    type: array
+                  resourceSelection:
+                    description: (Updatable) Resource Selection Type
+                    items:
+                      properties:
+                        resourceSelectionType:
+                          description: (Updatable) Type of resource selection in a
+                            Fleet. Select resources manually or select resources based
+                            on rules.
+                          type: string
+                        ruleSelectionCriteria:
+                          description: (Updatable) Rule Selection Criteria for DYNAMIC
+                            resource selection for a GENERIC fleet. Rules define what
+                            resources are members of this fleet. All resources that
+                            meet the criteria are added automatically.
+                          items:
+                            properties:
+                              matchCondition:
+                                description: (Updatable) Match condition for the rule
+                                  selection. Include resources that match all rules
+                                  or any of the rules.
+                                type: string
+                              rules:
+                                description: (Updatable) Rules.
+                                items:
+                                  properties:
+                                    basis:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) Based on what the rule is created.
+                                        It can be based on a resourceProperty or a
+                                        tag.   If based on a tag, basis will be 'definedTagEquals'
+                                        If based on a resource property, basis will
+                                        be 'inventoryProperties'
+                                      type: string
+                                    compartmentId:
+                                      description: (Updatable) compartment OCID
+                                      type: string
+                                    compartmentIdInSubtree:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) If set to true, resources will
+                                        be returned for not only the provided compartment,
+                                        but all compartments which descend from it.
+                                        Which resources are returned and their field
+                                        contents depends on the value of accessLevel.
+                                        Default value for compartmentIdInSubtree is
+                                        false
+                                      type: boolean
+                                    conditions:
+                                      description: (Updatable) Rule Conditions
+                                      items:
+                                        properties:
+                                          attrGroup:
+                                            description: (Updatable) Attribute Group.
+                                              Provide a Tag namespace if the rule
+                                              is based on a tag. Provide resource
+                                              type if the rule is based on a resource
+                                              property.
+                                            type: string
+                                          attrKey:
+                                            description: (Updatable) Attribute Key.Provide
+                                              Tag key if the rule is based on a tag.
+                                              Provide resource property name if the
+                                              rule is based on a resource property.
+                                            type: string
+                                          attrValue:
+                                            description: (Updatable) Attribute Value.Provide
+                                              Tag value if the rule is based on a
+                                              tag. Provide resource property value
+                                              if the rule is based on a resource property.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    matchCondition:
+                                      description: (Updatable) Match condition for
+                                        the rule selection. Include resources that
+                                        match all rules or any of the rules.
+                                      type: string
+                                    resourceCompartmentId:
+                                      description: (Updatable) The Compartment ID
+                                        to dynamically search resources. Provide the
+                                        compartment ID to which the rule is applicable.
+                                      type: string
+                                    resourceCompartmentIdRef:
+                                      description: Reference to a Compartment in identity
+                                        to populate resourceCompartmentId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    resourceCompartmentIdSelector:
+                                      description: Selector for a Compartment in identity
+                                        to populate resourceCompartmentId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  resources:
+                    description: Resources associated with the Fleet if resourceSelectionType
+                      is MANUAL.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        fleetResourceType:
+                          description: Type of the FleetResource.
+                          type: string
+                        resourceId:
+                          description: OCID of the resource associated with the target
+                            for which the credential is created.
+                          type: string
+                        tenancyId:
+                          description: Tenancy Identifier[OCID].
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: (Updatable) compartment OCID
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  credentials:
+                    description: Credentials associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        entitySpecifics:
+                          description: Credential specific Details.
+                          items:
+                            properties:
+                              credentialLevel:
+                                description: At what level the credential is provided?
+                                type: string
+                              resourceId:
+                                description: OCID of the resource associated with
+                                  the target for which the credential is created.
+                                type: string
+                              target:
+                                description: Target name for which the credential
+                                  is provided.
+                                type: string
+                              variables:
+                                description: (Applicable when credential_level=FLEET)
+                                  List of fleet credential variables.
+                                items:
+                                  properties:
+                                    name:
+                                      description: (Applicable when credential_level=FLEET)
+                                        Name of the variable.
+                                      type: string
+                                    value:
+                                      description: (Applicable when credential_level=FLEET)
+                                        The value corresponding to the variable name.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        password:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyIdRef:
+                                description: Reference to a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              keyIdSelector:
+                                description: Selector for a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretIdRef:
+                                description: Reference to a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              secretIdSelector:
+                                description: Selector for a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                              vaultIdRef:
+                                description: Reference to a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              vaultIdSelector:
+                                description: Selector for a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        user:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyIdRef:
+                                description: Reference to a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              keyIdSelector:
+                                description: Selector for a Key in kms to populate
+                                  keyId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretIdRef:
+                                description: Reference to a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              secretIdSelector:
+                                description: Selector for a Secret in vault to populate
+                                  secretId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                              vaultIdRef:
+                                description: Reference to a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              vaultIdSelector:
+                                description: Selector for a Vault in kms to populate
+                                  vaultId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-friendly description. To provide
+                      some insight about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  details:
+                    description: Fleet Type
+                    items:
+                      properties:
+                        fleetType:
+                          description: Type of the Fleet. PRODUCT - A fleet of product-specific
+                            resources for a product type. ENVIRONMENT - A fleet of
+                            environment-specific resources for a product stack. GROUP
+                            - A fleet of a fleet of either environment or product
+                            fleets. GENERIC - A fleet of resources selected dynamically
+                            or manually for reporting purposes
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: 'A user-friendly name. Does not have to be unique,
+                      and it''s changeable. Avoid entering confidential information.  Example:
+                      My new resource'
+                    type: string
+                  environmentType:
+                    description: (Updatable) Environment Type associated with the
+                      Fleet. Applicable for ENVIRONMENT fleet types.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isTargetAutoConfirm:
+                    description: (Updatable) A value that represents if auto-confirming
+                      of the targets can be enabled. This will allow targets to be
+                      auto-confirmed in the fleet without manual intervention.
+                    type: boolean
+                  notificationPreferences:
+                    description: (Updatable) Notification Preferences associated with
+                      the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        preferences:
+                          description: (Updatable) Preferences to send notifications
+                            on the fleet activities.
+                          items:
+                            properties:
+                              onJobCanceled:
+                                description: (Updatable) Enables or disables notification
+                                  on job canceled.
+                                type: boolean
+                              onJobFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on Job Failures.
+                                type: boolean
+                              onJobScheduleChange:
+                                description: (Updatable) Enables or disables notification
+                                  on job schedule change.
+                                type: boolean
+                              onJobStart:
+                                description: (Updatable) Enables or disables notification
+                                  on job start.
+                                type: boolean
+                              onJobSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on job success.
+                                type: boolean
+                              onResourceNonCompliance:
+                                description: (Updatable) Enables or disables notification
+                                  when fleet resource becomes non compliant.
+                                type: boolean
+                              onRunbookNewerVersion:
+                                description: (Updatable) Enables or disables notification
+                                  when a newer version of runbook associated with
+                                  a fleet is available
+                                type: boolean
+                              onTaskFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on task failure.
+                                type: boolean
+                              onTaskPause:
+                                description: (Updatable) Enables or disables notification
+                                  when a task is paused.
+                                type: boolean
+                              onTaskSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on task success.
+                                type: boolean
+                              onTopologyModification:
+                                description: (Updatable) Enables or disables notification
+                                  on Environment Fleet Topology Modification.
+                                type: boolean
+                              upcomingSchedule:
+                                description: (Updatable) Enables notification on upcoming
+                                  schedule.
+                                items:
+                                  properties:
+                                    notifyBefore:
+                                      description: (Updatable) Specify when the notification
+                                        should be sent.
+                                      type: string
+                                    onUpcomingSchedule:
+                                      description: (Updatable) Enables notification
+                                        on upcoming schedule.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        topicId:
+                          description: (Updatable) Topic Id where the notifications
+                            will be directed. A topic is a communication channel for
+                            sending messages on chosen events to subscriptions.
+                          type: string
+                        topicIdRef:
+                          description: Reference to a NotificationTopic in ons to
+                            populate topicId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        topicIdSelector:
+                          description: Selector for a NotificationTopic in ons to
+                            populate topicId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  parentFleetId:
+                    description: The OCID of the fleet that would be the parent for
+                      this fleet.
+                    type: string
+                  parentFleetIdRef:
+                    description: Reference to a Fleet in fleetappsmanagement to populate
+                      parentFleetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  parentFleetIdSelector:
+                    description: Selector for a Fleet in fleetappsmanagement to populate
+                      parentFleetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  products:
+                    description: (Updatable) Products associated with the Fleet. Provide
+                      PlatformConfiguration Ids corresponding to all the Products
+                      that need to be managed.
+                    items:
+                      type: string
+                    type: array
+                  properties:
+                    description: Properties associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        fleetPropertyType:
+                          description: Type of the FleetProperty.
+                          type: string
+                        isRequired:
+                          description: Property is required or not.
+                          type: boolean
+                        value:
+                          description: (Applicable when credential_level=FLEET) The
+                            value corresponding to the variable name.
+                          type: string
+                      type: object
+                    type: array
+                  resourceSelection:
+                    description: (Updatable) Resource Selection Type
+                    items:
+                      properties:
+                        resourceSelectionType:
+                          description: (Updatable) Type of resource selection in a
+                            Fleet. Select resources manually or select resources based
+                            on rules.
+                          type: string
+                        ruleSelectionCriteria:
+                          description: (Updatable) Rule Selection Criteria for DYNAMIC
+                            resource selection for a GENERIC fleet. Rules define what
+                            resources are members of this fleet. All resources that
+                            meet the criteria are added automatically.
+                          items:
+                            properties:
+                              matchCondition:
+                                description: (Updatable) Match condition for the rule
+                                  selection. Include resources that match all rules
+                                  or any of the rules.
+                                type: string
+                              rules:
+                                description: (Updatable) Rules.
+                                items:
+                                  properties:
+                                    basis:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) Based on what the rule is created.
+                                        It can be based on a resourceProperty or a
+                                        tag.   If based on a tag, basis will be 'definedTagEquals'
+                                        If based on a resource property, basis will
+                                        be 'inventoryProperties'
+                                      type: string
+                                    compartmentId:
+                                      description: (Updatable) compartment OCID
+                                      type: string
+                                    compartmentIdInSubtree:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) If set to true, resources will
+                                        be returned for not only the provided compartment,
+                                        but all compartments which descend from it.
+                                        Which resources are returned and their field
+                                        contents depends on the value of accessLevel.
+                                        Default value for compartmentIdInSubtree is
+                                        false
+                                      type: boolean
+                                    conditions:
+                                      description: (Updatable) Rule Conditions
+                                      items:
+                                        properties:
+                                          attrGroup:
+                                            description: (Updatable) Attribute Group.
+                                              Provide a Tag namespace if the rule
+                                              is based on a tag. Provide resource
+                                              type if the rule is based on a resource
+                                              property.
+                                            type: string
+                                          attrKey:
+                                            description: (Updatable) Attribute Key.Provide
+                                              Tag key if the rule is based on a tag.
+                                              Provide resource property name if the
+                                              rule is based on a resource property.
+                                            type: string
+                                          attrValue:
+                                            description: (Updatable) Attribute Value.Provide
+                                              Tag value if the rule is based on a
+                                              tag. Provide resource property value
+                                              if the rule is based on a resource property.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    matchCondition:
+                                      description: (Updatable) Match condition for
+                                        the rule selection. Include resources that
+                                        match all rules or any of the rules.
+                                      type: string
+                                    resourceCompartmentId:
+                                      description: (Updatable) The Compartment ID
+                                        to dynamically search resources. Provide the
+                                        compartment ID to which the rule is applicable.
+                                      type: string
+                                    resourceCompartmentIdRef:
+                                      description: Reference to a Compartment in identity
+                                        to populate resourceCompartmentId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    resourceCompartmentIdSelector:
+                                      description: Selector for a Compartment in identity
+                                        to populate resourceCompartmentId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  resources:
+                    description: Resources associated with the Fleet if resourceSelectionType
+                      is MANUAL.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        fleetResourceType:
+                          description: Type of the FleetResource.
+                          type: string
+                        resourceId:
+                          description: OCID of the resource associated with the target
+                            for which the credential is created.
+                          type: string
+                        tenancyId:
+                          description: Tenancy Identifier[OCID].
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.resourceSelection is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourceSelection)
+                || (has(self.initProvider) && has(self.initProvider.resourceSelection))'
+          status:
+            description: FleetStatus defines the observed state of Fleet.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) compartment OCID
+                    type: string
+                  credentials:
+                    description: Credentials associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        entitySpecifics:
+                          description: Credential specific Details.
+                          items:
+                            properties:
+                              credentialLevel:
+                                description: At what level the credential is provided?
+                                type: string
+                              resourceId:
+                                description: OCID of the resource associated with
+                                  the target for which the credential is created.
+                                type: string
+                              target:
+                                description: Target name for which the credential
+                                  is provided.
+                                type: string
+                              variables:
+                                description: (Applicable when credential_level=FLEET)
+                                  List of fleet credential variables.
+                                items:
+                                  properties:
+                                    name:
+                                      description: (Applicable when credential_level=FLEET)
+                                        Name of the variable.
+                                      type: string
+                                    value:
+                                      description: (Applicable when credential_level=FLEET)
+                                        The value corresponding to the variable name.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        password:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                            type: object
+                          type: array
+                        user:
+                          description: Credential Details.
+                          items:
+                            properties:
+                              credentialType:
+                                description: Credential Type.
+                                type: string
+                              keyId:
+                                description: OCID for the Vault Key that will be used
+                                  to encrypt/decrypt the value given.
+                                type: string
+                              keyVersion:
+                                description: (Applicable when credential_type=KEY_ENCRYPTION)
+                                  The Vault Key version.
+                                type: string
+                              secretId:
+                                description: The OCID of the secret.
+                                type: string
+                              secretVersion:
+                                description: (Applicable when credential_type=VAULT_SECRET)
+                                  The secret version.
+                                type: string
+                              value:
+                                description: (Applicable when credential_level=FLEET)
+                                  The value corresponding to the variable name.
+                                type: string
+                              vaultId:
+                                description: OCID for the Vault that will be used
+                                  to fetch the key to encrypt/decrypt the value given.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user-friendly description. To provide
+                      some insight about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  details:
+                    description: Fleet Type
+                    items:
+                      properties:
+                        fleetType:
+                          description: Type of the Fleet. PRODUCT - A fleet of product-specific
+                            resources for a product type. ENVIRONMENT - A fleet of
+                            environment-specific resources for a product stack. GROUP
+                            - A fleet of a fleet of either environment or product
+                            fleets. GENERIC - A fleet of resources selected dynamically
+                            or manually for reporting purposes
+                          type: string
+                      type: object
+                    type: array
+                  displayName:
+                    description: 'A user-friendly name. Does not have to be unique,
+                      and it''s changeable. Avoid entering confidential information.  Example:
+                      My new resource'
+                    type: string
+                  environmentType:
+                    description: (Updatable) Environment Type associated with the
+                      Fleet. Applicable for ENVIRONMENT fleet types.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the resource.
+                    type: string
+                  isTargetAutoConfirm:
+                    description: (Updatable) A value that represents if auto-confirming
+                      of the targets can be enabled. This will allow targets to be
+                      auto-confirmed in the fleet without manual intervention.
+                    type: boolean
+                  lifecycleDetails:
+                    description: A message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in Failed state.
+                    type: string
+                  notificationPreferences:
+                    description: (Updatable) Notification Preferences associated with
+                      the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        preferences:
+                          description: (Updatable) Preferences to send notifications
+                            on the fleet activities.
+                          items:
+                            properties:
+                              onJobCanceled:
+                                description: (Updatable) Enables or disables notification
+                                  on job canceled.
+                                type: boolean
+                              onJobFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on Job Failures.
+                                type: boolean
+                              onJobScheduleChange:
+                                description: (Updatable) Enables or disables notification
+                                  on job schedule change.
+                                type: boolean
+                              onJobStart:
+                                description: (Updatable) Enables or disables notification
+                                  on job start.
+                                type: boolean
+                              onJobSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on job success.
+                                type: boolean
+                              onResourceNonCompliance:
+                                description: (Updatable) Enables or disables notification
+                                  when fleet resource becomes non compliant.
+                                type: boolean
+                              onRunbookNewerVersion:
+                                description: (Updatable) Enables or disables notification
+                                  when a newer version of runbook associated with
+                                  a fleet is available
+                                type: boolean
+                              onTaskFailure:
+                                description: (Updatable) Enables or disables notification
+                                  on task failure.
+                                type: boolean
+                              onTaskPause:
+                                description: (Updatable) Enables or disables notification
+                                  when a task is paused.
+                                type: boolean
+                              onTaskSuccess:
+                                description: (Updatable) Enables or disables notification
+                                  on task success.
+                                type: boolean
+                              onTopologyModification:
+                                description: (Updatable) Enables or disables notification
+                                  on Environment Fleet Topology Modification.
+                                type: boolean
+                              upcomingSchedule:
+                                description: (Updatable) Enables notification on upcoming
+                                  schedule.
+                                items:
+                                  properties:
+                                    notifyBefore:
+                                      description: (Updatable) Specify when the notification
+                                        should be sent.
+                                      type: string
+                                    onUpcomingSchedule:
+                                      description: (Updatable) Enables notification
+                                        on upcoming schedule.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        topicId:
+                          description: (Updatable) Topic Id where the notifications
+                            will be directed. A topic is a communication channel for
+                            sending messages on chosen events to subscriptions.
+                          type: string
+                      type: object
+                    type: array
+                  parentFleetId:
+                    description: The OCID of the fleet that would be the parent for
+                      this fleet.
+                    type: string
+                  products:
+                    description: (Updatable) Products associated with the Fleet. Provide
+                      PlatformConfiguration Ids corresponding to all the Products
+                      that need to be managed.
+                    items:
+                      type: string
+                    type: array
+                  properties:
+                    description: Properties associated with the Fleet.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        displayName:
+                          description: 'A user-friendly name. Does not have to be
+                            unique, and it''s changeable. Avoid entering confidential
+                            information.  Example: My new resource'
+                          type: string
+                        fleetPropertyType:
+                          description: Type of the FleetProperty.
+                          type: string
+                        isRequired:
+                          description: Property is required or not.
+                          type: boolean
+                        value:
+                          description: (Applicable when credential_level=FLEET) The
+                            value corresponding to the variable name.
+                          type: string
+                      type: object
+                    type: array
+                  resourceRegion:
+                    description: Associated region
+                    type: string
+                  resourceSelection:
+                    description: (Updatable) Resource Selection Type
+                    items:
+                      properties:
+                        resourceSelectionType:
+                          description: (Updatable) Type of resource selection in a
+                            Fleet. Select resources manually or select resources based
+                            on rules.
+                          type: string
+                        ruleSelectionCriteria:
+                          description: (Updatable) Rule Selection Criteria for DYNAMIC
+                            resource selection for a GENERIC fleet. Rules define what
+                            resources are members of this fleet. All resources that
+                            meet the criteria are added automatically.
+                          items:
+                            properties:
+                              matchCondition:
+                                description: (Updatable) Match condition for the rule
+                                  selection. Include resources that match all rules
+                                  or any of the rules.
+                                type: string
+                              rules:
+                                description: (Updatable) Rules.
+                                items:
+                                  properties:
+                                    basis:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) Based on what the rule is created.
+                                        It can be based on a resourceProperty or a
+                                        tag.   If based on a tag, basis will be 'definedTagEquals'
+                                        If based on a resource property, basis will
+                                        be 'inventoryProperties'
+                                      type: string
+                                    compartmentId:
+                                      description: (Updatable) compartment OCID
+                                      type: string
+                                    compartmentIdInSubtree:
+                                      description: (Applicable when resource_selection_type=DYNAMIC)
+                                        (Updatable) If set to true, resources will
+                                        be returned for not only the provided compartment,
+                                        but all compartments which descend from it.
+                                        Which resources are returned and their field
+                                        contents depends on the value of accessLevel.
+                                        Default value for compartmentIdInSubtree is
+                                        false
+                                      type: boolean
+                                    conditions:
+                                      description: (Updatable) Rule Conditions
+                                      items:
+                                        properties:
+                                          attrGroup:
+                                            description: (Updatable) Attribute Group.
+                                              Provide a Tag namespace if the rule
+                                              is based on a tag. Provide resource
+                                              type if the rule is based on a resource
+                                              property.
+                                            type: string
+                                          attrKey:
+                                            description: (Updatable) Attribute Key.Provide
+                                              Tag key if the rule is based on a tag.
+                                              Provide resource property name if the
+                                              rule is based on a resource property.
+                                            type: string
+                                          attrValue:
+                                            description: (Updatable) Attribute Value.Provide
+                                              Tag value if the rule is based on a
+                                              tag. Provide resource property value
+                                              if the rule is based on a resource property.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    matchCondition:
+                                      description: (Updatable) Match condition for
+                                        the rule selection. Include resources that
+                                        match all rules or any of the rules.
+                                      type: string
+                                    resourceCompartmentId:
+                                      description: (Updatable) The Compartment ID
+                                        to dynamically search resources. Provide the
+                                        compartment ID to which the rule is applicable.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  resources:
+                    description: Resources associated with the Fleet if resourceSelectionType
+                      is MANUAL.
+                    items:
+                      properties:
+                        compartmentId:
+                          description: (Updatable) compartment OCID
+                          type: string
+                        fleetResourceType:
+                          description: Type of the FleetResource.
+                          type: string
+                        resourceId:
+                          description: OCID of the resource associated with the target
+                            for which the credential is created.
+                          type: string
+                        tenancyId:
+                          description: Tenancy Identifier[OCID].
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: The lifecycle state of the Fleet.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'System tags for this resource. Each key is predefined
+                      and scoped to a namespace. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time this resource was created. An RFC3339 formatted
+                      datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time this resource was last updated. An RFC3339
+                      formatted datetime string.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

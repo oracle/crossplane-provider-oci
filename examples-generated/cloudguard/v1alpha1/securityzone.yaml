@@ -1,0 +1,20 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: SecurityZone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/securityzone
+  labels:
+    testing.upbound.io/example-name: test_security_zone
+  name: test-security-zone
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.security_zone_description}
+    displayName: ${var.security_zone_display_name}
+    freeformTags:
+      bar-key: value
+    securityZoneRecipeId: ${oci_cloud_guard_security_zone_recipe.test_security_zone_recipe.id}

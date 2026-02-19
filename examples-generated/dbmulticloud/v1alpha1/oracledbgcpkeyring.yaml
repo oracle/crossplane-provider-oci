@@ -1,0 +1,23 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbGcpKeyRing
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbgcpkeyring
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_gcp_key_ring
+  name: test-oracle-db-gcp-key-ring
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_gcp_key_ring_display_name}
+    freeformTags:
+      Department: Finance
+    gcpKeyRingId: ${oci_dbmulticloud_gcp_key_ring.test_gcp_key_ring.id}
+    location: ${var.oracle_db_gcp_key_ring_location}
+    oracleDbConnectorId: ${oci_dbmulticloud_oracle_db_connector.test_oracle_db_connector.id}
+    properties: ${var.oracle_db_gcp_key_ring_properties}
+    type: ${var.oracle_db_gcp_key_ring_type}

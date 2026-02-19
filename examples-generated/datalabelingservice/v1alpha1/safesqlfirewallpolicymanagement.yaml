@@ -1,0 +1,32 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSqlFirewallPolicyManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesqlfirewallpolicymanagement
+  labels:
+    testing.upbound.io/example-name: test_sql_firewall_policy_management
+  name: test-sql-firewall-policy-management
+spec:
+  forProvider:
+    allowedClientIps: ${var.sql_firewall_policy_management_allowed_client_ips}
+    allowedClientOsUsernames: ${var.sql_firewall_policy_management_allowed_client_os_usernames}
+    allowedClientPrograms: ${var.sql_firewall_policy_management_allowed_client_programs}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbUserNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sql_firewall_policy_management_description}
+    displayName: ${var.sql_firewall_policy_management_display_name}
+    enforcementScope: ${var.sql_firewall_policy_management_enforcement_scope}
+    freeformTags:
+      Department: Finance
+    status: ${var.sql_firewall_policy_management_status}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target_database
+    violationAction: ${var.sql_firewall_policy_management_violation_action}
+    violationAudit: ${var.sql_firewall_policy_management_violation_audit}

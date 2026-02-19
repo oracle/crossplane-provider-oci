@@ -1,0 +1,29 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplateAlarmCondition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatealarmcondition
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_alarm_condition
+  name: test-monitoring-template-alarm-condition
+spec:
+  forProvider:
+    compositeType: ${var.monitoring_template_alarm_condition_composite_type}
+    conditionType: ${var.monitoring_template_alarm_condition_condition_type}
+    conditions:
+    - body: ${var.monitoring_template_alarm_condition_conditions_body}
+      query: ${var.monitoring_template_alarm_condition_conditions_query}
+      severity: ${var.monitoring_template_alarm_condition_conditions_severity}
+      shouldAppendNote: ${var.monitoring_template_alarm_condition_conditions_should_append_note}
+      shouldAppendUrl: ${var.monitoring_template_alarm_condition_conditions_should_append_url}
+      triggerDelay: ${var.monitoring_template_alarm_condition_conditions_trigger_delay}
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    metricName: ${oci_monitoring_metric.test_metric.name}
+    monitoringTemplateIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitoring_template
+    namespace: ${var.monitoring_template_alarm_condition_namespace}
+    resourceType: ${var.monitoring_template_alarm_condition_resource_type}

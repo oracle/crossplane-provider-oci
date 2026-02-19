@@ -16,7 +16,9 @@ spec:
       displayName: ${var.external_my_sql_database_connector_connector_details_display_name}
       externalDatabaseId: ${oci_database_management_external_database.test_external_database.id}
       hostName: ${var.external_my_sql_database_connector_connector_details_host_name}
-      macsAgentId: ${oci_cloud_bridge_agent.test_agent.id}
+      macsAgentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_agent
       networkProtocol: ${var.external_my_sql_database_connector_connector_details_network_protocol}
       port: ${var.external_my_sql_database_connector_connector_details_port}
       sslSecretIdSelector:

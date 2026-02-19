@@ -1,0 +1,21 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeAttributeSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safeattributeset
+  labels:
+    testing.upbound.io/example-name: test_attribute_set
+  name: test-attribute-set
+spec:
+  forProvider:
+    attributeSetType: ${var.attribute_set_attribute_set_type}
+    attributeSetValues: ${var.attribute_set_attribute_set_values}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.attribute_set_description}
+    displayName: ${var.attribute_set_display_name}
+    freeformTags:
+      Department: Finance

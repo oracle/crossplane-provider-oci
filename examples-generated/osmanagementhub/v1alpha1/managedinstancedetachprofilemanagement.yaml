@@ -1,0 +1,13 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagedInstanceDetachProfileManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managedinstancedetachprofilemanagement
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_detach_profile_management
+  name: test-managed-instance-detach-profile-management
+spec:
+  forProvider:
+    managedInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_instance

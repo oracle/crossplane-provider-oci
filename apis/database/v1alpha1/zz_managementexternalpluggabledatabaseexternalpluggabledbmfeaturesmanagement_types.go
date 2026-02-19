@@ -22,7 +22,17 @@ type ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementFe
 	DatabaseConnectorID *string `json:"databaseConnectorId,omitempty" tf:"database_connector_id,omitempty"`
 
 	// (Applicable when connector_type=MACS) The OCID of the management agent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/managementagent/v1alpha1.ManagementAgent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ManagementAgentID *string `json:"managementAgentId,omitempty" tf:"management_agent_id,omitempty"`
+
+	// Reference to a ManagementAgent in managementagent to populate managementAgentId.
+	// +kubebuilder:validation:Optional
+	ManagementAgentIDRef *v1.Reference `json:"managementAgentIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementAgent in managementagent to populate managementAgentId.
+	// +kubebuilder:validation:Optional
+	ManagementAgentIDSelector *v1.Selector `json:"managementAgentIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when connector_type=PE) The OCID of the private endpoint.
 	PrivateEndPointID *string `json:"privateEndPointId,omitempty" tf:"private_end_point_id,omitempty"`
@@ -54,8 +64,18 @@ type ManagementExternalpluggabledatabaseExternalPluggableDbmFeaturesManagementFe
 	DatabaseConnectorID *string `json:"databaseConnectorId,omitempty" tf:"database_connector_id,omitempty"`
 
 	// (Applicable when connector_type=MACS) The OCID of the management agent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/managementagent/v1alpha1.ManagementAgent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ManagementAgentID *string `json:"managementAgentId,omitempty" tf:"management_agent_id,omitempty"`
+
+	// Reference to a ManagementAgent in managementagent to populate managementAgentId.
+	// +kubebuilder:validation:Optional
+	ManagementAgentIDRef *v1.Reference `json:"managementAgentIdRef,omitempty" tf:"-"`
+
+	// Selector for a ManagementAgent in managementagent to populate managementAgentId.
+	// +kubebuilder:validation:Optional
+	ManagementAgentIDSelector *v1.Selector `json:"managementAgentIdSelector,omitempty" tf:"-"`
 
 	// (Applicable when connector_type=PE) The OCID of the private endpoint.
 	// +kubebuilder:validation:Optional

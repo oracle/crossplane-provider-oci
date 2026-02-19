@@ -16,7 +16,9 @@ spec:
       isOffline: ${var.network_load_balancers_backend_sets_unified_backends_is_offline}
       name: ${var.network_load_balancers_backend_sets_unified_backends_name}
       port: ${var.network_load_balancers_backend_sets_unified_backends_port}
-      targetId: ${oci_cloud_guard_target.test_target.id}
+      targetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_target
       weight: ${var.network_load_balancers_backend_sets_unified_backends_weight}
     healthChecker:
     - dns:

@@ -1,0 +1,14 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceSoftwareUpdateAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancesoftwareupdateaction
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_software_update_action
+  name: test-bds-instance-software-update-action
+spec:
+  forProvider:
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    software_update_key: ${var.bds_instance_software_update_action_software_update_key}

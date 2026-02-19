@@ -1,0 +1,78 @@
+apiVersion: desktops.oci.upbound.io/v1alpha1
+kind: DesktopPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: desktops/v1alpha1/desktoppool
+  labels:
+    testing.upbound.io/example-name: test_desktop_pool
+  name: test-desktop-pool
+spec:
+  forProvider:
+    arePrivilegedUsers: ${var.desktop_pool_are_privileged_users}
+    areVolumesPreserved: ${var.desktop_pool_are_volumes_preserved}
+    availabilityDomain: ${var.desktop_pool_availability_domain}
+    availabilityPolicy:
+    - startSchedule:
+      - cronExpression: 0 10 8 ? * 2
+        timezone: America/Denver
+      stopSchedule:
+      - cronExpression: 0 20 18 ? * 6
+        timezone: America/Denver
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contactDetails: ${var.desktop_pool_contact_details}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.desktop_pool_description}
+    devicePolicy:
+    - audioMode: ${var.desktop_pool_device_policy_audio_mode}
+      cdmMode: ${var.desktop_pool_device_policy_cdm_mode}
+      clipboardMode: ${var.desktop_pool_device_policy_clipboard_mode}
+      isDisplayEnabled: ${var.desktop_pool_device_policy_is_display_enabled}
+      isKeyboardEnabled: ${var.desktop_pool_device_policy_is_keyboard_enabled}
+      isPointerEnabled: ${var.desktop_pool_device_policy_is_pointer_enabled}
+      isPrintingEnabled: ${var.desktop_pool_device_policy_is_printing_enabled}
+    displayName: ${var.desktop_pool_display_name}
+    freeformTags:
+      Department: Finance
+    image:
+    - imageIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_image
+      imageName: ${var.desktop_pool_image_image_name}
+      operatingSystem: ${var.desktop_pool_image_operating_system}
+    isStorageEnabled: ${var.desktop_pool_is_storage_enabled}
+    maximumSize: ${var.desktop_pool_maximum_size}
+    networkConfiguration:
+    - subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      vcnIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vcn
+    nsgIds: ${var.desktop_pool_nsg_ids}
+    privateAccessDetails:
+    - nsgIds: ${var.desktop_pool_private_access_details_nsg_ids}
+      privateIp: ${var.desktop_pool_private_access_details_private_ip}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    sessionLifecycleActions:
+    - disconnect:
+      - action: STOP
+        gracePeriodInMinutes: ${var.desktop_pool_session_lifecycle_actions_disconnect_grace_period_in_minutes}
+      inactivity:
+      - action: DISCONNECT
+        gracePeriodInMinutes: ${var.desktop_pool_session_lifecycle_actions_inactivity_grace_period_in_minutes}
+    shapeConfig:
+    - baselineOcpuUtilization: ${var.desktop_pool_shape_config_baseline_ocpu_utilization}
+      memoryInGbs: ${var.desktop_pool_shape_config_memory_in_gbs}
+      ocpus: ${var.desktop_pool_shape_config_ocpus}
+    shapeName: VM.Standard.E4.Flex
+    standbySize: ${var.desktop_pool_standby_size}
+    storageBackupPolicyId: ocid1.volumebackuppolicy.oc1.xxxxyyyyyzzzz
+    storageSizeInGbs: ${var.desktop_pool_storage_size_in_gbs}
+    timeStartScheduled: ${var.desktop_pool_time_start_scheduled}
+    timeStopScheduled: ${var.desktop_pool_time_stop_scheduled}
+    useDedicatedVmHost: ${var.desktop_pool_use_dedicated_vm_host}

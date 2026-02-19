@@ -1,0 +1,12 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsUnprocessedDataBucketManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsunprocesseddatabucketmanagement
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_unprocessed_data_bucket_management
+  name: test-log-analytics-unprocessed-data-bucket-management
+spec:
+  forProvider:
+    bucket: ${var.log_analytics_unprocessed_data_bucket_management_bucket}
+    namespace: ${var.log_analytics_unprocessed_data_bucket_management_namespace}

@@ -1,0 +1,19 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: RepositoryRef
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositoryref
+  labels:
+    testing.upbound.io/example-name: test_repository_ref
+  name: test-repository-ref
+spec:
+  forProvider:
+    commitId: ${oci_devops_commit.test_commit.id}
+    objectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_object
+    refName: ${var.repository_ref_ref_name}
+    refType: ${var.repository_ref_ref_type}
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository

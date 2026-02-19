@@ -1,0 +1,19 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: ProtectionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/protectionrule
+  labels:
+    testing.upbound.io/example-name: test_protection_rule
+  name: test-protection-rule
+spec:
+  forProvider:
+    action: DETECT
+    exclusions:
+      exclusions:
+      - example.com
+      target: REQUEST_COOKIES
+    key: ${var.key}
+    waasPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_waas_policy

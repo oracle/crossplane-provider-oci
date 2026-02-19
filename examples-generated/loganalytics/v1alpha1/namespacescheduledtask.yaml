@@ -1,0 +1,49 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceScheduledTask
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacescheduledtask
+  labels:
+    testing.upbound.io/example-name: test_namespace_scheduled_task
+  name: test-namespace-scheduled-task
+spec:
+  forProvider:
+    action:
+    - compartmentIdInSubtree: ${var.namespace_scheduled_task_action_compartment_id_in_subtree}
+      dataType: ${var.namespace_scheduled_task_action_data_type}
+      metricExtraction:
+      - compartmentId: ${var.compartment_id}
+        metricName: ${oci_monitoring_metric.test_metric.name}
+        namespace: ${var.namespace_scheduled_task_action_metric_extraction_namespace}
+        resourceGroup: ${var.namespace_scheduled_task_action_metric_extraction_resource_group}
+      purgeCompartmentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_compartment
+      purgeDuration: ${var.namespace_scheduled_task_action_purge_duration}
+      queryString: ${var.namespace_scheduled_task_action_query_string}
+      savedSearchId: ${oci_log_analytics_saved_search.test_saved_search.id}
+      templateDetails:
+      - templateId: ${oci_log_analytics_template.test_template.id}
+        templateParams:
+        - keyField: ${var.namespace_scheduled_task_action_template_details_template_params_key_field}
+          valueField: ${var.namespace_scheduled_task_action_template_details_template_params_value_field}
+      type: ${var.namespace_scheduled_task_action_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.namespace_scheduled_task_display_name}
+    freeformTags:
+      bar-key: value
+    kind: ${var.namespace_scheduled_task_kind}
+    namespace: ${var.namespace_scheduled_task_namespace}
+    savedSearchId: ${oci_log_analytics_saved_search.test_saved_search.id}
+    schedules:
+    - expression: ${var.namespace_scheduled_task_schedules_expression}
+      misfire_policy: ${var.namespace_scheduled_task_schedules_misfire_policy}
+      recurring_interval: ${var.namespace_scheduled_task_schedules_recurring_interval}
+      repeat_count: ${var.namespace_scheduled_task_schedules_repeat_count}
+      time_zone: ${var.namespace_scheduled_task_schedules_time_zone}
+      type: ${var.namespace_scheduled_task_schedules_type}
+    taskType: ${var.namespace_scheduled_task_task_type}

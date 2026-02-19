@@ -1,0 +1,36 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: NewsReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/newsreport
+  labels:
+    testing.upbound.io/example-name: test_news_report
+  name: test-news-report
+spec:
+  forProvider:
+    areChildCompartmentsIncluded: ${var.news_report_are_child_compartments_included}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contentTypes:
+    - actionableInsightsResources: ${var.news_report_content_types_actionable_insights_resources}
+      capacityPlanningResources: ${var.news_report_content_types_capacity_planning_resources}
+      sqlInsightsFleetAnalysisResources: ${var.news_report_content_types_sql_insights_fleet_analysis_resources}
+      sqlInsightsPerformanceDegradationResources: ${var.news_report_content_types_sql_insights_performance_degradation_resources}
+      sqlInsightsPlanChangesResources: ${var.news_report_content_types_sql_insights_plan_changes_resources}
+      sqlInsightsTopDatabasesResources: ${var.news_report_content_types_sql_insights_top_databases_resources}
+      sqlInsightsTopSqlByInsightsResources: ${var.news_report_content_types_sql_insights_top_sql_by_insights_resources}
+      sqlInsightsTopSqlResources: ${var.news_report_content_types_sql_insights_top_sql_resources}
+    dayOfWeek: ${var.news_report_day_of_week}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.news_report_description}
+    freeformTags:
+      bar-key: value
+    locale: ${var.news_report_locale}
+    matchRule: ${var.news_report_match_rule}
+    name: ${var.news_report_name}
+    newsFrequency: ${var.news_report_news_frequency}
+    onsTopicId: ${oci_opsi_ons_topic.test_ons_topic.id}
+    status: ${var.news_report_status}
+    tagFilters: ${var.news_report_tag_filters}

@@ -1,0 +1,22 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceNodeBackupConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancenodebackupconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_backup_configuration
+  name: test-bds-instance-node-backup-configuration
+spec:
+  forProvider:
+    backupType: ${var.bds_instance_node_backup_configuration_backup_type}
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    displayName: ${var.bds_instance_node_backup_configuration_display_name}
+    levelTypeDetails:
+    - levelType: ${var.bds_instance_node_backup_configuration_level_type_details_level_type}
+      nodeHostName: ${var.bds_instance_node_backup_configuration_level_type_details_node_host_name}
+      nodeType: ${var.bds_instance_node_backup_configuration_level_type_details_node_type}
+    numberOfBackupsToRetain: ${var.bds_instance_node_backup_configuration_number_of_backups_to_retain}
+    schedule: ${var.bds_instance_node_backup_configuration_schedule}
+    timezone: ${var.bds_instance_node_backup_configuration_timezone}

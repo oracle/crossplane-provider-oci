@@ -1,0 +1,24 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyTunnelInspectionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicytunnelinspectionrule
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_tunnel_inspection_rule
+  name: test-network-firewall-policy-tunnel-inspection-rule
+spec:
+  forProvider:
+    action: ${var.network_firewall_policy_tunnel_inspection_rule_action}
+    condition:
+    - destinationAddress: ${var.network_firewall_policy_tunnel_inspection_rule_condition_destination_address}
+      sourceAddress: ${var.network_firewall_policy_tunnel_inspection_rule_condition_source_address}
+    name: ${var.network_firewall_policy_tunnel_inspection_rule_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    position:
+    - afterRule: ${var.network_firewall_policy_tunnel_inspection_rule_position_after_rule}
+      beforeRule: ${var.network_firewall_policy_tunnel_inspection_rule_position_before_rule}
+    profile:
+    - mustReturnTrafficToSource: ${var.network_firewall_policy_tunnel_inspection_rule_profile_must_return_traffic_to_source}
+    protocol: ${var.network_firewall_policy_tunnel_inspection_rule_protocol}

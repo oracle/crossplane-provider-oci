@@ -1,0 +1,20 @@
+apiVersion: email.oci.upbound.io/v1alpha1
+kind: EmailDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: email/v1alpha1/emaildomain
+  labels:
+    testing.upbound.io/example-name: test_email_domain
+  name: test-email-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.email_domain_description}
+    domainVerificationId: ${oci_email_domain_verification.test_domain_verification.id}
+    freeformTags:
+      Department: Finance
+    name: ${var.email_domain_name}

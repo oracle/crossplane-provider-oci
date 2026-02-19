@@ -1,0 +1,29 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeAuditProfileManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safeauditprofilemanagement
+  labels:
+    testing.upbound.io/example-name: test_audit_profile_management
+  name: test-audit-profile-management
+spec:
+  forProvider:
+    changeRetentionTrigger: ${var.retention_trigger}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.audit_profile_description}
+    displayName: ${var.audit_profile_display_name}
+    freeformTags:
+      Department: Finance
+    isOverrideGlobalPaidUsage: ${var.audit_profile_is_override_global_paid_usage}
+    isOverrideGlobalRetentionSetting: true
+    isPaidUsageEnabled: ${var.audit_profile_is_paid_usage_enabled}
+    offlineMonths: ${var.audit_profile_offline_months}
+    onlineMonths: ${var.audit_profile_online_months}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target
+    targetType: ${var.audit_profile_target_type}

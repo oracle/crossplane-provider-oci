@@ -1,0 +1,28 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplate
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template
+  name: test-monitoring-template
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.monitoring_template_description}
+    destinations: ${var.monitoring_template_destinations}
+    displayName: ${var.monitoring_template_display_name}
+    freeformTags:
+      bar-key: value
+    isAlarmsEnabled: ${var.monitoring_template_is_alarms_enabled}
+    isSplitNotificationEnabled: ${var.monitoring_template_is_split_notification_enabled}
+    members:
+    - compositeType: ${var.monitoring_template_members_composite_type}
+      id: ${var.monitoring_template_members_id}
+      type: ${var.monitoring_template_members_type}
+    messageFormat: ${var.monitoring_template_message_format}
+    repeatNotificationDuration: ${var.monitoring_template_repeat_notification_duration}

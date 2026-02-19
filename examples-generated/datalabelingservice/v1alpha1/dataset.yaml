@@ -1,0 +1,47 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: Dataset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/dataset
+  labels:
+    testing.upbound.io/example-name: test_dataset
+  name: test-dataset
+spec:
+  forProvider:
+    annotationFormat: ${var.dataset_annotation_format}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    datasetFormatDetails:
+    - formatType: ${var.dataset_dataset_format_details_format_type}
+      textFileTypeMetadata:
+      - columnDelimiter: ${var.dataset_dataset_format_details_text_file_type_metadata_column_delimiter}
+        columnIndex: ${var.dataset_dataset_format_details_text_file_type_metadata_column_index}
+        columnName: ${var.dataset_dataset_format_details_text_file_type_metadata_column_name}
+        escapeCharacter: ${var.dataset_dataset_format_details_text_file_type_metadata_escape_character}
+        formatType: ${var.dataset_dataset_format_details_text_file_type_metadata_format_type}
+        lineDelimiter: ${var.dataset_dataset_format_details_text_file_type_metadata_line_delimiter}
+    datasetSourceDetails:
+    - bucket: ${var.dataset_dataset_source_details_bucket}
+      namespace: ${var.dataset_dataset_source_details_namespace}
+      prefix: ${var.dataset_dataset_source_details_prefix}
+      sourceType: ${var.dataset_dataset_source_details_source_type}
+    definedTags: ${var.dataset_defined_tags}
+    description: ${var.dataset_description}
+    displayName: ${var.dataset_display_name}
+    freeformTags: ${var.dataset_freeform_tags}
+    initialImportDatasetConfiguration:
+    - importFormat:
+      - name: ${var.dataset_initial_import_dataset_configuration_import_format_name}
+        version: ${var.dataset_initial_import_dataset_configuration_import_format_version}
+      importMetadataPath:
+      - bucket: ${var.dataset_initial_import_dataset_configuration_import_metadata_path_bucket}
+        namespace: ${var.dataset_initial_import_dataset_configuration_import_metadata_path_namespace}
+        path: ${var.dataset_initial_import_dataset_configuration_import_metadata_path_path}
+        sourceType: ${var.dataset_initial_import_dataset_configuration_import_metadata_path_source_type}
+    initialRecordGenerationConfiguration:
+    - {}
+    labelSet:
+    - items:
+      - name: ${var.dataset_label_set_items_name}
+    labelingInstructions: ${var.dataset_labeling_instructions}

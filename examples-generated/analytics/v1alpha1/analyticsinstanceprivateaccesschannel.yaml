@@ -1,0 +1,28 @@
+apiVersion: analytics.oci.upbound.io/v1alpha1
+kind: AnalyticsInstancePrivateAccessChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceprivateaccesschannel
+  labels:
+    testing.upbound.io/example-name: test_analytics_instance_private_access_channel
+  name: test-analytics-instance-private-access-channel
+spec:
+  forProvider:
+    analyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_analytics_instance
+    displayName: ${var.analytics_instance_private_access_channel_display_name}
+    networkSecurityGroupIds: ${var.analytics_instance_private_access_channel_network_security_group_ids}
+    privateSourceDnsZones:
+    - description: ${var.analytics_instance_private_access_channel_private_source_dns_zones_description}
+      dnsZone: ${var.analytics_instance_private_access_channel_private_source_dns_zones_dns_zone}
+    privateSourceScanHosts:
+    - description: ${var.analytics_instance_private_access_channel_private_source_scan_hosts_description}
+      scanHostname: ${var.analytics_instance_private_access_channel_private_source_scan_hosts_scan_hostname}
+      scanPort: ${var.analytics_instance_private_access_channel_private_source_scan_hosts_scan_port}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn

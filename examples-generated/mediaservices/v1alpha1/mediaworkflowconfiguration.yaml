@@ -1,0 +1,25 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: MediaWorkflowConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/mediaworkflowconfiguration
+  labels:
+    testing.upbound.io/example-name: test_media_workflow_configuration
+  name: test-media-workflow-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.media_workflow_configuration_display_name}
+    freeformTags:
+      bar-key: value
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.media_workflow_configuration_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.media_workflow_configuration_locks_time_created}
+      type: ${var.media_workflow_configuration_locks_type}
+    parameters: ${var.media_workflow_configuration_parameters}

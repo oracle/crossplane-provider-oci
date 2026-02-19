@@ -1,0 +1,25 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicySecurityRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicysecurityrule
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_security_rule
+  name: test-network-firewall-policy-security-rule
+spec:
+  forProvider:
+    action: ${var.network_firewall_policy_security_rule_action}
+    condition:
+    - application: ${var.network_firewall_policy_security_rule_condition_application}
+      destinationAddress: ${var.network_firewall_policy_security_rule_condition_destination_address}
+      service: ${var.network_firewall_policy_security_rule_condition_service}
+      sourceAddress: ${var.network_firewall_policy_security_rule_condition_source_address}
+      url: ${var.network_firewall_policy_security_rule_condition_url}
+    inspection: ${var.network_firewall_policy_security_rule_inspection}
+    name: ${var.network_firewall_policy_security_rule_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    position:
+    - afterRule: ${var.network_firewall_policy_security_rule_position_after_rule}
+      beforeRule: ${var.network_firewall_policy_security_rule_position_before_rule}

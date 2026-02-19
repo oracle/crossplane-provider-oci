@@ -1,0 +1,18 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyService
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicyservice
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_service
+  name: test-network-firewall-policy-service
+spec:
+  forProvider:
+    name: ${var.network_firewall_policy_service_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    portRanges:
+    - maximumPort: ${var.network_firewall_policy_service_port_ranges_maximum_port}
+      minimumPort: ${var.network_firewall_policy_service_port_ranges_minimum_port}
+    type: ${var.network_firewall_policy_service_type}

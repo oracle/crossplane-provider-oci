@@ -1,0 +1,77 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource
+  name: test-monitored-resource
+spec:
+  forProvider:
+    additionalAliases:
+    - credential:
+      - name: ${var.monitored_resource_additional_aliases_credential_name}
+        service: ${var.monitored_resource_additional_aliases_credential_service}
+        source: ${var.monitored_resource_additional_aliases_credential_source}
+      name: ${var.monitored_resource_additional_aliases_name}
+      source: ${var.monitored_resource_additional_aliases_source}
+    additionalCredentials:
+    - credentialType: ${var.monitored_resource_additional_credentials_credential_type}
+      description: ${var.monitored_resource_additional_credentials_description}
+      keyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
+      name: ${var.monitored_resource_additional_credentials_name}
+      properties:
+      - name: ${var.monitored_resource_additional_credentials_properties_name}
+        value: ${var.monitored_resource_additional_credentials_properties_value}
+      source: ${var.monitored_resource_additional_credentials_source}
+      type: ${var.monitored_resource_additional_credentials_type}
+    aliases:
+    - credential:
+      - name: ${var.monitored_resource_aliases_credential_name}
+        service: ${var.monitored_resource_aliases_credential_service}
+        source: ${var.monitored_resource_aliases_credential_source}
+      name: ${var.monitored_resource_aliases_name}
+      source: ${var.monitored_resource_aliases_source}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    credentials:
+    - credentialType: ${var.monitored_resource_credentials_credential_type}
+      description: ${var.monitored_resource_credentials_description}
+      keyId: ${var.monitored_resource_credentials_key_id}
+      name: ${var.monitored_resource_credentials_name}
+      properties:
+      - name: ${var.monitored_resource_credentials_properties_name}
+        value: ${var.monitored_resource_credentials_properties_value}
+      source: ${var.monitored_resource_credentials_source}
+      type: ${var.monitored_resource_credentials_type}
+    databaseConnectionDetails:
+    - connectorId: ${var.monitored_resource_database_connector_id}
+      dbId: ${var.monitored_resource_database_id}
+      dbUniqueName: ${var.monitored_resource_database_connection_details_db_unique_name}
+      port: ${var.monitored_resource_database_connection_details_port}
+      protocol: ${var.monitored_resource_database_connection_details_protocol}
+      serviceName: ${var.monitored_resource_database_service_name}
+      sslSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.monitored_resource_display_name}
+    externalId: ${oci_stack_monitoring_external.test_external.id}
+    externalResourceId: ${var.monitored_resource_external_resource_id}
+    freeformTags:
+      bar-key: value
+    hostName: ${var.monitored_resource_host_name}
+    license: ${var.monitored_resource_license}
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    name: ${var.monitored_resource_name}
+    properties:
+    - name: ${var.monitored_resource_properties_name}
+      value: ${var.monitored_resource_properties_value}
+    resourceTimeZone: ${var.monitored_resource_resource_time_zone}
+    type: ${var.monitored_resource_type}

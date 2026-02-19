@@ -1,0 +1,37 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Trigger
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/trigger
+  labels:
+    testing.upbound.io/example-name: test_trigger
+  name: test-trigger
+spec:
+  forProvider:
+    actions:
+    - buildPipelineIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_build_pipeline
+      filter:
+      - events: ${var.trigger_actions_filter_events}
+        include:
+        - baseRef: ${var.trigger_actions_filter_include_base_ref}
+          headRef: ${var.trigger_actions_filter_include_head_ref}
+          repositoryNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_repository
+        triggerSource: ${var.trigger_actions_filter_trigger_source}
+      type: ${var.trigger_actions_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.trigger_description}
+    displayName: ${var.trigger_display_name}
+    freeformTags:
+      bar-key: value
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository
+    triggerSource: ${var.trigger_trigger_source}

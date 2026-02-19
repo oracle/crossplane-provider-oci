@@ -1,0 +1,19 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsCapacityReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdscapacityreport
+  labels:
+    testing.upbound.io/example-name: test_bds_capacity_report
+  name: test-bds-capacity-report
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    shapeAvailabilities:
+    - shape: ${var.bds_capacity_report_shape_availabilities_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_capacity_report_shape_availabilities_shape_config_memory_in_gbs}
+        nvmes: ${var.bds_capacity_report_shape_availabilities_shape_config_nvmes}
+        ocpus: ${var.bds_capacity_report_shape_availabilities_shape_config_ocpus}

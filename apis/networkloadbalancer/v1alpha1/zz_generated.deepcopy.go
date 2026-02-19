@@ -108,6 +108,16 @@ func (in *BackendInitParameters) DeepCopyInto(out *BackendInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.TargetIDRef != nil {
+		in, out := &in.TargetIDRef, &out.TargetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetIDSelector != nil {
+		in, out := &in.TargetIDSelector, &out.TargetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Weight != nil {
 		in, out := &in.Weight, &out.Weight
 		*out = new(float64)
@@ -294,6 +304,16 @@ func (in *BackendParameters) DeepCopyInto(out *BackendParameters) {
 		in, out := &in.TargetID, &out.TargetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetIDRef != nil {
+		in, out := &in.TargetIDRef, &out.TargetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetIDSelector != nil {
+		in, out := &in.TargetIDSelector, &out.TargetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Weight != nil {
 		in, out := &in.Weight, &out.Weight
@@ -2332,6 +2352,16 @@ func (in *NetworkLoadBalancersBackendSetsUnifiedBackendsInitParameters) DeepCopy
 		*out = new(string)
 		**out = **in
 	}
+	if in.TargetIDRef != nil {
+		in, out := &in.TargetIDRef, &out.TargetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetIDSelector != nil {
+		in, out := &in.TargetIDSelector, &out.TargetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Weight != nil {
 		in, out := &in.Weight, &out.Weight
 		*out = new(float64)
@@ -2441,6 +2471,16 @@ func (in *NetworkLoadBalancersBackendSetsUnifiedBackendsParameters) DeepCopyInto
 		in, out := &in.TargetID, &out.TargetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.TargetIDRef != nil {
+		in, out := &in.TargetIDRef, &out.TargetIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.TargetIDSelector != nil {
+		in, out := &in.TargetIDSelector, &out.TargetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Weight != nil {
 		in, out := &in.Weight, &out.Weight

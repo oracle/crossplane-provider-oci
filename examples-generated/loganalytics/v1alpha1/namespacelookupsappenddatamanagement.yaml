@@ -1,0 +1,16 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceLookupsAppendDataManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacelookupsappenddatamanagement
+  labels:
+    testing.upbound.io/example-name: test_namespace_lookups_append_data_management
+  name: test-namespace-lookups-append-data-management
+spec:
+  forProvider:
+    append_lookup_file_body: ${var.namespace_lookups_append_data_management_append_lookup_file_body}
+    charEncoding: ${var.namespace_lookups_append_data_management_char_encoding}
+    expect: ${var.namespace_lookups_append_data_management_expect}
+    isForce: ${var.namespace_lookups_append_data_management_is_force}
+    lookupName: ${var.namespace_lookups_append_data_management_lookup_name}
+    namespace: ${var.namespace_lookups_append_data_management_namespace}

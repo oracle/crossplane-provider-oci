@@ -1,0 +1,38 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: Query
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/query
+  labels:
+    testing.upbound.io/example-name: test_query
+  name: test-query
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    queryDefinition:
+    - costAnalysisUi:
+      - graph: ${var.query_query_definition_cost_analysis_ui_graph}
+        isCumulativeGraph: ${var.query_query_definition_cost_analysis_ui_is_cumulative_graph}
+      displayName: ${var.query_query_definition_display_name}
+      reportQuery:
+      - compartmentDepth: ${var.query_query_definition_report_query_compartment_depth}
+        dateRangeName: ${var.query_query_definition_report_query_date_range_name}
+        filter: ${var.query_query_definition_report_query_filter}
+        forecast:
+        - forecastType: ${var.query_query_definition_report_query_forecast_forecast_type}
+          timeForecastEnded: ${var.query_query_definition_report_query_forecast_time_forecast_ended}
+          timeForecastStarted: ${var.query_query_definition_report_query_forecast_time_forecast_started}
+        granularity: ${var.query_query_definition_report_query_granularity}
+        groupBy: ${var.query_query_definition_report_query_group_by}
+        groupByTag:
+        - key: ${var.query_query_definition_report_query_group_by_tag_key}
+          namespace: ${var.query_query_definition_report_query_group_by_tag_namespace}
+          value: ${var.query_query_definition_report_query_group_by_tag_value}
+        isAggregateByTime: ${var.query_query_definition_report_query_is_aggregate_by_time}
+        queryType: ${var.query_query_definition_report_query_query_type}
+        tenantId: ${oci_metering_computation_tenant.test_tenant.id}
+        timeUsageEnded: ${var.query_query_definition_report_query_time_usage_ended}
+        timeUsageStarted: ${var.query_query_definition_report_query_time_usage_started}
+      version: ${var.query_query_definition_version}

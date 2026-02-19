@@ -12,13 +12,100 @@ import (
 	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
+	apisresolver "github.com/oracle/provider-oci/internal/apis"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
-
-	// ResolveReferences of this Record.
-	apisresolver "github.com/oracle/provider-oci/internal/apis"
 )
 
+func (mg *ActionCreateZoneFromZoneFile) ResolveReferences( // ResolveReferences of this ActionCreateZoneFromZoneFile.
+	ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "View", "ViewList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ViewID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ViewIDRef,
+			Selector:     mg.Spec.ForProvider.ViewIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ViewID")
+	}
+	mg.Spec.ForProvider.ViewID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ViewIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "View", "ViewList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ViewID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ViewIDRef,
+			Selector:     mg.Spec.InitProvider.ViewIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ViewID")
+	}
+	mg.Spec.InitProvider.ViewID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ViewIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Record.
 func (mg *Record) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
 	var l xpresource.ManagedList
@@ -895,6 +982,106 @@ func (mg *Zone) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.ViewID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ViewIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ZonePromoteDnssecKeyVersion.
+func (mg *ZonePromoteDnssecKeyVersion) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "Zone", "ZoneList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ZoneIDRef,
+			Selector:     mg.Spec.ForProvider.ZoneIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ZoneID")
+	}
+	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "Zone", "ZoneList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ZoneIDRef,
+			Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ZoneStageDnssecKeyVersion.
+func (mg *ZoneStageDnssecKeyVersion) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "Zone", "ZoneList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.ForProvider.ZoneIDRef,
+			Selector:     mg.Spec.ForProvider.ZoneIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ZoneID")
+	}
+	mg.Spec.ForProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ZoneIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("dns.oci.upbound.io", "v1alpha1", "Zone", "ZoneList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.ZoneIDRef,
+			Selector:     mg.Spec.InitProvider.ZoneIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ZoneID")
+	}
+	mg.Spec.InitProvider.ZoneID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ZoneIDRef = rsp.ResolvedReference
 
 	return nil
 }

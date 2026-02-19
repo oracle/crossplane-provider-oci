@@ -1,0 +1,10 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: RunbookVersion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/runbookversion
+  labels:
+    testing.upbound.io/example-name: test_runbook_version
+  name: test-runbook-version
+spec:
+  forProvider: {}

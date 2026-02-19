@@ -1,0 +1,24 @@
+apiVersion: nosql.oci.upbound.io/v1alpha1
+kind: Table
+metadata:
+  annotations:
+    meta.upbound.io/example-id: nosql/v1alpha1/table
+  labels:
+    testing.upbound.io/example-name: test_table
+  name: test-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ddlStatement: ${var.table_ddl_statement}
+    definedTags: ${var.table_defined_tags}
+    freeformTags:
+      bar-key: value
+    isAutoReclaimable: ${var.table_is_auto_reclaimable}
+    name: ${var.table_name}
+    tableLimits:
+    - capacityMode: ${var.table_table_limits_capacity_mode}
+      maxReadUnits: ${var.table_table_limits_max_read_units}
+      maxStorageInGbs: ${var.table_table_limits_max_storage_in_gbs}
+      maxWriteUnits: ${var.table_table_limits_max_write_units}

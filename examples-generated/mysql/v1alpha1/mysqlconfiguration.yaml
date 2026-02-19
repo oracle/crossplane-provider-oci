@@ -19,7 +19,9 @@ spec:
       bar-key: value
     initVariables:
     - lowerCaseTableNames: ${var.mysql_configuration_init_variables_lower_case_table_names}
-    parentConfigurationId: ${oci_audit_configuration.test_configuration.id}
+    parentConfigurationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_configuration
     shapeName: ${oci_mysql_shape.test_shape.name}
     variables:
     - autoIncrementIncrement: ${var.mysql_configuration_variables_auto_increment_increment}

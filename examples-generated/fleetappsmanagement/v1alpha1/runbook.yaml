@@ -1,0 +1,152 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Runbook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/runbook
+  labels:
+    testing.upbound.io/example-name: test_runbook
+  name: test-runbook
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.runbook_description}
+    displayName: ${var.runbook_display_name}
+    estimatedTime: ${var.runbook_estimated_time}
+    freeformTags:
+      bar-key: value
+    isDefault: ${var.runbook_is_default}
+    isSudoAccessNeeded: ${var.runbook_is_sudo_access_needed}
+    operation: ${var.runbook_operation}
+    osType: ${var.runbook_os_type}
+    platform: ${var.runbook_platform}
+    runbookVersion:
+    - executionWorkflowDetails:
+      - workflow:
+        - groupNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_group
+          steps:
+          - groupNameSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_group
+            stepName: ${var.runbook_runbook_version_execution_workflow_details_workflow_steps_step_name}
+            steps: ${var.runbook_runbook_version_execution_workflow_details_workflow_steps_steps}
+            type: ${var.runbook_runbook_version_execution_workflow_details_workflow_steps_type}
+          type: ${var.runbook_runbook_version_execution_workflow_details_workflow_type}
+      groups:
+      - name: ${var.runbook_runbook_version_groups_name}
+        properties:
+        - actionOnFailure: ${var.runbook_runbook_version_groups_properties_action_on_failure}
+          notificationPreferences:
+          - shouldNotifyOnPause: ${var.runbook_runbook_version_groups_properties_notification_preferences_should_notify_on_pause}
+            shouldNotifyOnTaskFailure: ${var.runbook_runbook_version_groups_properties_notification_preferences_should_notify_on_task_failure}
+            shouldNotifyOnTaskSuccess: ${var.runbook_runbook_version_groups_properties_notification_preferences_should_notify_on_task_success}
+          pauseDetails:
+          - durationInMinutes: ${var.runbook_runbook_version_groups_properties_pause_details_duration_in_minutes}
+            kind: ${var.runbook_runbook_version_groups_properties_pause_details_kind}
+          preCondition: ${var.runbook_runbook_version_groups_properties_pre_condition}
+          runOn:
+          - condition: ${var.runbook_runbook_version_groups_properties_run_on_condition}
+            host: ${var.runbook_runbook_version_groups_properties_run_on_host}
+            kind: ${var.runbook_runbook_version_groups_properties_run_on_kind}
+            previousTaskInstanceDetails:
+            - outputVariableDetails:
+              - outputVariableName: ${var.runbook_runbook_version_groups_properties_run_on_previous_task_instance_details_output_variable_details_output_variable_name}
+                stepName: ${var.runbook_runbook_version_groups_properties_run_on_previous_task_instance_details_output_variable_details_step_name}
+              resourceId: ${oci_cloud_guard_resource.test_resource.id}
+              resourceType: ${var.runbook_runbook_version_groups_properties_run_on_previous_task_instance_details_resource_type}
+        type: ${var.runbook_runbook_version_groups_type}
+      isLatest: ${var.runbook_runbook_version_is_latest}
+      rollbackWorkflowDetails:
+      - scope: ${var.runbook_runbook_version_rollback_workflow_details_scope}
+        workflow:
+        - groupNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_group
+          steps:
+          - groupNameSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_group
+            stepName: ${var.runbook_runbook_version_rollback_workflow_details_workflow_steps_step_name}
+            steps: ${var.runbook_runbook_version_rollback_workflow_details_workflow_steps_steps}
+            type: ${var.runbook_runbook_version_rollback_workflow_details_workflow_steps_type}
+          type: ${var.runbook_runbook_version_rollback_workflow_details_workflow_type}
+      tasks:
+      - outputVariableMappings:
+        - name: ${var.runbook_runbook_version_tasks_output_variable_mappings_name}
+          outputVariableDetails:
+          - outputVariableName: ${var.runbook_runbook_version_tasks_output_variable_mappings_output_variable_details_output_variable_name}
+            stepName: ${var.runbook_runbook_version_tasks_output_variable_mappings_output_variable_details_step_name}
+        stepName: ${var.runbook_runbook_version_tasks_step_name}
+        stepProperties:
+        - actionOnFailure: ${var.runbook_runbook_version_tasks_step_properties_action_on_failure}
+          notificationPreferences:
+          - shouldNotifyOnPause: ${var.runbook_runbook_version_tasks_step_properties_notification_preferences_should_notify_on_pause}
+            shouldNotifyOnTaskFailure: ${var.runbook_runbook_version_tasks_step_properties_notification_preferences_should_notify_on_task_failure}
+            shouldNotifyOnTaskSuccess: ${var.runbook_runbook_version_tasks_step_properties_notification_preferences_should_notify_on_task_success}
+          pauseDetails:
+          - durationInMinutes: ${var.runbook_runbook_version_tasks_step_properties_pause_details_duration_in_minutes}
+            kind: ${var.runbook_runbook_version_tasks_step_properties_pause_details_kind}
+          preCondition: ${var.runbook_runbook_version_tasks_step_properties_pre_condition}
+          runOn:
+          - condition: ${var.runbook_runbook_version_tasks_step_properties_run_on_condition}
+            host: ${var.runbook_runbook_version_tasks_step_properties_run_on_host}
+            kind: ${var.runbook_runbook_version_tasks_step_properties_run_on_kind}
+            previousTaskInstanceDetails:
+            - outputVariableDetails:
+              - outputVariableName: ${var.runbook_runbook_version_tasks_step_properties_run_on_previous_task_instance_details_output_variable_details_output_variable_name}
+                stepName: ${var.runbook_runbook_version_tasks_step_properties_run_on_previous_task_instance_details_output_variable_details_step_name}
+              resourceId: ${oci_cloud_guard_resource.test_resource.id}
+              resourceType: ${var.runbook_runbook_version_tasks_step_properties_run_on_previous_task_instance_details_resource_type}
+        taskRecordDetails:
+        - description: ${var.runbook_runbook_version_tasks_task_record_details_description}
+          executionDetails:
+          - catalogIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_catalog
+            command: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_command}
+            configFile: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_config_file}
+            content:
+            - bucket: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_content_bucket}
+              catalogIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: test_catalog
+              checksum: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_content_checksum}
+              namespace: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_content_namespace}
+              object: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_content_object}
+              sourceType: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_content_source_type}
+            credentials:
+            - displayName: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_credentials_display_name}
+              id: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_credentials_id}
+            endpoint: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_endpoint}
+            executionType: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_execution_type}
+            isExecutableContent: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_is_executable_content}
+            isLocked: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_is_locked}
+            isReadOutputVariableEnabled: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_is_read_output_variable_enabled}
+            targetCompartmentIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_compartment
+            variables:
+            - inputVariables:
+              - description: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_variables_input_variables_description}
+                name: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_variables_input_variables_name}
+                type: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_variables_input_variables_type}
+              outputVariables: ${var.runbook_runbook_version_tasks_task_record_details_execution_details_variables_output_variables}
+          isApplySubjectTask: ${var.runbook_runbook_version_tasks_task_record_details_is_apply_subject_task}
+          isCopyToLibraryEnabled: ${var.runbook_runbook_version_tasks_task_record_details_is_copy_to_library_enabled}
+          isDiscoveryOutputTask: ${var.runbook_runbook_version_tasks_task_record_details_is_discovery_output_task}
+          name: ${var.runbook_runbook_version_tasks_task_record_details_name}
+          osType: ${var.runbook_runbook_version_tasks_task_record_details_os_type}
+          platform: ${var.runbook_runbook_version_tasks_task_record_details_platform}
+          properties:
+          - numRetries: ${var.runbook_runbook_version_tasks_task_record_details_properties_num_retries}
+            timeoutInSeconds: ${var.runbook_runbook_version_tasks_task_record_details_properties_timeout_in_seconds}
+          scope: ${var.runbook_runbook_version_tasks_task_record_details_scope}
+          taskRecordIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_task_record
+      version: ${var.runbook_runbook_version_version}

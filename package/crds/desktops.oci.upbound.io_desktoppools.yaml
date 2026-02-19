@@ -1,0 +1,2006 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: desktoppools.desktops.oci.upbound.io
+spec:
+  group: desktops.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DesktopPool
+    listKind: DesktopPoolList
+    plural: desktoppools
+    singular: desktoppool
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DesktopPool is the Schema for the DesktopPools API. Provides
+          the Desktop Pool resource in Oracle Cloud Infrastructure Desktops service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DesktopPoolSpec defines the desired state of DesktopPool
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  arePrivilegedUsers:
+                    description: Indicates whether desktop pool users have administrative
+                      privileges on their desktop.
+                    type: boolean
+                  areVolumesPreserved:
+                    description: (Updatable) Indicates whether the volumes are preserved
+                      when a desktop pool is deleted. Default value is false.
+                    type: boolean
+                  availabilityDomain:
+                    description: The availability domain of the desktop pool.
+                    type: string
+                  availabilityPolicy:
+                    description: (Updatable) Provides the start and stop schedule
+                      information for desktop availability of the desktop pool. Use
+                      availability_policy { } to not set a schedule.
+                    items:
+                      properties:
+                        startSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                        stopSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment which will
+                      contain the desktop pool.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  contactDetails:
+                    description: (Updatable) Contact information of the desktop pool
+                      administrator. Avoid entering confidential information.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user friendly description providing
+                      additional information about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  devicePolicy:
+                    description: (Updatable) Provides the settings for desktop and
+                      client device options, such as audio in and out, client drive
+                      mapping, and clipboard access.
+                    items:
+                      properties:
+                        audioMode:
+                          description: '(Updatable) The audio mode. NONE: No access
+                            to the local audio devices is permitted. TODESKTOP: The
+                            user may record audio on their desktop.  FROMDESKTOP:
+                            The user may play audio on their desktop. FULL: The user
+                            may play and record audio on their desktop.'
+                          type: string
+                        cdmMode:
+                          description: '(Updatable) The client local drive access
+                            mode. NONE: No access to local drives permitted. READONLY:
+                            The user may read from local drives on their desktop.
+                            FULL: The user may read from and write to their local
+                            drives on their desktop.'
+                          type: string
+                        clipboardMode:
+                          description: '(Updatable) The clipboard mode. NONE: No access
+                            to the local clipboard is permitted. TODESKTOP: The clipboard
+                            can be used to transfer data to the desktop only.  FROMDESKTOP:
+                            The clipboard can be used to transfer data from the desktop
+                            only. FULL: The clipboard can be used to transfer data
+                            to and from the desktop.'
+                          type: string
+                        isDisplayEnabled:
+                          description: (Updatable) Indicates whether the display is
+                            enabled.
+                          type: boolean
+                        isKeyboardEnabled:
+                          description: (Updatable) Indicates whether the keyboard
+                            is enabled.
+                          type: boolean
+                        isPointerEnabled:
+                          description: (Updatable) Indicates whether the pointer is
+                            enabled.
+                          type: boolean
+                        isPrintingEnabled:
+                          description: (Updatable) Indicates whether printing is enabled.
+                          type: boolean
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) A user friendly display name. Avoid entering
+                      confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  image:
+                    description: Provides information about the desktop image.
+                    items:
+                      properties:
+                        imageId:
+                          description: The OCID of the desktop image.
+                          type: string
+                        imageIdRef:
+                          description: Reference to a Image in compute to populate
+                            imageId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        imageIdSelector:
+                          description: Selector for a Image in compute to populate
+                            imageId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        imageName:
+                          description: The name of the desktop image.
+                          type: string
+                        operatingSystem:
+                          description: The operating system of the desktop image,
+                            e.g. "Oracle Linux", "Windows".
+                          type: string
+                      type: object
+                    type: array
+                  isStorageEnabled:
+                    description: Indicates whether storage is enabled for the desktop
+                      pool.
+                    type: boolean
+                  maximumSize:
+                    description: (Updatable) The maximum number of desktops permitted
+                      in the desktop pool.
+                    type: number
+                  networkConfiguration:
+                    description: Provides information about the network configuration
+                      of the desktop pool.
+                    items:
+                      properties:
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        vcnId:
+                          description: The OCID of the customer VCN.
+                          type: string
+                        vcnIdRef:
+                          description: Reference to a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        vcnIdSelector:
+                          description: Selector for a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  nsgIds:
+                    description: A list of network security groups for the private
+                      access.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  privateAccessDetails:
+                    description: The details of the desktop's private access network
+                      connectivity to be set up for the desktop pool.
+                    items:
+                      properties:
+                        nsgIds:
+                          description: A list of network security groups for the private
+                            access.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: The IPv4 address from the provided Oracle Cloud
+                            Infrastructure subnet which needs to be assigned to the
+                            VNIC. If not provided, it will be auto-assigned with an
+                            available IPv4 address from the subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  sessionLifecycleActions:
+                    description: The details of action to be triggered in case of
+                      inactivity or disconnect
+                    items:
+                      properties:
+                        disconnect:
+                          description: (Updatable) Action and grace period for disconnect.
+                            Session disconnect can not be used together with an availability_policy
+                            schedule.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                        inactivity:
+                          description: (Updatable) Action and grace period for inactivity
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  shapeConfig:
+                    description: The compute instance shape configuration requested
+                      for each desktop in the desktop pool.
+                    items:
+                      properties:
+                        baselineOcpuUtilization:
+                          description: 'The baseline OCPU utilization for a subcore
+                            burstable VM instance used for each desktop compute instance
+                            in the desktop pool. Leave this attribute blank for a
+                            non-burstable instance, or explicitly specify non-burstable
+                            with BASELINE_1_1. The following values are supported:'
+                          type: string
+                        memoryInGbs:
+                          description: The total amount of memory available in gigabytes
+                            for each desktop compute instance in the desktop pool.
+                          type: string
+                        ocpus:
+                          description: The total number of OCPUs available for each
+                            desktop compute instance in the desktop pool.
+                          type: string
+                      type: object
+                    type: array
+                  shapeName:
+                    description: The shape of the desktop pool.
+                    type: string
+                  standbySize:
+                    description: (Updatable) The maximum number of standby desktops
+                      available in the desktop pool.
+                    type: number
+                  storageBackupPolicyId:
+                    description: The backup policy OCID of the storage.
+                    type: string
+                  storageSizeInGbs:
+                    description: The size in GBs of the storage for the desktop pool.
+                    type: number
+                  timeStartScheduled:
+                    description: (Updatable) The start time of the desktop pool.
+                    type: string
+                  timeStopScheduled:
+                    description: (Updatable) The stop time of the desktop pool.
+                    type: string
+                  useDedicatedVmHost:
+                    description: Indicates whether the desktop pool uses dedicated
+                      virtual machine hosts.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  arePrivilegedUsers:
+                    description: Indicates whether desktop pool users have administrative
+                      privileges on their desktop.
+                    type: boolean
+                  areVolumesPreserved:
+                    description: (Updatable) Indicates whether the volumes are preserved
+                      when a desktop pool is deleted. Default value is false.
+                    type: boolean
+                  availabilityDomain:
+                    description: The availability domain of the desktop pool.
+                    type: string
+                  availabilityPolicy:
+                    description: (Updatable) Provides the start and stop schedule
+                      information for desktop availability of the desktop pool. Use
+                      availability_policy { } to not set a schedule.
+                    items:
+                      properties:
+                        startSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                        stopSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment which will
+                      contain the desktop pool.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  contactDetails:
+                    description: (Updatable) Contact information of the desktop pool
+                      administrator. Avoid entering confidential information.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user friendly description providing
+                      additional information about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  devicePolicy:
+                    description: (Updatable) Provides the settings for desktop and
+                      client device options, such as audio in and out, client drive
+                      mapping, and clipboard access.
+                    items:
+                      properties:
+                        audioMode:
+                          description: '(Updatable) The audio mode. NONE: No access
+                            to the local audio devices is permitted. TODESKTOP: The
+                            user may record audio on their desktop.  FROMDESKTOP:
+                            The user may play audio on their desktop. FULL: The user
+                            may play and record audio on their desktop.'
+                          type: string
+                        cdmMode:
+                          description: '(Updatable) The client local drive access
+                            mode. NONE: No access to local drives permitted. READONLY:
+                            The user may read from local drives on their desktop.
+                            FULL: The user may read from and write to their local
+                            drives on their desktop.'
+                          type: string
+                        clipboardMode:
+                          description: '(Updatable) The clipboard mode. NONE: No access
+                            to the local clipboard is permitted. TODESKTOP: The clipboard
+                            can be used to transfer data to the desktop only.  FROMDESKTOP:
+                            The clipboard can be used to transfer data from the desktop
+                            only. FULL: The clipboard can be used to transfer data
+                            to and from the desktop.'
+                          type: string
+                        isDisplayEnabled:
+                          description: (Updatable) Indicates whether the display is
+                            enabled.
+                          type: boolean
+                        isKeyboardEnabled:
+                          description: (Updatable) Indicates whether the keyboard
+                            is enabled.
+                          type: boolean
+                        isPointerEnabled:
+                          description: (Updatable) Indicates whether the pointer is
+                            enabled.
+                          type: boolean
+                        isPrintingEnabled:
+                          description: (Updatable) Indicates whether printing is enabled.
+                          type: boolean
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) A user friendly display name. Avoid entering
+                      confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  image:
+                    description: Provides information about the desktop image.
+                    items:
+                      properties:
+                        imageId:
+                          description: The OCID of the desktop image.
+                          type: string
+                        imageIdRef:
+                          description: Reference to a Image in compute to populate
+                            imageId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        imageIdSelector:
+                          description: Selector for a Image in compute to populate
+                            imageId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        imageName:
+                          description: The name of the desktop image.
+                          type: string
+                        operatingSystem:
+                          description: The operating system of the desktop image,
+                            e.g. "Oracle Linux", "Windows".
+                          type: string
+                      type: object
+                    type: array
+                  isStorageEnabled:
+                    description: Indicates whether storage is enabled for the desktop
+                      pool.
+                    type: boolean
+                  maximumSize:
+                    description: (Updatable) The maximum number of desktops permitted
+                      in the desktop pool.
+                    type: number
+                  networkConfiguration:
+                    description: Provides information about the network configuration
+                      of the desktop pool.
+                    items:
+                      properties:
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        vcnId:
+                          description: The OCID of the customer VCN.
+                          type: string
+                        vcnIdRef:
+                          description: Reference to a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        vcnIdSelector:
+                          description: Selector for a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  nsgIds:
+                    description: A list of network security groups for the private
+                      access.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  privateAccessDetails:
+                    description: The details of the desktop's private access network
+                      connectivity to be set up for the desktop pool.
+                    items:
+                      properties:
+                        nsgIds:
+                          description: A list of network security groups for the private
+                            access.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: The IPv4 address from the provided Oracle Cloud
+                            Infrastructure subnet which needs to be assigned to the
+                            VNIC. If not provided, it will be auto-assigned with an
+                            available IPv4 address from the subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  sessionLifecycleActions:
+                    description: The details of action to be triggered in case of
+                      inactivity or disconnect
+                    items:
+                      properties:
+                        disconnect:
+                          description: (Updatable) Action and grace period for disconnect.
+                            Session disconnect can not be used together with an availability_policy
+                            schedule.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                        inactivity:
+                          description: (Updatable) Action and grace period for inactivity
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  shapeConfig:
+                    description: The compute instance shape configuration requested
+                      for each desktop in the desktop pool.
+                    items:
+                      properties:
+                        baselineOcpuUtilization:
+                          description: 'The baseline OCPU utilization for a subcore
+                            burstable VM instance used for each desktop compute instance
+                            in the desktop pool. Leave this attribute blank for a
+                            non-burstable instance, or explicitly specify non-burstable
+                            with BASELINE_1_1. The following values are supported:'
+                          type: string
+                        memoryInGbs:
+                          description: The total amount of memory available in gigabytes
+                            for each desktop compute instance in the desktop pool.
+                          type: string
+                        ocpus:
+                          description: The total number of OCPUs available for each
+                            desktop compute instance in the desktop pool.
+                          type: string
+                      type: object
+                    type: array
+                  shapeName:
+                    description: The shape of the desktop pool.
+                    type: string
+                  standbySize:
+                    description: (Updatable) The maximum number of standby desktops
+                      available in the desktop pool.
+                    type: number
+                  storageBackupPolicyId:
+                    description: The backup policy OCID of the storage.
+                    type: string
+                  storageSizeInGbs:
+                    description: The size in GBs of the storage for the desktop pool.
+                    type: number
+                  timeStartScheduled:
+                    description: (Updatable) The start time of the desktop pool.
+                    type: string
+                  timeStopScheduled:
+                    description: (Updatable) The stop time of the desktop pool.
+                    type: string
+                  useDedicatedVmHost:
+                    description: Indicates whether the desktop pool uses dedicated
+                      virtual machine hosts.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.arePrivilegedUsers is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.arePrivilegedUsers)
+                || (has(self.initProvider) && has(self.initProvider.arePrivilegedUsers))'
+            - message: spec.forProvider.availabilityDomain is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityDomain)
+                || (has(self.initProvider) && has(self.initProvider.availabilityDomain))'
+            - message: spec.forProvider.availabilityPolicy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.availabilityPolicy)
+                || (has(self.initProvider) && has(self.initProvider.availabilityPolicy))'
+            - message: spec.forProvider.contactDetails is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.contactDetails)
+                || (has(self.initProvider) && has(self.initProvider.contactDetails))'
+            - message: spec.forProvider.devicePolicy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.devicePolicy)
+                || (has(self.initProvider) && has(self.initProvider.devicePolicy))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.image is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.image)
+                || (has(self.initProvider) && has(self.initProvider.image))'
+            - message: spec.forProvider.isStorageEnabled is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.isStorageEnabled)
+                || (has(self.initProvider) && has(self.initProvider.isStorageEnabled))'
+            - message: spec.forProvider.maximumSize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.maximumSize)
+                || (has(self.initProvider) && has(self.initProvider.maximumSize))'
+            - message: spec.forProvider.networkConfiguration is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkConfiguration)
+                || (has(self.initProvider) && has(self.initProvider.networkConfiguration))'
+            - message: spec.forProvider.shapeName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.shapeName)
+                || (has(self.initProvider) && has(self.initProvider.shapeName))'
+            - message: spec.forProvider.standbySize is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.standbySize)
+                || (has(self.initProvider) && has(self.initProvider.standbySize))'
+            - message: spec.forProvider.storageBackupPolicyId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageBackupPolicyId)
+                || (has(self.initProvider) && has(self.initProvider.storageBackupPolicyId))'
+            - message: spec.forProvider.storageSizeInGbs is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageSizeInGbs)
+                || (has(self.initProvider) && has(self.initProvider.storageSizeInGbs))'
+          status:
+            description: DesktopPoolStatus defines the observed state of DesktopPool.
+            properties:
+              atProvider:
+                properties:
+                  activeDesktops:
+                    description: The number of active desktops in the desktop pool.
+                    type: number
+                  arePrivilegedUsers:
+                    description: Indicates whether desktop pool users have administrative
+                      privileges on their desktop.
+                    type: boolean
+                  areVolumesPreserved:
+                    description: (Updatable) Indicates whether the volumes are preserved
+                      when a desktop pool is deleted. Default value is false.
+                    type: boolean
+                  availabilityDomain:
+                    description: The availability domain of the desktop pool.
+                    type: string
+                  availabilityPolicy:
+                    description: (Updatable) Provides the start and stop schedule
+                      information for desktop availability of the desktop pool. Use
+                      availability_policy { } to not set a schedule.
+                    items:
+                      properties:
+                        startSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                        stopSchedule:
+                          description: (Updatable) Provides the schedule information
+                            for a desktop.
+                          items:
+                            properties:
+                              cronExpression:
+                                description: (Updatable) A cron expression describing
+                                  the desktop's schedule.
+                                type: string
+                              timezone:
+                                description: (Updatable) The timezone of the desktop's
+                                  schedule.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment which will
+                      contain the desktop pool.
+                    type: string
+                  contactDetails:
+                    description: (Updatable) Contact information of the desktop pool
+                      administrator. Avoid entering confidential information.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) A user friendly description providing
+                      additional information about the resource. Avoid entering confidential
+                      information.
+                    type: string
+                  devicePolicy:
+                    description: (Updatable) Provides the settings for desktop and
+                      client device options, such as audio in and out, client drive
+                      mapping, and clipboard access.
+                    items:
+                      properties:
+                        audioMode:
+                          description: '(Updatable) The audio mode. NONE: No access
+                            to the local audio devices is permitted. TODESKTOP: The
+                            user may record audio on their desktop.  FROMDESKTOP:
+                            The user may play audio on their desktop. FULL: The user
+                            may play and record audio on their desktop.'
+                          type: string
+                        cdmMode:
+                          description: '(Updatable) The client local drive access
+                            mode. NONE: No access to local drives permitted. READONLY:
+                            The user may read from local drives on their desktop.
+                            FULL: The user may read from and write to their local
+                            drives on their desktop.'
+                          type: string
+                        clipboardMode:
+                          description: '(Updatable) The clipboard mode. NONE: No access
+                            to the local clipboard is permitted. TODESKTOP: The clipboard
+                            can be used to transfer data to the desktop only.  FROMDESKTOP:
+                            The clipboard can be used to transfer data from the desktop
+                            only. FULL: The clipboard can be used to transfer data
+                            to and from the desktop.'
+                          type: string
+                        isDisplayEnabled:
+                          description: (Updatable) Indicates whether the display is
+                            enabled.
+                          type: boolean
+                        isKeyboardEnabled:
+                          description: (Updatable) Indicates whether the keyboard
+                            is enabled.
+                          type: boolean
+                        isPointerEnabled:
+                          description: (Updatable) Indicates whether the pointer is
+                            enabled.
+                          type: boolean
+                        isPrintingEnabled:
+                          description: (Updatable) Indicates whether printing is enabled.
+                          type: boolean
+                      type: object
+                    type: array
+                  displayName:
+                    description: (Updatable) A user friendly display name. Avoid entering
+                      confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the desktop pool.
+                    type: string
+                  image:
+                    description: Provides information about the desktop image.
+                    items:
+                      properties:
+                        imageId:
+                          description: The OCID of the desktop image.
+                          type: string
+                        imageName:
+                          description: The name of the desktop image.
+                          type: string
+                        operatingSystem:
+                          description: The operating system of the desktop image,
+                            e.g. "Oracle Linux", "Windows".
+                          type: string
+                      type: object
+                    type: array
+                  isStorageEnabled:
+                    description: Indicates whether storage is enabled for the desktop
+                      pool.
+                    type: boolean
+                  maximumSize:
+                    description: (Updatable) The maximum number of desktops permitted
+                      in the desktop pool.
+                    type: number
+                  networkConfiguration:
+                    description: Provides information about the network configuration
+                      of the desktop pool.
+                    items:
+                      properties:
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        vcnId:
+                          description: The OCID of the customer VCN.
+                          type: string
+                      type: object
+                    type: array
+                  nsgIds:
+                    description: A list of network security groups for the private
+                      access.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  privateAccessDetails:
+                    description: The details of the desktop's private access network
+                      connectivity to be set up for the desktop pool.
+                    items:
+                      properties:
+                        endpointFqdn:
+                          description: The three-label FQDN to use for the private
+                            endpoint. The customer VCN's DNS records are updated with
+                            this FQDN. This enables the customer to use the FQDN instead
+                            of the private endpoint's private IP address to access
+                            the service (for example, xyz.oraclecloud.com).
+                          type: string
+                        nsgIds:
+                          description: A list of network security groups for the private
+                            access.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateIp:
+                          description: The IPv4 address from the provided Oracle Cloud
+                            Infrastructure subnet which needs to be assigned to the
+                            VNIC. If not provided, it will be auto-assigned with an
+                            available IPv4 address from the subnet.
+                          type: string
+                        subnetId:
+                          description: The OCID of the subnet in the customer VCN
+                            where the connectivity will be established.
+                          type: string
+                        vcnId:
+                          description: The OCID of the customer VCN.
+                          type: string
+                      type: object
+                    type: array
+                  sessionLifecycleActions:
+                    description: The details of action to be triggered in case of
+                      inactivity or disconnect
+                    items:
+                      properties:
+                        disconnect:
+                          description: (Updatable) Action and grace period for disconnect.
+                            Session disconnect can not be used together with an availability_policy
+                            schedule.
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                        inactivity:
+                          description: (Updatable) Action and grace period for inactivity
+                          items:
+                            properties:
+                              action:
+                                description: (Updatable) a disconnect action to be
+                                  triggered. Could be set to NONE or STOP
+                                type: string
+                              gracePeriodInMinutes:
+                                description: (Updatable) The period of time (in minutes)
+                                  after disconnect before any action occurs. If the
+                                  value is not provided, a default value is used.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  shapeConfig:
+                    description: The compute instance shape configuration requested
+                      for each desktop in the desktop pool.
+                    items:
+                      properties:
+                        baselineOcpuUtilization:
+                          description: 'The baseline OCPU utilization for a subcore
+                            burstable VM instance used for each desktop compute instance
+                            in the desktop pool. Leave this attribute blank for a
+                            non-burstable instance, or explicitly specify non-burstable
+                            with BASELINE_1_1. The following values are supported:'
+                          type: string
+                        memoryInGbs:
+                          description: The total amount of memory available in gigabytes
+                            for each desktop compute instance in the desktop pool.
+                          type: string
+                        ocpus:
+                          description: The total number of OCPUs available for each
+                            desktop compute instance in the desktop pool.
+                          type: string
+                      type: object
+                    type: array
+                  shapeName:
+                    description: The shape of the desktop pool.
+                    type: string
+                  standbySize:
+                    description: (Updatable) The maximum number of standby desktops
+                      available in the desktop pool.
+                    type: number
+                  state:
+                    description: The current state of the desktop pool.
+                    type: string
+                  storageBackupPolicyId:
+                    description: The backup policy OCID of the storage.
+                    type: string
+                  storageSizeInGbs:
+                    description: The size in GBs of the storage for the desktop pool.
+                    type: number
+                  timeCreated:
+                    description: The date and time the resource was created.
+                    type: string
+                  timeStartScheduled:
+                    description: (Updatable) The start time of the desktop pool.
+                    type: string
+                  timeStopScheduled:
+                    description: (Updatable) The stop time of the desktop pool.
+                    type: string
+                  useDedicatedVmHost:
+                    description: Indicates whether the desktop pool uses dedicated
+                      virtual machine hosts.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

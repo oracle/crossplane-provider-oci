@@ -1,0 +1,198 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: WaasPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/waaspolicy
+  labels:
+    testing.upbound.io/example-name: test_waas_policy
+  name: test-waas-policy
+spec:
+  forProvider:
+    additionalDomains: ${var.waas_policy_additional_domains}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.waas_policy_display_name}
+    domain: ${var.waas_policy_domain}
+    freeformTags:
+      Department: Finance
+    originGroups:
+    - origins: ${var.waas_policy_origin_groups_origins}
+    origins:
+    - customHeaders:
+      - name: ${var.waas_policy_origins_custom_headers_name}
+        value: ${var.waas_policy_origins_custom_headers_value}
+      httpPort: ${var.waas_policy_origins_http_port}
+      httpsPort: ${var.waas_policy_origins_https_port}
+      uri: ${var.waas_policy_origins_uri}
+    policyConfig:
+    - certificateIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate
+      cipherGroup: ${var.waas_policy_policy_config_cipher_group}
+      clientAddressHeader: ${var.waas_policy_policy_config_client_address_header}
+      healthChecks:
+      - expectedResponseCodeGroup: ${var.waas_policy_policy_config_health_checks_expected_response_code_group}
+        expectedResponseText: ${var.waas_policy_policy_config_health_checks_expected_response_text}
+        headers: ${var.waas_policy_policy_config_health_checks_headers}
+        healthyThreshold: ${var.waas_policy_policy_config_health_checks_healthy_threshold}
+        intervalInSeconds: ${var.waas_policy_policy_config_health_checks_interval_in_seconds}
+        isEnabled: ${var.waas_policy_policy_config_health_checks_is_enabled}
+        isResponseTextCheckEnabled: ${var.waas_policy_policy_config_health_checks_is_response_text_check_enabled}
+        method: ${var.waas_policy_policy_config_health_checks_method}
+        path: ${var.waas_policy_policy_config_health_checks_path}
+        timeoutInSeconds: ${var.waas_policy_policy_config_health_checks_timeout_in_seconds}
+        unhealthyThreshold: ${var.waas_policy_policy_config_health_checks_unhealthy_threshold}
+      isBehindCdn: ${var.waas_policy_policy_config_is_behind_cdn}
+      isCacheControlRespected: ${var.waas_policy_policy_config_is_cache_control_respected}
+      isHttpsEnabled: ${var.waas_policy_policy_config_is_https_enabled}
+      isHttpsForced: ${var.waas_policy_policy_config_is_https_forced}
+      isOriginCompressionEnabled: ${var.waas_policy_policy_config_is_origin_compression_enabled}
+      isResponseBufferingEnabled: ${var.waas_policy_policy_config_is_response_buffering_enabled}
+      isSniEnabled: ${var.waas_policy_policy_config_is_sni_enabled}
+      loadBalancingMethod:
+      - domain: ${var.waas_policy_policy_config_load_balancing_method_domain}
+        expirationTimeInSeconds: ${var.waas_policy_policy_config_load_balancing_method_expiration_time_in_seconds}
+        method: ${var.waas_policy_policy_config_load_balancing_method_method}
+        name: ${var.waas_policy_policy_config_load_balancing_method_name}
+      tlsProtocols: ${var.waas_policy_policy_config_tls_protocols}
+      websocketPathPrefixes: ${var.waas_policy_policy_config_websocket_path_prefixes}
+    wafConfig:
+    - accessRules:
+      - action: ${var.waas_policy_waf_config_access_rules_action}
+        blockAction: ${var.waas_policy_waf_config_access_rules_block_action}
+        blockErrorPageCode: ${var.waas_policy_waf_config_access_rules_block_error_page_code}
+        blockErrorPageDescription: ${var.waas_policy_waf_config_access_rules_block_error_page_description}
+        blockErrorPageMessage: ${var.waas_policy_waf_config_access_rules_block_error_page_message}
+        blockResponseCode: ${var.waas_policy_waf_config_access_rules_block_response_code}
+        bypassChallenges: ${var.waas_policy_waf_config_access_rules_bypass_challenges}
+        captchaFooter: ${var.waas_policy_waf_config_access_rules_captcha_footer}
+        captchaHeader: ${var.waas_policy_waf_config_access_rules_captcha_header}
+        captchaSubmitLabel: ${var.waas_policy_waf_config_access_rules_captcha_submit_label}
+        captchaTitle: ${var.waas_policy_waf_config_access_rules_captcha_title}
+        criteria:
+        - condition: ${var.waas_policy_waf_config_access_rules_criteria_condition}
+          isCaseSensitive: ${var.waas_policy_waf_config_access_rules_criteria_is_case_sensitive}
+          value: ${var.waas_policy_waf_config_access_rules_criteria_value}
+        name: ${var.waas_policy_waf_config_access_rules_name}
+        redirectResponseCode: ${var.waas_policy_waf_config_access_rules_redirect_response_code}
+        redirectUrl: ${var.waas_policy_waf_config_access_rules_redirect_url}
+        responseHeaderManipulation:
+        - action: ${var.waas_policy_waf_config_access_rules_response_header_manipulation_action}
+          header: ${var.waas_policy_waf_config_access_rules_response_header_manipulation_header}
+          value: ${var.waas_policy_waf_config_access_rules_response_header_manipulation_value}
+      addressRateLimiting:
+      - allowedRatePerAddress: ${var.waas_policy_waf_config_address_rate_limiting_allowed_rate_per_address}
+        blockResponseCode: ${var.waas_policy_waf_config_address_rate_limiting_block_response_code}
+        isEnabled: ${var.waas_policy_waf_config_address_rate_limiting_is_enabled}
+        maxDelayedCountPerAddress: ${var.waas_policy_waf_config_address_rate_limiting_max_delayed_count_per_address}
+      cachingRules:
+      - action: ${var.waas_policy_waf_config_caching_rules_action}
+        cachingDuration: ${var.waas_policy_waf_config_caching_rules_caching_duration}
+        clientCachingDuration: ${var.waas_policy_waf_config_caching_rules_client_caching_duration}
+        criteria:
+        - condition: ${var.waas_policy_waf_config_caching_rules_criteria_condition}
+          value: ${var.waas_policy_waf_config_caching_rules_criteria_value}
+        isClientCachingEnabled: ${var.waas_policy_waf_config_caching_rules_is_client_caching_enabled}
+        key: ${var.waas_policy_waf_config_caching_rules_key}
+        name: ${var.waas_policy_waf_config_caching_rules_name}
+      captchas:
+      - failureMessage: ${var.waas_policy_waf_config_captchas_failure_message}
+        footerText: ${var.waas_policy_waf_config_captchas_footer_text}
+        headerText: ${var.waas_policy_waf_config_captchas_header_text}
+        sessionExpirationInSeconds: ${var.waas_policy_waf_config_captchas_session_expiration_in_seconds}
+        submitLabel: ${var.waas_policy_waf_config_captchas_submit_label}
+        title: ${var.waas_policy_waf_config_captchas_title}
+        url: ${var.waas_policy_waf_config_captchas_url}
+      customProtectionRules:
+      - action: ${var.waas_policy_waf_config_custom_protection_rules_action}
+        exclusions:
+        - exclusions: ${var.waas_policy_waf_config_custom_protection_rules_exclusions_exclusions}
+          target: ${var.waas_policy_waf_config_custom_protection_rules_exclusions_target}
+        id: ${var.waas_policy_waf_config_custom_protection_rules_id}
+      deviceFingerprintChallenge:
+      - action: ${var.waas_policy_waf_config_device_fingerprint_challenge_action}
+        actionExpirationInSeconds: ${var.waas_policy_waf_config_device_fingerprint_challenge_action_expiration_in_seconds}
+        challengeSettings:
+        - blockAction: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_block_action}
+          blockErrorPageCode: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_block_error_page_code}
+          blockErrorPageDescription: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_block_error_page_description}
+          blockErrorPageMessage: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_block_error_page_message}
+          blockResponseCode: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_block_response_code}
+          captchaFooter: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_captcha_footer}
+          captchaHeader: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_captcha_header}
+          captchaSubmitLabel: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_captcha_submit_label}
+          captchaTitle: ${var.waas_policy_waf_config_device_fingerprint_challenge_challenge_settings_captcha_title}
+        failureThreshold: ${var.waas_policy_waf_config_device_fingerprint_challenge_failure_threshold}
+        failureThresholdExpirationInSeconds: ${var.waas_policy_waf_config_device_fingerprint_challenge_failure_threshold_expiration_in_seconds}
+        isEnabled: ${var.waas_policy_waf_config_device_fingerprint_challenge_is_enabled}
+        maxAddressCount: ${var.waas_policy_waf_config_device_fingerprint_challenge_max_address_count}
+        maxAddressCountExpirationInSeconds: ${var.waas_policy_waf_config_device_fingerprint_challenge_max_address_count_expiration_in_seconds}
+      humanInteractionChallenge:
+      - action: ${var.waas_policy_waf_config_human_interaction_challenge_action}
+        actionExpirationInSeconds: ${var.waas_policy_waf_config_human_interaction_challenge_action_expiration_in_seconds}
+        challengeSettings:
+        - blockAction: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_block_action}
+          blockErrorPageCode: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_block_error_page_code}
+          blockErrorPageDescription: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_block_error_page_description}
+          blockErrorPageMessage: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_block_error_page_message}
+          blockResponseCode: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_block_response_code}
+          captchaFooter: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_captcha_footer}
+          captchaHeader: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_captcha_header}
+          captchaSubmitLabel: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_captcha_submit_label}
+          captchaTitle: ${var.waas_policy_waf_config_human_interaction_challenge_challenge_settings_captcha_title}
+        failureThreshold: ${var.waas_policy_waf_config_human_interaction_challenge_failure_threshold}
+        failureThresholdExpirationInSeconds: ${var.waas_policy_waf_config_human_interaction_challenge_failure_threshold_expiration_in_seconds}
+        interactionThreshold: ${var.waas_policy_waf_config_human_interaction_challenge_interaction_threshold}
+        isEnabled: ${var.waas_policy_waf_config_human_interaction_challenge_is_enabled}
+        isNatEnabled: ${var.waas_policy_waf_config_human_interaction_challenge_is_nat_enabled}
+        recordingPeriodInSeconds: ${var.waas_policy_waf_config_human_interaction_challenge_recording_period_in_seconds}
+        setHttpHeader:
+        - name: ${var.waas_policy_waf_config_human_interaction_challenge_set_http_header_name}
+          value: ${var.waas_policy_waf_config_human_interaction_challenge_set_http_header_value}
+      jsChallenge:
+      - action: ${var.waas_policy_waf_config_js_challenge_action}
+        actionExpirationInSeconds: ${var.waas_policy_waf_config_js_challenge_action_expiration_in_seconds}
+        areRedirectsChallenged: ${var.waas_policy_waf_config_js_challenge_are_redirects_challenged}
+        challengeSettings:
+        - blockAction: ${var.waas_policy_waf_config_js_challenge_challenge_settings_block_action}
+          blockErrorPageCode: ${var.waas_policy_waf_config_js_challenge_challenge_settings_block_error_page_code}
+          blockErrorPageDescription: ${var.waas_policy_waf_config_js_challenge_challenge_settings_block_error_page_description}
+          blockErrorPageMessage: ${var.waas_policy_waf_config_js_challenge_challenge_settings_block_error_page_message}
+          blockResponseCode: ${var.waas_policy_waf_config_js_challenge_challenge_settings_block_response_code}
+          captchaFooter: ${var.waas_policy_waf_config_js_challenge_challenge_settings_captcha_footer}
+          captchaHeader: ${var.waas_policy_waf_config_js_challenge_challenge_settings_captcha_header}
+          captchaSubmitLabel: ${var.waas_policy_waf_config_js_challenge_challenge_settings_captcha_submit_label}
+          captchaTitle: ${var.waas_policy_waf_config_js_challenge_challenge_settings_captcha_title}
+        criteria:
+        - condition: ${var.waas_policy_waf_config_js_challenge_criteria_condition}
+          isCaseSensitive: ${var.waas_policy_waf_config_js_challenge_criteria_is_case_sensitive}
+          value: ${var.waas_policy_waf_config_js_challenge_criteria_value}
+        failureThreshold: ${var.waas_policy_waf_config_js_challenge_failure_threshold}
+        isEnabled: ${var.waas_policy_waf_config_js_challenge_is_enabled}
+        isNatEnabled: ${var.waas_policy_waf_config_js_challenge_is_nat_enabled}
+        setHttpHeader:
+        - name: ${var.waas_policy_waf_config_js_challenge_set_http_header_name}
+          value: ${var.waas_policy_waf_config_js_challenge_set_http_header_value}
+      origin: ${var.waas_policy_waf_config_origin}
+      originGroups: ${var.waas_policy_waf_config_origin_groups}
+      protectionSettings:
+      - allowedHttpMethods: ${var.waas_policy_waf_config_protection_settings_allowed_http_methods}
+        blockAction: ${var.waas_policy_waf_config_protection_settings_block_action}
+        blockErrorPageCode: ${var.waas_policy_waf_config_protection_settings_block_error_page_code}
+        blockErrorPageDescription: ${var.waas_policy_waf_config_protection_settings_block_error_page_description}
+        blockErrorPageMessage: ${var.waas_policy_waf_config_protection_settings_block_error_page_message}
+        blockResponseCode: ${var.waas_policy_waf_config_protection_settings_block_response_code}
+        isResponseInspected: ${var.waas_policy_waf_config_protection_settings_is_response_inspected}
+        maxArgumentCount: ${var.waas_policy_waf_config_protection_settings_max_argument_count}
+        maxNameLengthPerArgument: ${var.waas_policy_waf_config_protection_settings_max_name_length_per_argument}
+        maxResponseSizeInKiB: ${var.waas_policy_waf_config_protection_settings_max_response_size_in_ki_b}
+        maxTotalNameLengthOfArguments: ${var.waas_policy_waf_config_protection_settings_max_total_name_length_of_arguments}
+        mediaTypes: ${var.waas_policy_waf_config_protection_settings_media_types}
+        recommendationsPeriodInDays: ${var.waas_policy_waf_config_protection_settings_recommendations_period_in_days}
+      whitelists:
+      - addressLists: ${var.waas_policy_waf_config_whitelists_address_lists}
+        addresses: ${var.waas_policy_waf_config_whitelists_addresses}
+        name: ${var.waas_policy_waf_config_whitelists_name}

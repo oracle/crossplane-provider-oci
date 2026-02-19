@@ -1,0 +1,2295 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: modelgroups.datascience.oci.upbound.io
+spec:
+  group: datascience.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: ModelGroup
+    listKind: ModelGroupList
+    plural: modelgroups
+    singular: modelgroup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ModelGroup is the Schema for the ModelGroups API. Provides the
+          Model Group resource in Oracle Cloud Infrastructure Data Science service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ModelGroupSpec defines the desired state of ModelGroup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the modelGroup in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  createType:
+                    description: The type of the model group create operation.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Defined tags for this resource. Each key is predefined and scoped
+                      to a namespace. See Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when create_type=CREATE) (Updatable)
+                      A short description of the modelGroup.
+                    type: string
+                  displayName:
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      A user-friendly display name for the resource. It does not have
+                      to be unique and can be modified. Avoid entering confidential
+                      information. Example: My ModelGroup'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Free-form tags for this resource. Each tag is a simple key-value
+                      pair with no predefined name, type, or namespace. See Resource
+                      Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  memberModelEntries:
+                    description: List of member models (inferenceKey & modelId) to
+                      be associated with the model group.
+                    items:
+                      properties:
+                        memberModelDetails:
+                          description: (Applicable when create_type=CREATE) Each List
+                            item contains inference key and model ocid.
+                          items:
+                            properties:
+                              inferenceKey:
+                                description: (Applicable when create_type=CREATE)
+                                  SaaS friendly name of the model.
+                                type: string
+                              modelId:
+                                description: The OCID of the model.
+                                type: string
+                              modelIdRef:
+                                description: Reference to a Model in datascience to
+                                  populate modelId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelIdSelector:
+                                description: Selector for a Model in datascience to
+                                  populate modelId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  modelGroupCloneSourceDetails:
+                    description: Model Group clone source details.
+                    items:
+                      properties:
+                        modelGroupCloneSourceType:
+                          description: Source resource for model group clone operation.
+                          type: string
+                        modifyModelGroupDetails:
+                          description: Overwrites the properties of the source modelGroup.
+                          items:
+                            properties:
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Defined tags for this resource. Each
+                                  key is predefined and scoped to a namespace. See
+                                  Resource Tags. Example: {"Operations.CostCenter":
+                                  "42"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              displayName:
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) A user-friendly display name for the
+                                  resource. It does not have to be unique and can
+                                  be modified. Avoid entering confidential information.
+                                  Example: My ModelGroup'
+                                type: string
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Free-form tags for this resource. Each
+                                  tag is a simple key-value pair with no predefined
+                                  name, type, or namespace. See Resource Tags. Example:
+                                  {"Department": "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              modelGroupDetails:
+                                description: The model group details.
+                                items:
+                                  properties:
+                                    baseModelId:
+                                      description: The OCID of the model in the group
+                                        that represents the base model for stacked
+                                        deployment.
+                                      type: string
+                                    baseModelIdRef:
+                                      description: Reference to a Model in datascience
+                                        to populate baseModelId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    baseModelIdSelector:
+                                      description: Selector for a Model in datascience
+                                        to populate baseModelId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    customMetadataList:
+                                      description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                        | MODEL_GROUP_VERSION_HISTORY) An array of
+                                        custom metadata details for the model group.
+                                      items:
+                                        properties:
+                                          category:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Category
+                                              of the metadata.
+                                            type: string
+                                          description:
+                                            description: (Applicable when create_type=CREATE)
+                                              (Updatable) A short description of the
+                                              modelGroup.
+                                            type: string
+                                          key:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Key of
+                                              the metadata.
+                                            type: string
+                                          value:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Value
+                                              of the metadata.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: The type of the model group.
+                                      type: string
+                                  type: object
+                                type: array
+                              modelGroupVersionHistoryId:
+                                description: The OCID of the model group version history
+                                  to which the modelGroup is associated.
+                                type: string
+                              modelGroupVersionHistoryIdRef:
+                                description: Reference to a ModelGroupVersionHistory
+                                  in datascience to populate modelGroupVersionHistoryId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelGroupVersionHistoryIdSelector:
+                                description: Selector for a ModelGroupVersionHistory
+                                  in datascience to populate modelGroupVersionHistoryId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              versionLabel:
+                                description: An additional description of the lifecycle
+                                  state of the model group.
+                                type: string
+                            type: object
+                          type: array
+                        patchModelGroupMemberModelDetails:
+                          description: Specifies the list of new models to be added
+                            and list of models from source model group to be removed
+                            for cloning.
+                          items:
+                            properties:
+                              items:
+                                description: Array of patch instructions.
+                                items:
+                                  properties:
+                                    operation:
+                                      description: A single instruction to be included
+                                        as part of Patch request content. Enum type
+                                        (INSERT and REMOVE).
+                                      type: string
+                                    values:
+                                      description: Array of inference key and model
+                                        OCID.
+                                      items:
+                                        properties:
+                                          inferenceKey:
+                                            description: (Applicable when create_type=CREATE)
+                                              SaaS friendly name of the model.
+                                            type: string
+                                          modelId:
+                                            description: The OCID of the model.
+                                            type: string
+                                          modelIdRef:
+                                            description: Reference to a Model in datascience
+                                              to populate modelId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          modelIdSelector:
+                                            description: Selector for a Model in datascience
+                                              to populate modelId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        sourceId:
+                          description: The OCID of the model group version history.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupDetails:
+                    description: The model group details.
+                    items:
+                      properties:
+                        baseModelId:
+                          description: The OCID of the model in the group that represents
+                            the base model for stacked deployment.
+                          type: string
+                        baseModelIdRef:
+                          description: Reference to a Model in datascience to populate
+                            baseModelId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        baseModelIdSelector:
+                          description: Selector for a Model in datascience to populate
+                            baseModelId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        customMetadataList:
+                          description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                            | MODEL_GROUP_VERSION_HISTORY) An array of custom metadata
+                            details for the model group.
+                          items:
+                            properties:
+                              category:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Category of the metadata.
+                                type: string
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              key:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Key of the metadata.
+                                type: string
+                              value:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Value of the metadata.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: The type of the model group.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupVersionHistoryId:
+                    description: The OCID of the model group version history to which
+                      the modelGroup is associated.
+                    type: string
+                  modelGroupVersionHistoryIdRef:
+                    description: Reference to a ModelGroupVersionHistory in datascience
+                      to populate modelGroupVersionHistoryId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  modelGroupVersionHistoryIdSelector:
+                    description: Selector for a ModelGroupVersionHistory in datascience
+                      to populate modelGroupVersionHistoryId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  projectId:
+                    description: The OCID of the project to associate with the modelGroup.
+                    type: string
+                  projectIdRef:
+                    description: Reference to a Project in datascience to populate
+                      projectId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  projectIdSelector:
+                    description: Selector for a Project in datascience to populate
+                      projectId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  versionLabel:
+                    description: An additional description of the lifecycle state
+                      of the model group.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the modelGroup in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  createType:
+                    description: The type of the model group create operation.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Defined tags for this resource. Each key is predefined and scoped
+                      to a namespace. See Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when create_type=CREATE) (Updatable)
+                      A short description of the modelGroup.
+                    type: string
+                  displayName:
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      A user-friendly display name for the resource. It does not have
+                      to be unique and can be modified. Avoid entering confidential
+                      information. Example: My ModelGroup'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Free-form tags for this resource. Each tag is a simple key-value
+                      pair with no predefined name, type, or namespace. See Resource
+                      Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  memberModelEntries:
+                    description: List of member models (inferenceKey & modelId) to
+                      be associated with the model group.
+                    items:
+                      properties:
+                        memberModelDetails:
+                          description: (Applicable when create_type=CREATE) Each List
+                            item contains inference key and model ocid.
+                          items:
+                            properties:
+                              inferenceKey:
+                                description: (Applicable when create_type=CREATE)
+                                  SaaS friendly name of the model.
+                                type: string
+                              modelId:
+                                description: The OCID of the model.
+                                type: string
+                              modelIdRef:
+                                description: Reference to a Model in datascience to
+                                  populate modelId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelIdSelector:
+                                description: Selector for a Model in datascience to
+                                  populate modelId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  modelGroupCloneSourceDetails:
+                    description: Model Group clone source details.
+                    items:
+                      properties:
+                        modelGroupCloneSourceType:
+                          description: Source resource for model group clone operation.
+                          type: string
+                        modifyModelGroupDetails:
+                          description: Overwrites the properties of the source modelGroup.
+                          items:
+                            properties:
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Defined tags for this resource. Each
+                                  key is predefined and scoped to a namespace. See
+                                  Resource Tags. Example: {"Operations.CostCenter":
+                                  "42"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              displayName:
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) A user-friendly display name for the
+                                  resource. It does not have to be unique and can
+                                  be modified. Avoid entering confidential information.
+                                  Example: My ModelGroup'
+                                type: string
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Free-form tags for this resource. Each
+                                  tag is a simple key-value pair with no predefined
+                                  name, type, or namespace. See Resource Tags. Example:
+                                  {"Department": "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              modelGroupDetails:
+                                description: The model group details.
+                                items:
+                                  properties:
+                                    baseModelId:
+                                      description: The OCID of the model in the group
+                                        that represents the base model for stacked
+                                        deployment.
+                                      type: string
+                                    baseModelIdRef:
+                                      description: Reference to a Model in datascience
+                                        to populate baseModelId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    baseModelIdSelector:
+                                      description: Selector for a Model in datascience
+                                        to populate baseModelId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    customMetadataList:
+                                      description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                        | MODEL_GROUP_VERSION_HISTORY) An array of
+                                        custom metadata details for the model group.
+                                      items:
+                                        properties:
+                                          category:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Category
+                                              of the metadata.
+                                            type: string
+                                          description:
+                                            description: (Applicable when create_type=CREATE)
+                                              (Updatable) A short description of the
+                                              modelGroup.
+                                            type: string
+                                          key:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Key of
+                                              the metadata.
+                                            type: string
+                                          value:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Value
+                                              of the metadata.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: The type of the model group.
+                                      type: string
+                                  type: object
+                                type: array
+                              modelGroupVersionHistoryId:
+                                description: The OCID of the model group version history
+                                  to which the modelGroup is associated.
+                                type: string
+                              modelGroupVersionHistoryIdRef:
+                                description: Reference to a ModelGroupVersionHistory
+                                  in datascience to populate modelGroupVersionHistoryId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              modelGroupVersionHistoryIdSelector:
+                                description: Selector for a ModelGroupVersionHistory
+                                  in datascience to populate modelGroupVersionHistoryId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              versionLabel:
+                                description: An additional description of the lifecycle
+                                  state of the model group.
+                                type: string
+                            type: object
+                          type: array
+                        patchModelGroupMemberModelDetails:
+                          description: Specifies the list of new models to be added
+                            and list of models from source model group to be removed
+                            for cloning.
+                          items:
+                            properties:
+                              items:
+                                description: Array of patch instructions.
+                                items:
+                                  properties:
+                                    operation:
+                                      description: A single instruction to be included
+                                        as part of Patch request content. Enum type
+                                        (INSERT and REMOVE).
+                                      type: string
+                                    values:
+                                      description: Array of inference key and model
+                                        OCID.
+                                      items:
+                                        properties:
+                                          inferenceKey:
+                                            description: (Applicable when create_type=CREATE)
+                                              SaaS friendly name of the model.
+                                            type: string
+                                          modelId:
+                                            description: The OCID of the model.
+                                            type: string
+                                          modelIdRef:
+                                            description: Reference to a Model in datascience
+                                              to populate modelId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          modelIdSelector:
+                                            description: Selector for a Model in datascience
+                                              to populate modelId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        sourceId:
+                          description: The OCID of the model group version history.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupDetails:
+                    description: The model group details.
+                    items:
+                      properties:
+                        baseModelId:
+                          description: The OCID of the model in the group that represents
+                            the base model for stacked deployment.
+                          type: string
+                        baseModelIdRef:
+                          description: Reference to a Model in datascience to populate
+                            baseModelId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        baseModelIdSelector:
+                          description: Selector for a Model in datascience to populate
+                            baseModelId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        customMetadataList:
+                          description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                            | MODEL_GROUP_VERSION_HISTORY) An array of custom metadata
+                            details for the model group.
+                          items:
+                            properties:
+                              category:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Category of the metadata.
+                                type: string
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              key:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Key of the metadata.
+                                type: string
+                              value:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Value of the metadata.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: The type of the model group.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupVersionHistoryId:
+                    description: The OCID of the model group version history to which
+                      the modelGroup is associated.
+                    type: string
+                  modelGroupVersionHistoryIdRef:
+                    description: Reference to a ModelGroupVersionHistory in datascience
+                      to populate modelGroupVersionHistoryId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  modelGroupVersionHistoryIdSelector:
+                    description: Selector for a ModelGroupVersionHistory in datascience
+                      to populate modelGroupVersionHistoryId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  projectId:
+                    description: The OCID of the project to associate with the modelGroup.
+                    type: string
+                  projectIdRef:
+                    description: Reference to a Project in datascience to populate
+                      projectId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  projectIdSelector:
+                    description: Selector for a Project in datascience to populate
+                      projectId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  versionLabel:
+                    description: An additional description of the lifecycle state
+                      of the model group.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.createType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.createType)
+                || (has(self.initProvider) && has(self.initProvider.createType))'
+          status:
+            description: ModelGroupStatus defines the observed state of ModelGroup.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment to create
+                      the modelGroup in.
+                    type: string
+                  createType:
+                    description: The type of the model group create operation.
+                    type: string
+                  createdBy:
+                    description: The OCID of the user who created the modelGroup.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Defined tags for this resource. Each key is predefined and scoped
+                      to a namespace. See Resource Tags. Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Applicable when create_type=CREATE) (Updatable)
+                      A short description of the modelGroup.
+                    type: string
+                  displayName:
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      A user-friendly display name for the resource. It does not have
+                      to be unique and can be modified. Avoid entering confidential
+                      information. Example: My ModelGroup'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Applicable when create_type=CREATE) (Updatable)
+                      Free-form tags for this resource. Each tag is a simple key-value
+                      pair with no predefined name, type, or namespace. See Resource
+                      Tags. Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the modelGroup.
+                    type: string
+                  lifecycleDetails:
+                    description: Details about the lifecycle state of the model group.
+                    type: string
+                  memberModelEntries:
+                    description: List of member models (inferenceKey & modelId) to
+                      be associated with the model group.
+                    items:
+                      properties:
+                        memberModelDetails:
+                          description: (Applicable when create_type=CREATE) Each List
+                            item contains inference key and model ocid.
+                          items:
+                            properties:
+                              inferenceKey:
+                                description: (Applicable when create_type=CREATE)
+                                  SaaS friendly name of the model.
+                                type: string
+                              modelId:
+                                description: The OCID of the model.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  modelGroupCloneSourceDetails:
+                    description: Model Group clone source details.
+                    items:
+                      properties:
+                        modelGroupCloneSourceType:
+                          description: Source resource for model group clone operation.
+                          type: string
+                        modifyModelGroupDetails:
+                          description: Overwrites the properties of the source modelGroup.
+                          items:
+                            properties:
+                              definedTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Defined tags for this resource. Each
+                                  key is predefined and scoped to a namespace. See
+                                  Resource Tags. Example: {"Operations.CostCenter":
+                                  "42"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              displayName:
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) A user-friendly display name for the
+                                  resource. It does not have to be unique and can
+                                  be modified. Avoid entering confidential information.
+                                  Example: My ModelGroup'
+                                type: string
+                              freeformTags:
+                                additionalProperties:
+                                  type: string
+                                description: '(Applicable when create_type=CREATE)
+                                  (Updatable) Free-form tags for this resource. Each
+                                  tag is a simple key-value pair with no predefined
+                                  name, type, or namespace. See Resource Tags. Example:
+                                  {"Department": "Finance"}'
+                                type: object
+                                x-kubernetes-map-type: granular
+                              modelGroupDetails:
+                                description: The model group details.
+                                items:
+                                  properties:
+                                    baseModelId:
+                                      description: The OCID of the model in the group
+                                        that represents the base model for stacked
+                                        deployment.
+                                      type: string
+                                    customMetadataList:
+                                      description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                        | MODEL_GROUP_VERSION_HISTORY) An array of
+                                        custom metadata details for the model group.
+                                      items:
+                                        properties:
+                                          category:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Category
+                                              of the metadata.
+                                            type: string
+                                          description:
+                                            description: (Applicable when create_type=CREATE)
+                                              (Updatable) A short description of the
+                                              modelGroup.
+                                            type: string
+                                          key:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Key of
+                                              the metadata.
+                                            type: string
+                                          value:
+                                            description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                              | MODEL_GROUP_VERSION_HISTORY) Value
+                                              of the metadata.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: The type of the model group.
+                                      type: string
+                                  type: object
+                                type: array
+                              modelGroupVersionHistoryId:
+                                description: The OCID of the model group version history
+                                  to which the modelGroup is associated.
+                                type: string
+                              versionLabel:
+                                description: An additional description of the lifecycle
+                                  state of the model group.
+                                type: string
+                            type: object
+                          type: array
+                        patchModelGroupMemberModelDetails:
+                          description: Specifies the list of new models to be added
+                            and list of models from source model group to be removed
+                            for cloning.
+                          items:
+                            properties:
+                              items:
+                                description: Array of patch instructions.
+                                items:
+                                  properties:
+                                    operation:
+                                      description: A single instruction to be included
+                                        as part of Patch request content. Enum type
+                                        (INSERT and REMOVE).
+                                      type: string
+                                    values:
+                                      description: Array of inference key and model
+                                        OCID.
+                                      items:
+                                        properties:
+                                          inferenceKey:
+                                            description: (Applicable when create_type=CREATE)
+                                              SaaS friendly name of the model.
+                                            type: string
+                                          modelId:
+                                            description: The OCID of the model.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        sourceId:
+                          description: The OCID of the model group version history.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupDetails:
+                    description: The model group details.
+                    items:
+                      properties:
+                        baseModelId:
+                          description: The OCID of the model in the group that represents
+                            the base model for stacked deployment.
+                          type: string
+                        customMetadataList:
+                          description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                            | MODEL_GROUP_VERSION_HISTORY) An array of custom metadata
+                            details for the model group.
+                          items:
+                            properties:
+                              category:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Category of the metadata.
+                                type: string
+                              description:
+                                description: (Applicable when create_type=CREATE)
+                                  (Updatable) A short description of the modelGroup.
+                                type: string
+                              key:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Key of the metadata.
+                                type: string
+                              value:
+                                description: (Applicable when model_group_clone_source_type=MODEL_GROUP
+                                  | MODEL_GROUP_VERSION_HISTORY) Value of the metadata.
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: The type of the model group.
+                          type: string
+                      type: object
+                    type: array
+                  modelGroupVersionHistoryId:
+                    description: The OCID of the model group version history to which
+                      the modelGroup is associated.
+                    type: string
+                  modelGroupVersionHistoryName:
+                    description: The name of the model group version history to which
+                      the model group is associated.
+                    type: string
+                  projectId:
+                    description: The OCID of the project to associate with the modelGroup.
+                    type: string
+                  sourceModelGroupId:
+                    description: The OCID of the model group used for the clone operation.
+                    type: string
+                  state:
+                    description: The state of the modelGroup.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: 'The date and time the resource was created in the
+                      timestamp format defined by RFC3339. Example: 2019-08-25T21:10:29.41Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The date and time the resource was last updated
+                      in the timestamp format defined by RFC3339. Example: 2019-08-25T21:10:29.41Z'
+                    type: string
+                  versionId:
+                    description: Unique identifier assigned to each version of the
+                      model group. It would be auto-incremented number generated by
+                      service.
+                    type: string
+                  versionLabel:
+                    description: An additional description of the lifecycle state
+                      of the model group.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,384 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.deployment_display_name}
+    freeformTags:
+      Department: Finance
+    gatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_gateway
+    locks:
+    - message: ${var.deployment_locks_message}
+      type: ${var.deployment_locks_type}
+    pathPrefix: ${var.deployment_path_prefix}
+    specification:
+    - loggingPolicies:
+      - accessLog:
+        - isEnabled: ${var.deployment_specification_logging_policies_access_log_is_enabled}
+        executionLog:
+        - isEnabled: ${var.deployment_specification_logging_policies_execution_log_is_enabled}
+          logLevel: ${var.deployment_specification_logging_policies_execution_log_log_level}
+      requestPolicies:
+      - authentication:
+        - audiences: ${var.deployment_specification_request_policies_authentication_audiences}
+          cacheKey: ${var.deployment_specification_request_policies_authentication_cache_key}
+          functionIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_function
+          isAnonymousAccessAllowed: ${var.deployment_specification_request_policies_authentication_is_anonymous_access_allowed}
+          issuers: ${var.deployment_specification_request_policies_authentication_issuers}
+          maxClockSkewInSeconds: ${var.deployment_specification_request_policies_authentication_max_clock_skew_in_seconds}
+          parameters: ${var.deployment_specification_request_policies_authentication_parameters}
+          publicKeys:
+          - isSslVerifyDisabled: ${var.deployment_specification_request_policies_authentication_public_keys_is_ssl_verify_disabled}
+            keys:
+            - alg: ${var.deployment_specification_request_policies_authentication_public_keys_keys_alg}
+              e: ${var.deployment_specification_request_policies_authentication_public_keys_keys_e}
+              format: ${var.deployment_specification_request_policies_authentication_public_keys_keys_format}
+              key: ${var.deployment_specification_request_policies_authentication_public_keys_keys_key}
+              keyOps: ${var.deployment_specification_request_policies_authentication_public_keys_keys_key_ops}
+              kid: ${var.deployment_specification_request_policies_authentication_public_keys_keys_kid}
+              kty: ${var.deployment_specification_request_policies_authentication_public_keys_keys_kty}
+              "n": ${var.deployment_specification_request_policies_authentication_public_keys_keys_n}
+              use: ${var.deployment_specification_request_policies_authentication_public_keys_keys_use}
+            maxCacheDurationInHours: ${var.deployment_specification_request_policies_authentication_public_keys_max_cache_duration_in_hours}
+            type: ${var.deployment_specification_request_policies_authentication_public_keys_type}
+            uri: ${var.deployment_specification_request_policies_authentication_public_keys_uri}
+          tokenAuthScheme: ${var.deployment_specification_request_policies_authentication_token_auth_scheme}
+          tokenHeader: ${var.deployment_specification_request_policies_authentication_token_header}
+          tokenQueryParam: ${var.deployment_specification_request_policies_authentication_token_query_param}
+          type: ${var.deployment_specification_request_policies_authentication_type}
+          validationFailurePolicy:
+          - clientDetails:
+            - clientId: ${oci_apigateway_client.test_client.id}
+              clientSecretIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: test_secret
+              clientSecretVersionNumber: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_client_details_client_secret_version_number}
+              type: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_client_details_type}
+            fallbackRedirectPath: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_fallback_redirect_path}
+            logoutPath: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_logout_path}
+            maxExpiryDurationInHours: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_max_expiry_duration_in_hours}
+            responseCode: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_code}
+            responseHeaderTransformations:
+            - filterHeaders:
+              - items:
+                - name: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_filter_headers_items_name}
+                type: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_filter_headers_type}
+              renameHeaders:
+              - items:
+                - from: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_rename_headers_items_from}
+                  to: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_rename_headers_items_to}
+              setHeaders:
+              - items:
+                - ifExists: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_set_headers_items_if_exists}
+                  name: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_set_headers_items_name}
+                  values: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_header_transformations_set_headers_items_values}
+            responseMessage: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_message}
+            responseType: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_response_type}
+            scopes: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_scopes}
+            sourceUriDetails:
+            - type: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_source_uri_details_type}
+              uri: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_source_uri_details_uri}
+            type: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_type}
+            useCookiesForIntermediateSteps: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_use_cookies_for_intermediate_steps}
+            useCookiesForSession: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_use_cookies_for_session}
+            usePkce: ${var.deployment_specification_request_policies_authentication_validation_failure_policy_use_pkce}
+          validationPolicy:
+          - additionalValidationPolicy:
+            - audiences: ${var.deployment_specification_request_policies_authentication_validation_policy_additional_validation_policy_audiences}
+              issuers: ${var.deployment_specification_request_policies_authentication_validation_policy_additional_validation_policy_issuers}
+              verifyClaims:
+              - isRequired: ${var.deployment_specification_request_policies_authentication_validation_policy_additional_validation_policy_verify_claims_is_required}
+                key: ${var.deployment_specification_request_policies_authentication_validation_policy_additional_validation_policy_verify_claims_key}
+                values: ${var.deployment_specification_request_policies_authentication_validation_policy_additional_validation_policy_verify_claims_values}
+            clientDetails:
+            - clientId: ${oci_apigateway_client.test_client.id}
+              clientSecretIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: test_secret
+              clientSecretVersionNumber: ${var.deployment_specification_request_policies_authentication_validation_policy_client_details_client_secret_version_number}
+              type: ${var.deployment_specification_request_policies_authentication_validation_policy_client_details_type}
+            isSslVerifyDisabled: ${var.deployment_specification_request_policies_authentication_validation_policy_is_ssl_verify_disabled}
+            keys:
+            - alg: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_alg}
+              e: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_e}
+              format: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_format}
+              key: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_key}
+              keyOps: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_key_ops}
+              kid: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_kid}
+              kty: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_kty}
+              "n": ${var.deployment_specification_request_policies_authentication_validation_policy_keys_n}
+              use: ${var.deployment_specification_request_policies_authentication_validation_policy_keys_use}
+            maxCacheDurationInHours: ${var.deployment_specification_request_policies_authentication_validation_policy_max_cache_duration_in_hours}
+            sourceUriDetails:
+            - type: ${var.deployment_specification_request_policies_authentication_validation_policy_source_uri_details_type}
+              uri: ${var.deployment_specification_request_policies_authentication_validation_policy_source_uri_details_uri}
+            type: ${var.deployment_specification_request_policies_authentication_validation_policy_type}
+            uri: ${var.deployment_specification_request_policies_authentication_validation_policy_uri}
+          verifyClaims:
+          - isRequired: ${var.deployment_specification_request_policies_authentication_verify_claims_is_required}
+            key: ${var.deployment_specification_request_policies_authentication_verify_claims_key}
+            values: ${var.deployment_specification_request_policies_authentication_verify_claims_values}
+        cors:
+        - allowedHeaders: ${var.deployment_specification_request_policies_cors_allowed_headers}
+          allowedMethods: ${var.deployment_specification_request_policies_cors_allowed_methods}
+          allowedOrigins: ${var.deployment_specification_request_policies_cors_allowed_origins}
+          exposedHeaders: ${var.deployment_specification_request_policies_cors_exposed_headers}
+          isAllowCredentialsEnabled: ${var.deployment_specification_request_policies_cors_is_allow_credentials_enabled}
+          maxAgeInSeconds: ${var.deployment_specification_request_policies_cors_max_age_in_seconds}
+        dynamicAuthentication:
+        - authenticationServers:
+          - authenticationServerDetail:
+            - audiences: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_audiences}
+              functionIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: test_function
+              isAnonymousAccessAllowed: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_is_anonymous_access_allowed}
+              issuers: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_issuers}
+              maxClockSkewInSeconds: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_max_clock_skew_in_seconds}
+              publicKeys:
+              - isSslVerifyDisabled: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_is_ssl_verify_disabled}
+                keys:
+                - alg: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_alg}
+                  e: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_e}
+                  format: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_format}
+                  key: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_key}
+                  keyOps: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_key_ops}
+                  kid: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_kid}
+                  kty: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_kty}
+                  "n": ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_n}
+                  use: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_keys_use}
+                maxCacheDurationInHours: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_max_cache_duration_in_hours}
+                type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_type}
+                uri: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_public_keys_uri}
+              tokenAuthScheme: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_token_auth_scheme}
+              tokenHeader: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_token_header}
+              tokenQueryParam: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_token_query_param}
+              type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_type}
+              validationFailurePolicy:
+              - clientDetails:
+                - clientId: ${oci_apigateway_client.test_client.id}
+                  clientSecretIdSelector:
+                    matchLabels:
+                      testing.upbound.io/example-name: test_secret
+                  clientSecretVersionNumber: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_client_details_client_secret_version_number}
+                  type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_client_details_type}
+                fallbackRedirectPath: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_fallback_redirect_path}
+                logoutPath: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_logout_path}
+                maxExpiryDurationInHours: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_max_expiry_duration_in_hours}
+                responseCode: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_code}
+                responseHeaderTransformations:
+                - filterHeaders:
+                  - items:
+                    - name: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_filter_headers_items_name}
+                    type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_filter_headers_type}
+                  renameHeaders:
+                  - items:
+                    - from: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_rename_headers_items_from}
+                      to: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_rename_headers_items_to}
+                  setHeaders:
+                  - items:
+                    - ifExists: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_set_headers_items_if_exists}
+                      name: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_set_headers_items_name}
+                      values: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_header_transformations_set_headers_items_values}
+                responseMessage: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_message}
+                responseType: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_response_type}
+                scopes: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_scopes}
+                sourceUriDetails:
+                - type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_source_uri_details_type}
+                  uri: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_source_uri_details_uri}
+                type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_type}
+                useCookiesForIntermediateSteps: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_use_cookies_for_intermediate_steps}
+                useCookiesForSession: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_use_cookies_for_session}
+                usePkce: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_failure_policy_use_pkce}
+              validationPolicy:
+              - additionalValidationPolicy:
+                - audiences: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_additional_validation_policy_audiences}
+                  issuers: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_additional_validation_policy_issuers}
+                  verifyClaims:
+                  - isRequired: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_additional_validation_policy_verify_claims_is_required}
+                    key: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_additional_validation_policy_verify_claims_key}
+                    values: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_additional_validation_policy_verify_claims_values}
+                clientDetails:
+                - clientId: ${oci_apigateway_client.test_client.id}
+                  clientSecretIdSelector:
+                    matchLabels:
+                      testing.upbound.io/example-name: test_secret
+                  clientSecretVersionNumber: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_client_details_client_secret_version_number}
+                  type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_client_details_type}
+                isSslVerifyDisabled: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_is_ssl_verify_disabled}
+                keys:
+                - alg: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_alg}
+                  e: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_e}
+                  format: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_format}
+                  key: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_key}
+                  keyOps: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_key_ops}
+                  kid: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_kid}
+                  kty: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_kty}
+                  "n": ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_n}
+                  use: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_keys_use}
+                maxCacheDurationInHours: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_max_cache_duration_in_hours}
+                sourceUriDetails:
+                - type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_source_uri_details_type}
+                  uri: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_source_uri_details_uri}
+                type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_type}
+                uri: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_validation_policy_uri}
+              verifyClaims:
+              - isRequired: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_verify_claims_is_required}
+                key: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_verify_claims_key}
+                values: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_authentication_server_detail_verify_claims_values}
+            key:
+            - expression: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_expression}
+              isDefault: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_is_default}
+              name: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_name}
+              type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_type}
+              values: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_values}
+          selectionSource:
+          - selector: ${var.deployment_specification_request_policies_dynamic_authentication_selection_source_selector}
+            type: ${var.deployment_specification_request_policies_dynamic_authentication_selection_source_type}
+        mutualTls:
+        - allowedSans: ${var.deployment_specification_request_policies_mutual_tls_allowed_sans}
+          isVerifiedCertificateRequired: ${var.deployment_specification_request_policies_mutual_tls_is_verified_certificate_required}
+        rateLimiting:
+        - rateInRequestsPerSecond: ${var.deployment_specification_request_policies_rate_limiting_rate_in_requests_per_second}
+          rateKey: ${var.deployment_specification_request_policies_rate_limiting_rate_key}
+        usagePlans:
+        - tokenLocations: ${var.deployment_specification_request_policies_usage_plans_token_locations}
+      routes:
+      - backend:
+        - allowedPostLogoutUris: ${var.deployment_specification_routes_backend_allowed_post_logout_uris}
+          body: ${var.deployment_specification_routes_backend_body}
+          connectTimeoutInSeconds: ${var.deployment_specification_routes_backend_connect_timeout_in_seconds}
+          functionIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_function
+          headers:
+          - name: ${var.deployment_specification_routes_backend_headers_name}
+            value: ${var.deployment_specification_routes_backend_headers_value}
+          isSslVerifyDisabled: ${var.deployment_specification_routes_backend_is_ssl_verify_disabled}
+          postLogoutState: ${var.deployment_specification_routes_backend_post_logout_state}
+          readTimeoutInSeconds: ${var.deployment_specification_routes_backend_read_timeout_in_seconds}
+          routingBackends:
+          - backend:
+            - body: ${var.deployment_specification_routes_backend_routing_backends_backend_body}
+              connectTimeoutInSeconds: ${var.deployment_specification_routes_backend_routing_backends_backend_connect_timeout_in_seconds}
+              functionIdSelector:
+                matchLabels:
+                  testing.upbound.io/example-name: test_function
+              isSslVerifyDisabled: ${var.deployment_specification_routes_backend_routing_backends_backend_is_ssl_verify_disabled}
+              readTimeoutInSeconds: ${var.deployment_specification_routes_backend_routing_backends_backend_read_timeout_in_seconds}
+              status: ${var.deployment_specification_routes_backend_routing_backends_backend_status}
+              type: ${var.deployment_specification_routes_backend_routing_backends_backend_type}
+              url: ${var.deployment_specification_routes_backend_routing_backends_backend_url}
+            key:
+            - expression: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_expression}
+              isDefault: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_is_default}
+              name: ${var.deployment_specification_routes_backend_routing_backends_key_name}
+              type: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_type}
+              values: ${var.deployment_specification_request_policies_dynamic_authentication_authentication_servers_key_values}
+          selectionSource:
+          - selector: ${var.deployment_specification_routes_backend_selection_source_selector}
+            type: ${var.deployment_specification_routes_backend_selection_source_type}
+          sendTimeoutInSeconds: ${var.deployment_specification_routes_backend_send_timeout_in_seconds}
+          status: ${var.deployment_specification_routes_backend_status}
+          type: ${var.deployment_specification_routes_backend_type}
+          url: ${var.deployment_specification_routes_backend_url}
+        loggingPolicies:
+        - accessLog:
+          - isEnabled: ${var.deployment_specification_routes_logging_policies_access_log_is_enabled}
+          executionLog:
+          - isEnabled: ${var.deployment_specification_routes_logging_policies_execution_log_is_enabled}
+            logLevel: ${var.deployment_specification_routes_logging_policies_execution_log_log_level}
+        methods: ${var.deployment_specification_routes_methods}
+        path: ${var.deployment_specification_routes_path}
+        requestPolicies:
+        - authorization:
+          - allowedScope: ${var.deployment_specification_routes_request_policies_authorization_allowed_scope}
+            type: ${var.deployment_specification_routes_request_policies_authorization_type}
+          bodyValidation:
+          - content:
+            - mediaType: ${var.deployment_specification_routes_request_policies_body_validation_content_media_type}
+              validationType: ${var.deployment_specification_routes_request_policies_body_validation_content_validation_type}
+            required: ${var.deployment_specification_routes_request_policies_body_validation_required}
+            validationMode: ${var.deployment_specification_routes_request_policies_body_validation_validation_mode}
+          cors:
+          - allowedHeaders: ${var.deployment_specification_routes_request_policies_cors_allowed_headers}
+            allowedMethods: ${var.deployment_specification_routes_request_policies_cors_allowed_methods}
+            allowedOrigins: ${var.deployment_specification_routes_request_policies_cors_allowed_origins}
+            exposedHeaders: ${var.deployment_specification_routes_request_policies_cors_exposed_headers}
+            isAllowCredentialsEnabled: ${var.deployment_specification_routes_request_policies_cors_is_allow_credentials_enabled}
+            maxAgeInSeconds: ${var.deployment_specification_routes_request_policies_cors_max_age_in_seconds}
+          headerTransformations:
+          - filterHeaders:
+            - items:
+              - name: ${var.deployment_specification_routes_request_policies_header_transformations_filter_headers_items_name}
+              type: ${var.deployment_specification_routes_request_policies_header_transformations_filter_headers_type}
+            renameHeaders:
+            - items:
+              - from: ${var.deployment_specification_routes_request_policies_header_transformations_rename_headers_items_from}
+                to: ${var.deployment_specification_routes_request_policies_header_transformations_rename_headers_items_to}
+            setHeaders:
+            - items:
+              - ifExists: ${var.deployment_specification_routes_request_policies_header_transformations_set_headers_items_if_exists}
+                name: ${var.deployment_specification_routes_request_policies_header_transformations_set_headers_items_name}
+                values: ${var.deployment_specification_routes_request_policies_header_transformations_set_headers_items_values}
+          headerValidations:
+          - headers:
+            - name: ${var.deployment_specification_routes_request_policies_header_validations_headers_name}
+              required: ${var.deployment_specification_routes_request_policies_header_validations_headers_required}
+            validationMode: ${var.deployment_specification_routes_request_policies_header_validations_validation_mode}
+          queryParameterTransformations:
+          - filterQueryParameters:
+            - items:
+              - name: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_filter_query_parameters_items_name}
+              type: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_filter_query_parameters_type}
+            renameQueryParameters:
+            - items:
+              - from: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_rename_query_parameters_items_from}
+                to: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_rename_query_parameters_items_to}
+            setQueryParameters:
+            - items:
+              - ifExists: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_set_query_parameters_items_if_exists}
+                name: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_set_query_parameters_items_name}
+                values: ${var.deployment_specification_routes_request_policies_query_parameter_transformations_set_query_parameters_items_values}
+          queryParameterValidations:
+          - parameters:
+            - name: ${var.deployment_specification_routes_request_policies_query_parameter_validations_parameters_name}
+              required: ${var.deployment_specification_routes_request_policies_query_parameter_validations_parameters_required}
+            validationMode: ${var.deployment_specification_routes_request_policies_query_parameter_validations_validation_mode}
+          responseCacheLookup:
+          - cacheKeyAdditions: ${var.deployment_specification_routes_request_policies_response_cache_lookup_cache_key_additions}
+            isEnabled: ${var.deployment_specification_routes_request_policies_response_cache_lookup_is_enabled}
+            isPrivateCachingEnabled: ${var.deployment_specification_routes_request_policies_response_cache_lookup_is_private_caching_enabled}
+            type: ${var.deployment_specification_routes_request_policies_response_cache_lookup_type}
+        responsePolicies:
+        - headerTransformations:
+          - filterHeaders:
+            - items:
+              - name: ${var.deployment_specification_routes_response_policies_header_transformations_filter_headers_items_name}
+              type: ${var.deployment_specification_routes_response_policies_header_transformations_filter_headers_type}
+            renameHeaders:
+            - items:
+              - from: ${var.deployment_specification_routes_response_policies_header_transformations_rename_headers_items_from}
+                to: ${var.deployment_specification_routes_response_policies_header_transformations_rename_headers_items_to}
+            setHeaders:
+            - items:
+              - ifExists: ${var.deployment_specification_routes_response_policies_header_transformations_set_headers_items_if_exists}
+                name: ${var.deployment_specification_routes_response_policies_header_transformations_set_headers_items_name}
+                values: ${var.deployment_specification_routes_response_policies_header_transformations_set_headers_items_values}
+          responseCacheStore:
+          - timeToLiveInSeconds: ${var.deployment_specification_routes_response_policies_response_cache_store_time_to_live_in_seconds}
+            type: ${var.deployment_specification_routes_response_policies_response_cache_store_type}

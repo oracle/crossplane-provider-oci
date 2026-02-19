@@ -1,0 +1,20 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourcesSearchAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcessearchassociation
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_search_association
+  name: test-monitored-resources-search-association
+spec:
+  forProvider:
+    associationType: ${var.monitored_resources_search_association_association_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationResourceId: ${oci_stack_monitoring_destination_resource.test_destination_resource.id}
+    destinationResourceName: ${var.monitored_resources_search_association_destination_resource_name}
+    destinationResourceType: ${var.monitored_resources_search_association_destination_resource_type}
+    sourceResourceId: ${oci_stack_monitoring_source_resource.test_source_resource.id}
+    sourceResourceName: ${var.monitored_resources_search_association_source_resource_name}
+    sourceResourceType: ${var.monitored_resources_search_association_source_resource_type}

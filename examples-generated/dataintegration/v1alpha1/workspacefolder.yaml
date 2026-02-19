@@ -1,0 +1,26 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceFolder
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspacefolder
+  labels:
+    testing.upbound.io/example-name: test_workspace_folder
+  name: test-workspace-folder
+spec:
+  forProvider:
+    categoryName: ${oci_marketplace_category.test_category.name}
+    description: ${var.workspace_folder_description}
+    identifier: ${var.workspace_folder_identifier}
+    key: ${var.workspace_folder_key}
+    modelVersion: ${var.workspace_folder_model_version}
+    name: ${var.workspace_folder_name}
+    objectStatus: ${var.workspace_folder_object_status}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_folder_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_folder_registry_metadata_is_favorite}
+      key: ${var.workspace_folder_registry_metadata_key}
+      labels: ${var.workspace_folder_registry_metadata_labels}
+      registryVersion: ${var.workspace_folder_registry_metadata_registry_version}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

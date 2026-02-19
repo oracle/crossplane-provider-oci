@@ -1,0 +1,26 @@
+apiVersion: capacitymanagement.oci.upbound.io/v1alpha1
+kind: OccAvailabilityCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/occavailabilitycatalog
+  labels:
+    testing.upbound.io/example-name: test_occ_availability_catalog
+  name: test-occ-availability-catalog
+spec:
+  forProvider:
+    base64encodedCatalogDetails: ${var.occ_availability_catalog_base64encoded_catalog_details}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.occ_availability_catalog_description}
+    displayName: ${var.occ_availability_catalog_display_name}
+    freeformTags:
+      bar-key: value
+    metadataDetails:
+    - formatVersion: ${var.occ_availability_catalog_metadata_details_format_version}
+    namespace: ${var.occ_availability_catalog_namespace}
+    occCustomerGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_occ_customer_group

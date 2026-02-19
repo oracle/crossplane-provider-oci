@@ -1,0 +1,109 @@
+apiVersion: waf.oci.upbound.io/v1alpha1
+kind: WebAppFirewallPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waf/v1alpha1/webappfirewallpolicy
+  labels:
+    testing.upbound.io/example-name: test_web_app_firewall_policy
+  name: test-web-app-firewall-policy
+spec:
+  forProvider:
+    actions:
+    - body:
+      - text: ${var.web_app_firewall_policy_actions_body_text}
+        type: ${var.web_app_firewall_policy_actions_body_type}
+      code: ${var.web_app_firewall_policy_actions_code}
+      headers:
+      - name: ${var.web_app_firewall_policy_actions_headers_name}
+        value: ${var.web_app_firewall_policy_actions_headers_value}
+      name: ${var.web_app_firewall_policy_actions_name}
+      type: ${var.web_app_firewall_policy_actions_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.web_app_firewall_policy_display_name}
+    freeformTags:
+      bar-key: value
+    requestAccessControl:
+    - defaultActionName: ${var.web_app_firewall_policy_request_access_control_default_action_name}
+      rules:
+      - actionName: ${var.web_app_firewall_policy_request_access_control_rules_action_name}
+        condition: ${var.web_app_firewall_policy_request_access_control_rules_condition}
+        conditionLanguage: ${var.web_app_firewall_policy_request_access_control_rules_condition_language}
+        name: ${var.web_app_firewall_policy_request_access_control_rules_name}
+        type: ${var.web_app_firewall_policy_request_access_control_rules_type}
+    requestProtection:
+    - bodyInspectionSizeLimitExceededActionName: ${var.web_app_firewall_policy_request_protection_body_inspection_size_limit_exceeded_action_name}
+      bodyInspectionSizeLimitInBytes: ${var.web_app_firewall_policy_request_protection_body_inspection_size_limit_in_bytes}
+      rules:
+      - actionName: ${var.web_app_firewall_policy_request_protection_rules_action_name}
+        condition: ${var.web_app_firewall_policy_request_protection_rules_condition}
+        conditionLanguage: ${var.web_app_firewall_policy_request_protection_rules_condition_language}
+        isBodyInspectionEnabled: ${var.web_app_firewall_policy_request_protection_rules_is_body_inspection_enabled}
+        name: ${var.web_app_firewall_policy_request_protection_rules_name}
+        protectionCapabilities:
+        - actionName: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_action_name}
+          collaborativeActionThreshold: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_collaborative_action_threshold}
+          collaborativeWeights:
+          - key: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_collaborative_weights_key}
+            weight: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_collaborative_weights_weight}
+          exclusions:
+          - args: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_exclusions_args}
+            requestCookies: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_exclusions_request_cookies}
+          key: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_key}
+          version: ${var.web_app_firewall_policy_request_protection_rules_protection_capabilities_version}
+        protectionCapabilitySettings:
+        - allowedHttpMethods: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_allowed_http_methods}
+          maxHttpRequestHeaderLength: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_max_http_request_header_length}
+          maxHttpRequestHeaders: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_max_http_request_headers}
+          maxNumberOfArguments: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_max_number_of_arguments}
+          maxSingleArgumentLength: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_max_single_argument_length}
+          maxTotalArgumentLength: ${var.web_app_firewall_policy_request_protection_rules_protection_capability_settings_max_total_argument_length}
+        type: ${var.web_app_firewall_policy_request_protection_rules_type}
+    requestRateLimiting:
+    - rules:
+      - actionName: ${var.web_app_firewall_policy_request_rate_limiting_rules_action_name}
+        condition: ${var.web_app_firewall_policy_request_rate_limiting_rules_condition}
+        conditionLanguage: ${var.web_app_firewall_policy_request_rate_limiting_rules_condition_language}
+        configurations:
+        - actionDurationInSeconds: ${var.web_app_firewall_policy_request_rate_limiting_rules_configurations_action_duration_in_seconds}
+          periodInSeconds: ${var.web_app_firewall_policy_request_rate_limiting_rules_configurations_period_in_seconds}
+          requestsLimit: ${var.web_app_firewall_policy_request_rate_limiting_rules_configurations_requests_limit}
+        name: ${var.web_app_firewall_policy_request_rate_limiting_rules_name}
+        type: ${var.web_app_firewall_policy_request_rate_limiting_rules_type}
+    responseAccessControl:
+    - rules:
+      - actionName: ${var.web_app_firewall_policy_response_access_control_rules_action_name}
+        condition: ${var.web_app_firewall_policy_response_access_control_rules_condition}
+        conditionLanguage: ${var.web_app_firewall_policy_response_access_control_rules_condition_language}
+        name: ${var.web_app_firewall_policy_response_access_control_rules_name}
+        type: ${var.web_app_firewall_policy_response_access_control_rules_type}
+    responseProtection:
+    - rules:
+      - actionName: ${var.web_app_firewall_policy_response_protection_rules_action_name}
+        condition: ${var.web_app_firewall_policy_response_protection_rules_condition}
+        conditionLanguage: ${var.web_app_firewall_policy_response_protection_rules_condition_language}
+        isBodyInspectionEnabled: ${var.web_app_firewall_policy_response_protection_rules_is_body_inspection_enabled}
+        name: ${var.web_app_firewall_policy_response_protection_rules_name}
+        protectionCapabilities:
+        - actionName: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_action_name}
+          collaborativeActionThreshold: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_collaborative_action_threshold}
+          collaborativeWeights:
+          - key: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_collaborative_weights_key}
+            weight: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_collaborative_weights_weight}
+          exclusions:
+          - args: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_exclusions_args}
+            requestCookies: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_exclusions_request_cookies}
+          key: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_key}
+          version: ${var.web_app_firewall_policy_response_protection_rules_protection_capabilities_version}
+        protectionCapabilitySettings:
+        - allowedHttpMethods: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_allowed_http_methods}
+          maxHttpRequestHeaderLength: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_max_http_request_header_length}
+          maxHttpRequestHeaders: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_max_http_request_headers}
+          maxNumberOfArguments: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_max_number_of_arguments}
+          maxSingleArgumentLength: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_max_single_argument_length}
+          maxTotalArgumentLength: ${var.web_app_firewall_policy_response_protection_rules_protection_capability_settings_max_total_argument_length}
+        type: ${var.web_app_firewall_policy_response_protection_rules_type}
+    systemTags: ${var.web_app_firewall_policy_system_tags}

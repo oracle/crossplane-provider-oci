@@ -1,0 +1,20 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: StreamGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/streamgroup
+  labels:
+    testing.upbound.io/example-name: test_stream_group
+  name: test-stream-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.stream_group_defined_tags}
+    displayName: ${var.stream_group_display_name}
+    freeformTags: ${var.stream_group_freeform_tags}
+    isEnabled: ${var.stream_group_is_enabled}
+    streamOverlaps:
+    - overlappingStreams: ${var.stream_group_stream_overlaps_overlapping_streams}
+    streamSourceIds: ${var.stream_group_stream_source_ids}

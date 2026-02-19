@@ -1,0 +1,15 @@
+apiVersion: optimizer.oci.upbound.io/v1alpha1
+kind: ResourceAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: optimizer/v1alpha1/resourceaction
+  labels:
+    testing.upbound.io/example-name: test_resource_action
+  name: test-resource-action
+spec:
+  forProvider:
+    resourceActionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource_action
+    status: ${var.resource_action_status}
+    timeStatusEnd: ${var.resource_action_time_status_end}

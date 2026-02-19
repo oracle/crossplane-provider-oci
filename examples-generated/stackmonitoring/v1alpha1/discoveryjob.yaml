@@ -1,0 +1,35 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: DiscoveryJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/discoveryjob
+  labels:
+    testing.upbound.io/example-name: test_discovery_job
+  name: test-discovery-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    discoveryClient: ${var.discovery_job_discovery_client}
+    discoveryDetails:
+    - agentId: ${var.management_agent_id}
+      credentials:
+      - items:
+        - credentialName: ${var.discovery_job_discovery_details_credentials_items_credential_name}
+          credentialType: ${var.discovery_job_discovery_details_credentials_items_credential_type}
+          properties:
+          - propertiesMap: ${var.discovery_job_discovery_details_credentials_items_properties_properties_map}
+      license: ${var.discovery_job_discovery_details_license}
+      properties:
+      - propertiesMap: ${var.discovery_job_discovery_details_properties_properties_map}
+      resourceName: ${var.discovery_job_discovery_details_resource_name}
+      resourceType: ${var.discovery_job_discovery_details_resource_type}
+      tags:
+      - propertiesMap: ${var.discovery_job_discovery_details_tags_properties_map}
+    discoveryType: ${var.discovery_job_discovery_type}
+    freeformTags:
+      bar-key: value
+    shouldPropagateTagsToDiscoveredResources: ${var.discovery_job_should_propagate_tags_to_discovered_resources}

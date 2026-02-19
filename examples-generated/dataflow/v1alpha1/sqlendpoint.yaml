@@ -1,0 +1,48 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: SqlEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/sqlendpoint
+  labels:
+    testing.upbound.io/example-name: test_sql_endpoint
+  name: test-sql-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sql_endpoint_description}
+    displayName: ${var.sql_endpoint_display_name}
+    driverShape: ${var.sql_endpoint_driver_shape}
+    driverShapeConfig:
+    - memoryInGbs: ${var.sql_endpoint_driver_shape_config_memory_in_gbs}
+      ocpus: ${var.sql_endpoint_driver_shape_config_ocpus}
+    executorShape: ${var.sql_endpoint_executor_shape}
+    executorShapeConfig:
+    - memoryInGbs: ${var.sql_endpoint_executor_shape_config_memory_in_gbs}
+      ocpus: ${var.sql_endpoint_executor_shape_config_ocpus}
+    freeformTags:
+      Department: Finance
+    maxExecutorCount: ${var.sql_endpoint_max_executor_count}
+    metastoreIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_metastore
+    minExecutorCount: ${var.sql_endpoint_min_executor_count}
+    networkConfiguration:
+    - accessControlRules:
+      - ipNotation: ${var.sql_endpoint_network_configuration_access_control_rules_ip_notation}
+        value: ${var.sql_endpoint_network_configuration_access_control_rules_value}
+        vcnIps: ${var.sql_endpoint_network_configuration_access_control_rules_vcn_ips}
+      hostNamePrefix: ${var.sql_endpoint_network_configuration_host_name_prefix}
+      networkType: ${var.sql_endpoint_network_configuration_network_type}
+      nsgIds: ${var.sql_endpoint_network_configuration_nsg_ids}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      vcnIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vcn
+    sparkAdvancedConfigurations: ${var.sql_endpoint_spark_advanced_configurations}
+    sqlEndpointVersion: ${var.sql_endpoint_sql_endpoint_version}

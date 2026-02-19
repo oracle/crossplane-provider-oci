@@ -13,164 +13,16 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DNSSECConfigInitParameters struct {
+type DNSSECConfigKskDNSSECKeyVersionsInitParameters struct {
 }
 
-type DNSSECConfigObservation struct {
-
-	// A read-only array of key signing key (KSK) versions.
-	KskDNSSECKeyVersions []KskDNSSECKeyVersionsObservation `json:"kskDnssecKeyVersions,omitempty" tf:"ksk_dnssec_key_versions,omitempty"`
-
-	// A read-only array of zone signing key (ZSK) versions.
-	ZskDNSSECKeyVersions []ZskDNSSECKeyVersionsObservation `json:"zskDnssecKeyVersions,omitempty" tf:"zsk_dnssec_key_versions,omitempty"`
-}
-
-type DNSSECConfigParameters struct {
-}
-
-type DsDataInitParameters struct {
-}
-
-type DsDataObservation struct {
-
-	// The type of the digest associated with the rdata.
-	DigestType *string `json:"digestType,omitempty" tf:"digest_type,omitempty"`
-
-	// Presentation-format DS record data that must be added to the parent zone. For more information about RDATA, see Supported DNS Resource Record Types
-	Rdata *string `json:"rdata,omitempty" tf:"rdata,omitempty"`
-}
-
-type DsDataParameters struct {
-}
-
-type ExternalDownstreamsInitParameters struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-
-	// Reference to a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
-}
-
-type ExternalDownstreamsObservation struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-}
-
-type ExternalDownstreamsParameters struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	// +kubebuilder:validation:Optional
-	Address *string `json:"address" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-
-	// Reference to a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
-}
-
-type ExternalMastersInitParameters struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-
-	// Reference to a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
-}
-
-type ExternalMastersObservation struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	Address *string `json:"address,omitempty" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-}
-
-type ExternalMastersParameters struct {
-
-	// (Updatable) The server's IP address (IPv4 or IPv6).
-	// +kubebuilder:validation:Optional
-	Address *string `json:"address" tf:"address,omitempty"`
-
-	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
-	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
-
-	// Reference to a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
-
-	// Selector for a TsigKey in dns to populate tsigKeyId.
-	// +kubebuilder:validation:Optional
-	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
-}
-
-type KskDNSSECKeyVersionsInitParameters struct {
-}
-
-type KskDNSSECKeyVersionsObservation struct {
+type DNSSECConfigKskDNSSECKeyVersionsObservation struct {
 
 	// The signing algorithm used for the key.
 	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
 
 	// An array of data for DS records corresponding with this key version. An entry will exist for each supported DS digest algorithm.
-	DsData []DsDataObservation `json:"dsData,omitempty" tf:"ds_data,omitempty"`
+	DsData []KskDNSSECKeyVersionsDsDataObservation `json:"dsData,omitempty" tf:"ds_data,omitempty"`
 
 	// The key tag associated with the DnssecKeyVersion. This key tag will be present in the RRSIG and DS records associated with the key material for this DnssecKeyVersion. For more information about key tags, see RFC 4034.
 	KeyTag *float64 `json:"keyTag,omitempty" tf:"key_tag,omitempty"`
@@ -209,19 +61,203 @@ type KskDNSSECKeyVersionsObservation struct {
 	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
 }
 
-type KskDNSSECKeyVersionsParameters struct {
+type DNSSECConfigKskDNSSECKeyVersionsParameters struct {
 }
 
-type NameserversInitParameters struct {
+type DNSSECConfigZskDNSSECKeyVersionsInitParameters struct {
 }
 
-type NameserversObservation struct {
+type DNSSECConfigZskDNSSECKeyVersionsObservation struct {
 
-	// The hostname of the nameserver.
-	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+	// The signing algorithm used for the key.
+	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
+
+	// The key tag associated with the DnssecKeyVersion. This key tag will be present in the RRSIG and DS records associated with the key material for this DnssecKeyVersion. For more information about key tags, see RFC 4034.
+	KeyTag *float64 `json:"keyTag,omitempty" tf:"key_tag,omitempty"`
+
+	// The length of the corresponding private key in bytes, expressed as an integer.
+	LengthInBytes *float64 `json:"lengthInBytes,omitempty" tf:"length_in_bytes,omitempty"`
+
+	// When populated, this is the UUID of the DnssecKeyVersion that this DnssecKeyVersion will replace or has replaced.
+	PredecessorDNSSECKeyVersionUUID *string `json:"predecessorDnssecKeyVersionUuid,omitempty" tf:"predecessor_dnssec_key_version_uuid,omitempty"`
+
+	// When populated, this is the UUID of the DnssecKeyVersion that will replace, or has replaced, this DnssecKeyVersion.
+	SuccessorDNSSECKeyVersionUUID *string `json:"successorDnssecKeyVersionUuid,omitempty" tf:"successor_dnssec_key_version_uuid,omitempty"`
+
+	// The date and time the key version went, or will go, active, expressed in RFC 3339 timestamp format. This is when the key material will be used to generate RRSIGs.
+	TimeActivated *string `json:"timeActivated,omitempty" tf:"time_activated,omitempty"`
+
+	// The date and time the key version was created, expressed in RFC 3339 timestamp format.
+	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
+
+	// The date and time at which the recommended key version publication/activation lifetime ends, expressed in RFC 3339 timestamp format. This is when the corresponding DNSKEY should no longer exist in zone contents and no longer be used to generate RRSIGs. For a key sigining key (KSK), if PromoteZoneDnssecKeyVersion has not been called on this DnssecKeyVersion's successor then it will remain active for arbitrarily long past its recommended lifetime. This prevents service disruption at the potential increased risk of key compromise.
+	TimeExpired *string `json:"timeExpired,omitempty" tf:"time_expired,omitempty"`
+
+	// The date and time the key version went, or will go, inactive, expressed in RFC 3339 timestamp format. This is when the key material will no longer be used to generate RRSIGs. For a key signing key (KSK) DnssecKeyVersion, this is populated after PromoteZoneDnssecKeyVersion has been called on its successor DnssecKeyVersion.
+	TimeInactivated *string `json:"timeInactivated,omitempty" tf:"time_inactivated,omitempty"`
+
+	// The date and time the key version was promoted expressed in RFC 3339 timestamp format.
+	TimePromoted *string `json:"timePromoted,omitempty" tf:"time_promoted,omitempty"`
+
+	// The date and time the key version was, or will be, published, expressed in RFC 3339 timestamp format. This is when the zone contents will include a DNSKEY record corresponding to the key material.
+	TimePublished *string `json:"timePublished,omitempty" tf:"time_published,omitempty"`
+
+	// The date and time the key version was, or will be, unpublished, expressed in RFC 3339 timestamp format. This is when the corresponding DNSKEY will be removed from zone contents. For a key signing key (KSK) DnssecKeyVersion, this is populated after PromoteZoneDnssecKeyVersion has been called on its successor DnssecKeyVersion.
+	TimeUnpublished *string `json:"timeUnpublished,omitempty" tf:"time_unpublished,omitempty"`
+
+	// The UUID of the DnssecKeyVersion.
+	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
 }
 
-type NameserversParameters struct {
+type DNSSECConfigZskDNSSECKeyVersionsParameters struct {
+}
+
+type KskDNSSECKeyVersionsDsDataInitParameters struct {
+}
+
+type KskDNSSECKeyVersionsDsDataObservation struct {
+
+	// The type of the digest associated with the rdata.
+	DigestType *string `json:"digestType,omitempty" tf:"digest_type,omitempty"`
+
+	// Presentation-format DS record data that must be added to the parent zone. For more information about RDATA, see Supported DNS Resource Record Types
+	Rdata *string `json:"rdata,omitempty" tf:"rdata,omitempty"`
+}
+
+type KskDNSSECKeyVersionsDsDataParameters struct {
+}
+
+type ZoneDNSSECConfigInitParameters struct {
+}
+
+type ZoneDNSSECConfigObservation struct {
+
+	// A read-only array of key signing key (KSK) versions.
+	KskDNSSECKeyVersions []DNSSECConfigKskDNSSECKeyVersionsObservation `json:"kskDnssecKeyVersions,omitempty" tf:"ksk_dnssec_key_versions,omitempty"`
+
+	// A read-only array of zone signing key (ZSK) versions.
+	ZskDNSSECKeyVersions []DNSSECConfigZskDNSSECKeyVersionsObservation `json:"zskDnssecKeyVersions,omitempty" tf:"zsk_dnssec_key_versions,omitempty"`
+}
+
+type ZoneDNSSECConfigParameters struct {
+}
+
+type ZoneExternalDownstreamsInitParameters struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
+}
+
+type ZoneExternalDownstreamsObservation struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+}
+
+type ZoneExternalDownstreamsParameters struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	// +kubebuilder:validation:Optional
+	Address *string `json:"address" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	// +kubebuilder:validation:Optional
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
+}
+
+type ZoneExternalMastersInitParameters struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
+}
+
+type ZoneExternalMastersObservation struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+}
+
+type ZoneExternalMastersParameters struct {
+
+	// (Updatable) The server's IP address (IPv4 or IPv6).
+	// +kubebuilder:validation:Optional
+	Address *string `json:"address" tf:"address,omitempty"`
+
+	// (Updatable) The server's port. Port value must be a value of 53, otherwise omit the port value.
+	// +kubebuilder:validation:Optional
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// (Updatable) The OCID of the TSIG key. A TSIG key is used to secure DNS messages (in this case, zone transfers) between two systems that both have the (shared) secret.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.TsigKey
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	TsigKeyID *string `json:"tsigKeyId,omitempty" tf:"tsig_key_id,omitempty"`
+
+	// Reference to a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDRef *v1.Reference `json:"tsigKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a TsigKey in dns to populate tsigKeyId.
+	// +kubebuilder:validation:Optional
+	TsigKeyIDSelector *v1.Selector `json:"tsigKeyIdSelector,omitempty" tf:"-"`
 }
 
 type ZoneInitParameters struct {
@@ -246,10 +282,10 @@ type ZoneInitParameters struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) External secondary servers for the zone. This field is currently not supported when zoneType is SECONDARY or scope is PRIVATE.
-	ExternalDownstreams []ExternalDownstreamsInitParameters `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
+	ExternalDownstreams []ZoneExternalDownstreamsInitParameters `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
 
 	// (Updatable) External master servers for the zone. externalMasters becomes a required parameter when the zoneType value is SECONDARY.
-	ExternalMasters []ExternalMastersInitParameters `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
+	ExternalMasters []ZoneExternalMastersInitParameters `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -278,13 +314,25 @@ type ZoneInitParameters struct {
 	ZoneType *string `json:"zoneType,omitempty" tf:"zone_type,omitempty"`
 }
 
+type ZoneNameserversInitParameters struct {
+}
+
+type ZoneNameserversObservation struct {
+
+	// The hostname of the nameserver.
+	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+}
+
+type ZoneNameserversParameters struct {
+}
+
 type ZoneObservation struct {
 
 	// (Updatable) The OCID of the compartment containing the zone.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
 	// DNSSEC configuration data.
-	DNSSECConfig []DNSSECConfigObservation `json:"dnssecConfig,omitempty" tf:"dnssec_config,omitempty"`
+	DNSSECConfig []ZoneDNSSECConfigObservation `json:"dnssecConfig,omitempty" tf:"dnssec_config,omitempty"`
 
 	// (Updatable) The state of DNSSEC on the zone.
 	DNSSECState *string `json:"dnssecState,omitempty" tf:"dnssec_state,omitempty"`
@@ -294,10 +342,10 @@ type ZoneObservation struct {
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
 	// (Updatable) External secondary servers for the zone. This field is currently not supported when zoneType is SECONDARY or scope is PRIVATE.
-	ExternalDownstreams []ExternalDownstreamsObservation `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
+	ExternalDownstreams []ZoneExternalDownstreamsObservation `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
 
 	// (Updatable) External master servers for the zone. externalMasters becomes a required parameter when the zoneType value is SECONDARY.
-	ExternalMasters []ExternalMastersObservation `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
+	ExternalMasters []ZoneExternalMastersObservation `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
 	// +mapType=granular
@@ -313,7 +361,7 @@ type ZoneObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The authoritative nameservers for the zone.
-	Nameservers []NameserversObservation `json:"nameservers,omitempty" tf:"nameservers,omitempty"`
+	Nameservers []ZoneNameserversObservation `json:"nameservers,omitempty" tf:"nameservers,omitempty"`
 
 	// Specifies to operate only on resources that have a matching DNS scope.
 	// This value will be null for zones in the global DNS and PRIVATE when creating a private zone.
@@ -338,7 +386,7 @@ type ZoneObservation struct {
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
 
 	// The Oracle Cloud Infrastructure nameservers that transfer the zone data with external nameservers.
-	ZoneTransferServers []ZoneTransferServersObservation `json:"zoneTransferServers,omitempty" tf:"zone_transfer_servers,omitempty"`
+	ZoneTransferServers []ZoneZoneTransferServersObservation `json:"zoneTransferServers,omitempty" tf:"zone_transfer_servers,omitempty"`
 
 	// The type of the zone. Must be either PRIMARY or SECONDARY. SECONDARY is only supported for GLOBAL zones.
 	ZoneType *string `json:"zoneType,omitempty" tf:"zone_type,omitempty"`
@@ -370,11 +418,11 @@ type ZoneParameters struct {
 
 	// (Updatable) External secondary servers for the zone. This field is currently not supported when zoneType is SECONDARY or scope is PRIVATE.
 	// +kubebuilder:validation:Optional
-	ExternalDownstreams []ExternalDownstreamsParameters `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
+	ExternalDownstreams []ZoneExternalDownstreamsParameters `json:"externalDownstreams,omitempty" tf:"external_downstreams,omitempty"`
 
 	// (Updatable) External master servers for the zone. externalMasters becomes a required parameter when the zoneType value is SECONDARY.
 	// +kubebuilder:validation:Optional
-	ExternalMasters []ExternalMastersParameters `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
+	ExternalMasters []ZoneExternalMastersParameters `json:"externalMasters,omitempty" tf:"external_masters,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.
 	// +kubebuilder:validation:Optional
@@ -408,10 +456,10 @@ type ZoneParameters struct {
 	ZoneType *string `json:"zoneType,omitempty" tf:"zone_type,omitempty"`
 }
 
-type ZoneTransferServersInitParameters struct {
+type ZoneZoneTransferServersInitParameters struct {
 }
 
-type ZoneTransferServersObservation struct {
+type ZoneZoneTransferServersObservation struct {
 
 	// (Updatable) The server's IP address (IPv4 or IPv6).
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
@@ -426,55 +474,7 @@ type ZoneTransferServersObservation struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
-type ZoneTransferServersParameters struct {
-}
-
-type ZskDNSSECKeyVersionsInitParameters struct {
-}
-
-type ZskDNSSECKeyVersionsObservation struct {
-
-	// The signing algorithm used for the key.
-	Algorithm *string `json:"algorithm,omitempty" tf:"algorithm,omitempty"`
-
-	// The key tag associated with the DnssecKeyVersion. This key tag will be present in the RRSIG and DS records associated with the key material for this DnssecKeyVersion. For more information about key tags, see RFC 4034.
-	KeyTag *float64 `json:"keyTag,omitempty" tf:"key_tag,omitempty"`
-
-	// The length of the corresponding private key in bytes, expressed as an integer.
-	LengthInBytes *float64 `json:"lengthInBytes,omitempty" tf:"length_in_bytes,omitempty"`
-
-	// When populated, this is the UUID of the DnssecKeyVersion that this DnssecKeyVersion will replace or has replaced.
-	PredecessorDNSSECKeyVersionUUID *string `json:"predecessorDnssecKeyVersionUuid,omitempty" tf:"predecessor_dnssec_key_version_uuid,omitempty"`
-
-	// When populated, this is the UUID of the DnssecKeyVersion that will replace, or has replaced, this DnssecKeyVersion.
-	SuccessorDNSSECKeyVersionUUID *string `json:"successorDnssecKeyVersionUuid,omitempty" tf:"successor_dnssec_key_version_uuid,omitempty"`
-
-	// The date and time the key version went, or will go, active, expressed in RFC 3339 timestamp format. This is when the key material will be used to generate RRSIGs.
-	TimeActivated *string `json:"timeActivated,omitempty" tf:"time_activated,omitempty"`
-
-	// The date and time the key version was created, expressed in RFC 3339 timestamp format.
-	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
-
-	// The date and time at which the recommended key version publication/activation lifetime ends, expressed in RFC 3339 timestamp format. This is when the corresponding DNSKEY should no longer exist in zone contents and no longer be used to generate RRSIGs. For a key sigining key (KSK), if PromoteZoneDnssecKeyVersion has not been called on this DnssecKeyVersion's successor then it will remain active for arbitrarily long past its recommended lifetime. This prevents service disruption at the potential increased risk of key compromise.
-	TimeExpired *string `json:"timeExpired,omitempty" tf:"time_expired,omitempty"`
-
-	// The date and time the key version went, or will go, inactive, expressed in RFC 3339 timestamp format. This is when the key material will no longer be used to generate RRSIGs. For a key signing key (KSK) DnssecKeyVersion, this is populated after PromoteZoneDnssecKeyVersion has been called on its successor DnssecKeyVersion.
-	TimeInactivated *string `json:"timeInactivated,omitempty" tf:"time_inactivated,omitempty"`
-
-	// The date and time the key version was promoted expressed in RFC 3339 timestamp format.
-	TimePromoted *string `json:"timePromoted,omitempty" tf:"time_promoted,omitempty"`
-
-	// The date and time the key version was, or will be, published, expressed in RFC 3339 timestamp format. This is when the zone contents will include a DNSKEY record corresponding to the key material.
-	TimePublished *string `json:"timePublished,omitempty" tf:"time_published,omitempty"`
-
-	// The date and time the key version was, or will be, unpublished, expressed in RFC 3339 timestamp format. This is when the corresponding DNSKEY will be removed from zone contents. For a key signing key (KSK) DnssecKeyVersion, this is populated after PromoteZoneDnssecKeyVersion has been called on its successor DnssecKeyVersion.
-	TimeUnpublished *string `json:"timeUnpublished,omitempty" tf:"time_unpublished,omitempty"`
-
-	// The UUID of the DnssecKeyVersion.
-	UUID *string `json:"uuid,omitempty" tf:"uuid,omitempty"`
-}
-
-type ZskDNSSECKeyVersionsParameters struct {
+type ZoneZoneTransferServersParameters struct {
 }
 
 // ZoneSpec defines the desired state of Zone

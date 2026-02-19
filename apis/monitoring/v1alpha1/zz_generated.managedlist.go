@@ -16,6 +16,15 @@ func (l *AlarmList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this AlarmSuppressionList.
+func (l *AlarmSuppressionList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this CaptureFilterList.
 func (l *CaptureFilterList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

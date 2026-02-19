@@ -1,0 +1,20 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: FleetResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/fleetresource
+  labels:
+    testing.upbound.io/example-name: test_fleet_resource
+  name: test-fleet-resource
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    fleetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fleet
+    resourceId: ${oci_cloud_guard_resource.test_resource.id}
+    resourceRegion: ${var.fleet_resource_resource_region}
+    resourceType: ${var.fleet_resource_resource_type}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}

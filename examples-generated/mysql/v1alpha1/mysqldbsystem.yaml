@@ -32,7 +32,9 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    configurationId: ${oci_audit_configuration.test_configuration.id}
+    configurationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_configuration
     crashRecovery: ${var.mysql_db_system_crash_recovery}
     customerContacts:
     - email: ${var.mysql_db_system_customer_contacts_email}
@@ -79,7 +81,9 @@ spec:
       port: ${var.mysql_db_system_rest_port}
     secureConnections:
     - certificateGenerationType: ${var.mysql_db_system_secure_connections_certificate_generation_type}
-      certificateId: ${oci_apigateway_certificate.test_certificate.id}
+      certificateIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate
     securityAttributes: ${var.mysql_db_system_security_attributes}
     shapeName: ${var.mysql_shape_name}
     source:

@@ -1,0 +1,17 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSensitiveTypeGroupGroupedSensitiveType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesensitivetypegroupgroupedsensitivetype
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type_group_grouped_sensitive_type
+  name: test-sensitive-type-group-grouped-sensitive-type
+spec:
+  forProvider:
+    patchOperations:
+    - operation: ${var.sensitive_type_group_grouped_sensitive_type_patch_operations_operation}
+      selection: ${var.sensitive_type_group_grouped_sensitive_type_patch_operations_selection}
+      value: ${var.sensitive_type_group_grouped_sensitive_type_patch_operations_value}
+    sensitiveTypeGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_type_group

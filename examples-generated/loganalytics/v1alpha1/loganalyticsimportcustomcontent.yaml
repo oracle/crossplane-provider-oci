@@ -1,0 +1,14 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsImportCustomContent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsimportcustomcontent
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_import_custom_content
+  name: test-log-analytics-import-custom-content
+spec:
+  forProvider:
+    expect: ${var.log_analytics_import_custom_content_expect}
+    importCustomContentFile: ${var.log_analytics_import_custom_content_import_custom_content_file}
+    isOverwrite: ${var.log_analytics_import_custom_content_is_overwrite}
+    namespace: ${var.log_analytics_import_custom_content_namespace}

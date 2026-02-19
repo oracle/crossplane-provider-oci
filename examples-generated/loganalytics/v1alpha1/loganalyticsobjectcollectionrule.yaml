@@ -1,0 +1,47 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsObjectCollectionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsobjectcollectionrule
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_object_collection_rule
+  name: test-log-analytics-object-collection-rule
+spec:
+  forProvider:
+    charEncoding: ${var.log_analytics_object_collection_rule_char_encoding}
+    collectionType: ${var.log_analytics_object_collection_rule_collection_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.log_analytics_object_collection_rule_description}
+    entityId: ${oci_log_analytics_entity.test_entity.id}
+    freeformTags:
+      bar-key: value
+    isEnabled: ${var.log_analytics_object_collection_rule_is_enabled}
+    isForceHistoricCollection: ${var.log_analytics_object_collection_rule_is_force_historic_collection}
+    logGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_log_analytics_log_group
+    logSet: ${var.log_analytics_object_collection_rule_log_set}
+    logSetExtRegex: ${var.log_analytics_object_collection_rule_log_set_ext_regex}
+    logSetKey: ${var.log_analytics_object_collection_rule_log_set_key}
+    logSourceName: ${var.log_analytics_object_collection_rule_log_source_name}
+    logType: ${var.log_analytics_object_collection_rule_log_type}
+    name: ${var.log_analytics_object_collection_rule_name}
+    namespace: ${var.log_analytics_object_collection_rule_namespace}
+    objectNameFilters: ${var.log_analytics_object_collection_rule_object_name_filters}
+    osBucketNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bucket
+    osNamespace: ${var.log_analytics_object_collection_rule_os_namespace}
+    overrides: ${var.log_analytics_object_collection_rule_overrides}
+    pollSince: ${var.log_analytics_object_collection_rule_poll_since}
+    pollTill: ${var.log_analytics_object_collection_rule_poll_till}
+    streamCursorTime: ${var.log_analytics_object_collection_rule_stream_cursor_time}
+    streamCursorType: ${var.log_analytics_object_collection_rule_stream_cursor_type}
+    streamIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_stream
+    timezone: ${var.log_analytics_object_collection_rule_timezone}

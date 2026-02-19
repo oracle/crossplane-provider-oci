@@ -1,0 +1,1414 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: sqlendpoints.dataflow.oci.upbound.io
+spec:
+  group: dataflow.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: SqlEndpoint
+    listKind: SqlEndpointList
+    plural: sqlendpoints
+    singular: sqlendpoint
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: SqlEndpoint is the Schema for the SqlEndpoints API. Provides
+          the Sql Endpoint resource in Oracle Cloud Infrastructure Data Flow service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: SqlEndpointSpec defines the desired state of SqlEndpoint
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The identifier of the compartment used
+                      with the SQL Endpoint.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) The description of CreateSQLEndpointDetails.
+                    type: string
+                  displayName:
+                    description: (Updatable) The SQL Endpoint name, which can be changed.
+                    type: string
+                  driverShape:
+                    description: The shape of the SQL Endpoint driver instance.
+                    type: string
+                  driverShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  executorShape:
+                    description: The shape of the SQL Endpoint worker instance.
+                    type: string
+                  executorShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maxExecutorCount:
+                    description: (Updatable) The maximum number of executors.
+                    type: number
+                  metastoreId:
+                    description: Metastore OCID
+                    type: string
+                  metastoreIdRef:
+                    description: Reference to a Metastore in datacatalog to populate
+                      metastoreId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metastoreIdSelector:
+                    description: Selector for a Metastore in datacatalog to populate
+                      metastoreId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  minExecutorCount:
+                    description: (Updatable) The minimum number of executors.
+                    type: number
+                  networkConfiguration:
+                    description: The network configuration of a SQL Endpoint.
+                    items:
+                      properties:
+                        accessControlRules:
+                          description: (Applicable when network_type=SECURE_ACCESS)
+                            A list of SecureAccessControlRule's to which access is
+                            limited to
+                          items:
+                            properties:
+                              ipNotation:
+                                description: The type of IP notation.
+                                type: string
+                              value:
+                                description: The associated value of the selected
+                                  IP notation.
+                                type: string
+                              vcnIps:
+                                description: (Applicable when network_type=SECURE_ACCESS)
+                                  A comma-separated IP or CIDR address for VCN OCID
+                                  IP notation selection.
+                                type: string
+                            type: object
+                          type: array
+                        hostNamePrefix:
+                          description: (Applicable when network_type=VCN) The host
+                            name prefix.
+                          type: string
+                        networkType:
+                          description: The type of network configuration.
+                          type: string
+                        nsgIds:
+                          description: (Applicable when network_type=VCN) The OCIDs
+                            of Network Security Groups (NSGs).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        subnetId:
+                          description: The VCN Subnet OCID.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        vcnId:
+                          description: The VCN OCID.
+                          type: string
+                        vcnIdRef:
+                          description: Reference to a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        vcnIdSelector:
+                          description: Selector for a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  sparkAdvancedConfigurations:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The Spark configuration passed to the
+                      running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties.
+                      Example: { "spark.app.name" : "My App Name", "spark.shuffle.io.maxRetries"
+                      : "4" } Note: Not all Spark properties are permitted to be set.  Attempting
+                      to set a property that is not allowed to be overwritten will
+                      cause a 400 status to be returned.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sqlEndpointVersion:
+                    description: The version of the SQL Endpoint.
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the Sql Endpoint.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: (Updatable) The identifier of the compartment used
+                      with the SQL Endpoint.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) The description of CreateSQLEndpointDetails.
+                    type: string
+                  displayName:
+                    description: (Updatable) The SQL Endpoint name, which can be changed.
+                    type: string
+                  driverShape:
+                    description: The shape of the SQL Endpoint driver instance.
+                    type: string
+                  driverShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  executorShape:
+                    description: The shape of the SQL Endpoint worker instance.
+                    type: string
+                  executorShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maxExecutorCount:
+                    description: (Updatable) The maximum number of executors.
+                    type: number
+                  metastoreId:
+                    description: Metastore OCID
+                    type: string
+                  metastoreIdRef:
+                    description: Reference to a Metastore in datacatalog to populate
+                      metastoreId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metastoreIdSelector:
+                    description: Selector for a Metastore in datacatalog to populate
+                      metastoreId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  minExecutorCount:
+                    description: (Updatable) The minimum number of executors.
+                    type: number
+                  networkConfiguration:
+                    description: The network configuration of a SQL Endpoint.
+                    items:
+                      properties:
+                        accessControlRules:
+                          description: (Applicable when network_type=SECURE_ACCESS)
+                            A list of SecureAccessControlRule's to which access is
+                            limited to
+                          items:
+                            properties:
+                              ipNotation:
+                                description: The type of IP notation.
+                                type: string
+                              value:
+                                description: The associated value of the selected
+                                  IP notation.
+                                type: string
+                              vcnIps:
+                                description: (Applicable when network_type=SECURE_ACCESS)
+                                  A comma-separated IP or CIDR address for VCN OCID
+                                  IP notation selection.
+                                type: string
+                            type: object
+                          type: array
+                        hostNamePrefix:
+                          description: (Applicable when network_type=VCN) The host
+                            name prefix.
+                          type: string
+                        networkType:
+                          description: The type of network configuration.
+                          type: string
+                        nsgIds:
+                          description: (Applicable when network_type=VCN) The OCIDs
+                            of Network Security Groups (NSGs).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        subnetId:
+                          description: The VCN Subnet OCID.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in networking to populate
+                            subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        vcnId:
+                          description: The VCN OCID.
+                          type: string
+                        vcnIdRef:
+                          description: Reference to a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        vcnIdSelector:
+                          description: Selector for a Vcn in networking to populate
+                            vcnId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  sparkAdvancedConfigurations:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The Spark configuration passed to the
+                      running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties.
+                      Example: { "spark.app.name" : "My App Name", "spark.shuffle.io.maxRetries"
+                      : "4" } Note: Not all Spark properties are permitted to be set.  Attempting
+                      to set a property that is not allowed to be overwritten will
+                      cause a 400 status to be returned.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sqlEndpointVersion:
+                    description: The version of the SQL Endpoint.
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the Sql Endpoint.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.driverShape is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.driverShape)
+                || (has(self.initProvider) && has(self.initProvider.driverShape))'
+            - message: spec.forProvider.executorShape is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.executorShape)
+                || (has(self.initProvider) && has(self.initProvider.executorShape))'
+            - message: spec.forProvider.maxExecutorCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.maxExecutorCount)
+                || (has(self.initProvider) && has(self.initProvider.maxExecutorCount))'
+            - message: spec.forProvider.minExecutorCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.minExecutorCount)
+                || (has(self.initProvider) && has(self.initProvider.minExecutorCount))'
+            - message: spec.forProvider.networkConfiguration is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkConfiguration)
+                || (has(self.initProvider) && has(self.initProvider.networkConfiguration))'
+            - message: spec.forProvider.sqlEndpointVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.sqlEndpointVersion)
+                || (has(self.initProvider) && has(self.initProvider.sqlEndpointVersion))'
+          status:
+            description: SqlEndpointStatus defines the observed state of SqlEndpoint.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The identifier of the compartment used
+                      with the SQL Endpoint.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags. Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: (Updatable) The description of CreateSQLEndpointDetails.
+                    type: string
+                  displayName:
+                    description: (Updatable) The SQL Endpoint name, which can be changed.
+                    type: string
+                  driverShape:
+                    description: The shape of the SQL Endpoint driver instance.
+                    type: string
+                  driverShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  executorShape:
+                    description: The shape of the SQL Endpoint worker instance.
+                    type: string
+                  executorShapeConfig:
+                    description: This is used to configure the shape of the driver
+                      or executor if a flexible shape is used.
+                    items:
+                      properties:
+                        memoryInGbs:
+                          description: The amount of memory used for the driver or
+                            executors.
+                          type: number
+                        ocpus:
+                          description: The total number of OCPUs used for the driver
+                            or executors. See here for details.
+                          type: number
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags. Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The provision identifier that is immutable on creation.
+                    type: string
+                  jdbcEndpointUrl:
+                    description: The JDBC URL field. For example, jdbc:spark://{serviceFQDN}:443/default;SparkServerType=DFI
+                    type: string
+                  lakeId:
+                    description: Oracle Cloud Infrastructure lake OCID
+                    type: string
+                  maxExecutorCount:
+                    description: (Updatable) The maximum number of executors.
+                    type: number
+                  metastoreId:
+                    description: Metastore OCID
+                    type: string
+                  minExecutorCount:
+                    description: (Updatable) The minimum number of executors.
+                    type: number
+                  networkConfiguration:
+                    description: The network configuration of a SQL Endpoint.
+                    items:
+                      properties:
+                        accessControlRules:
+                          description: (Applicable when network_type=SECURE_ACCESS)
+                            A list of SecureAccessControlRule's to which access is
+                            limited to
+                          items:
+                            properties:
+                              ipNotation:
+                                description: The type of IP notation.
+                                type: string
+                              value:
+                                description: The associated value of the selected
+                                  IP notation.
+                                type: string
+                              vcnIps:
+                                description: (Applicable when network_type=SECURE_ACCESS)
+                                  A comma-separated IP or CIDR address for VCN OCID
+                                  IP notation selection.
+                                type: string
+                            type: object
+                          type: array
+                        hostNamePrefix:
+                          description: (Applicable when network_type=VCN) The host
+                            name prefix.
+                          type: string
+                        networkType:
+                          description: The type of network configuration.
+                          type: string
+                        nsgIds:
+                          description: (Applicable when network_type=VCN) The OCIDs
+                            of Network Security Groups (NSGs).
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        privateEndpointIp:
+                          description: (Applicable when network_type=VCN) Ip Address
+                            of private endpoint
+                          type: string
+                        publicEndpointIp:
+                          description: (Applicable when network_type=SECURE_ACCESS)
+                            Ip Address of public endpoint
+                          type: string
+                        subnetId:
+                          description: The VCN Subnet OCID.
+                          type: string
+                        vcnId:
+                          description: The VCN OCID.
+                          type: string
+                      type: object
+                    type: array
+                  sparkAdvancedConfigurations:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) The Spark configuration passed to the
+                      running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties.
+                      Example: { "spark.app.name" : "My App Name", "spark.shuffle.io.maxRetries"
+                      : "4" } Note: Not all Spark properties are permitted to be set.  Attempting
+                      to set a property that is not allowed to be overwritten will
+                      cause a 400 status to be returned.'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  sqlEndpointVersion:
+                    description: The version of the SQL Endpoint.
+                    type: string
+                  state:
+                    description: (Updatable) The target state for the Sql Endpoint.
+                      Could be set to ACTIVE or INACTIVE.
+                    type: string
+                  stateMessage:
+                    description: A message describing the reason why the resource
+                      is in it's current state. Helps bubble up errors in state changes.
+                      For example, it can be used to provide actionable information
+                      for a resource in the Failed state.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'The system tags associated with this resource, if
+                      any. The system tags are set by Oracle cloud infrastructure
+                      services. Each key is predefined and scoped to namespaces. For
+                      more information, see Resource Tags. Example: {orcl-cloud: {free-tier-retain:
+                      true}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time the Sql Endpoint was created. An RFC3339
+                      formatted datetime string.
+                    type: string
+                  timeUpdated:
+                    description: The time the Sql Endpoint was updated. An RFC3339
+                      formatted datetime string.
+                    type: string
+                  warehouseBucketUri:
+                    description: The warehouse bucket URI. It is a Oracle Cloud Infrastructure
+                      Object Storage bucket URI as defined here https://docs.oracle.com/en/cloud/paas/atp-cloud/atpud/object-storage-uris.html
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

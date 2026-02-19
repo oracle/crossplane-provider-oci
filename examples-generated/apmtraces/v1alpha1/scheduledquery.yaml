@@ -1,0 +1,47 @@
+apiVersion: apmtraces.oci.upbound.io/v1alpha1
+kind: ScheduledQuery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmtraces/v1alpha1/scheduledquery
+  labels:
+    testing.upbound.io/example-name: test_scheduled_query
+  name: test-scheduled-query
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    opcDryRun: ${var.scheduled_query_opc_dry_run}
+    scheduledQueryDescription: ${var.scheduled_query_scheduled_query_description}
+    scheduledQueryMaximumRuntimeInSeconds: ${var.scheduled_query_scheduled_query_maximum_runtime_in_seconds}
+    scheduledQueryNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduled_query
+    scheduledQueryProcessingConfiguration:
+    - customMetric:
+      - compartment: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_compartment}
+        description: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_description}
+        isAnomalyDetectionEnabled: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_is_anomaly_detection_enabled}
+        isMetricPublished: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_is_metric_published}
+        name: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_name}
+        namespace: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_namespace}
+        resourceGroup: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_resource_group}
+        unit: ${var.scheduled_query_scheduled_query_processing_configuration_custom_metric_unit}
+      objectStorage:
+      - bucket: ${var.scheduled_query_scheduled_query_processing_configuration_object_storage_bucket}
+        nameSpace: ${var.scheduled_query_scheduled_query_processing_configuration_object_storage_name_space}
+        objectNamePrefix: ${var.scheduled_query_scheduled_query_processing_configuration_object_storage_object_name_prefix}
+      streaming:
+      - streamIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_stream
+    scheduledQueryProcessingSubType: ${var.scheduled_query_scheduled_query_processing_sub_type}
+    scheduledQueryProcessingType: ${var.scheduled_query_scheduled_query_processing_type}
+    scheduledQueryRetentionCriteria: ${var.scheduled_query_scheduled_query_retention_criteria}
+    scheduledQueryRetentionPeriodInMs: ${var.scheduled_query_scheduled_query_retention_period_in_ms}
+    scheduledQuerySchedule: ${var.scheduled_query_scheduled_query_schedule}
+    scheduledQueryText: ${var.scheduled_query_scheduled_query_text}

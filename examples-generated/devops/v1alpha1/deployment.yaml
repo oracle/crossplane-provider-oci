@@ -1,0 +1,44 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    deployArtifactOverrideArguments:
+    - items:
+      - deployArtifactIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_deploy_artifact
+        name: ${var.deployment_deploy_artifact_override_arguments_items_name}
+        value: ${var.deployment_deploy_artifact_override_arguments_items_value}
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_stage
+    deployStageOverrideArguments:
+    - items:
+      - deployStageIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_deploy_stage
+        name: ${var.deployment_deploy_stage_override_arguments_items_name}
+        value: ${var.deployment_deploy_stage_override_arguments_items_value}
+    deploymentArguments:
+    - items:
+      - name: ${var.deployment_deployment_arguments_items_name}
+        value: ${var.deployment_deployment_arguments_items_value}
+    deploymentType: ${var.deployment_deployment_type}
+    displayName: ${var.deployment_display_name}
+    freeformTags:
+      bar-key: value
+    previousDeploymentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment
+    triggerNewDevopsDeployment: ${var.deployment_trigger_new_devops_deployment_bool}

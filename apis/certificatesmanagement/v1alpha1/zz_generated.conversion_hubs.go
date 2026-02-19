@@ -7,4 +7,10 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *CaBundle) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *Certificate) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *CertificateAuthority) Hub() {}

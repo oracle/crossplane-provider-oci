@@ -1,0 +1,20 @@
+apiVersion: apm.oci.upbound.io/v1alpha1
+kind: ApmDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apm/v1alpha1/apmdomain
+  labels:
+    testing.upbound.io/example-name: test_apm_domain
+  name: test-apm-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.apm_domain_description}
+    displayName: ${var.apm_domain_display_name}
+    freeformTags:
+      bar-key: value
+    isFreeTier: ${var.apm_domain_is_free_tier}

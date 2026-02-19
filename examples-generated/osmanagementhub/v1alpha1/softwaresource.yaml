@@ -1,0 +1,59 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: SoftwareSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/softwaresource
+  labels:
+    testing.upbound.io/example-name: test_software_source
+  name: test-software-source
+spec:
+  forProvider:
+    advancedRepoOptions: ${var.software_source_advanced_repo_options}
+    archType: ${var.software_source_arch_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    customSoftwareSourceFilter:
+    - moduleStreamProfileFilters:
+      - filterType: ${var.software_source_custom_software_source_filter_module_stream_profile_filters_filter_type}
+        moduleName: ${var.software_source_custom_software_source_filter_module_stream_profile_filters_module_name}
+        profileNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_profile
+        streamNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_stream
+      packageFilters:
+      - filterType: ${var.software_source_custom_software_source_filter_package_filters_filter_type}
+        packageName: ${var.software_source_custom_software_source_filter_package_filters_package_name}
+        packageNamePattern: ${var.software_source_custom_software_source_filter_package_filters_package_name_pattern}
+        packageVersion: ${var.software_source_custom_software_source_filter_package_filters_package_version}
+      packageGroupFilters:
+      - filterType: ${var.software_source_custom_software_source_filter_package_group_filters_filter_type}
+        packageGroups: ${var.software_source_custom_software_source_filter_package_group_filters_package_groups}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.software_source_description}
+    displayName: ${var.software_source_display_name}
+    freeformTags:
+      Department: Finance
+    gpgKeyUrl: ${var.software_source_gpg_key_url}
+    isAutoResolveDependencies: ${var.software_source_is_auto_resolve_dependencies}
+    isAutomaticallyUpdated: ${var.software_source_is_automatically_updated}
+    isCreatedFromPackageList: ${var.software_source_is_created_from_package_list}
+    isGpgCheckEnabled: ${var.software_source_is_gpg_check_enabled}
+    isLatestContentOnly: ${var.software_source_is_latest_content_only}
+    isMirrorSyncAllowed: ${var.software_source_is_mirror_sync_allowed}
+    isSslVerifyEnabled: ${var.software_source_is_ssl_verify_enabled}
+    originSoftwareSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_software_source
+    osFamily: ${var.software_source_os_family}
+    packages: ${var.software_source_packages}
+    softwareSourceSubType: ${var.software_source_software_source_sub_type}
+    softwareSourceType: ${var.software_source_software_source_type}
+    softwareSourceVersion: ${var.software_source_software_source_version}
+    url: ${var.software_source_url}
+    vendorSoftwareSources:
+    - displayName: ${var.software_source_vendor_software_sources_display_name}
+      id: ${var.software_source_vendor_software_sources_id}

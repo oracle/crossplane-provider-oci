@@ -1,0 +1,18 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: FileSystemQuotaRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/filesystemquotarule
+  labels:
+    testing.upbound.io/example-name: test_file_system_quota_rule
+  name: test-file-system-quota-rule
+spec:
+  forProvider:
+    displayName: ${var.file_system_quota_rule_display_name}
+    fileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_file_system
+    isHardQuota: ${var.file_system_quota_rule_is_hard_quota}
+    principalId: ${oci_file_storage_principal.test_principal.id}
+    principalType: ${var.file_system_quota_rule_principal_type}
+    quotaLimitInGigabytes: ${var.file_system_quota_rule_quota_limit_in_gigabytes}

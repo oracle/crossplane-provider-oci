@@ -1,0 +1,31 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: ApprovalWorkflow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approvalworkflow
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow
+  name: test-approval-workflow
+spec:
+  forProvider:
+    approvalWorkflowSteps:
+    - ocid: ${var.approval_workflow_approval_workflow_steps_ocid}
+      type: ${var.approval_workflow_approval_workflow_steps_type}
+      value: ${var.approval_workflow_approval_workflow_steps_value}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.approval_workflow_authorization}
+    description: ${var.approval_workflow_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    maxDuration:
+    - unit: ${var.approval_workflow_max_duration_unit}
+      value: ${var.approval_workflow_max_duration_value}
+    name: ${var.approval_workflow_name}
+    ocid: ${var.approval_workflow_ocid}
+    resourceTypeSchemaVersion: ${var.approval_workflow_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:ApprovalWorkflow
+    tags:
+    - key: ${var.approval_workflow_tags_key}
+      value: ${var.approval_workflow_tags_value}

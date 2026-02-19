@@ -1,0 +1,28 @@
+apiVersion: queue.oci.upbound.io/v1alpha1
+kind: Queue
+metadata:
+  annotations:
+    meta.upbound.io/example-id: queue/v1alpha1/queue
+  labels:
+    testing.upbound.io/example-name: test_queue
+  name: test-queue
+spec:
+  forProvider:
+    channelConsumptionLimit: ${var.queue_channel_consumption_limit}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    customEncryptionKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    deadLetterQueueDeliveryCount: ${var.queue_dead_letter_queue_delivery_count}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.queue_display_name}
+    freeformTags:
+      bar-key: value
+    purgeTrigger: ${var.purge_trigger}
+    purgeType: ${var.purge_type}
+    retentionInSeconds: ${var.queue_retention_in_seconds}
+    timeoutInSeconds: ${var.queue_timeout_in_seconds}
+    visibilityInSeconds: ${var.queue_visibility_in_seconds}

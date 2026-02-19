@@ -1,0 +1,85 @@
+apiVersion: sch.oci.upbound.io/v1alpha1
+kind: ServiceConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: sch/v1alpha1/serviceconnector
+  labels:
+    testing.upbound.io/example-name: test_service_connector
+  name: test-service-connector
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.service_connector_description}
+    displayName: ${var.service_connector_display_name}
+    freeformTags:
+      bar-key: value
+    source:
+    - configMap: ${var.service_connector_source_config_map}
+      cursor:
+      - kind: ${var.service_connector_source_cursor_kind}
+      kind: ${var.service_connector_source_kind}
+      logSources:
+      - compartmentId: ${var.compartment_id}
+        logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+      monitoringSources:
+      - compartmentId: ${var.compartment_id}
+        namespaceDetails:
+        - kind: ${var.service_connector_source_monitoring_sources_namespace_details_kind}
+          namespaces:
+          - metrics:
+            - kind: ${var.service_connector_source_monitoring_sources_namespace_details_namespaces_metrics_kind}
+            namespace: ${var.service_connector_source_monitoring_sources_namespace_details_namespaces_namespace}
+      pluginName: ${var.service_connector_source_plugin_name}
+      streamIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+    target:
+    - batchRolloverSizeInMbs: ${var.service_connector_target_batch_rollover_size_in_mbs}
+      batchRolloverTimeInMs: ${var.service_connector_target_batch_rollover_time_in_ms}
+      batchSizeInKbs: ${var.service_connector_target_batch_size_in_kbs}
+      batchSizeInNum: ${var.service_connector_target_batch_size_in_num}
+      batchTimeInSec: ${var.service_connector_target_batch_time_in_sec}
+      bucket: ${var.service_connector_target_bucket}
+      compartmentId: ${var.compartment_id}
+      dimensions:
+      - dimensionValue:
+        - kind: ${var.service_connector_target_dimensions_dimension_value_kind}
+          path: ${var.service_connector_target_dimensions_dimension_value_path}
+          value: ${var.service_connector_target_dimensions_dimension_value_value}
+        name: ${var.service_connector_target_dimensions_name}
+      enableFormattedMessaging: ${var.service_connector_target_enable_formatted_messaging}
+      functionIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_function
+      kind: ${var.service_connector_target_kind}
+      logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logSourceIdentifier: ${var.service_connector_target_log_source_identifier}
+      metric: ${var.service_connector_target_metric}
+      metricNamespace: ${var.service_connector_target_metric_namespace}
+      namespace: ${var.service_connector_target_namespace}
+      objectNamePrefix: ${var.service_connector_target_object_name_prefix}
+      streamIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_stream
+      topicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_notification_topic
+    tasks:
+    - batchSizeInKbs: ${var.service_connector_tasks_batch_size_in_kbs}
+      batchTimeInSec: ${var.service_connector_tasks_batch_time_in_sec}
+      condition: ${var.service_connector_tasks_condition}
+      functionIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_function
+      kind: ${var.service_connector_tasks_kind}

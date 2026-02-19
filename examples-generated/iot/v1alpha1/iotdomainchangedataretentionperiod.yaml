@@ -1,0 +1,15 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: IotDomainChangeDataRetentionPeriod
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomainchangedataretentionperiod
+  labels:
+    testing.upbound.io/example-name: test_iot_domain_change_data_retention_period
+  name: test-iot-domain-change-data-retention-period
+spec:
+  forProvider:
+    dataRetentionPeriodInDays: ${var.iot_domain_change_data_retention_period_data_retention_period_in_days}
+    iotDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_iot_domain
+    type: ${var.iot_domain_change_data_retention_period_type}

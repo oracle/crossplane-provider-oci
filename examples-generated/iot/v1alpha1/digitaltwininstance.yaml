@@ -1,0 +1,28 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: DigitalTwinInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwininstance
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_instance
+  name: test-digital-twin-instance
+spec:
+  forProvider:
+    authId: ${oci_iot_auth.test_auth.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.digital_twin_instance_description}
+    digitalTwinAdapterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_digital_twin_adapter
+    digitalTwinModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_digital_twin_model
+    digitalTwinModelSpecUri: ${var.digital_twin_instance_digital_twin_model_spec_uri}
+    displayName: ${var.digital_twin_instance_display_name}
+    externalKey: ${var.digital_twin_instance_external_key}
+    freeformTags:
+      Department: Finance
+    iotDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_iot_domain

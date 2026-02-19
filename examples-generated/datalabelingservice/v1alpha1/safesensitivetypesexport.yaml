@@ -1,0 +1,21 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSensitiveTypesExport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesensitivetypesexport
+  labels:
+    testing.upbound.io/example-name: test_sensitive_types_export
+  name: test-sensitive-types-export
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sensitive_types_export_description}
+    displayName: ${var.sensitive_types_export_display_name}
+    freeformTags:
+      Department: Finance
+    isIncludeAllSensitiveTypes: ${var.sensitive_types_export_is_include_all_sensitive_types}
+    sensitiveTypeIdsForExport: ${var.sensitive_types_export_sensitive_type_ids_for_export}

@@ -1,0 +1,83 @@
+apiVersion: cloudmigrations.oci.upbound.io/v1alpha1
+kind: TargetAsset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudmigrations/v1alpha1/targetasset
+  labels:
+    testing.upbound.io/example-name: test_target_asset
+  name: test-target-asset
+spec:
+  forProvider:
+    blockVolumesPerformance: ${var.target_asset_block_volumes_performance}
+    isExcludedFromExecution: ${var.target_asset_is_excluded_from_execution}
+    migrationPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_migration_plan
+    msLicense: ${var.target_asset_ms_license}
+    preferredShapeType: ${var.target_asset_preferred_shape_type}
+    type: ${var.target_asset_type}
+    userSpec:
+    - agentConfig:
+      - areAllPluginsDisabled: ${var.target_asset_user_spec_agent_config_are_all_plugins_disabled}
+        isManagementDisabled: ${var.target_asset_user_spec_agent_config_is_management_disabled}
+        isMonitoringDisabled: ${var.target_asset_user_spec_agent_config_is_monitoring_disabled}
+        pluginsConfig:
+        - desiredState: ${var.target_asset_user_spec_agent_config_plugins_config_desired_state}
+          name: ${var.target_asset_user_spec_agent_config_plugins_config_name}
+      availabilityDomain: ${var.target_asset_user_spec_availability_domain}
+      capacityReservationId: ${oci_cloud_migrations_capacity_reservation.test_capacity_reservation.id}
+      compartmentId: ${var.compartment_id}
+      createVnicDetails:
+      - assignPrivateDnsRecord: ${var.target_asset_user_spec_create_vnic_details_assign_private_dns_record}
+        assignPublicIp: ${var.target_asset_user_spec_create_vnic_details_assign_public_ip}
+        definedTags:
+          foo-namespace.bar-key: value
+        displayName: ${var.target_asset_user_spec_create_vnic_details_display_name}
+        freeformTags:
+          bar-key: value
+        hostnameLabel: ${var.target_asset_user_spec_create_vnic_details_hostname_label}
+        nsgIds: ${var.target_asset_user_spec_create_vnic_details_nsg_ids}
+        privateIp: ${var.target_asset_user_spec_create_vnic_details_private_ip}
+        skipSourceDestCheck: ${var.target_asset_user_spec_create_vnic_details_skip_source_dest_check}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+        vlanIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vlan
+      dedicatedVmHostIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dedicated_vm_host
+      definedTags:
+        foo-namespace.bar-key: value
+      displayName: ${var.target_asset_user_spec_display_name}
+      faultDomain: ${var.target_asset_user_spec_fault_domain}
+      freeformTags:
+        bar-key: value
+      hostnameLabel: ${var.target_asset_user_spec_hostname_label}
+      instanceOptions:
+      - areLegacyImdsEndpointsDisabled: ${var.target_asset_user_spec_instance_options_are_legacy_imds_endpoints_disabled}
+      ipxeScript: ${var.target_asset_user_spec_ipxe_script}
+      isPvEncryptionInTransitEnabled: ${var.target_asset_user_spec_is_pv_encryption_in_transit_enabled}
+      preemptibleInstanceConfig:
+      - preemptionAction:
+        - preserveBootVolume: ${var.target_asset_user_spec_preemptible_instance_config_preemption_action_preserve_boot_volume}
+          type: ${var.target_asset_user_spec_preemptible_instance_config_preemption_action_type}
+      shape: ${var.target_asset_user_spec_shape}
+      shapeConfig:
+      - baselineOcpuUtilization: ${var.target_asset_user_spec_shape_config_baseline_ocpu_utilization}
+        memoryInGbs: ${var.target_asset_user_spec_shape_config_memory_in_gbs}
+        ocpus: ${var.target_asset_user_spec_shape_config_ocpus}
+      sourceDetails:
+      - bootVolumeIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_boot_volume
+        bootVolumeSizeInGbs: ${var.target_asset_user_spec_source_details_boot_volume_size_in_gbs}
+        bootVolumeVpusPerGb: ${var.target_asset_user_spec_source_details_boot_volume_vpus_per_gb}
+        imageIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_image
+        kmsKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        sourceType: ${var.target_asset_user_spec_source_details_source_type}

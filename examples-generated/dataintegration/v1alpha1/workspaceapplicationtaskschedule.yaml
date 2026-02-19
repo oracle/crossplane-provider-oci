@@ -1,0 +1,91 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceApplicationTaskSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceapplicationtaskschedule
+  labels:
+    testing.upbound.io/example-name: test_workspace_application_task_schedule
+  name: test-workspace-application-task-schedule
+spec:
+  forProvider:
+    applicationKey: ${var.workspace_application_task_schedule_application_key}
+    authMode: ${var.workspace_application_task_schedule_auth_mode}
+    configProviderDelegate: ${var.workspace_application_task_schedule_config_provider_delegate}
+    description: ${var.workspace_application_task_schedule_description}
+    endTimeMillis: ${var.workspace_application_task_schedule_end_time_millis}
+    expectedDuration: ${var.workspace_application_task_schedule_expected_duration}
+    expectedDurationUnit: ${var.workspace_application_task_schedule_expected_duration_unit}
+    identifier: ${var.workspace_application_task_schedule_identifier}
+    isBackfillEnabled: ${var.workspace_application_task_schedule_is_backfill_enabled}
+    isConcurrentAllowed: ${var.workspace_application_task_schedule_is_concurrent_allowed}
+    isEnabled: ${var.workspace_application_task_schedule_is_enabled}
+    key: ${var.workspace_application_task_schedule_key}
+    modelVersion: ${var.workspace_application_task_schedule_model_version}
+    name: ${var.workspace_application_task_schedule_name}
+    numberOfRetries: ${var.workspace_application_task_schedule_number_of_retries}
+    objectStatus: ${var.workspace_application_task_schedule_object_status}
+    objectVersion: ${var.workspace_application_task_schedule_object_version}
+    parentRef:
+    - parent: ${var.workspace_application_task_schedule_parent_ref_parent}
+      rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_application_task_schedule_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_application_task_schedule_registry_metadata_is_favorite}
+      key: ${var.workspace_application_task_schedule_registry_metadata_key}
+      labels: ${var.workspace_application_task_schedule_registry_metadata_labels}
+      registryVersion: ${var.workspace_application_task_schedule_registry_metadata_registry_version}
+    retryDelay: ${var.workspace_application_task_schedule_retry_delay}
+    retryDelayUnit: ${var.workspace_application_task_schedule_retry_delay_unit}
+    scheduleRef:
+    - description: ${var.workspace_application_task_schedule_schedule_ref_description}
+      frequencyDetails:
+      - customExpression: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_custom_expression}
+        dayOfWeek: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_day_of_week}
+        days: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_days}
+        frequency: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_frequency}
+        interval: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_interval}
+        modelType: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_model_type}
+        time:
+        - hour: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_time_hour}
+          minute: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_time_minute}
+          second: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_time_second}
+        weekOfMonth: ${var.workspace_application_task_schedule_schedule_ref_frequency_details_week_of_month}
+      identifier: ${var.workspace_application_task_schedule_schedule_ref_identifier}
+      isDaylightAdjustmentEnabled: ${var.workspace_application_task_schedule_schedule_ref_is_daylight_adjustment_enabled}
+      key: ${var.workspace_application_task_schedule_schedule_ref_key}
+      metadata:
+      - aggregator:
+        - description: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_description}
+          identifier: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_identifier}
+          key: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_key}
+          name: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_name}
+          type: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_type}
+        aggregatorKey: ${var.workspace_application_task_schedule_schedule_ref_metadata_aggregator_key}
+        countStatistics:
+        - objectTypeCountList:
+          - objectCount: ${var.workspace_application_task_schedule_schedule_ref_metadata_count_statistics_object_type_count_list_object_count}
+            objectType: ${var.workspace_application_task_schedule_schedule_ref_metadata_count_statistics_object_type_count_list_object_type}
+        createdBy: ${var.workspace_application_task_schedule_schedule_ref_metadata_created_by}
+        createdByName: ${var.workspace_application_task_schedule_schedule_ref_metadata_created_by_name}
+        identifierPath: ${var.workspace_application_task_schedule_schedule_ref_metadata_identifier_path}
+        infoFields: ${var.workspace_application_task_schedule_schedule_ref_metadata_info_fields}
+        isFavorite: ${var.workspace_application_task_schedule_schedule_ref_metadata_is_favorite}
+        labels: ${var.workspace_application_task_schedule_schedule_ref_metadata_labels}
+        registryVersion: ${var.workspace_application_task_schedule_schedule_ref_metadata_registry_version}
+        timeCreated: ${var.workspace_application_task_schedule_schedule_ref_metadata_time_created}
+        timeUpdated: ${var.workspace_application_task_schedule_schedule_ref_metadata_time_updated}
+        updatedBy: ${var.workspace_application_task_schedule_schedule_ref_metadata_updated_by}
+        updatedByName: ${var.workspace_application_task_schedule_schedule_ref_metadata_updated_by_name}
+      modelType: ${var.workspace_application_task_schedule_schedule_ref_model_type}
+      modelVersion: ${var.workspace_application_task_schedule_schedule_ref_model_version}
+      name: ${var.workspace_application_task_schedule_schedule_ref_name}
+      objectStatus: ${var.workspace_application_task_schedule_schedule_ref_object_status}
+      objectVersion: ${var.workspace_application_task_schedule_schedule_ref_object_version}
+      parentRef:
+      - parent: ${var.workspace_application_task_schedule_schedule_ref_parent_ref_parent}
+        rootDocId: ${oci_dataintegration_root_doc.test_root_doc.id}
+      timezone: ${var.workspace_application_task_schedule_schedule_ref_timezone}
+    startTimeMillis: ${var.workspace_application_task_schedule_start_time_millis}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

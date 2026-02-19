@@ -1,0 +1,14 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsPreferencesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticspreferencesmanagement
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_preferences_management
+  name: test-log-analytics-preferences-management
+spec:
+  forProvider:
+    items:
+    - name: ${var.log_analytics_preferences_management_items_name}
+      value: ${var.log_analytics_preferences_management_items_value}
+    namespace: ${var.log_analytics_preferences_management_namespace}

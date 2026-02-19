@@ -47,7 +47,17 @@ type FileSystemInitParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/filestorage/v1alpha1.FilesystemSnapshotPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FilesystemSnapshotPolicyID *string `json:"filesystemSnapshotPolicyId,omitempty" tf:"filesystem_snapshot_policy_id,omitempty"`
+
+	// Reference to a FilesystemSnapshotPolicy in filestorage to populate filesystemSnapshotPolicyId.
+	// +kubebuilder:validation:Optional
+	FilesystemSnapshotPolicyIDRef *v1.Reference `json:"filesystemSnapshotPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a FilesystemSnapshotPolicy in filestorage to populate filesystemSnapshotPolicyId.
+	// +kubebuilder:validation:Optional
+	FilesystemSnapshotPolicyIDSelector *v1.Selector `json:"filesystemSnapshotPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +mapType=granular
@@ -261,8 +271,18 @@ type FileSystemParameters struct {
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// (Updatable) The OCID of the associated file system snapshot policy, which controls the frequency of snapshot creation and retention period of the taken snapshots.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/filestorage/v1alpha1.FilesystemSnapshotPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FilesystemSnapshotPolicyID *string `json:"filesystemSnapshotPolicyId,omitempty" tf:"filesystem_snapshot_policy_id,omitempty"`
+
+	// Reference to a FilesystemSnapshotPolicy in filestorage to populate filesystemSnapshotPolicyId.
+	// +kubebuilder:validation:Optional
+	FilesystemSnapshotPolicyIDRef *v1.Reference `json:"filesystemSnapshotPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a FilesystemSnapshotPolicy in filestorage to populate filesystemSnapshotPolicyId.
+	// +kubebuilder:validation:Optional
+	FilesystemSnapshotPolicyIDSelector *v1.Selector `json:"filesystemSnapshotPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags. Example: {"Department": "Finance"}
 	// +kubebuilder:validation:Optional

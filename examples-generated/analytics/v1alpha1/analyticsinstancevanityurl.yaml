@@ -1,0 +1,25 @@
+apiVersion: analytics.oci.upbound.io/v1alpha1
+kind: AnalyticsInstanceVanityUrl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstancevanityurl
+  labels:
+    testing.upbound.io/example-name: test_analytics_instance_vanity_url
+  name: test-analytics-instance-vanity-url
+spec:
+  forProvider:
+    analyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_analytics_instance
+    caCertificate: ${var.analytics_instance_vanity_url_ca_certificate}
+    description: ${var.analytics_instance_vanity_url_description}
+    hosts: ${var.analytics_instance_vanity_url_hosts}
+    passphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    privateKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    publicCertificate: ${var.analytics_instance_vanity_url_public_certificate}

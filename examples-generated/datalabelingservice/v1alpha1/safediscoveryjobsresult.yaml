@@ -1,0 +1,10 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeDiscoveryJobsResult
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safediscoveryjobsresult
+  labels:
+    testing.upbound.io/example-name: test_discovery_jobs_result
+  name: test-discovery-jobs-result
+spec:
+  forProvider: {}

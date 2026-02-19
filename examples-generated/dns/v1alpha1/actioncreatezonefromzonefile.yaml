@@ -1,0 +1,18 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: ActionCreateZoneFromZoneFile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dns/v1alpha1/actioncreatezonefromzonefile
+  labels:
+    testing.upbound.io/example-name: test_action_create_zone_from_zone_file
+  name: test-action-create-zone-from-zone-file
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createZoneFromZoneFileDetails: ${var.action_create_zone_from_zone_file_create_zone_from_zone_file_details}
+    scope: ${var.action_create_zone_from_zone_file_scope}
+    viewIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_view

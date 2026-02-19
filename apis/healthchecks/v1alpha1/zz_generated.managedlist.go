@@ -16,8 +16,26 @@ func (l *HTTPMonitorList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this HttpProbeList.
+func (l *HttpProbeList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this PingMonitorList.
 func (l *PingMonitorList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this PingProbeList.
+func (l *PingProbeList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

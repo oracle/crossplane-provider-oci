@@ -1,0 +1,24 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: UsageCarbonEmission
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usagecarbonemission
+  labels:
+    testing.upbound.io/example-name: test_usage_carbon_emission
+  name: test-usage-carbon-emission
+spec:
+  forProvider:
+    compartmentDepth: ${var.usage_carbon_emission_compartment_depth}
+    emissionCalculationMethod: ${var.usage_carbon_emission_emission_calculation_method}
+    emissionType: ${var.usage_carbon_emission_emission_type}
+    granularity: ${var.usage_carbon_emission_granularity}
+    groupBy: ${var.usage_carbon_emission_group_by}
+    groupByTag:
+    - key: ${var.usage_carbon_emission_group_by_tag_key}
+      namespace: ${var.usage_carbon_emission_group_by_tag_namespace}
+      value: ${var.usage_carbon_emission_group_by_tag_value}
+    isAggregateByTime: ${var.usage_carbon_emission_is_aggregate_by_time}
+    tenantId: ${oci_metering_computation_tenant.test_tenant.id}
+    timeUsageEnded: ${var.usage_carbon_emission_time_usage_ended}
+    timeUsageStarted: ${var.usage_carbon_emission_time_usage_started}
+    usageCarbonEmissionFilter: ${var.usage_carbon_emission_usage_carbon_emission_filter}

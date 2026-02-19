@@ -1,0 +1,24 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: Endpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: test_endpoint
+  name: test-endpoint
+spec:
+  forProvider:
+    alias: ${var.endpoint_alias}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.endpoint_description}
+    displayName: ${var.endpoint_display_name}
+    freeformTags:
+      bar-key: value
+    inferenceUnits: ${var.endpoint_inference_units}
+    modelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model

@@ -1,0 +1,25 @@
+apiVersion: resourceanalytics.oci.upbound.io/v1alpha1
+kind: ResourceAnalyticsInstanceOacManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourceanalytics/v1alpha1/resourceanalyticsinstanceoacmanagement
+  labels:
+    testing.upbound.io/example-name: test_resource_analytics_instance_oac_management
+  name: test-resource-analytics-instance-oac-management
+spec:
+  forProvider:
+    attachmentDetails:
+    - idcsDomainIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_domain
+      licenseModel: ${var.resource_analytics_instance_oac_management_attachment_details_license_model}
+      networkDetails:
+      - nsgIds: ${var.resource_analytics_instance_oac_management_attachment_details_network_details_nsg_ids}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+    attachmentType: ${var.resource_analytics_instance_oac_management_attachment_type}
+    enableOac: ${var.enable_oac}
+    resourceAnalyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource_analytics_instance

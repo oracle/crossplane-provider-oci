@@ -22,7 +22,17 @@ type ExternalKeyManagerMetadataInitParameters struct {
 	OauthMetadata []OauthMetadataInitParameters `json:"oauthMetadata,omitempty" tf:"oauth_metadata,omitempty"`
 
 	// OCID of private endpoint created by customer.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dataflow/v1alpha1.PrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	PrivateEndpointID *string `json:"privateEndpointId,omitempty" tf:"private_endpoint_id,omitempty"`
+
+	// Reference to a PrivateEndpoint in dataflow to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDRef *v1.Reference `json:"privateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a PrivateEndpoint in dataflow to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDSelector *v1.Selector `json:"privateEndpointIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalKeyManagerMetadataObservation struct {
@@ -48,8 +58,18 @@ type ExternalKeyManagerMetadataParameters struct {
 	OauthMetadata []OauthMetadataParameters `json:"oauthMetadata" tf:"oauth_metadata,omitempty"`
 
 	// OCID of private endpoint created by customer.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dataflow/v1alpha1.PrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
-	PrivateEndpointID *string `json:"privateEndpointId" tf:"private_endpoint_id,omitempty"`
+	PrivateEndpointID *string `json:"privateEndpointId,omitempty" tf:"private_endpoint_id,omitempty"`
+
+	// Reference to a PrivateEndpoint in dataflow to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDRef *v1.Reference `json:"privateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a PrivateEndpoint in dataflow to populate privateEndpointId.
+	// +kubebuilder:validation:Optional
+	PrivateEndpointIDSelector *v1.Selector `json:"privateEndpointIdSelector,omitempty" tf:"-"`
 }
 
 type ExternalKeyManagerMetadataSummaryInitParameters struct {

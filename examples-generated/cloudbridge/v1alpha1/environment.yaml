@@ -1,0 +1,18 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: Environment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/environment
+  labels:
+    testing.upbound.io/example-name: test_environment
+  name: test-environment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.environment_display_name}
+    freeformTags:
+      Department: Finance

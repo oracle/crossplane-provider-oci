@@ -1,0 +1,19 @@
+apiVersion: cloudmigrations.oci.upbound.io/v1alpha1
+kind: ReplicationSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudmigrations/v1alpha1/replicationschedule
+  labels:
+    testing.upbound.io/example-name: test_replication_schedule
+  name: test-replication-schedule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.replication_schedule_display_name}
+    executionRecurrences: ${var.replication_schedule_execution_recurrences}
+    freeformTags:
+      bar-key: value

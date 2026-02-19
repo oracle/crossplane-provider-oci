@@ -1,0 +1,15 @@
+apiVersion: resourceanalytics.oci.upbound.io/v1alpha1
+kind: TenancyAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourceanalytics/v1alpha1/tenancyattachment
+  labels:
+    testing.upbound.io/example-name: test_tenancy_attachment
+  name: test-tenancy-attachment
+spec:
+  forProvider:
+    description: ${var.tenancy_attachment_description}
+    resourceAnalyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource_analytics_instance
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}

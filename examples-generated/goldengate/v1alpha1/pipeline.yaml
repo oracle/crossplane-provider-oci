@@ -1,0 +1,47 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: Pipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/pipeline
+  labels:
+    testing.upbound.io/example-name: test_pipeline
+  name: test-pipeline
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.pipeline_description}
+    displayName: ${var.pipeline_display_name}
+    freeformTags:
+      bar-key: value
+    licenseModel: ${var.pipeline_license_model}
+    locks:
+    - message: ${var.pipeline_locks_message}
+      relatedResourceId: ${oci_cloud_guard_resource.test_resource.id}
+      timeCreated: ${var.pipeline_locks_time_created}
+      type: ${var.pipeline_locks_type}
+    processOptions:
+    - initialDataLoad:
+      - actionOnExistingTable: ${var.pipeline_process_options_initial_data_load_action_on_existing_table}
+        isInitialLoad: ${var.pipeline_process_options_initial_data_load_is_initial_load}
+      replicateSchemaChange:
+      - actionOnDdlError: ${var.pipeline_process_options_replicate_schema_change_action_on_ddl_error}
+        actionOnDmlError: ${var.pipeline_process_options_replicate_schema_change_action_on_dml_error}
+        canReplicateSchemaChange: ${var.pipeline_process_options_replicate_schema_change_can_replicate_schema_change}
+      shouldRestartOnFailure: ${var.pipeline_process_options_should_restart_on_failure}
+      startUsingDefaultMapping: ${var.pipeline_process_options_start_using_default_mapping}
+    recipeType: ${var.pipeline_recipe_type}
+    sourceConnectionDetails:
+    - connectionIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_connection
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    targetConnectionDetails:
+    - connectionIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_connection

@@ -1,0 +1,14 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSetSecurityAssessmentBaseline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesetsecurityassessmentbaseline
+  labels:
+    testing.upbound.io/example-name: test_set_security_assessment_baseline
+  name: test-set-security-assessment-baseline
+spec:
+  forProvider:
+    assessmentIds: ${var.set_security_assessment_baseline_assessment_ids}
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment

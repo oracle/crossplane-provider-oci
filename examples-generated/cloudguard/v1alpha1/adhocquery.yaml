@@ -1,0 +1,23 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: AdhocQuery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/adhocquery
+  labels:
+    testing.upbound.io/example-name: test_adhoc_query
+  name: test-adhoc-query
+spec:
+  forProvider:
+    adhocQueryDetails:
+    - adhocQueryResources:
+      - region: ${var.adhoc_query_adhoc_query_details_adhoc_query_resources_region}
+        resourceIds: ${var.adhoc_query_adhoc_query_details_adhoc_query_resources_resource_ids}
+        resourceType: ${var.adhoc_query_adhoc_query_details_adhoc_query_resources_resource_type}
+      query: ${var.adhoc_query_adhoc_query_details_query}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value

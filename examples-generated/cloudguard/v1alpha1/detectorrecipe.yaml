@@ -1,0 +1,58 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: DetectorRecipe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/detectorrecipe
+  labels:
+    testing.upbound.io/example-name: test_detector_recipe
+  name: test-detector-recipe
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.detector_recipe_description}
+    detector: ${var.detector_recipe_detector}
+    detectorRules:
+    - details:
+      - condition: ${var.detector_recipe_detector_rules_details_condition}
+        configurations:
+        - additionalProperties:
+          - key: ${var.detector_recipe_detector_rules_details_configurations_additional_properties_key}
+            propertyType: ${var.detector_recipe_detector_rules_details_configurations_additional_properties_property_type}
+            value: ${var.detector_recipe_detector_rules_details_configurations_additional_properties_value}
+          allowedValues:
+          - key: ${var.detector_recipe_detector_rules_details_configurations_allowed_values_key}
+            value: ${var.detector_recipe_detector_rules_details_configurations_allowed_values_value}
+          allowedValuesDataType: ${var.detector_recipe_detector_rules_details_configurations_allowed_values_data_type}
+          configKey: ${var.detector_recipe_detector_rules_details_configurations_config_key}
+          dataType: ${var.detector_recipe_detector_rules_details_configurations_data_type}
+          name: ${var.detector_recipe_detector_rules_details_configurations_name}
+          value: ${var.detector_recipe_detector_rules_details_configurations_value}
+          values:
+          - listType: ${var.detector_recipe_detector_rules_details_configurations_values_list_type}
+            managedListType: ${var.detector_recipe_detector_rules_details_configurations_values_managed_list_type}
+            value: ${var.detector_recipe_detector_rules_details_configurations_values_value}
+        dataSourceIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_data_source
+        description: ${var.detector_recipe_detector_rules_details_description}
+        entitiesMappings:
+        - displayName: ${var.detector_recipe_detector_rules_details_entities_mappings_display_name}
+          entityType: ${var.detector_recipe_detector_rules_details_entities_mappings_entity_type}
+          queryField: ${var.detector_recipe_detector_rules_details_entities_mappings_query_field}
+        isEnabled: ${var.detector_recipe_detector_rules_details_is_enabled}
+        labels: ${var.detector_recipe_detector_rules_details_labels}
+        recommendation: ${var.detector_recipe_detector_rules_details_recommendation}
+        riskLevel: ${var.detector_recipe_detector_rules_details_risk_level}
+      detectorRuleIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_rule
+    displayName: ${var.detector_recipe_display_name}
+    freeformTags:
+      bar-key: value
+    sourceDetectorRecipeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_detector_recipe

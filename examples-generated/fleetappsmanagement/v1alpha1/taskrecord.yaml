@@ -1,0 +1,62 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: TaskRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/taskrecord
+  labels:
+    testing.upbound.io/example-name: test_task_record
+  name: test-task-record
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.task_record_description}
+    details:
+    - executionDetails:
+      - catalogIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_catalog
+        command: ${var.task_record_details_execution_details_command}
+        configFile: ${var.task_record_details_execution_details_config_file}
+        content:
+        - bucket: ${var.task_record_details_execution_details_content_bucket}
+          catalogIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_catalog
+          checksum: ${var.task_record_details_execution_details_content_checksum}
+          namespace: ${var.task_record_details_execution_details_content_namespace}
+          object: ${var.task_record_details_execution_details_content_object}
+          sourceType: ${var.task_record_details_execution_details_content_source_type}
+        credentials:
+        - displayName: ${var.task_record_details_execution_details_credentials_display_name}
+          id: ${var.task_record_details_execution_details_credentials_id}
+        endpoint: ${var.task_record_details_execution_details_endpoint}
+        executionType: ${var.task_record_details_execution_details_execution_type}
+        isExecutableContent: ${var.task_record_details_execution_details_is_executable_content}
+        isLocked: ${var.task_record_details_execution_details_is_locked}
+        isReadOutputVariableEnabled: ${var.task_record_details_execution_details_is_read_output_variable_enabled}
+        systemVariables: ${var.task_record_details_execution_details_system_variables}
+        targetCompartmentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_compartment
+        variables:
+        - inputVariables:
+          - description: ${var.task_record_details_execution_details_variables_input_variables_description}
+            name: ${var.task_record_details_execution_details_variables_input_variables_name}
+            type: ${var.task_record_details_execution_details_variables_input_variables_type}
+          outputVariables: ${var.task_record_details_execution_details_variables_output_variables}
+      isApplySubjectTask: ${var.task_record_details_is_apply_subject_task}
+      isDiscoveryOutputTask: ${var.task_record_details_is_discovery_output_task}
+      operation: ${var.task_record_details_operation}
+      osType: ${var.task_record_details_os_type}
+      platform: ${var.task_record_details_platform}
+      properties:
+      - numRetries: ${var.task_record_details_properties_num_retries}
+        timeoutInSeconds: ${var.task_record_details_properties_timeout_in_seconds}
+      scope: ${var.task_record_details_scope}
+    displayName: ${var.task_record_display_name}
+    freeformTags:
+      bar-key: value

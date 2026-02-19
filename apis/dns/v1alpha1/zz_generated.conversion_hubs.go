@@ -7,6 +7,9 @@ Copyright 2022 Upbound Inc.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *ActionCreateZoneFromZoneFile) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Record) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -32,3 +35,9 @@ func (tr *View) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Zone) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ZonePromoteDnssecKeyVersion) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ZoneStageDnssecKeyVersion) Hub() {}

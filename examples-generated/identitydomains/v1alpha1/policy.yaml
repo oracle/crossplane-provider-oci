@@ -1,0 +1,32 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Policy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/policy
+  labels:
+    testing.upbound.io/example-name: test_policy
+  name: test-policy
+spec:
+  forProvider:
+    active: ${var.policy_active}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.policy_authorization}
+    description: ${var.policy_description}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    name: ${var.policy_name}
+    ocid: ${var.policy_ocid}
+    policyGroovy: ${var.policy_policy_groovy}
+    policyType:
+    - value: IdentityProvider
+    resourceTypeSchemaVersion: ${var.policy_resource_type_schema_version}
+    rules:
+    - sequence: ${var.policy_rules_sequence}
+      value: TODO
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Policy
+    tags:
+    - key: ${var.policy_tags_key}
+      value: ${var.policy_tags_value}

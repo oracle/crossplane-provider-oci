@@ -1,0 +1,18 @@
+apiVersion: adm.oci.upbound.io/v1alpha1
+kind: KnowledgeBase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: adm/v1alpha1/knowledgebase
+  labels:
+    testing.upbound.io/example-name: test_knowledge_base
+  name: test-knowledge-base
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.knowledge_base_display_name}
+    freeformTags:
+      bar-key: value

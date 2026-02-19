@@ -1,0 +1,21 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouse
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouse
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse
+  name: test-operations-insights-warehouse
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeModel: ${var.operations_insights_warehouse_compute_model}
+    cpuAllocated: ${var.operations_insights_warehouse_cpu_allocated}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.operations_insights_warehouse_display_name}
+    freeformTags:
+      bar-key: value
+    storageAllocatedInGbs: ${var.operations_insights_warehouse_storage_allocated_in_gbs}

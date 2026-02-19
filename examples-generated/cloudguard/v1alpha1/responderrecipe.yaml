@@ -1,0 +1,28 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: ResponderRecipe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/responderrecipe
+  labels:
+    testing.upbound.io/example-name: test_responder_recipe
+  name: test-responder-recipe
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.responder_recipe_description}
+    displayName: ${var.responder_recipe_display_name}
+    freeformTags:
+      bar-key: value
+    responderRules:
+    - details:
+      - isEnabled: ${var.responder_recipe_responder_rules_details_is_enabled}
+      responderRuleIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_rule
+    sourceResponderRecipeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_responder_recipe

@@ -1,0 +1,45 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: Model
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/model
+  labels:
+    testing.upbound.io/example-name: test_model
+  name: test-model
+spec:
+  forProvider:
+    baseModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.model_description}
+    displayName: ${var.model_display_name}
+    fineTuneDetails:
+    - dedicatedAiClusterIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_dedicated_ai_cluster
+      trainingConfig:
+      - earlyStoppingPatience: ${var.model_fine_tune_details_training_config_early_stopping_patience}
+        earlyStoppingThreshold: ${var.model_fine_tune_details_training_config_early_stopping_threshold}
+        learningRate: ${var.model_fine_tune_details_training_config_learning_rate}
+        logModelMetricsIntervalInSteps: ${var.model_fine_tune_details_training_config_log_model_metrics_interval_in_steps}
+        loraAlpha: ${var.model_fine_tune_details_training_config_lora_alpha}
+        loraDropout: ${var.model_fine_tune_details_training_config_lora_dropout}
+        loraR: ${var.model_fine_tune_details_training_config_lora_r}
+        numOfLastLayers: ${var.model_fine_tune_details_training_config_num_of_last_layers}
+        totalTrainingEpochs: ${var.model_fine_tune_details_training_config_total_training_epochs}
+        trainingBatchSize: ${var.model_fine_tune_details_training_config_training_batch_size}
+        trainingConfigType: ${var.model_fine_tune_details_training_config_training_config_type}
+      trainingDataset:
+      - bucket: ${var.model_fine_tune_details_training_dataset_bucket}
+        datasetType: ${var.model_fine_tune_details_training_dataset_dataset_type}
+        namespace: ${var.model_fine_tune_details_training_dataset_namespace}
+        object: ${var.model_fine_tune_details_training_dataset_object}
+    freeformTags:
+      Department: Finance
+    vendor: ${var.model_vendor}
+    version: ${var.model_version}

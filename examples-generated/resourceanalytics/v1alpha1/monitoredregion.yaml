@@ -1,0 +1,14 @@
+apiVersion: resourceanalytics.oci.upbound.io/v1alpha1
+kind: MonitoredRegion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourceanalytics/v1alpha1/monitoredregion
+  labels:
+    testing.upbound.io/example-name: test_monitored_region
+  name: test-monitored-region
+spec:
+  forProvider:
+    regionId: ${oci_identity_region.test_region.id}
+    resourceAnalyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource_analytics_instance

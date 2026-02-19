@@ -1,0 +1,661 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: drplanexecutions.disasterrecovery.oci.upbound.io
+spec:
+  group: disasterrecovery.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: DrPlanExecution
+    listKind: DrPlanExecutionList
+    plural: drplanexecutions
+    singular: drplanexecution
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DrPlanExecution is the Schema for the DrPlanExecutions API. Provides
+          the Dr Plan Execution resource in Oracle Cloud Infrastructure Disaster Recovery
+          service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DrPlanExecutionSpec defines the desired state of DrPlanExecution
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) The display name of the DR plan execution.  Example:
+                      Execution - EBS Switchover PHX to IAD'
+                    type: string
+                  executionOptions:
+                    description: The options for a plan execution.
+                    items:
+                      properties:
+                        arePrechecksEnabled:
+                          description: '(Applicable when plan_execution_type=FAILOVER
+                            | START_DRILL | STOP_DRILL | SWITCHOVER) A flag indicating
+                            whether prechecks should be executed before the plan execution.  Example:
+                            false'
+                          type: boolean
+                        areWarningsIgnored:
+                          description: 'A flag indicating whether warnings should
+                            be ignored during the switchover precheck.  Example: true'
+                          type: boolean
+                        planExecutionType:
+                          description: The type of the plan execution.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  planId:
+                    description: 'The OCID of the DR plan.  Example: ocid1.drplan.oc1..uniqueID'
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) The display name of the DR plan execution.  Example:
+                      Execution - EBS Switchover PHX to IAD'
+                    type: string
+                  executionOptions:
+                    description: The options for a plan execution.
+                    items:
+                      properties:
+                        arePrechecksEnabled:
+                          description: '(Applicable when plan_execution_type=FAILOVER
+                            | START_DRILL | STOP_DRILL | SWITCHOVER) A flag indicating
+                            whether prechecks should be executed before the plan execution.  Example:
+                            false'
+                          type: boolean
+                        areWarningsIgnored:
+                          description: 'A flag indicating whether warnings should
+                            be ignored during the switchover precheck.  Example: true'
+                          type: boolean
+                        planExecutionType:
+                          description: The type of the plan execution.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  planId:
+                    description: 'The OCID of the DR plan.  Example: ocid1.drplan.oc1..uniqueID'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.executionOptions is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.executionOptions)
+                || (has(self.initProvider) && has(self.initProvider.executionOptions))'
+            - message: spec.forProvider.planId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.planId)
+                || (has(self.initProvider) && has(self.initProvider.planId))'
+          status:
+            description: DrPlanExecutionStatus defines the observed state of DrPlanExecution.
+            properties:
+              atProvider:
+                properties:
+                  automaticExecutionDetails:
+                    description: The details of the event that started the automatic
+                      DR plan execution.
+                    items:
+                      properties:
+                        eventName:
+                          description: 'The name of the Oracle Cloud Infrastructure
+                            event that started the automatic DR plan execution.  Example:
+                            SwitchoverAutonomousDatabase'
+                          type: string
+                        memberId:
+                          description: 'The OCID of the member that emitted the event
+                            that started the automatic DR plan execution.  Example:
+                            "ocid1.autonomousdatabase.oc1..uniqueID"'
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: 'The OCID of the compartment containing this DR plan
+                      execution.  Example: ocid1.compartment.oc1..uniqueID'
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace.  Example: {"Operations.CostCenter":
+                      "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) The display name of the DR plan execution.  Example:
+                      Execution - EBS Switchover PHX to IAD'
+                    type: string
+                  drProtectionGroupId:
+                    description: 'The OCID of the DR protection group to which this
+                      DR plan execution belongs.  Example: ocid1.drprotectiongroup.oc1..uniqueID'
+                    type: string
+                  executionDurationInSec:
+                    description: 'The total duration in seconds taken to complete
+                      the DR plan execution.  Example: 750'
+                    type: number
+                  executionOptions:
+                    description: The options for a plan execution.
+                    items:
+                      properties:
+                        arePrechecksEnabled:
+                          description: '(Applicable when plan_execution_type=FAILOVER
+                            | START_DRILL | STOP_DRILL | SWITCHOVER) A flag indicating
+                            whether prechecks should be executed before the plan execution.  Example:
+                            false'
+                          type: boolean
+                        areWarningsIgnored:
+                          description: 'A flag indicating whether warnings should
+                            be ignored during the switchover precheck.  Example: true'
+                          type: boolean
+                        planExecutionType:
+                          description: The type of the plan execution.
+                          type: string
+                      type: object
+                    type: array
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  Example: {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  groupExecutions:
+                    description: A list of groups executed in this DR plan execution.
+                    items:
+                      properties:
+                        displayName:
+                          description: '(Updatable) The display name of the DR plan
+                            execution.  Example: Execution - EBS Switchover PHX to
+                            IAD'
+                          type: string
+                        executionDurationInSec:
+                          description: 'The total duration in seconds taken to complete
+                            the DR plan execution.  Example: 750'
+                          type: number
+                        groupId:
+                          description: 'The unique id of the group. Must not be modified
+                            by user.  Example: sgid1.group..uniqueID'
+                          type: string
+                        status:
+                          description: The status of the group execution.
+                          type: string
+                        statusDetails:
+                          description: 'Additional details on the group execution
+                            status.  Example: A total of [3] steps failed in the group'
+                          type: string
+                        stepExecutions:
+                          description: A list of step executions in the group.
+                          items:
+                            properties:
+                              displayName:
+                                description: '(Updatable) The display name of the
+                                  DR plan execution.  Example: Execution - EBS Switchover
+                                  PHX to IAD'
+                                type: string
+                              executionDurationInSec:
+                                description: 'The total duration in seconds taken
+                                  to complete the DR plan execution.  Example: 750'
+                                type: number
+                              groupId:
+                                description: 'The unique id of the group. Must not
+                                  be modified by user.  Example: sgid1.group..uniqueID'
+                                type: string
+                              logLocation:
+                                description: The details of an object storage log
+                                  location for a DR protection group.
+                                items:
+                                  properties:
+                                    bucket:
+                                      description: 'The bucket name inside the object
+                                        storage namespace.  Example: operation_logs'
+                                      type: string
+                                    namespace:
+                                      description: 'The namespace in object storage
+                                        (Note - this is usually the tenancy name).  Example:
+                                        myocitenancy'
+                                      type: string
+                                    object:
+                                      description: 'The object name inside the object
+                                        storage bucket.  Example: switchover_plan_executions'
+                                      type: string
+                                  type: object
+                                type: array
+                              status:
+                                description: The status of the group execution.
+                                type: string
+                              statusDetails:
+                                description: 'Additional details on the group execution
+                                  status.  Example: A total of [3] steps failed in
+                                  the group'
+                                type: string
+                              stepId:
+                                description: 'The unique id of the step. Must not
+                                  be modified by user.  Example: sgid1.step..uniqueID'
+                                type: string
+                              timeEnded:
+                                description: 'The time when execution ended. An RFC3339
+                                  formatted datetime string.  Example: 2019-03-29T09:36:42Z'
+                                type: string
+                              timeStarted:
+                                description: 'The time when step execution began.
+                                  An RFC3339 formatted datetime string.  Example:
+                                  2019-03-29T09:36:42Z'
+                                type: string
+                              type:
+                                description: The step type.
+                                type: string
+                              typeDisplayName:
+                                description: 'The display name of the DR Plan step
+                                  type.  Example: Database Switchover'
+                                type: string
+                            type: object
+                          type: array
+                        timeEnded:
+                          description: 'The time when execution ended. An RFC3339
+                            formatted datetime string.  Example: 2019-03-29T09:36:42Z'
+                          type: string
+                        timeStarted:
+                          description: 'The time when step execution began. An RFC3339
+                            formatted datetime string.  Example: 2019-03-29T09:36:42Z'
+                          type: string
+                        type:
+                          description: The step type.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: 'The OCID of the DR plan execution.  Example: ocid1.drplanexecution.oc1..uniqueID'
+                    type: string
+                  isAutomatic:
+                    description: 'A flag indicating whether execution was submitted
+                      automatically by Automatic DR Configuration.  Example: false'
+                    type: boolean
+                  lifeCycleDetails:
+                    description: A message describing the DR plan execution's current
+                      state in more detail.
+                    type: string
+                  logLocation:
+                    description: The details of an object storage log location for
+                      a DR protection group.
+                    items:
+                      properties:
+                        bucket:
+                          description: 'The bucket name inside the object storage
+                            namespace.  Example: operation_logs'
+                          type: string
+                        namespace:
+                          description: 'The namespace in object storage (Note - this
+                            is usually the tenancy name).  Example: myocitenancy'
+                          type: string
+                        object:
+                          description: 'The object name inside the object storage
+                            bucket.  Example: switchover_plan_executions'
+                          type: string
+                      type: object
+                    type: array
+                  peerDrProtectionGroupId:
+                    description: 'The OCID of peer DR protection group associated
+                      with this plan''s DR protection group.  Example: ocid1.drprotectiongroup.oc1..uniqueID'
+                    type: string
+                  peerRegion:
+                    description: 'The region of the peer DR protection group associated
+                      with this plan''s DR protection group.  Example: us-ashburn-1'
+                    type: string
+                  planExecutionType:
+                    description: The type of the plan execution.
+                    type: string
+                  planId:
+                    description: 'The OCID of the DR plan.  Example: ocid1.drplan.oc1..uniqueID'
+                    type: string
+                  state:
+                    description: The current state of the DR plan execution.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces.  Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: 'The date and time at which DR plan execution was
+                      created. An RFC3339 formatted datetime string.  Example: 2019-03-29T09:36:42Z'
+                    type: string
+                  timeEnded:
+                    description: 'The time when execution ended. An RFC3339 formatted
+                      datetime string.  Example: 2019-03-29T09:36:42Z'
+                    type: string
+                  timeStarted:
+                    description: 'The time when step execution began. An RFC3339 formatted
+                      datetime string.  Example: 2019-03-29T09:36:42Z'
+                    type: string
+                  timeUpdated:
+                    description: 'The time when DR plan execution was last updated.
+                      An RFC3339 formatted datetime string.  Example: 2019-03-29T09:36:42Z'
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

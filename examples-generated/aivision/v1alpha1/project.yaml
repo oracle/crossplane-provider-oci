@@ -1,0 +1,17 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/project
+  labels:
+    testing.upbound.io/example-name: test_project
+  name: test-project
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.project_defined_tags}
+    description: ${var.project_description}
+    displayName: ${var.project_display_name}
+    freeformTags: ${var.project_freeform_tags}

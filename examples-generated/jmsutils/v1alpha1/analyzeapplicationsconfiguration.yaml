@@ -1,0 +1,15 @@
+apiVersion: jmsutils.oci.upbound.io/v1alpha1
+kind: AnalyzeApplicationsConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsutils/v1alpha1/analyzeapplicationsconfiguration
+  labels:
+    testing.upbound.io/example-name: test_analyze_applications_configuration
+  name: test-analyze-applications-configuration
+spec:
+  forProvider:
+    bucket: ${var.analyze_applications_configuration_bucket}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    namespace: ${var.analyze_applications_configuration_namespace}

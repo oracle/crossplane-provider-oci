@@ -1,0 +1,38 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceapplication
+  labels:
+    testing.upbound.io/example-name: test_workspace_application
+  name: test-workspace-application
+spec:
+  forProvider:
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.workspace_application_description}
+    displayName: ${var.workspace_application_display_name}
+    freeformTags:
+      bar-key: value
+    identifier: ${var.workspace_application_identifier}
+    key: ${var.workspace_application_key}
+    modelType: ${var.workspace_application_model_type}
+    modelVersion: ${var.workspace_application_model_version}
+    name: ${var.workspace_application_name}
+    objectStatus: ${var.workspace_application_object_status}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_application_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_application_registry_metadata_is_favorite}
+      key: ${var.workspace_application_registry_metadata_key}
+      labels: ${var.workspace_application_registry_metadata_labels}
+      registryVersion: ${var.workspace_application_registry_metadata_registry_version}
+    sourceApplicationInfo:
+    - applicationKey: ${var.workspace_application_source_application_info_application_key}
+      copyType: ${var.workspace_application_source_application_info_copy_type}
+      workspaceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_workspace
+    state: ${var.workspace_application_state}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

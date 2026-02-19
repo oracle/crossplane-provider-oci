@@ -11,7 +11,9 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    configId: ${oci_apm_config_config.test_config.id}
+    configIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_config
     credentials:
     - passwordDetails:
       - passwordSecretRef:

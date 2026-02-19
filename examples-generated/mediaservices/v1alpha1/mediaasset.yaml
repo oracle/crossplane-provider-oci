@@ -1,0 +1,49 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: MediaAsset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/mediaasset
+  labels:
+    testing.upbound.io/example-name: test_media_asset
+  name: test-media-asset
+spec:
+  forProvider:
+    bucket: ${var.media_asset_bucket}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.media_asset_display_name}
+    freeformTags:
+      bar-key: value
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.media_asset_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.media_asset_locks_time_created}
+      type: ${var.media_asset_locks_type}
+    masterMediaAssetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_media_asset
+    mediaAssetTags:
+    - type: ${var.media_asset_media_asset_tags_type}
+      value: ${var.media_asset_media_asset_tags_value}
+    mediaWorkflowJobIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_media_workflow_job
+    metadata:
+    - metadata: ${var.media_asset_metadata_metadata}
+    namespace: ${var.media_asset_namespace}
+    object: ${var.media_asset_object}
+    objectEtag: ${var.media_asset_object_etag}
+    parentMediaAssetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_media_asset
+    segmentRangeEndIndex: ${var.media_asset_segment_range_end_index}
+    segmentRangeStartIndex: ${var.media_asset_segment_range_start_index}
+    sourceMediaWorkflowIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_media_workflow
+    sourceMediaWorkflowVersion: ${var.media_asset_source_media_workflow_version}
+    type: ${var.media_asset_type}

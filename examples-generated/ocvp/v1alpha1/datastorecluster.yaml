@@ -1,0 +1,21 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: DatastoreCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/datastorecluster
+  labels:
+    testing.upbound.io/example-name: test_datastore_cluster
+  name: test-datastore-cluster
+spec:
+  forProvider:
+    availabilityDomain: ${var.datastore_cluster_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    datastoreClusterType: ${var.datastore_cluster_datastore_cluster_type}
+    datastoreIds: ${var.datastore_cluster_datastore_ids}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.datastore_cluster_display_name}
+    freeformTags:
+      Department: Finance

@@ -1,0 +1,123 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: PipelineRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/pipelinerun
+  labels:
+    testing.upbound.io/example-name: test_pipeline_run
+  name: test-pipeline-run
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurationOverrideDetails:
+    - commandLineArguments: ${var.pipeline_run_configuration_override_details_command_line_arguments}
+      environmentVariables: ${var.pipeline_run_configuration_override_details_environment_variables}
+      maximumRuntimeInMinutes: ${var.pipeline_run_configuration_override_details_maximum_runtime_in_minutes}
+      type: ${var.pipeline_run_configuration_override_details_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.pipeline_run_display_name}
+    freeformTags:
+      Department: Finance
+    infrastructureConfigurationOverrideDetails:
+    - blockStorageSizeInGbs: ${var.pipeline_run_infrastructure_configuration_override_details_block_storage_size_in_gbs}
+      blockStorageSizeInGbsParameterized: ${var.pipeline_run_infrastructure_configuration_override_details_block_storage_size_in_gbs_parameterized}
+      shapeConfigDetails:
+      - memoryInGbs: ${var.pipeline_run_infrastructure_configuration_override_details_shape_config_details_memory_in_gbs}
+        memoryInGbsParameterized: ${var.pipeline_run_infrastructure_configuration_override_details_shape_config_details_memory_in_gbs_parameterized}
+        ocpus: ${var.pipeline_run_infrastructure_configuration_override_details_shape_config_details_ocpus}
+        ocpusParameterized: ${var.pipeline_run_infrastructure_configuration_override_details_shape_config_details_ocpus_parameterized}
+      shapeName: ${oci_core_shape.test_shape.name}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    logConfigurationOverrideDetails:
+    - enableAutoLogCreation: ${var.pipeline_run_log_configuration_override_details_enable_auto_log_creation}
+      enableLogging: ${var.pipeline_run_log_configuration_override_details_enable_logging}
+      logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    opcParentRptUrl: ${var.pipeline_run_opc_parent_rpt_url}
+    parametersOverride: ${var.pipeline_run_parameters_override}
+    pipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pipeline
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    stepOverrideDetails:
+    - stepConfigurationDetails:
+      - commandLineArguments: ${var.pipeline_run_step_override_details_step_configuration_details_command_line_arguments}
+        environmentVariables: ${var.pipeline_run_step_override_details_step_configuration_details_environment_variables}
+        maximumRuntimeInMinutes: ${var.pipeline_run_step_override_details_step_configuration_details_maximum_runtime_in_minutes}
+      stepContainerConfigurationDetails:
+      - cmd: ${var.pipeline_run_step_override_details_step_container_configuration_details_cmd}
+        containerType: ${var.pipeline_run_step_override_details_step_container_configuration_details_container_type}
+        entrypoint: ${var.pipeline_run_step_override_details_step_container_configuration_details_entrypoint}
+        image: ${var.pipeline_run_step_override_details_step_container_configuration_details_image}
+        imageDigest: ${var.pipeline_run_step_override_details_step_container_configuration_details_image_digest}
+        imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      stepDataflowConfigurationDetails:
+      - configuration: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_configuration}
+        driverShape: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape}
+        driverShapeConfigDetails:
+        - cpu_baseline: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_driver_shape_config_details_ocpus_parameterized}
+        executorShape: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape}
+        executorShapeConfigDetails:
+        - cpu_baseline: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_executor_shape_config_details_ocpus_parameterized}
+        logsBucketUri: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_logs_bucket_uri}
+        numExecutors: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_num_executors}
+        warehouseBucketUri: ${var.pipeline_run_step_override_details_step_dataflow_configuration_details_warehouse_bucket_uri}
+      stepInfrastructureConfigurationDetails:
+      - blockStorageSizeInGbs: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_block_storage_size_in_gbs}
+        blockStorageSizeInGbsParameterized: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_block_storage_size_in_gbs_parameterized}
+        shapeConfigDetails:
+        - memoryInGbs: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_run_step_override_details_step_infrastructure_configuration_details_shape_config_details_ocpus_parameterized}
+        shapeName: ${oci_core_shape.test_shape.name}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+      stepName: ${var.pipeline_run_step_override_details_step_name}
+      stepStorageMountConfigurationDetailsList:
+      - bucket: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_bucket}
+        destinationDirectoryName: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_destination_directory_name}
+        destinationPath: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_destination_path}
+        exportIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_export
+        mountTargetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_mount_target
+        namespace: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_namespace}
+        prefix: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_prefix}
+        storageType: ${var.pipeline_run_step_override_details_step_storage_mount_configuration_details_list_storage_type}
+    storageMountConfigurationOverrideDetailsList:
+    - bucket: ${var.pipeline_run_storage_mount_configuration_override_details_list_bucket}
+      destinationDirectoryName: ${var.pipeline_run_storage_mount_configuration_override_details_list_destination_directory_name}
+      destinationPath: ${var.pipeline_run_storage_mount_configuration_override_details_list_destination_path}
+      exportIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_export
+      mountTargetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mount_target
+      namespace: ${var.pipeline_run_storage_mount_configuration_override_details_list_namespace}
+      prefix: ${var.pipeline_run_storage_mount_configuration_override_details_list_prefix}
+      storageType: ${var.pipeline_run_storage_mount_configuration_override_details_list_storage_type}
+    systemTags: ${var.pipeline_run_system_tags}

@@ -1,0 +1,25 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAwsKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbawskey
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_aws_key
+  name: test-oracle-db-aws-key
+spec:
+  forProvider:
+    awsAccountId: ${oci_dbmulticloud_aws_account.test_aws_account.id}
+    awsKeyArn: ${var.oracle_db_aws_key_aws_key_arn}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_aws_key_display_name}
+    freeformTags:
+      Department: Finance
+    isAwsKeyEnabled: ${var.oracle_db_aws_key_is_aws_key_enabled}
+    location: ${var.oracle_db_aws_key_location}
+    oracleDbConnectorId: ${oci_dbmulticloud_oracle_db_connector.test_oracle_db_connector.id}
+    properties: ${var.oracle_db_aws_key_properties}
+    type: ${var.oracle_db_aws_key_type}

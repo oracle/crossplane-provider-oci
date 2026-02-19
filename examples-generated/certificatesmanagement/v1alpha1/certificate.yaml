@@ -1,0 +1,63 @@
+apiVersion: certificatesmanagement.oci.upbound.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: certificatesmanagement/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: test_certificate
+  name: test-certificate
+spec:
+  forProvider:
+    certificateConfig:
+    - cert_chain_pem: ${var.certificate_certificate_config_cert_chain_pem}
+      certificate_pem: ${var.certificate_certificate_config_certificate_pem}
+      certificateProfileType: ${var.certificate_certificate_config_certificate_profile_type}
+      configType: ${var.certificate_certificate_config_config_type}
+      csrPem: ${var.certificate_certificate_config_csr_pem}
+      issuerCertificateAuthorityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_certificate_authority
+      keyAlgorithm: ${var.certificate_certificate_config_key_algorithm}
+      private_key_pem: ${var.certificate_certificate_config_private_key_pem}
+      private_key_pem_passphrase: ${var.certificate_certificate_config_private_key_pem_passphrase}
+      signatureAlgorithm: ${var.certificate_certificate_config_signature_algorithm}
+      subject:
+      - commonName: ${var.certificate_certificate_config_subject_common_name}
+        country: ${var.certificate_certificate_config_subject_country}
+        distinguishedNameQualifier: ${var.certificate_certificate_config_subject_distinguished_name_qualifier}
+        domainComponent: ${var.certificate_certificate_config_subject_domain_component}
+        generationQualifier: ${var.certificate_certificate_config_subject_generation_qualifier}
+        givenName: ${var.certificate_certificate_config_subject_given_name}
+        initials: ${var.certificate_certificate_config_subject_initials}
+        localityName: ${var.certificate_certificate_config_subject_locality_name}
+        organization: ${var.certificate_certificate_config_subject_organization}
+        organizationalUnit: ${var.certificate_certificate_config_subject_organizational_unit}
+        pseudonym: ${var.certificate_certificate_config_subject_pseudonym}
+        serialNumber: ${var.certificate_certificate_config_subject_serial_number}
+        stateOrProvinceName: ${var.certificate_certificate_config_subject_state_or_province_name}
+        street: ${var.certificate_certificate_config_subject_street}
+        surname: ${var.certificate_certificate_config_subject_surname}
+        title: ${var.certificate_certificate_config_subject_title}
+        userIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
+      subjectAlternativeNames:
+      - type: ${var.certificate_certificate_config_subject_alternative_names_type}
+        value: ${var.certificate_certificate_config_subject_alternative_names_value}
+      validity:
+      - timeOfValidityNotAfter: ${var.certificate_certificate_config_validity_time_of_validity_not_after}
+        timeOfValidityNotBefore: ${var.certificate_certificate_config_validity_time_of_validity_not_before}
+      versionName: ${var.certificate_certificate_config_version_name}
+    certificateRules:
+    - advanceRenewalPeriod: ${var.certificate_certificate_rules_advance_renewal_period}
+      renewalInterval: ${var.certificate_certificate_rules_renewal_interval}
+      ruleType: ${var.certificate_certificate_rules_rule_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.certificate_description}
+    freeformTags:
+      Department: Finance
+    name: ${var.certificate_name}

@@ -734,7 +734,17 @@ type ManagementExternalDbSystemDiscoveryDiscoveredComponentsVipConfigurationsPar
 type ManagementExternalDbSystemDiscoveryInitParameters struct {
 
 	// The OCID of the management agent used for the external DB system discovery.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compartment in which the external DB system resides.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -819,8 +829,18 @@ type ManagementExternalDbSystemDiscoveryObservation struct {
 type ManagementExternalDbSystemDiscoveryParameters struct {
 
 	// The OCID of the management agent used for the external DB system discovery.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the compartment in which the external DB system resides.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/identity/v1alpha1.Compartment
@@ -1221,9 +1241,8 @@ type ManagementExternalDbSystemDiscoveryStatus struct {
 type ManagementExternalDbSystemDiscovery struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.agentId) || (has(self.initProvider) && has(self.initProvider.agentId))",message="spec.forProvider.agentId is a required parameter"
-	Spec   ManagementExternalDbSystemDiscoverySpec   `json:"spec"`
-	Status ManagementExternalDbSystemDiscoveryStatus `json:"status,omitempty"`
+	Spec              ManagementExternalDbSystemDiscoverySpec   `json:"spec"`
+	Status            ManagementExternalDbSystemDiscoveryStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

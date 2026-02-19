@@ -1,0 +1,17 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSecurityAssessmentCheck
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesecurityassessmentcheck
+  labels:
+    testing.upbound.io/example-name: test_security_assessment_check
+  name: test-security-assessment-check
+spec:
+  forProvider:
+    patchOperations:
+    - operation: ${var.security_assessment_check_patch_operations_operation}
+      selection: ${var.security_assessment_check_patch_operations_selection}
+      value: ${var.security_assessment_check_patch_operations_value}
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment

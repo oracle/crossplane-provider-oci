@@ -1,0 +1,40 @@
+apiVersion: ospgateway.oci.upbound.io/v1alpha1
+kind: AddressActionVerification
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospgateway/v1alpha1/addressactionverification
+  labels:
+    testing.upbound.io/example-name: test_address_action_verification
+  name: test-address-action-verification
+spec:
+  forProvider:
+    addressKey: ${var.address_action_verification_address_key}
+    city: ${var.address_action_verification_city}
+    companyName: ${var.address_action_verification_company_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contributorClass: ${var.address_action_verification_contributor_class}
+    country: ${var.address_action_verification_country}
+    county: ${var.address_action_verification_county}
+    departmentName: ${var.address_action_verification_department_name}
+    emailAddress: ${var.address_action_verification_email_address}
+    firstName: ${var.address_action_verification_first_name}
+    internalNumber: ${var.address_action_verification_internal_number}
+    jobTitle: ${var.address_action_verification_job_title}
+    lastName: ${var.address_action_verification_last_name}
+    line1: ${var.address_action_verification_line1}
+    line2: ${var.address_action_verification_line2}
+    line3: ${var.address_action_verification_line3}
+    line4: ${var.address_action_verification_line4}
+    middleName: ${var.address_action_verification_middle_name}
+    municipalInscription: ${var.address_action_verification_municipal_inscription}
+    ospHomeRegion: ${var.address_action_verification_osp_home_region}
+    phoneCountryCode: ${var.address_action_verification_phone_country_code}
+    phoneNumber: ${var.address_action_verification_phone_number}
+    postalCode: ${var.address_action_verification_postal_code}
+    province: ${var.address_action_verification_province}
+    state: ${var.address_action_verification_state}
+    stateInscription: ${var.address_action_verification_state_inscription}
+    streetName: ${var.address_action_verification_street_name}
+    streetNumber: ${var.address_action_verification_street_number}

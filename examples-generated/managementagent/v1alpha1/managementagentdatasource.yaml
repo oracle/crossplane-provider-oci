@@ -1,0 +1,30 @@
+apiVersion: managementagent.oci.upbound.io/v1alpha1
+kind: ManagementAgentDataSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managementagent/v1alpha1/managementagentdatasource
+  labels:
+    testing.upbound.io/example-name: test_management_agent_data_source
+  name: test-management-agent-data-source
+spec:
+  forProvider:
+    allowMetrics: ${var.management_agent_data_source_allow_metrics}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionTimeout: ${var.management_agent_data_source_connection_timeout}
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    metricDimensions:
+    - name: ${var.management_agent_data_source_metric_dimensions_name}
+      value: ${var.management_agent_data_source_metric_dimensions_value}
+    name: ${var.management_agent_data_source_name}
+    namespace: ${var.management_agent_data_source_namespace}
+    proxyUrl: ${var.management_agent_data_source_proxy_url}
+    readDataLimitInKilobytes: ${var.management_agent_data_source_read_data_limit_in_kilobytes}
+    readTimeout: ${var.management_agent_data_source_read_timeout}
+    resourceGroup: ${var.management_agent_data_source_resource_group}
+    scheduleMins: ${var.management_agent_data_source_schedule_mins}
+    type: ${var.management_agent_data_source_type}
+    url: ${var.management_agent_data_source_url}

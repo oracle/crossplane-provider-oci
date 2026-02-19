@@ -1,0 +1,49 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: IdentityPropagationTrust
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/identitypropagationtrust
+  labels:
+    testing.upbound.io/example-name: test_identity_propagation_trust
+  name: test-identity-propagation-trust
+spec:
+  forProvider:
+    accountId: accountId
+    active: ${var.identity_propagation_trust_active}
+    allowImpersonation: ${var.identity_propagation_trust_allow_impersonation}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.identity_propagation_trust_authorization}
+    clientClaimName: ${var.identity_propagation_trust_client_claim_name}
+    clientClaimValues:
+    - clientClaimValues
+    clockSkewSeconds: ${var.identity_propagation_trust_clock_skew_seconds}
+    description: ${var.identity_propagation_trust_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    impersonationServiceUsers:
+    - ocid: ${var.identity_propagation_trust_impersonation_service_users_ocid}
+      rule: ${var.identity_propagation_trust_impersonation_service_users_rule}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_identity_propagation_trust_user
+    issuer: ${var.identity_propagation_trust_issuer}
+    keytab:
+    - secretOcid: ${var.identity_propagation_trust_keytab_secret_ocid}
+      secretVersion: ${var.identity_propagation_trust_keytab_secret_version}
+    name: ${var.identity_propagation_trust_name}
+    oauthClients:
+    - oauthClients
+    ocid: ${var.identity_propagation_trust_ocid}
+    publicCertificate: ${var.identity_propagation_trust_public_certificate}
+    publicKeyEndpoint: ${var.identity_propagation_trust_public_key_endpoint}
+    resourceTypeSchemaVersion: ${var.identity_propagation_trust_resource_type_schema_version}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:IdentityPropagationTrust
+    subjectClaimName: ${var.identity_propagation_trust_subject_claim_name}
+    subjectMappingAttribute: ${var.identity_propagation_trust_subject_mapping_attribute}
+    subjectType: ${var.identity_propagation_trust_subject_type}
+    tags:
+    - key: ${var.identity_propagation_trust_tags_key}
+      value: ${var.identity_propagation_trust_tags_value}
+    type: ${var.identity_propagation_trust_type}

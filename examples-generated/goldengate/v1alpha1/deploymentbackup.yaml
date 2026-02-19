@@ -1,0 +1,28 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: DeploymentBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/deploymentbackup
+  labels:
+    testing.upbound.io/example-name: test_deployment_backup
+  name: test-deployment-backup
+spec:
+  forProvider:
+    bucket: ${var.deployment_backup_bucket}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment
+    displayName: ${var.deployment_backup_display_name}
+    freeformTags:
+      bar-key: value
+    isMetadataOnly: ${var.deployment_backup_is_metadata_only}
+    locks:
+    - message: ${var.deployment_backup_locks_message}
+      type: ${var.deployment_backup_locks_type}
+    namespace: ${var.deployment_backup_namespace}
+    object: ${var.deployment_backup_object}

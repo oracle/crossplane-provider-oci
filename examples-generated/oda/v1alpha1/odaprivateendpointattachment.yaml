@@ -1,0 +1,16 @@
+apiVersion: oda.oci.upbound.io/v1alpha1
+kind: OdaPrivateEndpointAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odaprivateendpointattachment
+  labels:
+    testing.upbound.io/example-name: test_oda_private_endpoint_attachment
+  name: test-oda-private-endpoint-attachment
+spec:
+  forProvider:
+    odaInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oda_instance
+    odaPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oda_private_endpoint

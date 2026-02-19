@@ -1,0 +1,24 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: AwrHubSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsource
+  labels:
+    testing.upbound.io/example-name: test_awr_hub_source
+  name: test-awr-hub-source
+spec:
+  forProvider:
+    associatedOpsiId: ${oci_opsi_associated_opsi.test_associated_opsi.id}
+    associatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+    awrHubIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_awr_hub
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    name: ${var.awr_hub_source_name}
+    type: ${var.awr_hub_source_type}

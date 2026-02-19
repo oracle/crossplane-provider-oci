@@ -1,0 +1,15 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: Namespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespace
+  labels:
+    testing.upbound.io/example-name: test_namespace
+  name: test-namespace
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isOnboarded: ${var.is_onboarded}
+    namespace: ${var.namespace_namespace}

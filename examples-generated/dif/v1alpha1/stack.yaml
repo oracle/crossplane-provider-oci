@@ -1,0 +1,137 @@
+apiVersion: dif.oci.upbound.io/v1alpha1
+kind: Stack
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dif/v1alpha1/stack
+  labels:
+    testing.upbound.io/example-name: test_stack
+  name: test-stack
+spec:
+  forProvider:
+    adb:
+    - adminPasswordIdSecretRef:
+        key: attribute.id
+        name: example-dif-admin-password
+        namespace: upbound-system
+      artifactObjectStoragePath: ${var.stack_adb_artifact_object_storage_path}
+      dataStorageSizeInTbs: ${var.stack_adb_data_storage_size_in_tbs}
+      dbCredentials:
+      - secretIdSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        userName: ${var.stack_adb_db_credentials_user_name}
+        userType: ${var.stack_adb_db_credentials_user_type}
+      dbVersion: ${var.stack_adb_db_version}
+      dbWorkload: ${var.stack_adb_db_workload}
+      ecpu: ${var.stack_adb_ecpu}
+      instanceId: ${var.stack_adb_instance_id}
+      isMtlsConnectionRequired: ${var.stack_adb_is_mtls_connection_required}
+      isPublic: ${var.stack_adb_is_public}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      toolsPublicAccess: ${var.stack_adb_tools_public_access}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataflow:
+    - archiveUri: ${var.stack_dataflow_archive_uri}
+      connections:
+      - connectionDetails:
+        - difDependencies:
+          - serviceInstanceId: ${var.stack_dependency_instance_id}
+            serviceType: ${var.stack_dataflow_connections_connection_details_dif_dependencies_service_type}
+          domainNames: ${var.stack_dataflow_connections_connection_details_domain_names}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+      driverShape: ${var.stack_dataflow_driver_shape}
+      driverShapeConfig:
+      - memoryInGbs: ${var.stack_dataflow_driver_shape_config_memory_in_gbs}
+        ocpus: ${var.stack_dataflow_driver_shape_config_ocpus}
+      execute: ${var.stack_dataflow_execute}
+      executorShape: ${var.stack_dataflow_executor_shape}
+      executorShapeConfig:
+      - memoryInGbs: ${var.stack_dataflow_executor_shape_config_memory_in_gbs}
+        ocpus: ${var.stack_dataflow_executor_shape_config_ocpus}
+      instanceId: ${var.stack_dataflow_instance_id}
+      logBucketInstanceId: ${var.stack_objectstorage_instance_id}
+      numExecutors: ${var.stack_dataflow_num_executors}
+      privateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
+      sparkVersion: ${var.stack_dataflow_spark_version}
+      warehouseBucketInstanceId: ${var.stack_objectstorage_instance_id}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.stack_display_name}
+    freeformTags:
+      Department: Finance
+    genai:
+    - baseModel: ${var.stack_genai_base_model}
+      clusterType: ${var.stack_genai_cluster_type}
+      endpoints:
+      - endpointName: ${var.stack_genai_endpoint_name}
+        isContentModerationEnabled: ${var.stack_genai_endpoints_is_content_moderation_enabled}
+      instanceId: ${var.stack_genai_instance_id}
+      ociRegion: ${var.stack_genai_oci_region}
+      unitCount: ${var.stack_genai_unit_count}
+    ggcs:
+    - artifactObjectStoragePath: ${var.stack_ggcs_artifact_object_storage_path}
+      connections:
+      - connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_connection
+        connectionNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_connection
+        difDependencies:
+        - serviceInstanceId: ${var.stack_dependency_instance_id}
+          serviceType: ${var.stack_ggcs_connections_dif_dependencies_service_type}
+        ggAdminSecretIdSecretRef:
+          key: attribute.id
+          name: example-vault-secret
+          namespace: upbound-system
+      instanceId: ${var.stack_ggcs_instance_id}
+      ocpu: ${var.stack_ggcs_ocpu}
+      oggVersion: ${var.stack_ggcs_ogg_version}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+      publicSubnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      sources:
+      - action: ${var.stack_ggcs_sources_action}
+        shouldStartSourceOperations: ${var.stack_ggcs_sources_should_start_source_operations}
+        sourceId: ${var.stack_ggcs_sources_source_id}
+        targetConnectionName: ${var.stack_ggcs_sources_target_connection_name}
+        targetUri: ${var.stack_ggcs_sources_target_uri}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      targets:
+      - action: ${var.stack_ggcs_action}
+        shouldStartTargetOperations: ${var.stack_ggcs_should_start_target_operations}
+        sourceConnectionName: ${var.stack_ggcs_source_connection_name}
+        sourceUri: ${var.stack_ggcs_source_uri}
+        targetId: ${var.stack_ggcs_target_id}
+      users:
+      - action: ${var.stack_ggcs_users_action}
+        secretIdSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        userName: ${var.stack_ggcs_users_user_name}
+        userType: ${var.stack_ggcs_users_user_type}
+    notificationEmail: ${var.stack_notification_email}
+    objectstorage:
+    - autoTiering: ${var.stack_objectstorage_auto_tiering}
+      instanceId: ${var.stack_objectstorage_instance_id}
+      objectVersioning: ${var.stack_objectstorage_object_versioning}
+      storageTier: ${var.stack_objectstorage_storage_tier}
+    services: ${var.stack_services}
+    stackTemplates: ${var.stack_stack_templates}
+    subnetId: ${var.stack_deploy_artifacts_subnet_id}

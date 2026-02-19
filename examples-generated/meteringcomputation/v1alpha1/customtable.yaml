@@ -1,0 +1,24 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: CustomTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/customtable
+  labels:
+    testing.upbound.io/example-name: test_custom_table
+  name: test-custom-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    savedCustomTable:
+    - columnGroupBy: ${var.custom_table_saved_custom_table_column_group_by}
+      compartmentDepth: ${var.custom_table_saved_custom_table_compartment_depth}
+      displayName: ${var.custom_table_saved_custom_table_display_name}
+      groupByTag:
+      - key: ${var.custom_table_saved_custom_table_group_by_tag_key}
+        namespace: ${var.custom_table_saved_custom_table_group_by_tag_namespace}
+        value: ${var.custom_table_saved_custom_table_group_by_tag_value}
+      rowGroupBy: ${var.custom_table_saved_custom_table_row_group_by}
+      version: ${var.custom_table_saved_custom_table_version}
+    savedReportId: ${oci_metering_computation_saved_report.test_saved_report.id}

@@ -69,7 +69,17 @@ type CredentialInfoParameters struct {
 type ManagementExternalExadataStorageConnectorInitParameters struct {
 
 	// The OCID of the agent for the Exadata storage server.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The unique string of the connection. For example, "https:///MS/RESTService/".
 	ConnectionURI *string `json:"connectionUri,omitempty" tf:"connection_uri,omitempty"`
@@ -159,8 +169,18 @@ type ManagementExternalExadataStorageConnectorObservation struct {
 type ManagementExternalExadataStorageConnectorParameters struct {
 
 	// The OCID of the agent for the Exadata storage server.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1.Agent
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AgentID *string `json:"agentId,omitempty" tf:"agent_id,omitempty"`
+
+	// Reference to a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDRef *v1.Reference `json:"agentIdRef,omitempty" tf:"-"`
+
+	// Selector for a Agent in cloudbridge to populate agentId.
+	// +kubebuilder:validation:Optional
+	AgentIDSelector *v1.Selector `json:"agentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The unique string of the connection. For example, "https:///MS/RESTService/".
 	// +kubebuilder:validation:Optional
@@ -225,7 +245,6 @@ type ManagementExternalExadataStorageConnectorStatus struct {
 type ManagementExternalExadataStorageConnector struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.agentId) || (has(self.initProvider) && has(self.initProvider.agentId))",message="spec.forProvider.agentId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectionUri) || (has(self.initProvider) && has(self.initProvider.connectionUri))",message="spec.forProvider.connectionUri is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.connectorName) || (has(self.initProvider) && has(self.initProvider.connectorName))",message="spec.forProvider.connectorName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.credentialInfo) || (has(self.initProvider) && has(self.initProvider.credentialInfo))",message="spec.forProvider.credentialInfo is a required parameter"

@@ -20,7 +20,9 @@ spec:
       - clientAppId: ${oci_kms_client_app.test_client_app.id}
         clientAppSecret: ${var.vault_external_key_manager_metadata_oauth_metadata_client_app_secret}
         idcsAccountNameUrl: ${var.vault_external_key_manager_metadata_oauth_metadata_idcs_account_name_url}
-      privateEndpointId: ${oci_dataflow_private_endpoint.test_private_endpoint.id}
+      privateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
     freeformTags:
       Department: Finance
     vaultType: ${var.vault_vault_type}

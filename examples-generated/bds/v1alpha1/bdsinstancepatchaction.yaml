@@ -1,0 +1,25 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstancePatchAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancepatchaction
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_patch_action
+  name: test-bds-instance-patch-action
+spec:
+  forProvider:
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    patchingConfig:
+    - batchSize: ${var.bds_instance_patch_action_patching_config_batch_size}
+      patchingConfigStrategy: ${var.bds_instance_patch_action_patching_config_patching_config_strategy}
+      toleranceThresholdPerBatch: ${var.bds_instance_patch_action_patching_config_tolerance_threshold_per_batch}
+      toleranceThresholdPerDomain: ${var.bds_instance_patch_action_patching_config_tolerance_threshold_per_domain}
+      waitTimeBetweenBatchInSeconds: ${var.bds_instance_patch_action_patching_config_wait_time_between_batch_in_seconds}
+      waitTimeBetweenDomainInSeconds: ${var.bds_instance_patch_action_patching_config_wait_time_between_domain_in_seconds}
+    version: ${var.bds_instance_patch_action_version}

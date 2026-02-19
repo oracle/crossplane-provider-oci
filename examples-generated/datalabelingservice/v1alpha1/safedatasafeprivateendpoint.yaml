@@ -1,0 +1,27 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeDataSafePrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safedatasafeprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_data_safe_private_endpoint
+  name: test-data-safe-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.data_safe_private_endpoint_description}
+    displayName: ${var.data_safe_private_endpoint_display_name}
+    freeformTags:
+      Department: Finance
+    nsgIds: ${var.data_safe_private_endpoint_nsg_ids}
+    privateEndpointIp: ${var.data_safe_private_endpoint_private_endpoint_ip}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn

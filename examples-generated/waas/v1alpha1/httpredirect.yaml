@@ -1,0 +1,26 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: HttpRedirect
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/httpredirect
+  labels:
+    testing.upbound.io/example-name: test_http_redirect
+  name: test-http-redirect
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.http_redirect_display_name}
+    domain: ${var.http_redirect_domain}
+    freeformTags:
+      Department: Finance
+    responseCode: ${var.http_redirect_response_code}
+    target:
+    - host: ${var.http_redirect_target_host}
+      path: ${var.http_redirect_target_path}
+      port: ${var.http_redirect_target_port}
+      protocol: ${var.http_redirect_target_protocol}
+      query: ${var.http_redirect_target_query}

@@ -1,0 +1,26 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureVault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazurevault
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_vault
+  name: test-oracle-db-azure-vault
+spec:
+  forProvider:
+    azureVaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vault
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_azure_vault_display_name}
+    freeformTags:
+      Department: Finance
+    location: ${var.oracle_db_azure_vault_location}
+    oracleDbAzureResourceGroup: ${var.oracle_db_azure_vault_oracle_db_azure_resource_group}
+    oracleDbConnectorId: ${oci_dbmulticloud_oracle_db_connector.test_oracle_db_connector.id}
+    properties: ${var.oracle_db_azure_vault_properties}
+    type: ${var.oracle_db_azure_vault_type}

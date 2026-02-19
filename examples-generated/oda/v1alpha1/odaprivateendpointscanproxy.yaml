@@ -1,0 +1,19 @@
+apiVersion: oda.oci.upbound.io/v1alpha1
+kind: OdaPrivateEndpointScanProxy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odaprivateendpointscanproxy
+  labels:
+    testing.upbound.io/example-name: test_oda_private_endpoint_scan_proxy
+  name: test-oda-private-endpoint-scan-proxy
+spec:
+  forProvider:
+    odaPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oda_private_endpoint
+    protocol: ${var.oda_private_endpoint_scan_proxy_protocol}
+    scanListenerInfos:
+    - scanListenerFqdn: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_fqdn}
+      scanListenerIp: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_ip}
+      scanListenerPort: ${var.oda_private_endpoint_scan_proxy_scan_listener_infos_scan_listener_port}
+    scanListenerType: ${var.oda_private_endpoint_scan_proxy_scan_listener_type}

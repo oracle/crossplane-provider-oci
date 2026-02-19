@@ -1,0 +1,17 @@
+apiVersion: capacitymanagement.oci.upbound.io/v1alpha1
+kind: OccCustomerGroupOccCustomer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/occcustomergroupocccustomer
+  labels:
+    testing.upbound.io/example-name: test_occ_customer_group_occ_customer
+  name: test-occ-customer-group-occ-customer
+spec:
+  forProvider:
+    description: ${var.occ_customer_group_occ_customer_description}
+    displayName: ${var.occ_customer_group_occ_customer_display_name}
+    occCustomerGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_occ_customer_group
+    status: ${var.occ_customer_group_occ_customer_status}
+    tenancyId: ${oci_identity_tenancy.test_tenancy.id}

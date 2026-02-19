@@ -1,0 +1,24 @@
+apiVersion: limits.oci.upbound.io/v1alpha1
+kind: Quota
+metadata:
+  annotations:
+    meta.upbound.io/example-id: limits/v1alpha1/quota
+  labels:
+    testing.upbound.io/example-name: test_quota
+  name: test-quota
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.quota_description}
+    freeformTags:
+      Department: Finance
+    locks:
+    - message: ${var.quota_locks_message}
+      relatedResourceId: ${oci_limits_related_resource.test_related_resource.id}
+      type: ${var.quota_locks_type}
+    name: ${var.quota_name}
+    statements: ${var.quota_statements}

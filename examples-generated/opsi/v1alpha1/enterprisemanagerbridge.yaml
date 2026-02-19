@@ -1,0 +1,22 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: EnterpriseManagerBridge
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/enterprisemanagerbridge
+  labels:
+    testing.upbound.io/example-name: test_enterprise_manager_bridge
+  name: test-enterprise-manager-bridge
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.enterprise_manager_bridge_description}
+    displayName: ${var.enterprise_manager_bridge_display_name}
+    freeformTags:
+      bar-key: value
+    objectStorageBucketNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bucket

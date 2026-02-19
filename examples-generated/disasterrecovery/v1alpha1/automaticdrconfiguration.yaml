@@ -1,0 +1,29 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: AutomaticDrConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/automaticdrconfiguration
+  labels:
+    testing.upbound.io/example-name: test_automatic_dr_configuration
+  name: test-automatic-dr-configuration
+spec:
+  forProvider:
+    defaultFailoverDrPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_dr_plan
+    defaultSwitchoverDrPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_dr_plan
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.automatic_dr_configuration_display_name}
+    drProtectionGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_dr_protection_group
+    freeformTags:
+      Department: Finance
+    members:
+    - isAutoFailoverEnabled: ${var.automatic_dr_configuration_members_is_auto_failover_enabled}
+      isAutoSwitchoverEnabled: ${var.automatic_dr_configuration_members_is_auto_switchover_enabled}
+      memberId: ${oci_disaster_recovery_member.test_member.id}
+      memberType: ${var.automatic_dr_configuration_members_member_type}

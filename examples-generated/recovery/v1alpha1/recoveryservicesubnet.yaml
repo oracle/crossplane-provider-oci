@@ -1,0 +1,26 @@
+apiVersion: recovery.oci.upbound.io/v1alpha1
+kind: RecoveryServiceSubnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: recovery/v1alpha1/recoveryservicesubnet
+  labels:
+    testing.upbound.io/example-name: test_recovery_service_subnet
+  name: test-recovery-service-subnet
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.recovery_service_subnet_display_name}
+    freeformTags:
+      bar-key: value
+    nsgIds: ${var.recovery_service_subnet_nsg_ids}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    subnets: ${var.recovery_service_subnet_subnets}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn

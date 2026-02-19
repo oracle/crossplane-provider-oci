@@ -1,0 +1,29 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: CompliancePolicyRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/compliancepolicyrule
+  labels:
+    testing.upbound.io/example-name: test_compliance_policy_rule
+  name: test-compliance-policy-rule
+spec:
+  forProvider:
+    compliancePolicyId: ${oci_fleet_apps_management_compliance_policy.test_compliance_policy.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.compliance_policy_rule_display_name}
+    freeformTags:
+      bar-key: value
+    gracePeriod: ${var.compliance_policy_rule_grace_period}
+    patchSelection:
+    - daysSinceRelease: ${var.compliance_policy_rule_patch_selection_days_since_release}
+      patchLevel: ${var.compliance_policy_rule_patch_selection_patch_level}
+      patchNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_patch
+      selectionType: ${var.compliance_policy_rule_patch_selection_selection_type}
+    patchTypeId: ${oci_fleet_apps_management_patch_type.test_patch_type.id}
+    productVersion:
+    - isApplicableForAllHigherVersions: ${var.compliance_policy_rule_product_version_is_applicable_for_all_higher_versions}
+      version: ${var.compliance_policy_rule_product_version_version}
+    severity: ${var.compliance_policy_rule_severity}

@@ -1,0 +1,22 @@
+apiVersion: marketplace.oci.upbound.io/v1alpha1
+kind: AcceptedAgreement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: marketplace/v1alpha1/acceptedagreement
+  labels:
+    testing.upbound.io/example-name: test_accepted_agreement
+  name: test-accepted-agreement
+spec:
+  forProvider:
+    agreementId: ${oci_marketplace_agreement.test_agreement.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.accepted_agreement_display_name}
+    freeformTags:
+      Department: Finance
+    listingId: ${oci_marketplace_listing.test_listing.id}
+    packageVersion: ${var.accepted_agreement_package_version}
+    signature: ${var.accepted_agreement_signature}

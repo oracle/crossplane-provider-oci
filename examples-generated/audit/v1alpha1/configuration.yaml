@@ -1,0 +1,14 @@
+apiVersion: audit.oci.upbound.io/v1alpha1
+kind: Configuration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: audit/v1alpha1/configuration
+  labels:
+    testing.upbound.io/example-name: test_configuration
+  name: test-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    retentionPeriodDays: ${var.configuration_retention_period_days}

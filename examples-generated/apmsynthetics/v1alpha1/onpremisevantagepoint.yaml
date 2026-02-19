@@ -1,0 +1,20 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: OnPremiseVantagePoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/onpremisevantagepoint
+  labels:
+    testing.upbound.io/example-name: test_on_premise_vantage_point
+  name: test-on-premise-vantage-point
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.on_premise_vantage_point_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.on_premise_vantage_point_name}
+    type: ${var.on_premise_vantage_point_type}

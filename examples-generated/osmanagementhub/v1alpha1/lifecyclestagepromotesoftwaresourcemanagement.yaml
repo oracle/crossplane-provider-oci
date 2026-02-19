@@ -1,0 +1,17 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: LifecycleStagePromoteSoftwareSourceManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/lifecyclestagepromotesoftwaresourcemanagement
+  labels:
+    testing.upbound.io/example-name: test_lifecycle_stage_promote_software_source_management
+  name: test-lifecycle-stage-promote-software-source-management
+spec:
+  forProvider:
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}
+    softwareSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_software_source
+    workRequestDetails:
+    - description: ${var.lifecycle_stage_promote_software_source_management_work_request_details_description}
+      displayName: ${var.lifecycle_stage_promote_software_source_management_work_request_details_display_name}

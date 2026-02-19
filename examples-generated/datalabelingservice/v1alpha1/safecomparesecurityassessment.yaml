@@ -1,0 +1,16 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeCompareSecurityAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safecomparesecurityassessment
+  labels:
+    testing.upbound.io/example-name: test_compare_security_assessment
+  name: test-compare-security-assessment
+spec:
+  forProvider:
+    comparisonSecurityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment

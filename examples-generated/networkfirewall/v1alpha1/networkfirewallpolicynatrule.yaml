@@ -1,0 +1,24 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyNatRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicynatrule
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_nat_rule
+  name: test-network-firewall-policy-nat-rule
+spec:
+  forProvider:
+    action: ${var.network_firewall_policy_nat_rule_action}
+    condition:
+    - destinationAddress: ${var.network_firewall_policy_nat_rule_condition_destination_address}
+      service: ${var.network_firewall_policy_nat_rule_condition_service}
+      sourceAddress: ${var.network_firewall_policy_nat_rule_condition_source_address}
+    description: ${var.network_firewall_policy_nat_rule_description}
+    name: ${var.network_firewall_policy_nat_rule_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    position:
+    - afterRule: ${var.network_firewall_policy_nat_rule_position_after_rule}
+      beforeRule: ${var.network_firewall_policy_nat_rule_position_before_rule}
+    type: ${var.network_firewall_policy_nat_rule_type}

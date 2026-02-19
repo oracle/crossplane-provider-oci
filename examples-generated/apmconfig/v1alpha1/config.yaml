@@ -1,0 +1,60 @@
+apiVersion: apmconfig.oci.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmconfig/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_config
+  name: test-config
+spec:
+  forProvider:
+    agentVersion: ${var.config_agent_version}
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    attachInstallDir: ${var.config_attach_install_dir}
+    config:
+    - configMap:
+      - body: ${var.config_config_config_map_body}
+        contentType: ${var.config_config_config_map_content_type}
+        fileName: ${var.config_config_config_map_file_name}
+    configType: ${var.config_config_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.config_description}
+    dimensions:
+    - name: ${var.config_dimensions_name}
+      valueSource: ${var.config_dimensions_value_source}
+    displayName: ${var.config_display_name}
+    filterId: ${oci_apm_config_filter.test_filter.id}
+    filterText: ${var.config_filter_text}
+    freeformTags:
+      bar-key: value
+    group: ${var.config_group}
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    matchAgentsWithAttributeValue: ${var.config_match_agents_with_attribute_value}
+    metrics:
+    - description: ${var.config_metrics_description}
+      name: ${var.config_metrics_name}
+      unit: ${var.config_metrics_unit}
+      valueSource: ${var.config_metrics_value_source}
+    namespace: ${var.config_namespace}
+    opcDryRun: ${var.config_opc_dry_run}
+    options: ${var.config_options}
+    overrides:
+    - overrideList:
+      - agentFilter: ${var.config_overrides_override_list_agent_filter}
+        overrideMap: ${var.config_overrides_override_list_override_map}
+    processFilter: ${var.config_process_filter}
+    rules:
+    - displayName: ${var.config_rules_display_name}
+      filterText: ${var.config_rules_filter_text}
+      isApplyToErrorSpans: ${var.config_rules_is_apply_to_error_spans}
+      isEnabled: ${var.config_rules_is_enabled}
+      priority: ${var.config_rules_priority}
+      satisfiedResponseTime: ${var.config_rules_satisfied_response_time}
+      toleratingResponseTime: ${var.config_rules_tolerating_response_time}
+    runAsUser: ${var.config_run_as_user}
+    serviceName: ${oci_announcements_service_service.test_service.name}

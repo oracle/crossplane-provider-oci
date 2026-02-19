@@ -34,8 +34,35 @@ func (l *FileSystemList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this FileSystemQuotaRuleList.
+func (l *FileSystemQuotaRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this FilesystemSnapshotPolicyList.
+func (l *FilesystemSnapshotPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this MountTargetList.
 func (l *MountTargetList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this OutboundConnectorList.
+func (l *OutboundConnectorList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

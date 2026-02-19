@@ -1,0 +1,19 @@
+apiVersion: securityattribute.oci.upbound.io/v1alpha1
+kind: SecurityAttributeNamespace
+metadata:
+  annotations:
+    meta.upbound.io/example-id: securityattribute/v1alpha1/securityattributenamespace
+  labels:
+    testing.upbound.io/example-name: test_security_attribute_namespace
+  name: test-security-attribute-namespace
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.security_attribute_namespace_description}
+    freeformTags:
+      Department: Finance
+    name: ${var.security_attribute_namespace_name}

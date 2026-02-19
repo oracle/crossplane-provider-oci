@@ -1,0 +1,27 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: StreamSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/streamsource
+  labels:
+    testing.upbound.io/example-name: test_stream_source
+  name: test-stream-source
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.stream_source_defined_tags}
+    displayName: ${var.stream_source_display_name}
+    freeformTags: ${var.stream_source_freeform_tags}
+    streamSourceDetails:
+    - cameraUrl: ${var.stream_source_stream_source_details_camera_url}
+      secretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      sourceType: ${var.stream_source_stream_source_details_source_type}
+      streamNetworkAccessDetails:
+      - privateEndpointIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_private_endpoint
+        streamAccessType: ${var.stream_source_stream_source_details_stream_network_access_details_stream_access_type}

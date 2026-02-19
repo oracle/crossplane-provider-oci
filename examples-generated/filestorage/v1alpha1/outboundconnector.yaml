@@ -1,0 +1,33 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: OutboundConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/outboundconnector
+  labels:
+    testing.upbound.io/example-name: test_outbound_connector
+  name: test-outbound-connector
+spec:
+  forProvider:
+    availabilityDomain: ${var.outbound_connector_availability_domain}
+    bindDistinguishedName: ${var.outbound_connector_bind_distinguished_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectorType: ${var.outbound_connector_connector_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.outbound_connector_display_name}
+    endpoints:
+    - hostname: ${var.outbound_connector_endpoints_hostname}
+      port: ${var.outbound_connector_endpoints_port}
+    freeformTags:
+      Department: Finance
+    locks:
+    - message: ${var.outbound_connector_locks_message}
+      relatedResourceId: ${oci_cloud_guard_resource.test_resource.id}
+      timeCreated: ${var.outbound_connector_locks_time_created}
+      type: ${var.outbound_connector_locks_type}
+    passwordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    passwordSecretVersion: ${var.outbound_connector_password_secret_version}

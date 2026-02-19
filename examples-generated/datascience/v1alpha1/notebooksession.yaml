@@ -1,0 +1,65 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: NotebookSession
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/notebooksession
+  labels:
+    testing.upbound.io/example-name: test_notebook_session
+  name: test-notebook-session
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.notebook_session_display_name}
+    freeformTags:
+      Department: Finance
+    notebookSessionConfigDetails:
+    - blockStorageSizeInGbs: ${var.notebook_session_notebook_session_config_details_block_storage_size_in_gbs}
+      notebookSessionShapeConfigDetails:
+      - cpuBaseline: ${var.notebook_session_notebook_session_config_details_notebook_session_shape_config_details_cpu_baseline}
+        memoryInGbs: ${var.notebook_session_notebook_session_config_details_notebook_session_shape_config_details_memory_in_gbs}
+        ocpus: ${var.notebook_session_notebook_session_config_details_notebook_session_shape_config_details_ocpus}
+      privateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
+      shape: ${var.notebook_session_notebook_session_config_details_shape}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    notebookSessionConfigurationDetails:
+    - blockStorageSizeInGbs: ${var.notebook_session_notebook_session_configuration_details_block_storage_size_in_gbs}
+      notebookSessionShapeConfigDetails:
+      - cpuBaseline: ${var.notebook_session_notebook_session_configuration_details_notebook_session_shape_config_details_cpu_baseline}
+        memoryInGbs: ${var.notebook_session_notebook_session_configuration_details_notebook_session_shape_config_details_memory_in_gbs}
+        ocpus: ${var.notebook_session_notebook_session_configuration_details_notebook_session_shape_config_details_ocpus}
+      privateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
+      shape: ${var.notebook_session_notebook_session_configuration_details_shape}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    notebookSessionRuntimeConfigDetails:
+    - customEnvironmentVariables: ${var.notebook_session_notebook_session_runtime_config_details_custom_environment_variables}
+      notebookSessionGitConfigDetails:
+      - notebookSessionGitRepoConfigCollection:
+        - url: ${var.notebook_session_notebook_session_runtime_config_details_notebook_session_git_config_details_notebook_session_git_repo_config_collection_url}
+    notebookSessionStorageMountConfigurationDetailsList:
+    - bucket: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_bucket}
+      destinationDirectoryName: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_destination_directory_name}
+      destinationPath: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_destination_path}
+      exportIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_export
+      mountTargetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mount_target
+      namespace: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_namespace}
+      prefix: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_prefix}
+      storageType: ${var.notebook_session_notebook_session_storage_mount_configuration_details_list_storage_type}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

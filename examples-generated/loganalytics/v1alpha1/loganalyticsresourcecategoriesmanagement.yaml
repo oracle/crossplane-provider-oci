@@ -1,0 +1,14 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsResourceCategoriesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsresourcecategoriesmanagement
+  labels:
+    testing.upbound.io/example-name: test_log_analytics_resource_categories_management
+  name: test-log-analytics-resource-categories-management
+spec:
+  forProvider:
+    namespace: ${var.log_analytics_resource_categories_management_namespace}
+    resourceCategories: ${var.log_analytics_resource_categories_management_resource_categories}
+    resourceId: ${oci_log_analytics_resource_categories_management_resource_id}
+    resourceType: ${var.log_analytics_resource_categories_management_resource_type}

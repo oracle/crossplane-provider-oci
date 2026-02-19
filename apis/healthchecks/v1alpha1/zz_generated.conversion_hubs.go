@@ -10,4 +10,10 @@ package v1alpha1
 func (tr *HTTPMonitor) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *HttpProbe) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *PingMonitor) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *PingProbe) Hub() {}

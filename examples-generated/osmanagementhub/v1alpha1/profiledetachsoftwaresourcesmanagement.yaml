@@ -1,0 +1,14 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ProfileDetachSoftwareSourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/profiledetachsoftwaresourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_profile_detach_software_sources_management
+  name: test-profile-detach-software-sources-management
+spec:
+  forProvider:
+    profileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_profile
+    softwareSources: ${var.profile_detach_software_sources_management_software_sources}

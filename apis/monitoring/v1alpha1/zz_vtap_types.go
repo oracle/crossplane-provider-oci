@@ -83,7 +83,17 @@ type VtapInitParameters struct {
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 
 	// (Updatable) The OCID of the destination resource where mirrored packets are sent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudguard/v1alpha1.Target
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
+
+	// Reference to a Target in cloudguard to populate targetId.
+	// +kubebuilder:validation:Optional
+	TargetIDRef *v1.Reference `json:"targetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Target in cloudguard to populate targetId.
+	// +kubebuilder:validation:Optional
+	TargetIDSelector *v1.Selector `json:"targetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The IP address of the destination resource where mirrored packets are sent.
 	TargetIP *string `json:"targetIp,omitempty" tf:"target_ip,omitempty"`
@@ -264,8 +274,18 @@ type VtapParameters struct {
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 
 	// (Updatable) The OCID of the destination resource where mirrored packets are sent.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cloudguard/v1alpha1.Target
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
+
+	// Reference to a Target in cloudguard to populate targetId.
+	// +kubebuilder:validation:Optional
+	TargetIDRef *v1.Reference `json:"targetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Target in cloudguard to populate targetId.
+	// +kubebuilder:validation:Optional
+	TargetIDSelector *v1.Selector `json:"targetIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The IP address of the destination resource where mirrored packets are sent.
 	// +kubebuilder:validation:Optional

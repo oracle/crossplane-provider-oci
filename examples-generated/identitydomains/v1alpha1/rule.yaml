@@ -1,0 +1,38 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: test_rule
+  name: test-rule
+spec:
+  forProvider:
+    active: ${var.rule_active}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.rule_authorization}
+    condition: ${var.rule_condition}
+    conditionGroup:
+    - type: Condition
+      value: ${var.rule_condition_group_value}
+    description: ${var.rule_description}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    locked: ${var.rule_locked}
+    name: ${var.rule_name}
+    ocid: ${var.rule_ocid}
+    policyType:
+    - value: SignOn
+    resourceTypeSchemaVersion: ${var.rule_resource_type_schema_version}
+    return:
+    - name: ${var.rule_return_name}
+      returnGroovy: ${var.rule_return_return_groovy}
+      value: ${var.rule_return_value}
+    ruleGroovy: ${var.rule_rule_groovy}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Rule
+    tags:
+    - key: ${var.rule_tags_key}
+      value: ${var.rule_tags_value}

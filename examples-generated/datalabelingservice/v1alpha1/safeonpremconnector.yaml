@@ -1,0 +1,19 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeOnPremConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safeonpremconnector
+  labels:
+    testing.upbound.io/example-name: test_on_prem_connector
+  name: test-on-prem-connector
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.on_prem_connector_description}
+    displayName: ${var.on_prem_connector_display_name}
+    freeformTags:
+      Department: Finance

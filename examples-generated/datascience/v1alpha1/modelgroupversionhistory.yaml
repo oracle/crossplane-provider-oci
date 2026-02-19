@@ -1,0 +1,25 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelGroupVersionHistory
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelgroupversionhistory
+  labels:
+    testing.upbound.io/example-name: test_model_group_version_history
+  name: test-model-group-version-history
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.model_group_version_history_description}
+    displayName: ${var.model_group_version_history_display_name}
+    freeformTags:
+      Department: Finance
+    latestModelGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model_group
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

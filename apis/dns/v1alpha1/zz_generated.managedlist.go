@@ -7,6 +7,15 @@ package v1alpha1
 
 import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
+// GetItems of this ActionCreateZoneFromZoneFileList.
+func (l *ActionCreateZoneFromZoneFileList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this RecordList.
 func (l *RecordList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -81,6 +90,24 @@ func (l *ViewList) GetItems() []resource.Managed {
 
 // GetItems of this ZoneList.
 func (l *ZoneList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ZonePromoteDnssecKeyVersionList.
+func (l *ZonePromoteDnssecKeyVersionList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this ZoneStageDnssecKeyVersionList.
+func (l *ZoneStageDnssecKeyVersionList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

@@ -1,0 +1,47 @@
+apiVersion: aidocument.oci.upbound.io/v1alpha1
+kind: ProcessorJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aidocument/v1alpha1/processorjob
+  labels:
+    testing.upbound.io/example-name: test_processor_job
+  name: test-processor-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.processor_job_display_name}
+    inputLocation:
+    - data: ${var.processor_job_input_location_data}
+      objectLocations:
+      - bucket: ${var.processor_job_input_location_object_locations_bucket}
+        namespace: ${var.processor_job_input_location_object_locations_namespace}
+        object: ${var.processor_job_input_location_object_locations_object}
+        pageRange: ${var.processor_job_input_location_object_locations_page_range}
+      pageRange: ${var.processor_job_input_location_page_range}
+      sourceType: ${var.processor_job_input_location_source_type}
+    outputLocation:
+    - bucket: ${var.processor_job_output_location_bucket}
+      namespace: ${var.processor_job_output_location_namespace}
+      prefix: ${var.processor_job_output_location_prefix}
+    processorConfig:
+    - documentType: ${var.processor_job_processor_config_document_type}
+      features:
+      - featureType: ${var.processor_job_processor_config_features_feature_type}
+        generateSearchablePdf: ${var.processor_job_processor_config_features_generate_searchable_pdf}
+        maxResults: ${var.processor_job_processor_config_features_max_results}
+        modelIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_model
+        selectionMarkDetection: ${var.processor_job_processor_config_features_selection_mark_detection}
+        tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+      isZipOutputEnabled: ${var.processor_job_processor_config_is_zip_output_enabled}
+      language: ${var.processor_job_processor_config_language}
+      modelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_model
+      normalizationFields:
+      - map:
+        - normalizationType: ${var.processor_job_processor_config_normalization_fields_map_normalization_type}
+      processorType: ${var.processor_job_processor_config_processor_type}

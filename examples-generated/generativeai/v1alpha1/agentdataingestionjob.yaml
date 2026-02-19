@@ -1,0 +1,22 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentDataIngestionJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentdataingestionjob
+  labels:
+    testing.upbound.io/example-name: test_data_ingestion_job
+  name: test-data-ingestion-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_data_source
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.data_ingestion_job_description}
+    displayName: ${var.data_ingestion_job_display_name}
+    freeformTags:
+      Department: Finance

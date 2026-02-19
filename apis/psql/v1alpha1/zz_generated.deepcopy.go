@@ -2476,6 +2476,16 @@ func (in *PsqlDbSystemInitParameters) DeepCopyInto(out *PsqlDbSystemInitParamete
 		*out = new(string)
 		**out = **in
 	}
+	if in.ConfigIDRef != nil {
+		in, out := &in.ConfigIDRef, &out.ConfigIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConfigIDSelector != nil {
+		in, out := &in.ConfigIDSelector, &out.ConfigIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Credentials != nil {
 		in, out := &in.Credentials, &out.Credentials
 		*out = make([]CredentialsInitParameters, len(*in))
@@ -2872,6 +2882,16 @@ func (in *PsqlDbSystemParameters) DeepCopyInto(out *PsqlDbSystemParameters) {
 		in, out := &in.ConfigID, &out.ConfigID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ConfigIDRef != nil {
+		in, out := &in.ConfigIDRef, &out.ConfigIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ConfigIDSelector != nil {
+		in, out := &in.ConfigIDSelector, &out.ConfigIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Credentials != nil {
 		in, out := &in.Credentials, &out.Credentials

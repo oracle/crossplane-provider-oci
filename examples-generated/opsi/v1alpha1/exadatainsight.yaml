@@ -1,0 +1,155 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: ExadataInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/exadatainsight
+  labels:
+    testing.upbound.io/example-name: test_exadata_insight
+  name: test-exadata-insight
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    enterpriseManagerBridgeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_enterprise_manager_bridge
+    enterpriseManagerEntityIdentifier: ${var.exadata_insight_enterprise_manager_entity_identifier}
+    enterpriseManagerIdentifier: ${var.exadata_insight_enterprise_manager_identifier}
+    entitySource: ${var.exadata_insight_entity_source}
+    exadataInfraId: ${oci_opsi_exadata_infra.test_exadata_infra.id}
+    freeformTags:
+      bar-key: value
+    isAutoSyncEnabled: ${var.exadata_insight_is_auto_sync_enabled}
+    memberVmClusterDetails:
+    - compartmentId: ${var.compartment_id}
+      dbmPrivateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
+      memberAutonomousDetails:
+      - compartmentId: ${var.compartment_id}
+        connectionCredentialDetails:
+        - credentialSourceName: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_credential_details_credential_source_name}
+          credentialType: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_credential_details_credential_type}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_credential_details_role}
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
+          walletSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        connectionDetails:
+        - hostName: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_details_host_name}
+          port: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_details_port}
+          protocol: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_connection_details_protocol}
+          serviceName: ${oci_announcements_service_service.test_service.name}
+        credentialDetails:
+        - credentialSourceName: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_credential_details_credential_source_name}
+          credentialType: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_credential_details_credential_type}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_credential_details_role}
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
+          walletSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        databaseIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_database
+        databaseResourceType: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_database_resource_type}
+        definedTags: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_defined_tags}
+        deploymentType: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_deployment_type}
+        entitySource: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_entity_source}
+        freeformTags: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_freeform_tags}
+        isAdvancedFeaturesEnabled: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_is_advanced_features_enabled}
+        managementAgentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_management_agent
+        opsiPrivateEndpointIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_private_endpoint
+        systemTags: ${var.exadata_insight_member_vm_cluster_details_member_autonomous_details_system_tags}
+      memberDatabaseDetails:
+      - compartmentId: ${var.compartment_id}
+        connectionCredentialDetails:
+        - credentialSourceName: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_credential_details_credential_source_name}
+          credentialType: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_credential_details_credential_type}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_credential_details_role}
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
+          walletSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        connectionDetails:
+        - hostName: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_details_host_name}
+          hosts:
+          - hostIp: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_details_hosts_host_ip}
+            port: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_details_hosts_port}
+          port: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_details_port}
+          protocol: ${var.exadata_insight_member_vm_cluster_details_member_database_details_connection_details_protocol}
+          serviceName: ${oci_announcements_service_service.test_service.name}
+        credentialDetails:
+        - credentialSourceName: ${var.exadata_insight_member_vm_cluster_details_member_database_details_credential_details_credential_source_name}
+          credentialType: ${var.exadata_insight_member_vm_cluster_details_member_database_details_credential_details_credential_type}
+          namedCredentialIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_named_credential
+          passwordSecretIdSecretRef:
+            key: attribute.id
+            name: example-vault-secret
+            namespace: upbound-system
+          role: ${var.exadata_insight_member_vm_cluster_details_member_database_details_credential_details_role}
+          userNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_user
+          walletSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        databaseIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_database
+        databaseResourceType: ${var.exadata_insight_member_vm_cluster_details_member_database_details_database_resource_type}
+        dbmPrivateEndpointIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_private_endpoint
+        definedTags: ${var.exadata_insight_member_vm_cluster_details_member_database_details_defined_tags}
+        deploymentType: ${var.exadata_insight_member_vm_cluster_details_member_database_details_deployment_type}
+        entitySource: ${var.exadata_insight_member_vm_cluster_details_member_database_details_entity_source}
+        freeformTags: ${var.exadata_insight_member_vm_cluster_details_member_database_details_freeform_tags}
+        managementAgentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_management_agent
+        opsiPrivateEndpointIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_private_endpoint
+        serviceName: ${oci_announcements_service_service.test_service.name}
+        systemTags: ${var.exadata_insight_member_vm_cluster_details_member_database_details_system_tags}
+      opsiPrivateEndpointIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_private_endpoint
+      vmClusterType: ${var.exadata_insight_member_vm_cluster_details_vm_cluster_type}
+      vmclusterId: ${oci_opsi_vmcluster.test_vmcluster.id}

@@ -1,0 +1,36 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: LifecycleEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/lifecycleenvironment
+  labels:
+    testing.upbound.io/example-name: test_lifecycle_environment
+  name: test-lifecycle-environment
+spec:
+  forProvider:
+    archType: ${var.lifecycle_environment_arch_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.lifecycle_environment_description}
+    displayName: ${var.lifecycle_environment_display_name}
+    freeformTags:
+      Department: Finance
+    location: ${var.lifecycle_environment_location}
+    osFamily: ${var.lifecycle_environment_os_family}
+    stages:
+    - definedTags:
+        Operations.CostCenter: "42"
+      displayName: ${var.lifecycle_environment_stages_display_name_1}
+      freeformTags:
+        Department: Finance
+      rank: ${var.lifecycle_environment_stages_rank_1}
+    - definedTags:
+        Operations.CostCenter: "42"
+      displayName: ${var.lifecycle_environment_stages_display_name_2}
+      freeformTags:
+        Department: Finance
+      rank: ${var.lifecycle_environment_stages_rank_2}
+    vendorName: ${var.lifecycle_environment_vendor_name}

@@ -1,0 +1,51 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Gateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apigateway/v1alpha1/gateway
+  labels:
+    testing.upbound.io/example-name: test_gateway
+  name: test-gateway
+spec:
+  forProvider:
+    caBundles:
+    - caBundleId: ${oci_apigateway_ca_bundle.test_ca_bundle.id}
+      certificateAuthorityId: ${oci_apigateway_certificate_authority.test_certificate_authority.id}
+      type: ${var.gateway_ca_bundles_type}
+    certificateId: ${oci_apigateway_certificate.test_certificate.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.gateway_display_name}
+    endpointType: ${var.gateway_endpoint_type}
+    freeformTags:
+      Department: Finance
+    ipMode: ${var.gateway_ip_mode}
+    ipv4addressConfiguration:
+    - reservedIpIds: ${var.gateway_ipv4address_configuration_reserved_ip_ids}
+    ipv6addressConfiguration:
+    - addresses: ${var.gateway_ipv6address_configuration_addresses}
+      subnetCidrs: ${var.gateway_ipv6address_configuration_subnet_cidrs}
+    locks:
+    - message: ${var.gateway_locks_message}
+      type: ${var.gateway_locks_type}
+    networkSecurityGroupIds: ${var.gateway_network_security_group_ids}
+    responseCacheDetails:
+    - authenticationSecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      authenticationSecretVersionNumber: ${var.gateway_response_cache_details_authentication_secret_version_number}
+      connectTimeoutInMs: ${var.gateway_response_cache_details_connect_timeout_in_ms}
+      isSslEnabled: ${var.gateway_response_cache_details_is_ssl_enabled}
+      isSslVerifyDisabled: ${var.gateway_response_cache_details_is_ssl_verify_disabled}
+      readTimeoutInMs: ${var.gateway_response_cache_details_read_timeout_in_ms}
+      sendTimeoutInMs: ${var.gateway_response_cache_details_send_timeout_in_ms}
+      servers:
+      - host: ${var.gateway_response_cache_details_servers_host}
+        port: ${var.gateway_response_cache_details_servers_port}
+      type: ${var.gateway_response_cache_details_type}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

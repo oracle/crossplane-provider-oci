@@ -1,0 +1,26 @@
+apiVersion: waf.oci.upbound.io/v1alpha1
+kind: NetworkAddressList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waf/v1alpha1/networkaddresslist
+  labels:
+    testing.upbound.io/example-name: test_network_address_list
+  name: test-network-address-list
+spec:
+  forProvider:
+    addresses: ${var.network_address_list_addresses}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.network_address_list_display_name}
+    freeformTags:
+      bar-key: value
+    systemTags: ${var.network_address_list_system_tags}
+    type: ${var.network_address_list_type}
+    vcnAddresses:
+    - addresses: ${var.network_address_list_vcn_addresses_addresses}
+      vcnIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vcn

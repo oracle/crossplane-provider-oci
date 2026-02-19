@@ -1,0 +1,34 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: MediaWorkflow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/mediaworkflow
+  labels:
+    testing.upbound.io/example-name: test_media_workflow
+  name: test-media-workflow
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.media_workflow_display_name}
+    freeformTags:
+      bar-key: value
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.media_workflow_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.media_workflow_locks_time_created}
+      type: ${var.media_workflow_locks_type}
+    mediaWorkflowConfigurationIds: ${var.media_workflow_media_workflow_configuration_ids}
+    parameters: ${var.media_workflow_parameters}
+    tasks:
+    - enableParameterReference: ${var.media_workflow_tasks_enable_parameter_reference}
+      enableWhenReferencedParameterEquals: ${var.media_workflow_tasks_enable_when_referenced_parameter_equals}
+      key: ${var.media_workflow_tasks_key}
+      parameters: ${var.media_workflow_tasks_parameters}
+      prerequisites: ${var.media_workflow_tasks_prerequisites}
+      type: ${var.media_workflow_tasks_type}
+      version: ${var.media_workflow_tasks_version}

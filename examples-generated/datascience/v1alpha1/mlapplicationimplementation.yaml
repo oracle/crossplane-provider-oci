@@ -1,0 +1,51 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplicationImplementation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplicationimplementation
+  labels:
+    testing.upbound.io/example-name: test_ml_application_implementation
+  name: test-ml-application-implementation
+spec:
+  forProvider:
+    allowedMigrationDestinations: ${var.ml_application_implementation_allowed_migration_destinations}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    logging:
+    - aggregatedInstanceViewLog:
+      - enableLogging: ${var.ml_application_implementation_logging_aggregated_instance_view_log_enable_logging}
+        logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+      implementationLog:
+      - enableLogging: ${var.ml_application_implementation_logging_implementation_log_enable_logging}
+        logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+      triggerLog:
+      - enableLogging: ${var.ml_application_implementation_logging_trigger_log_enable_logging}
+        logGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log_group
+        logIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_log
+    mlApplicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ml_application
+    mlApplicationPackage:
+      source_type: ${var.ml_application_package_source_type}
+      uri: ${var.ml_application_package_uri}
+    name: ${var.ml_application_implementation_name}
+    opcMlAppPackageArgs: ${var.opc_ml_app_package_args}

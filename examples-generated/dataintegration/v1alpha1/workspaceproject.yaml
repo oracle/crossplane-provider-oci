@@ -1,0 +1,25 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceProject
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceproject
+  labels:
+    testing.upbound.io/example-name: test_workspace_project
+  name: test-workspace-project
+spec:
+  forProvider:
+    description: ${var.workspace_project_description}
+    identifier: ${var.workspace_project_identifier}
+    key: ${var.workspace_project_key}
+    modelVersion: ${var.workspace_project_model_version}
+    name: ${var.workspace_project_name}
+    objectStatus: ${var.workspace_project_object_status}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_project_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_project_registry_metadata_is_favorite}
+      key: ${var.workspace_project_registry_metadata_key}
+      labels: ${var.workspace_project_registry_metadata_labels}
+      registryVersion: ${var.workspace_project_registry_metadata_registry_version}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

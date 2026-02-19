@@ -1,0 +1,14 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceStorageArchivalConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacestoragearchivalconfig
+  labels:
+    testing.upbound.io/example-name: test_namespace_storage_archival_config
+  name: test-namespace-storage-archival-config
+spec:
+  forProvider:
+    archivingConfiguration:
+    - activeStorageDuration: ${var.namespace_storage_archival_config_archiving_configuration_active_storage_duration}
+      archivalStorageDuration: ${var.namespace_storage_archival_config_archiving_configuration_archival_storage_duration}
+    namespace: ${var.namespace_storage_archival_config_namespace}

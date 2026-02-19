@@ -1,0 +1,35 @@
+apiVersion: filestorage.oci.upbound.io/v1alpha1
+kind: FilesystemSnapshotPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: filestorage/v1alpha1/filesystemsnapshotpolicy
+  labels:
+    testing.upbound.io/example-name: test_filesystem_snapshot_policy
+  name: test-filesystem-snapshot-policy
+spec:
+  forProvider:
+    availabilityDomain: ${var.filesystem_snapshot_policy_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.filesystem_snapshot_policy_display_name}
+    freeformTags:
+      Department: Finance
+    locks:
+    - message: ${var.filesystem_snapshot_policy_locks_message}
+      relatedResourceId: ${oci_cloud_guard_resource.test_resource.id}
+      timeCreated: ${var.filesystem_snapshot_policy_locks_time_created}
+      type: ${var.filesystem_snapshot_policy_locks_type}
+    policyPrefix: ${var.filesystem_snapshot_policy_policy_prefix}
+    schedules:
+    - dayOfMonth: ${var.filesystem_snapshot_policy_schedules_day_of_month}
+      dayOfWeek: ${var.filesystem_snapshot_policy_schedules_day_of_week}
+      hourOfDay: ${var.filesystem_snapshot_policy_schedules_hour_of_day}
+      month: ${var.filesystem_snapshot_policy_schedules_month}
+      period: ${var.filesystem_snapshot_policy_schedules_period}
+      retentionDurationInSeconds: ${var.filesystem_snapshot_policy_schedules_retention_duration_in_seconds}
+      schedulePrefix: ${var.filesystem_snapshot_policy_schedules_schedule_prefix}
+      timeScheduleStart: ${var.filesystem_snapshot_policy_schedules_time_schedule_start}
+      timeZone: ${var.filesystem_snapshot_policy_schedules_time_zone}

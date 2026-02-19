@@ -1,0 +1,59 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/application
+  labels:
+    testing.upbound.io/example-name: test_application
+  name: test-application
+spec:
+  forProvider:
+    applicationLogConfig:
+    - logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    archiveUri: ${var.application_archive_uri}
+    arguments: ${var.application_arguments}
+    className: ${var.application_class_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configuration: ${var.application_configuration}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.application_description}
+    displayName: ${var.application_display_name}
+    driverShape: ${var.application_driver_shape}
+    driverShapeConfig:
+    - memoryInGbs: ${var.application_driver_shape_config_memory_in_gbs}
+      ocpus: ${var.application_driver_shape_config_ocpus}
+    execute: ${var.application_execute}
+    executorShape: ${var.application_executor_shape}
+    executorShapeConfig:
+    - memoryInGbs: ${var.application_executor_shape_config_memory_in_gbs}
+      ocpus: ${var.application_executor_shape_config_ocpus}
+    fileUri: ${var.application_file_uri}
+    freeformTags:
+      Department: Finance
+    idleTimeoutInMinutes: ${var.application_idle_timeout_in_minutes}
+    language: ${var.application_language}
+    logsBucketUri: ${var.application_logs_bucket_uri}
+    maxDurationInMinutes: ${var.application_max_duration_in_minutes}
+    metastoreId: ${var.metastore_id}
+    numExecutors: ${var.application_num_executors}
+    parameters:
+    - name: ${var.application_parameters_name}
+      value: ${var.application_parameters_value}
+    poolIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pool
+    privateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_private_endpoint
+    sparkVersion: ${var.application_spark_version}
+    terminateRunsOnDeletion: true
+    type: ${var.application_type}
+    warehouseBucketUri: ${var.application_warehouse_bucket_uri}

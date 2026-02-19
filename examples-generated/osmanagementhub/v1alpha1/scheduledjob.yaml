@@ -1,0 +1,84 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ScheduledJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/scheduledjob
+  labels:
+    testing.upbound.io/example-name: test_scheduled_job
+  name: test-scheduled-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.scheduled_job_description}
+    displayName: ${var.scheduled_job_display_name}
+    freeformTags:
+      Department: Finance
+    isManagedByAutonomousLinux: ${var.scheduled_job_is_managed_by_autonomous_linux}
+    isSubcompartmentIncluded: ${var.scheduled_job_is_subcompartment_included}
+    lifecycleStageIds: ${var.scheduled_job_lifecycle_stage_ids}
+    locations: ${var.scheduled_job_locations}
+    managedCompartmentIds: ${var.scheduled_job_managed_compartment_ids}
+    managedInstanceGroupIds: ${var.scheduled_job_managed_instance_group_ids}
+    managedInstanceIds: ${var.scheduled_job_managed_instance_ids}
+    operations:
+    - manageModuleStreamsDetails:
+      - disable:
+        - moduleName: ${var.scheduled_job_operations_manage_module_streams_details_disable_module_name}
+          softwareSourceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_software_source
+          streamNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_stream
+        enable:
+        - moduleName: ${var.scheduled_job_operations_manage_module_streams_details_enable_module_name}
+          softwareSourceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_software_source
+          streamNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_stream
+        install:
+        - moduleName: ${var.scheduled_job_operations_manage_module_streams_details_install_module_name}
+          profileNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_profile
+          softwareSourceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_software_source
+          streamNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_stream
+        remove:
+        - moduleName: ${var.scheduled_job_operations_manage_module_streams_details_remove_module_name}
+          profileNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_profile
+          softwareSourceIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_software_source
+          streamNameSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_stream
+      operationType: ${var.scheduled_job_operations_operation_type}
+      packageNames: ${var.scheduled_job_operations_package_names}
+      rebootTimeoutInMins: ${var.scheduled_job_operations_reboot_timeout_in_mins}
+      softwareSourceIds: ${var.scheduled_job_operations_software_source_ids}
+      switchModuleStreamsDetails:
+      - moduleName: ${var.scheduled_job_operations_switch_module_streams_details_module_name}
+        softwareSourceIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_software_source
+        streamNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_stream
+      windowsUpdateNames: ${var.scheduled_job_operations_windows_update_names}
+    recurringRule: ${var.scheduled_job_recurring_rule}
+    retryIntervals: ${var.scheduled_job_retry_intervals}
+    scheduleType: ${var.scheduled_job_schedule_type}
+    timeNextExecution: ${var.scheduled_job_time_next_execution}
+    workRequestId: ${oci_containerengine_work_request.test_work_request.id}

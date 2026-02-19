@@ -1,0 +1,14 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ProfileAttachLifecycleStageManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/profileattachlifecyclestagemanagement
+  labels:
+    testing.upbound.io/example-name: test_profile_attach_lifecycle_stage_management
+  name: test-profile-attach-lifecycle-stage-management
+spec:
+  forProvider:
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}
+    profileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_profile

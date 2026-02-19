@@ -1,0 +1,31 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ManagedInstanceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/managedinstancegroup
+  labels:
+    testing.upbound.io/example-name: test_managed_instance_group
+  name: test-managed-instance-group
+spec:
+  forProvider:
+    archType: ${var.managed_instance_group_arch_type}
+    autonomousSettings:
+    - isDataCollectionAuthorized: ${var.managed_instance_group_autonomous_settings_is_data_collection_authorized}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.managed_instance_group_description}
+    displayName: ${var.managed_instance_group_display_name}
+    freeformTags:
+      Department: Finance
+    location: ${var.managed_instance_group_location}
+    managedInstanceIds: ${var.managed_instance_group_managed_instance_ids}
+    notificationTopicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_topic
+    osFamily: ${var.managed_instance_group_os_family}
+    softwareSourceIds:
+    - {}
+    vendorName: ${var.managed_instance_group_vendor_name}

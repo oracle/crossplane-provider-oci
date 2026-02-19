@@ -20,5 +20,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: test_network_load_balancer
     port: ${var.backend_port}
-    targetId: ${oci_cloud_guard_target.test_target.id}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target
     weight: ${var.backend_weight}

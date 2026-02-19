@@ -1,0 +1,46 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: Schedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/schedule
+  labels:
+    testing.upbound.io/example-name: test_schedule
+  name: test-schedule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.schedule_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.schedule_name}
+    outputFileFormat: ${var.schedule_output_file_format}
+    queryProperties:
+    - compartmentDepth: ${var.schedule_query_properties_compartment_depth}
+      dateRange:
+      - dateRangeType: ${var.schedule_query_properties_date_range_date_range_type}
+        dynamicDateRangeType: ${var.schedule_query_properties_date_range_dynamic_date_range_type}
+        timeUsageEnded: ${var.schedule_query_properties_date_range_time_usage_ended}
+        timeUsageStarted: ${var.schedule_query_properties_date_range_time_usage_started}
+      filter: ${var.schedule_query_properties_filter}
+      granularity: ${var.schedule_query_properties_granularity}
+      groupBy: ${var.schedule_query_properties_group_by}
+      groupByTag:
+      - key: ${var.schedule_query_properties_group_by_tag_key}
+        namespace: ${var.schedule_query_properties_group_by_tag_namespace}
+        value: ${var.schedule_query_properties_group_by_tag_value}
+      isAggregateByTime: ${var.schedule_query_properties_is_aggregate_by_time}
+      queryType: ${var.schedule_query_properties_query_type}
+    resultLocation:
+    - bucket: ${var.schedule_result_location_bucket}
+      locationType: ${var.schedule_result_location_location_type}
+      namespace: ${var.schedule_result_location_namespace}
+      region: ${var.schedule_result_location_region}
+    savedReportIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_report
+    scheduleRecurrences: ${var.schedule_schedule_recurrences}
+    timeScheduled: ${var.schedule_time_scheduled}

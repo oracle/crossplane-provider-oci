@@ -1,0 +1,16 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelGroupArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelgroupartifact
+  labels:
+    testing.upbound.io/example-name: test_model_group_artifact
+  name: test-model-group-artifact
+spec:
+  forProvider:
+    contentDisposition: ${var.model_group_artifact_content_disposition}
+    contentLength: ${var.model_group_artifact_content_length}
+    modelGroupArtifact: ${var.model_group_artifact_model_group_artifact}
+    modelGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model_group

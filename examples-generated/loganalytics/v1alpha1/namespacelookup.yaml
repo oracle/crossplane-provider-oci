@@ -1,0 +1,40 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceLookup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacelookup
+  labels:
+    testing.upbound.io/example-name: test_namespace_lookup
+  name: test-namespace-lookup
+spec:
+  forProvider:
+    categories:
+    - description: ${var.namespace_lookup_categories_description}
+      displayName: ${var.namespace_lookup_categories_display_name}
+      isSystem: ${var.namespace_lookup_categories_is_system}
+      name: ${var.namespace_lookup_categories_name}
+      type: ${var.namespace_lookup_categories_type}
+    charEncoding: ${var.namespace_lookup_char_encoding}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultMatchValue: ${var.namespace_lookup_default_match_value}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.namespace_lookup_description}
+    fields:
+    - commonFieldName: ${var.namespace_lookup_fields_common_field_name}
+      defaultMatchValue: ${var.namespace_lookup_fields_default_match_value}
+      displayName: ${var.namespace_lookup_fields_display_name}
+      isCommonField: ${var.namespace_lookup_fields_is_common_field}
+      matchOperator: ${var.namespace_lookup_fields_match_operator}
+      name: ${var.namespace_lookup_fields_name}
+      position: ${var.namespace_lookup_fields_position}
+    freeformTags:
+      bar-key: value
+    isHidden: ${var.namespace_lookup_is_hidden}
+    lookupName: ${var.namespace_lookup_lookup_name}
+    maxMatches: ${var.namespace_lookup_max_matches}
+    namespace: ${var.namespace_lookup_namespace}
+    registerLookupFile: ${var.namespace_lookup_register_lookup_file}
+    type: ${var.namespace_lookup_type}

@@ -1,0 +1,20 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: DrPlanExecution
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/drplanexecution
+  labels:
+    testing.upbound.io/example-name: test_dr_plan_execution
+  name: test-dr-plan-execution
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.dr_plan_execution_display_name}
+    executionOptions:
+    - arePrechecksEnabled: ${var.dr_plan_execution_execution_options_are_prechecks_enabled}
+      areWarningsIgnored: ${var.dr_plan_execution_execution_options_are_warnings_ignored}
+      planExecutionType: ${var.dr_plan_execution_execution_options_plan_execution_type}
+    freeformTags:
+      Department: Finance
+    planId: ${oci_disaster_recovery_plan.test_plan.id}

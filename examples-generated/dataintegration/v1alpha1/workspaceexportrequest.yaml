@@ -1,0 +1,21 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceExportRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceexportrequest
+  labels:
+    testing.upbound.io/example-name: test_workspace_export_request
+  name: test-workspace-export-request
+spec:
+  forProvider:
+    areReferencesIncluded: ${var.workspace_export_request_are_references_included}
+    bucket: ${var.workspace_export_request_bucket}
+    fileName: ${var.workspace_export_request_file_name}
+    filters: ${var.workspace_export_request_filters}
+    isObjectOverwriteEnabled: ${var.workspace_export_request_is_object_overwrite_enabled}
+    objectKeys: ${var.workspace_export_request_object_keys}
+    objectStorageRegion: ${var.workspace_export_request_object_storage_region}
+    objectStorageTenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

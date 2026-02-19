@@ -1,0 +1,59 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: SchedulerDefinition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/schedulerdefinition
+  labels:
+    testing.upbound.io/example-name: test_scheduler_definition
+  name: test-scheduler-definition
+spec:
+  forProvider:
+    actionGroups:
+    - displayName: ${var.scheduler_definition_action_groups_display_name}
+      fleetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_fleet
+      kind: ${var.scheduler_definition_action_groups_kind}
+      runbookIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_runbook
+      runbookVersionNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_runbook_version
+      sequence: ${var.scheduler_definition_action_groups_sequence}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.scheduler_definition_description}
+    displayName: ${var.scheduler_definition_display_name}
+    freeformTags:
+      bar-key: value
+    runBooks:
+    - inputParameters:
+      - arguments:
+        - content:
+          - bucket: ${var.scheduler_definition_run_books_input_parameters_arguments_content_bucket}
+            checksum: ${var.scheduler_definition_run_books_input_parameters_arguments_content_checksum}
+            namespace: ${var.scheduler_definition_run_books_input_parameters_arguments_content_namespace}
+            object: ${var.scheduler_definition_run_books_input_parameters_arguments_content_object}
+            sourceType: ${var.scheduler_definition_run_books_input_parameters_arguments_content_source_type}
+          kind: ${var.scheduler_definition_run_books_input_parameters_arguments_kind}
+          name: ${var.scheduler_definition_run_books_input_parameters_arguments_name}
+          value: ${var.scheduler_definition_run_books_input_parameters_arguments_value}
+        stepName: ${var.scheduler_definition_run_books_input_parameters_step_name}
+      runbookIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_runbook
+      runbookVersionNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_runbook_version
+    schedule:
+    - duration: ${var.scheduler_definition_schedule_duration}
+      executionStartdate: ${var.scheduler_definition_schedule_execution_startdate}
+      maintenanceWindowIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_maintenance_window
+      recurrences: ${var.scheduler_definition_schedule_recurrences}
+      type: ${var.scheduler_definition_schedule_type}

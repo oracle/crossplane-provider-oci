@@ -1,0 +1,19 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelCustomMetadataArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modelcustommetadataartifact
+  labels:
+    testing.upbound.io/example-name: test_model_custom_metadata_artifact
+  name: test-model-custom-metadata-artifact
+spec:
+  forProvider:
+    contentDisposition: ${var.model_custom_metadata_artifact_content_disposition}
+    contentLength: ${var.model_custom_metadata_artifact_content_length}
+    metadatumKeyNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_key
+    modelCustomMetadatumArtifact: ${var.model_custom_metadata_artifact_model_custom_metadatum_artifact}
+    modelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model

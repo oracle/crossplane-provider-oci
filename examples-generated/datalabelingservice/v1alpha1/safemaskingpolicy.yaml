@@ -1,0 +1,34 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeMaskingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safemaskingpolicy
+  labels:
+    testing.upbound.io/example-name: test_masking_policy
+  name: test-masking-policy
+spec:
+  forProvider:
+    columnSource:
+    - columnSource: ${var.masking_policy_column_source_column_source}
+      sensitiveDataModelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_sensitive_data_model
+      targetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_target
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.masking_policy_description}
+    displayName: ${var.masking_policy_display_name}
+    freeformTags:
+      Department: Finance
+    isDropTempTablesEnabled: ${var.masking_policy_is_drop_temp_tables_enabled}
+    isRedoLoggingEnabled: ${var.masking_policy_is_redo_logging_enabled}
+    isRefreshStatsEnabled: ${var.masking_policy_is_refresh_stats_enabled}
+    parallelDegree: ${var.masking_policy_parallel_degree}
+    postMaskingScript: ${var.masking_policy_post_masking_script}
+    preMaskingScript: ${var.masking_policy_pre_masking_script}
+    recompile: ${var.masking_policy_recompile}

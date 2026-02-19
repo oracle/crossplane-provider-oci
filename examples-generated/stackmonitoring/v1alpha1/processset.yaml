@@ -1,0 +1,24 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: ProcessSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/processset
+  labels:
+    testing.upbound.io/example-name: test_process_set
+  name: test-process-set
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.process_set_display_name}
+    freeformTags:
+      bar-key: value
+    specification:
+    - items:
+      - label: ${var.process_set_specification_items_label}
+        processCommand: ${var.process_set_specification_items_process_command}
+        processLineRegexPattern: ${var.process_set_specification_items_process_line_regex_pattern}
+        processUser: ${var.process_set_specification_items_process_user}

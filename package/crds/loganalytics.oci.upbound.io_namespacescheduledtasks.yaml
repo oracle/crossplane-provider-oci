@@ -1,0 +1,1215 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: namespacescheduledtasks.loganalytics.oci.upbound.io
+spec:
+  group: loganalytics.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: NamespaceScheduledTask
+    listKind: NamespaceScheduledTaskList
+    plural: namespacescheduledtasks
+    singular: namespacescheduledtask
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: NamespaceScheduledTask is the Schema for the NamespaceScheduledTasks
+          API. Provides the Namespace Scheduled Task resource in Oracle Cloud Infrastructure
+          Log Analytics service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NamespaceScheduledTaskSpec defines the desired state of NamespaceScheduledTask
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  action:
+                    description: Action for scheduled task.
+                    items:
+                      properties:
+                        compartmentIdInSubtree:
+                          description: (Applicable when type=PURGE) if true, purge
+                            child compartments data
+                          type: boolean
+                        dataType:
+                          description: the type of the log data to be purged
+                          type: string
+                        metricExtraction:
+                          description: (Applicable when type=STREAM) Specify metric
+                            extraction for SAVED_SEARCH scheduled task execution to
+                            post to Oracle Cloud Infrastructure Monitoring.
+                          items:
+                            properties:
+                              compartmentId:
+                                description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                                  of the extracted metric.
+                                type: string
+                              metricName:
+                                description: The metric name of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters, periods
+                                  (.), underscores (_), hyphens (-), and dollar signs
+                                  ($).
+                                type: string
+                              namespace:
+                                description: The namespace of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters and underscores
+                                  (_).
+                                type: string
+                              resourceGroup:
+                                description: (Applicable when type=STREAM) The resource
+                                  group of the extracted metric. A valid value starts
+                                  with an alphabetical character and includes only
+                                  alphanumeric characters, periods (.), underscores
+                                  (_), hyphens (-), and dollar signs ($).
+                                type: string
+                            type: object
+                          type: array
+                        purgeCompartmentId:
+                          description: the compartment OCID under which the data will
+                            be purged
+                          type: string
+                        purgeCompartmentIdRef:
+                          description: Reference to a Compartment in identity to populate
+                            purgeCompartmentId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        purgeCompartmentIdSelector:
+                          description: Selector for a Compartment in identity to populate
+                            purgeCompartmentId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        purgeDuration:
+                          description: The duration of data to be retained, which
+                            is used to calculate the timeDataEnded when the task fires.
+                            The value should be negative. Purge duration in ISO 8601
+                            extended format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                            The largest supported unit is D, e.g. -P365D (not -P1Y)
+                            or -P14D (not -P2W).
+                          type: string
+                        queryString:
+                          description: Purge query string.
+                          type: string
+                        savedSearchId:
+                          description: (Applicable when type=STREAM) The ManagementSavedSearch
+                            id [OCID] utilized in the action.  Should not be provided
+                            when a template ID is present.
+                          type: string
+                        templateDetails:
+                          description: (Applicable when type=STREAM) details for scheduled
+                            task using template
+                          items:
+                            properties:
+                              templateId:
+                                description: (Applicable when type=STREAM) The template
+                                  Id of a particular template.  Should not be provided
+                                  when a saved search ID is present.
+                                type: string
+                              templateParams:
+                                description: (Applicable when type=STREAM) To store
+                                  macro params.
+                                items:
+                                  properties:
+                                    keyField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        a template parameter's name.
+                                      type: string
+                                    valueField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        the desired value for a given parameter.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: Action type discriminator.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the extracted metric.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) A user-friendly name that is changeable
+                      and that does not have to be unique. Format: a leading alphanumeric,
+                      followed by zero or more alphanumerics, underscores, spaces,
+                      backslashes, or hyphens in any order). No trailing spaces allowed.'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  kind:
+                    description: (Updatable) Discriminator.
+                    type: string
+                  namespace:
+                    description: The namespace of the extracted metric. A valid value
+                      starts with an alphabetical character and includes only alphanumeric
+                      characters and underscores (_).
+                    type: string
+                  savedSearchId:
+                    description: (Applicable when type=STREAM) The ManagementSavedSearch
+                      id [OCID] utilized in the action.  Should not be provided when
+                      a template ID is present.
+                    type: string
+                  schedules:
+                    description: (Applicable when kind=STANDARD) (Updatable) Schedules,
+                      typically a single schedule. Note there may only be a single
+                      schedule for SAVED_SEARCH and PURGE scheduled tasks.
+                    items:
+                      properties:
+                        schedule:
+                          items:
+                            properties:
+                              expression:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Value in cron format.
+                                type: string
+                              misfirePolicy:
+                                description: (Applicable when kind=STANDARD) (Updatable)
+                                  Schedule misfire retry policy.
+                                type: string
+                              recurringInterval:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Recurring interval in ISO 8601 extended
+                                  format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                                  The largest supported unit is D, e.g. P14D (not
+                                  P2W). The value must be at least 5 minutes (PT5M)
+                                  and at most 3 weeks (P21D or PT30240M).
+                                type: string
+                              repeatCount:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Number of times (0-based) to execute
+                                  until auto-stop. Default value -1 will execute indefinitely.
+                                  Value 0 will execute once.
+                                type: number
+                              timeZone:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Time zone, by default UTC.
+                                type: string
+                              type:
+                                description: Action type discriminator.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  taskType:
+                    description: Task type.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  action:
+                    description: Action for scheduled task.
+                    items:
+                      properties:
+                        compartmentIdInSubtree:
+                          description: (Applicable when type=PURGE) if true, purge
+                            child compartments data
+                          type: boolean
+                        dataType:
+                          description: the type of the log data to be purged
+                          type: string
+                        metricExtraction:
+                          description: (Applicable when type=STREAM) Specify metric
+                            extraction for SAVED_SEARCH scheduled task execution to
+                            post to Oracle Cloud Infrastructure Monitoring.
+                          items:
+                            properties:
+                              compartmentId:
+                                description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                                  of the extracted metric.
+                                type: string
+                              metricName:
+                                description: The metric name of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters, periods
+                                  (.), underscores (_), hyphens (-), and dollar signs
+                                  ($).
+                                type: string
+                              namespace:
+                                description: The namespace of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters and underscores
+                                  (_).
+                                type: string
+                              resourceGroup:
+                                description: (Applicable when type=STREAM) The resource
+                                  group of the extracted metric. A valid value starts
+                                  with an alphabetical character and includes only
+                                  alphanumeric characters, periods (.), underscores
+                                  (_), hyphens (-), and dollar signs ($).
+                                type: string
+                            type: object
+                          type: array
+                        purgeCompartmentId:
+                          description: the compartment OCID under which the data will
+                            be purged
+                          type: string
+                        purgeCompartmentIdRef:
+                          description: Reference to a Compartment in identity to populate
+                            purgeCompartmentId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        purgeCompartmentIdSelector:
+                          description: Selector for a Compartment in identity to populate
+                            purgeCompartmentId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        purgeDuration:
+                          description: The duration of data to be retained, which
+                            is used to calculate the timeDataEnded when the task fires.
+                            The value should be negative. Purge duration in ISO 8601
+                            extended format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                            The largest supported unit is D, e.g. -P365D (not -P1Y)
+                            or -P14D (not -P2W).
+                          type: string
+                        queryString:
+                          description: Purge query string.
+                          type: string
+                        savedSearchId:
+                          description: (Applicable when type=STREAM) The ManagementSavedSearch
+                            id [OCID] utilized in the action.  Should not be provided
+                            when a template ID is present.
+                          type: string
+                        templateDetails:
+                          description: (Applicable when type=STREAM) details for scheduled
+                            task using template
+                          items:
+                            properties:
+                              templateId:
+                                description: (Applicable when type=STREAM) The template
+                                  Id of a particular template.  Should not be provided
+                                  when a saved search ID is present.
+                                type: string
+                              templateParams:
+                                description: (Applicable when type=STREAM) To store
+                                  macro params.
+                                items:
+                                  properties:
+                                    keyField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        a template parameter's name.
+                                      type: string
+                                    valueField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        the desired value for a given parameter.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: Action type discriminator.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the extracted metric.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) A user-friendly name that is changeable
+                      and that does not have to be unique. Format: a leading alphanumeric,
+                      followed by zero or more alphanumerics, underscores, spaces,
+                      backslashes, or hyphens in any order). No trailing spaces allowed.'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  kind:
+                    description: (Updatable) Discriminator.
+                    type: string
+                  namespace:
+                    description: The namespace of the extracted metric. A valid value
+                      starts with an alphabetical character and includes only alphanumeric
+                      characters and underscores (_).
+                    type: string
+                  savedSearchId:
+                    description: (Applicable when type=STREAM) The ManagementSavedSearch
+                      id [OCID] utilized in the action.  Should not be provided when
+                      a template ID is present.
+                    type: string
+                  schedules:
+                    description: (Applicable when kind=STANDARD) (Updatable) Schedules,
+                      typically a single schedule. Note there may only be a single
+                      schedule for SAVED_SEARCH and PURGE scheduled tasks.
+                    items:
+                      properties:
+                        schedule:
+                          items:
+                            properties:
+                              expression:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Value in cron format.
+                                type: string
+                              misfirePolicy:
+                                description: (Applicable when kind=STANDARD) (Updatable)
+                                  Schedule misfire retry policy.
+                                type: string
+                              recurringInterval:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Recurring interval in ISO 8601 extended
+                                  format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                                  The largest supported unit is D, e.g. P14D (not
+                                  P2W). The value must be at least 5 minutes (PT5M)
+                                  and at most 3 weeks (P21D or PT30240M).
+                                type: string
+                              repeatCount:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Number of times (0-based) to execute
+                                  until auto-stop. Default value -1 will execute indefinitely.
+                                  Value 0 will execute once.
+                                type: number
+                              timeZone:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Time zone, by default UTC.
+                                type: string
+                              type:
+                                description: Action type discriminator.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  taskType:
+                    description: Task type.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.action is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.action)
+                || (has(self.initProvider) && has(self.initProvider.action))'
+            - message: spec.forProvider.kind is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.kind)
+                || (has(self.initProvider) && has(self.initProvider.kind))'
+            - message: spec.forProvider.namespace is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.__namespace__)
+                || (has(self.initProvider) && has(self.initProvider.__namespace__))'
+            - message: spec.forProvider.schedules is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.schedules)
+                || (has(self.initProvider) && has(self.initProvider.schedules))'
+            - message: spec.forProvider.taskType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.taskType)
+                || (has(self.initProvider) && has(self.initProvider.taskType))'
+          status:
+            description: NamespaceScheduledTaskStatus defines the observed state of
+              NamespaceScheduledTask.
+            properties:
+              atProvider:
+                properties:
+                  action:
+                    description: Action for scheduled task.
+                    items:
+                      properties:
+                        compartmentIdInSubtree:
+                          description: (Applicable when type=PURGE) if true, purge
+                            child compartments data
+                          type: boolean
+                        dataType:
+                          description: the type of the log data to be purged
+                          type: string
+                        metricExtraction:
+                          description: (Applicable when type=STREAM) Specify metric
+                            extraction for SAVED_SEARCH scheduled task execution to
+                            post to Oracle Cloud Infrastructure Monitoring.
+                          items:
+                            properties:
+                              compartmentId:
+                                description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                                  of the extracted metric.
+                                type: string
+                              metricName:
+                                description: The metric name of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters, periods
+                                  (.), underscores (_), hyphens (-), and dollar signs
+                                  ($).
+                                type: string
+                              namespace:
+                                description: The namespace of the extracted metric.
+                                  A valid value starts with an alphabetical character
+                                  and includes only alphanumeric characters and underscores
+                                  (_).
+                                type: string
+                              resourceGroup:
+                                description: (Applicable when type=STREAM) The resource
+                                  group of the extracted metric. A valid value starts
+                                  with an alphabetical character and includes only
+                                  alphanumeric characters, periods (.), underscores
+                                  (_), hyphens (-), and dollar signs ($).
+                                type: string
+                            type: object
+                          type: array
+                        purgeCompartmentId:
+                          description: the compartment OCID under which the data will
+                            be purged
+                          type: string
+                        purgeDuration:
+                          description: The duration of data to be retained, which
+                            is used to calculate the timeDataEnded when the task fires.
+                            The value should be negative. Purge duration in ISO 8601
+                            extended format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                            The largest supported unit is D, e.g. -P365D (not -P1Y)
+                            or -P14D (not -P2W).
+                          type: string
+                        queryString:
+                          description: Purge query string.
+                          type: string
+                        savedSearchId:
+                          description: (Applicable when type=STREAM) The ManagementSavedSearch
+                            id [OCID] utilized in the action.  Should not be provided
+                            when a template ID is present.
+                          type: string
+                        templateDetails:
+                          description: (Applicable when type=STREAM) details for scheduled
+                            task using template
+                          items:
+                            properties:
+                              templateId:
+                                description: (Applicable when type=STREAM) The template
+                                  Id of a particular template.  Should not be provided
+                                  when a saved search ID is present.
+                                type: string
+                              templateParams:
+                                description: (Applicable when type=STREAM) To store
+                                  macro params.
+                                items:
+                                  properties:
+                                    keyField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        a template parameter's name.
+                                      type: string
+                                    valueField:
+                                      description: (Applicable when type=STREAM) Contains
+                                        the desired value for a given parameter.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        type:
+                          description: Action type discriminator.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: (Updatable) The compartment OCID (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      of the extracted metric.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: '(Updatable) A user-friendly name that is changeable
+                      and that does not have to be unique. Format: a leading alphanumeric,
+                      followed by zero or more alphanumerics, underscores, spaces,
+                      backslashes, or hyphens in any order). No trailing spaces allowed.'
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the data plane resource.
+                    type: string
+                  kind:
+                    description: (Updatable) Discriminator.
+                    type: string
+                  namespace:
+                    description: The namespace of the extracted metric. A valid value
+                      starts with an alphabetical character and includes only alphanumeric
+                      characters and underscores (_).
+                    type: string
+                  numOccurrences:
+                    description: Number of execution occurrences.
+                    type: string
+                  savedSearchId:
+                    description: (Applicable when type=STREAM) The ManagementSavedSearch
+                      id [OCID] utilized in the action.  Should not be provided when
+                      a template ID is present.
+                    type: string
+                  scheduledTaskId:
+                    description: The OCID of the data plane resource.
+                    type: string
+                  schedules:
+                    description: (Applicable when kind=STANDARD) (Updatable) Schedules,
+                      typically a single schedule. Note there may only be a single
+                      schedule for SAVED_SEARCH and PURGE scheduled tasks.
+                    items:
+                      properties:
+                        schedule:
+                          items:
+                            properties:
+                              expression:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Value in cron format.
+                                type: string
+                              misfirePolicy:
+                                description: (Applicable when kind=STANDARD) (Updatable)
+                                  Schedule misfire retry policy.
+                                type: string
+                              recurringInterval:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Recurring interval in ISO 8601 extended
+                                  format as described in https://en.wikipedia.org/wiki/ISO_8601#Durations.
+                                  The largest supported unit is D, e.g. P14D (not
+                                  P2W). The value must be at least 5 minutes (PT5M)
+                                  and at most 3 weeks (P21D or PT30240M).
+                                type: string
+                              repeatCount:
+                                description: (Applicable when type=FIXED_FREQUENCY)
+                                  (Updatable) Number of times (0-based) to execute
+                                  until auto-stop. Default value -1 will execute indefinitely.
+                                  Value 0 will execute once.
+                                type: number
+                              timeZone:
+                                description: (Applicable when type=CRON) (Updatable)
+                                  Time zone, by default UTC.
+                                type: string
+                              type:
+                                description: Action type discriminator.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  state:
+                    description: The current state of the scheduled task.
+                    type: string
+                  taskStatus:
+                    description: Status of the scheduled task. - PURGE_RESOURCE_NOT_FOUND
+                    type: string
+                  taskType:
+                    description: Task type.
+                    type: string
+                  timeCreated:
+                    description: The date and time the scheduled task was created,
+                      in the format defined by RFC3339.
+                    type: string
+                  timeUpdated:
+                    description: The date and time the scheduled task was last updated,
+                      in the format defined by RFC3339.
+                    type: string
+                  workRequestId:
+                    description: most recent Work Request Identifier [OCID] (https://docs.cloud.oracle.com/iaas/Content/General/Concepts/identifiers.htm)
+                      for the asynchronous request.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,31 @@
+apiVersion: blockchain.oci.upbound.io/v1alpha1
+kind: BlockchainPlatform
+metadata:
+  annotations:
+    meta.upbound.io/example-id: blockchain/v1alpha1/blockchainplatform
+  labels:
+    testing.upbound.io/example-name: test_blockchain_platform
+  name: test-blockchain-platform
+spec:
+  forProvider:
+    caCertArchiveText: ${var.blockchain_platform_ca_cert_archive_text}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeShape: ${var.blockchain_platform_compute_shape}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.blockchain_platform_description}
+    displayName: ${var.blockchain_platform_display_name}
+    federatedUserIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user
+    freeformTags:
+      bar-key: value
+    idcsAccessTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    isByol: ${var.blockchain_platform_is_byol}
+    platformRole: ${var.blockchain_platform_platform_role}
+    platformVersion: ${var.blockchain_platform_platform_version}

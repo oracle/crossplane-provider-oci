@@ -1,0 +1,20 @@
+apiVersion: delegateaccesscontrol.oci.upbound.io/v1alpha1
+kind: DelegationSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: delegateaccesscontrol/v1alpha1/delegationsubscription
+  labels:
+    testing.upbound.io/example-name: test_delegation_subscription
+  name: test-delegation-subscription
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.delegation_subscription_description}
+    freeformTags:
+      Department: Finance
+    serviceProviderId: ${oci_delegate_access_control_service_provider.test_service_provider.id}
+    subscribedServiceType: ${var.delegation_subscription_subscribed_service_type}

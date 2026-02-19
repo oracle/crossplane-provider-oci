@@ -1,0 +1,75 @@
+apiVersion: vnmonitoring.oci.upbound.io/v1alpha1
+kind: PathAnalysi
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_path_analysi
+  name: test-path-analysi
+spec:
+  forProvider:
+    cacheControl: ${var.path_analysi_cache_control}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationEndpoint:
+    - address: ${var.path_analysi_destination_endpoint_address}
+      instanceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance
+      listenerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_listener
+      loadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+      networkLoadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_network_load_balancer
+      psaId: ${oci_vn_monitoring_psa.test_psa.id}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      type: ${var.path_analysi_destination_endpoint_type}
+      vlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      vnicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vnic_attachment
+    pathAnalyzerTestId: ${oci_vn_monitoring_path_analyzer_test.test_path_analyzer_test.id}
+    protocol: ${var.path_analysi_protocol}
+    protocolParameters:
+    - destinationPort: ${var.path_analysi_protocol_parameters_destination_port}
+      icmpCode: ${var.path_analysi_protocol_parameters_icmp_code}
+      icmpType: ${var.path_analysi_protocol_parameters_icmp_type}
+      sourcePort: ${var.path_analysi_protocol_parameters_source_port}
+      type: ${var.path_analysi_protocol_parameters_type}
+    queryOptions:
+    - isBiDirectionalAnalysis: ${var.path_analysi_query_options_is_bi_directional_analysis}
+    sourceEndpoint:
+    - address: ${var.path_analysi_source_endpoint_address}
+      instanceIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance
+      listenerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_listener
+      loadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_load_balancer
+      networkLoadBalancerIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_network_load_balancer
+      psaId: ${oci_vn_monitoring_psa.test_psa.id}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      type: ${var.path_analysi_source_endpoint_type}
+      vlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan
+      vnicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vnic_attachment
+    type: ${var.path_analysi_type}

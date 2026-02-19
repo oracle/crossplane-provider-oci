@@ -1,0 +1,26 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: BuildRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildrun
+  labels:
+    testing.upbound.io/example-name: test_build_run
+  name: test-build-run
+spec:
+  forProvider:
+    buildPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_build_pipeline
+    buildRunArguments:
+    - items:
+      - name: ${var.build_run_build_run_arguments_items_name}
+        value: ${var.build_run_build_run_arguments_items_value}
+    commitInfo:
+    - commitHash: ${var.build_run_commit_info_commit_hash}
+      repositoryBranch: ${var.build_run_commit_info_repository_branch}
+      repositoryUrl: ${var.build_run_commit_info_repository_url}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.build_run_display_name}
+    freeformTags:
+      bar-key: value

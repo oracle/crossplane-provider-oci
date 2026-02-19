@@ -1,0 +1,38 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployenvironment
+  labels:
+    testing.upbound.io/example-name: test_deploy_environment
+  name: test-deploy-environment
+spec:
+  forProvider:
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster
+    computeInstanceGroupSelectors:
+    - items:
+      - computeInstanceIds: ${var.deploy_environment_compute_instance_group_selectors_items_compute_instance_ids}
+        query: ${var.deploy_environment_compute_instance_group_selectors_items_query}
+        region: ${var.deploy_environment_compute_instance_group_selectors_items_region}
+        selectorType: ${var.deploy_environment_compute_instance_group_selectors_items_selector_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    deployEnvironmentType: ${var.deploy_environment_deploy_environment_type}
+    description: ${var.deploy_environment_description}
+    displayName: ${var.deploy_environment_display_name}
+    freeformTags:
+      bar-key: value
+    functionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_function
+    networkChannel:
+    - networkChannelType: ${var.deploy_environment_network_channel_network_channel_type}
+      nsgIds: ${var.deploy_environment_network_channel_nsg_ids}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project

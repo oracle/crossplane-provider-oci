@@ -29,7 +29,17 @@ type AutonomousVmClusterOrdsCertificateManagementInitParameters struct {
 	AutonomousVMClusterIDSelector *v1.Selector `json:"autonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the certificate bundle.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CaBundle
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CABundleID *string `json:"caBundleId,omitempty" tf:"ca_bundle_id,omitempty"`
+
+	// Reference to a CaBundle in certificatesmanagement to populate caBundleId.
+	// +kubebuilder:validation:Optional
+	CABundleIDRef *v1.Reference `json:"caBundleIdRef,omitempty" tf:"-"`
+
+	// Selector for a CaBundle in certificatesmanagement to populate caBundleId.
+	// +kubebuilder:validation:Optional
+	CABundleIDSelector *v1.Selector `json:"caBundleIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the certificate authority.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CertificateAuthority
@@ -48,7 +58,17 @@ type AutonomousVmClusterOrdsCertificateManagementInitParameters struct {
 	CertificateGenerationType *string `json:"certificateGenerationType,omitempty" tf:"certificate_generation_type,omitempty"`
 
 	// The OCID of the certificate to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 }
 
 type AutonomousVmClusterOrdsCertificateManagementObservation struct {
@@ -88,8 +108,18 @@ type AutonomousVmClusterOrdsCertificateManagementParameters struct {
 	AutonomousVMClusterIDSelector *v1.Selector `json:"autonomousVmClusterIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the certificate bundle.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CaBundle
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CABundleID *string `json:"caBundleId,omitempty" tf:"ca_bundle_id,omitempty"`
+
+	// Reference to a CaBundle in certificatesmanagement to populate caBundleId.
+	// +kubebuilder:validation:Optional
+	CABundleIDRef *v1.Reference `json:"caBundleIdRef,omitempty" tf:"-"`
+
+	// Selector for a CaBundle in certificatesmanagement to populate caBundleId.
+	// +kubebuilder:validation:Optional
+	CABundleIDSelector *v1.Selector `json:"caBundleIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the certificate authority.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1.CertificateAuthority
@@ -110,8 +140,18 @@ type AutonomousVmClusterOrdsCertificateManagementParameters struct {
 	CertificateGenerationType *string `json:"certificateGenerationType,omitempty" tf:"certificate_generation_type,omitempty"`
 
 	// The OCID of the certificate to use.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.Reference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.Selector `json:"certificateIdSelector,omitempty" tf:"-"`
 }
 
 // AutonomousVmClusterOrdsCertificateManagementSpec defines the desired state of AutonomousVmClusterOrdsCertificateManagement

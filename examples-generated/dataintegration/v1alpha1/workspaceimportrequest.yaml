@@ -1,0 +1,23 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceImportRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceimportrequest
+  labels:
+    testing.upbound.io/example-name: test_workspace_import_request
+  name: test-workspace-import-request
+spec:
+  forProvider:
+    areDataAssetReferencesIncluded: ${var.workspace_import_request_are_data_asset_references_included}
+    bucket: ${var.workspace_import_request_bucket}
+    fileName: ${var.workspace_import_request_file_name}
+    importConflictResolution:
+    - duplicatePrefix: ${var.workspace_import_request_import_conflict_resolution_duplicate_prefix}
+      duplicateSuffix: ${var.workspace_import_request_import_conflict_resolution_duplicate_suffix}
+      importConflictResolutionType: ${var.workspace_import_request_import_conflict_resolution_import_conflict_resolution_type}
+    objectKeyForImport: ${var.workspace_import_request_object_key_for_import}
+    objectStorageRegion: ${var.workspace_import_request_object_storage_region}
+    objectStorageTenancyId: ${oci_identity_tenancy.test_tenancy.id}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

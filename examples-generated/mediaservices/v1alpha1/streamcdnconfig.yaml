@@ -1,0 +1,38 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: StreamCdnConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mediaservices/v1alpha1/streamcdnconfig
+  labels:
+    testing.upbound.io/example-name: test_stream_cdn_config
+  name: test-stream-cdn-config
+spec:
+  forProvider:
+    config:
+    - edgeHostname: ${var.stream_cdn_config_config_edge_hostname}
+      edgePathPrefix: ${var.stream_cdn_config_config_edge_path_prefix}
+      edgeTokenKey: ${var.stream_cdn_config_config_edge_token_key}
+      edgeTokenSalt: ${var.stream_cdn_config_config_edge_token_salt}
+      isEdgeTokenAuth: ${var.stream_cdn_config_config_is_edge_token_auth}
+      originAuthSecretKeyA: ${var.stream_cdn_config_config_origin_auth_secret_key_a}
+      originAuthSecretKeyB: ${var.stream_cdn_config_config_origin_auth_secret_key_b}
+      originAuthSecretKeyNonceA: ${var.stream_cdn_config_config_origin_auth_secret_key_nonce_a}
+      originAuthSecretKeyNonceB: ${var.stream_cdn_config_config_origin_auth_secret_key_nonce_b}
+      originAuthSignEncryption: ${var.stream_cdn_config_config_origin_auth_sign_encryption}
+      originAuthSignType: ${var.stream_cdn_config_config_origin_auth_sign_type}
+      type: ${var.stream_cdn_config_config_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.stream_cdn_config_display_name}
+    distributionChannelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_channel
+    freeformTags:
+      bar-key: value
+    isEnabled: ${var.stream_cdn_config_is_enabled}
+    locks:
+    - compartmentId: ${var.compartment_id}
+      message: ${var.stream_cdn_config_locks_message}
+      relatedResourceId: ${oci_usage_proxy_resource.test_resource.id}
+      timeCreated: ${var.stream_cdn_config_locks_time_created}
+      type: ${var.stream_cdn_config_locks_type}

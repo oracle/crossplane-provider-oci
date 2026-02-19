@@ -1,0 +1,15 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: LifecycleStageRebootManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/lifecyclestagerebootmanagement
+  labels:
+    testing.upbound.io/example-name: test_lifecycle_stage_reboot_management
+  name: test-lifecycle-stage-reboot-management
+spec:
+  forProvider:
+    lifecycleStageId: ${oci_os_management_hub_lifecycle_stage.test_lifecycle_stage.id}
+    rebootTimeoutInMins: ${var.lifecycle_stage_reboot_management_reboot_timeout_in_mins}
+    workRequestDetails:
+    - description: ${var.lifecycle_stage_reboot_management_work_request_details_description}
+      displayName: ${var.lifecycle_stage_reboot_management_work_request_details_display_name}

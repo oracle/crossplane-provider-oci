@@ -1,0 +1,13 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouseRotateWarehouseWallet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouserotatewarehousewallet
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse_rotate_warehouse_wallet
+  name: test-operations-insights-warehouse-rotate-warehouse-wallet
+spec:
+  forProvider:
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse

@@ -1,0 +1,20 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: WlpAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/wlpagent
+  labels:
+    testing.upbound.io/example-name: test_wlp_agent
+  name: test-wlp-agent
+spec:
+  forProvider:
+    agentVersion: ${var.wlp_agent_agent_version}
+    certificateSignedRequest: ${var.wlp_agent_certificate_signed_request}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    osInfo: ${var.wlp_agent_os_info}

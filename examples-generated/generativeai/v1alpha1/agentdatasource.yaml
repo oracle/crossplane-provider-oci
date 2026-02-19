@@ -1,0 +1,30 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentDataSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentdatasource
+  labels:
+    testing.upbound.io/example-name: test_data_source
+  name: test-data-source
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataSourceConfig:
+    - dataSourceConfigType: ${var.data_source_data_source_config_data_source_config_type}
+      objectStoragePrefixes:
+      - bucket: ${var.data_source_data_source_config_object_storage_prefixes_bucket}
+        namespace: ${var.data_source_data_source_config_object_storage_prefixes_namespace}
+        prefix: ${var.data_source_data_source_config_object_storage_prefixes_prefix}
+      should_enable_multi_modality: ${var.data_source_data_source_config_should_enable_multi_modality}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.data_source_description}
+    displayName: ${var.data_source_display_name}
+    freeformTags:
+      Department: Finance
+    knowledgeBaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_knowledge_base
+    metadata: ${var.data_source_metadata}

@@ -1,0 +1,30 @@
+apiVersion: budget.oci.upbound.io/v1alpha1
+kind: Budget
+metadata:
+  annotations:
+    meta.upbound.io/example-id: budget/v1alpha1/budget
+  labels:
+    testing.upbound.io/example-name: test_budget
+  name: test-budget
+spec:
+  forProvider:
+    amount: ${var.budget_amount}
+    budgetProcessingPeriodStartOffset: ${var.budget_budget_processing_period_start_offset}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.budget_description}
+    displayName: ${var.budget_display_name}
+    endDate: ${var.budget_end_date}
+    freeformTags:
+      Department: Finance
+    processingPeriodType: ${var.budget_processing_period_type}
+    resetPeriod: ${var.budget_reset_period}
+    startDate: ${var.budget_start_date}
+    targetCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    targetType: ${var.budget_target_type}
+    targets: ${var.budget_targets}

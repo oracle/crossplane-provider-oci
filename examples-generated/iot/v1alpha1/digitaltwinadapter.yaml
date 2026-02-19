@@ -1,0 +1,37 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: DigitalTwinAdapter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwinadapter
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_adapter
+  name: test-digital-twin-adapter
+spec:
+  forProvider:
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.digital_twin_adapter_description}
+    digitalTwinModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_digital_twin_model
+    digitalTwinModelSpecUri: ${var.digital_twin_adapter_digital_twin_model_spec_uri}
+    displayName: ${var.digital_twin_adapter_display_name}
+    freeformTags:
+      Department: Finance
+    inboundEnvelope:
+    - envelopeMapping:
+      - timeObserved: ${var.digital_twin_adapter_inbound_envelope_envelope_mapping_time_observed}
+      referenceEndpoint: ${var.digital_twin_adapter_inbound_envelope_reference_endpoint}
+      referencePayload:
+      - data: ${var.digital_twin_adapter_inbound_envelope_reference_payload_data}
+        dataFormat: ${var.digital_twin_adapter_inbound_envelope_reference_payload_data_format}
+    inboundRoutes:
+    - condition: ${var.digital_twin_adapter_inbound_routes_condition}
+      description: ${var.digital_twin_adapter_inbound_routes_description}
+      payloadMapping: ${var.digital_twin_adapter_inbound_routes_payload_mapping}
+      referencePayload:
+      - data: ${var.digital_twin_adapter_inbound_routes_reference_payload_data}
+        dataFormat: ${var.digital_twin_adapter_inbound_routes_reference_payload_data_format}
+    iotDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_iot_domain

@@ -1,0 +1,28 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: DataMaskRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/datamaskrule
+  labels:
+    testing.upbound.io/example-name: test_data_mask_rule
+  name: test-data-mask-rule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataMaskCategories: ${var.data_mask_rule_data_mask_categories}
+    dataMaskRuleStatus: ${var.data_mask_rule_data_mask_rule_status}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.data_mask_rule_description}
+    displayName: ${var.data_mask_rule_display_name}
+    freeformTags:
+      bar-key: value
+    iamGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_group
+    state: ${var.data_mask_rule_state}
+    targetSelected:
+    - kind: ${var.data_mask_rule_target_selected_kind}
+      values: ${var.data_mask_rule_target_selected_values}

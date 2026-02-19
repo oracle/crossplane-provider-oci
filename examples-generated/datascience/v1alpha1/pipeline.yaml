@@ -1,0 +1,138 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Pipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/pipeline
+  labels:
+    testing.upbound.io/example-name: test_pipeline
+  name: test-pipeline
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurationDetails:
+    - commandLineArguments: ${var.pipeline_configuration_details_command_line_arguments}
+      environmentVariables: ${var.pipeline_configuration_details_environment_variables}
+      maximumRuntimeInMinutes: ${var.pipeline_configuration_details_maximum_runtime_in_minutes}
+      type: ${var.pipeline_configuration_details_type}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.pipeline_description}
+    displayName: ${var.pipeline_display_name}
+    freeformTags:
+      Department: Finance
+    infrastructureConfigurationDetails:
+    - blockStorageSizeInGbs: ${var.pipeline_infrastructure_configuration_details_block_storage_size_in_gbs}
+      blockStorageSizeInGbsParameterized: ${var.pipeline_infrastructure_configuration_details_block_storage_size_in_gbs_parameterized}
+      shapeConfigDetails:
+      - cpuBaseline: ${var.pipeline_infrastructure_configuration_details_shape_config_details_cpu_baseline}
+        memoryInGbs: ${var.pipeline_infrastructure_configuration_details_shape_config_details_memory_in_gbs}
+        memoryInGbsParameterized: ${var.pipeline_infrastructure_configuration_details_shape_config_details_memory_in_gbs_parameterized}
+        ocpus: ${var.pipeline_infrastructure_configuration_details_shape_config_details_ocpus}
+        ocpusParameterized: ${var.pipeline_infrastructure_configuration_details_shape_config_details_ocpus_parameterized}
+      shapeName: ${oci_core_shape.test_shape.name}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    logConfigurationDetails:
+    - enableAutoLogCreation: ${var.pipeline_log_configuration_details_enable_auto_log_creation}
+      enableLogging: ${var.pipeline_log_configuration_details_enable_logging}
+      logGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log_group
+      logIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_log
+    parameters: ${var.pipeline_parameters}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    stepDetails:
+    - applicationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_application
+      dependsOn: ${var.pipeline_step_details_depends_on}
+      description: ${var.pipeline_step_details_description}
+      isArtifactUploaded: ${var.pipeline_step_details_is_artifact_uploaded}
+      jobIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_job
+      stepConfigurationDetails:
+      - commandLineArguments: ${var.pipeline_step_details_step_configuration_details_command_line_arguments}
+        environmentVariables: ${var.pipeline_step_details_step_configuration_details_environment_variables}
+        maximumRuntimeInMinutes: ${var.pipeline_step_details_step_configuration_details_maximum_runtime_in_minutes}
+      stepContainerConfigurationDetails:
+      - cmd: ${var.pipeline_step_details_step_container_configuration_details_cmd}
+        containerType: ${var.pipeline_step_details_step_container_configuration_details_container_type}
+        entrypoint: ${var.pipeline_step_details_step_container_configuration_details_entrypoint}
+        image: ${var.pipeline_step_details_step_container_configuration_details_image}
+        imageDigest: ${var.pipeline_step_details_step_container_configuration_details_image_digest}
+        imageSignatureId: ${oci_datascience_image_signature.test_image_signature.id}
+      stepDataflowConfigurationDetails:
+      - configuration: ${var.pipeline_step_details_step_dataflow_configuration_details_configuration}
+        driverShape: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape}
+        driverShapeConfigDetails:
+        - cpu_baseline: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_step_details_step_dataflow_configuration_details_driver_shape_config_details_ocpus_parameterized}
+        executorShape: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape}
+        executorShapeConfigDetails:
+        - cpu_baseline: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_step_details_step_dataflow_configuration_details_executor_shape_config_details_ocpus_parameterized}
+        logsBucketUri: ${var.pipeline_step_details_step_dataflow_configuration_details_logs_bucket_uri}
+        numExecutors: ${var.pipeline_step_details_step_dataflow_configuration_details_num_executors}
+        warehouseBucketUri: ${var.pipeline_step_details_step_dataflow_configuration_details_warehouse_bucket_uri}
+      stepInfrastructureConfigurationDetails:
+      - blockStorageSizeInGbs: ${var.pipeline_step_details_step_infrastructure_configuration_details_block_storage_size_in_gbs}
+        blockStorageSizeInGbsParameterized: ${var.pipeline_step_details_step_infrastructure_configuration_details_block_storage_size_in_gbs_parameterized}
+        shapeConfigDetails:
+        - cpuBaseline: ${var.pipeline_step_details_step_infrastructure_configuration_details_shape_config_details_cpu_baseline}
+          memoryInGbs: ${var.pipeline_step_details_step_infrastructure_configuration_details_shape_config_details_memory_in_gbs}
+          memoryInGbsParameterized: ${var.pipeline_step_details_step_infrastructure_configuration_details_shape_config_details_memory_in_gbs_parameterized}
+          ocpus: ${var.pipeline_step_details_step_infrastructure_configuration_details_shape_config_details_ocpus}
+          ocpusParameterized: ${var.pipeline_step_details_step_infrastructure_configuration_details_shape_config_details_ocpus_parameterized}
+        shapeName: ${oci_core_shape.test_shape.name}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+      stepName: ${var.pipeline_step_details_step_name}
+      stepParameters:
+      - output:
+        - outputFile: ${var.pipeline_step_details_step_parameters_output_output_file}
+          outputParameterType: ${var.pipeline_step_details_step_parameters_output_output_parameter_type}
+          parameterNames: ${var.pipeline_step_details_step_parameters_output_parameter_names}
+        parameterType: ${var.pipeline_step_details_step_parameters_parameter_type}
+      stepRunName: ${var.pipeline_step_details_step_run_name}
+      stepStorageMountConfigurationDetailsList:
+      - bucket: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_bucket}
+        destinationDirectoryName: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_destination_directory_name}
+        destinationPath: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_destination_path}
+        exportIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_export
+        mountTargetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_mount_target
+        namespace: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_namespace}
+        prefix: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_prefix}
+        storageType: ${var.pipeline_step_details_step_storage_mount_configuration_details_list_storage_type}
+      stepType: ${var.pipeline_step_details_step_type}
+    storageMountConfigurationDetailsList:
+    - bucket: ${var.pipeline_storage_mount_configuration_details_list_bucket}
+      destinationDirectoryName: ${var.pipeline_storage_mount_configuration_details_list_destination_directory_name}
+      destinationPath: ${var.pipeline_storage_mount_configuration_details_list_destination_path}
+      exportIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_export
+      mountTargetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mount_target
+      namespace: ${var.pipeline_storage_mount_configuration_details_list_namespace}
+      prefix: ${var.pipeline_storage_mount_configuration_details_list_prefix}
+      storageType: ${var.pipeline_storage_mount_configuration_details_list_storage_type}

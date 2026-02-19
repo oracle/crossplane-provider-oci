@@ -1,0 +1,965 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: buildruns.devops.oci.upbound.io
+spec:
+  group: devops.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: BuildRun
+    listKind: BuildRunList
+    plural: buildruns
+    singular: buildrun
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: BuildRun is the Schema for the BuildRuns API. Provides the Build
+          Run resource in Oracle Cloud Infrastructure Devops service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BuildRunSpec defines the desired state of BuildRun
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  buildPipelineId:
+                    description: The OCID of the build pipeline.
+                    type: string
+                  buildPipelineIdRef:
+                    description: Reference to a BuildPipeline in devops to populate
+                      buildPipelineId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  buildPipelineIdSelector:
+                    description: Selector for a BuildPipeline in devops to populate
+                      buildPipelineId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  buildRunArguments:
+                    description: Specifies list of arguments passed along with the
+                      build run.
+                    items:
+                      properties:
+                        items:
+                          description: List of arguments provided at the time of running
+                            the build.
+                          items:
+                            properties:
+                              name:
+                                description: 'Name of the parameter (case-sensitive).
+                                  Parameter name must be ^[a-zA-Z][a-zA-Z_0-9]*$.
+                                  Example: ''Build_Pipeline_param'' is not same as
+                                  ''build_pipeline_Param'''
+                                type: string
+                              value:
+                                description: Value of the argument.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  commitInfo:
+                    description: Commit details that need to be used for the build
+                      run.
+                    items:
+                      properties:
+                        commitHash:
+                          description: Commit hash pertinent to the repository URL
+                            and the specified branch.
+                          type: string
+                        repositoryBranch:
+                          description: Name of the repository branch.
+                          type: string
+                        repositoryUrl:
+                          description: Repository URL.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. See Resource Tags.
+                      Example: {"foo-namespace.bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Build run display name, which can be
+                      renamed and is not necessarily unique. Avoid entering confidential
+                      information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  See Resource Tags. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  buildPipelineId:
+                    description: The OCID of the build pipeline.
+                    type: string
+                  buildPipelineIdRef:
+                    description: Reference to a BuildPipeline in devops to populate
+                      buildPipelineId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  buildPipelineIdSelector:
+                    description: Selector for a BuildPipeline in devops to populate
+                      buildPipelineId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  buildRunArguments:
+                    description: Specifies list of arguments passed along with the
+                      build run.
+                    items:
+                      properties:
+                        items:
+                          description: List of arguments provided at the time of running
+                            the build.
+                          items:
+                            properties:
+                              name:
+                                description: 'Name of the parameter (case-sensitive).
+                                  Parameter name must be ^[a-zA-Z][a-zA-Z_0-9]*$.
+                                  Example: ''Build_Pipeline_param'' is not same as
+                                  ''build_pipeline_Param'''
+                                type: string
+                              value:
+                                description: Value of the argument.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  commitInfo:
+                    description: Commit details that need to be used for the build
+                      run.
+                    items:
+                      properties:
+                        commitHash:
+                          description: Commit hash pertinent to the repository URL
+                            and the specified branch.
+                          type: string
+                        repositoryBranch:
+                          description: Name of the repository branch.
+                          type: string
+                        repositoryUrl:
+                          description: Repository URL.
+                          type: string
+                      type: object
+                    type: array
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. See Resource Tags.
+                      Example: {"foo-namespace.bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Build run display name, which can be
+                      renamed and is not necessarily unique. Avoid entering confidential
+                      information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  See Resource Tags. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: BuildRunStatus defines the observed state of BuildRun.
+            properties:
+              atProvider:
+                properties:
+                  buildOutputs:
+                    description: Outputs from the build.
+                    items:
+                      properties:
+                        artifactOverrideParameters:
+                          description: Specifies the list of artifact override arguments
+                            at the time of deployment.
+                          items:
+                            properties:
+                              items:
+                                description: List of arguments provided at the time
+                                  of running the build.
+                                items:
+                                  properties:
+                                    deployArtifactId:
+                                      description: The OCID of the artifact to which
+                                        this parameter applies.
+                                      type: string
+                                    name:
+                                      description: 'Name of the parameter (case-sensitive).
+                                        Parameter name must be ^[a-zA-Z][a-zA-Z_0-9]*$.
+                                        Example: ''Build_Pipeline_param'' is not same
+                                        as ''build_pipeline_Param'''
+                                      type: string
+                                    value:
+                                      description: Value of the argument.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        deliveredArtifacts:
+                          description: Specifies the list of artifacts delivered through
+                            the Deliver Artifacts stage.
+                          items:
+                            properties:
+                              items:
+                                description: List of arguments provided at the time
+                                  of running the build.
+                                items:
+                                  properties:
+                                    artifactRepositoryId:
+                                      description: The OCID of the artifact registry
+                                        repository used by the DeliverArtifactStage
+                                      type: string
+                                    artifactType:
+                                      description: Type of artifact delivered.
+                                      type: string
+                                    deliveredArtifactHash:
+                                      description: The hash of the container registry
+                                        artifact pushed by the Deliver Artifacts stage.
+                                      type: string
+                                    deliveredArtifactId:
+                                      description: The OCID of the artifact pushed
+                                        by the Deliver Artifacts stage.
+                                      type: string
+                                    deployArtifactId:
+                                      description: The OCID of the artifact to which
+                                        this parameter applies.
+                                      type: string
+                                    imageUri:
+                                      description: The imageUri of the OCIR artifact
+                                        pushed by the DeliverArtifactStage
+                                      type: string
+                                    outputArtifactName:
+                                      description: Name of the output artifact defined
+                                        in the build specification file.
+                                      type: string
+                                    path:
+                                      description: Path of the repository where artifact
+                                        was pushed
+                                      type: string
+                                    version:
+                                      description: Version of the artifact pushed
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        exportedVariables:
+                          description: Specifies list of exported variables.
+                          items:
+                            properties:
+                              items:
+                                description: List of arguments provided at the time
+                                  of running the build.
+                                items:
+                                  properties:
+                                    name:
+                                      description: 'Name of the parameter (case-sensitive).
+                                        Parameter name must be ^[a-zA-Z][a-zA-Z_0-9]*$.
+                                        Example: ''Build_Pipeline_param'' is not same
+                                        as ''build_pipeline_Param'''
+                                      type: string
+                                    value:
+                                      description: Value of the argument.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vulnerabilityAuditSummaryCollection:
+                          description: List of vulnerability audit summary.
+                          items:
+                            properties:
+                              items:
+                                description: List of arguments provided at the time
+                                  of running the build.
+                                items:
+                                  properties:
+                                    buildStageId:
+                                      description: Build stage OCID where scan was
+                                        configured.
+                                      type: string
+                                    commitHash:
+                                      description: Commit hash pertinent to the repository
+                                        URL and the specified branch.
+                                      type: string
+                                    vulnerabilityAuditId:
+                                      description: The OCID of the vulnerability audit.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  buildPipelineId:
+                    description: The OCID of the build pipeline.
+                    type: string
+                  buildRunArguments:
+                    description: Specifies list of arguments passed along with the
+                      build run.
+                    items:
+                      properties:
+                        items:
+                          description: List of arguments provided at the time of running
+                            the build.
+                          items:
+                            properties:
+                              name:
+                                description: 'Name of the parameter (case-sensitive).
+                                  Parameter name must be ^[a-zA-Z][a-zA-Z_0-9]*$.
+                                  Example: ''Build_Pipeline_param'' is not same as
+                                  ''build_pipeline_Param'''
+                                type: string
+                              value:
+                                description: Value of the argument.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  buildRunProgress:
+                    description: The run progress details of a build run.
+                    items:
+                      properties:
+                        buildPipelineStageRunProgress:
+                          additionalProperties:
+                            type: string
+                          description: Map of stage OCIDs to build pipeline stage
+                            run progress model.
+                          type: object
+                          x-kubernetes-map-type: granular
+                        timeFinished:
+                          description: Time when the step finished.
+                          type: string
+                        timeStarted:
+                          description: Time when the step started.
+                          type: string
+                      type: object
+                    type: array
+                  buildRunSource:
+                    description: The source from which the build run is triggered.
+                    items:
+                      properties:
+                        repositoryId:
+                          description: The DevOps code repository ID.
+                          type: string
+                        sourceType:
+                          description: The source from which the build run is triggered.
+                          type: string
+                        triggerId:
+                          description: The trigger that invoked the build run.
+                          type: string
+                        triggerInfo:
+                          description: Trigger details that need to be used for the
+                            BuildRun
+                          items:
+                            properties:
+                              actions:
+                                description: The list of actions that are to be performed
+                                  for this Trigger
+                                items:
+                                  properties:
+                                    buildPipelineId:
+                                      description: The OCID of the build pipeline.
+                                      type: string
+                                    filter:
+                                      items:
+                                        properties:
+                                          events:
+                                            description: The events, for example,
+                                              PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED.
+                                            items:
+                                              type: string
+                                            type: array
+                                          exclude:
+                                            description: Attributes to filter GitLab
+                                              self-hosted server events. File filter
+                                              criteria - Changes only affecting excluded
+                                              files will not invoke a build. if both
+                                              include and exclude filter are used
+                                              then exclusion filter will be applied
+                                              on the result set of inclusion filter.
+                                            items:
+                                              properties:
+                                                fileFilter:
+                                                  description: Attributes to support
+                                                    include/exclude files for triggering
+                                                    build runs.
+                                                  items:
+                                                    properties:
+                                                      filePaths:
+                                                        description: The file paths/glob
+                                                          pattern for files.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          include:
+                                            description: Attributes to filter GitLab
+                                              self-hosted server events.
+                                            items:
+                                              properties:
+                                                baseRef:
+                                                  description: The target branch for
+                                                    pull requests; not applicable
+                                                    for push requests.
+                                                  type: string
+                                                fileFilter:
+                                                  description: Attributes to support
+                                                    include/exclude files for triggering
+                                                    build runs.
+                                                  items:
+                                                    properties:
+                                                      filePaths:
+                                                        description: The file paths/glob
+                                                          pattern for files.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                headRef:
+                                                  description: Branch for push event;
+                                                    source branch for pull requests.
+                                                  type: string
+                                                repositoryName:
+                                                  description: The repository name
+                                                    for trigger events.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          triggerSource:
+                                            description: Source of the trigger. Allowed
+                                              values are, GITHUB and GITLAB.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    type:
+                                      description: The type of action that will be
+                                        taken. Allowed value is TRIGGER_BUILD_PIPELINE.
+                                      type: string
+                                  type: object
+                                type: array
+                              displayName:
+                                description: (Updatable) Build run display name, which
+                                  can be renamed and is not necessarily unique. Avoid
+                                  entering confidential information.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  commitInfo:
+                    description: Commit details that need to be used for the build
+                      run.
+                    items:
+                      properties:
+                        commitHash:
+                          description: Commit hash pertinent to the repository URL
+                            and the specified branch.
+                          type: string
+                        repositoryBranch:
+                          description: Name of the repository branch.
+                          type: string
+                        repositoryUrl:
+                          description: Repository URL.
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: The OCID of the compartment where the build is running.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. See Resource Tags.
+                      Example: {"foo-namespace.bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) Build run display name, which can be
+                      renamed and is not necessarily unique. Avoid entering confidential
+                      information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only.  See Resource Tags. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the predecessor stage. If a stage is
+                      the first stage in the pipeline, then the ID is the pipeline's
+                      OCID.
+                    type: string
+                  lifecycleDetails:
+                    description: A message describing the current state in more detail.
+                      For example, can be used to provide actionable information for
+                      a resource in Failed state.
+                    type: string
+                  projectId:
+                    description: The OCID of the DevOps project.
+                    type: string
+                  state:
+                    description: State of the step.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. See Resource Tags. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The time the build run was created. Format defined
+                      by RFC3339.
+                    type: string
+                  timeUpdated:
+                    description: The time the build run was updated. Format defined
+                      by RFC3339.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

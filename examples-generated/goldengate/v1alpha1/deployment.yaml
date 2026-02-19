@@ -1,0 +1,103 @@
+apiVersion: goldengate.oci.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+spec:
+  forProvider:
+    availabilityDomain: ${var.deployment_availability_domain}
+    backupSchedule:
+    - bucket: ${var.deployment_backup_schedule_bucket}
+      compartmentId: ${var.compartment_id}
+      frequencyBackupScheduled: ${var.deployment_backup_schedule_frequency_backup_scheduled}
+      isMetadataOnly: ${var.deployment_backup_schedule_is_metadata_only}
+      namespace: ${var.deployment_backup_schedule_namespace}
+      timeBackupScheduled: ${var.deployment_backup_schedule_time_backup_scheduled}
+    byolCpuCoreCountLimit: ${var.deployment_byol_cpu_core_count_limit}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cluster_placement_group
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: ${var.deployment_cpu_core_count}
+    definedTags:
+      foo-namespace.bar-key: value
+    deploymentBackupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment_backup
+    deploymentType: ${var.deployment_deployment_type}
+    description: ${var.deployment_description}
+    displayName: ${var.deployment_display_name}
+    environmentType: ${var.deployment_environment_type}
+    faultDomain: ${var.deployment_fault_domain}
+    fqdn: ${var.deployment_fqdn}
+    freeformTags:
+      bar-key: value
+    isAutoScalingEnabled: ${var.deployment_is_auto_scaling_enabled}
+    isByolCpuCoreCountLimitEnabled: ${var.deployment_is_byol_cpu_core_count_limit_enabled}
+    isPublic: ${var.deployment_is_public}
+    licenseModel: ${var.deployment_license_model}
+    loadBalancerSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    locks:
+    - message: ${var.deployment_locks_message}
+      type: ${var.deployment_locks_type}
+    maintenanceConfiguration:
+    - bundleReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_bundle_release_upgrade_period_in_days}
+      interimReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_interim_release_upgrade_period_in_days}
+      isInterimReleaseAutoUpgradeEnabled: ${var.deployment_maintenance_configuration_is_interim_release_auto_upgrade_enabled}
+      majorReleaseUpgradePeriodInDays: ${var.deployment_maintenance_configuration_major_release_upgrade_period_in_days}
+      securityPatchUpgradePeriodInDays: ${var.deployment_maintenance_configuration_security_patch_upgrade_period_in_days}
+    maintenanceWindow:
+    - day: ${var.deployment_maintenance_window_day}
+      startHour: ${var.deployment_maintenance_window_start_hour}
+    nsgIds: ${var.deployment_nsg_ids}
+    oggData:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      adminUsername: ${var.deployment_ogg_data_admin_username}
+      certificate: ${var.deployment_ogg_data_certificate}
+      credentialStore: ${var.deployment_ogg_data_credential_store}
+      deploymentNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_deployment
+      groupToRolesMapping:
+      - administratorGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_group
+        operatorGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_group
+        securityGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_group
+        userGroupIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_group
+      identityDomainIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_domain
+      key: ${var.deployment_ogg_data_key}
+      oggVersion: ${var.deployment_ogg_data_ogg_version}
+      passwordSecretIdSecretRef:
+        key: attribute.id
+        name: example-vault-secret
+        namespace: upbound-system
+    placements:
+    - availabilityDomain: ${var.deployment_placements_availability_domain}
+      faultDomain: ${var.deployment_placements_fault_domain}
+    securityAttributes: ${var.deployment_security_attributes}
+    sourceDeploymentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    subscriptionId: ${oci_onesubscription_subscription.test_subscription.id}

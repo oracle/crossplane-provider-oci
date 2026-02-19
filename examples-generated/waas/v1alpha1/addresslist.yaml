@@ -1,0 +1,19 @@
+apiVersion: waas.oci.upbound.io/v1alpha1
+kind: AddressList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/addresslist
+  labels:
+    testing.upbound.io/example-name: test_address_list
+  name: test-address-list
+spec:
+  forProvider:
+    addresses: ${var.address_list_addresses}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.address_list_display_name}
+    freeformTags:
+      Department: Finance

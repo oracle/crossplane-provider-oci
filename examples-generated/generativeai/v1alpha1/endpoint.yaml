@@ -1,0 +1,34 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: Endpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: test_endpoint
+  name: test-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contentModerationConfig:
+    - isEnabled: ${var.endpoint_content_moderation_config_is_enabled}
+      mode: ${var.endpoint_content_moderation_config_mode}
+      modelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_model
+    dedicatedAiClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_dedicated_ai_cluster
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.endpoint_description}
+    displayName: ${var.endpoint_display_name}
+    freeformTags:
+      Department: Finance
+    generativeAiPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_generative_ai_private_endpoint
+    modelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model

@@ -10,71 +10,265 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/oracle/provider-oci/apis/artifacts/v1alpha1"
+	v1alpha1 "github.com/oracle/provider-oci/apis/adm/v1alpha1"
+	v1alpha1aidataplatform "github.com/oracle/provider-oci/apis/aidataplatform/v1alpha1"
+	v1alpha1aidocument "github.com/oracle/provider-oci/apis/aidocument/v1alpha1"
+	v1alpha1ailanguage "github.com/oracle/provider-oci/apis/ailanguage/v1alpha1"
+	v1alpha1aivision "github.com/oracle/provider-oci/apis/aivision/v1alpha1"
+	v1alpha1analytics "github.com/oracle/provider-oci/apis/analytics/v1alpha1"
+	v1alpha1announcementsservice "github.com/oracle/provider-oci/apis/announcementsservice/v1alpha1"
+	v1alpha1apiaccesscontrol "github.com/oracle/provider-oci/apis/apiaccesscontrol/v1alpha1"
+	v1alpha1apigateway "github.com/oracle/provider-oci/apis/apigateway/v1alpha1"
+	v1alpha1apiplatform "github.com/oracle/provider-oci/apis/apiplatform/v1alpha1"
+	v1alpha1apm "github.com/oracle/provider-oci/apis/apm/v1alpha1"
+	v1alpha1apmconfig "github.com/oracle/provider-oci/apis/apmconfig/v1alpha1"
+	v1alpha1apmsynthetics "github.com/oracle/provider-oci/apis/apmsynthetics/v1alpha1"
+	v1alpha1apmtraces "github.com/oracle/provider-oci/apis/apmtraces/v1alpha1"
+	v1alpha1appmgmt "github.com/oracle/provider-oci/apis/appmgmt/v1alpha1"
+	v1alpha1artifacts "github.com/oracle/provider-oci/apis/artifacts/v1alpha1"
+	v1alpha1audit "github.com/oracle/provider-oci/apis/audit/v1alpha1"
+	v1alpha1autoscaling "github.com/oracle/provider-oci/apis/autoscaling/v1alpha1"
+	v1alpha1bastion "github.com/oracle/provider-oci/apis/bastion/v1alpha1"
+	v1alpha1bds "github.com/oracle/provider-oci/apis/bds/v1alpha1"
+	v1alpha1blockchain "github.com/oracle/provider-oci/apis/blockchain/v1alpha1"
 	v1alpha1blockstorage "github.com/oracle/provider-oci/apis/blockstorage/v1alpha1"
+	v1alpha1budget "github.com/oracle/provider-oci/apis/budget/v1alpha1"
+	v1alpha1capacitymanagement "github.com/oracle/provider-oci/apis/capacitymanagement/v1alpha1"
 	v1alpha1certificatesmanagement "github.com/oracle/provider-oci/apis/certificatesmanagement/v1alpha1"
+	v1alpha1cloudbridge "github.com/oracle/provider-oci/apis/cloudbridge/v1alpha1"
+	v1alpha1cloudguard "github.com/oracle/provider-oci/apis/cloudguard/v1alpha1"
+	v1alpha1cloudmigrations "github.com/oracle/provider-oci/apis/cloudmigrations/v1alpha1"
+	v1alpha1clusterplacementgroups "github.com/oracle/provider-oci/apis/clusterplacementgroups/v1alpha1"
 	v1alpha1compute "github.com/oracle/provider-oci/apis/compute/v1alpha1"
+	v1alpha1computecloudatcustomer "github.com/oracle/provider-oci/apis/computecloudatcustomer/v1alpha1"
 	v1alpha1containerengine "github.com/oracle/provider-oci/apis/containerengine/v1alpha1"
+	v1alpha1containerinstances "github.com/oracle/provider-oci/apis/containerinstances/v1alpha1"
 	v1alpha1core "github.com/oracle/provider-oci/apis/core/v1alpha1"
 	v1alpha1database "github.com/oracle/provider-oci/apis/database/v1alpha1"
+	v1alpha1datacatalog "github.com/oracle/provider-oci/apis/datacatalog/v1alpha1"
+	v1alpha1dataflow "github.com/oracle/provider-oci/apis/dataflow/v1alpha1"
+	v1alpha1dataintegration "github.com/oracle/provider-oci/apis/dataintegration/v1alpha1"
+	v1alpha1datalabelingservice "github.com/oracle/provider-oci/apis/datalabelingservice/v1alpha1"
+	v1alpha1datascience "github.com/oracle/provider-oci/apis/datascience/v1alpha1"
+	v1alpha1dblm "github.com/oracle/provider-oci/apis/dblm/v1alpha1"
+	v1alpha1dbmulticloud "github.com/oracle/provider-oci/apis/dbmulticloud/v1alpha1"
+	v1alpha1delegateaccesscontrol "github.com/oracle/provider-oci/apis/delegateaccesscontrol/v1alpha1"
+	v1alpha1demandsignal "github.com/oracle/provider-oci/apis/demandsignal/v1alpha1"
+	v1alpha1desktops "github.com/oracle/provider-oci/apis/desktops/v1alpha1"
+	v1alpha1devops "github.com/oracle/provider-oci/apis/devops/v1alpha1"
+	v1alpha1dif "github.com/oracle/provider-oci/apis/dif/v1alpha1"
+	v1alpha1disasterrecovery "github.com/oracle/provider-oci/apis/disasterrecovery/v1alpha1"
 	v1alpha1dns "github.com/oracle/provider-oci/apis/dns/v1alpha1"
+	v1alpha1email "github.com/oracle/provider-oci/apis/email/v1alpha1"
 	v1alpha1events "github.com/oracle/provider-oci/apis/events/v1alpha1"
 	v1alpha1filestorage "github.com/oracle/provider-oci/apis/filestorage/v1alpha1"
+	v1alpha1fleetappsmanagement "github.com/oracle/provider-oci/apis/fleetappsmanagement/v1alpha1"
+	v1alpha1fleetsoftwareupdate "github.com/oracle/provider-oci/apis/fleetsoftwareupdate/v1alpha1"
 	v1alpha1functions "github.com/oracle/provider-oci/apis/functions/v1alpha1"
+	v1alpha1fusionapps "github.com/oracle/provider-oci/apis/fusionapps/v1alpha1"
+	v1alpha1generativeai "github.com/oracle/provider-oci/apis/generativeai/v1alpha1"
+	v1alpha1genericartifactscontent "github.com/oracle/provider-oci/apis/genericartifactscontent/v1alpha1"
+	v1alpha1globallydistributeddatabase "github.com/oracle/provider-oci/apis/globallydistributeddatabase/v1alpha1"
+	v1alpha1goldengate "github.com/oracle/provider-oci/apis/goldengate/v1alpha1"
 	v1alpha1healthchecks "github.com/oracle/provider-oci/apis/healthchecks/v1alpha1"
 	v1alpha1identity "github.com/oracle/provider-oci/apis/identity/v1alpha1"
+	v1alpha1identitydataplane "github.com/oracle/provider-oci/apis/identitydataplane/v1alpha1"
+	v1alpha1identitydomains "github.com/oracle/provider-oci/apis/identitydomains/v1alpha1"
+	v1alpha1integration "github.com/oracle/provider-oci/apis/integration/v1alpha1"
+	v1alpha1iot "github.com/oracle/provider-oci/apis/iot/v1alpha1"
+	v1alpha1jms "github.com/oracle/provider-oci/apis/jms/v1alpha1"
+	v1alpha1jmsjavadownloads "github.com/oracle/provider-oci/apis/jmsjavadownloads/v1alpha1"
+	v1alpha1jmsutils "github.com/oracle/provider-oci/apis/jmsutils/v1alpha1"
 	v1alpha1kms "github.com/oracle/provider-oci/apis/kms/v1alpha1"
+	v1alpha1licensemanager "github.com/oracle/provider-oci/apis/licensemanager/v1alpha1"
+	v1alpha1limits "github.com/oracle/provider-oci/apis/limits/v1alpha1"
 	v1alpha1loadbalancer "github.com/oracle/provider-oci/apis/loadbalancer/v1alpha1"
+	v1alpha1loganalytics "github.com/oracle/provider-oci/apis/loganalytics/v1alpha1"
 	v1alpha1logging "github.com/oracle/provider-oci/apis/logging/v1alpha1"
+	v1alpha1lustrefilestorage "github.com/oracle/provider-oci/apis/lustrefilestorage/v1alpha1"
+	v1alpha1managedkafka "github.com/oracle/provider-oci/apis/managedkafka/v1alpha1"
+	v1alpha1managementagent "github.com/oracle/provider-oci/apis/managementagent/v1alpha1"
+	v1alpha1managementdashboard "github.com/oracle/provider-oci/apis/managementdashboard/v1alpha1"
+	v1alpha1marketplace "github.com/oracle/provider-oci/apis/marketplace/v1alpha1"
+	v1alpha1mediaservices "github.com/oracle/provider-oci/apis/mediaservices/v1alpha1"
+	v1alpha1meteringcomputation "github.com/oracle/provider-oci/apis/meteringcomputation/v1alpha1"
 	v1alpha1monitoring "github.com/oracle/provider-oci/apis/monitoring/v1alpha1"
 	v1alpha1mysql "github.com/oracle/provider-oci/apis/mysql/v1alpha1"
 	v1alpha1networkconnectivity "github.com/oracle/provider-oci/apis/networkconnectivity/v1alpha1"
 	v1alpha1networkfirewall "github.com/oracle/provider-oci/apis/networkfirewall/v1alpha1"
 	v1alpha1networking "github.com/oracle/provider-oci/apis/networking/v1alpha1"
 	v1alpha1networkloadbalancer "github.com/oracle/provider-oci/apis/networkloadbalancer/v1alpha1"
+	v1alpha1nosql "github.com/oracle/provider-oci/apis/nosql/v1alpha1"
 	v1alpha1objectstorage "github.com/oracle/provider-oci/apis/objectstorage/v1alpha1"
+	v1alpha1oce "github.com/oracle/provider-oci/apis/oce/v1alpha1"
+	v1alpha1ocvp "github.com/oracle/provider-oci/apis/ocvp/v1alpha1"
+	v1alpha1oda "github.com/oracle/provider-oci/apis/oda/v1alpha1"
 	v1alpha1ons "github.com/oracle/provider-oci/apis/ons/v1alpha1"
+	v1alpha1opa "github.com/oracle/provider-oci/apis/opa/v1alpha1"
+	v1alpha1opensearch "github.com/oracle/provider-oci/apis/opensearch/v1alpha1"
+	v1alpha1operatoraccesscontrol "github.com/oracle/provider-oci/apis/operatoraccesscontrol/v1alpha1"
+	v1alpha1opsi "github.com/oracle/provider-oci/apis/opsi/v1alpha1"
+	v1alpha1optimizer "github.com/oracle/provider-oci/apis/optimizer/v1alpha1"
+	v1alpha1osmanagementhub "github.com/oracle/provider-oci/apis/osmanagementhub/v1alpha1"
+	v1alpha1ospgateway "github.com/oracle/provider-oci/apis/ospgateway/v1alpha1"
+	v1alpha1psa "github.com/oracle/provider-oci/apis/psa/v1alpha1"
 	v1alpha1psql "github.com/oracle/provider-oci/apis/psql/v1alpha1"
+	v1alpha1queue "github.com/oracle/provider-oci/apis/queue/v1alpha1"
+	v1alpha1recovery "github.com/oracle/provider-oci/apis/recovery/v1alpha1"
 	v1alpha1redis "github.com/oracle/provider-oci/apis/redis/v1alpha1"
+	v1alpha1resourceanalytics "github.com/oracle/provider-oci/apis/resourceanalytics/v1alpha1"
+	v1alpha1resourcemanager "github.com/oracle/provider-oci/apis/resourcemanager/v1alpha1"
+	v1alpha1resourcescheduler "github.com/oracle/provider-oci/apis/resourcescheduler/v1alpha1"
+	v1alpha1sch "github.com/oracle/provider-oci/apis/sch/v1alpha1"
+	v1alpha1securityattribute "github.com/oracle/provider-oci/apis/securityattribute/v1alpha1"
+	v1alpha1servicecatalog "github.com/oracle/provider-oci/apis/servicecatalog/v1alpha1"
+	v1alpha1stackmonitoring "github.com/oracle/provider-oci/apis/stackmonitoring/v1alpha1"
 	v1alpha1streaming "github.com/oracle/provider-oci/apis/streaming/v1alpha1"
+	v1alpha1tenantmanagercontrolplane "github.com/oracle/provider-oci/apis/tenantmanagercontrolplane/v1alpha1"
+	v1alpha1usageproxy "github.com/oracle/provider-oci/apis/usageproxy/v1alpha1"
 	v1alpha1apis "github.com/oracle/provider-oci/apis/v1alpha1"
 	v1beta1 "github.com/oracle/provider-oci/apis/v1beta1"
 	v1alpha1vault "github.com/oracle/provider-oci/apis/vault/v1alpha1"
+	v1alpha1vbsinst "github.com/oracle/provider-oci/apis/vbsinst/v1alpha1"
+	v1alpha1visualbuilder "github.com/oracle/provider-oci/apis/visualbuilder/v1alpha1"
+	v1alpha1vnmonitoring "github.com/oracle/provider-oci/apis/vnmonitoring/v1alpha1"
+	v1alpha1vulnerabilityscanning "github.com/oracle/provider-oci/apis/vulnerabilityscanning/v1alpha1"
+	v1alpha1waa "github.com/oracle/provider-oci/apis/waa/v1alpha1"
+	v1alpha1waas "github.com/oracle/provider-oci/apis/waas/v1alpha1"
+	v1alpha1waf "github.com/oracle/provider-oci/apis/waf/v1alpha1"
+	v1alpha1zpr "github.com/oracle/provider-oci/apis/zpr/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1aidataplatform.SchemeBuilder.AddToScheme,
+		v1alpha1aidocument.SchemeBuilder.AddToScheme,
+		v1alpha1ailanguage.SchemeBuilder.AddToScheme,
+		v1alpha1aivision.SchemeBuilder.AddToScheme,
+		v1alpha1analytics.SchemeBuilder.AddToScheme,
+		v1alpha1announcementsservice.SchemeBuilder.AddToScheme,
+		v1alpha1apiaccesscontrol.SchemeBuilder.AddToScheme,
+		v1alpha1apigateway.SchemeBuilder.AddToScheme,
+		v1alpha1apiplatform.SchemeBuilder.AddToScheme,
+		v1alpha1apm.SchemeBuilder.AddToScheme,
+		v1alpha1apmconfig.SchemeBuilder.AddToScheme,
+		v1alpha1apmsynthetics.SchemeBuilder.AddToScheme,
+		v1alpha1apmtraces.SchemeBuilder.AddToScheme,
+		v1alpha1appmgmt.SchemeBuilder.AddToScheme,
+		v1alpha1artifacts.SchemeBuilder.AddToScheme,
+		v1alpha1audit.SchemeBuilder.AddToScheme,
+		v1alpha1autoscaling.SchemeBuilder.AddToScheme,
+		v1alpha1bastion.SchemeBuilder.AddToScheme,
+		v1alpha1bds.SchemeBuilder.AddToScheme,
+		v1alpha1blockchain.SchemeBuilder.AddToScheme,
 		v1alpha1blockstorage.SchemeBuilder.AddToScheme,
+		v1alpha1budget.SchemeBuilder.AddToScheme,
+		v1alpha1capacitymanagement.SchemeBuilder.AddToScheme,
 		v1alpha1certificatesmanagement.SchemeBuilder.AddToScheme,
+		v1alpha1cloudbridge.SchemeBuilder.AddToScheme,
+		v1alpha1cloudguard.SchemeBuilder.AddToScheme,
+		v1alpha1cloudmigrations.SchemeBuilder.AddToScheme,
+		v1alpha1clusterplacementgroups.SchemeBuilder.AddToScheme,
 		v1alpha1compute.SchemeBuilder.AddToScheme,
+		v1alpha1computecloudatcustomer.SchemeBuilder.AddToScheme,
 		v1alpha1containerengine.SchemeBuilder.AddToScheme,
+		v1alpha1containerinstances.SchemeBuilder.AddToScheme,
 		v1alpha1core.SchemeBuilder.AddToScheme,
 		v1alpha1database.SchemeBuilder.AddToScheme,
+		v1alpha1datacatalog.SchemeBuilder.AddToScheme,
+		v1alpha1dataflow.SchemeBuilder.AddToScheme,
+		v1alpha1dataintegration.SchemeBuilder.AddToScheme,
+		v1alpha1datalabelingservice.SchemeBuilder.AddToScheme,
+		v1alpha1datascience.SchemeBuilder.AddToScheme,
+		v1alpha1dblm.SchemeBuilder.AddToScheme,
+		v1alpha1dbmulticloud.SchemeBuilder.AddToScheme,
+		v1alpha1delegateaccesscontrol.SchemeBuilder.AddToScheme,
+		v1alpha1demandsignal.SchemeBuilder.AddToScheme,
+		v1alpha1desktops.SchemeBuilder.AddToScheme,
+		v1alpha1devops.SchemeBuilder.AddToScheme,
+		v1alpha1dif.SchemeBuilder.AddToScheme,
+		v1alpha1disasterrecovery.SchemeBuilder.AddToScheme,
 		v1alpha1dns.SchemeBuilder.AddToScheme,
+		v1alpha1email.SchemeBuilder.AddToScheme,
 		v1alpha1events.SchemeBuilder.AddToScheme,
 		v1alpha1filestorage.SchemeBuilder.AddToScheme,
+		v1alpha1fleetappsmanagement.SchemeBuilder.AddToScheme,
+		v1alpha1fleetsoftwareupdate.SchemeBuilder.AddToScheme,
 		v1alpha1functions.SchemeBuilder.AddToScheme,
+		v1alpha1fusionapps.SchemeBuilder.AddToScheme,
+		v1alpha1generativeai.SchemeBuilder.AddToScheme,
+		v1alpha1genericartifactscontent.SchemeBuilder.AddToScheme,
+		v1alpha1globallydistributeddatabase.SchemeBuilder.AddToScheme,
+		v1alpha1goldengate.SchemeBuilder.AddToScheme,
 		v1alpha1healthchecks.SchemeBuilder.AddToScheme,
 		v1alpha1identity.SchemeBuilder.AddToScheme,
+		v1alpha1identitydataplane.SchemeBuilder.AddToScheme,
+		v1alpha1identitydomains.SchemeBuilder.AddToScheme,
+		v1alpha1integration.SchemeBuilder.AddToScheme,
+		v1alpha1iot.SchemeBuilder.AddToScheme,
+		v1alpha1jms.SchemeBuilder.AddToScheme,
+		v1alpha1jmsjavadownloads.SchemeBuilder.AddToScheme,
+		v1alpha1jmsutils.SchemeBuilder.AddToScheme,
 		v1alpha1kms.SchemeBuilder.AddToScheme,
+		v1alpha1licensemanager.SchemeBuilder.AddToScheme,
+		v1alpha1limits.SchemeBuilder.AddToScheme,
 		v1alpha1loadbalancer.SchemeBuilder.AddToScheme,
+		v1alpha1loganalytics.SchemeBuilder.AddToScheme,
 		v1alpha1logging.SchemeBuilder.AddToScheme,
+		v1alpha1lustrefilestorage.SchemeBuilder.AddToScheme,
+		v1alpha1managedkafka.SchemeBuilder.AddToScheme,
+		v1alpha1managementagent.SchemeBuilder.AddToScheme,
+		v1alpha1managementdashboard.SchemeBuilder.AddToScheme,
+		v1alpha1marketplace.SchemeBuilder.AddToScheme,
+		v1alpha1mediaservices.SchemeBuilder.AddToScheme,
+		v1alpha1meteringcomputation.SchemeBuilder.AddToScheme,
 		v1alpha1monitoring.SchemeBuilder.AddToScheme,
 		v1alpha1mysql.SchemeBuilder.AddToScheme,
 		v1alpha1networkconnectivity.SchemeBuilder.AddToScheme,
 		v1alpha1networkfirewall.SchemeBuilder.AddToScheme,
 		v1alpha1networking.SchemeBuilder.AddToScheme,
 		v1alpha1networkloadbalancer.SchemeBuilder.AddToScheme,
+		v1alpha1nosql.SchemeBuilder.AddToScheme,
 		v1alpha1objectstorage.SchemeBuilder.AddToScheme,
+		v1alpha1oce.SchemeBuilder.AddToScheme,
+		v1alpha1ocvp.SchemeBuilder.AddToScheme,
+		v1alpha1oda.SchemeBuilder.AddToScheme,
 		v1alpha1ons.SchemeBuilder.AddToScheme,
+		v1alpha1opa.SchemeBuilder.AddToScheme,
+		v1alpha1opensearch.SchemeBuilder.AddToScheme,
+		v1alpha1operatoraccesscontrol.SchemeBuilder.AddToScheme,
+		v1alpha1opsi.SchemeBuilder.AddToScheme,
+		v1alpha1optimizer.SchemeBuilder.AddToScheme,
+		v1alpha1osmanagementhub.SchemeBuilder.AddToScheme,
+		v1alpha1ospgateway.SchemeBuilder.AddToScheme,
+		v1alpha1psa.SchemeBuilder.AddToScheme,
 		v1alpha1psql.SchemeBuilder.AddToScheme,
+		v1alpha1queue.SchemeBuilder.AddToScheme,
+		v1alpha1recovery.SchemeBuilder.AddToScheme,
 		v1alpha1redis.SchemeBuilder.AddToScheme,
+		v1alpha1resourceanalytics.SchemeBuilder.AddToScheme,
+		v1alpha1resourcemanager.SchemeBuilder.AddToScheme,
+		v1alpha1resourcescheduler.SchemeBuilder.AddToScheme,
+		v1alpha1sch.SchemeBuilder.AddToScheme,
+		v1alpha1securityattribute.SchemeBuilder.AddToScheme,
+		v1alpha1servicecatalog.SchemeBuilder.AddToScheme,
+		v1alpha1stackmonitoring.SchemeBuilder.AddToScheme,
 		v1alpha1streaming.SchemeBuilder.AddToScheme,
+		v1alpha1tenantmanagercontrolplane.SchemeBuilder.AddToScheme,
+		v1alpha1usageproxy.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 		v1alpha1vault.SchemeBuilder.AddToScheme,
+		v1alpha1vbsinst.SchemeBuilder.AddToScheme,
+		v1alpha1visualbuilder.SchemeBuilder.AddToScheme,
+		v1alpha1vnmonitoring.SchemeBuilder.AddToScheme,
+		v1alpha1vulnerabilityscanning.SchemeBuilder.AddToScheme,
+		v1alpha1waa.SchemeBuilder.AddToScheme,
+		v1alpha1waas.SchemeBuilder.AddToScheme,
+		v1alpha1waf.SchemeBuilder.AddToScheme,
+		v1alpha1zpr.SchemeBuilder.AddToScheme,
 	)
 }
 

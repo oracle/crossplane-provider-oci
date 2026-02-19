@@ -1,0 +1,14 @@
+apiVersion: optimizer.oci.upbound.io/v1alpha1
+kind: EnrollmentStatus
+metadata:
+  annotations:
+    meta.upbound.io/example-id: optimizer/v1alpha1/enrollmentstatus
+  labels:
+    testing.upbound.io/example-name: test_enrollment_status
+  name: test-enrollment-status
+spec:
+  forProvider:
+    enrollmentStatusIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_enrollment_status
+    status: ${var.enrollment_status_status}

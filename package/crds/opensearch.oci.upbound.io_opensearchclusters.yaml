@@ -1,0 +1,2731 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: opensearchclusters.opensearch.oci.upbound.io
+spec:
+  group: opensearch.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: OpensearchCluster
+    listKind: OpensearchClusterList
+    plural: opensearchclusters
+    singular: opensearchcluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: OpensearchCluster is the Schema for the OpensearchClusters API.
+          Provides the Opensearch Cluster resource in Oracle Cloud Infrastructure
+          Opensearch service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: OpensearchClusterSpec defines the desired state of OpensearchCluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  certificateConfig:
+                    description: (Updatable) Custom certificate config for customer
+                      provided certs.
+                    items:
+                      properties:
+                        clusterCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in cluster is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        dashboardCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in dashboard is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        openSearchApiCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            cluster api communication
+                          type: string
+                        openSearchApiCertificateIdRef:
+                          description: Reference to a Certificate in apigateway to
+                            populate openSearchApiCertificateId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        openSearchApiCertificateIdSelector:
+                          description: Selector for a Certificate in apigateway to
+                            populate openSearchApiCertificateId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        openSearchDashboardCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            dashboard api communication
+                          type: string
+                        openSearchDashboardCertificateIdRef:
+                          description: Reference to a Certificate in apigateway to
+                            populate openSearchDashboardCertificateId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        openSearchDashboardCertificateIdSelector:
+                          description: Selector for a Certificate in apigateway to
+                            populate openSearchDashboardCertificateId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: The OCID of the compartment to create the cluster
+                      in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  configureOutboundClusterTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Configure Outbound Cluster. Could be set to any integer
+                      value.
+                    type: number
+                  dataNodeCount:
+                    description: (Updatable) The number of data nodes to configure
+                      for the cluster.
+                    type: number
+                  dataNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's data nodes.
+                    type: string
+                  dataNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  dataNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's data nodes.
+                    type: number
+                  dataNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's data
+                      nodes.
+                    type: string
+                  dataNodeHostType:
+                    description: TThe instance type for the cluster's data nodes.
+                    type: string
+                  dataNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) The name of the cluster. Avoid entering
+                      confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inboundClusterIds:
+                    description: List of inbound clusters that will be queried using
+                      cross cluster search
+                    items:
+                      type: string
+                    type: array
+                  maintenanceDetails:
+                    description: (Updatable) Details for creation of maintenance details
+                    items:
+                      properties:
+                        notificationEmailIds:
+                          description: (Updatable) The Email IDs given by the customer
+                            to get notified about maintenance activities
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  masterNodeCount:
+                    description: (Updatable) The number of master nodes to configure
+                      for the cluster.
+                    type: number
+                  masterNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's master nodes.
+                    type: string
+                  masterNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's master nodes.
+                    type: number
+                  masterNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluser's master nodes.
+                    type: number
+                  masterNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's master
+                      nodes.
+                    type: string
+                  masterNodeHostType:
+                    description: The instance type for the cluster's master nodes.
+                    type: string
+                  nsgId:
+                    description: The OCID of the NSG where the private endpoint vnic
+                      will be attached.
+                    type: string
+                  opendashboardNodeCount:
+                    description: (Updatable) The number of OpenSearch Dashboard nodes
+                      to configure for the cluster.
+                    type: number
+                  opendashboardNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      for the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's OpenSearch
+                      Dashboard nodes.
+                    type: string
+                  outboundClusterConfig:
+                    description: (Updatable) This configuration is used for passing
+                      request details to connect outbound cluster(s) to the inbound
+                      cluster (coordinating cluster)
+                    items:
+                      properties:
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        outboundClusters:
+                          description: (Updatable) List of outbound clusters to be
+                            connected to the inbound cluster
+                          items:
+                            properties:
+                              displayName:
+                                description: (Updatable) The name of the cluster.
+                                  Avoid entering confidential information.
+                                type: string
+                              isSkipUnavailable:
+                                description: (Updatable) Flag to indicate whether
+                                  to skip the Outbound cluster during cross cluster
+                                  search, if it is unavailable
+                                type: boolean
+                              mode:
+                                description: (Updatable) Mode for the cross cluster
+                                  connection
+                                type: string
+                              pingSchedule:
+                                description: (Updatable) Sets the time interval between
+                                  regular application-level ping messages that are
+                                  sent to try and keep outbound cluster connections
+                                  alive. If set to -1, application-level ping messages
+                                  to this outbound cluster are not sent. If unset,
+                                  application-level ping messages are sent according
+                                  to the global transport.ping_schedule setting, which
+                                  defaults to -1 meaning that pings are not sent.
+                                type: string
+                              seedClusterId:
+                                description: (Updatable) OCID of the Outbound cluster
+                                type: string
+                              seedClusterIdRef:
+                                description: Reference to a OpensearchCluster in opensearch
+                                  to populate seedClusterId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              seedClusterIdSelector:
+                                description: Selector for a OpensearchCluster in opensearch
+                                  to populate seedClusterId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  reverseConnectionEndpointCustomerIps:
+                    description: (Updatable) The customer IP addresses of the endpoint
+                      in customer VCN
+                    items:
+                      type: string
+                    type: array
+                  searchNodeCount:
+                    description: (Updatable) The number of search nodes configured
+                      for the cluster.
+                    type: number
+                  searchNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, for the cluster's
+                      search nodes.
+                    type: number
+                  searchNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs configured for the
+                      cluster's search nodes.
+                    type: number
+                  searchNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's search
+                      nodes.
+                    type: string
+                  searchNodeHostType:
+                    description: The instance type for the cluster's search nodes.
+                    type: string
+                  searchNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's search nodes.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  securityMasterUserName:
+                    description: (Updatable) The name of the master user that are
+                      used to manage security config
+                    type: string
+                  securityMasterUserNameRef:
+                    description: Reference to a User in identity to populate securityMasterUserName.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  securityMasterUserNameSelector:
+                    description: Selector for a User in identity to populate securityMasterUserName.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  securityMasterUserPasswordHashSecretRef:
+                    description: (Updatable) The password hash of the master user
+                      that are used to manage security config
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  securityMode:
+                    description: (Updatable) The security mode of the cluster.
+                    type: string
+                  securitySamlConfig:
+                    description: SAML policy is optionally used for Opensearch cluster
+                      to config SAML authentication
+                    items:
+                      properties:
+                        adminBackendRole:
+                          description: The backend role of admins who have all permissions
+                            like local master user
+                          type: string
+                        idpEntityId:
+                          description: The unique name for a identity provider entity
+                          type: string
+                        idpMetadataContent:
+                          description: The content of identity provider metadata
+                          type: string
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        opendashboardUrl:
+                          description: The endpoint of opendashboard
+                          type: string
+                        rolesKey:
+                          description: The roles key is sued to get backend roles
+                            from SAML assertion
+                          type: string
+                        subjectKey:
+                          description: The subject key is used to get username from
+                            SAML assertion. By default, it is NameID
+                          type: string
+                      type: object
+                    type: array
+                  softwareVersion:
+                    description: (Updatable) The version of the software the cluster
+                      is running.
+                    type: string
+                  subnetCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      subnet is located.
+                    type: string
+                  subnetCompartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      subnetCompartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetCompartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      subnetCompartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  subnetId:
+                    description: The OCID of the cluster's subnet.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in networking to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in networking to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  upgradeMajorVersionTrigger:
+                    description: An optional property to upgrade the major version
+                      of the cluster. This workflow upgrades the cluster without creating
+                      a clone. If you want to create a clone and upgrade the clone
+                      for testing please use SDK or CLI.
+                    type: number
+                  vcnCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      VCN is located.
+                    type: string
+                  vcnCompartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      vcnCompartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vcnCompartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      vcnCompartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  vcnId:
+                    description: The OCID of the cluster's VCN.
+                    type: string
+                  vcnIdRef:
+                    description: Reference to a Vcn in networking to populate vcnId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vcnIdSelector:
+                    description: Selector for a Vcn in networking to populate vcnId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  certificateConfig:
+                    description: (Updatable) Custom certificate config for customer
+                      provided certs.
+                    items:
+                      properties:
+                        clusterCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in cluster is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        dashboardCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in dashboard is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        openSearchApiCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            cluster api communication
+                          type: string
+                        openSearchApiCertificateIdRef:
+                          description: Reference to a Certificate in apigateway to
+                            populate openSearchApiCertificateId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        openSearchApiCertificateIdSelector:
+                          description: Selector for a Certificate in apigateway to
+                            populate openSearchApiCertificateId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        openSearchDashboardCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            dashboard api communication
+                          type: string
+                        openSearchDashboardCertificateIdRef:
+                          description: Reference to a Certificate in apigateway to
+                            populate openSearchDashboardCertificateId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        openSearchDashboardCertificateIdSelector:
+                          description: Selector for a Certificate in apigateway to
+                            populate openSearchDashboardCertificateId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: The OCID of the compartment to create the cluster
+                      in.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  configureOutboundClusterTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Configure Outbound Cluster. Could be set to any integer
+                      value.
+                    type: number
+                  dataNodeCount:
+                    description: (Updatable) The number of data nodes to configure
+                      for the cluster.
+                    type: number
+                  dataNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's data nodes.
+                    type: string
+                  dataNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  dataNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's data nodes.
+                    type: number
+                  dataNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's data
+                      nodes.
+                    type: string
+                  dataNodeHostType:
+                    description: TThe instance type for the cluster's data nodes.
+                    type: string
+                  dataNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) The name of the cluster. Avoid entering
+                      confidential information.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  inboundClusterIds:
+                    description: List of inbound clusters that will be queried using
+                      cross cluster search
+                    items:
+                      type: string
+                    type: array
+                  maintenanceDetails:
+                    description: (Updatable) Details for creation of maintenance details
+                    items:
+                      properties:
+                        notificationEmailIds:
+                          description: (Updatable) The Email IDs given by the customer
+                            to get notified about maintenance activities
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  masterNodeCount:
+                    description: (Updatable) The number of master nodes to configure
+                      for the cluster.
+                    type: number
+                  masterNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's master nodes.
+                    type: string
+                  masterNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's master nodes.
+                    type: number
+                  masterNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluser's master nodes.
+                    type: number
+                  masterNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's master
+                      nodes.
+                    type: string
+                  masterNodeHostType:
+                    description: The instance type for the cluster's master nodes.
+                    type: string
+                  nsgId:
+                    description: The OCID of the NSG where the private endpoint vnic
+                      will be attached.
+                    type: string
+                  opendashboardNodeCount:
+                    description: (Updatable) The number of OpenSearch Dashboard nodes
+                      to configure for the cluster.
+                    type: number
+                  opendashboardNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      for the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's OpenSearch
+                      Dashboard nodes.
+                    type: string
+                  outboundClusterConfig:
+                    description: (Updatable) This configuration is used for passing
+                      request details to connect outbound cluster(s) to the inbound
+                      cluster (coordinating cluster)
+                    items:
+                      properties:
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        outboundClusters:
+                          description: (Updatable) List of outbound clusters to be
+                            connected to the inbound cluster
+                          items:
+                            properties:
+                              displayName:
+                                description: (Updatable) The name of the cluster.
+                                  Avoid entering confidential information.
+                                type: string
+                              isSkipUnavailable:
+                                description: (Updatable) Flag to indicate whether
+                                  to skip the Outbound cluster during cross cluster
+                                  search, if it is unavailable
+                                type: boolean
+                              mode:
+                                description: (Updatable) Mode for the cross cluster
+                                  connection
+                                type: string
+                              pingSchedule:
+                                description: (Updatable) Sets the time interval between
+                                  regular application-level ping messages that are
+                                  sent to try and keep outbound cluster connections
+                                  alive. If set to -1, application-level ping messages
+                                  to this outbound cluster are not sent. If unset,
+                                  application-level ping messages are sent according
+                                  to the global transport.ping_schedule setting, which
+                                  defaults to -1 meaning that pings are not sent.
+                                type: string
+                              seedClusterId:
+                                description: (Updatable) OCID of the Outbound cluster
+                                type: string
+                              seedClusterIdRef:
+                                description: Reference to a OpensearchCluster in opensearch
+                                  to populate seedClusterId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              seedClusterIdSelector:
+                                description: Selector for a OpensearchCluster in opensearch
+                                  to populate seedClusterId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  reverseConnectionEndpointCustomerIps:
+                    description: (Updatable) The customer IP addresses of the endpoint
+                      in customer VCN
+                    items:
+                      type: string
+                    type: array
+                  searchNodeCount:
+                    description: (Updatable) The number of search nodes configured
+                      for the cluster.
+                    type: number
+                  searchNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, for the cluster's
+                      search nodes.
+                    type: number
+                  searchNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs configured for the
+                      cluster's search nodes.
+                    type: number
+                  searchNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's search
+                      nodes.
+                    type: string
+                  searchNodeHostType:
+                    description: The instance type for the cluster's search nodes.
+                    type: string
+                  searchNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's search nodes.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  securityMasterUserName:
+                    description: (Updatable) The name of the master user that are
+                      used to manage security config
+                    type: string
+                  securityMasterUserNameRef:
+                    description: Reference to a User in identity to populate securityMasterUserName.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  securityMasterUserNameSelector:
+                    description: Selector for a User in identity to populate securityMasterUserName.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  securityMasterUserPasswordHashSecretRef:
+                    description: (Updatable) The password hash of the master user
+                      that are used to manage security config
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  securityMode:
+                    description: (Updatable) The security mode of the cluster.
+                    type: string
+                  securitySamlConfig:
+                    description: SAML policy is optionally used for Opensearch cluster
+                      to config SAML authentication
+                    items:
+                      properties:
+                        adminBackendRole:
+                          description: The backend role of admins who have all permissions
+                            like local master user
+                          type: string
+                        idpEntityId:
+                          description: The unique name for a identity provider entity
+                          type: string
+                        idpMetadataContent:
+                          description: The content of identity provider metadata
+                          type: string
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        opendashboardUrl:
+                          description: The endpoint of opendashboard
+                          type: string
+                        rolesKey:
+                          description: The roles key is sued to get backend roles
+                            from SAML assertion
+                          type: string
+                        subjectKey:
+                          description: The subject key is used to get username from
+                            SAML assertion. By default, it is NameID
+                          type: string
+                      type: object
+                    type: array
+                  softwareVersion:
+                    description: (Updatable) The version of the software the cluster
+                      is running.
+                    type: string
+                  subnetCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      subnet is located.
+                    type: string
+                  subnetCompartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      subnetCompartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetCompartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      subnetCompartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  subnetId:
+                    description: The OCID of the cluster's subnet.
+                    type: string
+                  subnetIdRef:
+                    description: Reference to a Subnet in networking to populate subnetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subnetIdSelector:
+                    description: Selector for a Subnet in networking to populate subnetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  upgradeMajorVersionTrigger:
+                    description: An optional property to upgrade the major version
+                      of the cluster. This workflow upgrades the cluster without creating
+                      a clone. If you want to create a clone and upgrade the clone
+                      for testing please use SDK or CLI.
+                    type: number
+                  vcnCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      VCN is located.
+                    type: string
+                  vcnCompartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      vcnCompartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vcnCompartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      vcnCompartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  vcnId:
+                    description: The OCID of the cluster's VCN.
+                    type: string
+                  vcnIdRef:
+                    description: Reference to a Vcn in networking to populate vcnId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vcnIdSelector:
+                    description: Selector for a Vcn in networking to populate vcnId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
+                        type: object
+                      type:
+                        description: |-
+                          Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.dataNodeCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataNodeCount)
+                || (has(self.initProvider) && has(self.initProvider.dataNodeCount))'
+            - message: spec.forProvider.dataNodeHostMemoryGb is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataNodeHostMemoryGb)
+                || (has(self.initProvider) && has(self.initProvider.dataNodeHostMemoryGb))'
+            - message: spec.forProvider.dataNodeHostOcpuCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataNodeHostOcpuCount)
+                || (has(self.initProvider) && has(self.initProvider.dataNodeHostOcpuCount))'
+            - message: spec.forProvider.dataNodeHostType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataNodeHostType)
+                || (has(self.initProvider) && has(self.initProvider.dataNodeHostType))'
+            - message: spec.forProvider.dataNodeStorageGb is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.dataNodeStorageGb)
+                || (has(self.initProvider) && has(self.initProvider.dataNodeStorageGb))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+            - message: spec.forProvider.masterNodeCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.masterNodeCount)
+                || (has(self.initProvider) && has(self.initProvider.masterNodeCount))'
+            - message: spec.forProvider.masterNodeHostMemoryGb is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.masterNodeHostMemoryGb)
+                || (has(self.initProvider) && has(self.initProvider.masterNodeHostMemoryGb))'
+            - message: spec.forProvider.masterNodeHostOcpuCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.masterNodeHostOcpuCount)
+                || (has(self.initProvider) && has(self.initProvider.masterNodeHostOcpuCount))'
+            - message: spec.forProvider.masterNodeHostType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.masterNodeHostType)
+                || (has(self.initProvider) && has(self.initProvider.masterNodeHostType))'
+            - message: spec.forProvider.opendashboardNodeCount is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.opendashboardNodeCount)
+                || (has(self.initProvider) && has(self.initProvider.opendashboardNodeCount))'
+            - message: spec.forProvider.opendashboardNodeHostMemoryGb is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.opendashboardNodeHostMemoryGb)
+                || (has(self.initProvider) && has(self.initProvider.opendashboardNodeHostMemoryGb))'
+            - message: spec.forProvider.opendashboardNodeHostOcpuCount is a required
+                parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.opendashboardNodeHostOcpuCount)
+                || (has(self.initProvider) && has(self.initProvider.opendashboardNodeHostOcpuCount))'
+            - message: spec.forProvider.softwareVersion is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.softwareVersion)
+                || (has(self.initProvider) && has(self.initProvider.softwareVersion))'
+          status:
+            description: OpensearchClusterStatus defines the observed state of OpensearchCluster.
+            properties:
+              atProvider:
+                properties:
+                  availabilityDomains:
+                    description: The availability domains to distribute the cluser
+                      nodes across.
+                    items:
+                      type: string
+                    type: array
+                  certificateConfig:
+                    description: (Updatable) Custom certificate config for customer
+                      provided certs.
+                    items:
+                      properties:
+                        clusterCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in cluster is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        dashboardCertificateMode:
+                          description: (Updatable) Specifies whether the certificate
+                            to be used in dashboard is managed by OpenSearch or Oracle
+                            Cloud Infrastructure Certificates service.
+                          type: string
+                        openSearchApiCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            cluster api communication
+                          type: string
+                        openSearchDashboardCertificateId:
+                          description: (Updatable) certificate to be used for OpenSearch
+                            dashboard api communication
+                          type: string
+                      type: object
+                    type: array
+                  compartmentId:
+                    description: The OCID of the compartment to create the cluster
+                      in.
+                    type: string
+                  configureOutboundClusterTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Configure Outbound Cluster. Could be set to any integer
+                      value.
+                    type: number
+                  dataNodeCount:
+                    description: (Updatable) The number of data nodes to configure
+                      for the cluster.
+                    type: number
+                  dataNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's data nodes.
+                    type: string
+                  dataNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  dataNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's data nodes.
+                    type: number
+                  dataNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's data
+                      nodes.
+                    type: string
+                  dataNodeHostType:
+                    description: TThe instance type for the cluster's data nodes.
+                    type: string
+                  dataNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's data nodes.
+                    type: number
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key":
+                      "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) The name of the cluster. Avoid entering
+                      confidential information.
+                    type: string
+                  fqdn:
+                    description: The fully qualified domain name (FQDN) for the cluster's
+                      API endpoint.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Simple key-value pair that is applied
+                      without any predefined name, type or scope. Exists for cross-compatibility
+                      only. Example: {"bar-key": "value"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the cluster.
+                    type: string
+                  inboundClusterIds:
+                    description: List of inbound clusters that will be queried using
+                      cross cluster search
+                    items:
+                      type: string
+                    type: array
+                  lifecycleDetails:
+                    description: Additional information about the current lifecycle
+                      state of the cluster.
+                    type: string
+                  maintenanceDetails:
+                    description: (Updatable) Details for creation of maintenance details
+                    items:
+                      properties:
+                        endTime:
+                          description: End time of the maintenance activity
+                          type: string
+                        notificationEmailIds:
+                          description: (Updatable) The Email IDs given by the customer
+                            to get notified about maintenance activities
+                          items:
+                            type: string
+                          type: array
+                        startTime:
+                          description: Start time of the maintenance activity
+                          type: string
+                        state:
+                          description: State of the maintenance activity
+                          type: string
+                      type: object
+                    type: array
+                  masterNodeCount:
+                    description: (Updatable) The number of master nodes to configure
+                      for the cluster.
+                    type: number
+                  masterNodeHostBareMetalShape:
+                    description: The bare metal shape for the cluster's master nodes.
+                    type: string
+                  masterNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      per node for the cluster's master nodes.
+                    type: number
+                  masterNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluser's master nodes.
+                    type: number
+                  masterNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's master
+                      nodes.
+                    type: string
+                  masterNodeHostType:
+                    description: The instance type for the cluster's master nodes.
+                    type: string
+                  nsgId:
+                    description: The OCID of the NSG where the private endpoint vnic
+                      will be attached.
+                    type: string
+                  opendashboardFqdn:
+                    description: The fully qualified domain name (FQDN) for the cluster's
+                      OpenSearch Dashboard API endpoint.
+                    type: string
+                  opendashboardNodeCount:
+                    description: (Updatable) The number of OpenSearch Dashboard nodes
+                      to configure for the cluster.
+                    type: number
+                  opendashboardNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, to configure
+                      for the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs to configure for
+                      the cluster's OpenSearch Dashboard nodes.
+                    type: number
+                  opendashboardNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's OpenSearch
+                      Dashboard nodes.
+                    type: string
+                  opendashboardPrivateIp:
+                    description: The private IP address for the cluster's OpenSearch
+                      Dashboard.
+                    type: string
+                  opensearchFqdn:
+                    description: The fully qualified domain name (FQDN) for the cluster's
+                      API endpoint.
+                    type: string
+                  opensearchPrivateIp:
+                    description: The cluster's private IP address.
+                    type: string
+                  outboundClusterConfig:
+                    description: (Updatable) This configuration is used for passing
+                      request details to connect outbound cluster(s) to the inbound
+                      cluster (coordinating cluster)
+                    items:
+                      properties:
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        outboundClusters:
+                          description: (Updatable) List of outbound clusters to be
+                            connected to the inbound cluster
+                          items:
+                            properties:
+                              displayName:
+                                description: (Updatable) The name of the cluster.
+                                  Avoid entering confidential information.
+                                type: string
+                              isSkipUnavailable:
+                                description: (Updatable) Flag to indicate whether
+                                  to skip the Outbound cluster during cross cluster
+                                  search, if it is unavailable
+                                type: boolean
+                              mode:
+                                description: (Updatable) Mode for the cross cluster
+                                  connection
+                                type: string
+                              pingSchedule:
+                                description: (Updatable) Sets the time interval between
+                                  regular application-level ping messages that are
+                                  sent to try and keep outbound cluster connections
+                                  alive. If set to -1, application-level ping messages
+                                  to this outbound cluster are not sent. If unset,
+                                  application-level ping messages are sent according
+                                  to the global transport.ping_schedule setting, which
+                                  defaults to -1 meaning that pings are not sent.
+                                type: string
+                              seedClusterId:
+                                description: (Updatable) OCID of the Outbound cluster
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  reverseConnectionEndpointCustomerIps:
+                    description: (Updatable) The customer IP addresses of the endpoint
+                      in customer VCN
+                    items:
+                      type: string
+                    type: array
+                  reverseConnectionEndpoints:
+                    description: The list of reverse connection endpoints.
+                    items:
+                      properties:
+                        customerIp:
+                          description: The IP addresses of the endpoint in customer
+                            VCN
+                          type: string
+                        natIp:
+                          description: The NAT IP addresses of the endpoint in service
+                            VCN
+                          type: string
+                      type: object
+                    type: array
+                  searchNodeCount:
+                    description: (Updatable) The number of search nodes configured
+                      for the cluster.
+                    type: number
+                  searchNodeHostMemoryGb:
+                    description: (Updatable) The amount of memory in GB, for the cluster's
+                      search nodes.
+                    type: number
+                  searchNodeHostOcpuCount:
+                    description: (Updatable) The number of OCPUs configured for the
+                      cluster's search nodes.
+                    type: number
+                  searchNodeHostShape:
+                    description: (Updatable) The node shape for the cluster's search
+                      nodes.
+                    type: string
+                  searchNodeHostType:
+                    description: The instance type for the cluster's search nodes.
+                    type: string
+                  searchNodeStorageGb:
+                    description: (Updatable) The amount of storage in GB, to configure
+                      per node for the cluster's search nodes.
+                    type: number
+                  securityAttributes:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  securityMasterUserName:
+                    description: (Updatable) The name of the master user that are
+                      used to manage security config
+                    type: string
+                  securityMode:
+                    description: (Updatable) The security mode of the cluster.
+                    type: string
+                  securitySamlConfig:
+                    description: SAML policy is optionally used for Opensearch cluster
+                      to config SAML authentication
+                    items:
+                      properties:
+                        adminBackendRole:
+                          description: The backend role of admins who have all permissions
+                            like local master user
+                          type: string
+                        idpEntityId:
+                          description: The unique name for a identity provider entity
+                          type: string
+                        idpMetadataContent:
+                          description: The content of identity provider metadata
+                          type: string
+                        isEnabled:
+                          description: (Updatable) Flag to indicate whether outbound
+                            cluster configuration is enabled
+                          type: boolean
+                        opendashboardUrl:
+                          description: The endpoint of opendashboard
+                          type: string
+                        rolesKey:
+                          description: The roles key is sued to get backend roles
+                            from SAML assertion
+                          type: string
+                        subjectKey:
+                          description: The subject key is used to get username from
+                            SAML assertion. By default, it is NameID
+                          type: string
+                      type: object
+                    type: array
+                  softwareVersion:
+                    description: (Updatable) The version of the software the cluster
+                      is running.
+                    type: string
+                  state:
+                    description: State of the maintenance activity
+                    type: string
+                  subnetCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      subnet is located.
+                    type: string
+                  subnetId:
+                    description: The OCID of the cluster's subnet.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'Usage of system tag keys. These predefined keys
+                      are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained":
+                      "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  timeCreated:
+                    description: The amount of time in milliseconds since the cluster
+                      was created.
+                    type: string
+                  timeDeleted:
+                    description: The amount of time in milliseconds since the cluster
+                      was updated.
+                    type: string
+                  timeUpdated:
+                    description: The amount of time in milliseconds since the cluster
+                      was updated.
+                    type: string
+                  totalStorageGb:
+                    description: The size in GB of the cluster's total storage.
+                    type: number
+                  upgradeMajorVersionTrigger:
+                    description: An optional property to upgrade the major version
+                      of the cluster. This workflow upgrades the cluster without creating
+                      a clone. If you want to create a clone and upgrade the clone
+                      for testing please use SDK or CLI.
+                    type: number
+                  vcnCompartmentId:
+                    description: The OCID for the compartment where the cluster's
+                      VCN is located.
+                    type: string
+                  vcnId:
+                    description: The OCID of the cluster's VCN.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

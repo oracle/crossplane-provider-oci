@@ -1,0 +1,41 @@
+apiVersion: dataintegration.oci.upbound.io/v1alpha1
+kind: WorkspaceApplicationSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataintegration/v1alpha1/workspaceapplicationschedule
+  labels:
+    testing.upbound.io/example-name: test_workspace_application_schedule
+  name: test-workspace-application-schedule
+spec:
+  forProvider:
+    applicationKey: ${var.workspace_application_schedule_application_key}
+    description: ${var.workspace_application_schedule_description}
+    frequencyDetails:
+    - customExpression: ${var.workspace_application_schedule_frequency_details_custom_expression}
+      dayOfWeek: ${var.workspace_application_schedule_frequency_details_day_of_week}
+      days: ${var.workspace_application_schedule_frequency_details_days}
+      frequency: ${var.workspace_application_schedule_frequency_details_frequency}
+      interval: ${var.workspace_application_schedule_frequency_details_interval}
+      modelType: ${var.workspace_application_schedule_frequency_details_model_type}
+      time:
+      - hour: ${var.workspace_application_schedule_frequency_details_time_hour}
+        minute: ${var.workspace_application_schedule_frequency_details_time_minute}
+        second: ${var.workspace_application_schedule_frequency_details_time_second}
+      weekOfMonth: ${var.workspace_application_schedule_frequency_details_week_of_month}
+    identifier: ${var.workspace_application_schedule_identifier}
+    isDaylightAdjustmentEnabled: ${var.workspace_application_schedule_is_daylight_adjustment_enabled}
+    key: ${var.workspace_application_schedule_key}
+    modelVersion: ${var.workspace_application_schedule_model_version}
+    name: ${var.workspace_application_schedule_name}
+    objectStatus: ${var.workspace_application_schedule_object_status}
+    objectVersion: ${var.workspace_application_schedule_object_version}
+    registryMetadata:
+    - aggregatorKey: ${var.workspace_application_schedule_registry_metadata_aggregator_key}
+      isFavorite: ${var.workspace_application_schedule_registry_metadata_is_favorite}
+      key: ${var.workspace_application_schedule_registry_metadata_key}
+      labels: ${var.workspace_application_schedule_registry_metadata_labels}
+      registryVersion: ${var.workspace_application_schedule_registry_metadata_registry_version}
+    timezone: ${var.workspace_application_schedule_timezone}
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_workspace

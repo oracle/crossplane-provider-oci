@@ -1,0 +1,112 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Fleet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/fleet
+  labels:
+    testing.upbound.io/example-name: test_fleet
+  name: test-fleet
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    credentials:
+    - compartmentId: ${var.compartment_id}
+      displayName: ${var.fleet_credentials_display_name}
+      entitySpecifics:
+      - credentialLevel: ${var.fleet_credentials_entity_specifics_credential_level}
+        resourceId: ${oci_cloud_guard_resource.test_resource.id}
+        target: ${var.fleet_credentials_entity_specifics_target}
+        variables:
+        - name: ${var.fleet_credentials_entity_specifics_variables_name}
+          value: ${var.fleet_credentials_entity_specifics_variables_value}
+      password:
+      - credentialType: ${var.fleet_credentials_password_credential_type}
+        keyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        keyVersion: ${var.fleet_credentials_password_key_version}
+        secretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        secretVersion: ${var.fleet_credentials_password_secret_version}
+        value: ${var.fleet_credentials_password_value}
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+      user:
+      - credentialType: ${var.fleet_credentials_user_credential_type}
+        keyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        keyVersion: ${var.fleet_credentials_user_key_version}
+        secretIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_secret
+        secretVersion: ${var.fleet_credentials_user_secret_version}
+        value: ${var.fleet_credentials_user_value}
+        vaultIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vault
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.fleet_description}
+    details:
+    - fleetType: ${var.fleet_details_fleet_type}
+    displayName: ${var.fleet_display_name}
+    environmentType: ${var.fleet_environment_type}
+    freeformTags:
+      bar-key: value
+    isTargetAutoConfirm: ${var.fleet_is_target_auto_confirm}
+    notificationPreferences:
+    - compartmentId: ${var.compartment_id}
+      preferences:
+      - onJobCanceled: ${var.fleet_notification_preferences_preferences_on_job_canceled}
+        onJobFailure: ${var.fleet_notification_preferences_preferences_on_job_failure}
+        onJobScheduleChange: ${var.fleet_notification_preferences_preferences_on_job_schedule_change}
+        onJobStart: ${var.fleet_notification_preferences_preferences_on_job_start}
+        onJobSuccess: ${var.fleet_notification_preferences_preferences_on_job_success}
+        onResourceNonCompliance: ${var.fleet_notification_preferences_preferences_on_resource_non_compliance}
+        onRunbookNewerVersion: ${var.fleet_notification_preferences_preferences_on_runbook_newer_version}
+        onTaskFailure: ${var.fleet_notification_preferences_preferences_on_task_failure}
+        onTaskPause: ${var.fleet_notification_preferences_preferences_on_task_pause}
+        onTaskSuccess: ${var.fleet_notification_preferences_preferences_on_task_success}
+        onTopologyModification: ${var.fleet_notification_preferences_preferences_on_topology_modification}
+        upcomingSchedule:
+        - notifyBefore: ${var.fleet_notification_preferences_preferences_upcoming_schedule_notify_before}
+          onUpcomingSchedule: ${var.fleet_notification_preferences_preferences_upcoming_schedule_on_upcoming_schedule}
+      topicIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_notification_topic
+    parentFleetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fleet
+    products: ${var.fleet_products}
+    properties:
+    - compartmentId: ${var.compartment_id}
+      displayName: ${var.fleet_properties_display_name}
+      fleetPropertyType: ${var.fleet_properties_fleet_property_type}
+      isRequired: ${var.fleet_properties_is_required}
+      value: ${var.fleet_properties_value}
+    resourceSelection:
+    - resourceSelectionType: ${var.fleet_resource_selection_resource_selection_type}
+      ruleSelectionCriteria:
+      - matchCondition: ${var.fleet_resource_selection_rule_selection_criteria_match_condition}
+        rules:
+        - basis: ${var.fleet_resource_selection_rule_selection_criteria_rules_basis}
+          compartmentId: ${var.compartment_id}
+          compartmentIdInSubtree: ${var.fleet_resource_selection_rule_selection_criteria_rules_compartment_id_in_subtree}
+          conditions:
+          - attrGroup: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_group}
+            attrKey: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_key}
+            attrValue: ${var.fleet_resource_selection_rule_selection_criteria_rules_conditions_attr_value}
+          matchCondition: ${var.fleet_resource_selection_rule_selection_criteria_rules_match_condition}
+          resourceCompartmentIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_compartment
+    resources:
+    - compartmentId: ${var.compartment_id}
+      fleetResourceType: ${var.fleet_resources_fleet_resource_type}
+      resourceId: ${oci_cloud_guard_resource.test_resource.id}
+      tenancyId: ${oci_identity_tenancy.test_tenancy.id}

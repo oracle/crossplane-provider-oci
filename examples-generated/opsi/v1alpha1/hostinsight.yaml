@@ -1,0 +1,31 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: HostInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/hostinsight
+  labels:
+    testing.upbound.io/example-name: test_host_insight
+  name: test-host-insight
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeId: ${oci_opsi_compute.test_compute.id}
+    definedTags:
+      foo-namespace.bar-key: value
+    enterpriseManagerBridgeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_enterprise_manager_bridge
+    enterpriseManagerEntityIdentifier: ${var.host_insight_enterprise_manager_entity_identifier}
+    enterpriseManagerIdentifier: ${var.host_insight_enterprise_manager_identifier}
+    entitySource: ${var.host_insight_entity_source}
+    exadataInsightIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_insight
+    freeformTags:
+      bar-key: value
+    managementAgentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_management_agent
+    status: DISABLED

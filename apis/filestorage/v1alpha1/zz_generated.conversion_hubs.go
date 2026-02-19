@@ -16,7 +16,16 @@ func (tr *ExportSet) Hub() {}
 func (tr *FileSystem) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *FileSystemQuotaRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FilesystemSnapshotPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *MountTarget) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *OutboundConnector) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Replication) Hub() {}

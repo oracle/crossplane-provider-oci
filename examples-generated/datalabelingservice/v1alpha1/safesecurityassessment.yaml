@@ -1,0 +1,30 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSecurityAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesecurityassessment
+  labels:
+    testing.upbound.io/example-name: test_security_assessment
+  name: test-security-assessment
+spec:
+  forProvider:
+    baseSecurityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.security_assessment_description}
+    displayName: ${var.security_assessment_display_name}
+    freeformTags:
+      Department: Finance
+    isAssessmentScheduled: ${var.security_assessment_is_assessment_scheduled}
+    schedule: ${var.security_assessment_schedule}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target
+    targetType: ${var.security_assessment_target_type}
+    templateAssessmentId: ${oci_data_safe_template_assessment.test_template_assessment.id}
+    type: ${var.security_assessment_type}

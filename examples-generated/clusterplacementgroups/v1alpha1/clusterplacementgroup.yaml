@@ -1,0 +1,29 @@
+apiVersion: clusterplacementgroups.oci.upbound.io/v1alpha1
+kind: ClusterPlacementGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clusterplacementgroups/v1alpha1/clusterplacementgroup
+  labels:
+    testing.upbound.io/example-name: test_cluster_placement_group
+  name: test-cluster-placement-group
+spec:
+  forProvider:
+    availabilityDomain: ${var.cluster_placement_group_availability_domain}
+    capabilities:
+    - items:
+      - name: ${var.cluster_placement_group_capabilities_items_name}
+        service: ${var.cluster_placement_group_capabilities_items_service}
+    clusterPlacementGroupType: ${var.cluster_placement_group_cluster_placement_group_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.cluster_placement_group_description}
+    freeformTags:
+      bar-key: value
+    name: ${var.cluster_placement_group_name}
+    opcDryRun: ${var.cluster_placement_group_opc_dry_run}
+    placementInstruction:
+    - type: ${var.cluster_placement_group_placement_instruction_type}
+      value: ${var.cluster_placement_group_placement_instruction_value}

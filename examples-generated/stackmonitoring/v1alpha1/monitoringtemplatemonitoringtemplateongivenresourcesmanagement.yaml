@@ -1,0 +1,14 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplateMonitoringTemplateOnGivenResourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatemonitoringtemplateongivenresourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_monitoring_template_on_given_resources_management
+  name: test-monitoring-template-monitoring-template-on-given-resources-management
+spec:
+  forProvider:
+    enableMonitoringTemplateOnGivenResources: ${var.enable_monitoring_template_on_given_resources}
+    monitoringTemplateIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitoring_template

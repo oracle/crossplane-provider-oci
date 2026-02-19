@@ -1,0 +1,22 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: SafeSecurityPolicyManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/safesecuritypolicymanagement
+  labels:
+    testing.upbound.io/example-name: test_security_policy_management
+  name: test-security-policy-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.security_policy_management_description}
+    displayName: ${var.security_policy_management_display_name}
+    freeformTags:
+      Department: Finance
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target_database

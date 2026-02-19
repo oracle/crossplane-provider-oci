@@ -1,0 +1,28 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouseUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouseuser
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse_user
+  name: test-operations-insights-warehouse-user
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    definedTags:
+      foo-namespace.bar-key: value
+    freeformTags:
+      bar-key: value
+    isAwrDataAccess: ${var.operations_insights_warehouse_user_is_awr_data_access}
+    isEmDataAccess: ${var.operations_insights_warehouse_user_is_em_data_access}
+    isOpsiDataAccess: ${var.operations_insights_warehouse_user_is_opsi_data_access}
+    name: ${var.operations_insights_warehouse_user_name}
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse

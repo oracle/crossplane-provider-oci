@@ -16,7 +16,9 @@ spec:
     - connectorDetails:
       - connectorType: ${var.autonomous_database_autonomous_database_dbm_features_management_feature_details_connector_details_connector_type}
         databaseConnectorId: ${oci_database_management_database_connector.test_database_connector.id}
-        managementAgentId: ${oci_management_agent_management_agent.test_management_agent.id}
+        managementAgentIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_management_agent
         privateEndPointId: ${oci_database_management_private_end_point.test_private_end_point.id}
       databaseConnectionDetails:
       - connectionCredentials:

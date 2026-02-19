@@ -1,0 +1,16 @@
+apiVersion: networkfirewall.oci.upbound.io/v1alpha1
+kind: NetworkFirewallPolicyAddressList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkfirewall/v1alpha1/networkfirewallpolicyaddresslist
+  labels:
+    testing.upbound.io/example-name: test_network_firewall_policy_address_list
+  name: test-network-firewall-policy-address-list
+spec:
+  forProvider:
+    addresses: ${var.network_firewall_policy_address_list_addresses}
+    name: ${var.network_firewall_policy_address_list_name}
+    networkFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_network_firewall_policy
+    type: ${var.network_firewall_policy_address_list_type}
