@@ -74,15 +74,19 @@ func AutoExternalNameConfiguration() config.ResourceOption {
 func ServiceGroupDetector(resourceName string) (group string, kind string) {
 	// Extract the service prefix (e.g., "oci_database_*" -> "database")
 	parts := strings.Split(resourceName, "_")
+
+	// Fallback case: Resources with len(parts)<2 are grouped into core service
 	if len(parts) < 2 {
-		return "core", generateKindName(resourceName)
+		group = "core"
+		return group, generateKindName(resourceName, group)
 	}
 
 	servicePrefix := parts[1]
 
 	// Special handling for core resources that should be split
 	if servicePrefix == "core" {
-		return detectCoreServiceGroup(resourceName)
+		group = detectCoreServiceGroup(resourceName)
+		return group, generateKindName(resourceName, group)
 	}
 
 	// Special handling for multi-word services
@@ -91,85 +95,128 @@ func ServiceGroupDetector(resourceName string) (group string, kind string) {
 		if len(parts) > 2 {
 			switch parts[2] {
 			case "firewall":
-				return "networkfirewall", generateKindName(resourceName)
+				group = "networkfirewall"
 			case "load":
-				return "networkloadbalancer", generateKindName(resourceName)
+				group = "networkloadbalancer"
 			default:
-				return "networking", generateKindName(resourceName)
+				group = "networking"
 			}
+		} else {
+			group = "networking"
 		}
-		return "networking", generateKindName(resourceName)
 
 	case "load":
-		return "loadbalancer", generateKindName(resourceName)
+		group = "loadbalancer"
 
 	case "file":
-		return "filestorage", generateKindName(resourceName)
+		group = "filestorage"
 
 	case "health":
-		return "healthchecks", generateKindName(resourceName)
+		group = "healthchecks"
 
 	case "certificates":
-		return "certificatesmanagement", generateKindName(resourceName)
+		group = "certificatesmanagement"
 
 	default:
-		// Use the service prefix as the group
-		return servicePrefix, generateKindName(resourceName)
+		group = servicePrefix
 	}
+
+	return group, generateKindName(resourceName, group)
 }
 
 // detectCoreServiceGroup intelligently splits oci_core_* resources into logical services
-func detectCoreServiceGroup(resourceName string) (group string, kind string) {
+func detectCoreServiceGroup(resourceName string) (group string) {
 	// Compute resources
 	if contains(resourceName, []string{"instance", "image", "dedicated_vm", "console", "shape", "app_catalog", "cluster_network", "compute_"}) {
-		return "compute", generateKindName(resourceName)
+		return "compute"
 	}
 
 	// Networking resources
 	if contains(resourceName, []string{"vcn", "subnet", "vnic", "dhcp", "vlan", "gateway", "security", "route", "ip", "peering"}) {
-		return "networking", generateKindName(resourceName)
+		return "networking"
 	}
 
 	// Block storage resources
 	if contains(resourceName, []string{"volume", "boot_volume"}) {
-		return "blockstorage", generateKindName(resourceName)
+		return "blockstorage"
 	}
 
 	// Network connectivity resources (DRG, IPSec, etc.)
 	if contains(resourceName, []string{"drg", "cross_connect", "virtual_circuit", "cpe", "ipsec"}) {
-		return "networkconnectivity", generateKindName(resourceName)
+		return "networkconnectivity"
 	}
 
 	// Monitoring resources
 	if contains(resourceName, []string{"capture_filter", "vtap"}) {
-		return "monitoring", generateKindName(resourceName)
+		return "monitoring"
 	}
 
 	// Default to core for unmatched patterns
-	return "core", generateKindName(resourceName)
+	return "core"
 }
 
-// generateKindName converts a resource name to a proper Kind name
-func generateKindName(resourceName string) string {
-	// Remove oci_ prefix and service prefix
+// generateKindName converts a resource name to a Kind name by stripping the
+// OCI prefix and all tokens that make up the logical service group.
+//
+//   - resourceName: full Terraform resource name, e.g. "oci_os_management_update_schedule".
+//   - group: the service group returned by ServiceGroupDetector, e.g. "osmanagement".
+//
+// If the resource name does not have at least three underscore-separated parts,
+// the function returns the original resourceName unchanged.
+func generateKindName(resourceName, group string) string {
 	parts := strings.Split(resourceName, "_")
 	if len(parts) < 3 {
-		return "Resource"
+		// Not in expected oci_<service>_<resource> form; return as-is.
+		return resourceName
 	}
 
-	// Join remaining parts and convert to CamelCase
-	kindParts := parts[2:]
-	result := ""
+	tokens := parts[1:] // drop the first segment (usually "oci")
+	if len(tokens) == 0 {
+		return resourceName
+	}
+
+	// Find the shortest prefix of tokens whose concatenation matches the group
+	// string (case-insensitive). That prefix represents the service name
+	// portion to drop from the Kind.
+	groupLower := strings.ToLower(group)
+	prefixEnd := 0
+	if groupLower != "" {
+		for i := 1; i <= len(tokens); i++ {
+			candidate := strings.ToLower(strings.Join(tokens[:i], ""))
+			if candidate == groupLower {
+				prefixEnd = i
+				break
+			}
+		}
+	}
+
+	// If we couldn't match the group to a prefix, fall back to dropping
+	// only the first token (service prefix) as in the original behavior.
+	start := 1
+	if prefixEnd > 0 {
+		start = prefixEnd
+	}
+	if start >= len(tokens) {
+		// No resource tokens left; return original resourceName defensively.
+		return resourceName
+	}
+
+	kindTokens := tokens[start:]
+
 	titleCaser := cases.Title(language.Und)
-	for _, part := range kindParts {
-		result += titleCaser.String(part)
+	var b strings.Builder
+	for _, t := range kindTokens {
+		if t == "" {
+			continue
+		}
+		b.WriteString(titleCaser.String(t))
 	}
 
-	if result == "" {
-		result = "Resource"
+	if b.Len() == 0 {
+		return resourceName
 	}
 
-	return result
+	return b.String()
 }
 
 // contains checks if the resource name contains any of the given patterns
