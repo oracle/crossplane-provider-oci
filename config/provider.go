@@ -63,17 +63,7 @@ var providerSchema string
 var providerMetadata string
 
 var ServiceWildcards = []string{
-	"oci_containerengine_.*",
-	"oci_database_.*",
-	"oci_core_.*",
-	"oci_identity_.*",
-	"oci_kms_.*",
-	"oci_mysql_.*",
-	"oci_network_load_balancer_.*",
-	"oci_objectstorage_.*",
-	"oci_psql_.*",
-	"oci_load_balancer_.*",
-	"oci_redis_.*",
+	".*",
 }
 
 // GetProvider returns provider configuration
