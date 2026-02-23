@@ -1,0 +1,18 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: CatalogPrivateEndpoint
+metadata:
+  labels:
+    testing.upbound.io/example-name: catalogprivateendpoint_label_1
+  name: catalogprivateendpoint1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: catalogprivateendpoint1
+    dnsZones:
+      - example.internal
+      - datacatalog.example.internal
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1

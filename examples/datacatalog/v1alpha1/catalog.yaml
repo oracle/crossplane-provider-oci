@@ -1,0 +1,12 @@
+apiVersion: datacatalog.oci.upbound.io/v1alpha1
+kind: Catalog
+metadata:
+  labels:
+    testing.upbound.io/example-name: catalog_label_1
+  name: catalog1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: catalog1
