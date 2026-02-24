@@ -1,0 +1,28 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: UnifiedAgentConfiguration
+metadata:
+  name: unifiedagentconfiguration1
+  labels:
+    testing.upbound.io/example-name: unifiedagentconfiguration_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: unifiedagentconfiguration1
+    description: "Unified Agent config"
+    isEnabled: true
+    serviceConfiguration:
+      - configurationType: LOGGING
+        destination:
+          - logObjectIdSelector:
+              matchLabels:
+                # required a custom log to be created first
+                testing.upbound.io/example-name: log_label_2
+        sources:
+          - name: "src1"
+            parser:
+              - parserType: NONE
+            sourceType: "LOG_TAIL"
+            paths:
+              - /var/log/messages

@@ -1,0 +1,21 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: Log
+metadata:
+  name: log1
+  labels:
+    testing.upbound.io/example-name: log_label_1
+spec:
+  forProvider:
+    configuration:
+      - compartmentId: ${COMPARTMENT_OCID}
+        source:
+          - category: "write"              
+            resource: "bucket1"
+            service: "objectstorage"
+            sourceType: "OCISERVICE"
+    displayName: "log1"
+    isEnabled: true
+    logGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loggroup_label_1
+    logType: "SERVICE"

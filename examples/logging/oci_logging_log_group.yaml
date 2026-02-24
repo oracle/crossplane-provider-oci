@@ -1,9 +1,0 @@
-apiVersion: logging.oci.upbound.io/v1alpha1
-kind: LogGroup
-metadata:
-  name: loggroup-via-crossplane
-spec:
-  forProvider:
-    compartmentIdRef:
-      name : compartment-via-crossplane5
-    displayName: "loggroup-crossplane"

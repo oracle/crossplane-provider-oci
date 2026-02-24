@@ -1,0 +1,13 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: LogSavedSearch
+metadata:
+  name: logsavedsearch1
+  labels:
+    testing.upbound.io/example-name: logsavedsearch_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: "examplesavedsearch"
+    query: "exampleQuery"

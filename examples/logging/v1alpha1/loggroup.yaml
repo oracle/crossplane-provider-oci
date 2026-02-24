@@ -1,0 +1,12 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: LogGroup
+metadata:
+  name: loggroup1
+  labels:
+    testing.upbound.io/example-name: loggroup_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: loggroup1

@@ -1,0 +1,16 @@
+apiVersion: logging.oci.upbound.io/v1alpha1
+kind: Log
+metadata:
+  annotations:
+    meta.upbound.io/example-id: logging/v1alpha1/log
+  labels:
+    testing.upbound.io/example-name: log_label_2
+  name: log2
+spec:
+  forProvider:
+    displayName: "log2"
+    isEnabled: true
+    logGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loggroup_label_1
+    logType: CUSTOM
