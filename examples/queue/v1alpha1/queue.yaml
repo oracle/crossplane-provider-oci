@@ -1,0 +1,12 @@
+apiVersion: queue.oci.upbound.io/v1alpha1
+kind: Queue
+metadata:
+  name: queue1
+  labels:
+    testing.upbound.io/example-name: queue_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: "queue1"
