@@ -1,0 +1,25 @@
+apiVersion: compute.oci.upbound.io/v1alpha1
+kind: InstanceConfiguration
+metadata:
+  name: instanceconfiguration2
+  labels:
+    testing.upbound.io/example-name: instanceconfiguration_label_2
+spec:
+  forProvider:
+    displayName: instanceconfiguration2
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    instanceDetails:
+      - instanceType: compute
+        launchDetails:
+          - compartmentId: ${COMPARTMENT_OCID}
+            shape: VM.Standard.E4.Flex
+            shapeConfig:
+              - ocpus: 1
+                memoryInGbs: 16
+            sourceDetails:
+              - sourceType: IMAGE
+                imageIdSelector:
+                  matchLabels:
+                    testing.upbound.io/example-name: image_label_1
