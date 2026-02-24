@@ -1,0 +1,28 @@
+apiVersion: autoscaling.oci.upbound.io/v1alpha1
+kind: AutoScalingConfiguration
+metadata:
+  name: autoscalingconfiguration1
+  labels:
+    testing.upbound.io/example-name: autoscalingconfiguration_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    # A resource that is managed by an autoscaling configuration. 
+    # The only supported type is instancePool.
+    # An InstanceConfiguration with valid launchDetails and an Instancepool with primarySubnet are required for creating an autoscaling configuration.
+    autoScalingResources:
+      - id: ${INSTANCEPOOL_OCID}
+        type: instancePool
+    policies:
+      - policyType: scheduled
+        displayName: scale-up-mornings
+        capacity:
+          - initial: 1
+            min: 1
+            max: 3
+        executionSchedule:
+          - expression: "0 15 10 ? * *"
+            timezone: "UTC"
+            type: cron
