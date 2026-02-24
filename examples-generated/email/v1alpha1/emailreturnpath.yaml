@@ -14,4 +14,6 @@ spec:
     freeformTags:
       Department: Finance
     name: ${var.email_return_path_name}
-    parentResourceId: ${oci_cloud_guard_resource.test_resource.id}
+    parentResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource

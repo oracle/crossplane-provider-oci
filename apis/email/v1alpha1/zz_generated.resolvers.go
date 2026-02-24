@@ -118,6 +118,56 @@ func (mg *EmailDomain) ResolveReferences(ctx context.Context, c client.Reader) e
 	return nil
 }
 
+// ResolveReferences of this EmailReturnPath.
+func (mg *EmailReturnPath) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("email.oci.upbound.io", "v1alpha1", "EmailDomain", "EmailDomainList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ParentResourceID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.ParentResourceIDRef,
+			Selector:     mg.Spec.ForProvider.ParentResourceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ParentResourceID")
+	}
+	mg.Spec.ForProvider.ParentResourceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ParentResourceIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("email.oci.upbound.io", "v1alpha1", "EmailDomain", "EmailDomainList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ParentResourceID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.ParentResourceIDRef,
+			Selector:     mg.Spec.InitProvider.ParentResourceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ParentResourceID")
+	}
+	mg.Spec.InitProvider.ParentResourceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ParentResourceIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this Sender.
 func (mg *Sender) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed

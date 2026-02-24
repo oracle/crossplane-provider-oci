@@ -30,7 +30,16 @@ type EmailReturnPathInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The OCID of the EmailDomain for this email return path.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/email/v1alpha1.EmailDomain
 	ParentResourceID *string `json:"parentResourceId,omitempty" tf:"parent_resource_id,omitempty"`
+
+	// Reference to a EmailDomain in email to populate parentResourceId.
+	// +kubebuilder:validation:Optional
+	ParentResourceIDRef *v1.Reference `json:"parentResourceIdRef,omitempty" tf:"-"`
+
+	// Selector for a EmailDomain in email to populate parentResourceId.
+	// +kubebuilder:validation:Optional
+	ParentResourceIDSelector *v1.Selector `json:"parentResourceIdSelector,omitempty" tf:"-"`
 }
 
 type EmailReturnPathLocksInitParameters struct {
@@ -129,8 +138,17 @@ type EmailReturnPathParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The OCID of the EmailDomain for this email return path.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/email/v1alpha1.EmailDomain
 	// +kubebuilder:validation:Optional
 	ParentResourceID *string `json:"parentResourceId,omitempty" tf:"parent_resource_id,omitempty"`
+
+	// Reference to a EmailDomain in email to populate parentResourceId.
+	// +kubebuilder:validation:Optional
+	ParentResourceIDRef *v1.Reference `json:"parentResourceIdRef,omitempty" tf:"-"`
+
+	// Selector for a EmailDomain in email to populate parentResourceId.
+	// +kubebuilder:validation:Optional
+	ParentResourceIDSelector *v1.Selector `json:"parentResourceIdSelector,omitempty" tf:"-"`
 }
 
 // EmailReturnPathSpec defines the desired state of EmailReturnPath
@@ -169,9 +187,8 @@ type EmailReturnPathStatus struct {
 type EmailReturnPath struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.parentResourceId) || (has(self.initProvider) && has(self.initProvider.parentResourceId))",message="spec.forProvider.parentResourceId is a required parameter"
-	Spec   EmailReturnPathSpec   `json:"spec"`
-	Status EmailReturnPathStatus `json:"status,omitempty"`
+	Spec              EmailReturnPathSpec   `json:"spec"`
+	Status            EmailReturnPathStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
