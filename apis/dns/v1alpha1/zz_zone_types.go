@@ -300,6 +300,7 @@ type ZoneInitParameters struct {
 
 	// The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
 
 	// Reference to a View in dns to populate viewId.
@@ -440,6 +441,7 @@ type ZoneParameters struct {
 
 	// The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.View
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ViewID *string `json:"viewId,omitempty" tf:"view_id,omitempty"`
 

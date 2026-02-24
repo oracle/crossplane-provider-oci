@@ -48,6 +48,7 @@ type ResolverEndpointInitParameters struct {
 
 	// The OCID of the target resolver.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Resolver
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ResolverID *string `json:"resolverId,omitempty" tf:"resolver_id,omitempty"`
 
 	// Reference to a Resolver in dns to populate resolverId.
@@ -63,6 +64,7 @@ type ResolverEndpointInitParameters struct {
 
 	// The OCID of a subnet. Must be part of the VCN that the resolver is attached to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in networking to populate subnetId.
@@ -167,6 +169,7 @@ type ResolverEndpointParameters struct {
 
 	// The OCID of the target resolver.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/dns/v1alpha1.Resolver
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ResolverID *string `json:"resolverId,omitempty" tf:"resolver_id,omitempty"`
 
@@ -184,6 +187,7 @@ type ResolverEndpointParameters struct {
 
 	// The OCID of a subnet. Must be part of the VCN that the resolver is attached to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 

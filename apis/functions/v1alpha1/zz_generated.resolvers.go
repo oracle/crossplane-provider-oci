@@ -206,7 +206,7 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.ApplicationIDRef,
 			Selector:     mg.Spec.ForProvider.ApplicationIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -393,7 +393,7 @@ func (mg *Function) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ApplicationIDRef,
 			Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -593,7 +593,7 @@ func (mg *InvokeFunction) ResolveReferences(ctx context.Context, c client.Reader
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FunctionID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.FunctionIDRef,
 			Selector:     mg.Spec.ForProvider.FunctionIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -612,7 +612,7 @@ func (mg *InvokeFunction) ResolveReferences(ctx context.Context, c client.Reader
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FunctionID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.FunctionIDRef,
 			Selector:     mg.Spec.InitProvider.FunctionIDSelector,
 			To:           reference.To{List: l, Managed: m},

@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
@@ -101,7 +102,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TopicID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.TopicIDRef,
 			Selector:     mg.Spec.ForProvider.TopicIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -139,7 +140,7 @@ func (mg *Subscription) ResolveReferences(ctx context.Context, c client.Reader) 
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TopicID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.TopicIDRef,
 			Selector:     mg.Spec.InitProvider.TopicIDSelector,
 			To:           reference.To{List: l, Managed: m},

@@ -321,7 +321,7 @@ func (mg *ResolverEndpoint) ResolveReferences(ctx context.Context, c client.Read
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ResolverID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.ResolverIDRef,
 			Selector:     mg.Spec.ForProvider.ResolverIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -340,7 +340,7 @@ func (mg *ResolverEndpoint) ResolveReferences(ctx context.Context, c client.Read
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SubnetID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.SubnetIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -378,7 +378,7 @@ func (mg *ResolverEndpoint) ResolveReferences(ctx context.Context, c client.Read
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResolverID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ResolverIDRef,
 			Selector:     mg.Spec.InitProvider.ResolverIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -397,7 +397,7 @@ func (mg *ResolverEndpoint) ResolveReferences(ctx context.Context, c client.Read
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SubnetID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.SubnetIDRef,
 			Selector:     mg.Spec.InitProvider.SubnetIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -573,7 +573,7 @@ func (mg *SteeringPolicy) ResolveReferences(ctx context.Context, c client.Reader
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.HealthCheckMonitorID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.HealthCheckMonitorIDRef,
 			Selector:     mg.Spec.ForProvider.HealthCheckMonitorIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -611,7 +611,7 @@ func (mg *SteeringPolicy) ResolveReferences(ctx context.Context, c client.Reader
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.HealthCheckMonitorID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.HealthCheckMonitorIDRef,
 			Selector:     mg.Spec.InitProvider.HealthCheckMonitorIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -642,7 +642,7 @@ func (mg *SteeringPolicyAttachment) ResolveReferences(ctx context.Context, c cli
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SteeringPolicyID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.SteeringPolicyIDRef,
 			Selector:     mg.Spec.ForProvider.SteeringPolicyIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -661,7 +661,7 @@ func (mg *SteeringPolicyAttachment) ResolveReferences(ctx context.Context, c cli
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ZoneID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.ZoneIDRef,
 			Selector:     mg.Spec.ForProvider.ZoneIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -680,7 +680,7 @@ func (mg *SteeringPolicyAttachment) ResolveReferences(ctx context.Context, c cli
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SteeringPolicyID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.SteeringPolicyIDRef,
 			Selector:     mg.Spec.InitProvider.SteeringPolicyIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -699,7 +699,7 @@ func (mg *SteeringPolicyAttachment) ResolveReferences(ctx context.Context, c cli
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ZoneID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ZoneIDRef,
 			Selector:     mg.Spec.InitProvider.ZoneIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -891,7 +891,7 @@ func (mg *Zone) ResolveReferences(ctx context.Context, c client.Reader) error {
 		}
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ViewID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.ViewIDRef,
 			Selector:     mg.Spec.ForProvider.ViewIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -971,7 +971,7 @@ func (mg *Zone) ResolveReferences(ctx context.Context, c client.Reader) error {
 		}
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ViewID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ViewIDRef,
 			Selector:     mg.Spec.InitProvider.ViewIDSelector,
 			To:           reference.To{List: l, Managed: m},

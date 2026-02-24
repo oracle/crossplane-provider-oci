@@ -46,6 +46,7 @@ type SubscriptionInitParameters struct {
 
 	// The OCID of the topic for the subscription.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/ons/v1alpha1.NotificationTopic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
 
 	// Reference to a NotificationTopic in ons to populate topicId.
@@ -134,6 +135,7 @@ type SubscriptionParameters struct {
 
 	// The OCID of the topic for the subscription.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/ons/v1alpha1.NotificationTopic
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	TopicID *string `json:"topicId,omitempty" tf:"topic_id,omitempty"`
 

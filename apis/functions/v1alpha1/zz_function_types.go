@@ -156,6 +156,7 @@ type FunctionInitParameters struct {
 
 	// The OCID of the application this function belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// Reference to a Application in functions to populate applicationId.
@@ -288,6 +289,7 @@ type FunctionParameters struct {
 
 	// The OCID of the application this function belongs to.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 

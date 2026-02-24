@@ -26,6 +26,7 @@ type InvokeFunctionInitParameters struct {
 
 	// The OCID of this function.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Function
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	FunctionID *string `json:"functionId,omitempty" tf:"function_id,omitempty"`
 
 	// Reference to a Function in functions to populate functionId.
@@ -99,6 +100,7 @@ type InvokeFunctionParameters struct {
 
 	// The OCID of this function.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/functions/v1alpha1.Function
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	FunctionID *string `json:"functionId,omitempty" tf:"function_id,omitempty"`
 
