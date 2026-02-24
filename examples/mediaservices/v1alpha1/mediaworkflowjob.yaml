@@ -1,0 +1,16 @@
+apiVersion: mediaservices.oci.upbound.io/v1alpha1
+kind: MediaWorkflowJob
+metadata:
+  labels:
+    testing.upbound.io/example-name: mediaworkflowjob_label_1
+  name: mediaworkflowjob1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: mediaworkflowjob1
+    mediaWorkflowIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: mediaworkflow_label_1
+    workflowIdentifierType: ID
