@@ -374,20 +374,7 @@ var GroupMap = map[string]GroupKindCalculator{
 	"oci_network_firewall_network_firewall": func(name string) (string, string) {
 		return "networkfirewall", "NetworkFirewall"
 	},
-
-	// Logging Service
-	"oci_logging_log_group": func(name string) (string, string) {
-		return "logging", "LogGroup"
-	},
-	"oci_logging_log": func(name string) (string, string) {
-		return "logging", "Log"
-	},
-	"oci_logging_log_saved_search": func(name string) (string, string) {
-		return "logging", "LogSavedSearch"
-	},
-	"oci_logging_unified_agent_configuration": func(name string) (string, string) {
-		return "logging", "UnifiedAgentConfiguration"
-	},
+	
 
 	// Load Balancer Service
 	"oci_load_balancer_load_balancer": func(name string) (string, string) {
