@@ -9,6 +9,7 @@ package v1alpha1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	resource "github.com/crossplane/upjet/pkg/resource"
 
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	errors "github.com/pkg/errors"
@@ -33,7 +34,7 @@ func (mg *Log) ResolveReferences(ctx context.Context, c client.Reader) error {
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LogGroupID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.ForProvider.LogGroupIDRef,
 			Selector:     mg.Spec.ForProvider.LogGroupIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -52,7 +53,7 @@ func (mg *Log) ResolveReferences(ctx context.Context, c client.Reader) error {
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.LogGroupID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.LogGroupIDRef,
 			Selector:     mg.Spec.InitProvider.LogGroupIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -198,13 +199,13 @@ func (mg *UnifiedAgentConfiguration) ResolveReferences(ctx context.Context, c cl
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.ServiceConfiguration); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.ServiceConfiguration[i3].Destination); i4++ {
 			{
-				m, l, err = apisresolver.GetManagedResource("logging.oci.upbound.io", "v1alpha1", "Log", "LogList")
+				m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Object", "ObjectList")
 				if err != nil {
 					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 				}
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServiceConfiguration[i3].Destination[i4].LogObjectID),
-					Extract:      reference.ExternalName(),
+					Extract:      resource.ExtractResourceID(),
 					Reference:    mg.Spec.ForProvider.ServiceConfiguration[i3].Destination[i4].LogObjectIDRef,
 					Selector:     mg.Spec.ForProvider.ServiceConfiguration[i3].Destination[i4].LogObjectIDSelector,
 					To:           reference.To{List: l, Managed: m},
@@ -263,13 +264,13 @@ func (mg *UnifiedAgentConfiguration) ResolveReferences(ctx context.Context, c cl
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.ServiceConfiguration); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.ServiceConfiguration[i3].Destination); i4++ {
 			{
-				m, l, err = apisresolver.GetManagedResource("logging.oci.upbound.io", "v1alpha1", "Log", "LogList")
+				m, l, err = apisresolver.GetManagedResource("objectstorage.oci.upbound.io", "v1alpha1", "Object", "ObjectList")
 				if err != nil {
 					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 				}
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceConfiguration[i3].Destination[i4].LogObjectID),
-					Extract:      reference.ExternalName(),
+					Extract:      resource.ExtractResourceID(),
 					Reference:    mg.Spec.InitProvider.ServiceConfiguration[i3].Destination[i4].LogObjectIDRef,
 					Selector:     mg.Spec.InitProvider.ServiceConfiguration[i3].Destination[i4].LogObjectIDSelector,
 					To:           reference.To{List: l, Managed: m},

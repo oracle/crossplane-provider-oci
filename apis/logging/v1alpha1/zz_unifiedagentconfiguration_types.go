@@ -1098,14 +1098,15 @@ type ScrapeTargetsParameters struct {
 type ServiceConfigurationDestinationInitParameters struct {
 
 	// (Updatable) The OCID of the resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/logging/v1alpha1.Log
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Object
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	LogObjectID *string `json:"logObjectId,omitempty" tf:"log_object_id,omitempty"`
 
-	// Reference to a Log in logging to populate logObjectId.
+	// Reference to a Object in objectstorage to populate logObjectId.
 	// +kubebuilder:validation:Optional
 	LogObjectIDRef *v1.Reference `json:"logObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Log in logging to populate logObjectId.
+	// Selector for a Object in objectstorage to populate logObjectId.
 	// +kubebuilder:validation:Optional
 	LogObjectIDSelector *v1.Selector `json:"logObjectIdSelector,omitempty" tf:"-"`
 
@@ -1125,15 +1126,16 @@ type ServiceConfigurationDestinationObservation struct {
 type ServiceConfigurationDestinationParameters struct {
 
 	// (Updatable) The OCID of the resource.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/logging/v1alpha1.Log
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/objectstorage/v1alpha1.Object
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LogObjectID *string `json:"logObjectId,omitempty" tf:"log_object_id,omitempty"`
 
-	// Reference to a Log in logging to populate logObjectId.
+	// Reference to a Object in objectstorage to populate logObjectId.
 	// +kubebuilder:validation:Optional
 	LogObjectIDRef *v1.Reference `json:"logObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Log in logging to populate logObjectId.
+	// Selector for a Object in objectstorage to populate logObjectId.
 	// +kubebuilder:validation:Optional
 	LogObjectIDSelector *v1.Selector `json:"logObjectIdSelector,omitempty" tf:"-"`
 

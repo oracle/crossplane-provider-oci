@@ -587,8 +587,8 @@ spec:
                                 description: (Updatable) The OCID of the resource.
                                 type: string
                               logObjectIdRef:
-                                description: Reference to a Log in logging to populate
-                                  logObjectId.
+                                description: Reference to a Object in objectstorage
+                                  to populate logObjectId.
                                 properties:
                                   name:
                                     description: Name of the referenced object.
@@ -622,8 +622,8 @@ spec:
                                 - name
                                 type: object
                               logObjectIdSelector:
-                                description: Selector for a Log in logging to populate
-                                  logObjectId.
+                                description: Selector for a Object in objectstorage
+                                  to populate logObjectId.
                                 properties:
                                   matchControllerRef:
                                     description: |-
@@ -2000,8 +2000,8 @@ spec:
                                 description: (Updatable) The OCID of the resource.
                                 type: string
                               logObjectIdRef:
-                                description: Reference to a Log in logging to populate
-                                  logObjectId.
+                                description: Reference to a Object in objectstorage
+                                  to populate logObjectId.
                                 properties:
                                   name:
                                     description: Name of the referenced object.
@@ -2035,8 +2035,8 @@ spec:
                                 - name
                                 type: object
                               logObjectIdSelector:
-                                description: Selector for a Log in logging to populate
-                                  logObjectId.
+                                description: Selector for a Object in objectstorage
+                                  to populate logObjectId.
                                 properties:
                                   matchControllerRef:
                                     description: |-

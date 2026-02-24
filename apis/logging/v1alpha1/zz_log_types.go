@@ -63,6 +63,7 @@ type LogInitParameters struct {
 
 	// (Updatable) OCID of a log group to work with.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/logging/v1alpha1.LogGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
 	// Reference to a LogGroup in logging to populate logGroupId.
@@ -153,6 +154,7 @@ type LogParameters struct {
 
 	// (Updatable) OCID of a log group to work with.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/logging/v1alpha1.LogGroup
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
