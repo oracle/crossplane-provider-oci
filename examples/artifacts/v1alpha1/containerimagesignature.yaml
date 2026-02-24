@@ -1,0 +1,28 @@
+apiVersion: artifacts.oci.upbound.io/v1alpha1
+kind: ContainerImageSignature
+metadata:
+  labels:
+    testing.upbound.io/example-name: containerimagesignature_label_1
+  name: containerimagesignature1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    imageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: image_label_1
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key_label_1
+    kmsKeyVersionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: keyversion_label_1
+    # message should be a base64 encoded string
+    # To generate a base64 string yourself run the following command. Replace with your data.
+    # echo -n "message" | base64
+    message: "bWVzc2FnZQ=="
+    # To obtain signature, sign the key in the following way, or get exported signature after creating examples/kms/v1alpha1/sign.yaml
+    # oci kms crypto signed-data sign --key-id VAULT_KEY_OCID --message BASE64_ENCODED_MESSAGED --signing-algorithm SIGNING_ALGORITHM --endpoint VAULT_CRYPTO_ENDPOINT
+    signature: ${VAULT_KEY_SIGNATURE}
+    signingAlgorithm: "SHA_256_RSA_PKCS1_V1_5"

@@ -1,7 +1,0 @@
-apiVersion: artifacts.oci.upbound.io/v1alpha1
-kind: GenericArtifact
-metadata:
-  name: generic-artifacts-via-crossplane-1
-spec:
-  forProvider:
-    artifactId: ocid1.genericartifact.xxx

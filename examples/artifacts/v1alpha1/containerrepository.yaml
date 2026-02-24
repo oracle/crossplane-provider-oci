@@ -1,0 +1,12 @@
+apiVersion: artifacts.oci.upbound.io/v1alpha1
+kind: ContainerRepository
+metadata:
+  labels:
+    testing.upbound.io/example-name: containerrepository_label_1
+  name: containerrepository1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: containerrepository1

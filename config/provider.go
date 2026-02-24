@@ -22,7 +22,6 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
-	"github.com/oracle/provider-oci/config/artifacts"
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
@@ -94,7 +93,6 @@ func GetProvider() *config.Provider {
 		core.Configure,
 		kms.Configure,
 		containerengine.Configure,
-		artifacts.Configure,
 		ons.Configure,
 		networkloadbalancer.Configure,
 		dns.Configure,
