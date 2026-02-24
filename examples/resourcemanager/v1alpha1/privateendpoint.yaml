@@ -1,0 +1,18 @@
+apiVersion: resourcemanager.oci.upbound.io/v1alpha1
+kind: PrivateEndpoint
+metadata:
+  name: privateendpoint1
+  labels:
+    testing.upbound.io/example-name: privateendpoint_label_1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: "privateendpoint1"
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1
