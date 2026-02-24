@@ -1,0 +1,13 @@
+apiVersion: apm.oci.upbound.io/v1alpha1
+kind: ApmDomain
+metadata:
+  labels:
+    testing.upbound.io/example-name: apmdomain_label_1
+  name: apmdomain1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: apmdomain1
+    isFreeTier: true
