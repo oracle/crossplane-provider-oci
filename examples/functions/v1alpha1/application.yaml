@@ -1,0 +1,15 @@
+apiVersion: functions.oci.upbound.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    testing.upbound.io/example-name: application_label_1
+  name: application1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: application1
+    subnetIdsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1

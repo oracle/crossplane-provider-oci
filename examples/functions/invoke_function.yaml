@@ -1,8 +1,0 @@
-apiVersion: functions.oci.upbound.io/v1alpha1
-kind: InvokeFunction
-metadata:
-  name: invoke-function-via-crossplane
-spec:
-  forProvider:
-    functionIdRef:
-      name: function-via-crossplane

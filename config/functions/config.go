@@ -21,38 +21,11 @@ import "github.com/crossplane/upjet/pkg/config"
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("oci_functions_application", func(r *config.Resource) {
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
-		r.References["compartment_id"] = config.Reference{
-			TerraformName: "oci_identity_compartment",
-		}
 		r.References["subnet_ids"] = config.Reference{
 			TerraformName: "oci_core_subnet",
 		}
 		r.References["network_security_group_ids"] = config.Reference{
 			TerraformName: "oci_core_network_security_group",
-		}
-		r.References["kms_key_id"] = config.Reference{
-			TerraformName: "oci_kms_key",
-		}
-		r.References["domain_id"] = config.Reference{
-			TerraformName: "oci_dns_zone",
-		}
-	})
-
-	p.AddResourceConfigurator("oci_functions_function", func(r *config.Resource) {
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
-		r.References["application_id"] = config.Reference{
-			TerraformName: "oci_functions_application",
-		}
-	})
-
-	p.AddResourceConfigurator("oci_functions_invoke_function", func(r *config.Resource) {
-		r.Version = "v1alpha1"
-		r.ExternalName = config.IdentifierFromProvider
-		r.References["function_id"] = config.Reference{
-			TerraformName: "oci_functions_function",
 		}
 	})
 }
