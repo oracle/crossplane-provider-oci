@@ -1,0 +1,23 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditPolicyManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/auditpolicymanagement
+  labels:
+    testing.upbound.io/example-name: test_audit_policy_management
+  name: test-audit-policy-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.audit_policy_management_description}
+    displayName: ${var.audit_policy_management_display_name}
+    freeformTags:
+      Department: Finance
+    retrieveFromTargetTrigger: true
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target_database

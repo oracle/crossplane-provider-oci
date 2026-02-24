@@ -279,8 +279,7 @@ spec:
                       a query.
                     type: string
                   savedReportIdRef:
-                    description: Reference to a SafeReport in datalabelingservice
-                      to populate savedReportId.
+                    description: Reference to a Report in datasafe to populate savedReportId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -314,8 +313,7 @@ spec:
                     - name
                     type: object
                   savedReportIdSelector:
-                    description: Selector for a SafeReport in datalabelingservice
-                      to populate savedReportId.
+                    description: Selector for a Report in datasafe to populate savedReportId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -583,8 +581,7 @@ spec:
                       a query.
                     type: string
                   savedReportIdRef:
-                    description: Reference to a SafeReport in datalabelingservice
-                      to populate savedReportId.
+                    description: Reference to a Report in datasafe to populate savedReportId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -618,8 +615,7 @@ spec:
                     - name
                     type: object
                   savedReportIdSelector:
-                    description: Selector for a SafeReport in datalabelingservice
-                      to populate savedReportId.
+                    description: Selector for a Report in datasafe to populate savedReportId.
                     properties:
                       matchControllerRef:
                         description: |-

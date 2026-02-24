@@ -1,0 +1,19 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/securitypolicy
+  labels:
+    testing.upbound.io/example-name: test_security_policy
+  name: test-security-policy
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.security_policy_description}
+    displayName: ${var.security_policy_display_name}
+    freeformTags:
+      Department: Finance

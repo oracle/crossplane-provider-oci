@@ -1,0 +1,10 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: DiscoveryJobsResult
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/discoveryjobsresult
+  labels:
+    testing.upbound.io/example-name: test_discovery_jobs_result
+  name: test-discovery-jobs-result
+spec:
+  forProvider: {}

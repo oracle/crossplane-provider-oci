@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AlertPolicyRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/alertpolicyrule
+  labels:
+    testing.upbound.io/example-name: test_alert_policy_rule
+  name: test-alert-policy-rule
+spec:
+  forProvider:
+    alertPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_alert_policy
+    description: ${var.alert_policy_rule_description}
+    displayName: ${var.alert_policy_rule_display_name}
+    expression: ${var.alert_policy_rule_expression}

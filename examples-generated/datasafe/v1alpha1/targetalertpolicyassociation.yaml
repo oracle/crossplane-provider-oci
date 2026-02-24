@@ -1,0 +1,27 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: TargetAlertPolicyAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/targetalertpolicyassociation
+  labels:
+    testing.upbound.io/example-name: test_target_alert_policy_association
+  name: test-target-alert-policy-association
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.target_alert_policy_association_description}
+    displayName: ${var.target_alert_policy_association_display_name}
+    freeformTags:
+      Department: Finance
+    isEnabled: ${var.target_alert_policy_association_is_enabled}
+    policyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_policy
+    target_type: ${var.target_alert_policy_association_target_type}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target

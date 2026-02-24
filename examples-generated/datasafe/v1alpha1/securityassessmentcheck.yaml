@@ -1,0 +1,17 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SecurityAssessmentCheck
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/securityassessmentcheck
+  labels:
+    testing.upbound.io/example-name: test_security_assessment_check
+  name: test-security-assessment-check
+spec:
+  forProvider:
+    patchOperations:
+    - operation: ${var.security_assessment_check_patch_operations_operation}
+      selection: ${var.security_assessment_check_patch_operations_selection}
+      value: ${var.security_assessment_check_patch_operations_value}
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment

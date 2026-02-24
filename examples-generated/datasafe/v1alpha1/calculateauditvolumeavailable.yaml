@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: CalculateAuditVolumeAvailable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/calculateauditvolumeavailable
+  labels:
+    testing.upbound.io/example-name: test_calculate_audit_volume_available
+  name: test-calculate-audit-volume-available
+spec:
+  forProvider:
+    auditCollectionStartTime: ${var.calculate_audit_volume_available_audit_collection_start_time}
+    auditProfileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_audit_profile
+    databaseUniqueName: ${var.calculate_audit_volume_available_database_unique_name}
+    trailLocations: ${var.calculate_audit_volume_available_trail_locations}

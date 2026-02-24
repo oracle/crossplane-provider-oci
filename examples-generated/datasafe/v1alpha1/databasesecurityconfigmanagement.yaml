@@ -1,0 +1,26 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: DatabaseSecurityConfigManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/databasesecurityconfigmanagement
+  labels:
+    testing.upbound.io/example-name: test_database_security_config_management
+  name: test-database-security-config-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.database_security_config_management_description}
+    displayName: ${var.database_security_config_management_display_name}
+    freeformTags:
+      Department: Finance
+    sqlFirewallConfig:
+    - excludeJob: ${var.database_security_config_management_sql_firewall_config_exclude_job}
+      status: ${var.database_security_config_management_sql_firewall_config_status}
+      violationLogAutoPurge: ${var.database_security_config_management_sql_firewall_config_violation_log_auto_purge}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target_database

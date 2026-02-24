@@ -1,0 +1,45 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: ReportDefinition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/reportdefinition
+  labels:
+    testing.upbound.io/example-name: test_report_definition
+  name: test-report-definition
+spec:
+  forProvider:
+    columnFilters:
+    - expressions: ${var.report_definition_column_filters_expressions}
+      fieldName: ${var.report_definition_column_filters_field_name}
+      isEnabled: ${var.report_definition_column_filters_is_enabled}
+      isHidden: ${var.report_definition_column_filters_is_hidden}
+      operator: ${var.report_definition_column_filters_operator}
+    columnInfo:
+    - applicableOperators: ${var.report_definition_column_info_applicable_operators}
+      dataType: ${var.report_definition_column_info_data_type}
+      displayName: ${var.report_definition_column_info_display_name}
+      displayOrder: ${var.report_definition_column_info_display_order}
+      fieldName: ${var.report_definition_column_info_field_name}
+      isHidden: ${var.report_definition_column_info_is_hidden}
+      isVirtual: ${var.report_definition_column_info_is_virtual}
+    columnSortings:
+    - fieldName: ${var.report_definition_column_sortings_field_name}
+      isAscending: ${var.report_definition_column_sortings_is_ascending}
+      sortingOrder: ${var.report_definition_column_sortings_sorting_order}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.report_definition_description}
+    displayName: ${var.report_definition_display_name}
+    freeformTags:
+      Department: Finance
+    parentId: ${oci_data_safe_parent.test_parent.id}
+    summary:
+    - countOf: ${var.report_definition_summary_count_of}
+      displayOrder: ${var.report_definition_summary_display_order}
+      groupByFieldName: ${var.report_definition_summary_group_by_field_name}
+      isHidden: ${var.report_definition_summary_is_hidden}
+      name: ${var.report_definition_summary_name}
+      scimFilter: ${var.report_definition_summary_scim_filter}

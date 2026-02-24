@@ -1,0 +1,25 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: UserAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/userassessment
+  labels:
+    testing.upbound.io/example-name: test_user_assessment
+  name: test-user-assessment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.user_assessment_description}
+    displayName: ${var.user_assessment_display_name}
+    freeformTags:
+      Department: Finance
+    isAssessmentScheduled: ${var.user_assessment_is_assessment_scheduled}
+    schedule: ${var.user_assessment_schedule}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target
+    targetType: ${var.user_assessment_target_type}

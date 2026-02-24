@@ -1,0 +1,26 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SqlFirewallPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sqlfirewallpolicy
+  labels:
+    testing.upbound.io/example-name: test_sql_firewall_policy
+  name: test-sql-firewall-policy
+spec:
+  forProvider:
+    allowedClientIps: ${var.sql_firewall_policy_allowed_client_ips}
+    allowedClientOsUsernames: ${var.sql_firewall_policy_allowed_client_os_usernames}
+    allowedClientPrograms: ${var.sql_firewall_policy_allowed_client_programs}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sql_firewall_policy_description}
+    displayName: ${var.sql_firewall_policy_display_name}
+    enforcementScope: ${var.sql_firewall_policy_enforcement_scope}
+    freeformTags:
+      Department: Finance
+    sqlFirewallPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sql_firewall_policy
+    status: ${var.sql_firewall_policy_status}
+    violationAction: ${var.sql_firewall_policy_violation_action}
+    violationAudit: ${var.sql_firewall_policy_violation_audit}

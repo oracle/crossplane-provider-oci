@@ -311,74 +311,74 @@ import (
 	workspaceproject "github.com/oracle/provider-oci/internal/controller/dataintegration/workspaceproject"
 	workspacetask "github.com/oracle/provider-oci/internal/controller/dataintegration/workspacetask"
 	dataset "github.com/oracle/provider-oci/internal/controller/datalabelingservice/dataset"
-	safeaddsdmcolumns "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeaddsdmcolumns"
-	safealert "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safealert"
-	safealertpolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safealertpolicy"
-	safealertpolicyrule "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safealertpolicyrule"
-	safeattributeset "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeattributeset"
-	safeauditarchiveretrieval "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeauditarchiveretrieval"
-	safeauditpolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeauditpolicy"
-	safeauditpolicymanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeauditpolicymanagement"
-	safeauditprofile "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeauditprofile"
-	safeauditprofilemanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeauditprofilemanagement"
-	safeaudittrail "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeaudittrail"
-	safeaudittrailmanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeaudittrailmanagement"
-	safecalculateauditvolumeavailable "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safecalculateauditvolumeavailable"
-	safecalculateauditvolumecollected "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safecalculateauditvolumecollected"
-	safecomparesecurityassessment "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safecomparesecurityassessment"
-	safecompareuserassessment "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safecompareuserassessment"
-	safedatabasesecurityconfig "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safedatabasesecurityconfig"
-	safedatabasesecurityconfigmanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safedatabasesecurityconfigmanagement"
-	safedatasafeconfiguration "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safedatasafeconfiguration"
-	safedatasafeprivateendpoint "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safedatasafeprivateendpoint"
-	safediscoveryjob "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safediscoveryjob"
-	safediscoveryjobsresult "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safediscoveryjobsresult"
-	safegenerateonpremconnectorconfiguration "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safegenerateonpremconnectorconfiguration"
-	safelibrarymaskingformat "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safelibrarymaskingformat"
-	safemaskdata "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskdata"
-	safemaskingpoliciesapplydifferencetomaskingcolumns "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskingpoliciesapplydifferencetomaskingcolumns"
-	safemaskingpoliciesmaskingcolumn "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskingpoliciesmaskingcolumn"
-	safemaskingpolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskingpolicy"
-	safemaskingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskingpolicyhealthreportmanagement"
-	safemaskingreportmanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safemaskingreportmanagement"
-	safeonpremconnector "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeonpremconnector"
-	safereport "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safereport"
-	safereportdefinition "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safereportdefinition"
-	safesdmmaskingpolicydifference "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesdmmaskingpolicydifference"
-	safesecurityassessment "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecurityassessment"
-	safesecurityassessmentcheck "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecurityassessmentcheck"
-	safesecurityassessmentfinding "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecurityassessmentfinding"
-	safesecuritypolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecuritypolicy"
-	safesecuritypolicyconfig "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecuritypolicyconfig"
-	safesecuritypolicydeployment "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecuritypolicydeployment"
-	safesecuritypolicydeploymentmanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecuritypolicydeploymentmanagement"
-	safesecuritypolicymanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesecuritypolicymanagement"
-	safesensitivedatamodel "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivedatamodel"
-	safesensitivedatamodelreferentialrelation "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivedatamodelreferentialrelation"
-	safesensitivedatamodelsapplydiscoveryjobresults "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivedatamodelsapplydiscoveryjobresults"
-	safesensitivedatamodelssensitivecolumn "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivedatamodelssensitivecolumn"
-	safesensitivetype "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivetype"
-	safesensitivetypegroup "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivetypegroup"
-	safesensitivetypegroupgroupedsensitivetype "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivetypegroupgroupedsensitivetype"
-	safesensitivetypesexport "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesensitivetypesexport"
-	safesetsecurityassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesetsecurityassessmentbaseline"
-	safesetsecurityassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesetsecurityassessmentbaselinemanagement"
-	safesetuserassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesetuserassessmentbaseline"
-	safesetuserassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesetuserassessmentbaselinemanagement"
-	safesqlcollection "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesqlcollection"
-	safesqlfirewallpolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesqlfirewallpolicy"
-	safesqlfirewallpolicymanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safesqlfirewallpolicymanagement"
-	safetargetalertpolicyassociation "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safetargetalertpolicyassociation"
-	safetargetdatabase "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safetargetdatabase"
-	safetargetdatabasegroup "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safetargetdatabasegroup"
-	safetargetdatabasepeertargetdatabase "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safetargetdatabasepeertargetdatabase"
-	safeunifiedauditpolicy "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunifiedauditpolicy"
-	safeunifiedauditpolicydefinition "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunifiedauditpolicydefinition"
-	safeunsetsecurityassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunsetsecurityassessmentbaseline"
-	safeunsetsecurityassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunsetsecurityassessmentbaselinemanagement"
-	safeunsetuserassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunsetuserassessmentbaseline"
-	safeunsetuserassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeunsetuserassessmentbaselinemanagement"
-	safeuserassessment "github.com/oracle/provider-oci/internal/controller/datalabelingservice/safeuserassessment"
+	addsdmcolumns "github.com/oracle/provider-oci/internal/controller/datasafe/addsdmcolumns"
+	alert "github.com/oracle/provider-oci/internal/controller/datasafe/alert"
+	alertpolicy "github.com/oracle/provider-oci/internal/controller/datasafe/alertpolicy"
+	alertpolicyrule "github.com/oracle/provider-oci/internal/controller/datasafe/alertpolicyrule"
+	attributeset "github.com/oracle/provider-oci/internal/controller/datasafe/attributeset"
+	auditarchiveretrieval "github.com/oracle/provider-oci/internal/controller/datasafe/auditarchiveretrieval"
+	auditpolicy "github.com/oracle/provider-oci/internal/controller/datasafe/auditpolicy"
+	auditpolicymanagement "github.com/oracle/provider-oci/internal/controller/datasafe/auditpolicymanagement"
+	auditprofile "github.com/oracle/provider-oci/internal/controller/datasafe/auditprofile"
+	auditprofilemanagement "github.com/oracle/provider-oci/internal/controller/datasafe/auditprofilemanagement"
+	audittrail "github.com/oracle/provider-oci/internal/controller/datasafe/audittrail"
+	audittrailmanagement "github.com/oracle/provider-oci/internal/controller/datasafe/audittrailmanagement"
+	calculateauditvolumeavailable "github.com/oracle/provider-oci/internal/controller/datasafe/calculateauditvolumeavailable"
+	calculateauditvolumecollected "github.com/oracle/provider-oci/internal/controller/datasafe/calculateauditvolumecollected"
+	comparesecurityassessment "github.com/oracle/provider-oci/internal/controller/datasafe/comparesecurityassessment"
+	compareuserassessment "github.com/oracle/provider-oci/internal/controller/datasafe/compareuserassessment"
+	databasesecurityconfig "github.com/oracle/provider-oci/internal/controller/datasafe/databasesecurityconfig"
+	databasesecurityconfigmanagement "github.com/oracle/provider-oci/internal/controller/datasafe/databasesecurityconfigmanagement"
+	datasafeconfiguration "github.com/oracle/provider-oci/internal/controller/datasafe/datasafeconfiguration"
+	datasafeprivateendpoint "github.com/oracle/provider-oci/internal/controller/datasafe/datasafeprivateendpoint"
+	discoveryjob "github.com/oracle/provider-oci/internal/controller/datasafe/discoveryjob"
+	discoveryjobsresult "github.com/oracle/provider-oci/internal/controller/datasafe/discoveryjobsresult"
+	generateonpremconnectorconfiguration "github.com/oracle/provider-oci/internal/controller/datasafe/generateonpremconnectorconfiguration"
+	librarymaskingformat "github.com/oracle/provider-oci/internal/controller/datasafe/librarymaskingformat"
+	maskdata "github.com/oracle/provider-oci/internal/controller/datasafe/maskdata"
+	maskingpoliciesapplydifferencetomaskingcolumns "github.com/oracle/provider-oci/internal/controller/datasafe/maskingpoliciesapplydifferencetomaskingcolumns"
+	maskingpoliciesmaskingcolumn "github.com/oracle/provider-oci/internal/controller/datasafe/maskingpoliciesmaskingcolumn"
+	maskingpolicy "github.com/oracle/provider-oci/internal/controller/datasafe/maskingpolicy"
+	maskingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/datasafe/maskingpolicyhealthreportmanagement"
+	maskingreportmanagement "github.com/oracle/provider-oci/internal/controller/datasafe/maskingreportmanagement"
+	onpremconnector "github.com/oracle/provider-oci/internal/controller/datasafe/onpremconnector"
+	report "github.com/oracle/provider-oci/internal/controller/datasafe/report"
+	reportdefinition "github.com/oracle/provider-oci/internal/controller/datasafe/reportdefinition"
+	sdmmaskingpolicydifference "github.com/oracle/provider-oci/internal/controller/datasafe/sdmmaskingpolicydifference"
+	securityassessment "github.com/oracle/provider-oci/internal/controller/datasafe/securityassessment"
+	securityassessmentcheck "github.com/oracle/provider-oci/internal/controller/datasafe/securityassessmentcheck"
+	securityassessmentfinding "github.com/oracle/provider-oci/internal/controller/datasafe/securityassessmentfinding"
+	securitypolicy "github.com/oracle/provider-oci/internal/controller/datasafe/securitypolicy"
+	securitypolicyconfig "github.com/oracle/provider-oci/internal/controller/datasafe/securitypolicyconfig"
+	securitypolicydeployment "github.com/oracle/provider-oci/internal/controller/datasafe/securitypolicydeployment"
+	securitypolicydeploymentmanagement "github.com/oracle/provider-oci/internal/controller/datasafe/securitypolicydeploymentmanagement"
+	securitypolicymanagement "github.com/oracle/provider-oci/internal/controller/datasafe/securitypolicymanagement"
+	sensitivedatamodel "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivedatamodel"
+	sensitivedatamodelreferentialrelation "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivedatamodelreferentialrelation"
+	sensitivedatamodelsapplydiscoveryjobresults "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivedatamodelsapplydiscoveryjobresults"
+	sensitivedatamodelssensitivecolumn "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivedatamodelssensitivecolumn"
+	sensitivetype "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivetype"
+	sensitivetypegroup "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivetypegroup"
+	sensitivetypegroupgroupedsensitivetype "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivetypegroupgroupedsensitivetype"
+	sensitivetypesexport "github.com/oracle/provider-oci/internal/controller/datasafe/sensitivetypesexport"
+	setsecurityassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datasafe/setsecurityassessmentbaseline"
+	setsecurityassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datasafe/setsecurityassessmentbaselinemanagement"
+	setuserassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datasafe/setuserassessmentbaseline"
+	setuserassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datasafe/setuserassessmentbaselinemanagement"
+	sqlcollection "github.com/oracle/provider-oci/internal/controller/datasafe/sqlcollection"
+	sqlfirewallpolicy "github.com/oracle/provider-oci/internal/controller/datasafe/sqlfirewallpolicy"
+	sqlfirewallpolicymanagement "github.com/oracle/provider-oci/internal/controller/datasafe/sqlfirewallpolicymanagement"
+	targetalertpolicyassociation "github.com/oracle/provider-oci/internal/controller/datasafe/targetalertpolicyassociation"
+	targetdatabase "github.com/oracle/provider-oci/internal/controller/datasafe/targetdatabase"
+	targetdatabasegroup "github.com/oracle/provider-oci/internal/controller/datasafe/targetdatabasegroup"
+	targetdatabasepeertargetdatabase "github.com/oracle/provider-oci/internal/controller/datasafe/targetdatabasepeertargetdatabase"
+	unifiedauditpolicy "github.com/oracle/provider-oci/internal/controller/datasafe/unifiedauditpolicy"
+	unifiedauditpolicydefinition "github.com/oracle/provider-oci/internal/controller/datasafe/unifiedauditpolicydefinition"
+	unsetsecurityassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datasafe/unsetsecurityassessmentbaseline"
+	unsetsecurityassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datasafe/unsetsecurityassessmentbaselinemanagement"
+	unsetuserassessmentbaseline "github.com/oracle/provider-oci/internal/controller/datasafe/unsetuserassessmentbaseline"
+	unsetuserassessmentbaselinemanagement "github.com/oracle/provider-oci/internal/controller/datasafe/unsetuserassessmentbaselinemanagement"
+	userassessment "github.com/oracle/provider-oci/internal/controller/datasafe/userassessment"
 	jobdatascience "github.com/oracle/provider-oci/internal/controller/datascience/job"
 	jobrun "github.com/oracle/provider-oci/internal/controller/datascience/jobrun"
 	mlapplication "github.com/oracle/provider-oci/internal/controller/datascience/mlapplication"
@@ -867,7 +867,7 @@ import (
 	servicecatalogassociation "github.com/oracle/provider-oci/internal/controller/servicecatalog/servicecatalogassociation"
 	baselineablemetric "github.com/oracle/provider-oci/internal/controller/stackmonitoring/baselineablemetric"
 	configstackmonitoring "github.com/oracle/provider-oci/internal/controller/stackmonitoring/config"
-	discoveryjob "github.com/oracle/provider-oci/internal/controller/stackmonitoring/discoveryjob"
+	discoveryjobstackmonitoring "github.com/oracle/provider-oci/internal/controller/stackmonitoring/discoveryjob"
 	maintenancewindowstackmonitoring "github.com/oracle/provider-oci/internal/controller/stackmonitoring/maintenancewindow"
 	maintenancewindowsretryfailedoperation "github.com/oracle/provider-oci/internal/controller/stackmonitoring/maintenancewindowsretryfailedoperation"
 	maintenancewindowsstop "github.com/oracle/provider-oci/internal/controller/stackmonitoring/maintenancewindowsstop"
@@ -1219,74 +1219,74 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		workspaceproject.Setup,
 		workspacetask.Setup,
 		dataset.Setup,
-		safeaddsdmcolumns.Setup,
-		safealert.Setup,
-		safealertpolicy.Setup,
-		safealertpolicyrule.Setup,
-		safeattributeset.Setup,
-		safeauditarchiveretrieval.Setup,
-		safeauditpolicy.Setup,
-		safeauditpolicymanagement.Setup,
-		safeauditprofile.Setup,
-		safeauditprofilemanagement.Setup,
-		safeaudittrail.Setup,
-		safeaudittrailmanagement.Setup,
-		safecalculateauditvolumeavailable.Setup,
-		safecalculateauditvolumecollected.Setup,
-		safecomparesecurityassessment.Setup,
-		safecompareuserassessment.Setup,
-		safedatabasesecurityconfig.Setup,
-		safedatabasesecurityconfigmanagement.Setup,
-		safedatasafeconfiguration.Setup,
-		safedatasafeprivateendpoint.Setup,
-		safediscoveryjob.Setup,
-		safediscoveryjobsresult.Setup,
-		safegenerateonpremconnectorconfiguration.Setup,
-		safelibrarymaskingformat.Setup,
-		safemaskdata.Setup,
-		safemaskingpoliciesapplydifferencetomaskingcolumns.Setup,
-		safemaskingpoliciesmaskingcolumn.Setup,
-		safemaskingpolicy.Setup,
-		safemaskingpolicyhealthreportmanagement.Setup,
-		safemaskingreportmanagement.Setup,
-		safeonpremconnector.Setup,
-		safereport.Setup,
-		safereportdefinition.Setup,
-		safesdmmaskingpolicydifference.Setup,
-		safesecurityassessment.Setup,
-		safesecurityassessmentcheck.Setup,
-		safesecurityassessmentfinding.Setup,
-		safesecuritypolicy.Setup,
-		safesecuritypolicyconfig.Setup,
-		safesecuritypolicydeployment.Setup,
-		safesecuritypolicydeploymentmanagement.Setup,
-		safesecuritypolicymanagement.Setup,
-		safesensitivedatamodel.Setup,
-		safesensitivedatamodelreferentialrelation.Setup,
-		safesensitivedatamodelsapplydiscoveryjobresults.Setup,
-		safesensitivedatamodelssensitivecolumn.Setup,
-		safesensitivetype.Setup,
-		safesensitivetypegroup.Setup,
-		safesensitivetypegroupgroupedsensitivetype.Setup,
-		safesensitivetypesexport.Setup,
-		safesetsecurityassessmentbaseline.Setup,
-		safesetsecurityassessmentbaselinemanagement.Setup,
-		safesetuserassessmentbaseline.Setup,
-		safesetuserassessmentbaselinemanagement.Setup,
-		safesqlcollection.Setup,
-		safesqlfirewallpolicy.Setup,
-		safesqlfirewallpolicymanagement.Setup,
-		safetargetalertpolicyassociation.Setup,
-		safetargetdatabase.Setup,
-		safetargetdatabasegroup.Setup,
-		safetargetdatabasepeertargetdatabase.Setup,
-		safeunifiedauditpolicy.Setup,
-		safeunifiedauditpolicydefinition.Setup,
-		safeunsetsecurityassessmentbaseline.Setup,
-		safeunsetsecurityassessmentbaselinemanagement.Setup,
-		safeunsetuserassessmentbaseline.Setup,
-		safeunsetuserassessmentbaselinemanagement.Setup,
-		safeuserassessment.Setup,
+		addsdmcolumns.Setup,
+		alert.Setup,
+		alertpolicy.Setup,
+		alertpolicyrule.Setup,
+		attributeset.Setup,
+		auditarchiveretrieval.Setup,
+		auditpolicy.Setup,
+		auditpolicymanagement.Setup,
+		auditprofile.Setup,
+		auditprofilemanagement.Setup,
+		audittrail.Setup,
+		audittrailmanagement.Setup,
+		calculateauditvolumeavailable.Setup,
+		calculateauditvolumecollected.Setup,
+		comparesecurityassessment.Setup,
+		compareuserassessment.Setup,
+		databasesecurityconfig.Setup,
+		databasesecurityconfigmanagement.Setup,
+		datasafeconfiguration.Setup,
+		datasafeprivateendpoint.Setup,
+		discoveryjob.Setup,
+		discoveryjobsresult.Setup,
+		generateonpremconnectorconfiguration.Setup,
+		librarymaskingformat.Setup,
+		maskdata.Setup,
+		maskingpoliciesapplydifferencetomaskingcolumns.Setup,
+		maskingpoliciesmaskingcolumn.Setup,
+		maskingpolicy.Setup,
+		maskingpolicyhealthreportmanagement.Setup,
+		maskingreportmanagement.Setup,
+		onpremconnector.Setup,
+		report.Setup,
+		reportdefinition.Setup,
+		sdmmaskingpolicydifference.Setup,
+		securityassessment.Setup,
+		securityassessmentcheck.Setup,
+		securityassessmentfinding.Setup,
+		securitypolicy.Setup,
+		securitypolicyconfig.Setup,
+		securitypolicydeployment.Setup,
+		securitypolicydeploymentmanagement.Setup,
+		securitypolicymanagement.Setup,
+		sensitivedatamodel.Setup,
+		sensitivedatamodelreferentialrelation.Setup,
+		sensitivedatamodelsapplydiscoveryjobresults.Setup,
+		sensitivedatamodelssensitivecolumn.Setup,
+		sensitivetype.Setup,
+		sensitivetypegroup.Setup,
+		sensitivetypegroupgroupedsensitivetype.Setup,
+		sensitivetypesexport.Setup,
+		setsecurityassessmentbaseline.Setup,
+		setsecurityassessmentbaselinemanagement.Setup,
+		setuserassessmentbaseline.Setup,
+		setuserassessmentbaselinemanagement.Setup,
+		sqlcollection.Setup,
+		sqlfirewallpolicy.Setup,
+		sqlfirewallpolicymanagement.Setup,
+		targetalertpolicyassociation.Setup,
+		targetdatabase.Setup,
+		targetdatabasegroup.Setup,
+		targetdatabasepeertargetdatabase.Setup,
+		unifiedauditpolicy.Setup,
+		unifiedauditpolicydefinition.Setup,
+		unsetsecurityassessmentbaseline.Setup,
+		unsetsecurityassessmentbaselinemanagement.Setup,
+		unsetuserassessmentbaseline.Setup,
+		unsetuserassessmentbaselinemanagement.Setup,
+		userassessment.Setup,
 		jobdatascience.Setup,
 		jobrun.Setup,
 		mlapplication.Setup,
@@ -1775,7 +1775,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		servicecatalogassociation.Setup,
 		baselineablemetric.Setup,
 		configstackmonitoring.Setup,
-		discoveryjob.Setup,
+		discoveryjobstackmonitoring.Setup,
 		maintenancewindowstackmonitoring.Setup,
 		maintenancewindowsretryfailedoperation.Setup,
 		maintenancewindowsstop.Setup,

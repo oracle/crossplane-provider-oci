@@ -49,6 +49,7 @@ import (
 	v1alpha1dataflow "github.com/oracle/provider-oci/apis/dataflow/v1alpha1"
 	v1alpha1dataintegration "github.com/oracle/provider-oci/apis/dataintegration/v1alpha1"
 	v1alpha1datalabelingservice "github.com/oracle/provider-oci/apis/datalabelingservice/v1alpha1"
+	v1alpha1datasafe "github.com/oracle/provider-oci/apis/datasafe/v1alpha1"
 	v1alpha1datascience "github.com/oracle/provider-oci/apis/datascience/v1alpha1"
 	v1alpha1dblm "github.com/oracle/provider-oci/apis/dblm/v1alpha1"
 	v1alpha1dbmulticloud "github.com/oracle/provider-oci/apis/dbmulticloud/v1alpha1"
@@ -181,6 +182,7 @@ func init() {
 		v1alpha1dataflow.SchemeBuilder.AddToScheme,
 		v1alpha1dataintegration.SchemeBuilder.AddToScheme,
 		v1alpha1datalabelingservice.SchemeBuilder.AddToScheme,
+		v1alpha1datasafe.SchemeBuilder.AddToScheme,
 		v1alpha1datascience.SchemeBuilder.AddToScheme,
 		v1alpha1dblm.SchemeBuilder.AddToScheme,
 		v1alpha1dbmulticloud.SchemeBuilder.AddToScheme,

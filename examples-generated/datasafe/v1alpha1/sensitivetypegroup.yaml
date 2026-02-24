@@ -1,0 +1,19 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveTypeGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivetypegroup
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type_group
+  name: test-sensitive-type-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sensitive_type_group_description}
+    displayName: ${var.sensitive_type_group_display_name}
+    freeformTags:
+      Department: Finance

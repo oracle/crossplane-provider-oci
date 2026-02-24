@@ -1,0 +1,27 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SqlCollection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sqlcollection
+  labels:
+    testing.upbound.io/example-name: test_sql_collection
+  name: test-sql-collection
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbUserNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_user
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sql_collection_description}
+    displayName: ${var.sql_collection_display_name}
+    freeformTags:
+      Department: Finance
+    sqlLevel: ${var.sql_collection_sql_level}
+    status: ${var.sql_collection_status}
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_target

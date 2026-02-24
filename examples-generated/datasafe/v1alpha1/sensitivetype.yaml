@@ -1,0 +1,27 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivetype
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type
+  name: test-sensitive-type
+spec:
+  forProvider:
+    commentPattern: ${var.sensitive_type_comment_pattern}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataPattern: ${var.sensitive_type_data_pattern}
+    defaultMaskingFormatId: ${oci_data_safe_default_masking_format.test_default_masking_format.id}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.sensitive_type_description}
+    displayName: ${var.sensitive_type_display_name}
+    entityType: ${var.sensitive_type_entity_type}
+    freeformTags:
+      Department: Finance
+    namePattern: ${var.sensitive_type_name_pattern}
+    parentCategoryId: ${oci_marketplace_category.test_category.id}
+    searchType: ${var.sensitive_type_search_type}
+    shortName: ${var.sensitive_type_short_name}

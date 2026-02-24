@@ -1,0 +1,19 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: Alert
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/alert
+  labels:
+    testing.upbound.io/example-name: test_alert
+  name: test-alert
+spec:
+  forProvider:
+    alertIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_alert
+    comment: ${var.alert_comment}
+    definedTags:
+      Operations.CostCenter: "42"
+    freeformTags:
+      Department: Finance
+    status: ${var.alert_status}
