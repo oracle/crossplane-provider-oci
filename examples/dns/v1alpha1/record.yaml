@@ -1,0 +1,13 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: Record
+metadata:
+  labels:
+    testing.upbound.io/example-name: record_label_1
+  name: record1
+spec:
+  forProvider:
+    domain: domain1.oci-dns1
+    rdata: 192.168.0.1
+    rtype: A
+    ttl: 3600
+    zoneNameOrId: zone1.oci-dns1

@@ -1,0 +1,19 @@
+apiVersion: dns.oci.upbound.io/v1alpha1
+kind: SteeringPolicy
+metadata:
+  labels:
+    testing.upbound.io/example-name: steeringpolicy_label_1
+  name: steeringpolicy1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: steeringpolicy1
+    template: FAILOVER
+    healthCheckMonitorIdRef:
+      name: httpmonitor1
+    rules:
+      - ruleType: HEALTH
+      - ruleType: LIMIT
+        defaultCount: 1

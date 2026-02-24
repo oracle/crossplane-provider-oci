@@ -1,9 +1,0 @@
-apiVersion: dns.oci.upbound.io/v1alpha1
-kind: Record
-metadata:
-  name: record-via-crossplane
-spec:
-  forProvider:
-      zone_name_or_id: zone-via-crossplane
-      domain: test-domain
-      rtype: CNAME
