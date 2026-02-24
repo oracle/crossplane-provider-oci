@@ -1,0 +1,15 @@
+apiVersion: integration.oci.upbound.io/v1alpha1
+kind: IntegrationInstance
+metadata:
+  labels:
+    testing.upbound.io/example-name: integrationinstance_label_1
+  name: integrationinstance1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: integrationinstance1
+    integrationInstanceType: "STANDARDX"
+    isByol: False
+    messagePacks: 1
