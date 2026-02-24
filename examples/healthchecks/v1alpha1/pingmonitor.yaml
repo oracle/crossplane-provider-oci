@@ -1,0 +1,17 @@
+apiVersion: healthchecks.oci.upbound.io/v1alpha1
+kind: PingMonitor
+metadata:
+  labels:
+    testing.upbound.io/example-name: pingmonitor_label_1
+  name: pingmonitor1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: pingmonitor1
+    intervalInSeconds: 30
+    protocol: ICMP
+    targets:
+      - www.example.com
+
