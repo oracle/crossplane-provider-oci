@@ -1,4 +1,0 @@
-apiVersion: monitoring.oci.upbound.io/v1alpha1
-kind: AlarmHistoryCollection
-metadata:
-  name: alarm-history-collection-via-crossplane

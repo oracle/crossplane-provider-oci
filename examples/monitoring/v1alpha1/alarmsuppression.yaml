@@ -1,0 +1,17 @@
+apiVersion: monitoring.oci.upbound.io/v1alpha1
+kind: AlarmSuppression
+metadata:
+  labels:
+    testing.upbound.io/example-name: alarmsuppression_label_1
+  name: alarmsuppression1
+spec:
+  forProvider:
+    alarmSuppressionTarget:
+    - alarmIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: alarm_label_1
+      targetType: ALARM
+    timeSuppressFrom: "2026-02-22T20:43:40Z"
+    timeSuppressUntil: "2026-02-22T20:53:30Z"
+    displayName: alarmsuppression1
+    dimensions: {'availabilityDomain': 'phx-ad-1'}
