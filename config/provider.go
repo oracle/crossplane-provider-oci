@@ -40,7 +40,6 @@ import (
 	"github.com/oracle/provider-oci/config/networkfirewall"
 	"github.com/oracle/provider-oci/config/networkloadbalancer"
 	"github.com/oracle/provider-oci/config/objectstorage"
-	"github.com/oracle/provider-oci/config/ons"
 	"github.com/oracle/provider-oci/config/psql"
 	"github.com/oracle/provider-oci/config/recovery"
 	"github.com/oracle/provider-oci/config/redis"
@@ -94,7 +93,6 @@ func GetProvider() *config.Provider {
 		core.Configure,
 		kms.Configure,
 		containerengine.Configure,
-		ons.Configure,
 		networkloadbalancer.Configure,
 		dns.Configure,
 		healthchecks.Configure,

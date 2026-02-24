@@ -1,0 +1,12 @@
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  labels:
+    testing.upbound.io/example-name: notificationtopic_label_1
+  name: notificationtopic1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: notificationtopic1
