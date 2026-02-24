@@ -1,0 +1,14 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: UsagePlan
+metadata:
+  labels:
+    testing.upbound.io/example-name: usageplan_label_1
+  name: usageplan1
+spec:
+  forProvider:
+    displayName: usageplan1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    entitlements:
+      - name: "basicentitlement"

@@ -1,0 +1,24 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  name: deployment1
+  labels:
+    testing.upbound.io/example-name: deployment_label_1
+spec:
+  forProvider:
+    displayName: deployment1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1    
+    gatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: gateway_label_1
+    pathPrefix: "/api"
+    specification:
+      - routes:
+        - path: "/"
+          methods:
+            - "GET"
+          backend:
+            - type: HTTP_BACKEND
+              url: "https://example.com"

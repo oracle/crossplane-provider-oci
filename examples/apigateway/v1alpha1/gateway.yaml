@@ -1,0 +1,16 @@
+apiVersion: apigateway.oci.upbound.io/v1alpha1
+kind: Gateway
+metadata:
+  name: gateway1
+  labels:
+    testing.upbound.io/example-name: gateway_label_1
+spec:
+  forProvider:
+    displayName: gateway1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    endpointType: PUBLIC
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
