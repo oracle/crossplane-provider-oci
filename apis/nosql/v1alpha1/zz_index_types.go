@@ -37,7 +37,16 @@ type IndexInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A table name within the compartment, or a table OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/nosql/v1alpha1.Table
 	TableNameOrID *string `json:"tableNameOrId,omitempty" tf:"table_name_or_id,omitempty"`
+
+	// Reference to a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDRef *v1.Reference `json:"tableNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDSelector *v1.Selector `json:"tableNameOrIdSelector,omitempty" tf:"-"`
 }
 
 type IndexObservation struct {
@@ -100,8 +109,17 @@ type IndexParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A table name within the compartment, or a table OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/nosql/v1alpha1.Table
 	// +kubebuilder:validation:Optional
 	TableNameOrID *string `json:"tableNameOrId,omitempty" tf:"table_name_or_id,omitempty"`
+
+	// Reference to a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDRef *v1.Reference `json:"tableNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDSelector *v1.Selector `json:"tableNameOrIdSelector,omitempty" tf:"-"`
 }
 
 type KeysInitParameters struct {
@@ -181,7 +199,6 @@ type Index struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.keys) || (has(self.initProvider) && has(self.initProvider.keys))",message="spec.forProvider.keys is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.tableNameOrId) || (has(self.initProvider) && has(self.initProvider.tableNameOrId))",message="spec.forProvider.tableNameOrId is a required parameter"
 	Spec   IndexSpec   `json:"spec"`
 	Status IndexStatus `json:"status,omitempty"`
 }

@@ -17,4 +17,6 @@ spec:
       jsonFieldType: ${var.index_keys_json_field_type}
       jsonPath: ${var.index_keys_json_path}
     name: ${var.index_name}
-    tableNameOrId: ${oci_nosql_table_name_or.test_table_name_or.id}
+    tableNameOrIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_table_name_or

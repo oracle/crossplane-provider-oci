@@ -138,6 +138,25 @@ func (mg *Index) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("nosql.oci.upbound.io", "v1alpha1", "Table", "TableList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TableNameOrID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.TableNameOrIDRef,
+			Selector:     mg.Spec.ForProvider.TableNameOrIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.TableNameOrID")
+	}
+	mg.Spec.ForProvider.TableNameOrID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.TableNameOrIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -156,6 +175,25 @@ func (mg *Index) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("nosql.oci.upbound.io", "v1alpha1", "Table", "TableList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TableNameOrID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.TableNameOrIDRef,
+			Selector:     mg.Spec.InitProvider.TableNameOrIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TableNameOrID")
+	}
+	mg.Spec.InitProvider.TableNameOrID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TableNameOrIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -238,6 +276,25 @@ func (mg *TableReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("nosql.oci.upbound.io", "v1alpha1", "Table", "TableList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TableNameOrID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.TableNameOrIDRef,
+			Selector:     mg.Spec.ForProvider.TableNameOrIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.TableNameOrID")
+	}
+	mg.Spec.ForProvider.TableNameOrID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.TableNameOrIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -256,6 +313,25 @@ func (mg *TableReplica) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("nosql.oci.upbound.io", "v1alpha1", "Table", "TableList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.TableNameOrID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.TableNameOrIDRef,
+			Selector:     mg.Spec.InitProvider.TableNameOrIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.TableNameOrID")
+	}
+	mg.Spec.InitProvider.TableNameOrID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.TableNameOrIDRef = rsp.ResolvedReference
 
 	return nil
 }

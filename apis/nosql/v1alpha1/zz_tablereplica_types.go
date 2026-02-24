@@ -37,7 +37,16 @@ type TableReplicaInitParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// A table name within the compartment, or a table OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/nosql/v1alpha1.Table
 	TableNameOrID *string `json:"tableNameOrId,omitempty" tf:"table_name_or_id,omitempty"`
+
+	// Reference to a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDRef *v1.Reference `json:"tableNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDSelector *v1.Selector `json:"tableNameOrIdSelector,omitempty" tf:"-"`
 }
 
 type TableReplicaObservation struct {
@@ -88,8 +97,17 @@ type TableReplicaParameters struct {
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// A table name within the compartment, or a table OCID.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/nosql/v1alpha1.Table
 	// +kubebuilder:validation:Optional
 	TableNameOrID *string `json:"tableNameOrId,omitempty" tf:"table_name_or_id,omitempty"`
+
+	// Reference to a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDRef *v1.Reference `json:"tableNameOrIdRef,omitempty" tf:"-"`
+
+	// Selector for a Table in nosql to populate tableNameOrId.
+	// +kubebuilder:validation:Optional
+	TableNameOrIDSelector *v1.Selector `json:"tableNameOrIdSelector,omitempty" tf:"-"`
 }
 
 // TableReplicaSpec defines the desired state of TableReplica
@@ -129,7 +147,6 @@ type TableReplica struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.region) || (has(self.initProvider) && has(self.initProvider.region))",message="spec.forProvider.region is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.tableNameOrId) || (has(self.initProvider) && has(self.initProvider.tableNameOrId))",message="spec.forProvider.tableNameOrId is a required parameter"
 	Spec   TableReplicaSpec   `json:"spec"`
 	Status TableReplicaStatus `json:"status,omitempty"`
 }
