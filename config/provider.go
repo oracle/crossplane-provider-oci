@@ -40,6 +40,7 @@ import (
 	"github.com/oracle/provider-oci/config/mysql"
 	"github.com/oracle/provider-oci/config/networkfirewall"
 	"github.com/oracle/provider-oci/config/networkloadbalancer"
+	"github.com/oracle/provider-oci/config/nosql"
 	"github.com/oracle/provider-oci/config/objectstorage"
 	"github.com/oracle/provider-oci/config/psql"
 	"github.com/oracle/provider-oci/config/recovery"
@@ -112,6 +113,7 @@ func GetProvider() *config.Provider {
 		redis.Configure,
 		database.Configure,
 		recovery.Configure,
+		nosql.Configure,
 		email.Configure,
 	} {
 		configure(pc)

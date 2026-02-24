@@ -1,0 +1,18 @@
+apiVersion: nosql.oci.upbound.io/v1alpha1
+kind: Table
+metadata:
+  labels:
+    testing.upbound.io/example-name: table_label_1
+  name: table1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    ddlStatement: ${var.table_ddl_statement}
+    name: table1
+    tableLimits:
+    - capacityMode: ON_DEMAND
+      maxReadUnits: "1"
+      maxStorageInGbs: "1"
+      maxWriteUnits: "1"

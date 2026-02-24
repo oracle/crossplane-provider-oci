@@ -1,0 +1,14 @@
+apiVersion: nosql.oci.upbound.io/v1alpha1
+kind: Index
+metadata:
+  labels:
+    testing.upbound.io/example-name: index_label_1
+  name: index1
+spec:
+  forProvider:
+    keys:
+    - columnName: column1
+    name: index1
+    tableNameOrIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: table_label_1
