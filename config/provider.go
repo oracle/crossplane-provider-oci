@@ -27,6 +27,7 @@ import (
 	"github.com/oracle/provider-oci/config/core"
 	"github.com/oracle/provider-oci/config/database"
 	"github.com/oracle/provider-oci/config/dns"
+	"github.com/oracle/provider-oci/config/email"
 	"github.com/oracle/provider-oci/config/events"
 	"github.com/oracle/provider-oci/config/filestorage"
 	"github.com/oracle/provider-oci/config/functions"
@@ -111,6 +112,7 @@ func GetProvider() *config.Provider {
 		redis.Configure,
 		database.Configure,
 		recovery.Configure,
+		email.Configure,
 	} {
 		configure(pc)
 	}

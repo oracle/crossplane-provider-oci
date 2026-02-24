@@ -1,0 +1,10 @@
+apiVersion: email.oci.upbound.io/v1alpha1
+kind: Suppression
+metadata:
+  labels:
+    testing.upbound.io/example-name: suppression_label_1
+  name: suppression1
+spec:
+  forProvider:
+    compartmentId: ${TENANCY_OCID}
+    emailAddress: emailsuppression1@email.dummydomain.com

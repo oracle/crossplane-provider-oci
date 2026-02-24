@@ -1,0 +1,11 @@
+apiVersion: email.oci.upbound.io/v1alpha1
+kind: Dkim
+metadata:
+  labels:
+    testing.upbound.io/example-name: dkim_label_1
+  name: dkim1
+spec:
+  forProvider:
+    emailDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: emaildomain_label_1
