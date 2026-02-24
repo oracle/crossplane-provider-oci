@@ -188,8 +188,19 @@ func ServiceGroupDetector(resourceName string) (group string, kind string) {
 		}
 
 	case "data":
-		// Data Labeling Service: "data_labeling_service" -> "datalabelingservice"
-		group = "datalabelingservice"
+		// Data Labeling Service, Data Safe
+		if len(parts) > 2 {
+			switch parts[2] {
+			case "labeling":
+				group = "datalabelingservice"
+			case "safe":
+				group = "datasafe"
+			default:
+				group = "datasafe"
+			}
+		} else {
+			group = "datasafe"
+		}
 
 	case "delegate":
 		// Delegate Access Control: "delegate_access_control" -> "delegateaccesscontrol"
