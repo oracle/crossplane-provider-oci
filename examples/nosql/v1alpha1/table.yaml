@@ -9,10 +9,10 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
-    ddlStatement: ${var.table_ddl_statement}
+    ddlStatement: ${NOSQL_TABLE_DDLSTATEMENT}
     name: table1
     tableLimits:
     - capacityMode: ON_DEMAND
-      maxReadUnits: "1"
-      maxStorageInGbs: "1"
-      maxWriteUnits: "1"
+      maxReadUnits: 1
+      maxStorageInGbs: 1
+      maxWriteUnits: 1

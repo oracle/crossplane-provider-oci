@@ -3,7 +3,7 @@ kind: TableReplica
 metadata:
   labels:
     testing.upbound.io/example-name: tablereplica_label_1
-  name: replica1
+  name: tablereplica1
 spec:
   forProvider:
     region: us-ashburn-1
