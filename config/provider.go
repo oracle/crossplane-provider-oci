@@ -19,6 +19,7 @@ package config
 import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
+
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/registry/reference"
 
@@ -89,7 +90,6 @@ func GetProvider() *config.Provider {
 		core.Configure,
 		kms.Configure,
 		containerengine.Configure,
-		ons.Configure,
 		networkloadbalancer.Configure,
 		dns.Configure,
 		healthchecks.Configure,
