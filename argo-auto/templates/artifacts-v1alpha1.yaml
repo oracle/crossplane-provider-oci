@@ -12,9 +12,12 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
+    - name: vault_management_endpoint
     - name: image_instance_ocid
     - name: vault_key_signature
     - name: compartment_ocid
+    - name: create_key
+      value: "true"
     - name: create_image
       value: "true"
     - name: create_compartment
@@ -27,6 +30,17 @@ spec:
     - name: artifacts-tests-workflow
       dag:
         tasks:
+        - name: create-key
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_key}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
+              - name: envVars
+                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}},COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
         - name: create-image
           templateRef:
             name: test-template
@@ -75,7 +89,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-image, create-kmskey, create-kmskeyversion]
+          dependencies: [create-compartment, create-image, create-key, create-kmskeyversion]
           arguments:
             parameters:
               - name: resourceFile

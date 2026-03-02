@@ -12,7 +12,10 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
+    - name: vault_management_endpoint
     - name: compartment_ocid
+    - name: create_key
+      value: "true"
     - name: create_compartment
       value: "true"
     - name: create_resources
@@ -23,6 +26,17 @@ spec:
     - name: certificatesmanagement-tests-workflow
       dag:
         tasks:
+        - name: create-key
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_key}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -39,7 +53,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-kmskey]
+          dependencies: [create-key, create-compartment]
           arguments:
             parameters:
               - name: resourceFile

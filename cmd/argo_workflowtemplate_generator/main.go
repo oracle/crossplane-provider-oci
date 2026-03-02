@@ -40,14 +40,17 @@ var (
 	WorkflowTemplate         *template.Template
 	WorkflowTemplateFilePath                   = filepath.Join(RootDir, "cmd/argo_workflowtemplate_generator/templates/workflowtemplate.yaml.tmpl")
 	SelectorKindOverrides    map[string]string = map[string]string{
-		"ocicacheusersselector":         "ocicacheuser",
-		"subnetidsselector":             "subnet",
-		"tablenameoridselector":         "table",
-		"sourceidselector":              "filesystem",
-		"targetidselector":              "filesystem",
-		"defaultbackendsetnameselector": "backendset",
-		"dbsystemidselector":            "mysqldbsystem",
-		"topicidselector":               "notificationtopic",
+		"ocicacheusersselector":                "ocicacheuser",
+		"subnetidsselector":                    "subnet",
+		"tablenameoridselector":                "table",
+		"sourceidselector":                     "filesystem",
+		"targetidselector":                     "filesystem",
+		"defaultbackendsetnameselector":        "backendset",
+		"dbsystemidselector":                   "mysqldbsystem",
+		"topicidselector":                      "notificationtopic",
+		"passwordsecretidselector":             "secret",
+		"kmskeyidselector":                     "key",
+		"issuercertificateauthorityidselector": "certificateauthority",
 	}
 	ResourceKindToFileMapping map[string]string = make(map[string]string)
 )
