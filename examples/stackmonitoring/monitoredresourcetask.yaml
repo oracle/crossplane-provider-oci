@@ -1,0 +1,25 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourceTask
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcetask
+  labels:
+    testing.upbound.io/example-name: test_update_resource_types_config_task
+  name: test-update-resource-types-config-task
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    freeformTags:
+      bar-key: test_update_resource_types_config_task.value
+    name: ${var.task_name}
+    taskDetails:
+    - handlerType: TELEGRAF
+      resourceTypesConfiguration:
+      - handlerConfig:
+        - collectorTypes:
+          - abc
+          telemetryResourceGroup: telegraf_abc
+        resourceType: telegraf_abc
+      type: UPDATE_RESOURCE_TYPE_CONFIGS

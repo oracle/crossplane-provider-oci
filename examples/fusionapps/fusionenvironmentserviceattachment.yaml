@@ -1,0 +1,13 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironmentServiceAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentserviceattachment
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_service_attachment
+  name: test-fusion-environment-service-attachment
+spec:
+  forProvider:
+    fusionEnvironmentId: ${var.fusion_environment_id}
+    serviceInstanceId: ${var.service_instance_id}
+    serviceInstanceType: ${var.fusion_environment_service_attachment_service_instance_type}

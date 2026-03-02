@@ -1,0 +1,14 @@
+apiVersion: adm.oci.upbound.io/v1alpha1
+kind: RemediationRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: adm/v1alpha1/remediationrun
+  labels:
+    testing.upbound.io/example-name: example_remediation_run
+  name: example-remediation-run
+spec:
+  forProvider:
+    displayName: example_remediation_run
+    remediationRecipeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_remediation_recipe

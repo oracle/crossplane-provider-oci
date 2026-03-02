@@ -1,0 +1,98 @@
+apiVersion: vnmonitoring.oci.upbound.io/v1alpha1
+kind: PathAnalysi
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_path_analysi
+  name: test-path-analysi
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationEndpoint:
+    - address: 10.1.20.55
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+      type: ${var.path_analysi_destination_endpoint_type}
+    protocol: ${var.path_analysi_protocol}
+    protocolParameters:
+    - destinationPort: ${var.path_analysi_protocol_parameters_destination_port}
+      icmpCode: ${var.path_analysi_protocol_parameters_icmp_code}
+      icmpType: ${var.path_analysi_protocol_parameters_icmp_type}
+      sourcePort: ${var.path_analysi_protocol_parameters_source_port}
+      type: ${var.path_analysi_protocol_parameters_type}
+    queryOptions:
+    - isBiDirectionalAnalysis: ${var.path_analysi_query_options_is_bi_directional_analysis}
+    sourceEndpoint:
+    - address: 10.1.21.55
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet2
+      type: ${var.path_analysi_source_endpoint_type}
+    type: ${var.path_analysi_type}
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testSubnet1
+    dnsLabel: testsubnet1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_subnet2
+  name: test-subnet2
+spec:
+  forProvider:
+    cidrBlock: 10.1.21.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testSubnet2
+    dnsLabel: testsubnet2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testVcn
+    dnsLabel: testvcn

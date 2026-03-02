@@ -1,0 +1,21 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceNodeReplaceConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancenodereplaceconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_replace_configuration
+  name: test-bds-instance-node-replace-configuration
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    displayName: displayName
+    durationInMinutes: "20"
+    levelTypeDetails:
+    - levelType: NODE_TYPE_LEVEL
+      nodeType: UTILITY
+    metricType: INSTANCE_STATUS

@@ -12,7 +12,7 @@ spec:
     displayName: "privateendpoint1"
     subnetIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: subnet_label_1
+        testing.upbound.io/example-name: subnet_label_2
     vcnIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vcn_label_1

@@ -1,0 +1,78 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourcesAssociateMonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcesassociatemonitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_associate_monitored_resource
+  name: test-monitored-resources-associate-monitored-resource
+spec:
+  forProvider:
+    associationType: uses
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitored_resource2
+    sourceResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitored_resource1
+
+---
+
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcesassociatemonitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource1
+  name: test-monitored-resource1
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleDisplayName
+    freeformTags:
+      bar-key: test_monitored_resource1.value
+    hostName: ${var.stack_mon_hostname_resource1}
+    managementAgentId: ${var.stack_mon_management_agent_id_resource1}
+    name: terraformExample
+    properties:
+    - name: osName
+      value: Linux
+    - name: osVersion
+      value: "7.0"
+    resourceTimeZone: en
+    type: host
+
+---
+
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcesassociatemonitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource2
+  name: test-monitored-resource2
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleDisplayName2
+    freeformTags:
+      bar-key: test_monitored_resource2.value
+    hostName: ${var.stack_mon_hostname_resource2}
+    managementAgentId: ${var.stack_mon_management_agent_id_resource2}
+    name: terraformExample2
+    properties:
+    - name: osName
+      value: Linux
+    - name: osVersion
+      value: "7.0"
+    resourceTimeZone: en
+    type: host

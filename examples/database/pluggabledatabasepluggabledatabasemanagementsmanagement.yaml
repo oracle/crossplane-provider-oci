@@ -1,0 +1,74 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: PluggableDatabasePluggabledatabasemanagementsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabasepluggabledatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_pluggable_database_pluggabledatabasemanagements_management
+  name: test-pluggable-database-pluggabledatabasemanagements-management
+spec:
+  forProvider:
+    credentialDetails:
+    - passwordSecretIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      userName: ${var.ssl_user_name}
+    enablePluggabledatabasemanagement: ${var.enable_pluggabledatabasemanagement}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database
+    port: ${var.pluggable_database_pluggabledatabasemanagements_management_port}
+    privateEndPointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_management_private_endpoint
+    protocol: ${var.pluggable_database_pluggabledatabasemanagements_management_protocol}
+    role: ${var.pluggable_database_pluggabledatabasemanagements_management_role}
+    serviceName: ${join("", [data.oci_database_databases.t.databases.0.db_unique_name,
+      oci_core_subnet.t.subnet_domain_name])}
+    sslSecretId: ${var.ssl_secret_id}
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementDbManagementPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabasepluggabledatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_db_management_private_endpoint
+  name: test-db-management-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${oci_database_db_system.t.db_home.0.database.0.db_name}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: PluggableDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabasepluggabledatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_pluggable_database
+  name: test-pluggable-database
+spec:
+  forProvider:
+    containerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: oci_database_database
+    pdbAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    pdbName: SalesPdb
+    tdeWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

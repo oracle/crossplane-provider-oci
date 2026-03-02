@@ -1,0 +1,33 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Schedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/schedule
+  labels:
+    testing.upbound.io/example-name: cron_schedule_example
+  name: cron-schedule-example
+spec:
+  forProvider:
+    action:
+    - actionDetails:
+      - createJobRunDetails:
+        - compartmentId: ${var.compartment_id}
+          displayName: ${var.data_science_job_run_display_name}
+          jobId: ${var.data_science_job_id}
+          projectId: ${var.data_science_project_id}
+        httpActionType: CREATE_JOB_RUN
+      actionType: HTTP
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.schedule_description}
+    displayName: ${var.schedule_display_name}
+    logDetails:
+    - logGroupId: ${var.log_group_id}
+      logId: ${var.log_id}
+    projectId: ${var.data_science_project_id}
+    trigger:
+    - cronExpression: 11 11 * * *
+      timeEnd: "2065-01-01T05:00:00.000Z"
+      timeStart: "2055-01-01T05:00:00.000Z"
+      triggerType: CRON

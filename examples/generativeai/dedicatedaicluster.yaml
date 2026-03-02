@@ -1,0 +1,19 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: DedicatedAiCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/dedicatedaicluster
+  labels:
+    testing.upbound.io/example-name: test_hosting_cluster
+  name: test-hosting-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.hosting_cluster_description}
+    displayName: ${var.hosting_cluster_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    type: HOSTING
+    unitCount: ${var.hosting_cluster_unit_count}
+    unitShape: ${var.hosting_cluster_shape}

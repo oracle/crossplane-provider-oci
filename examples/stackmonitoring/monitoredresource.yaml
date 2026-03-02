@@ -1,0 +1,25 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource
+  name: test-monitored-resource
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleDisplayName
+    hostName: ${var.stack_mon_hostname_resource1}
+    license: STANDARD_EDITION
+    managementAgentId: ${var.stack_mon_management_agent_id_resource1}
+    name: terraformExample
+    properties:
+    - name: osName
+      value: Linux
+    - name: osVersion
+      value: "7.0"
+    resourceTimeZone: en
+    type: host

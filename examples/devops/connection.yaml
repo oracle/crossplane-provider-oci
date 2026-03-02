@@ -1,0 +1,34 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/connection
+  labels:
+    testing.upbound.io/example-name: test_github_connection
+  name: test-github-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    connectionType: GITHUB_ACCESS_TOKEN
+    description: Github access token
+    displayName: github_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/connection
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

@@ -1,0 +1,14 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: Alert
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/alert
+  labels:
+    testing.upbound.io/example-name: test_alert
+  name: test-alert
+spec:
+  forProvider:
+    alertId: ${var.data_safe_alert_ocid}
+    comment: ${var.alert_comment}
+    freeformTags: ${var.alert_freeform_tags}
+    status: ${var.alert_status}

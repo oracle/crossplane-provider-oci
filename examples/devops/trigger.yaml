@@ -1,0 +1,63 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Trigger
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/trigger
+  labels:
+    testing.upbound.io/example-name: test_github_trigger
+  name: test-github-trigger
+spec:
+  forProvider:
+    actions:
+    - buildPipelineIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_build_pipeline
+      filter:
+      - events:
+        - PUSH
+        include:
+        - baseRef: baseRef
+          headRef: headRef
+        triggerSource: GITHUB
+      type: TRIGGER_BUILD_PIPELINE
+    description: Github Trigger
+    displayName: github-trigger
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+    triggerSource: GITHUB
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: BuildPipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/trigger
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline
+  name: test-build-pipeline
+spec:
+  forProvider:
+    description: Build pipeline
+    displayName: build_pipeline
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/trigger
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

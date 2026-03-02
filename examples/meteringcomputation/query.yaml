@@ -1,0 +1,38 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: Query
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/query
+  labels:
+    testing.upbound.io/example-name: test_query
+  name: test-query
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    queryDefinition:
+    - costAnalysisUi:
+      - graph: BARS
+        isCumulativeGraph: false
+      displayName: tf_display_name
+      reportQuery:
+      - compartmentDepth: 1
+        dateRangeName: LAST_TEN_DAYS
+        filter: "    {\n            \"operator\": \"AND\",\n            \"dimensions\":
+          [],\n            \"tags\": [],\n            \"filters\": [\n                {\n
+          \   \t\t\t\t\"operator\": \"OR\",\n                    \"dimensions\": [\n
+          \   \t\t\t\t    {\n                            \"key\": \"compartmentName\",\n
+          \                           \"value\": \"${var.dimensions_value}\"\n    \t\t\t\t\t
+          \ }\n                    ],\n                    \"filters\": null,\n                    \"tags\":
+          []\n    \t\t    }\n            ]\n    }\n"
+        forecast:
+        - forecastType: ${var.query_query_definition_report_query_forecast_forecast_type}
+          timeForecastEnded: ${var.query_query_definition_report_query_forecast_time_forecast_ended}
+          timeForecastStarted: ${var.query_query_definition_report_query_forecast_time_forecast_started}
+        granularity: DAILY
+        groupBy: []
+        isAggregateByTime: false
+        queryType: COST
+        tenantId: ${var.tenancy_ocid}
+      version: 1

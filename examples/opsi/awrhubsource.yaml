@@ -1,0 +1,66 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: AwrHubSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsource
+  labels:
+    testing.upbound.io/example-name: test_awr_hub_source
+  name: test-awr-hub-source
+spec:
+  forProvider:
+    awrHubIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_awr_hub
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.awrhubsource_defined_tags_value}")}
+    freeformTags: ${var.awr_hub_source_freeform_tags}
+    name: ${var.awr_hub_source_name}
+    type: ${var.awr_hub_source_type}
+
+---
+
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: AwrHub
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsource
+  labels:
+    testing.upbound.io/example-name: test_awr_hub
+  name: test-awr-hub
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.awrhub_defined_tags_value}")}
+    displayName: ${var.awrhub_display_name}
+    freeformTags: ${var.awrhub_freeform_tags}
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse
+
+---
+
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouse
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsource
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse
+  name: test-operations-insights-warehouse
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuAllocated: ${var.warehouse_cpu_allocated}
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.warehouse_defined_tags_value}")}
+    displayName: ${var.warehouse_display_name}
+    freeformTags: ${var.warehouse_freeform_tags}
+    storageAllocatedInGbs: ${var.storage_allocated_in_gbs}

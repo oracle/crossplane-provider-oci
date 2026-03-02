@@ -1,0 +1,28 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: Schedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/schedule
+  labels:
+    testing.upbound.io/example-name: test_schedule
+  name: test-schedule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: description
+    name: name
+    outputFileFormat: CSV
+    queryProperties:
+    - dateRange:
+      - dateRangeType: DYNAMIC
+        dynamicDateRangeType: LAST_7_DAYS
+      granularity: DAILY
+    resultLocation:
+    - bucket: costCsv
+      locationType: OBJECT_STORAGE
+      namespace: r1uoqjtybbv4
+      region: us-seattle-1
+    scheduleRecurrences: DAILY
+    timeScheduled: ${var.time_scheduled}

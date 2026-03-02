@@ -1,0 +1,18 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SqlFirewallPolicyManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sqlfirewallpolicymanagement
+  labels:
+    testing.upbound.io/example-name: test_sql_firewall_policy_management
+  name: test-sql-firewall-policy-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbUserName: ${var.sql_firewall_policy_user}
+    description: ${var.sql_firewall_policy_description}
+    displayName: ${var.sql_firewall_policydisplay_name}
+    freeformTags: ${var.sql_firewall_policy_freeform_tags}
+    targetId: ${var.data_safe_target_ocid}

@@ -1,0 +1,20 @@
+apiVersion: budget.oci.upbound.io/v1alpha1
+kind: AlertRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: budget/v1alpha1/alertrule
+  labels:
+    testing.upbound.io/example-name: test_alert_rule
+  name: test-alert-rule
+spec:
+  forProvider:
+    budgetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_single_use_budget
+    description: alertRuleDescription
+    displayName: alertRule
+    message: possible overspend
+    recipients: JohnSmith@example.com
+    threshold: "100"
+    thresholdType: ABSOLUTE
+    type: ACTUAL

@@ -1,0 +1,25 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceLookup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacelookup
+  labels:
+    testing.upbound.io/example-name: TFLookup
+  name: tflookup
+spec:
+  forProvider:
+    charEncoding: UTF-8
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Oracle-Recommended-Tags.ResourceAuthorizedUser: test
+    description: A simple lookup
+    freeformTags:
+      Dept: Devops
+      servicegroup: test
+    isHidden: false
+    lookupName: TFLookup
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    registerLookupFile: ./files/vendor.csv
+    type: Lookup

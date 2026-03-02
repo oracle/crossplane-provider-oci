@@ -1,0 +1,75 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstance
+  labels:
+    testing.upbound.io/example-name: test_bds_instance
+  name: test-bds-instance
+spec:
+  forProvider:
+    bootstrapScriptUrl: https://objectstorage.us-ashburn-1.oraclecloud.com/p/Lk5JT9tnUIOG4yLm6S21QVR7m3Rm2uj1RAS2Olx5v14onLU2Y-b0lIc_N0RuUIge/n/idpbwtq1b3ta/b/bucket-20230214-1316/o/execute_bootstrap_script.sh
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    clusterProfile: ${var.cluster_profile}
+    clusterPublicKey: ${var.bds_instance_cluster_public_key}
+    clusterVersion: ${var.bds_instance_cluster_version}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeOnlyWorkerNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_worker_nodes_block_volume_size_in_gbs}
+      numberOfNodes: 1
+      shape: ${var.bds_instance_compute_only_worker_node_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_compute_only_worker_memory_per_node}
+        ocpus: ${var.bds_instance_compute_only_worker_ocpu_per_node}
+      subnetId: ${var.subnet_id}
+    displayName: ${var.bds_instance_display_name}
+    edgeNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_worker_nodes_block_volume_size_in_gbs}
+      numberOfNodes: 1
+      shape: ${var.bds_instance_edge_node_shape}
+      shapeConfig:
+      - memoryInGbs: ${var.bds_instance_edge_memory_per_node}
+        ocpus: ${var.bds_instance_edge_ocpu_per_node}
+      subnetId: ${var.subnet_id}
+    freeformTags: ${var.bds_instance_freeform_tags}
+    ignoreExistingNodesShape:
+    - worker
+    - master
+    - utility
+    isCloudSqlConfigured: false
+    isHighAvailability: ${var.bds_instance_is_high_availability}
+    isKafkaConfigured: false
+    isSecure: ${var.bds_instance_is_secure}
+    masterNode:
+    - numberOfNodes: 2
+      shape: VM.DenseIO.E5.Flex
+      shapeConfig:
+      - memoryInGbs: 96
+        nvmes: 1
+        ocpus: 8
+      subnetId: ${var.subnet_id}
+    networkConfig:
+    - cidrBlock: ${var.bds_instance_network_config_cidr_block}
+      isNatGatewayRequired: ${var.bds_instance_network_config_is_nat_gateway_required}
+    utilNode:
+    - numberOfNodes: 3
+      shape: VM.DenseIO.Generic
+      shapeConfig:
+      - memoryInGbs: 96
+        nvmes: 1
+        ocpus: 8
+      subnetId: ${var.subnet_id}
+    workerNode:
+    - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
+      numberOfNodes: 4
+      shape: ${var.bds_instance_worker_node_shape}
+      shapeConfig:
+      - memoryInGbs: 96
+        nvmes: 1
+        ocpus: 8
+      subnetId: ${var.subnet_id}

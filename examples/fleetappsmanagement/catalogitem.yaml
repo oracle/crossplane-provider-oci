@@ -1,0 +1,31 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: CatalogItem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/catalogitem
+  labels:
+    testing.upbound.io/example-name: test_catalog_item
+  name: test-catalog-item
+spec:
+  forProvider:
+    catalogSourcePayload:
+    - accessUri: ""
+      bucket: test-catalog-bucket
+      configSourceType: PAR_CATALOG_SOURCE
+      namespace: namespace
+      object: ObjectStorageCatalog.zip
+      timeExpires: "2029-12-31T00:00:00Z"
+      workingDirectory: workingDirectory
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configSourceType: PAR_CATALOG_SOURCE
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    description: description2
+    displayName: displayName2
+    freeformTags:
+      Department: Accounting
+    packageType: TF_PACKAGE
+    shortDescription: shortDescription2
+    timeReleased: "2025-10-27T00:00:00.000Z"
+    versionDescription: V2

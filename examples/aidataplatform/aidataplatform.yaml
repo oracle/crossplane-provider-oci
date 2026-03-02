@@ -1,0 +1,17 @@
+apiVersion: aidataplatform.oci.upbound.io/v1alpha1
+kind: AiDataPlatform
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aidataplatform/v1alpha1/aidataplatform
+  labels:
+    testing.upbound.io/example-name: test_ai_data_platform
+  name: test-ai-data-platform
+spec:
+  forProvider:
+    aiDataPlatformType: ${var.ai_data_platform_ai_data_platform_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultWorkspaceName: ${var.ai_data_platform_workspace_name}
+    displayName: ${var.ai_data_platform_display_name}
+    freeformTags: ${var.ai_data_platform_freeform_tags}

@@ -1,0 +1,48 @@
+apiVersion: datalabelingservice.oci.upbound.io/v1alpha1
+kind: Dataset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/dataset
+  labels:
+    testing.upbound.io/example-name: test_dataset
+  name: test-dataset
+spec:
+  forProvider:
+    annotationFormat: BOUNDING_BOX
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    datasetFormatDetails:
+    - formatType: IMAGE
+    datasetSourceDetails:
+    - bucketSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_bucket
+      namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+      prefix: ""
+      sourceType: OBJECT_STORAGE
+    description: Example Dataset
+    displayName: Example Dataset
+    labelSet:
+    - items:
+      - name: label1
+      - name: label2
+
+---
+
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datalabelingservice/v1alpha1/dataset
+  labels:
+    testing.upbound.io/example-name: test_bucket
+  name: test-bucket
+spec:
+  forProvider:
+    accessType: NoPublicAccess
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: exampleBucket
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

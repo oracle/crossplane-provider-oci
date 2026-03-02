@@ -1,0 +1,48 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsIdentity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsidentity
+  labels:
+    testing.upbound.io/example-name: example_identity
+  name: example-identity
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    credentialKey: MY_TEST_CREDENTIAL
+    databaseToolsConnectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_connection
+    displayName: My Identity
+    type: ORACLE_DATABASE_RESOURCE_PRINCIPAL
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsidentity
+  labels:
+    testing.upbound.io/example-name: example_connection
+  name: example-connection
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionString: ${var.connection_string}
+    displayName: Test Connection
+    keyStores:
+    - keyStoreContent:
+      - secretId: ${var.database_wallet_secret_ocid}
+        valueType: SECRETID
+      keyStoreType: SSO
+    runtimeIdentity: RESOURCE_PRINCIPAL
+    type: ORACLE_DATABASE
+    userName: admin
+    userPassword:
+    - secretId: ${var.user_password_secret_ocid}
+      valueType: SECRETID

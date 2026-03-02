@@ -1,0 +1,44 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: ExadataInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/exadatainsight
+  labels:
+    testing.upbound.io/example-name: test_exadata_insight
+  name: test-exadata-insight
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.exadata_insight_defined_tags_value}")}
+    entitySource: ${var.exadata_insight_entity_source}
+    exadataInfraId: ${var.exadata_infra_id}
+    freeformTags: ${var.freeform_tags}
+    memberVmClusterDetails:
+    - compartmentId: ${var.compartment_ocid}
+      memberDatabaseDetails:
+      - compartmentId: ${var.compartment_ocid}
+        connectionDetails:
+        - hosts:
+          - port: ${var.tcps_port}
+          protocol: TCPS
+          serviceName: ${var.service_name}
+        credentialDetails:
+        - credentialType: ${var.credential_details_credential_type}
+          passwordSecretIdSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          role: ${var.credential_details_role}
+          userName: ${var.user_name}
+          walletSecretId: ${var.wallet_secret_id}
+        databaseId: ${var.dbsystem_database_id}
+        databaseResourceType: ${var.database_resource_type}
+        deploymentType: ${var.deployment_type}
+        entitySource: PE_COMANAGED_DATABASE
+        opsiPrivateEndpointId: ${var.opsi_private_endpoint_id}
+        serviceName: ${var.service_name}
+      opsiPrivateEndpointId: ${var.opsi_private_endpoint_id}
+      vmclusterId: ${var.vmcluster_id}

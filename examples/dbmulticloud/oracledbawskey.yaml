@@ -1,0 +1,17 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAwsKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbawskey
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_aws_key
+  name: test-oracle-db-aws-key
+spec:
+  forProvider:
+    awsKeyArn: arn:aws:iam::867344470629:role/OracleDatabaseKMS
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: AWS_Key_Tersi_Test
+    isAwsKeyEnabled: false
+    oracleDbConnectorId: ${var.oracle_db_aws_connector_id}

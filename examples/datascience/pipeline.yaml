@@ -1,0 +1,84 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Pipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/pipeline
+  labels:
+    testing.upbound.io/example-name: test_pipeline
+  name: test-pipeline
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configurationDetails:
+    - commandLineArguments: ${var.pipeline_configuration_details_command_line_arguments}
+      environmentVariables: ${var.pipeline_configuration_details_environment_variables}
+      maximumRuntimeInMinutes: ${var.pipeline_configuration_details_maximum_runtime_in_minutes}
+      type: ${var.pipeline_configuration_details_type}
+    deleteRelatedPipelineRuns: true
+    description: ${var.pipeline_description}
+    displayName: ${var.pipeline_display_name}
+    dynamic:
+      step_artifact:
+      - content:
+        - artifact_content_disposition: ${step_artifact.value.artifact_content_disposition}
+          artifact_content_length: ${step_artifact.value.artifact_content_length}
+          pipeline_step_artifact: ${step_artifact.value.pipeline_step_artifact}
+          step_name: ${step_artifact.value.step_name}
+        for_each: ${local.step_artifacts}
+      step_details:
+      - content:
+        - depends_on: '${step_details.value["depends_on"] == [] ? null : step_details.value["depends_on"]}'
+          dynamic:
+            step_infrastructure_configuration_details:
+            - content:
+              - block_storage_size_in_gbs: ${lookup(step_infrastructure_configuration_details.value,
+                  "block_storage_size_in_gbs", null)}
+                dynamic:
+                  shape_config_details:
+                  - content:
+                    - cpu_baseline: ${lookup(shape_config_details.value, "cpu_baseline",
+                        null)}
+                      memory_in_gbs: ${lookup(shape_config_details.value, "memory_in_gbs",
+                        null)}
+                      ocpus: ${lookup(shape_config_details.value, "ocpus", null)}
+                    for_each: |-
+                      ${(
+                                  contains(keys(step_infrastructure_configuration_details.value), "shape_config_details")
+                                  ) ? [lookup(step_infrastructure_configuration_details.value, "shape_config_details", {})] : []}
+                shape_name: ${lookup(step_infrastructure_configuration_details.value,
+                  "shape_name", null)}
+                subnet_id: ${lookup(step_infrastructure_configuration_details.value,
+                  "subnet_id", null)}
+              for_each: '${step_details.value.infra == null ? [] : [step_details.value.infra]}'
+          is_artifact_uploaded: ${step_details.value["is_artifact_uploaded"]}
+          step_configuration_details:
+          - maximum_runtime_in_minutes: ${step_details.value["step_configuration_maximum_runtime_in_minutes"]}
+          step_name: ${step_details.value["step_name"]}
+          step_type: ${step_details.value["step_type"]}
+        for_each: |-
+          ${[for s in local.steps: {
+                  step_name = s.step_name
+                  step_type = s.step_type
+                  step_configuration_maximum_runtime_in_minutes = s.step_configuration_maximum_runtime_in_minutes
+                  depends_on = s.depends_on
+                  infra = s.step_infrastructure_configuration_details
+          #        step_parameters = try(s.step_parameters, null)
+                  is_artifact_uploaded = s.is_artifact_uploaded
+                }]}
+      storage_mount_configuration_details_list:
+      - content:
+        - destination_directory_name: ${storage_mount_configuration_details_list.value.destination_directory_name}
+          destination_path: ${storage_mount_configuration_details_list.value.destination_path}
+          export_id: ${storage_mount_configuration_details_list.value.export_id}
+          mount_target_id: ${storage_mount_configuration_details_list.value.mount_target_id}
+          storage_type: ${storage_mount_configuration_details_list.value.storage_type}
+        for_each: ${local.storage_mount_configuration_list}
+    infrastructureConfigurationDetails:
+    - blockStorageSizeInGbs: ${var.pipeline_infrastructure_configuration_details_block_storage_size_in_gbs}
+      shapeName: VM.Standard2.1
+      subnetId: ${var.subnet_id}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pipeline

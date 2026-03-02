@@ -6,7 +6,7 @@ metadata:
   name: record1
 spec:
   forProvider:
-    domain: domain1.oci-dns1
+    domain: record1.zone1.oci-dns1
     rdata: 192.168.0.1
     rtype: A
     ttl: 3600

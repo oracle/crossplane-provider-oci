@@ -1,0 +1,45 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseSaasAdminUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesaasadminuser
+  labels:
+    testing.upbound.io/example-name: test_saas_admin_user
+  name: test-saas-admin-user
+spec:
+  forProvider:
+    accessType: READ_WRITE
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    duration: 2
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesaasadminuser
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database
+  name: test-autonomous-database
+spec:
+  forProvider:
+    adminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: "1"
+    dataStorageSizeInTbs: "1"
+    dbName: Xsk5djnfdl23423
+    dbVersion: 19c
+    dbWorkload: AJD
+    licenseModel: LICENSE_INCLUDED

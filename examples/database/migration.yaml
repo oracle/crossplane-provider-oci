@@ -1,0 +1,309 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: Migration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_migration
+  name: test-migration
+spec:
+  forProvider:
+    dbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_system
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: internet_gateway
+  name: internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TFExampleIGDBSystem
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: displayName
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_network_security_group_backup
+  name: test-network-security-group-backup
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: displayName
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: route_table
+  name: route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TFExampleRouteTableDBSystem
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: route_table_backup
+  name: route-table-backup
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TFExampleRouteTableDBSystemBackup
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: ExampleSecurityList
+  name: examplesecuritylist
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TFExampleSecurityList
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: "6"
+    - destination: 0.0.0.0/0
+      protocol: "17"
+      stateless: true
+    - destination: 0.0.0.0/0
+      protocol: "1"
+      stateless: true
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 0.0.0.0/0
+      stateless: false
+    - protocol: 1
+      source: 0.0.0.0/0
+      stateless: true
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: subnet
+  name: subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+    displayName: TFExampleSubnetDBSystem
+    dnsLabel: tfexsubdbsys
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: route_table
+    securityListIdRefs:
+    - name: ExampleSecurityList
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: subnet_backup
+  name: subnet-backup
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+    displayName: TFExampleSubnetDBSystemBackup
+    dnsLabel: tfexsubdbsysbp
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: route_table_backup
+    securityListIdRefs:
+    - name: ExampleSecurityList
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: vcn
+  name: vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TFExampleVCNDBSystem
+    dnsLabel: tfexvcndbsys
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migration
+  labels:
+    testing.upbound.io/example-name: test_db_system
+  name: test-db-system
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    backupNetworkNsgIds:
+    - ${oci_core_network_security_group.test_network_security_group.id}
+    backupSubnetId: ${oci_core_subnet.subnet_backup.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: ${var.cpu_core_count}
+    dataStoragePercentage: ${var.data_storage_percentage}
+    databaseEdition: ${var.db_edition}
+    dbHome:
+    - database:
+      - adminPasswordSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        characterSet: ${var.character_set}
+        dbBackupConfig:
+        - autoBackupEnabled: false
+        dbName: TFdb1Exa
+        dbWorkload: ${var.db_workload}
+        ncharacterSet: ${var.n_character_set}
+        pdbName: ${var.pdb_name}
+      dbVersion: ${var.db_version}
+      displayName: MyTFDBHome1Exa
+    diskRedundancy: ${var.db_disk_redundancy}
+    displayName: ${var.db_system_display_name}
+    freeformTags:
+      Department: Finance
+    hostname: ${var.hostname}
+    licenseModel: ${var.license_model}
+    maintenanceWindowDetails:
+    - daysOfWeek:
+      - name: MONDAY
+      hoursOfDay:
+      - "4"
+      leadTimeInWeeks: 2
+      months:
+      - name: APRIL
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    nodeCount: ${data.oci_database_db_system_shapes.test_db_system_shapes.db_system_shapes[0]["minimum_node_count"]}
+    nsgIds:
+    - ${oci_core_network_security_group.test_network_security_group_backup.id}
+    - ${oci_core_network_security_group.test_network_security_group.id}
+    shape: ${var.db_system_shape}
+    sparseDiskgroup: ${var.sparse_diskgroup}
+    sshPublicKeys:
+    - ${var.ssh_public_key}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet
+    timeZone: ${var.time_zone}

@@ -1,0 +1,47 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: MyRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/myrequest
+  labels:
+    testing.upbound.io/example-name: test_my_request
+  name: test-my-request
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.my_request_authorization}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    justification: ${var.my_request_justification}
+    requesting:
+    - type: ${var.my_request_requesting_type}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: group_to_request
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Request
+    tags:
+    - key: ${var.my_request_tags_key}
+      value: ${var.my_request_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/myrequest
+  labels:
+    testing.upbound.io/example-name: group_to_request
+  name: group-to-request
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    displayName: groupToRequest
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:Group
+    urnietfparamsscimschemasoracleidcsextensionrequestableGroup:
+    - requestable: true

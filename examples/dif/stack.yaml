@@ -1,0 +1,65 @@
+apiVersion: dif.oci.upbound.io/v1alpha1
+kind: Stack
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dif/v1alpha1/stack
+  labels:
+    testing.upbound.io/example-name: test_stack
+  name: test-stack
+spec:
+  forProvider:
+    adb:
+    - adminPasswordIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      dataStorageSizeInTbs: 1
+      dbVersion: 19c
+      dbWorkload: DW
+      ecpu: 2
+      instanceId: testadb1
+      isPublic: ${var.stack_adb_is_public}
+      subnetId: ${var.stack_subnet_id}
+    addServiceTrigger: 1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataflow:
+    - connections:
+      - connectionDetails:
+        - difDependencies:
+          - serviceInstanceId: testadb1
+            serviceType: ADB
+          domainNames:
+          - custpvtsubnet.oraclevcn.com
+        subnetId: ${var.stack_subnet_id}
+      driverShape: VM.Standard.E5.Flex
+      driverShapeConfig:
+      - memoryInGbs: "16"
+        ocpus: "1"
+      execute: ${var.dataflow_file_uri}
+      executorShape: VM.Standard.E5.Flex
+      executorShapeConfig:
+      - memoryInGbs: "16"
+        ocpus: "1"
+      instanceId: testApp
+      logBucketInstanceId: testLogBucket1
+      numExecutors: "3"
+      sparkVersion: 3.5.0
+    deployArtifactsTrigger: 1
+    displayName: ${var.stack_display_name}
+    objectstorage:
+    - instanceId: testLogBucket1
+      objectVersioning: ENABLED
+      storageTier: STANDARD
+    - instanceId: testBucket2
+      objectVersioning: DISABLED
+      storageTier: STANDARD
+    services:
+    - OBJECTSTORAGE
+    - ADB
+    - DATAFLOW
+    stackTemplates:
+    - DATALAKE
+    - DATATRANSFORMATION
+    subnetId: ${var.stack_subnet_id}

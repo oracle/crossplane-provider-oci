@@ -1,0 +1,17 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsResourceCategoriesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsresourcecategoriesmanagement
+  labels:
+    testing.upbound.io/example-name: VCN_DB1_categories
+  name: vcn-db1-categories
+spec:
+  forProvider:
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    resourceCategories:
+    - oracle
+    - linux
+    - database
+    resourceId: VCN_DB1
+    resourceType: DASHBOARD

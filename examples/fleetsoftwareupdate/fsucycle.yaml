@@ -1,0 +1,45 @@
+apiVersion: fleetsoftwareupdate.oci.upbound.io/v1alpha1
+kind: FsuCycle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetsoftwareupdate/v1alpha1/fsucycle
+  labels:
+    testing.upbound.io/example-name: test_fsu_cycle_upgrade_23
+  name: test-fsu-cycle-upgrade-23
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tf-test-upgrade-cycle
+    fsuCollectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fsu_collection_db19
+    goalVersionDetails:
+    - type: VERSION
+      version: 23.6.0.24.10
+    type: UPGRADE
+
+---
+
+apiVersion: fleetsoftwareupdate.oci.upbound.io/v1alpha1
+kind: FsuCollection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetsoftwareupdate/v1alpha1/fsucycle
+  labels:
+    testing.upbound.io/example-name: test_fsu_collection_db19
+  name: test-fsu-collection-db19
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tf-test-db19-collection
+    fleetDiscovery:
+    - strategy: TARGET_LIST
+      targets:
+      - ${var.fsu_db_19_target_1}
+    serviceType: EXACS
+    sourceMajorVersion: DB_19
+    type: DB

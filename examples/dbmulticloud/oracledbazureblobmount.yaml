@@ -1,0 +1,16 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureBlobMount
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazureblobmount
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_blob_mount
+  name: test-oracle-db-azure-blob-mount
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestOracleDBAzureBlobMountUpdated
+    oracleDbAzureBlobContainerId: ${var.oracle_db_azure_blob_container_id}
+    oracleDbAzureConnectorId: ${var.oracle_db_azure_connector_id}

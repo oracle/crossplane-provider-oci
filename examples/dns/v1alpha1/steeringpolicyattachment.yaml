@@ -7,7 +7,7 @@ metadata:
 spec:
   forProvider:
     displayName: steeringpolicyattachment1
-    domainName: domain1.oci-dns1
+    domainName: steeringpolicyattachment1.zone1.oci-dns1
     steeringPolicyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: steeringpolicy_label_1

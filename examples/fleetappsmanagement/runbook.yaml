@@ -1,0 +1,35 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Runbook
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/runbook
+  labels:
+    testing.upbound.io/example-name: test_runbook
+  name: test-runbook
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: displayName
+    operation: PATCH
+    platform: Oracle Linux
+    runbookVersion:
+    - executionWorkflowDetails:
+      - workflow:
+        - groupName: Parallel_resource_group
+          steps:
+          - stepName: StepName
+            type: TASK
+          type: PARALLEL_RESOURCE_GROUP
+      groups:
+      - name: Parallel_resource_group
+        type: PARALLEL_RESOURCE_GROUP
+      tasks:
+      - stepName: StepName
+        taskRecordDetails:
+        - executionDetails:
+          - command: pwd
+            executionType: SCRIPT
+          scope: LOCAL
+      version: "1"

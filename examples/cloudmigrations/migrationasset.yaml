@@ -1,0 +1,25 @@
+apiVersion: cloudmigrations.oci.upbound.io/v1alpha1
+kind: MigrationAsset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudmigrations/v1alpha1/migrationasset
+  labels:
+    testing.upbound.io/example-name: test_migration_asset
+  name: test-migration-asset
+spec:
+  forProvider:
+    availabilityDomain: ${var.migration_asset_availability_domain}
+    displayName: ${var.migration_asset_display_name}
+    inventoryAssetId: ${oci_cloud_migrations_inventory_asset.test_inventory_asset.id}
+    migrationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_migration
+    replicationCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    replicationScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_replication_schedule
+    snapShotBucketNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bucket

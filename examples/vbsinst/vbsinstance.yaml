@@ -1,0 +1,18 @@
+apiVersion: vbsinst.oci.upbound.io/v1alpha1
+kind: VbsInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vbsinst/v1alpha1/vbsinstance
+  labels:
+    testing.upbound.io/example-name: test_vbs_instance
+  name: test-vbs-instance
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.vbs_instance_display_name}
+    freeformTags: ${var.vbs_instance_freeform_tags}
+    isResourceUsageAgreementGranted: ${var.vbs_instance_is_resource_usage_agreement_granted}
+    name: ${var.vbs_instance_name}
+    resourceCompartmentId: ${var.resource_compartment_id}

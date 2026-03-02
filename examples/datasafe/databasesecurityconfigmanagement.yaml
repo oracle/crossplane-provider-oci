@@ -1,0 +1,17 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: DatabaseSecurityConfigManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/databasesecurityconfigmanagement
+  labels:
+    testing.upbound.io/example-name: test_database_security_config_management
+  name: test-database-security-config-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.database_security_config_description}
+    displayName: ${var.database_security_config_display_name}
+    freeformTags: ${var.database_security_config_freeform_tags}
+    targetId: ${var.data_safe_target_ocid}

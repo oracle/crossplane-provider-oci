@@ -1,0 +1,78 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: ApprovalWorkflow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approvalworkflow
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow
+  name: test-approval-workflow
+spec:
+  forProvider:
+    approvalWorkflowSteps:
+    - typeSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_approval_workflow_approval_workflow_step
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_approval_workflow_approval_workflow_step
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.approval_workflow_authorization}
+    description: ${var.approval_workflow_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    maxDuration:
+    - unit: ${var.approval_workflow_max_duration_unit}
+      value: ${var.approval_workflow_max_duration_value}
+    name: ${var.approval_workflow_name}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:ApprovalWorkflow
+    tags:
+    - key: ${var.approval_workflow_tags_key}
+      value: ${var.approval_workflow_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: ApprovalWorkflowStep
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approvalworkflow
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow_approval_workflow_step
+  name: test-approval-workflow-approval-workflow-step
+spec:
+  forProvider:
+    approvers:
+    - type: User
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_approval_workflow_user
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    order: "1"
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:ApprovalWorkflowStep
+    type: regular
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approvalworkflow
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow_user
+  name: test-approval-workflow-user
+spec:
+  forProvider:
+    emails:
+    - primary: "true"
+      type: work
+      value: value@email.com
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    name:
+    - familyName: testApprovalWorkflowFamilyName
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:User
+    userName: testApprovalWorkflowUserName

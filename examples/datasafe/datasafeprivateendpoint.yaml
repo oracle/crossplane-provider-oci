@@ -1,0 +1,61 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: DataSafePrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/datasafeprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_data_safe_private_endpoint
+  name: test-data-safe-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: PE2
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/datasafeprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: regionalSubnet
+    dnsLabel: regionalsubnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/datasafeprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn

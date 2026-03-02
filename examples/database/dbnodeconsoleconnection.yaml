@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbNodeConsoleConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbnodeconsoleconnection
+  labels:
+    testing.upbound.io/example-name: test_db_node_console_connection
+  name: test-db-node-console-connection
+spec:
+  forProvider:
+    dbNodeId: ${data.oci_database_db_nodes.test_db_nodes.db_nodes[0]["id"]}
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    freeformTags:
+      Department: Accounting
+    publicKey: ${var.db_node_console_connection_public_key}

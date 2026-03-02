@@ -6,7 +6,6 @@ metadata:
     testing.upbound.io/example-name: export_label_1
 spec:
   forProvider:
-    displayName: export1
     exportSetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: exportset_label_1

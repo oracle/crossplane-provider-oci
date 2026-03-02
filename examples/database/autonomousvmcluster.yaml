@@ -1,0 +1,165 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_autonomous_vm_cluster
+  name: test-autonomous-vm-cluster
+spec:
+  forProvider:
+    autonomousDataStorageSizeInTbs: "2.0"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCountPerNode: "20"
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: value
+    displayName: autonomousVmCluster
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Finance
+    isLocalBackupEnabled: "false"
+    licenseModel: LICENSE_INCLUDED
+    memoryPerOracleComputeUnitInGbs: "5"
+    timeZone: US/Pacific
+    totalContainerDatabases: "2"
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network2
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure
+  name: test-exadata-infrastructure
+spec:
+  forProvider:
+    activationFile: activation.zip
+    adminNetworkCidr: 192.168.0.0/16
+    cloudControlPlaneServer1: 10.32.88.1
+    cloudControlPlaneServer2: 10.32.88.3
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: 2
+    contacts:
+    - email: testuser2@testdomain.com
+      isPrimary: "true"
+      name: name
+      phoneNumber: "1234567891"
+    corporateProxy: http://192.168.19.1:80
+    databaseServerType: X11M
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: tstExaInfra
+    dnsServer:
+    - 10.231.225.65
+    freeformTags:
+      Department: Accounting
+    gateway: 10.32.88.5
+    infiniBandNetworkCidr: 10.31.8.0/21
+    isCpsOfflineReportEnabled: false
+    isMultiRackDeployment: false
+    maintenanceWindow:
+    - customActionTimeoutInMins: 30
+      daysOfWeek:
+      - name: TUESDAY
+      hoursOfDay:
+      - "4"
+      isCustomActionTimeoutEnabled: true
+      leadTimeInWeeks: 2
+      months:
+      - name: JANUARY
+      - name: APRIL
+      - name: JULY
+      - name: OCTOBER
+      patchingMode: ROLLING
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    netmask: 255.255.255.0
+    networkBondingModeDetails:
+    - backupNetworkBondingMode: ACTIVE_BACKUP
+      clientNetworkBondingMode: ACTIVE_BACKUP
+    ntpServer:
+    - 10.231.225.76
+    shape: ExadataCC.X11M
+    storageCount: 3
+    storageServerType: X11M-HC
+    timeZone: US/Pacific
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: VmClusterNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster_network2
+  name: test-vm-cluster-network2
+spec:
+  forProvider:
+    action: ADD_DBSERVER_NETWORK
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: testVmClusterRecommendedNetwork2
+    dns:
+    - 192.178.10.10
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Accounting
+    ntp:
+    - 192.178.10.20
+    scans:
+    - hostname: myprefix3-nsubz-scan
+      ips:
+      - 192.178.19.7
+      - 192.178.19.6
+      - 192.178.19.8
+      port: 1521
+      scanListenerPortTcp: 1521
+      scanListenerPortTcpSsl: 2484
+    validateVmClusterNetwork: true
+    vmNetworks:
+    - domainName: oracle.com
+      gateway: 192.179.20.1
+      netmask: 255.255.0.0
+      networkType: BACKUP
+      nodes:
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+        hostname: myprefix4-cghdm1
+        ip: 192.179.19.18
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+        hostname: myprefix4-cghdm2
+        ip: 192.179.19.20
+      vlanId: "31"
+    - domainName: oracle.com
+      gateway: 192.178.20.1
+      netmask: 255.255.0.0
+      networkType: CLIENT
+      nodes:
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+        hostname: myprefix5-r64zc1
+        ip: 192.178.19.10
+        vip: 192.178.19.11
+        vipHostname: myprefix5-r64zc1-vip
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+        hostname: myprefix5-r64zc2
+        ip: 192.178.19.14
+        vip: 192.178.19.15
+        vipHostname: myprefix5-r64zc2-vip
+      vlanId: "41"

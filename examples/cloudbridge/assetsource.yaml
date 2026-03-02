@@ -1,0 +1,44 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: AssetSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/assetsource
+  labels:
+    testing.upbound.io/example-name: test_asset_source
+  name: test-asset-source
+spec:
+  forProvider:
+    areHistoricalMetricsCollected: ${var.asset_source_are_historical_metrics_collected}
+    areRealtimeMetricsCollected: ${var.asset_source_are_realtime_metrics_collected}
+    assetsCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_compartment
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.asset_source_defined_tags_value)}
+    discoveryCredentials:
+    - secretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      type: ${var.asset_source_discovery_credentials_type}
+    discoveryScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_discovery_schedule
+    displayName: ${var.asset_source_display_name}
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_environment
+    freeformTags: ${var.asset_source_freeform_tags}
+    inventoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_inventory
+    replicationCredentials:
+    - secretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      type: ${var.asset_source_replication_credentials_type}
+    systemTags: ${var.asset_source_system_tags}
+    type: ${var.asset_source_type}
+    vcenterEndpoint: ${var.asset_source_vcenter_endpoint}

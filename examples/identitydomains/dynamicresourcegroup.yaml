@@ -1,0 +1,27 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: DynamicResourceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/dynamicresourcegroup
+  labels:
+    testing.upbound.io/example-name: test_dynamic_resource_group
+  name: test-dynamic-resource-group
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.dynamic_resource_group_authorization}
+    description: ${var.dynamic_resource_group_description}
+    displayName: ${var.dynamic_resource_group_display_name}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    matchingRule: ${var.dynamic_resource_group_matching_rule}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:DynamicResourceGroup
+    tags:
+    - key: ${var.dynamic_resource_group_tags_key}
+      value: ${var.dynamic_resource_group_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionOciTags:
+    - freeformTags:
+      - key: ${var.dynamic_resource_group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_key}
+        value: ${var.dynamic_resource_group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_value}

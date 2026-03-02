@@ -1,0 +1,39 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: LibraryMaskingFormat
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/librarymaskingformat
+  labels:
+    testing.upbound.io/example-name: test_library_masking_format
+  name: test-library-masking-format
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.library_masking_format_description}
+    displayName: ${var.library_masking_format_display_name}
+    formatEntries:
+    - columnName: ${var.library_masking_format_format_entries_column_name}
+      description: ${var.library_masking_format_format_entries_description}
+      endDate: ${var.library_masking_format_format_entries_end_date}
+      endLength: ${var.library_masking_format_format_entries_end_length}
+      endValue: ${var.library_masking_format_format_entries_end_value}
+      fixedNumber: ${var.library_masking_format_format_entries_fixed_number}
+      fixedString: ${var.library_masking_format_format_entries_fixed_string}
+      groupingColumns: ${var.library_masking_format_format_entries_grouping_columns}
+      length: ${var.library_masking_format_format_entries_length}
+      postProcessingFunction: ${var.library_masking_format_format_entries_post_processing_function}
+      randomList: ${var.library_masking_format_format_entries_random_list}
+      regularExpression: ${var.library_masking_format_format_entries_regular_expression}
+      replaceWith: ${var.library_masking_format_format_entries_replace_with}
+      schemaName: ${var.library_masking_format_format_entries_schema_name}
+      sqlExpression: ${var.library_masking_format_format_entries_sql_expression}
+      startDate: ${var.library_masking_format_format_entries_start_date}
+      startLength: ${var.library_masking_format_format_entries_start_length}
+      startPosition: ${var.library_masking_format_format_entries_start_position}
+      startValue: ${var.library_masking_format_format_entries_start_value}
+      type: ${var.library_masking_format_format_entries_type}
+      userDefinedFunction: ${var.library_masking_format_format_entries_user_defined_function}
+    freeformTags: ${var.library_masking_format_freeform_tags}
+    sensitiveTypeIds: ${var.library_masking_format_sensitive_type_ids}

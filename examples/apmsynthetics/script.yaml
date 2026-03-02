@@ -1,0 +1,41 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: Script
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/script
+  labels:
+    testing.upbound.io/example-name: test_script
+  name: test-script
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    content: ${var.script_content}
+    contentType: ${var.script_content_type}
+    displayName: ${var.script_display_name}
+    freeformTags: ${var.script_freeform_tags}
+    parameters:
+    - isSecret: ${var.script_parameters_is_secret}
+      paramName: ${var.script_parameters_param_name}
+      paramValue: ${var.script_parameters_param_value}
+
+---
+
+apiVersion: apm.oci.upbound.io/v1alpha1
+kind: ApmDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/script
+  labels:
+    testing.upbound.io/example-name: test_apm_domain
+  name: test-apm-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.apm_domain_description}
+    displayName: ${var.apm_domain_display_name}
+    freeformTags: ${var.apm_domain_freeform_tags}
+    isFreeTier: ${var.apm_domain_is_free_tier}

@@ -1,0 +1,30 @@
+apiVersion: demandsignal.oci.upbound.io/v1alpha1
+kind: OccDemandSignal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: demandsignal/v1alpha1/occdemandsignal
+  labels:
+    testing.upbound.io/example-name: test_occ_demand_signal
+  name: test-occ-demand-signal
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.occ_demand_signal_display_name}
+    freeformTags: ${var.occ_demand_signal_freeform_tags}
+    isActive: ${var.occ_demand_signal_is_active}
+    occDemandSignals:
+    - resourceType: ${var.occ_demand_signal_resource_type}
+      units: ${var.occ_demand_signal_units}
+      values:
+      - comments: ${var.occ_demand_signal_comments}
+        timeExpected: ${var.occ_demand_signal_time_expected}
+        value: ${var.occ_demand_signal_value}
+    patchOperations:
+    - from: ${var.occ_demand_signal_patch_operations_from}
+      operation: ${var.occ_demand_signal_patch_operations_operation}
+      position: ${var.occ_demand_signal_patch_operations_position}
+      selectedItem: ${var.occ_demand_signal_patch_operations_selected_item}
+      selection: ${var.occ_demand_signal_patch_operations_selection}
+      value: ${var.occ_demand_signal_patch_operations_value}

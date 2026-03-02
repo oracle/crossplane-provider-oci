@@ -1,0 +1,14 @@
+apiVersion: jmsutils.oci.upbound.io/v1alpha1
+kind: SubscriptionAcknowledgmentConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsutils/v1alpha1/subscriptionacknowledgmentconfiguration
+  labels:
+    testing.upbound.io/example-name: test_subscription_acknowledgment_configuration
+  name: test-subscription-acknowledgment-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isAcknowledged: ${var.subscription_acknowledgment_configuration_is_acknowledged}

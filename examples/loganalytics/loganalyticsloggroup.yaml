@@ -1,0 +1,15 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsLogGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsloggroup
+  labels:
+    testing.upbound.io/example-name: logGroupRequired
+  name: loggrouprequired
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tf-loggroup-example-req
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

@@ -1,0 +1,57 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure
+  name: test-exadata-infrastructure
+spec:
+  forProvider:
+    activationFile: activation.zip
+    adminNetworkCidr: 192.168.0.0/16
+    cloudControlPlaneServer1: 10.32.88.1
+    cloudControlPlaneServer2: 10.32.88.3
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: 2
+    contacts:
+    - email: testuser2@testdomain.com
+      isPrimary: "true"
+      name: name
+      phoneNumber: "1234567891"
+    corporateProxy: http://192.168.19.1:80
+    displayName: tstExaInfra
+    dnsServer:
+    - 10.231.225.65
+    gateway: 10.32.88.5
+    infiniBandNetworkCidr: 10.31.8.0/21
+    isCpsOfflineReportEnabled: false
+    isMultiRackDeployment: false
+    maintenanceWindow:
+    - customActionTimeoutInMins: 30
+      daysOfWeek:
+      - name: TUESDAY
+      hoursOfDay:
+      - "4"
+      isCustomActionTimeoutEnabled: true
+      leadTimeInWeeks: 2
+      months:
+      - name: JANUARY
+      - name: APRIL
+      - name: JULY
+      - name: OCTOBER
+      patchingMode: ROLLING
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    netmask: 255.255.255.0
+    networkBondingModeDetails:
+    - backupNetworkBondingMode: ACTIVE_BACKUP
+      clientNetworkBondingMode: ACTIVE_BACKUP
+    ntpServer:
+    - 10.231.225.76
+    shape: ExadataCC.X7
+    storageCount: 3
+    timeZone: US/Pacific

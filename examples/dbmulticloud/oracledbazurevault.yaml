@@ -1,0 +1,19 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureVault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazurevault
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_vault
+  name: test-oracle-db-azure-vault
+spec:
+  forProvider:
+    azureVaultId: PrasannaHSM2
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: Discover_Tersi_Test
+    location: eastus2
+    oracleDbAzureResourceGroup: Prasanna.RG
+    oracleDbConnectorId: ${var.oracle_db_azure_connector_id}
+    type: managedHSMs

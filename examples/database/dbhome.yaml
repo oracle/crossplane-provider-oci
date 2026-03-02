@@ -1,0 +1,30 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbHome
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbhome
+  labels:
+    testing.upbound.io/example-name: test_db_home_source_none
+  name: test-db-home-source-none
+spec:
+  forProvider:
+    database:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      characterSet: AL32UTF8
+      databaseSoftwareImageId: ${var.test_database_software_image_ocid}
+      dbBackupConfig:
+      - autoBackupEnabled: "true"
+        autoBackupWindow: SLOT_TWO
+        recoveryWindowInDays: "10"
+      dbName: dbNonegk
+      dbWorkload: OLTP
+      ncharacterSet: AL16UTF16
+      pdbName: pdbName
+    databaseSoftwareImageId: ${var.test_database_software_image_ocid}
+    dbSystemId: ${oci_database_db_system.test_db_system.id}
+    dbVersion: 12.1.0.2
+    displayName: createdDbHomeNone
+    source: NONE

@@ -1,0 +1,29 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: DigitalTwinAdapter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwinadapter
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_adapter
+  name: test-digital-twin-adapter
+spec:
+  forProvider:
+    description: ${var.digital_twin_adapter_description}
+    digitalTwinModelId: ${var.digital_twin_model_ocid}
+    displayName: ${var.digital_twin_adapter_display_name}
+    freeformTags: ${var.digital_twin_adapter_freeform_tags}
+    inboundEnvelope:
+    - envelopeMapping:
+      - timeObserved: ${var.digital_twin_adapter_inbound_envelope_envelope_mapping_time_observed}
+      referenceEndpoint: ${var.digital_twin_adapter_inbound_envelope_reference_endpoint}
+      referencePayload:
+      - data: ${var.digital_twin_adapter_inbound_envelope_reference_payload_data}
+        dataFormat: ${var.digital_twin_adapter_inbound_envelope_reference_payload_data_format}
+    inboundRoutes:
+    - condition: ${var.digital_twin_adapter_inbound_routes_condition}
+      description: ${var.digital_twin_adapter_inbound_routes_description}
+      payloadMapping: ${var.digital_twin_adapter_inbound_routes_payload_mapping}
+      referencePayload:
+      - data: ${var.digital_twin_adapter_inbound_routes_reference_payload_data}
+        dataFormat: ${var.digital_twin_adapter_inbound_routes_reference_payload_data_format}
+    iotDomainId: ${var.iot_domain_ocid}

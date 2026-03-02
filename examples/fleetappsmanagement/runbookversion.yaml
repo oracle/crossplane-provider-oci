@@ -1,0 +1,120 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: RunbookVersion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/runbookversion
+  labels:
+    testing.upbound.io/example-name: test_runbook_version
+  name: test-runbook-version
+spec:
+  forProvider:
+    definedTags: ${var.defined_tags}
+    executionWorkflowDetails:
+    - workflow:
+      - groupName: Parallel_resource_group
+        steps:
+        - stepName: StepName
+          type: TASK
+        type: ${var.group_type}
+    freeformTags: ${var.freeform_tags}
+    groups:
+    - name: Parallel_resource_group
+      properties:
+      - actionOnFailure: ${var.action_on_failure}
+        notificationPreferences:
+        - shouldNotifyOnPause: true
+          shouldNotifyOnTaskFailure: true
+          shouldNotifyOnTaskSuccess: true
+        pauseDetails:
+        - kind: ${var.pause_kind}
+        preCondition: target.product.name == "Oracle Linux Server"
+        runOn:
+        - condition: target.product.name == "Oracle Linux Server"
+          kind: ${var.run_on_kind}
+      type: ${var.group_type}
+    rollbackWorkflowDetails:
+    - scope: TARGET
+      workflow:
+      - groupName: Parallel_resource_group
+        steps:
+        - stepName: stepNameRollback
+          type: TASK
+        type: ${var.group_type}
+    runbookId: ${var.runbook_id}
+    tasks:
+    - stepName: StepName
+      stepProperties:
+      - actionOnFailure: ${var.action_on_failure}
+        notificationPreferences:
+        - shouldNotifyOnPause: true
+          shouldNotifyOnTaskFailure: true
+          shouldNotifyOnTaskSuccess: true
+        pauseDetails:
+        - kind: ${var.pause_kind}
+        preCondition: target.product.name == "Oracle Weblogic Server"
+        runOn:
+        - condition: target.product.name == "Oracle Linux Server"
+          kind: ${var.run_on_kind}
+      taskRecordDetails:
+      - description: Sample Runbook Version task
+        executionDetails:
+        - command: ls -la
+          executionType: ${var.execution_type}
+          isExecutableContent: true
+          isLocked: true
+          isReadOutputVariableEnabled: false
+          variables:
+          - inputVariables:
+            - description: Input variable description
+              name: inputVarName
+              type: STRING
+            outputVariables:
+            - outputVar
+        isApplySubjectTask: true
+        isCopyToLibraryEnabled: false
+        isDiscoveryOutputTask: false
+        name: TaskExample
+        osType: ${var.os_type}
+        platform: ${var.platform}
+        properties:
+        - numRetries: 3
+          timeoutInSeconds: 1800
+        scope: ${var.scope}
+    - stepName: stepNameRollback
+      stepProperties:
+      - actionOnFailure: ABORT
+        notificationPreferences:
+        - shouldNotifyOnPause: "false"
+          shouldNotifyOnTaskFailure: "false"
+          shouldNotifyOnTaskSuccess: "false"
+        pauseDetails:
+        - kind: USER_ACTION
+        preCondition: target.product.name == "Oracle Weblogic Server"
+        runOn:
+        - condition: target.product.name == "Oracle Weblogic Server"
+          kind: SCHEDULED_INSTANCES
+      taskRecordDetails:
+      - description: description
+        executionDetails:
+        - command: pwd
+          executionType: SCRIPT
+          isExecutableContent: "false"
+          isLocked: "false"
+          isReadOutputVariableEnabled: "false"
+          variables:
+          - inputVariables:
+            - description: inputVarDescription
+              name: inputVarName
+              type: STRING
+            outputVariables:
+            - outputVariables
+        isApplySubjectTask: "false"
+        isCopyToLibraryEnabled: "false"
+        isDiscoveryOutputTask: "false"
+        name: name
+        osType: WINDOWS
+        platform: Oracle Fusion Middleware
+        properties:
+        - numRetries: "10"
+          timeoutInSeconds: "10"
+        scope: LOCAL

@@ -1,0 +1,81 @@
+apiVersion: opensearch.oci.upbound.io/v1alpha1
+kind: OpensearchCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchcluster
+  labels:
+    testing.upbound.io/example-name: test_opensearch_cluster
+  name: test-opensearch-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataNodeCount: ${var.opensearch_cluster_data_node_count}
+    dataNodeHostBareMetalShape: ${var.opensearch_cluster_data_node_host_bare_metal_shape}
+    dataNodeHostMemoryGb: ${var.opensearch_cluster_data_node_host_memory_gb}
+    dataNodeHostOcpuCount: ${var.opensearch_cluster_data_node_host_ocpu_count}
+    dataNodeHostType: ${var.opensearch_cluster_data_node_host_type}
+    dataNodeStorageGb: ${var.opensearch_cluster_data_node_storage_gb}
+    displayName: ${var.opensearch_cluster_display_name}
+    freeformTags: ${var.opensearch_cluster_freeform_tags}
+    masterNodeCount: ${var.opensearch_cluster_master_node_count}
+    masterNodeHostBareMetalShape: ${var.opensearch_cluster_master_node_host_bare_metal_shape}
+    masterNodeHostMemoryGb: ${var.opensearch_cluster_master_node_host_memory_gb}
+    masterNodeHostOcpuCount: ${var.opensearch_cluster_master_node_host_ocpu_count}
+    masterNodeHostType: ${var.opensearch_cluster_master_node_host_type}
+    opendashboardNodeCount: ${var.opensearch_cluster_opendashboard_node_count}
+    opendashboardNodeHostMemoryGb: ${var.opensearch_cluster_opendashboard_node_host_memory_gb}
+    opendashboardNodeHostOcpuCount: ${var.opensearch_cluster_opendashboard_node_host_ocpu_count}
+    securityMasterUserName: ${var.security_master_user_name}
+    securityMasterUserPasswordHashSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    securityMode: ${var.security_mode}
+    softwareVersion: ${var.opensearch_cluster_software_version}
+    subnetCompartmentId: ${var.compartment_id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnCompartmentId: ${var.compartment_id}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchcluster
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchcluster
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

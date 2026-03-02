@@ -1,0 +1,73 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: IdentityPropagationTrust
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/identitypropagationtrust
+  labels:
+    testing.upbound.io/example-name: test_identity_propagation_trust
+  name: test-identity-propagation-trust
+spec:
+  forProvider:
+    accountId: accountId
+    active: ${var.identity_propagation_trust_active}
+    allowImpersonation: ${var.identity_propagation_trust_allow_impersonation}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.identity_propagation_trust_authorization}
+    clientClaimName: ${var.identity_propagation_trust_client_claim_name}
+    clientClaimValues:
+    - clientClaimValues
+    description: ${var.identity_propagation_trust_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    impersonationServiceUsers:
+    - ocidSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_identity_propagation_trust_user
+      rule: ${var.identity_propagation_trust_impersonation_service_users_rule}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_identity_propagation_trust_user
+    issuer: ${var.identity_propagation_trust_issuer}
+    keytab:
+    - secretOcid: ${var.identity_propagation_trust_keytab_secret_ocid}
+      secretVersion: ${var.identity_propagation_trust_keytab_secret_version}
+    name: ${var.identity_propagation_trust_name}
+    oauthClients:
+    - oauthClients
+    publicCertificate: ${var.identity_propagation_trust_public_certificate}
+    publicKeyEndpoint: ${var.identity_propagation_trust_public_key_endpoint}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:IdentityPropagationTrust
+    subjectClaimName: ${var.identity_propagation_trust_subject_claim_name}
+    subjectMappingAttribute: ${var.identity_propagation_trust_subject_mapping_attribute}
+    subjectType: ${var.identity_propagation_trust_subject_type}
+    tags:
+    - key: ${var.identity_propagation_trust_tags_key}
+      value: ${var.identity_propagation_trust_tags_value}
+    type: ${var.identity_propagation_trust_type}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/identitypropagationtrust
+  labels:
+    testing.upbound.io/example-name: test_identity_propagation_trust_user
+  name: test-identity-propagation-trust-user
+spec:
+  forProvider:
+    emails:
+    - primary: true
+      type: work
+      value: value@email.com
+    - type: recovery
+      value: value@email.com
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    name:
+    - familyName: familyName
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:User
+    userName: testIdentityPropagationTrustUser

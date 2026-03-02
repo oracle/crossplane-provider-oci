@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SecurityAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/securityassessment
+  labels:
+    testing.upbound.io/example-name: oci_data_safe_security_assessment
+  name: oci-data-safe-security-assessment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.description}
+    displayName: ${var.display_name}
+    targetId: ${var.data_safe_target_ocid}

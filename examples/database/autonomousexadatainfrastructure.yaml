@@ -1,0 +1,138 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
+  name: test-autonomous-exadata-infrastructure
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createAsync: true
+    displayName: TestExadata11
+    domain: ${var.autonomous_exadata_infrastructure_domain}
+    freeformTags: ${var.autonomous_database_freeform_tags}
+    licenseModel: LICENSE_INCLUDED
+    maintenanceWindowDetails:
+    - daysOfWeek:
+      - name: MONDAY
+      hoursOfDay:
+      - "4"
+      months:
+      - name: JANUARY
+      - name: APRIL
+      - name: JULY
+      - name: OCTOBER
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    nsgIdsRefs:
+    - name: test_network_security_group
+    shape: Exadata.Quarter2.92
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadata_subnet
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: exadata_shapes_security_list
+  name: exadata-shapes-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExadataSecurityList
+    egressSecurityRules:
+    - destination: 10.1.22.0/24
+      protocol: "6"
+    - destination: 10.1.22.0/24
+      protocol: "1"
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 10.1.22.0/24
+    - protocol: "1"
+      source: 10.1.22.0/24
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: exadata_subnet
+  name: exadata-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.22.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: TestExadataSubnet
+    dnsLabel: subnetexadata
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    securityListIdRefs:
+    - name: test_vcn
+    - name: exadata_shapes_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: examplevcn

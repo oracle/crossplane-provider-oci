@@ -1,0 +1,22 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceMetastoreConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancemetastoreconfig
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_metastore_config
+  name: test-bds-instance-metastore-config
+spec:
+  forProvider:
+    bdsApiKeyId: ${var.api_key_id}
+    bdsApiKeyPassphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    bdsInstanceId: ${var.bds_instance_id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    displayName: ${var.bds_instance_metastore_config_display_name}
+    metastoreId: ${var.metastore_id}

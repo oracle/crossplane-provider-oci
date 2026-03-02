@@ -1,0 +1,15 @@
+apiVersion: jmsjavadownloads.oci.upbound.io/v1alpha1
+kind: JavaLicenseAcceptanceRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsjavadownloads/v1alpha1/javalicenseacceptancerecord
+  labels:
+    testing.upbound.io/example-name: test_java_license_acceptance_record
+  name: test-java-license-acceptance-record
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    licenseAcceptanceStatus: ACCEPTED
+    licenseType: OTN

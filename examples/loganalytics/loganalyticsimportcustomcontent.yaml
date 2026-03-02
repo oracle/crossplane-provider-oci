@@ -1,0 +1,12 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsImportCustomContent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsimportcustomcontent
+  labels:
+    testing.upbound.io/example-name: importCustomContentNew
+  name: importcustomcontentnew
+spec:
+  forProvider:
+    importCustomContentFile: ./files/TFSource1.zip
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

@@ -1,0 +1,38 @@
+apiVersion: apmconfig.oci.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmconfig/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_config
+  name: test-config
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    configType: ${var.config_config_type}
+    description: ${var.config_description}
+    displayName: ${var.config_display_name}
+    filterText: ${var.config_filter_text}
+    freeformTags: ${var.config_freeform_tags}
+
+---
+
+apiVersion: apm.oci.upbound.io/v1alpha1
+kind: ApmDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmconfig/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_apm_domain
+  name: test-apm-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.apm_domain_description}
+    displayName: ${var.apm_domain_display_name}
+    freeformTags: ${var.apm_domain_freeform_tags}
+    isFreeTier: ${var.apm_domain_is_free_tier}

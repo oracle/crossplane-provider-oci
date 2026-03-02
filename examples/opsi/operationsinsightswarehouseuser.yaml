@@ -1,0 +1,49 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouseUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouseuser
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse_user
+  name: test-operations-insights-warehouse-user
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.wh_user_defined_tags_value}")}
+    freeformTags: ${var.wh_user_freeform_tags}
+    isAwrDataAccess: ${var.wh_user_is_awr_data_access}
+    isEmDataAccess: ${var.wh_user_is_em_data_access}
+    isOpsiDataAccess: ${var.wh_user_is_opsi_data_access}
+    name: ${var.wh_user_name}
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse
+
+---
+
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouse
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouseuser
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse
+  name: test-operations-insights-warehouse
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuAllocated: ${var.warehouse_cpu_allocated}
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.warehouse_defined_tags_value}")}
+    displayName: ${var.warehouse_display_name}
+    freeformTags: ${var.warehouse_freeform_tags}
+    storageAllocatedInGbs: ${var.storage_allocated_in_gbs}

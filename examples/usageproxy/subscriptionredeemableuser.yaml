@@ -1,0 +1,14 @@
+apiVersion: usageproxy.oci.upbound.io/v1alpha1
+kind: SubscriptionRedeemableUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: usageproxy/v1alpha1/subscriptionredeemableuser
+  labels:
+    testing.upbound.io/example-name: test_subscription_redeemable_user
+  name: test-subscription-redeemable-user
+spec:
+  forProvider:
+    items:
+    - emailId: ${var.email_id}
+    subscriptionId: ${var.subscription_id}
+    tenancyId: ${var.tenancy_ocid}

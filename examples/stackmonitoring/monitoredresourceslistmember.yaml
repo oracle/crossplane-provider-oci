@@ -1,0 +1,12 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourcesListMember
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourceslistmember
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_list_member
+  name: test-monitored-resources-list-member
+spec:
+  forProvider:
+    destinationResourceId: ${var.stack_mon_destination_resource_id}
+    monitoredResourceId: ${var.stack_mon_source_resource_id}

@@ -1,0 +1,14 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironmentDataMaskingActivity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentdatamaskingactivity
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_data_masking_activity
+  name: test-fusion-environment-data-masking-activity
+spec:
+  forProvider:
+    fusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+    isResumeDataMasking: ${var.fusion_environment_data_masking_activity_is_resume_data_masking}

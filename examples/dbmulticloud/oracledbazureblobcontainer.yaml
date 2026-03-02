@@ -1,0 +1,16 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureBlobContainer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazureblobcontainer
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_blob_container
+  name: test-oracle-db-azure-blob-container
+spec:
+  forProvider:
+    azureStorageAccountName: ADBDAppStorageAccounts
+    azureStorageContainerName: ADBDContainers
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestDBAzureBlobContainerUpdate

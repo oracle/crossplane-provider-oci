@@ -1,0 +1,15 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceNodeBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancenodebackup
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_backup
+  name: test-bds-instance-node-backup
+spec:
+  forProvider:
+    backupType: FULL
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    levelTypeDetails:
+    - levelType: NODE_TYPE_LEVEL
+      nodeType: MASTER

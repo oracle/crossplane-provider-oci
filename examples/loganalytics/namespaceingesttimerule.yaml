@@ -1,0 +1,25 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceIngestTimeRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespaceingesttimerule
+  labels:
+    testing.upbound.io/example-name: ingest_time_rule_minimal
+  name: ingest-time-rule-minimal
+spec:
+  forProvider:
+    actions:
+    - compartmentId: ${var.compartment_ocid}
+      metricName: tfmetriccve
+      namespace: tfmetricnamespace
+      type: METRIC_EXTRACTION
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    conditions:
+    - fieldName: mtag
+      fieldOperator: EQUAL
+      fieldValue: cveexploitattempt
+      kind: FIELD
+    displayName: displayName
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

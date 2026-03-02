@@ -1,0 +1,16 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: IotDomainGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomaingroup
+  labels:
+    testing.upbound.io/example-name: test_iot_domain_group
+  name: test-iot-domain-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.iot_domain_group_description}
+    displayName: ${var.iot_domain_group_display_name}
+    freeformTags: ${var.iot_domain_group_freeform_tags}

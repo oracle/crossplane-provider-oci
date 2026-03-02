@@ -1,0 +1,100 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: CloudGateMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgatemapping
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_mapping
+  name: test-cloud-gate-mapping
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.cloud_gate_mapping_authorization}
+    cloudGate:
+    - valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_mapping_cloud_gate
+    description: ${var.cloud_gate_mapping_description}
+    gatewayApp:
+    - nameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_mapping_app
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_mapping_app
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    nginxSettings: ${var.cloud_gate_mapping_nginx_settings}
+    policyName: ${var.cloud_gate_mapping_policy_name}
+    proxyPass: ${var.cloud_gate_mapping_proxy_pass}
+    resourcePrefix: ${var.cloud_gate_mapping_resource_prefix}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGateMapping
+    server:
+    - valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_mapping_server
+    tags:
+    - key: ${var.cloud_gate_mapping_tags_key}
+      value: ${var.cloud_gate_mapping_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: App
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgatemapping
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_mapping_app
+  name: test-cloud-gate-mapping-app
+spec:
+  forProvider:
+    basedOnTemplate:
+    - value: CustomWebAppTemplateId
+    displayName: cloudGateMappingAppDisplayName
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:App
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: CloudGate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgatemapping
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_mapping_cloud_gate
+  name: test-cloud-gate-mapping-cloud-gate
+spec:
+  forProvider:
+    displayName: cloudGateMappingName
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGate
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: CloudGateServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgatemapping
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_mapping_server
+  name: test-cloud-gate-mapping-server
+spec:
+  forProvider:
+    cloudGate:
+    - valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_mapping_cloud_gate
+    displayName: cloudGateMappingServerDisplayName
+    hostName: hostName
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    port: 10
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGateServer
+    ssl: false

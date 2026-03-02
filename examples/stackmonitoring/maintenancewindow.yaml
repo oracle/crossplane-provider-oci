@@ -1,0 +1,21 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MaintenanceWindow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/maintenancewindow
+  labels:
+    testing.upbound.io/example-name: test_maintenance_window_example
+  name: test-maintenance-window-example
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${var.maintenance_window_name}
+    resources:
+    - areMembersIncluded: true
+      resourceId: ${var.resource_id_for_maintwin}
+    schedule:
+    - scheduleType: ${var.maintenance_window_schedule_schedule_type}
+      timeMaintenanceWindowEnd: ${var.maintenance_window_schedule_time_maintenance_window_end}
+      timeMaintenanceWindowStart: ${var.maintenance_window_schedule_time_maintenance_window_start}

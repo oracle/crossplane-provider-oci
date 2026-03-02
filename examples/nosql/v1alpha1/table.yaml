@@ -12,7 +12,8 @@ spec:
     ddlStatement: ${NOSQL_TABLE_DDLSTATEMENT}
     name: table1
     tableLimits:
-    - capacityMode: ON_DEMAND
+    # ON_DEMAND capacityMode limits vary by tenancy
+    - capacityMode: PROVISIONED
       maxReadUnits: 1
       maxStorageInGbs: 1
       maxWriteUnits: 1

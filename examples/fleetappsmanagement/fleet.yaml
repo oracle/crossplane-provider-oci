@@ -1,0 +1,80 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Fleet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/fleet
+  labels:
+    testing.upbound.io/example-name: test_fleet
+  name: test-fleet
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    credentials:
+    - compartmentId: ${var.compartment_id}
+      displayName: tersi-testing-credential
+      entitySpecifics:
+      - credentialLevel: FLEET
+        resourceId: ${var.test_instance_id}
+        target: target
+        variables:
+        - name: name
+          value: value
+      password:
+      - credentialType: PLAIN_TEXT
+        keyId: ${var.key_id}
+        keyVersion: keyVersion
+        secretId: ${var.fams_user_password}
+        secretVersion: secretVersion
+        value: value
+        vaultId: ${var.vault_id}
+      user:
+      - credentialType: PLAIN_TEXT
+        keyId: ${var.key_id}
+        keyVersion: keyVersion
+        secretId: ${var.fams_user_id}
+        secretVersion: secretVersion
+        value: value
+        vaultId: ${var.vault_id}
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    description: description2
+    details:
+    - fleetType: GENERIC
+    displayName: displayName2
+    environmentType: Stage
+    freeformTags:
+      Department: Accounting
+    isTargetAutoConfirm: "true"
+    notificationPreferences:
+    - compartmentId: ${var.compartment_id}
+      preferences:
+      - onJobCanceled: "true"
+        onJobFailure: "true"
+        onJobScheduleChange: "true"
+        onJobStart: "true"
+        onJobSuccess: "true"
+        onResourceNonCompliance: "true"
+        onRunbookNewerVersion: "true"
+        onTaskFailure: "true"
+        onTaskPause: "true"
+        onTaskSuccess: "true"
+        onTopologyModification: "true"
+        upcomingSchedule:
+        - notifyBefore: notifyBefore2
+          onUpcomingSchedule: "true"
+      topicId: ${var.oci_ons_notification_topic}
+    resourceSelection:
+    - resourceSelectionType: DYNAMIC
+      ruleSelectionCriteria:
+      - matchCondition: MATCH_ALL
+        rules:
+        - basis: inventoryProperties
+          compartmentId: ${var.tenancy_id}
+          compartmentIdInSubtree: "true"
+          conditions:
+          - attrGroup: Instance
+            attrKey: shape
+            attrValue: VM.Standard.E4.Flex
+          matchCondition: ANY
+          resourceCompartmentId: ${var.compartment_id}

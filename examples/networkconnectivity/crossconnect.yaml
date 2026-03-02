@@ -1,0 +1,37 @@
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: CrossConnect
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/crossconnect
+  labels:
+    testing.upbound.io/example-name: cross_connect
+  name: cross-connect
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    crossConnectGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: cross_connect_group
+    displayName: ${var.cross_connect_display_name}
+    isActive: true
+    locationName: ${data.oci_core_cross_connect_locations.cross_connect_locations.cross_connect_locations[0].name}
+    portSpeedShapeName: ${data.oci_core_cross_connect_port_speed_shapes.cross_connect_port_speed_shapes.cross_connect_port_speed_shapes[1].name}
+
+---
+
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: CrossConnectGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/crossconnect
+  labels:
+    testing.upbound.io/example-name: cross_connect_group
+  name: cross-connect-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.cross_connect_group_display_name}

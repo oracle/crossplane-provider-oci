@@ -1,0 +1,51 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Grant
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/grant
+  labels:
+    testing.upbound.io/example-name: test_grant
+  name: test-grant
+spec:
+  forProvider:
+    app:
+    - value: ${data.oci_identity_domains_apps.test_grant_apps.apps.0.id}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.grant_authorization}
+    grantMechanism: ${var.grant_grant_mechanism}
+    grantee:
+    - type: ${var.grant_grantee_type}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_grant_user
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Grant
+    tags:
+    - key: ${var.grant_tags_key}
+      value: ${var.grant_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/grant
+  labels:
+    testing.upbound.io/example-name: test_grant_user
+  name: test-grant-user
+spec:
+  forProvider:
+    emails:
+    - primary: "true"
+      type: work
+      value: value@email.com
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    name:
+    - familyName: testGrantFamilyName
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:User
+    userName: testGrantUserName

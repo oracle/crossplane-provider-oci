@@ -1,0 +1,22 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExascaleDbStorageVault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exascaledbstoragevault
+  labels:
+    testing.upbound.io/example-name: test_exascale_db_storage_vault
+  name: test-exascale-db-storage-vault
+spec:
+  forProvider:
+    additionalFlashCacheInPercent: 20
+    autoscaleLimitInGbs: ${var.autoscale_limit_in_gbs}
+    availabilityDomain: ${local.ad}
+    clusterPlacementGroupId: ${var.cpg_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExampleExascaleDbStorageVault
+    highCapacityDatabaseStorage:
+    - totalSizeInGbs: 800
+    isAutoscaleEnabled: ${var.is_autoscale_enabled}
+    subscriptionId: ${var.subscription_id}

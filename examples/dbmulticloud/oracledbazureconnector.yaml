@@ -1,0 +1,20 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAzureConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbazureconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_azure_connector
+  name: test-oracle-db-azure-connector
+spec:
+  forProvider:
+    accessToken: AzureAccessToken
+    azureIdentityMechanism: ARC_AGENT
+    azureResourceGroup: Prasanna.RG
+    azureSubscriptionId: 7080446f-ee76-4aa2-b9dd-c2625f63cab0
+    azureTenantId: 5b743bc7-c1e2-4d46-b4b5-a32eddac0286
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbClusterResourceId: ${var.db_cluster_resource_id}
+    displayName: AzureConnectorTest-Tersi

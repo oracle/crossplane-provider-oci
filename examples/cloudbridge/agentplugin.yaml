@@ -1,0 +1,15 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: AgentPlugin
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/agentplugin
+  labels:
+    testing.upbound.io/example-name: test_agent_plugin
+  name: test-agent-plugin
+spec:
+  forProvider:
+    agentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_agent
+    desiredState: ${var.agent_plugin_desired_state}
+    pluginName: ${var.agent_plugin_plugin_name}

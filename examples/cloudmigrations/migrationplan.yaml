@@ -1,0 +1,42 @@
+apiVersion: cloudmigrations.oci.upbound.io/v1alpha1
+kind: MigrationPlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudmigrations/v1alpha1/migrationplan
+  labels:
+    testing.upbound.io/example-name: test_migration_plan
+  name: test-migration-plan
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.migration_plan_defined_tags_value)}
+    displayName: ${var.migration_plan_display_name}
+    freeformTags: ${var.migration_plan_freeform_tags}
+    migrationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_migration
+    sourceMigrationPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_migration_plan
+    strategies:
+    - adjustmentMultiplier: ${var.migration_plan_strategies_adjustment_multiplier}
+      metricTimeWindow: ${var.migration_plan_strategies_metric_time_window}
+      metricType: ${var.migration_plan_strategies_metric_type}
+      percentile: ${var.migration_plan_strategies_percentile}
+      resourceType: ${var.migration_plan_strategies_resource_type}
+      strategyType: ${var.migration_plan_strategies_strategy_type}
+    targetEnvironments:
+    - availabilityDomain: ${var.migration_plan_target_environments_availability_domain}
+      dedicatedVmHost: ${var.migration_plan_target_environments_dedicated_vm_host}
+      faultDomain: ${var.migration_plan_target_environments_fault_domain}
+      msLicense: ${var.migration_plan_target_environments_ms_license}
+      preferredShapeType: ${var.migration_plan_target_environments_preferred_shape_type}
+      subnet: ${var.migration_plan_target_environments_subnet}
+      targetCompartmentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_compartment
+      targetEnvironmentType: ${var.migration_plan_target_environments_target_environment_type}
+      vcn: ${var.migration_plan_target_environments_vcn}

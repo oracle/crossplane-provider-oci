@@ -1,9 +1,0 @@
-apiVersion: kms.oci.upbound.io/v1alpha1
-kind: Vault
-metadata:
-  name: vault-via-crossplane
-spec:
-  forProvider:
-    compartmentId: ocid1.compartment.xxx
-    displayName: vault-via-crossplane
-    vaultType: DEFAULT

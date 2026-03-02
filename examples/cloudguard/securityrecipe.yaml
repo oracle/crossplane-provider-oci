@@ -1,0 +1,17 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: SecurityRecipe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/securityrecipe
+  labels:
+    testing.upbound.io/example-name: test_security_recipe
+  name: test-security-recipe
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.security_recipe_description}
+    displayName: ${var.security_recipe_display_name}
+    securityPolicies:
+    - ${data.oci_cloud_guard_security_policies.test_security_policies.security_policy_collection[0].items[0].id}

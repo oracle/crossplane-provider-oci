@@ -1,0 +1,25 @@
+apiVersion: apiaccesscontrol.oci.upbound.io/v1alpha1
+kind: PrivilegedApiControl
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apiaccesscontrol/v1alpha1/privilegedapicontrol
+  labels:
+    testing.upbound.io/example-name: test_privileged_api_control
+  name: test-privileged-api-control
+spec:
+  forProvider:
+    approverGroupIdList: ${var.privileged_api_control_approver_group_id_list}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.privileged_api_control_description}
+    displayName: ${var.privileged_api_control_display_name}
+    freeformTags: ${var.privileged_api_control_freeform_tags}
+    notificationTopicId: ${var.notification_topic_id}
+    numberOfApprovers: ${var.privileged_api_control_number_of_approvers}
+    privilegedOperationList:
+    - apiName: ${var.privileged_api_control_privileged_operation_list_api_name}
+      attributeNames: ${var.privileged_api_control_privileged_operation_list_attribute_names}
+      entityType: ${var.privileged_api_control_privileged_operation_list_entity_type}
+    resourceType: ${var.privileged_api_control_resource_type}
+    resources: ${var.privileged_api_control_resources}

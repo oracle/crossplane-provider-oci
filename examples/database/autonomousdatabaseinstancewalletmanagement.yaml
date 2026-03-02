@@ -1,0 +1,42 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseInstanceWalletManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabaseinstancewalletmanagement
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_instance_wallet_management
+  name: test-autonomous-database-instance-wallet-management
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_database
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabaseinstancewalletmanagement
+  labels:
+    testing.upbound.io/example-name: autonomous_database
+  name: autonomous-database
+spec:
+  forProvider:
+    adminPasswordSecretRef:
+      key: attribute.result
+      name: example-string
+      namespace: upbound-system
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: "1"
+    dataStorageSizeInTbs: "1"
+    dbName: adbdb1
+    dbWorkload: ${var.autonomous_database_db_workload}
+    displayName: example_autonomous_database
+    freeformTags: ${var.autonomous_database_freeform_tags}
+    isAutoScalingEnabled: "true"
+    isPreviewVersionWithServiceTermsAccepted: "false"
+    licenseModel: ${var.autonomous_database_license_model}

@@ -1,0 +1,47 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: CloudGateServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgateserver
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_server
+  name: test-cloud-gate-server
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.cloud_gate_server_authorization}
+    cloudGate:
+    - valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_cloud_gate_server_cloud_gate
+    description: ${var.cloud_gate_server_description}
+    displayName: ${var.cloud_gate_server_display_name}
+    hostName: ${var.cloud_gate_server_host_name}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    nginxSettings: ${var.cloud_gate_server_nginx_settings}
+    port: ${var.cloud_gate_server_port}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGateServer
+    ssl: ${var.cloud_gate_server_ssl}
+    tags:
+    - key: ${var.cloud_gate_server_tags_key}
+      value: ${var.cloud_gate_server_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: CloudGate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/cloudgateserver
+  labels:
+    testing.upbound.io/example-name: test_cloud_gate_server_cloud_gate
+  name: test-cloud-gate-server-cloud-gate
+spec:
+  forProvider:
+    displayName: name
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:CloudGate

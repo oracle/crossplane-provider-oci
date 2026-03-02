@@ -1,0 +1,108 @@
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: Ipsec
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/ipsec
+  labels:
+    testing.upbound.io/example-name: test_ipsec_over_fc_connection
+  name: test-ipsec-over-fc-connection
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cpe_ipsec_over_fc
+    cpeLocalIdentifier: 10.1.6.7
+    cpeLocalIdentifierType: IP_ADDRESS
+    definedTags:
+      ${oci_identity_tag_namespace.tag_namespace1_fc.name}.${oci_identity_tag.tag1_fc.name}: value
+    displayName: MyIPSecConnectionOverFC
+    drgIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_drg_ipsec_over_fc
+    freeformTags:
+      Department: Finance
+    staticRoutes:
+    - 10.0.0.0/16
+    tunnelConfiguration:
+    - associatedVirtualCircuitsRefs:
+      - name: test_ipsec_over_fc_virtual_circuit
+      drgRouteTableIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_drg_ipsec_over_fc_route_table
+      oracleTunnelIp: 10.1.5.5
+    - associatedVirtualCircuitsRefs:
+      - name: test_ipsec_over_fc_virtual_circuit
+      drgRouteTableIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_drg_ipsec_over_fc_route_table
+      oracleTunnelIp: 10.1.7.7
+
+---
+
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: CrossConnect
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/ipsec
+  labels:
+    testing.upbound.io/example-name: test_ipsec_over_fc_cross_connect
+  name: test-ipsec-over-fc-cross-connect
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testIpsecOverFCCrossConnect
+    isActive: true
+    locationName: ${data.oci_core_cross_connect_locations.cross_connect_locations.cross_connect_locations[0].name}
+    portSpeedShapeName: ${data.oci_core_cross_connect_port_speed_shapes.cross_connect_port_speed_shapes.cross_connect_port_speed_shapes[0].name}
+
+---
+
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: Drg
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/ipsec
+  labels:
+    testing.upbound.io/example-name: test_drg_ipsec_over_fc
+  name: test-drg-ipsec-over-fc
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: test_drg_ipsec_over_fc
+
+---
+
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: VirtualCircuit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/ipsec
+  labels:
+    testing.upbound.io/example-name: test_ipsec_over_fc_virtual_circuit
+  name: test-ipsec-over-fc-virtual-circuit
+spec:
+  forProvider:
+    bandwidthShapeName: 100 Mbps
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    crossConnectMappings:
+    - crossConnectOrCrossConnectGroupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_ipsec_over_fc_cross_connect
+      customerBgpPeeringIp: 10.0.1.22/30
+      oracleBgpPeeringIp: 10.0.1.21/30
+      vlan: 101
+    customerAsn: "64513"
+    displayName: testIpsecOverFCVirtualCircuit
+    gatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_drg_ipsec_over_fc
+    type: PRIVATE

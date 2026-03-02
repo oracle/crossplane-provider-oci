@@ -1,0 +1,365 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DatabaseSnapshotStandby
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_database_snapshot_standby
+  name: test-database-snapshot-standby
+spec:
+  forProvider:
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: standby_database
+    snapshotDurationInDays: 10
+    standbyConversionType: SNAPSHOT
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t
+  name: t
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-internet-gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t2
+  name: t2
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-internet-gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t
+  name: t
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    routeRules:
+    - cidrBlock: 0.0.0.0/0
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: t
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t2
+  name: t2
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    routeRules:
+    - cidrBlock: 0.0.0.0/0
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: t2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t
+  name: t
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains.0.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+    displayName: TFSubnet1
+    dnsLabel: tfsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+    securityListIdRefs:
+    - name: t
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t3
+  name: t3
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains.0.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+    displayName: TFSubnet1
+    dnsLabel: tfsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+    securityListIdRefs:
+    - name: t2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_subnet_backup
+  name: test-subnet-backup
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.23.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+    displayName: ExadataBackupSubnet
+    dnsLabel: subnetexadata2
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+    securityListIdRefs:
+    - name: t
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_subnet_backup4
+  name: test-subnet-backup4
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.23.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+    displayName: ExadataBackupSubnet
+    dnsLabel: subnetexadata2
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+    securityListIdRefs:
+    - name: t2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: t2
+
+---
+
+apiVersion: core.oci.upbound.io/v1alpha1
+kind: VirtualNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t
+  name: t
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-vcn
+    dnsLabel: tfvcn
+
+---
+
+apiVersion: core.oci.upbound.io/v1alpha1
+kind: VirtualNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: t2
+  name: t2
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: -tf-vcn
+    dnsLabel: tfvcn
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: Database
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: primary_database
+  name: primary-database
+spec:
+  forProvider:
+    database:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      characterSet: AL32UTF8
+      dbName: PrimDb
+      dbWorkload: OLTP
+      ncharacterSet: AL16UTF16
+    dbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_home
+    source: NONE
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: Database
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: standby_database
+  name: standby-database
+spec:
+  forProvider:
+    database:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      characterSet: AL32UTF8
+      databaseAdminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      dbWorkload: OLTP
+      ncharacterSet: AL16UTF16
+      protectionMode: MAXIMUM_PERFORMANCE
+      sourceDatabaseId: ${oci_database_database.primary_database.id}
+      sourceTdeWalletPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      transportType: ASYNC
+    dbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_home2
+    source: DATAGUARD
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbHome
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_db_home
+  name: test-db-home
+spec:
+  forProvider:
+    dbSystemId: ${oci_database_cloud_vm_cluster.test_cloud_vm_cluster.id}
+    dbVersion: 19.26.0.0
+    displayName: createdDbHomeNone
+    source: NONE
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DbHome
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_db_home2
+  name: test-db-home2
+spec:
+  forProvider:
+    dbSystemId: ${oci_database_cloud_vm_cluster.test_cloud_vm_cluster2.id}
+    dbVersion: 19.26.0.0
+    displayName: createdDbHomeNone
+    source: NONE

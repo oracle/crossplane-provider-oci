@@ -1,0 +1,92 @@
+apiVersion: opensearch.oci.upbound.io/v1alpha1
+kind: OpensearchClusterPipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchclusterpipeline
+  labels:
+    testing.upbound.io/example-name: test_opensearch_cluster_pipeline
+  name: test-opensearch-cluster-pipeline
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataPrepperConfigurationBody: ${var.opensearch_cluster_pipeline_data_prepper_configuration_body}
+    displayName: ${var.opensearch_cluster_pipeline_display_name}
+    freeformTags: ${var.opensearch_cluster_pipeline_freeform_tags}
+    memoryGb: ${var.opensearch_cluster_pipeline_memory_gb}
+    nodeCount: ${var.opensearch_cluster_pipeline_node_count}
+    nsgIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_nsg
+    ocpuCount: ${var.opensearch_cluster_pipeline_ocpu_count}
+    opcDryRun: ${var.opensearch_cluster_pipeline_opc_dry_run}
+    pipelineConfigurationBody: ${local.pipeline_configuration_body}
+    reverseConnectionEndpoints:
+    - customerFqdn: ${var.opensearch_cluster_pipeline_reverse_connection_endpoints_customer_fqdn}
+      customerIp: ${var.opensearch_cluster_pipeline_reverse_connection_endpoints_customer_ip}
+    subnetCompartmentId: ${var.compartment_id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnCompartmentId: ${var.compartment_id}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchclusterpipeline
+  labels:
+    testing.upbound.io/example-name: test_nsg
+  name: test-nsg
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfNsgForPipeline
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchclusterpipeline
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opensearch/v1alpha1/opensearchclusterpipeline
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

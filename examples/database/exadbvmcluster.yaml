@@ -1,0 +1,216 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadbVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: test_exadb_vm_cluster
+  name: test-exadb-vm-cluster
+spec:
+  forProvider:
+    availabilityDomain: ${local.ad}
+    backupSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_backup_subnet
+    clusterName: apollo
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExampleExadbVmCluster
+    exascaleDbStorageVaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exascale_db_storage_vault
+    gridImageId: ${data.oci_database_gi_version_minor_versions.test_gi_minor_versions.gi_minor_versions[0].grid_image_id}
+    hostname: apollo
+    nodeConfig:
+    - enabledEcpuCountPerNode: "8"
+      totalEcpuCountPerNode: "16"
+      vmFileSystemStorageSizeGbsPerNode: "293"
+    nodeResource:
+    - nodeName: node1
+    - nodeName: node2
+    - nodeName: node3
+    shape: EXADBXS
+    shapeAttribute: ${local.shape_attribute}
+    sshPublicKeys:
+    - ${var.ssh_public_key}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_client_subnet
+    subscriptionId: ${var.subscription_id}
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_igw
+  name: exadbxs-igw
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-tf-igw
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_rt
+  name: exadbxs-rt
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-tf-route-table
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: exadbxs_igw
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_security_list
+  name: exadbxs-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-security-list
+    egressSecurityRules:
+    - destination: 10.1.22.0/24
+      protocol: "6"
+    - destination: 10.1.22.0/24
+      protocol: "1"
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 10.1.22.0/24
+    - protocol: "1"
+      source: 10.1.22.0/24
+    - protocol: all
+      source: 10.1.22.0/24
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_backup_subnet
+  name: exadbxs-backup-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.21.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-tf-backup-subnet
+    dnsLabel: tfbackupsub
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_rt
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_client_subnet
+  name: exadbxs-client-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-tf-client-subnet
+    dnsLabel: tfclientsub
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_rt
+    securityListIdRefs:
+    - name: exadbxs_vcn
+    - name: exadbxs_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_vcn
+
+---
+
+apiVersion: core.oci.upbound.io/v1alpha1
+kind: VirtualNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: exadbxs_vcn
+  name: exadbxs-vcn
+spec:
+  forProvider:
+    cidrBlocks:
+    - 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exadbxs-tf-vcn
+    dnsLabel: tfvcn
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExascaleDbStorageVault
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: test_exascale_db_storage_vault
+  name: test-exascale-db-storage-vault
+spec:
+  forProvider:
+    additionalFlashCacheInPercent: 20
+    autoscaleLimitInGbs: ${var.autoscale_limit_in_gbs}
+    availabilityDomain: ${local.ad}
+    clusterPlacementGroupId: ${var.cpg_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExampleExascaleDbStorageVault
+    highCapacityDatabaseStorage:
+    - totalSizeInGbs: 800
+    isAutoscaleEnabled: ${var.is_autoscale_enabled}
+    subscriptionId: ${var.subscription_id}

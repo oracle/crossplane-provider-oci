@@ -1,0 +1,34 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: DiscoveryJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/discoveryjob
+  labels:
+    testing.upbound.io/example-name: test_discovery_job
+  name: test-discovery-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    discoveryClient: LA_SERVICE
+    discoveryDetails:
+    - agentId: ${var.stack_mon_management_agent_id_discovery}
+      credentials:
+      - items:
+        - credentialName: Sk1YQ3JlZHM=
+          credentialType: Sk1YQ3JlZHM=
+          properties:
+          - propertiesMap:
+              Password: d2VibG9naWM=
+              Username: d2VibG9naWM=
+      license: STANDARD_EDITION
+      properties:
+      - propertiesMap:
+          admin_server_host: somehost.us.oracle.com
+          admin_server_port: "7001"
+          admin_server_protocol: t3
+      resourceName: terraformExample
+      resourceType: WEBLOGIC_DOMAIN
+    discoveryType: ADD
+    shouldPropagateTagsToDiscoveredResources: ${var.discovery_job_should_propagate_tags_to_discovered_resources}

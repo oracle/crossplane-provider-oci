@@ -1,0 +1,23 @@
+apiVersion: computecloudatcustomer.oci.upbound.io/v1alpha1
+kind: CccUpgradeSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccupgradeschedule
+  labels:
+    testing.upbound.io/example-name: test_ccc_upgrade_schedule
+  name: test-ccc-upgrade-schedule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      var.ccc_upgrade_schedule_defined_tags_value)}
+    description: ${var.ccc_upgrade_schedule_description}
+    displayName: ${var.ccc_upgrade_schedule_display_name}
+    events:
+    - description: ${var.ccc_upgrade_schedule_events_description}
+      scheduleEventDuration: ${var.ccc_upgrade_schedule_events_schedule_event_duration}
+      scheduleEventRecurrences: ${var.ccc_upgrade_schedule_events_schedule_event_recurrences}
+      timeStart: ${var.ccc_upgrade_schedule_events_time_start}
+    freeformTags: ${var.ccc_upgrade_schedule_freeform_tags}

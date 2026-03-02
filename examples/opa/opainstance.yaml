@@ -1,0 +1,20 @@
+apiVersion: opa.oci.upbound.io/v1alpha1
+kind: OpaInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opa/v1alpha1/opainstance
+  labels:
+    testing.upbound.io/example-name: test_opa_instance
+  name: test-opa-instance
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    consumptionModel: UCM
+    displayName: opa_instance_tf
+    idcsAt: ${var.idcs_access_token}
+    isBreakglassEnabled: false
+    meteringType: EXECUTION_PACK
+    shapeName: PRODUCTION
+    state: ACTIVE

@@ -1,0 +1,20 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: AutomaticDrConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/automaticdrconfiguration
+  labels:
+    testing.upbound.io/example-name: example_automatic_dr_configuration
+  name: example-automatic-dr-configuration
+spec:
+  forProvider:
+    defaultFailoverDrPlanId: ${data.oci_disaster_recovery_dr_plans.test_failover_plan.dr_plan_collection.0.items.0.id}
+    defaultSwitchoverDrPlanId: ${data.oci_disaster_recovery_dr_plans.test_switchover_plan.dr_plan_collection.0.items.0.id}
+    displayName: ${var.automatic_dr_configuration_display_name}
+    drProtectionGroupId: ${data.oci_disaster_recovery_dr_protection_groups.test_drpg.dr_protection_group_collection.0.items.0.id}
+    freeformTags: ${var.automatic_dr_configuration_freeform_tags}
+    members:
+    - isAutoFailoverEnabled: true
+      isAutoSwitchoverEnabled: true
+      memberId: ${data.oci_database_autonomous_databases.test_adb.autonomous_databases[0].id}
+      memberType: AUTONOMOUS_DATABASE

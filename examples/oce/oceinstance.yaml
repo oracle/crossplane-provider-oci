@@ -1,0 +1,34 @@
+apiVersion: oce.oci.upbound.io/v1alpha1
+kind: OceInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oce/v1alpha1/oceinstance
+  labels:
+    testing.upbound.io/example-name: test_oce_instance
+  name: test-oce-instance
+spec:
+  forProvider:
+    adminEmail: ${var.admin_email}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: description
+    freeformTags:
+      freeformkey: freeformvalue
+    idcsAccessTokenSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    instanceAccessType: PUBLIC
+    instanceLicenseType: BYOL
+    instanceUsageType: NONPRIMARY
+    name: testoceinstance
+    objectStorageNamespace: ${data.oci_objectstorage_namespace.test_namespace.namespace}
+    tenancyId: ${var.tenancy_ocid}
+    tenancyName: ${var.tenancy_name}
+    timeouts:
+    - create: 2h
+      delete: 1h
+      update: 60m
+    upgradeSchedule: UPGRADE_IMMEDIATELY
+    wafPrimaryDomain: oracle.com

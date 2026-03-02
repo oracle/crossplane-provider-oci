@@ -16,5 +16,5 @@ spec:
           - commonName: www.example.com
     kmsKeyIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: key_label_1
+        testing.upbound.io/example-name: key_label_2
     name: certificateauthority1

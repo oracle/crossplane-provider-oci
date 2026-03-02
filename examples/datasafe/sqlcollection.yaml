@@ -1,0 +1,18 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SqlCollection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sqlcollection
+  labels:
+    testing.upbound.io/example-name: test_sql_collection
+  name: test-sql-collection
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbUserName: ${var.data_safe_db_user_name}
+    displayName: ${var.sql_collection_display_name}
+    sqlLevel: ${var.sql_collection_sql_level}
+    status: ${var.sql_collection_status}
+    targetId: ${var.data_safe_target_ocid}

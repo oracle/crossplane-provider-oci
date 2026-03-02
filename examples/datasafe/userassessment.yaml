@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: UserAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/userassessment
+  labels:
+    testing.upbound.io/example-name: test_user_assessment
+  name: test-user-assessment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.description}
+    displayName: ${var.display_name}
+    targetId: ${var.data_safe_target_ocid}

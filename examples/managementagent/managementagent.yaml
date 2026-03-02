@@ -1,0 +1,15 @@
+apiVersion: managementagent.oci.upbound.io/v1alpha1
+kind: ManagementAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managementagent/v1alpha1/managementagent
+  labels:
+    testing.upbound.io/example-name: test_management_agent
+  name: test-management-agent
+spec:
+  forProvider:
+    deployPluginsId:
+    - ${data.oci_management_agent_management_agent_plugins.test_management_agent_plugins.management_agent_plugins.0.id}
+    freeformTags:
+      tagKey: tagValue
+    managedAgentId: ${data.oci_management_agent_management_agents.find_agent.management_agents[0].id}

@@ -1,0 +1,38 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: FleetAgentConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/fleetagentconfiguration
+  labels:
+    testing.upbound.io/example-name: test_fleet_agent_configuration
+  name: test-fleet-agent-configuration
+spec:
+  forProvider:
+    agentPollingIntervalInMinutes: 10
+    fleetId: ${var.fleet_ocid}
+    isCapturingIpAddressAndFqdnEnabled: false
+    isCollectingManagedInstanceMetricsEnabled: false
+    isCollectingUsernamesEnabled: false
+    isLibrariesScanEnabled: false
+    javaUsageTrackerProcessingFrequencyInMinutes: 10
+    jreScanFrequencyInMinutes: 180
+    linuxConfiguration:
+    - excludePaths:
+      - /user/private1
+      - /opt/private1
+      includePaths:
+      - /user
+      - /opt
+    macOsConfiguration:
+    - excludePaths:
+      - /home/private1
+      includePaths:
+      - /home
+    windowsConfiguration:
+    - excludePaths:
+      - c:\windows\private1
+      - d:\data\private1
+      includePaths:
+      - c:\windows
+      - d:\data
+    workRequestValidityPeriodInDays: 10

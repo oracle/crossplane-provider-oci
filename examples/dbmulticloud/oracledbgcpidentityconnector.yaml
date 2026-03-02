@@ -1,0 +1,21 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbGcpIdentityConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbgcpidentityconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_gcp_identity_connector
+  name: test-oracle-db-gcp-identity-connector
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.oracle_db_gcp_identity_connector_display_name}
+    gcpLocation: ${var.oracle_db_gcp_identity_connector_gcp_location}
+    gcpResourceServiceAgentId: ${var.oracle_db_gcp_resource_service_agent_id}
+    gcpWorkloadIdentityPoolId: ${var.oracle_db_gcp_workload_identity_pool_id}
+    gcpWorkloadIdentityProviderId: ${var.oracle_db_gcp_workload_identity_provider_id}
+    issuerUrl: ${var.oracle_db_gcp_identity_connector_issuer_url}
+    projectId: ${var.project_id}
+    resourceId: ${var.resource_id}

@@ -1,0 +1,28 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: DetectorRecipe
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/detectorrecipe
+  labels:
+    testing.upbound.io/example-name: test_detector_recipe
+  name: test-detector-recipe
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.detector_recipe_description}
+    detectorRules:
+    - details:
+      - condition: ${var.detector_recipe_detector_rules_details_condition}
+        configurations:
+        - configKey: ${var.detector_recipe_detector_rules_details_configurations_config_key}
+          dataType: ${var.detector_recipe_detector_rules_details_configurations_data_type}
+          name: ${var.detector_recipe_detector_rules_details_configurations_name}
+          value: ${var.detector_recipe_detector_rules_details_configurations_value}
+        isEnabled: ${var.detector_recipe_detector_rules_details_is_enabled}
+        labels: ${var.detector_recipe_detector_rules_details_labels}
+        riskLevel: ${var.detector_recipe_detector_rules_details_risk_level}
+      detectorRuleId: LB_CERTIFICATE_EXPIRING_SOON
+    displayName: ${var.detector_recipe_display_name}
+    sourceDetectorRecipeId: ${data.oci_cloud_guard_detector_recipes.test_detector_recipes.detector_recipe_collection.0.items.0.id}

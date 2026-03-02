@@ -1,0 +1,24 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditProfileManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/auditprofilemanagement
+  labels:
+    testing.upbound.io/example-name: test_audit_profile_management
+  name: test-audit-profile-management
+spec:
+  forProvider:
+    changeRetentionTrigger: 1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.description}
+    displayName: ${var.displayName}
+    freeformTags: ${var.freeform_tags}
+    isOverrideGlobalPaidUsage: ${var.is_override_global_paid_usage}
+    isOverrideGlobalRetentionSetting: true
+    isPaidUsageEnabled: ${var.is_paid_usage_enabled}
+    offlineMonths: ${var.offline_months}
+    onlineMonths: ${var.online_months}
+    targetId: ${var.target_id}
+    targetType: ${var.target_type}

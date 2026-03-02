@@ -1,0 +1,22 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAwsIdentityConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbawsidentityconnector
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_aws_identity_connector
+  name: test-oracle-db-aws-identity-connector
+spec:
+  forProvider:
+    awsLocation: us-east1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: AWS_Tersi_Test
+    issuerUrl: https://idcs-0b7b9fa060364ddf849ef39ee8001737.us-ashburn-idcs-1.identity.us-ashburn-1.oci.oraclecloud.com
+    oidcScope: DBMC/aws
+    resourceId: ocid1.cloudvmcluster.test..awstersitest
+    serviceRoleDetails:
+    - roleArn: arn:aws:iam::867344470629:role/OracleDatabaseKMS
+      servicePrivateEndpoint: https://kms.us-east-1.amazonaws.com
+      serviceType: KMS

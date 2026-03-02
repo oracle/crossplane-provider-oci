@@ -1,0 +1,163 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MaintenanceRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_maintenance_run
+  name: test-maintenance-run
+spec:
+  forProvider:
+    patchType: QUARTERLY
+    targetResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
+    timeScheduled: ${var.time_for_schedule_mr}
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: exadata_shapes_security_list
+  name: exadata-shapes-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExadataSecurityList
+    egressSecurityRules:
+    - destination: 10.1.22.0/24
+      protocol: "6"
+    - destination: 10.1.22.0/24
+      protocol: "1"
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 10.1.22.0/24
+    - protocol: "1"
+      source: 10.1.22.0/24
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: exadata_subnet
+  name: exadata-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.22.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: TestExadataSubnet
+    dnsLabel: subnetexadata
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    securityListIdRefs:
+    - name: test_vcn
+    - name: exadata_shapes_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: TestVcn
+    dnsLabel: examplevcn
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousContainerDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_autonomous_container_database
+  name: test-autonomous-container-database
+spec:
+  forProvider:
+    cloudAutonomousVmClusterId: ${oci_database_cloud_autonomous_vm_cluster.test_cloud_autonomous_vm_cluster.id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbName: ACDNAME
+    dbSplitThreshold: 12
+    dbVersion: 19.26.0.1.0
+    displayName: example-container-database
+    distributionAffinity: MINIMUM_DISTRIBUTION
+    isDstFileUpdateEnabled: false
+    maintenanceWindowDetails:
+    - daysOfWeek:
+      - name: MONDAY
+      hoursOfDay:
+      - "4"
+      months:
+      - name: JANUARY
+      - name: APRIL
+      - name: JULY
+      - name: OCTOBER
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    netServicesArchitecture: DEDICATED
+    patchModel: RELEASE_UPDATES
+    rotateKeyTrigger: "true"
+    serviceLevelAgreementType: STANDARD
+    versionPreference: LATEST_RELEASE_UPDATE
+    vmFailoverReservation: 25
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudAutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+  name: test-cloud-autonomous-vm-cluster
+spec:
+  forProvider:
+    cloudExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_exadata_infrastructure
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeModel: ECPU
+    displayName: TestCloudAutonomousVmCluster
+    licenseModel: LICENSE_INCLUDED
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadata_subnet

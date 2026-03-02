@@ -1,0 +1,57 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseWallet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasewallet
+  labels:
+    testing.upbound.io/example-name: autonomous_database_wallet
+  name: autonomous-database-wallet
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_database
+    base64EncodeContent: "true"
+    passwordSecretRef:
+      key: attribute.result
+      name: example-string
+      namespace: upbound-system
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasewallet
+  labels:
+    testing.upbound.io/example-name: autonomous_database
+  name: autonomous-database
+spec:
+  forProvider:
+    adminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: "6"
+    customerContacts:
+    - email: test1@oracle.com
+    - email: test2@oracle.com
+    dataStorageSizeInTbs: "1"
+    dbName: testdbScheduledOperations
+    scheduledOperations:
+    - dayOfWeek:
+      - name: MONDAY
+      scheduledStartTime: "10:00"
+      scheduledStopTime: "18:00"
+    - dayOfWeek:
+      - name: TUESDAY
+      scheduledStartTime: "10:00"
+      scheduledStopTime: "18:00"
+    - dayOfWeek:
+      - name: FRIDAY
+      scheduledStartTime: "10:00"
+      scheduledStopTime: "18:00"

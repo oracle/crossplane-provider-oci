@@ -1,0 +1,18 @@
+apiVersion: securityattribute.oci.upbound.io/v1alpha1
+kind: SecurityAttribute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: securityattribute/v1alpha1/securityattribute
+  labels:
+    testing.upbound.io/example-name: test_security_attribute
+  name: test-security-attribute
+spec:
+  forProvider:
+    description: ${var.security_attribute_description}
+    name: ${var.security_attribute_name}
+    securityAttributeNamespaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_attribute_namespace
+    validator:
+    - validatorType: ${var.security_attribute_validator_validator_type}
+      values: ${var.security_attribute_validator_values}

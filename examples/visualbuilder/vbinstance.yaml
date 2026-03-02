@@ -1,0 +1,27 @@
+apiVersion: visualbuilder.oci.upbound.io/v1alpha1
+kind: VbInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: visualbuilder/v1alpha1/vbinstance
+  labels:
+    testing.upbound.io/example-name: test_vb_instance_acl
+  name: test-vb-instance-acl
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    consumptionModel: ${var.vb_instance_consumption_model}
+    displayName: displayName
+    idcsOpenIdSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    isVisualBuilderEnabled: "true"
+    networkEndpointDetails:
+    - allowlistedHttpIps: ${var.vb_instance_network_endpoint_details_allowlisted_http_ips}
+      allowlistedHttpVcns:
+      - allowlistedIpCidrs: ${var.vb_instance_network_endpoint_details_allowlisted_http_vcns_allowlisted_ip_cidrs}
+        id: ${var.vb_instance_network_endpoint_details_allowlisted_http_vcns_id}
+      networkEndpointType: ${var.vb_instance_network_endpoint_details_network_endpoint_type}
+    nodeCount: "1"

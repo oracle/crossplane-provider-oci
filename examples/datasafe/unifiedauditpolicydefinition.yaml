@@ -1,0 +1,14 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: UnifiedAuditPolicyDefinition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/unifiedauditpolicydefinition
+  labels:
+    testing.upbound.io/example-name: test_unified_audit_policy_definition
+  name: test-unified-audit-policy-definition
+spec:
+  forProvider:
+    description: ${var.unified_audit_policy_definition_description}
+    displayName: ${var.unified_audit_policy_definition_display_name}
+    freeformTags: ${var.unified_audit_policy_definition_freeform_tags}
+    unifiedAuditPolicyDefinitionId: ${var.unified_audit_policy_definition_id}

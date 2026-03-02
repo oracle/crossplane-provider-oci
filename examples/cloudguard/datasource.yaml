@@ -1,0 +1,34 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: DataSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/datasource
+  labels:
+    testing.upbound.io/example-name: test_data_source
+  name: test-data-source
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataSourceDetails:
+    - additionalEntitiesCount: ${var.data_source_data_source_details_additional_entities_count}
+      dataSourceFeedProvider: ${var.data_source_data_source_feed_provider}
+      intervalInMinutes: ${var.data_source_data_source_details_interval_in_minutes}
+      loggingQueryDetails:
+      - keyEntitiesCount: ${var.data_source_data_source_details_logging_query_details_key_entities_count}
+        loggingQueryType: ${var.data_source_data_source_details_logging_query_type}
+      loggingQueryType: ${var.data_source_data_source_details_logging_query_type}
+      operator: ${var.data_source_data_source_details_operator}
+      query: ${var.data_source_data_source_details_query}
+      queryStartTime:
+      - queryStartTime: ${var.data_source_data_source_details_query_start_time_query_start_time}
+        startPolicyType: ${var.data_source_data_source_details_query_start_time_start_policy_type}
+      regions: ${var.data_source_data_source_details_regions}
+      threshold: ${var.data_source_data_source_details_threshold}
+    dataSourceFeedProvider: ${var.data_source_data_source_feed_provider}
+    definedTags:
+      example-tag-namespace-all.example-tag: ${var.data_source_defined_tags_value}
+    displayName: ${var.data_source_display_name}
+    freeformTags: ${var.data_source_freeform_tags}
+    status: ${var.data_source_status}

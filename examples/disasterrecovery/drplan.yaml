@@ -1,0 +1,16 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: DrPlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/drplan
+  labels:
+    testing.upbound.io/example-name: test_dr_plan
+  name: test-dr-plan
+spec:
+  forProvider:
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.dr_plan_defined_tags_value}")}
+    displayName: ${var.dr_plan_display_name}
+    drProtectionGroupId: ${data.oci_disaster_recovery_dr_protection_groups.test_dr_protection_groups.dr_protection_group_collection.0.items.0.id}
+    freeformTags: ${var.dr_plan_freeform_tags}
+    type: ${var.dr_plan_type}

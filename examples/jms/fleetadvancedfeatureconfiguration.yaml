@@ -1,0 +1,54 @@
+apiVersion: jms.oci.upbound.io/v1alpha1
+kind: FleetAdvancedFeatureConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jms/v1alpha1/fleetadvancedfeatureconfiguration
+  labels:
+    testing.upbound.io/example-name: test_fleet_advanced_feature_configuration
+  name: test-fleet-advanced-feature-configuration
+spec:
+  forProvider:
+    advancedUsageTracking:
+    - isEnabled: "true"
+    analyticBucketName: ${var.analytic_bucket_name}
+    analyticNamespace: ${var.analytic_bucket_namespace}
+    cryptoEventAnalysis:
+    - isEnabled: "true"
+      summarizedEventsLog:
+      - logGroupId: ${var.fleet_log_group_ocid}
+        logId: ${var.crypto_event_log_ocid}
+    fleetId: ${var.fleet_ocid}
+    javaMigrationAnalysis:
+    - isEnabled: "true"
+    jfrRecording:
+    - isEnabled: "true"
+    lcm:
+    - isEnabled: "true"
+      postInstallationActions:
+      - addLoggingHandler: "false"
+        disabledTlsVersions:
+        - TLS_1_0
+        globalLoggingLevel: ALL
+        minimumKeySizeSettings:
+        - certpath:
+          - keySize: "2048"
+            name: RSA
+          jar:
+          - keySize: "2048"
+            name: RSA
+          tls:
+          - keySize: "2048"
+            name: RSA
+        proxies:
+        - ftpProxyHost: example-ftp-proxy-host
+          ftpProxyPort: "10"
+          httpProxyHost: example-http-proxy-host
+          httpProxyPort: "10"
+          httpsProxyHost: example-https-proxy-host
+          httpsProxyPort: "10"
+          socksProxyHost: example-socks-proxy-host
+          socksProxyPort: "10"
+          useSystemProxies: "false"
+        shouldReplaceCertificatesOperatingSystem: "false"
+    performanceTuningAnalysis:
+    - isEnabled: "true"

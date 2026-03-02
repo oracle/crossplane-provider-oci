@@ -1,0 +1,32 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: NamespaceScheduledTask
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacescheduledtask
+  labels:
+    testing.upbound.io/example-name: test_namespace_scheduled_task
+  name: test-namespace-scheduled-task
+spec:
+  forProvider:
+    action:
+    - compartmentIdInSubtree: "false"
+      dataType: LOG
+      purgeCompartmentId: ${var.compartment_ocid}
+      purgeDuration: -P1D
+      queryString: fake_query
+      type: PURGE
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfPurgeTask11
+    freeformTags:
+      Department: Accounting
+    kind: STANDARD
+    namespace: ${data.oci_objectstorage_namespace.test_namespace.namespace}
+    schedules:
+    - schedule:
+      - misfirePolicy: RETRY_ONCE
+        recurringInterval: P1D
+        repeatCount: "4"
+        type: FIXED_FREQUENCY
+    taskType: PURGE

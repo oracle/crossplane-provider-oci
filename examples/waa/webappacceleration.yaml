@@ -1,0 +1,93 @@
+apiVersion: waa.oci.upbound.io/v1alpha1
+kind: WebAppAcceleration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_web_app_acceleration
+  name: test-web-app-acceleration
+spec:
+  forProvider:
+    backendType: LOAD_BALANCER
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.web_app_acceleration_display_name}
+    freeformTags:
+      bar-key: value
+    loadBalancerId: ${oci_load_balancer.test_load_balancer.id}
+    webAppAccelerationPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_web_app_acceleration_policy
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: subnet1
+    dnsLabel: subnet1
+    prohibitPublicIpOnVnic: true
+    provisioner:
+      local-exec:
+      - command: sleep 5
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vcn1
+    dnsLabel: vcn1

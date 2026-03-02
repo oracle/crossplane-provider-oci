@@ -1,0 +1,27 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceIdentityConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstanceidentityconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_identity_configuration
+  name: test-bds-instance-identity-configuration
+spec:
+  forProvider:
+    activateIamUserSyncConfigurationTrigger: ${var.activate_iam_user_sync_configuration_trigger}
+    activateUpstConfigurationTrigger: ${var.activate_upst_configuration_trigger}
+    bdsInstanceId: ${var.bds_instance_id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    confidentialApplicationId: ${var.confidential_application_id}
+    displayName: ${var.display_name}
+    iamUserSyncConfigurationDetails:
+    - isPosixAttributesAdditionRequired: ${var.is_posix_attributes_addition_required}
+    identityDomainId: ${var.identity_domain_id}
+    refreshConfidentialApplicationTrigger: ${var.refresh_confidential_application_trigger}
+    refreshUpstTokenExchangeKeytabTrigger: ${var.refresh_upst_token_exchange_keytab_trigger}
+    upstConfigurationDetails:
+    - masterEncryptionKeyId: ${var.confidential_application_id}
+      vaultId: ${var.vault_id}

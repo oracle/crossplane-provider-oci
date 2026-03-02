@@ -1,0 +1,31 @@
+apiVersion: capacitymanagement.oci.upbound.io/v1alpha1
+kind: OccCapacityRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/occcapacityrequest
+  labels:
+    testing.upbound.io/example-name: test_occ_capacity_request
+  name: test-occ-capacity-request
+spec:
+  forProvider:
+    availabilityDomain: ${var.occ_capacity_request_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dateExpectedCapacityHandover: ${var.occ_capacity_request_date_expected_capacity_handover}
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.occ_capacity_request_defined_tags_value)}
+    description: ${var.occ_capacity_request_description}
+    details:
+    - demandQuantity: ${var.occ_capacity_request_details_demand_quantity}
+      resourceName: ${var.occ_capacity_request_resource_name}
+      resourceType: ${var.occ_capacity_request_details_resource_type}
+      workloadType: ${var.occ_capacity_request_details_workload_type}
+    displayName: ${var.occ_capacity_request_display_name}
+    freeformTags: ${var.occ_capacity_request_freeform_tags}
+    lifecycleDetails: ${var.occ_capacity_request_lifecycle_details}
+    namespace: ${var.occ_capacity_request_namespace}
+    occAvailabilityCatalogId: ${var.occ_availability_catalog_id}
+    region: ${var.occ_capacity_request_region}
+    requestState: ${var.occ_capacity_request_request_state}
+    requestType: ${var.occ_capacity_request_request_type}

@@ -1,0 +1,17 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: OauthPartnerCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/oauthpartnercertificate
+  labels:
+    testing.upbound.io/example-name: test_oauth_partner_certificate
+  name: test-oauth-partner-certificate
+spec:
+  forProvider:
+    authorization: ${var.oauth_partner_certificate_authorization}
+    certificateAlias: ${var.oauth_partner_certificate_certificate_alias}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:OAuthPartnerCertificate
+    x509base64certificate: ${var.oauth_partner_certificate_x509base64certificate}

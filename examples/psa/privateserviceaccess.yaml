@@ -1,0 +1,93 @@
+apiVersion: psa.oci.upbound.io/v1alpha1
+kind: PrivateServiceAccess
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: test_private_service_access
+  name: test-private-service-access
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("example-tag-namespace-all.example-tag", var.private_service_access_defined_tags_value)}
+    description: ${var.private_service_access_description}
+    displayName: ${var.private_service_access_display_name}
+    freeformTags: ${var.private_service_access_freeform_tags}
+    ipv4ip: ${var.private_service_access_ipv4ip}
+    nsgIdsRefs:
+    - name: test_nsg
+    securityAttributes: ${var.private_service_access_security_attributes}
+    serviceId: ${data.oci_psa_psa_services.test_psa_services.psa_service_collection.0.items.0.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: test_nsg
+  name: test-nsg
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfNsgForPSA
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: subnet1
+  name: subnet1
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+    displayName: subnet1
+    dnsLabel: subnet1
+    provisioner:
+      local-exec:
+      - command: sleep 5
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn1
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: vcn1
+  name: vcn1
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vcn1
+    dnsLabel: vcn1
+    isIpv6Enabled: true

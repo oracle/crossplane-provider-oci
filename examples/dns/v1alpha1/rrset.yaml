@@ -9,6 +9,6 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
-    domain: domain1.oci-dns1
+    domain: rrset1.zone1.oci-dns1
     rtype: TXT
     zoneNameOrId: zone1.oci-dns1

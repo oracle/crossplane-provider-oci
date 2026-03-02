@@ -1,0 +1,36 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveDataModelsSensitiveColumn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivedatamodelssensitivecolumn
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_models_sensitive_column
+  name: test-sensitive-data-models-sensitive-column
+spec:
+  forProvider:
+    columnName: ${var.sensitive_data_models_sensitive_column_column_name_var}
+    object: ${var.sensitive_data_models_sensitive_column_object_var}
+    schemaName: ${var.sensitive_data_models_sensitive_column_schema_name_var}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+
+---
+
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveDataModel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivedatamodelssensitivecolumn
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_model
+  name: test-sensitive-data-model
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.sensitive_data_model_display_name}
+    schemasForDiscovery: ${var.sensitive_data_model_schemas_for_discovery}
+    sensitiveTypeIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_ids_for_discovery}
+    targetId: ${var.data_safe_target_ocid}

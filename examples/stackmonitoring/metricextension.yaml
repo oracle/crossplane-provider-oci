@@ -1,0 +1,47 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MetricExtension
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/metricextension
+  labels:
+    testing.upbound.io/example-name: test_metric_extension_test_management
+  name: test-metric-extension-test-management
+spec:
+  forProvider:
+    collectionRecurrences: FREQ=HOURLY;INTERVAL=6
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Computes File System Utilization Percentage of various mount points
+    displayName: OS File System Utilization
+    metricList:
+    - dataType: STRING
+      isDimension: true
+      isHidden: false
+      name: MountPoint
+    - dataType: NUMBER
+      isDimension: false
+      isHidden: true
+      name: FileSystemSize
+    - dataType: NUMBER
+      isDimension: false
+      isHidden: true
+      name: FileSystemUsed
+    - computeExpression: (FileSystemUsed / FileSystemSize) * 100
+      dataType: NUMBER
+      displayName: NumberOfUpInstances
+      isDimension: false
+      isHidden: false
+      metricCategory: UTILIZATION
+      name: FileSystemUsage
+      unit: percent
+    name: ME_MetricExtensionTestTerraformExample
+    queryProperties:
+    - collectionMethod: OS_COMMAND
+      command: /bin/bash
+      delimiter: '|'
+      scriptDetails:
+      - content: IyEvYmluL2Jhc2gKIyBDb3B5cmlnaHQgKGMpIDIwMjIsIE9yYWNsZSBhbmQvb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCByaWdodHMgcmVzZXJ2ZWQuCiMKIyBTdGFjayBNb25pdG9yaW5nIC8gSG9zdDogY29sbGVjdCBmaWxlc3lzdGVtIHN0YXRpc3RpY3MgZnJvbSBMaW51eCBob3N0cwojCiMgT3V0cHV0IGZvcm1hdDoKIwojIHJlc3VsdD1tb3VudHxzaXplfHVzZWQKCmV4ZWMgMTA+JjEKZXhlYyAxPiYyCgoKd2hpbGUgcmVhZCAtciBkZXYgc2l6ZSB1c2VkIGF2YWlsIHVzZWRwIG1vdW50IG90aGVyCmRvCiAgICBpZiBbWyAiJHtkZXZ9IiA9fiAvIF1dCiAgICB0aGVuCiAgICAgICAgaWYgWyAiJHt0b3R9IiA9PSAiMCIgXQogICAgICAgIHRoZW4KICAgICAgICAgICAgIyBQcmV2ZW50IGRldmlzaW9uIGJ5IHplcm8KICAgICAgICAgICAgdXNlZD0wCiAgICAgICAgICAgIHVzZWRwPTAKICAgICAgICBmaQoKICAgICAgICBwcmludGYgIm9jaV9yZXN1bHQ9JXN8JXN8JXNcbiIgIiR7bW91bnR9IiAiJHtzaXplfSIgIiR7dXNlZH0iID4mMTAKICAgIGZpCmRvbmUgPCA8KGRmIC1rIDI+L2Rldi9udWxsKQ==
+        name: fileSystem.sh
+      startsWith: oci_result=
+    resourceType: host_linux

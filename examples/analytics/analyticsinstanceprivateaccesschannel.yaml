@@ -1,0 +1,72 @@
+apiVersion: analytics.oci.upbound.io/v1alpha1
+kind: AnalyticsInstancePrivateAccessChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceprivateaccesschannel
+  labels:
+    testing.upbound.io/example-name: test_private_access_channel
+  name: test-private-access-channel
+spec:
+  forProvider:
+    analyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oce_instance_public
+    displayName: ExamplePAC
+    privateSourceDnsZones:
+    - description: Example dns zone
+      dnsZone: examplecorp.com
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceprivateaccesschannel
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: regionalSubnet
+    dnsLabel: regionalsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    securityListIdRefs:
+    - name: test_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceprivateaccesschannel
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: exampleVCN
+    dnsLabel: tfexamplevcn

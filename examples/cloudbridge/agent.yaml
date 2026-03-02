@@ -1,0 +1,23 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: Agent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/agent
+  labels:
+    testing.upbound.io/example-name: test_agent
+  name: test-agent
+spec:
+  forProvider:
+    agentType: ${var.agent_agent_type}
+    agentVersion: ${var.agent_agent_version}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.agent_defined_tags_value)}
+    displayName: ${var.agent_display_name}
+    environmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_environment
+    freeformTags: ${var.agent_freeform_tags}
+    osVersion: ${var.agent_os_version}

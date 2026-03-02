@@ -1,0 +1,20 @@
+apiVersion: jmsjavadownloads.oci.upbound.io/v1alpha1
+kind: JavaDownloadToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsjavadownloads/v1alpha1/javadownloadtoken
+  labels:
+    testing.upbound.io/example-name: test_java_download_token
+  name: test-java-download-token
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Example token description for script friendly download
+    displayName: Unique-displayName-in-a-tenancy
+    isDefault: false
+    javaVersion: "11"
+    licenseType:
+    - OTN
+    timeExpires: "2026-12-31T00:00:00.000Z"

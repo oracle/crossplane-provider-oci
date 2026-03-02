@@ -1,0 +1,19 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: SavedQuery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/savedquery
+  labels:
+    testing.upbound.io/example-name: test_saved_query
+  name: test-saved-query
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      example-tag-namespace-all.example-tag: ${var.saved_query_defined_tags_value}
+    description: ${var.saved_query_description}
+    displayName: ${var.saved_query_display_name}
+    freeformTags: ${var.saved_query_freeform_tags}
+    query: ${var.saved_query_query}

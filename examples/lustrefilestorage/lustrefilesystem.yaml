@@ -1,0 +1,158 @@
+apiVersion: lustrefilestorage.oci.upbound.io/v1alpha1
+kind: LustreFileSystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: test_lustre_file_system_import_job
+  name: test-lustre-file-system-import-job
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    capacityInGbs: ${var.lustre_file_system_capacity_in_gbs}
+    clusterPlacementGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cpg
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.lustre_file_system_display_name_import_job}
+    fileSystemDescription: ${var.lustre_file_system_import_job_file_system_description}
+    fileSystemName: ${var.lustre_file_system_name}
+    freeformTags:
+      Department: Finance
+    performanceTier: ${var.lustre_file_system_performance_tier}
+    rootSquashConfiguration:
+    - clientExceptions: ${var.lustre_file_system_root_squash_configuration_client_exceptions}
+      identitySquash: ${var.lustre_file_system_root_squash_configuration_identity_squash}
+      squashGid: ${var.lustre_file_system_root_squash_configuration_squash_gid}
+      squashUid: ${var.lustre_file_system_root_squash_configuration_squash_uid}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_subnet
+
+---
+
+apiVersion: clusterplacementgroups.oci.upbound.io/v1alpha1
+kind: ClusterPlacementGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: test_cpg
+  name: test-cpg
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    clusterPlacementGroupType: STANDARD
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: cpg for lustre file system
+    name: test_cpg
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: my_route_table
+  name: my-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my route table
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: my_security_list
+  name: my-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: my_security_list
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: all
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 0.0.0.0/0
+      tcpOptions:
+      - max: 22
+        min: 22
+    - icmpOptions:
+      - code: 4
+        type: 3
+      protocol: 1
+      source: 0.0.0.0/0
+    - protocol: 1
+      source: 10.0.0.0/16
+    - protocol: "6"
+      source: 10.0.0.0/16
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: my_subnet
+  name: my-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: ${var.my_subnet_cidr}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: mysubnet
+    dnsLabel: mysubnet
+    prohibitPublicIpOnVnic: true
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_route_table
+    securityListIdRefs:
+    - name: my_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/lustrefilesystem
+  labels:
+    testing.upbound.io/example-name: my_vcn
+  name: my-vcn
+spec:
+  forProvider:
+    cidrBlock: ${var.my_vcn-cidr}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: myvcn
+    dnsLabel: myvcn

@@ -1,0 +1,11 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseRegionalWalletManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabaseregionalwalletmanagement
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_regional_wallet_management
+  name: test-autonomous-database-regional-wallet-management
+spec:
+  forProvider:
+    shouldRotate: false

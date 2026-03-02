@@ -1,0 +1,26 @@
+apiVersion: apiaccesscontrol.oci.upbound.io/v1alpha1
+kind: PrivilegedApiRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apiaccesscontrol/v1alpha1/privilegedapirequest
+  labels:
+    testing.upbound.io/example-name: test_privileged_api_request
+  name: test-privileged-api-request
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    durationInHrs: ${var.privileged_api_request_duration_in_hrs}
+    freeformTags: ${var.privileged_api_request_freeform_tags}
+    notificationTopicId: ${var.notification_topic_id}
+    privilegedOperationList:
+    - apiName: ${var.privileged_api_control_privileged_operation_list_api_name}
+      attributeNames: ${var.privileged_api_request_privileged_operation_list_attribute_names}
+    reasonDetail: ${var.privileged_api_request_reason_detail}
+    reasonSummary: ${var.privileged_api_request_reason_summary}
+    resourceId: ${var.resource_id}
+    severity: ${var.privileged_api_request_severity}
+    subResourceNameList: ${var.privileged_api_request_sub_resource_name_list}
+    ticketNumbers: ${var.privileged_api_request_ticket_numbers}
+    timeRequestedForFutureAccess: ${var.privileged_api_request_time_requested_for_future_access}

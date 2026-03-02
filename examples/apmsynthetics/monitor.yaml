@@ -1,0 +1,72 @@
+apiVersion: apmsynthetics.oci.upbound.io/v1alpha1
+kind: Monitor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/monitor
+  labels:
+    testing.upbound.io/example-name: test_monitor
+  name: test-monitor
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    availabilityConfiguration:
+    - maxAllowedFailuresPerInterval: ${var.monitor_availability_configuration_max_allowed_failures_per_interval}
+      minAllowedRunsPerInterval: ${var.monitor_availability_configuration_min_allowed_runs_per_interval}
+    configuration:
+    - configType: ${var.monitor_configuration_config_type}
+      databaseAuthenticationDetails:
+      - password:
+        - passwordSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+          passwordTypeSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+        username: ${var.monitor_configuration_database_authentication_details_username}
+      databaseConnectionType: ${var.monitor_configuration_database_connection_type}
+      databaseRole: ${var.monitor_configuration_database_role}
+      databaseType: ${var.monitor_configuration_database_type}
+      databaseWalletDetails:
+      - databaseWallet: ${var.monitor_configuration_database_wallet_details_database_wallet}
+        serviceName: ${var.monitor_configuration_database_wallet_details_service_name}
+      isFailureRetried: ${var.monitor_configuration_is_failure_retried}
+      query: ${var.monitor_configuration_query}
+    displayName: ${var.monitor_display_name}
+    freeformTags: ${var.monitor_freeform_tags}
+    isRunNow: ${var.monitor_is_run_now}
+    isRunOnce: ${var.monitor_is_run_once}
+    maintenanceWindowSchedule:
+    - timeEnded: ${var.monitor_maintenance_window_schedule_time_ended}
+      timeStarted: ${var.monitor_maintenance_window_schedule_time_started}
+    monitorType: ${var.monitor_monitor_type}
+    repeatIntervalInSeconds: ${var.monitor_repeat_interval_in_seconds}
+    schedulingPolicy: ${var.monitor_scheduling_policy}
+    status: ${var.monitor_status}
+    target: ${var.monitor_target}
+    timeoutInSeconds: ${var.monitor_timeout_in_seconds}
+    vantagePoints:
+    - name: ${var.monitor_vantage_points_name}
+
+---
+
+apiVersion: apm.oci.upbound.io/v1alpha1
+kind: ApmDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/monitor
+  labels:
+    testing.upbound.io/example-name: test_apm_domain
+  name: test-apm-domain
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.apm_domain_description}
+    displayName: ${var.apm_domain_display_name}
+    freeformTags: ${var.apm_domain_freeform_tags}
+    isFreeTier: ${var.apm_domain_is_free_tier}

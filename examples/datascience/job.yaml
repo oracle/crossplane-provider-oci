@@ -1,0 +1,37 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/job
+  labels:
+    testing.upbound.io/example-name: job
+  name: job
+spec:
+  forProvider:
+    artifactContentDisposition: attachment; filename=job_artifact.py
+    artifactContentLength: 1380
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    deleteRelatedJobRuns: true
+    jobArtifact: ${path.root}/job-artifact.py
+    jobConfigurationDetails:
+    - jobType: DEFAULT
+      maximumRuntimeInMinutes: 30
+    jobInfrastructureConfigurationDetails:
+    - blockStorageSizeInGbs: 100
+      jobInfrastructureType: STANDALONE
+      jobShapeConfigDetails:
+      - memoryInGbs: 16
+        ocpus: 2
+      shapeName: VM.Standard3.Flex
+      subnetId: <subnet_id>
+    jobStorageMountConfigurationDetailsList:
+    - destinationDirectoryName: fss
+      destinationPath: /mnt
+      exportId: <export_id>
+      mountTargetId: <mount_id>
+      storageType: FILE_STORAGE
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: job

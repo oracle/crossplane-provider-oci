@@ -1,0 +1,37 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/group
+  labels:
+    testing.upbound.io/example-name: test_group
+  name: test-group
+spec:
+  forProvider:
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.group_authorization}
+    displayName: ${var.group_display_name}
+    externalId: externalId
+    forceDelete: true
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    nonUniqueDisplayName: ${var.group_non_unique_display_name}
+    schemas:
+    - urn:ietf:params:scim:schemas:core:2.0:Group
+    tags:
+    - key: ${var.group_tags_key}
+      value: ${var.group_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionOciTags:
+    - freeformTags:
+      - key: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_key}
+        value: ${var.group_urnietfparamsscimschemasoracleidcsextension_oci_tags_freeform_tags_value}
+    urnietfparamsscimschemasoracleidcsextensiondynamicGroup:
+    - membershipType: ${var.group_urnietfparamsscimschemasoracleidcsextensiondynamic_group_membership_type}
+    urnietfparamsscimschemasoracleidcsextensiongroupGroup:
+    - creationMechanism: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_creation_mechanism}
+      description: ${var.group_urnietfparamsscimschemasoracleidcsextensiongroup_group_description}
+    urnietfparamsscimschemasoracleidcsextensionposixGroup:
+    - gidNumber: ${var.group_urnietfparamsscimschemasoracleidcsextensionposix_group_gid_number}
+    urnietfparamsscimschemasoracleidcsextensionrequestableGroup:
+    - requestable: ${var.group_urnietfparamsscimschemasoracleidcsextensionrequestable_group_requestable}

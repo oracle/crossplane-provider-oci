@@ -1,0 +1,29 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsConnection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsconnection
+  labels:
+    testing.upbound.io/example-name: dbtools_connection_postgresql
+  name: dbtools-connection-postgresql
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionString: postgresql://example.com:5432/db
+    displayName: My Postgresql connection
+    freeformTags:
+      my-Freeform-tag1: value f1
+      my-Freeform-tag2: value f2
+    keyStores:
+    - keyStoreContent:
+      - secretId: ${var.ca_certificate_pem_secret_ocid}
+        valueType: SECRETID
+      keyStoreType: CA_CERTIFICATE_PEM
+    runtimeSupport: UNSUPPORTED
+    type: POSTGRESQL
+    userName: john.doe@oracle.com
+    userPassword:
+    - secretId: ${var.secret_ocid}
+      valueType: SECRETID

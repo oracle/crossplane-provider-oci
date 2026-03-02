@@ -1,0 +1,37 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: MaskingPoliciesMaskingColumn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/maskingpoliciesmaskingcolumn
+  labels:
+    testing.upbound.io/example-name: test_masking_policies_masking_column
+  name: test-masking-policies-masking-column
+spec:
+  forProvider:
+    columnName: ${var.masking_policies_masking_column_column_name_var}
+    maskingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_masking_policy
+    object: ${var.masking_policies_masking_column_object_var}
+    schemaName: ${var.masking_policies_masking_column_schema_name_var}
+
+---
+
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: MaskingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/maskingpoliciesmaskingcolumn
+  labels:
+    testing.upbound.io/example-name: test_masking_policy
+  name: test-masking-policy
+spec:
+  forProvider:
+    columnSource:
+    - columnSource: ${var.masking_policy_column_source_column_source}
+      targetId: ${var.data_safe_target_ocid}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.masking_policy_description}
+    displayName: ${var.masking_policy_display_name}

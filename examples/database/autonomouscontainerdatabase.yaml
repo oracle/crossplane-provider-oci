@@ -1,0 +1,286 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousContainerDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: autonomous_container_database_from_adsi
+  name: autonomous-container-database-from-adsi
+spec:
+  forProvider:
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    backupConfig:
+    - backupDestinationDetails:
+      - type: LOCAL
+      recoveryWindowInDays: "7"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseSoftwareImageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_database_software_image
+    dbUniqueName: ${random_string.db_unique_name_adsi_acd.result}
+    displayName: ACD-TFTest
+    freeformTags:
+      Department: Finance
+    isDstFileUpdateEnabled: false
+    maintenanceWindowDetails:
+    - preference: NO_PREFERENCE
+    patchModel: RELEASE_UPDATES
+    serviceLevelAgreementType: STANDARD
+    versionPreference: LATEST_RELEASE_UPDATE
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousContainerDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: autonomous_container_database
+  name: autonomous-container-database
+spec:
+  forProvider:
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    backupConfig:
+    - backupDestinationDetails:
+      - backupRetentionPolicyOnTerminate: RETAIN_FOR_72_HOURS
+        id: ${oci_database_backup_destination.test_backup_destination.id}
+        isRetentionLockEnabled: false
+        type: NFS
+      recoveryWindowInDays: "7"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    customerContacts:
+    - email: contact1@example.com
+    - email: contact2@example.com
+    dbUniqueName: ${random_string.db_unique_name.result}
+    dbVersion: 19.28.0.1.0
+    displayName: ACD-TFTest
+    freeformTags:
+      Department: Finance
+    isDstFileUpdateEnabled: false
+    keyStoreId: ${oci_database_key_store.test_key_store.id}
+    maintenanceWindowDetails:
+    - preference: NO_PREFERENCE
+    okvEndPointGroupName: DUMMY_OKV_EPG_GROUP
+    patchModel: RELEASE_UPDATES
+    serviceLevelAgreementType: STANDARD
+    versionPreference: LATEST_RELEASE_UPDATE
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousDatabaseSoftwareImage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: autonomous_database_software_image
+  name: autonomous-database-software-image
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ADSI-TFTest1
+    freeformTags:
+      Department: Finance
+    imageShapeFamily: EXACC_SHAPE
+    sourceCdbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_container_database
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: AutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: test_autonomous_vm_cluster
+  name: test-autonomous-vm-cluster
+spec:
+  forProvider:
+    autonomousDataStorageSizeInTbs: "2.0"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCountPerNode: "20"
+    dbServers:
+    - ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+    - ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: value
+    displayName: autonomousVmCluster
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Finance
+    isLocalBackupEnabled: "false"
+    isMtlsEnabled: "true"
+    licenseModel: LICENSE_INCLUDED
+    memoryPerOracleComputeUnitInGbs: "5"
+    scanListenerPortNonTls: "1600"
+    scanListenerPortTls: "3600"
+    timeZone: US/Pacific
+    totalContainerDatabases: "2"
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure
+  name: test-exadata-infrastructure
+spec:
+  forProvider:
+    activationFile: /tmp/activation.zip
+    adminNetworkCidr: 192.168.0.0/16
+    cloudControlPlaneServer1: 10.32.88.1
+    cloudControlPlaneServer2: 10.32.88.3
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: 2
+    contacts:
+    - email: testuser2@testdomain.com
+      isPrimary: "true"
+      name: name
+      phoneNumber: "1234567891"
+    corporateProxy: http://192.168.19.1:80
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: tstExaInfra
+    dnsServer:
+    - 10.231.225.65
+    freeformTags:
+      Department: Accounting
+    gateway: 10.32.88.5
+    infiniBandNetworkCidr: 10.31.8.0/21
+    maintenanceWindow:
+    - daysOfWeek:
+      - name: TUESDAY
+      hoursOfDay:
+      - "4"
+      leadTimeInWeeks: 2
+      months:
+      - name: JANUARY
+      - name: APRIL
+      - name: JULY
+      - name: OCTOBER
+      preference: CUSTOM_PREFERENCE
+      weeksOfMonth:
+      - "2"
+    netmask: 255.255.255.0
+    ntpServer:
+    - 10.231.225.76
+    shape: ExadataCC.X7
+    storageCount: 3
+    timeZone: US/Pacific
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: KeyStore
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: test_key_store
+  name: test-key-store
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: example-key-store
+    typeDetails:
+    - adminUsername: example-username
+      connectionIps:
+      - 192.1.1.1
+      secretId: ${var.okv_secret}
+      type: ORACLE_KEY_VAULT
+      vaultId: ${var.kms_vault_ocid}
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: VmClusterNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster_network
+  name: test-vm-cluster-network
+spec:
+  forProvider:
+    action: ADD_DBSERVER_NETWORK
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: testVmClusterRecommendedNetwork
+    dns:
+    - 192.168.10.10
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Accounting
+    ntp:
+    - 192.168.10.20
+    scans:
+    - hostname: myprefix1-nsubz-scan
+      ips:
+      - 192.168.19.7
+      - 192.168.19.6
+      - 192.168.19.8
+      port: 1521
+      scanListenerPortTcp: 1521
+      scanListenerPortTcpSsl: 2484
+    validateVmClusterNetwork: true
+    vmNetworks:
+    - domainName: oracle.com
+      gateway: 192.169.20.1
+      netmask: 255.255.0.0
+      networkType: BACKUP
+      nodes:
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+        hostname: myprefix2-cghdm1
+        ip: 192.169.19.18
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+        hostname: myprefix2-cghdm2
+        ip: 192.169.19.20
+      vlanId: "11"
+    - domainName: oracle.com
+      gateway: 192.168.20.1
+      netmask: 255.255.0.0
+      networkType: CLIENT
+      nodes:
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+        hostname: myprefix1-r64zc1
+        ip: 192.168.19.10
+        vip: 192.168.19.11
+        vipHostname: myprefix1-r64zc1-vip
+      - dbServerId: ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+        hostname: myprefix1-r64zc2
+        ip: 192.168.19.14
+        vip: 192.168.19.15
+        vipHostname: myprefix1-r64zc2-vip
+      vlanId: "10"

@@ -1,0 +1,42 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: AutoScalingConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/autoscalingconfiguration
+  labels:
+    testing.upbound.io/example-name: test_auto_scaling_configuration
+  name: test-auto-scaling-configuration
+spec:
+  forProvider:
+    bdsInstanceId: ${var.bds_instance_id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    displayName: ${var.auto_scaling_configuration_display_name}
+    isEnabled: ${var.auto_scaling_configuration_is_enabled}
+    nodeType: ${var.auto_scaling_configuration_node_type}
+    policyDetails:
+    - policyType: ${var.auto_scaling_configuration_policy_policy_type}
+      scaleDownConfig:
+      - memoryStepSize: ${var.auto_scaling_configuration_policy_memory_step_size}
+        metric:
+        - metricType: ${var.auto_scaling_configuration_policy_scale_down_rules_metric_metric_type}
+          threshold:
+          - durationInMinutes: ${var.auto_scaling_configuration_policy_scale_down_rules_metric_threshold_duration_in_minutes}
+            operator: ${var.auto_scaling_configuration_policy_scale_down_rules_metric_threshold_operator}
+            value: ${var.auto_scaling_configuration_policy_scale_down_rules_metric_threshold_value}
+        minMemoryPerNode: ${var.auto_scaling_configuration_policy_scale_down_config_min_memory_per_node}
+        minOcpusPerNode: ${var.auto_scaling_configuration_policy_scale_down_config_min_ocpus_per_node}
+        ocpuStepSize: ${var.auto_scaling_configuration_policy_ocpu_step_size}
+      scaleUpConfig:
+      - maxMemoryPerNode: ${var.auto_scaling_configuration_policy_scale_down_config_max_memory_per_node}
+        maxOcpusPerNode: ${var.auto_scaling_configuration_policy_scale_down_config_max_ocpus_per_node}
+        memoryStepSize: ${var.auto_scaling_configuration_policy_memory_step_size}
+        metric:
+        - metricType: ${var.auto_scaling_configuration_policy_scale_down_rules_metric_metric_type}
+          threshold:
+          - durationInMinutes: ${var.auto_scaling_configuration_policy_scale_up_rules_metric_threshold_duration_in_minutes}
+            operator: ${var.auto_scaling_configuration_policy_scale_up_rules_metric_threshold_operator}
+            value: ${var.auto_scaling_configuration_policy_scale_up_rules_metric_threshold_value}
+        ocpuStepSize: ${var.auto_scaling_configuration_policy_ocpu_step_size}

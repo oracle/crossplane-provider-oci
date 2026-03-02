@@ -1,0 +1,84 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: PrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: test_private_endpoint
+  name: test-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: description
+    displayName: pe_name
+    dnsZones:
+    - custpvtsubnet.oraclevcn.com
+    freeformTags:
+      Department: Finance
+    maxHostCount: "256"
+    nsgIdsRefs:
+    - name: test_network_security_group
+    scanDetails:
+    - fqdn: scan.test.com
+      port: "1521"
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: test_network_security_group
+  name: test-network-security-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

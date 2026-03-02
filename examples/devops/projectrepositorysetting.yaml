@@ -1,0 +1,10 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: ProjectRepositorySetting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/projectrepositorysetting
+  labels:
+    testing.upbound.io/example-name: test_project_repository_setting
+  name: test-project-repository-setting
+spec:
+  forProvider: {}

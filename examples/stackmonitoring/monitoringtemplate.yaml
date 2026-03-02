@@ -1,0 +1,38 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplate
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_example
+  name: test-monitoring-template-example
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Example MT for resource type Apache Tomcat
+    destinationsRefs:
+    - name: test_notification_topic
+    displayName: MT_MonitoringTemplateTerraformExample
+    members:
+    - id: ocid1.stackmonitoringresourcetype.apache_tomcat
+      type: RESOURCE_TYPE
+    messageFormat: ONS_OPTIMIZED
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplate
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

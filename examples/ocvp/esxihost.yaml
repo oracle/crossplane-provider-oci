@@ -1,0 +1,444 @@
+apiVersion: ocvp.oci.upbound.io/v1alpha1
+kind: EsxiHost
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_esxi_host
+  name: test-esxi-host
+spec:
+  forProvider:
+    sddcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sddc
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NatGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nat_gateway_ocvp
+  name: test-nat-gateway-ocvp
+spec:
+  forProvider:
+    blockTraffic: "false"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: NAT Gateway OCVP
+    freeformTags:
+      VCN: VCN-2020-09-11T00:43:42
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: NetworkSecurityGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nsg_allow_all
+  name: test-nsg-allow-all
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: nsg-allow-all
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: private_rt
+  name: private-rt
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: private-rt
+    routeRules:
+    - destination: ${data.oci_core_services.test_services.services[0]["cidr_block"]}
+      destinationType: SERVICE_CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: export_sgw
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_route_table_for_vsphere_vlan
+  name: test-route-table-for-vsphere-vlan
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: Route Table for VLAN-grk-vSphere
+    freeformTags:
+      VMware: VMware-2020-09-11T00:47:02
+    routeRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_nat_gateway_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: private_sl
+  name: private-sl
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: private-sl
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      protocol: all
+      stateless: "false"
+    ingressSecurityRules:
+    - description: 'TCP traffic for ports: 22 SSH Remote Login Protocol'
+      protocol: "6"
+      source: 10.0.0.0/16
+      sourceType: CIDR_BLOCK
+      stateless: "false"
+      tcpOptions:
+      - max: "22"
+        min: "22"
+    - description: 'ICMP traffic for: 3 Destination Unreachable'
+      icmpOptions:
+      - code: "3"
+        type: "3"
+      protocol: "1"
+      source: 10.0.0.0/16
+      sourceType: CIDR_BLOCK
+      stateless: "false"
+    - protocol: all
+      source: 0.0.0.0/0
+      sourceType: CIDR_BLOCK
+      stateless: "false"
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: ServiceGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: export_sgw
+  name: export-sgw
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: sgw
+    services:
+    - serviceId: ${data.oci_core_services.test_services.services[0]["id"]}
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_provisioning_subnet
+  name: test-provisioning-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.103.128/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    displayName: provisioning-subnet
+    dnsLabel: provisioningsub
+    prohibitPublicIpOnVnic: "true"
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: private_rt
+    securityListIdRefs:
+    - name: private_sl
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_vcn_ocvp
+  name: test-vcn-ocvp
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: VmWareOCVP
+    dnsLabel: vmwareocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_hcx_vlan
+  name: test-hcx-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.100.192/26
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: hcx
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nsx_edge_uplink1_vlan
+  name: test-nsx-edge-uplink1-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.100.0/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: NSX-Edge-UP1
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nsx_edge_uplink2_vlan
+  name: test-nsx-edge-uplink2-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.103.0/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: NSX-Edge-UP2
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nsx_edge_vtep_vlan
+  name: test-nsx-edge-vtep-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.102.0/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: NSX Edge-vTep
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_nsx_vtep_vlan
+  name: test-nsx-vtep-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.101.0/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: NSX-vTep
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_vmotion_net_vlan
+  name: test-vmotion-net-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.102.128/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vMotion-Net
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_vsan_net_vlan
+  name: test-vsan-net-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.101.128/25
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vSAN-Net
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_vsphere_net_vlan
+  name: test-vsphere-net-vlan
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.ADs.availability_domains[0]["name"]}
+    cidrBlock: 10.0.100.128/26
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: vSphere-Net
+    nsgIdsRefs:
+    - name: test_nsg_allow_all
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table_for_vsphere_vlan
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn_ocvp

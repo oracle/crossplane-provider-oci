@@ -1,0 +1,49 @@
+apiVersion: desktops.oci.upbound.io/v1alpha1
+kind: DesktopPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: desktops/v1alpha1/desktoppool
+  labels:
+    testing.upbound.io/example-name: test_desktop_pool
+  name: test-desktop-pool
+spec:
+  forProvider:
+    arePrivilegedUsers: ${var.desktop_pool_are_privileged_users}
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    availabilityPolicy:
+    - startSchedule:
+      - cronExpression: ${var.desktop_pool_start_schedule_cron_expr}
+        timezone: ${var.desktop_pool_start_schedule_timezone}
+      stopSchedule:
+      - cronExpression: ${var.desktop_pool_stop_schedule_cron_expr}
+        timezone: ${var.desktop_pool_stop_schedule_timezone}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contactDetails: ${var.desktop_pool_contact_details}
+    devicePolicy:
+    - audioMode: ${var.desktop_pool_device_policy_audio_mode}
+      cdmMode: ${var.desktop_pool_device_policy_cdm_mode}
+      clipboardMode: ${var.desktop_pool_device_policy_clipboard_mode}
+      isDisplayEnabled: ${var.desktop_pool_device_policy_is_display_enabled}
+      isKeyboardEnabled: ${var.desktop_pool_device_policy_is_keyboard_enabled}
+      isPointerEnabled: ${var.desktop_pool_device_policy_is_pointer_enabled}
+      isPrintingEnabled: ${var.desktop_pool_device_policy_is_printing_enabled}
+    displayName: ${var.desktop_pool_display_name}
+    image:
+    - imageId: ${var.desktop_pool_image_id}
+      imageName: ${var.desktop_pool_image_name}
+    isStorageEnabled: ${var.desktop_pool_is_storage_enabled}
+    maximumSize: ${var.desktop_pool_maximum_size}
+    networkConfiguration:
+    - subnetId: ${var.desktop_pool_subnet_id}
+      vcnId: ${var.desktop_pool_vcn_id}
+    shapeConfig:
+    - baselineOcpuUtilization: ${var.desktop_pool_shape_config_baseline_ocpu_utilization}
+      memoryInGbs: ${var.desktop_pool_shape_config_memory_in_gbs}
+      ocpus: ${var.desktop_pool_shape_config_ocpus}
+    shapeName: ${var.desktop_pool_shape_name}
+    standbySize: ${var.desktop_pool_standby_size}
+    storageBackupPolicyId: ${var.desktop_pool_backup_policy_id}
+    storageSizeInGbs: ${var.desktop_pool_storage_size_in_gbs}
+    useDedicatedVmHost: ${var.desktop_pool_use_dedicated_vm_host}

@@ -1,0 +1,15 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: SoftwareSourceAddPackagesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/softwaresourceaddpackagesmanagement
+  labels:
+    testing.upbound.io/example-name: test_software_source_add_packages_management
+  name: test-software-source-add-packages-management
+spec:
+  forProvider:
+    packages:
+    - ModemManager-glib-1.10.4-1.el8.x86_64
+    softwareSourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_software_source_list

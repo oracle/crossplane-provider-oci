@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditTrail
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/audittrail
+  labels:
+    testing.upbound.io/example-name: test_audit_trail
+  name: test-audit-trail
+spec:
+  forProvider:
+    auditTrailId: ${var.trail_ocid}
+    canUpdateLastArchiveTimeOnTarget: ${var.can_update_last_archive_time_on_target}
+    description: ${var.audit_trail_description}
+    displayName: ${var.audit_trail_display_name}
+    freeformTags: ${var.audit_trail_freeform_tags}
+    isAutoPurgeEnabled: ${var.audit_trail_is_auto_purge_enabled}

@@ -1,0 +1,55 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveTypeGroupGroupedSensitiveType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivetypegroupgroupedsensitivetype
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type_group_grouped_sensitive_type
+  name: test-sensitive-type-group-grouped-sensitive-type
+spec:
+  forProvider:
+    patchOperations:
+    - operation: INSERT
+      selection: items
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_sensitive_type
+    sensitiveTypeGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_type_group
+
+---
+
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivetypegroupgroupedsensitivetype
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type
+  name: test-sensitive-type
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.sensitive_type_display_name}
+    entityType: ${var.sensitive_type_entity_type}
+
+---
+
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveTypeGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivetypegroupgroupedsensitivetype
+  labels:
+    testing.upbound.io/example-name: test_sensitive_type_group
+  name: test-sensitive-type-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.sensitive_type_group_description}
+    displayName: ${var.sensitive_type_group_display_name}

@@ -1,0 +1,53 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPolicySchedulingWindow
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingpolicyschedulingwindow
+  labels:
+    testing.upbound.io/example-name: test_scheduling_policy_scheduling_window
+  name: test-scheduling-policy-scheduling-window
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.scheduling_policy_scheduling_window_defined_tags_value)}
+    freeformTags: ${var.scheduling_policy_scheduling_window_freeform_tags}
+    schedulingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_policy
+    windowPreference:
+    - daysOfWeek:
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_days_of_week_name}
+      duration: ${var.scheduling_policy_scheduling_window_window_preference_duration}
+      isEnforcedDuration: ${var.scheduling_policy_scheduling_window_window_preference_is_enforced_duration}
+      months:
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_months_name1}
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_months_name2}
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_months_name3}
+      - name: ${var.scheduling_policy_scheduling_window_window_preference_months_name4}
+      startTime: ${var.scheduling_policy_scheduling_window_window_preference_start_time}
+      weeksOfMonth: ${var.scheduling_policy_scheduling_window_window_preference_weeks_of_month}
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingpolicyschedulingwindow
+  labels:
+    testing.upbound.io/example-name: test_scheduling_policy
+  name: test-scheduling-policy
+spec:
+  forProvider:
+    cadence: ${var.scheduling_policy_cadence}
+    cadenceStartMonth:
+    - name: ${var.scheduling_policy_cadence_start_month_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.scheduling_policy_defined_tags_value}
+    displayName: ${var.scheduling_policy_display_name}
+    freeformTags: ${var.scheduling_policy_freeform_tags}

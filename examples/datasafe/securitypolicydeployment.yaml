@@ -1,0 +1,18 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SecurityPolicyDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/securitypolicydeployment
+  labels:
+    testing.upbound.io/example-name: test_security_policy_deployment
+  name: test-security-policy-deployment
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.description}
+    displayName: ${var.display_name}
+    securityPolicyId: ${var.security_policy_ocid}
+    targetId: ${var.data_safe_target_ocid}
+    targetType: ${var.target_type}

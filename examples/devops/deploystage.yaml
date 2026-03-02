@@ -1,0 +1,41 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deploystage
+  labels:
+    testing.upbound.io/example-name: test_wait_deploy_stage
+  name: test-wait-deploy-stage
+spec:
+  forProvider:
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStagePredecessorCollection:
+    - items:
+      - idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_deploy_pipeline
+    deployStageType: WAIT
+    description: description
+    displayName: displayName
+    waitCriteria:
+    - waitDuration: PT5S
+      waitType: ABSOLUTE_WAIT
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deploystage
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

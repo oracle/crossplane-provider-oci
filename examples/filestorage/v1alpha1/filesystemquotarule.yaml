@@ -12,4 +12,4 @@ spec:
         testing.upbound.io/example-name: filesystem_label_1
     isHardQuota: true
     principalType: "DEFAULT_USER"
-    quotaLimitInGigabytes: 1
+    quotaLimitInGigabytes: 0

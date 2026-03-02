@@ -1,0 +1,37 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployartifact
+  labels:
+    testing.upbound.io/example-name: test_deploy_ocir_artifact
+  name: test-deploy-ocir-artifact
+spec:
+  forProvider:
+    argumentSubstitutionMode: NONE
+    deployArtifactSource:
+    - deployArtifactSourceType: OCIR
+      imageDigest: 38598585.fakedigest1
+      imageUri: iad.ocir.io/ax022wvgmjpq/fake/hello-java:0.0.2
+    deployArtifactType: DOCKER_IMAGE
+    displayName: Display_name
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployartifact
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

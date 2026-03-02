@@ -1,0 +1,100 @@
+apiVersion: globallydistributeddatabase.oci.upbound.io/v1alpha1
+kind: ShardedDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: globallydistributeddatabase/v1alpha1/shardeddatabase
+  labels:
+    testing.upbound.io/example-name: this
+  name: this
+spec:
+  forProvider:
+    caSignedCertificate: null
+    catalogDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterId: ${var.ogdd_sharded_database_catalog_details_cloud_autonomous_vm_cluster_id}
+      computeCount: ${var.ogdd_sharded_database_catalog_details_compute_count}
+      dataStorageSizeInGbs: ${var.ogdd_sharded_database_catalog_details_data_storage_size_in_gbs}
+      isAutoScalingEnabled: ${var.ogdd_sharded_database_catalog_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterId: ${var.ogdd_sharded_database_catalog_details_peer_cloud_autonomous_vm_cluster_id}
+    characterSet: ${var.ogdd_sharded_database_character_set}
+    chunks: ${var.ogdd_sharded_database_chunks}
+    clusterCertificateCommonName: ${var.ogdd_sharded_database_cluster_certificate_common_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configureGsmsTrigger: ${var.oci_globally_distributed_database_configure_gsms_trigger}
+    configureGsmsTriggerIsLatestGsmImage: ${var.oci_globally_distributed_database_configure_gsms_trigger_is_latest_gsm_image}
+    configureGsmsTriggerOldGsmNames: ${var.oci_globally_distributed_database_configure_gsms_trigger_old_gsm_names}
+    configureShardingTrigger: ${var.oci_globally_distributed_database_configure_sharding_trigger}
+    dbDeploymentType: ${var.ogdd_sharded_database_db_deployment_type}
+    dbVersion: ${var.ogdd_sharded_database_db_version}
+    dbWorkload: ${var.ogdd_sharded_database_db_workload}
+    displayName: GloballyDistributedDB23ai-Sharded-Database-Example
+    downloadGsmCertificateSigningRequestTrigger: ${var.oci_globally_distributed_database_download_gsm_certificate_signing_request_trigger}
+    generateGsmCertificateSigningRequestTrigger: ${var.oci_globally_distributed_database_generate_gsm_certificate_signing_request_trigger}
+    generateWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    generateWalletTrigger: ${var.oci_globally_distributed_database_generate_wallet}
+    getConnectionStringTrigger: ${var.oci_globally_distributed_database_get_connection_string_trigger}
+    listenerPort: ${var.ogdd_sharded_database_listener_port}
+    listenerPortTls: ${var.listener_port_tls}
+    ncharacterSet: ${var.ogdd_sharded_database_ncharacter_set}
+    onsPortLocal: ${var.ogdd_sharded_database_ons_port_local}
+    onsPortRemote: ${var.ogdd_sharded_database_ons_port_remote}
+    prefix: ${var.ogdd_sharded_database_prefix}
+    replicationFactor: ${var.oci_globally_distributed_database_replication_factor}
+    replicationMethod: ${var.oci_globally_distributed_database_replication_method}
+    replicationUnit: ${var.oci_globally_distributed_database_replication_unit}
+    shardDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterId: ${var.ogdd_sharded_database_shard_details_cloud_autonomous_vm_cluster_id}
+      computeCount: ${var.ogdd_sharded_database_shard_details_compute_count}
+      dataStorageSizeInGbs: ${var.ogdd_sharded_database_shard_details_data_storage_size_in_gbs}
+      encryptionKeyDetails:
+      - kmsKeyId: ${var.kms_key_id}
+        kmsKeyVersionId: ${var.kms_key_version_id}
+        vaultId: ${var.vault_id}
+      isAutoScalingEnabled: ${var.ogdd_sharded_database_shard_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterId: ${var.ogdd_sharded_database_shard_details_peer_cloud_autonomous_vm_cluster_id}
+      shardSpace: ${var.ogdd_sharded_database_shard_details_shard_space}
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterId: ocid of the cluster id
+      computeCount: ${var.ogdd_sharded_database_shard_details_compute_count}
+      dataStorageSizeInGbs: ${var.ogdd_sharded_database_shard_details_data_storage_size_in_gbs}
+      encryptionKeyDetails:
+      - kmsKeyId: ${var.kms_key_id}
+        kmsKeyVersionId: ${var.kms_key_version_id}
+        vaultId: ${var.vault_id}
+      isAutoScalingEnabled: ${var.ogdd_sharded_database_shard_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterId: ${var.ogdd_sharded_database_shard_details_peer_cloud_autonomous_vm_cluster_id}
+      shardSpace: ${var.ogdd_sharded_database_shard_details_shard_space}
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      cloudAutonomousVmClusterId: ocid of the cluster id
+      computeCount: ${var.ogdd_sharded_database_shard_details_compute_count}
+      dataStorageSizeInGbs: ${var.ogdd_sharded_database_shard_details_data_storage_size_in_gbs}
+      encryptionKeyDetails:
+      - kmsKeyId: ${var.kms_key_id}
+        kmsKeyVersionId: ${var.kms_key_version_id}
+        vaultId: ${var.vault_id}
+      isAutoScalingEnabled: ${var.ogdd_sharded_database_shard_details_is_auto_scaling_enabled}
+      peerCloudAutonomousVmClusterId: ${var.ogdd_sharded_database_shard_details_peer_cloud_autonomous_vm_cluster_id}
+      shardSpace: ${var.ogdd_sharded_database_shard_details_shard_space}
+    shardingMethod: ${var.ogdd_sharded_database_sharding_method}
+    startDatabaseTrigger: ${var.oci_globally_distributed_database_start_database_trigger}
+    stopDatabaseTrigger: ${var.oci_globally_distributed_database_stop_database_trigger}
+    uploadSignedCertificateAndGenerateWalletTrigger: ${var.oci_globally_distributed_database_upload_signed_certificate_and_generate_wallet}
+    validateNetworkTrigger: ${var.oci_globally_distributed_database_validate_network_trigger}

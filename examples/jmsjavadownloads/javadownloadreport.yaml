@@ -1,0 +1,18 @@
+apiVersion: jmsjavadownloads.oci.upbound.io/v1alpha1
+kind: JavaDownloadReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: jmsjavadownloads/v1alpha1/javadownloadreport
+  labels:
+    testing.upbound.io/example-name: test_java_download_report_content_data
+  name: test-java-download-report-content-data
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    format: CSV
+    freeformTags:
+      bar-key: value
+    timeEnd: "2024-08-01T03:07:27Z"
+    timeStart: "2023-08-01T03:07:27Z"

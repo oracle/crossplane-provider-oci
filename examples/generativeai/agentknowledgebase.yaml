@@ -1,0 +1,19 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentKnowledgeBase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentknowledgebase
+  labels:
+    testing.upbound.io/example-name: test_service_managed_knowledge_base
+  name: test-service-managed-knowledge-base
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.test_knowledge_base_description}
+    displayName: ${var.test_knowledge_base_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    indexConfig:
+    - indexConfigType: ${var.index_config_type_default}
+      shouldEnableHybridSearch: ${var.should_enable_hybrid_search}

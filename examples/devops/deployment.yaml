@@ -1,0 +1,128 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+spec:
+  forProvider:
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_helm_deploy_stage
+    deploymentArguments:
+    - items:
+      - name: PLAN_DRY_RUN
+        value: "true"
+    deploymentType: PIPELINE_DEPLOYMENT
+    displayName: HelmDiffDeployment
+
+---
+
+apiVersion: containerengine.oci.upbound.io/v1alpha1
+kind: Cluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_cluster
+  name: test-cluster
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    kubernetesVersion: v1.27.2
+    name: cluster
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deploy_helm_artifact
+  name: test-deploy-helm-artifact
+spec:
+  forProvider:
+    argumentSubstitutionMode: NONE
+    deployArtifactSource:
+    - chartUrl: oci://us-ashburn-1.ocir.io/idkxrdu9epyt/helm-test-chart
+      deployArtifactSourceType: HELM_CHART
+      deployArtifactVersion: 0.0.1
+    deployArtifactType: HELM_CHART
+    displayName: Display_name
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deploy_oke_environment
+  name: test-deploy-oke-environment
+spec:
+  forProvider:
+    clusterId: ${oci_containerengine_cluster.test_cluster.id}
+    deployEnvironmentType: OKE_CLUSTER
+    displayName: okeDeployEnvironment
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: DeployStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_helm_deploy_stage
+  name: test-helm-deploy-stage
+spec:
+  forProvider:
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStagePredecessorCollection:
+    - items:
+      - idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_deploy_pipeline
+    deployStageType: OKE_HELM_CHART_DEPLOYMENT
+    helmChartDeployArtifactId: ${oci_devops_deploy_artifact.test_deploy_helm_artifact.id}
+    okeClusterDeployEnvironmentId: ${oci_devops_deploy_environment.test_deploy_oke_environment.id}
+    purpose: EXECUTE_HELM_UPGRADE
+    releaseName: release-name
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}

@@ -1,0 +1,37 @@
+apiVersion: cloudguard.oci.upbound.io/v1alpha1
+kind: Target
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/target
+  labels:
+    testing.upbound.io/example-name: test_target
+  name: test-target
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.target_description}
+    displayName: ${var.target_display_name}
+    state: ${var.target_state}
+    targetDetectorRecipes:
+    - detectorRecipeId: ${data.oci_cloud_guard_detector_recipes.test_detector_recipes.detector_recipe_collection.0.items.0.id}
+      detectorRules:
+      - details:
+        - conditionGroups:
+          - compartmentId: ${var.compartment_ocid}
+            condition: ${var.target_target_detector_recipes_detector_rules_details_condition_groups_condition}
+        detectorRuleId: LB_CERTIFICATE_EXPIRING_SOON
+    targetResourceId: ${var.compartment_ocid}
+    targetResourceType: ${var.target_target_resource_type}
+    targetResponderRecipes:
+    - responderRecipeId: ${data.oci_cloud_guard_responder_recipes.test_responder_recipes.responder_recipe_collection.0.items.0.id}
+      responderRules:
+      - details:
+        - condition: ${var.target_target_responder_recipes_responder_rules_details_condition}
+          configurations:
+          - configKey: ${var.target_target_responder_recipes_responder_rules_details_configurations_config_key}
+            name: ${var.target_target_responder_recipes_responder_rules_details_configurations_name}
+            value: ${var.target_target_responder_recipes_responder_rules_details_configurations_value}
+          mode: ${var.target_target_responder_recipes_responder_rules_details_mode}
+        responderRuleId: ENABLE_DB_BACKUP

@@ -1,0 +1,19 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditArchiveRetrieval
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/auditarchiveretrieval
+  labels:
+    testing.upbound.io/example-name: test_audit_archive_retrieval
+  name: test-audit-archive-retrieval
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.audit_archive_retrieval_description}
+    displayName: ${var.audit_archive_retrieval_display_name}
+    endDate: ${var.audit_archive_retrieval_end_date}
+    freeformTags: ${var.audit_archive_retrieval_freeform_tags}
+    startDate: ${var.audit_archive_retrieval_start_date}
+    targetId: ${var.target_id}

@@ -1,0 +1,45 @@
+apiVersion: licensemanager.oci.upbound.io/v1alpha1
+kind: LicenseRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: licensemanager/v1alpha1/licenserecord
+  labels:
+    testing.upbound.io/example-name: test_license_record
+  name: test-license-record
+spec:
+  forProvider:
+    displayName: ${var.license_record_display_name}
+    expirationDate: ${var.license_record_expiration_date}
+    freeformTags: ${var.license_record_freeform_tags}
+    isPerpetual: ${var.license_record_is_perpetual}
+    isUnlimited: ${var.license_record_is_unlimited}
+    licenseCount: ${var.license_record_license_count}
+    productId: ${var.product_id}
+    productLicenseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_product_license
+    supportEndDate: ${var.license_record_support_end_date}
+
+---
+
+apiVersion: licensemanager.oci.upbound.io/v1alpha1
+kind: ProductLicense
+metadata:
+  annotations:
+    meta.upbound.io/example-id: licensemanager/v1alpha1/licenserecord
+  labels:
+    testing.upbound.io/example-name: test_product_license
+  name: test-product-license
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.product_license_display_name}
+    freeformTags: ${var.product_license_freeform_tags}
+    images:
+    - listingId: ${data.oci_marketplace_listing.test_listing.listing_id}
+      packageVersion: ${data.oci_marketplace_listing.test_listing.default_package_version}
+    isVendorOracle: ${var.product_license_is_vendor_oracle}
+    licenseUnit: ${var.product_license_license_unit}
+    vendorName: ${var.product_license_vendor_name}

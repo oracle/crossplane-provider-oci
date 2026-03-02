@@ -1,0 +1,24 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentTool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agenttool
+  labels:
+    testing.upbound.io/example-name: rag_test_tool
+  name: rag-test-tool
+spec:
+  forProvider:
+    agentId: ${var.test_agent_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.test_agent_tool_description}
+    displayName: ${var.test_agent_tool_display_name}
+    freeformTags:
+      Department: Finance
+    toolConfig:
+    - generationLlmCustomization:
+      - instruction: instruction
+      knowledgeBaseConfigs:
+      - knowledgeBaseId: ${var.test_knowledge_base_id}
+      toolConfigType: RAG_TOOL_CONFIG

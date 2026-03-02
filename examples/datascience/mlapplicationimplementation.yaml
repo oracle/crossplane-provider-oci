@@ -1,0 +1,42 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplicationImplementation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplicationimplementation
+  labels:
+    testing.upbound.io/example-name: test_ml_application_implementation
+  name: test-ml-application-implementation
+spec:
+  forProvider:
+    allowedMigrationDestinations: ${var.ml_application_implementation_allowed_migration_destinations}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    freeformTags: ${var.ml_application_implementation_freeform_tags}
+    mlApplicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ml_application
+    mlApplicationPackage:
+      source_type: object_storage_download
+      uri: https://objectstorage.us-ashburn-1.oraclecloud.com/n/ociodscdev/b/Artifact/o/windows.zip
+    name: ${var.ml_application_implementation_name}
+    opcMlAppPackageArgs: ${var.opc_ml_app_package_args}
+
+---
+
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplicationimplementation
+  labels:
+    testing.upbound.io/example-name: test_ml_application
+  name: test-ml-application
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.ml_application_description}
+    freeformTags: ${var.ml_application_freeform_tags}
+    name: ${var.ml_application_name}

@@ -1,0 +1,162 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: CloudDatabaseManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_database_cloud_database_management
+  name: test-database-cloud-database-management
+spec:
+  forProvider:
+    credentialdetails:
+    - passwordSecretId: ${var.ssl_secret_id}
+      userName: sys
+    databaseId: ${data.oci_database_databases.test_databases.databases.0.id}
+    enableManagement: "true"
+    managementType: BASIC
+    privateEndPointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_management_private_endpoint
+    serviceName: ${data.oci_database_databases.test_databases.databases.0.db_unique_name}.${oci_core_subnet.test_subnet.subnet_domain_name}
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_internet_gateway
+  name: test-internet-gateway
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfInternetGateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfRouteTable
+    routeRules:
+    - description: Internal traffic for OCI Services
+      destination: 0.0.0.0/0
+      destinationType: CIDR_BLOCK
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_internet_gateway
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: SecurityList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_security_list
+  name: test-security-list
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfSecurityList
+    egressSecurityRules:
+    - destination: 0.0.0.0/0
+      protocol: "6"
+    ingressSecurityRules:
+    - protocol: "6"
+      source: 0.0.0.0/0
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+    displayName: tfSubnet
+    dnsLabel: tfsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_security_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfVcn
+    dnsLabel: tfvcn
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementDbManagementPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_db_management_private_endpoint
+  name: test-db-management-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: tfPrivateEndpoint
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

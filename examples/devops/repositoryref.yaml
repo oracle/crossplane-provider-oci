@@ -1,0 +1,34 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: RepositoryRef
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositoryref
+  labels:
+    testing.upbound.io/example-name: test_repository_ref
+  name: test-repository-ref
+spec:
+  forProvider:
+    commitId: ${lookup(data.oci_devops_repository_commits.test_repository_commits.repository_commit_collection[0].items[0],
+      "commit_id")}
+    refName: <refName>
+    refType: BRANCH
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_repository
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositoryref
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${join("", ["A", random_string.topicname.result])}

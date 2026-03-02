@@ -1,0 +1,69 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: GenerativeAiPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/generativeaiprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_generative_ai_private_endpoint
+  name: test-generative-ai-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.generative_ai_private_endpoint_description}
+    displayName: ${var.generative_ai_private_endpoint_display_name}
+    dnsPrefix: ${var.generative_ai_private_endpoint_dns_prefix}
+    freeformTags:
+      Department: Marketing
+    nsgIds: []
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_subnet
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/generativeaiprivateendpoint
+  labels:
+    testing.upbound.io/example-name: vcn_subnet
+  name: vcn-subnet
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    cidrBlock: 10.1.20.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dhcpOptionsIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pe_vcn
+    displayName: PE
+    dnsLabel: PE
+    securityListIdRefs:
+    - name: pe_vcn
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pe_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/generativeaiprivateendpoint
+  labels:
+    testing.upbound.io/example-name: pe_vcn
+  name: pe-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: pe
+    dnsLabel: pe

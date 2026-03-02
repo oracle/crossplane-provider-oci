@@ -1,0 +1,20 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentAgent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentagent
+  labels:
+    testing.upbound.io/example-name: test_agent
+  name: test-agent
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.agent_description}
+    displayName: ${var.agent_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    llmConfig:
+    - routingLlmCustomization:
+      - instruction: ${var.agent_llm_config_routing_llm_customization_instruction}
+    welcomeMessage: ${var.agent_welcome_message}

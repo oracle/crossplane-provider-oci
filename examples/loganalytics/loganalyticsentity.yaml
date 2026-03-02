@@ -1,0 +1,16 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsEntity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsentity
+  labels:
+    testing.upbound.io/example-name: entityTopologyRequired
+  name: entitytopologyrequired
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    entityTypeName: Host (Linux)
+    name: tf-entity-example-topo-req
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}

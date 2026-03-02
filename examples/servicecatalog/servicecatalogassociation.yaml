@@ -1,0 +1,60 @@
+apiVersion: servicecatalog.oci.upbound.io/v1alpha1
+kind: ServiceCatalogAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: servicecatalog/v1alpha1/servicecatalogassociation
+  labels:
+    testing.upbound.io/example-name: test_service_catalog_association
+  name: test-service-catalog-association
+spec:
+  forProvider:
+    entityIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_private_application
+    entityType: ${var.service_catalog_association_entity_type}
+    serviceCatalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_service_catalog
+
+---
+
+apiVersion: servicecatalog.oci.upbound.io/v1alpha1
+kind: PrivateApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: servicecatalog/v1alpha1/servicecatalogassociation
+  labels:
+    testing.upbound.io/example-name: test_private_application
+  name: test-private-application
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.private_application_display_name}
+    freeformTags: ${var.private_application_freeform_tags}
+    logoFileBase64Encoded: ${var.private_application_logo_file_base64encoded}
+    longDescription: ${var.private_application_long_description}
+    packageDetails:
+    - packageType: ${var.private_application_package_details_package_type}
+      version: ${var.private_application_package_details_version}
+      zipFileBase64Encoded: ${var.private_application_package_details_zip_file_base64encoded}
+    shortDescription: ${var.private_application_short_description}
+
+---
+
+apiVersion: servicecatalog.oci.upbound.io/v1alpha1
+kind: ServiceCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: servicecatalog/v1alpha1/servicecatalogassociation
+  labels:
+    testing.upbound.io/example-name: test_service_catalog
+  name: test-service-catalog
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.service_catalog_display_name}
+    freeformTags: ${var.service_catalog_freeform_tags}

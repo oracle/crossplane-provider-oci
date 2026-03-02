@@ -1,0 +1,20 @@
+apiVersion: capacitymanagement.oci.upbound.io/v1alpha1
+kind: InternalOccmDemandSignalDelivery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/internaloccmdemandsignaldelivery
+  labels:
+    testing.upbound.io/example-name: test_internal_occm_demand_signal_delivery
+  name: test-internal-occm-demand-signal-delivery
+spec:
+  forProvider:
+    acceptedQuantity: ${var.internal_occm_demand_signal_delivery_accepted_quantity}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    demandSignalId: ${var.inprogress_demand_signal_id}
+    demandSignalItemId: ${var.demand_signal_item_id}
+    freeformTags: ${var.internal_occm_demand_signal_delivery_freeform_tags}
+    justification: ${var.internal_occm_demand_signal_delivery_justification}
+    notes: ${var.internal_occm_demand_signal_delivery_notes}
+    occCustomerGroupId: ${var.customergroup_id}

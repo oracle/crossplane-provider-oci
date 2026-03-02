@@ -1,0 +1,85 @@
+apiVersion: computecloudatcustomer.oci.upbound.io/v1alpha1
+kind: CccInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_ccc_infrastructure
+  name: test-ccc-infrastructure
+spec:
+  forProvider:
+    cccUpgradeScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ccc_upgrade_schedule
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionDetails: ${var.ccc_infrastructure_connection_details}
+    connectionState: ${var.ccc_infrastructure_connection_state}
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      var.ccc_infrastructure_defined_tags_value)}
+    description: ${var.ccc_infrastructure_description}
+    displayName: ${var.ccc_infrastructure_display_name}
+    freeformTags: ${var.ccc_infrastructure_freeform_tags}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+
+---
+
+apiVersion: computecloudatcustomer.oci.upbound.io/v1alpha1
+kind: CccUpgradeSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_ccc_upgrade_schedule
+  name: test-ccc-upgrade-schedule
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: example_cccUpgradeSchedule
+    events:
+    - description: description
+      scheduleEventDuration: PT49H
+      scheduleEventRecurrences: FREQ=MONTHLY;INTERVAL=3;
+      timeStart: "2023-09-09T16:10:25Z"
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

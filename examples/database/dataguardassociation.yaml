@@ -1,0 +1,137 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DataGuardAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_exadata_data_guard_association
+  name: test-exadata-data-guard-association
+spec:
+  forProvider:
+    creationType: ExistingVmCluster
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseId: ${data.oci_database_databases.exadb.databases[0].id}
+    deleteStandbyDbHomeOnDelete: "true"
+    peerVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_vm_cluster_for_standby_db
+    protectionMode: MAXIMUM_PERFORMANCE
+    transportType: ASYNC
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_exadata_infrastructure
+  name: test-exadata-infrastructure
+spec:
+  forProvider:
+    activationFile: activation.zip
+    adminNetworkCidr: 192.168.0.0/16
+    cloudControlPlaneServer1: 10.32.88.1
+    cloudControlPlaneServer2: 10.32.88.3
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    corporateProxy: http://192.168.19.1:80
+    displayName: tstExaInfra
+    dnsServer:
+    - 10.231.225.65
+    gateway: 10.32.88.5
+    infiniBandNetworkCidr: 10.31.8.0/21
+    netmask: 255.255.0.0
+    ntpServer:
+    - 10.231.225.76
+    shape: ExadataCC.Quarter3.100
+    timeZone: US/Pacific
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: VmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_exadata_vm_cluster_for_standby_db
+  name: test-exadata-vm-cluster-for-standby-db
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: "4"
+    displayName: vmClusterForStandbyDB
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    giVersion: ${data.oci_database_gi_versions.gi_version.gi_versions.0.version}
+    sshPublicKeys:
+    - ${var.ssh_public_key}
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network
+
+---
+
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: VmClusterNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster_network
+  name: test-vm-cluster-network
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: testVmClusterNw
+    dns:
+    - 192.168.10.12
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    ntp:
+    - 192.168.10.22
+    scans:
+    - hostname: myprefix2-ivmmj-scan
+      ips:
+      - 192.168.19.7
+      - 192.168.19.8
+      - 192.168.19.9
+      port: "1522"
+    validateVmClusterNetwork: "true"
+    vmNetworks:
+    - domainName: oracle.com
+      gateway: 192.169.20.2
+      netmask: 255.255.192.0
+      networkType: BACKUP
+      nodes:
+      - hostname: myprefix2-xapb24
+        ip: 192.169.19.19
+      - hostname: myprefix2-xapb28
+        ip: 192.169.19.21
+      vlanId: "100"
+    - domainName: oracle.com
+      gateway: 192.168.20.2
+      netmask: 255.255.192.0
+      networkType: CLIENT
+      nodes:
+      - hostname: myprefix2-xapb22
+        ip: 192.168.19.11
+        vip: 192.168.19.13
+        vipHostname: myprefix2-xapb22-vip
+      - hostname: myprefix2-xapb26
+        ip: 192.168.19.15
+        vip: 192.168.19.17
+        vipHostname: myprefix2-xapb26-vip
+      vlanId: "101"

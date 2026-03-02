@@ -1,0 +1,58 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: NotebookSession
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/notebooksession
+  labels:
+    testing.upbound.io/example-name: tf_notebook_session
+  name: tf-notebook-session
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    notebookSessionConfigurationDetails:
+    - shape: ${var.shape}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: tf_subnet
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tf_project
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/notebooksession
+  labels:
+    testing.upbound.io/example-name: tf_subnet
+  name: tf-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.1.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tf_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/notebooksession
+  labels:
+    testing.upbound.io/example-name: tf_vcn
+  name: tf-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

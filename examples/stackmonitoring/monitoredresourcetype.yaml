@@ -1,0 +1,34 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoredResourceType
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcetype
+  labels:
+    testing.upbound.io/example-name: test_monitored_resource_type
+  name: test-monitored-resource-type
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: This is a resource type created for terraform test
+    displayName: Terraform Resource Type Example
+    freeformTags:
+      bar-key: test_monitored_resource_type.value
+    metadata:
+    - agentProperties:
+      - agent_prop1
+      - agent_prop2
+      format: SYSTEM_FORMAT
+      requiredProperties:
+      - required_prop1
+      - required_prop2
+      validPropertiesForCreate:
+      - valid_prop1
+      - valid_prop2
+      validPropertiesForUpdate:
+      - valid_prop2
+    metricNamespace: oci_terraform_test
+    name: terraformResourceTypeExample
+    resourceCategory: APPLICATION
+    sourceType: SM_MGMT_AGENT_MONITORED

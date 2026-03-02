@@ -1,0 +1,14 @@
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
+kind: Drg
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/drg
+  labels:
+    testing.upbound.io/example-name: test_vcn_drg
+  name: test-vcn-drg
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: MyTestVcnDrg

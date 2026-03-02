@@ -1,0 +1,21 @@
+apiVersion: fleetsoftwareupdate.oci.upbound.io/v1alpha1
+kind: FsuCollection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetsoftwareupdate/v1alpha1/fsucollection
+  labels:
+    testing.upbound.io/example-name: test_fsu_collection_db19
+  name: test-fsu-collection-db19
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tf-test-db19-collection
+    fleetDiscovery:
+    - strategy: TARGET_LIST
+      targets:
+      - ${var.fsu_db_19_target_1}
+    serviceType: EXACS
+    sourceMajorVersion: DB_19
+    type: DB

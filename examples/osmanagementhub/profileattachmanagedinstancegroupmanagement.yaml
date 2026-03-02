@@ -1,0 +1,16 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ProfileAttachManagedInstanceGroupManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/profileattachmanagedinstancegroupmanagement
+  labels:
+    testing.upbound.io/example-name: test_profile_attach_managed_instance_group_management
+  name: test-profile-attach-managed-instance-group-management
+spec:
+  forProvider:
+    managedInstanceGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_managed_instance_group_oci
+    profileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_profile_oci

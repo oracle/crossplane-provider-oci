@@ -1,0 +1,17 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementExternalAsm
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalasm
+  labels:
+    testing.upbound.io/example-name: test_external_asm
+  name: test-external-asm
+spec:
+  forProvider:
+    definedTags:
+      ${oci_identity_tag_namespace.tag_namespace1.name}.${oci_identity_tag.tag1.name}: ${var.asm_defined_tags_value}
+    externalAsmId: ${data.oci_database_management_external_asms.test_external_asms.external_asm_collection.0.items.0.id}
+    externalConnectorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_asm_connector
+    freeformTags: ${var.asm_freeform_tags}

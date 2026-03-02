@@ -1,0 +1,17 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceNodeBackupConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancenodebackupconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_node_backup_configuration
+  name: test-bds-instance-node-backup-configuration
+spec:
+  forProvider:
+    backupType: FULL
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    levelTypeDetails:
+    - levelType: NODE_TYPE_LEVEL
+      nodeType: MASTER
+    numberOfBackupsToRetain: "1"
+    schedule: FREQ=WEEKLY;BYDAY=MO;BYHOUR=10

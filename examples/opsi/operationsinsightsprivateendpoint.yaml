@@ -1,0 +1,22 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OperationsInsightsPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightsprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_private_endpoint
+  name: test-operations-insights-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.operations_insights_private_endpoint_defined_tags_value}")}
+    description: ${var.operations_insights_private_endpoint_description}
+    displayName: ${var.operations_insights_private_endpoint_display_name}
+    freeformTags: ${var.operations_insights_private_endpoint_freeform_tags}
+    isUsedForRacDbs: ${var.operations_insights_private_endpoint_is_used_for_rac_dbs}
+    nsgIds: ${var.operations_insights_private_endpoint_nsg_ids}
+    subnetId: ${var.subnet_id}
+    vcnId: ${var.vcn_id}

@@ -1,0 +1,27 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: OpsiConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/opsiconfiguration
+  labels:
+    testing.upbound.io/example-name: test_opsi_configuration
+  name: test-opsi-configuration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configItemCustomStatus: ${var.opsi_configuration_config_item_custom_status}
+    configItemField: ${var.opsi_configuration_config_item_field}
+    configItems:
+    - configItemType: ${var.opsi_configuration_config_items_config_item_type}
+      name: ${var.opsi_configuration_config_items_name1}
+      value: ${var.opsi_configuration_config_items_value1}
+    - configItemType: ${var.opsi_configuration_config_items_config_item_type}
+      name: ${var.opsi_configuration_config_items_name2}
+      value: ${var.opsi_configuration_config_items_value2}
+    configItemsApplicableContext: ${var.opsi_configuration_config_items_applicable_context}
+    description: ${var.opsi_configuration_description}
+    displayName: ${var.opsi_configuration_display_name}
+    opsiConfigField: ${var.opsi_configuration_opsi_config_field}
+    opsiConfigType: ${var.opsi_configuration_opsi_config_type}

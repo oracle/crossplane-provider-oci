@@ -1,0 +1,22 @@
+apiVersion: ospgateway.oci.upbound.io/v1alpha1
+kind: AddressActionVerification
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospgateway/v1alpha1/addressactionverification
+  labels:
+    testing.upbound.io/example-name: test_address_action_verification
+  name: test-address-action-verification
+spec:
+  forProvider:
+    city: ${var.address.city}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    country: ${var.address.country}
+    county: ${var.address.county}
+    line1: ${var.address.line1}
+    line2: ${var.address.line2}
+    line3: ${var.address.line3}
+    ospHomeRegion: ${var.region}
+    postalCode: ${var.address.postal_code}
+    state: ${var.address.state}

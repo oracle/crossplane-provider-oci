@@ -1,0 +1,42 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: MigrationMigration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/migrationmigration
+  labels:
+    testing.upbound.io/example-name: test_oracle_rds_migration
+  name: test-oracle-rds-migration
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataTransferMediumDetails:
+    - accessKeyId: "12345"
+      name: rdsbucket
+      objectStorageBucket:
+      - bucket: ${var.bucket_oracle_id}
+        namespace: namespace
+      region: us-east-1
+      secretAccessKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      type: AWS_S3
+    databaseCombination: ORACLE
+    displayName: displayName
+    initialLoadSettings:
+    - dataPumpParameters:
+      - estimate: BLOCKS
+        isCluster: "false"
+        tableExistsAction: TRUNCATE
+      exportDirectoryObject:
+      - name: name
+      jobMode: SCHEMA
+    sourceDatabaseConnectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_connection_rds_source
+    targetDatabaseConnectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_connection_autonomous_target
+    type: ONLINE

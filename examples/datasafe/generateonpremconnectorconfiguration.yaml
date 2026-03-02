@@ -1,0 +1,17 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: GenerateOnPremConnectorConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/generateonpremconnectorconfiguration
+  labels:
+    testing.upbound.io/example-name: test_generate_on_prem_connector_configuration
+  name: test-generate-on-prem-connector-configuration
+spec:
+  forProvider:
+    onPremConnectorIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_on_prem_connector
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system

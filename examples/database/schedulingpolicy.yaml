@@ -1,0 +1,19 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: SchedulingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingpolicy
+  labels:
+    testing.upbound.io/example-name: test_scheduling_policy
+  name: test-scheduling-policy
+spec:
+  forProvider:
+    cadence: ${var.scheduling_policy_cadence}
+    cadenceStartMonth:
+    - name: ${var.scheduling_policy_cadence_start_month_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.scheduling_policy_defined_tags_value}
+    displayName: ${var.scheduling_policy_display_name}
+    freeformTags: ${var.scheduling_policy_freeform_tags}

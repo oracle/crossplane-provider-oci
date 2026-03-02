@@ -1,0 +1,34 @@
+apiVersion: resourcescheduler.oci.upbound.io/v1alpha1
+kind: Schedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourcescheduler/v1alpha1/schedule
+  labels:
+    testing.upbound.io/example-name: test_schedule
+  name: test-schedule
+spec:
+  forProvider:
+    action: ${var.schedule_action}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.schedule_description}
+    displayName: ${var.schedule_display_name}
+    freeformTags: ${var.schedule_freeform_tags}
+    recurrenceDetails: ${var.schedule_recurrence_details}
+    recurrenceType: ${var.schedule_recurrence_type}
+    resourceFilters:
+    - attribute: DEFINED_TAGS
+      value:
+      - namespace: ResourceSchedulerCanary
+        tagKey: ScheduleTagFilterTestKey
+        value: foo
+    - attribute: LIFECYCLE_STATE
+      value:
+      - value: running
+      - value: stopped
+    - attribute: COMPARTMENT_ID
+      value:
+      - value: ${var.compartment_id}
+    timeEnds: ${var.schedule_time_ends}
+    timeStarts: ${var.schedule_time_starts}

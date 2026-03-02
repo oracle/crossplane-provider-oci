@@ -1,0 +1,40 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: DatabaseInsight
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/databaseinsight
+  labels:
+    testing.upbound.io/example-name: test_database_insight
+  name: test-database-insight
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionDetails:
+    - hosts:
+      - port: ${var.tcps_port}
+      protocol: TCPS
+      serviceName: ${var.service_name}
+    credentialDetails:
+    - credentialType: ${var.database_insight_credential_details_credential_type}
+      passwordSecretIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      role: ${var.database_insight_credential_details_role}
+      userName: ${var.user_name}
+      walletSecretIdSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    databaseId: ${var.dbsystem_database_id}
+    databaseResourceType: ${var.database_insight_database_resource_type}
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.database_insight_defined_tags_value}")}
+    deploymentType: ${var.deployment_type}
+    entitySource: ${var.database_insight_entity_source}
+    freeformTags: ${var.database_insight_freeform_tags}
+    opsiPrivateEndpointId: ${var.opsi_private_endpoint_id}
+    serviceName: ${var.service_name}
+    status: ${var.resource_status}

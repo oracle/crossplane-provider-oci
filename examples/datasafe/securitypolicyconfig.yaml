@@ -1,0 +1,18 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SecurityPolicyConfig
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/securitypolicyconfig
+  labels:
+    testing.upbound.io/example-name: test_security_policy_config
+  name: test-security-policy-config
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.description}
+    displayName: ${var.display_name}
+    securityPolicyId: ${var.security_policy_ocid}
+    unifiedAuditPolicyConfig:
+    - excludeDatasafeUser: ${var.exclude_datasafe_user}

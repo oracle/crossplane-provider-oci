@@ -1,0 +1,212 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: BuildPipelineStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline_build_github_stage
+  name: test-build-pipeline-build-github-stage
+spec:
+  forProvider:
+    buildPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_build_pipeline
+    buildPipelineStagePredecessorCollection:
+    - items:
+      - idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_build_pipeline
+    buildPipelineStageType: BUILD
+    buildRunnerShapeConfig:
+    - buildRunnerType: CUSTOM
+      memoryInGbs: 4
+      ocpus: 1
+    buildSourceCollection:
+    - items:
+      - branch: branch
+        connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_github_connection
+        connectionType: GITHUB
+        name: primaryBuildSource
+        repositoryUrl: https://github.com/dlcbld/docktest
+      - branch: branch
+        connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_gitlab_connection
+        connectionType: GITLAB
+        name: source
+        repositoryUrl: https://gitlab.com/dlcbld/docktest
+      - branch: branch
+        connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_gitlab_server_connection
+        connectionType: GITLAB_SERVER
+        name: source1
+        repositoryUrl: https://gitlabserver.com/dlcbld/docktest
+      - branch: branch
+        connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_bitbucket_server_connection
+        connectionType: BITBUCKET_SERVER
+        name: source2
+        repositoryUrl: https://bitbucketserver.com/dlcbld/docktest
+      - branch: branch
+        connectionIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_vbs_connection
+        connectionType: VBS
+        name: source3
+        repositoryUrl: https://vbs.com/dlcbld/docktest
+    buildSpecFile: build_spec.yml
+    description: Github build stage
+    displayName: github-build-stage
+    image: OL7_X86_64_STANDARD_10
+    primaryBuildSource: primaryBuildSource
+    stageExecutionTimeoutInSeconds: "10"
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: BuildPipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline
+  name: test-build-pipeline
+spec:
+  forProvider:
+    buildPipelineParameters:
+    - items:
+      - defaultValue: defaultValue
+        description: description
+        name: name
+      - defaultValue: defaultValue2
+        description: description2
+        name: name2
+    description: Build pipeline
+    displayName: build_pipeline
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_bitbucket_server_connection
+  name: test-bitbucket-server-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    baseUrl: ${var.base_url}
+    connectionType: BITBUCKET_SERVER_ACCESS_TOKEN
+    description: Bitbucket server access token
+    displayName: bitbucket_server_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_github_connection
+  name: test-github-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    connectionType: GITHUB_ACCESS_TOKEN
+    description: Github access token
+    displayName: github_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_gitlab_connection
+  name: test-gitlab-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    connectionType: GITLAB_ACCESS_TOKEN
+    description: Gitlab access token
+    displayName: gitlab_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_gitlab_server_connection
+  name: test-gitlab-server-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    baseUrl: ${var.base_url}
+    connectionType: GITLAB_SERVER_ACCESS_TOKEN
+    description: Gitlab server access token
+    displayName: gitlab_server_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_vbs_connection
+  name: test-vbs-connection
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    baseUrl: ${var.base_url}
+    connectionType: VBS_ACCESS_TOKEN
+    description: VBS access token
+    displayName: vbs_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${join("", ["A", random_string.topicname.result])}

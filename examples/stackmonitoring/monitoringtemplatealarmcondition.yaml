@@ -1,0 +1,62 @@
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplateAlarmCondition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatealarmcondition
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_alarm_condition_example
+  name: test-monitoring-template-alarm-condition-example
+spec:
+  forProvider:
+    conditionType: FIXED
+    conditions:
+    - body: Garbage collection throughput exceeds the warning threshold value
+      query: GarbageCollectionThroughput[10m].mean() > 0.3
+      severity: WARNING
+    metricName: GarbageCollectionThroughput
+    monitoringTemplateIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitoring_template_example
+    namespace: oracle_appmgmt
+    resourceType: ocid1.stackmonitoringresourcetype.apache_tomcat
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatealarmcondition
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${random_string.topicname.result}
+
+---
+
+apiVersion: stackmonitoring.oci.upbound.io/v1alpha1
+kind: MonitoringTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatealarmcondition
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_example
+  name: test-monitoring-template-example
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Example MT for resource type Apache Tomcat
+    destinationsRefs:
+    - name: test_notification_topic
+    displayName: MT_MonitoringTemplateTerraformExample
+    members:
+    - id: ocid1.stackmonitoringresourcetype.apache_tomcat
+      type: RESOURCE_TYPE
+    messageFormat: ONS_OPTIMIZED

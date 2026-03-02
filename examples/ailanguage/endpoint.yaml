@@ -1,0 +1,21 @@
+apiVersion: ailanguage.oci.upbound.io/v1alpha1
+kind: Endpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ailanguage/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: test_endpoint
+  name: test-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    inferenceUnits: 1
+    modelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_model
+    timeouts:
+    - create: 60m
+      delete: 60m
+      update: 60m

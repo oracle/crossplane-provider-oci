@@ -1,0 +1,19 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: Property
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/property
+  labels:
+    testing.upbound.io/example-name: test_property
+  name: test-property
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    displayName: displayName2
+    selection: MULTI_CHOICE
+    valueType: NUMERIC
+    values:
+    - values2

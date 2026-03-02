@@ -1,9 +1,0 @@
-apiVersion: loadbalancer.oci.upbound.io/v1alpha1
-kind: Certificate
-metadata:
-  name: lbcertificate-via-crossplane
-spec:
-  forProvider:
-    loadBalancerIdRef:
-      name: loadbalancer-via-crossplane
-    certificateName: "lbcertificate-via-crossplane"

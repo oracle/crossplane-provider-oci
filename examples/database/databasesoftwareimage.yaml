@@ -1,0 +1,22 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: DatabaseSoftwareImage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesoftwareimage
+  labels:
+    testing.upbound.io/example-name: test_database_software_image
+  name: test-database-software-image
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseVersion: 19.0.0.0
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: image1
+    freeformTags:
+      Department: Finance
+    imageShapeFamily: EXACC_SHAPE
+    imageType: DATABASE_IMAGE
+    patchSet: 19.26.0.0

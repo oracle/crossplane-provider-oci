@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: UnsetSecurityAssessmentBaselineManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/unsetsecurityassessmentbaselinemanagement
+  labels:
+    testing.upbound.io/example-name: test_unset_security_assessment_baseline_management
+  name: test-unset-security-assessment-baseline-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_set_security_assessment_baseline_management

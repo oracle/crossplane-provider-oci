@@ -1,0 +1,27 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: SecurityQuestion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/securityquestion
+  labels:
+    testing.upbound.io/example-name: test_security_question
+  name: test-security-question
+spec:
+  forProvider:
+    active: ${var.security_question_active}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.security_question_authorization}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    questionText:
+    - default: ${var.security_question_question_text_default}
+      locale: ${var.security_question_question_text_locale}
+      value: ${var.security_question_question_text_value}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:SecurityQuestion
+    tags:
+    - key: ${var.security_question_tags_key}
+      value: ${var.security_question_tags_value}
+    type: ${var.security_question_type}

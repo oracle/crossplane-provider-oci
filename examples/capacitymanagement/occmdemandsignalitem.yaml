@@ -1,0 +1,24 @@
+apiVersion: capacitymanagement.oci.upbound.io/v1alpha1
+kind: OccmDemandSignalItem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/occmdemandsignalitem
+  labels:
+    testing.upbound.io/example-name: test_occm_demand_signal_item
+  name: test-occm-demand-signal-item
+spec:
+  forProvider:
+    availabilityDomain: ${var.occm_demand_signal_item_availability_domain}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    demandQuantity: ${var.occm_demand_signal_item_demand_quantity}
+    demandSignalCatalogResourceId: ${var.demand_signal_catalog_resource_id}
+    demandSignalId: ${var.occm_demand_signal_id}
+    freeformTags: ${var.occm_demand_signal_item_freeform_tags}
+    notes: ${var.occm_demand_signal_item_notes}
+    region: ${var.occm_demand_signal_item_region}
+    requestType: ${var.occm_demand_signal_item_request_type}
+    resourceProperties: ${var.occm_demand_signal_resource_properties_items}
+    targetCompartmentId: ${var.sp_compartment_ocid}
+    timeNeededBefore: ${var.occm_demand_signal_item_time_needed_before}

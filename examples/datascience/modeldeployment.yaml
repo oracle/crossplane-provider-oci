@@ -1,0 +1,38 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: ModelDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/modeldeployment
+  labels:
+    testing.upbound.io/example-name: tf_model_deployment
+  name: tf-model-deployment
+spec:
+  forProvider:
+    categoryLogDetails:
+    - access:
+      - logGroupId: ${var.log_group_id}
+        logId: ${var.access_log_id}
+      predict:
+      - logGroupId: ${var.log_group_id}
+        logId: ${var.predict_log_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.model_deployment_description}
+    displayName: ${var.model_deployment_display_name}
+    modelDeploymentConfigurationDetails:
+    - deploymentType: ${var.model_deployment_model_deployment_configuration_details_deployment_type}
+      modelConfigurationDetails:
+      - bandwidthMbps: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_bandwidth_mbps}
+        instanceConfiguration:
+        - instanceShapeName: ${var.shape}
+          modelDeploymentInstanceShapeConfigDetails:
+          - cpuBaseline: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_cpu_baseline}
+            memoryInGbs: ${var.model_deployment_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_memory_in_gbs}
+            ocpus: ${var.model_deployment_model_configuration_details_instance_configuration_model_deployment_instance_shape_config_details_ocpus}
+        maximumBandwidthMbps: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_maximum_bandwidth_mbps}
+        modelId: ${var.model_id}
+        scalingPolicy:
+        - instanceCount: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_instance_count}
+          policyType: ${var.model_deployment_model_deployment_configuration_details_model_configuration_details_scaling_policy_policy_type}
+    projectId: ${var.project_ocid}

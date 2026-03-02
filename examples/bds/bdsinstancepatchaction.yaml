@@ -1,0 +1,16 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstancePatchAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancepatchaction
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_patch_action
+  name: test-bds-instance-patch-action
+spec:
+  forProvider:
+    bdsInstanceId: ${var.bds_instance_id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    version: ${var.bds_instance_patch_action_version}

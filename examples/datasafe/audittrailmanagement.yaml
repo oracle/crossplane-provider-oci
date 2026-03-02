@@ -1,0 +1,19 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditTrailManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/audittrailmanagement
+  labels:
+    testing.upbound.io/example-name: test_audit_trail_management
+  name: test-audit-trail-management
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.audit_trail_description}
+    displayName: ${var.audit_trail_display_name}
+    freeformTags: ${var.audit_trail_freeform_tags}
+    isAutoPurgeEnabled: ${var.audit_trail_is_auto_purge_enabled}
+    targetId: ${var.target_ocid}
+    trailLocation: ${var.trail_location}

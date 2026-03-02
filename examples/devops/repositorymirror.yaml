@@ -1,0 +1,50 @@
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: RepositoryMirror
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositorymirror
+  labels:
+    testing.upbound.io/example-name: test_repository_mirror
+  name: test-repository-mirror
+spec:
+  forProvider:
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_mirrored_repository
+
+---
+
+apiVersion: devops.oci.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositorymirror
+  labels:
+    testing.upbound.io/example-name: test_connection
+  name: test-connection
+spec:
+  forProvider:
+    accessToken: ${var.connection_access_token}
+    connectionType: GITHUB_ACCESS_TOKEN
+    description: description
+    displayName: display_name
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+
+---
+
+apiVersion: ons.oci.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/repositorymirror
+  labels:
+    testing.upbound.io/example-name: test_notification_topic
+  name: test-notification-topic
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${join("", ["A", random_string.topicname.result])}

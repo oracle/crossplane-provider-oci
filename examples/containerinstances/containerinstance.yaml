@@ -1,0 +1,190 @@
+apiVersion: containerinstances.oci.upbound.io/v1alpha1
+kind: ContainerInstance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_container_instance
+  name: test-container-instance
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domains.test_availability_domains.availability_domains.2.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    containerRestartPolicy: ALWAYS
+    containers:
+    - arguments:
+      - -c
+      - cat /mnt/my_file
+      command:
+      - /bin/sh
+      displayName: displayName
+      environmentVariables:
+        environment: variable
+      healthChecks:
+      - failureAction: KILL
+        failureThreshold: "10"
+        headers:
+        - name: name
+          value: value
+        healthCheckType: HTTP
+        initialDelayInSeconds: "10"
+        intervalInSeconds: "10"
+        name: name
+        path: path
+        port: "10"
+        successThreshold: "1"
+        timeoutInSeconds: "10"
+      imageUrl: busybox
+      isResourcePrincipalDisabled: "false"
+      resourceConfig:
+      - memoryLimitInGbs: "1.0"
+        vcpusLimit: "1.0"
+      securityContext:
+      - capabilities:
+        - addCapabilities:
+          - CAP_CHOWN
+          - CAP_KILL
+          dropCapabilities:
+          - ALL
+        isNonRootUserCheckEnabled: false
+        isRootFileSystemReadonly: true
+        runAsGroup: 10
+        runAsUser: 10
+        securityContextType: LINUX
+      volumeMounts:
+      - isReadOnly: "false"
+        mountPath: /mnt
+        partition: "10"
+        subPath: /subPath
+        volumeName: volumeName1
+      - mountPath: /mnt
+        volumeName: volumeName2
+      workingDirectory: /mnt
+    definedTags: ${map("tf_test_namespace.test_tag", "value")}
+    displayName: displayName
+    dnsConfig:
+    - nameservers:
+      - 8.8.8.8
+      options:
+      - options
+      searches:
+      - search domain
+    freeformTags:
+      bar-key: foo-value
+    gracefulShutdownTimeoutInSeconds: "10"
+    shape: CI.Standard.E4.Flex
+    shapeConfig:
+    - memoryInGbs: "8"
+      ocpus: "4"
+    state: ACTIVE
+    vnics:
+    - definedTags: ${map("tf_test_namespace.test_tag", "value")}
+      displayName: displayName
+      freeformTags:
+        freeformTag: freeformTags
+      hostnameLabel: hostnamelabel
+      isPublicIpAssigned: "true"
+      nsgIds: []
+      privateIp: 10.0.0.7
+      skipSourceDestCheck: "false"
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
+    volumes:
+    - backingStore: EPHEMERAL_STORAGE
+      name: volumeName1
+      volumeType: EMPTYDIR
+    - configs:
+      - data: SGFyc2hpdA==
+        fileName: my_file
+      name: volumeName2
+      volumeType: CONFIGFILE
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: InternetGateway
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_ig
+  name: test-ig
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_route_table
+  name: test-route-table
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    routeRules:
+    - destination: 0.0.0.0/0
+      networkEntityIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_ig
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_subnet
+  name: test-subnet
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/24
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dnsLabel: testsubnet
+    routeTableIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_route_table
+    securityListIdRefs:
+    - name: test_sec_list
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: containerinstances/v1alpha1/containerinstance
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dnsLabel: testvcn

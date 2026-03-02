@@ -1,0 +1,16 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: MultiCloudResourceDiscovery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/multicloudresourcediscovery
+  labels:
+    testing.upbound.io/example-name: test_multi_cloud_resource_discovery
+  name: test-multi-cloud-resource-discovery
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: Tersi_Discover_Test
+    oracleDbConnectorId: ${var.oracle_db_azure_connector_id}
+    resourceType: VAULTS

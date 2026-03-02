@@ -1,0 +1,61 @@
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Rule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: test_rule
+  name: test-rule
+spec:
+  forProvider:
+    active: ${var.rule_active}
+    attributeSets:
+    - all
+    attributes: ""
+    authorization: ${var.rule_authorization}
+    condition: ${var.rule_condition}
+    conditionGroup:
+    - type: ${var.rule_condition_group_type}
+      valueSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_rule_condition
+    description: ${var.rule_description}
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    locked: ${var.rule_locked}
+    name: ${var.rule_name}
+    policyType:
+    - value: ${var.rule_policy_type_value}
+    return:
+    - name: ${var.rule_return_name}
+      returnGroovy: ${var.rule_return_return_groovy}
+      value: ${var.rule_return_value}
+    ruleGroovy: ${var.rule_rule_groovy}
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Rule
+    tags:
+    - key: ${var.rule_tags_key}
+      value: ${var.rule_tags_value}
+
+---
+
+apiVersion: identitydomains.oci.upbound.io/v1alpha1
+kind: Condition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/rule
+  labels:
+    testing.upbound.io/example-name: test_rule_condition
+  name: test-rule-condition
+spec:
+  forProvider:
+    attributeName: attributeName
+    attributeValue: attributeValue
+    description: description
+    evaluateConditionIf: evaluateConditionIf
+    externalId: externalId
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    name: name
+    operator: eq
+    schemas:
+    - urn:ietf:params:scim:schemas:oracle:idcs:Condition

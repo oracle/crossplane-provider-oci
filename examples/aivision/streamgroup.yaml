@@ -1,0 +1,15 @@
+apiVersion: aivision.oci.upbound.io/v1alpha1
+kind: StreamGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aivision/v1alpha1/streamgroup
+  labels:
+    testing.upbound.io/example-name: test_stream_group
+  name: test-stream-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    streamSourceIdsRefs:
+    - name: test_stream_source

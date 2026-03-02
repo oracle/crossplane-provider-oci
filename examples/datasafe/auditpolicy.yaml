@@ -1,0 +1,14 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: AuditPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/auditpolicy
+  labels:
+    testing.upbound.io/example-name: test_audit_policy
+  name: test-audit-policy
+spec:
+  forProvider:
+    auditPolicyId: ${var.policy_ocid}
+    description: ${var.audit_policy_description}
+    displayName: ${var.audit_policy_display_name}
+    freeformTags: ${var.audit_policy_freeform_tags}

@@ -1,0 +1,20 @@
+apiVersion: loganalytics.oci.upbound.io/v1alpha1
+kind: LogAnalyticsObjectCollectionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticsobjectcollectionrule
+  labels:
+    testing.upbound.io/example-name: objectCollectionRuleRequired
+  name: objectcollectionrulerequired
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    logGroupId: ${var.log_analytics_log_group_id}
+    logSourceName: LinuxSyslogSource
+    name: tf-obj-coll-example-req
+    namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    osBucketName: ${var.object_collection_rule_bucket_name}
+    osNamespace: ${data.oci_objectstorage_namespace.ns.namespace}
+    streamId: ${var.object_collection_stream_id}

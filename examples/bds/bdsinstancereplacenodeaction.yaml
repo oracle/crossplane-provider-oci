@@ -1,0 +1,17 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsInstanceReplaceNodeAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancereplacenodeaction
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_replace_node_action
+  name: test-bds-instance-replace-node-action
+spec:
+  forProvider:
+    bdsInstanceId: ${oci_bds_bds_instance.test_bds_instance.id}
+    clusterAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    nodeBackupId: ${var.node_backup_id}
+    nodeHostName: ${var.node_host_name}

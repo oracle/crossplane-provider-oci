@@ -1,0 +1,44 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentAgentEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentagentendpoint
+  labels:
+    testing.upbound.io/example-name: test_agent_endpoint
+  name: test-agent-endpoint
+spec:
+  forProvider:
+    agentId: ${var.test_agent_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contentModerationConfig:
+    - shouldEnableOnInput: ${var.should_enable_on_input}
+      shouldEnableOnOutput: ${var.should_enable_on_output}
+    description: ${var.test_agent_endpoint_description}
+    displayName: ${var.test_agent_endpoint_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    guardrailConfig:
+    - contentModerationConfig:
+      - inputGuardrailMode: ${var.agent_endpoint_guardrail_config_content_moderation_config_input_guardrail_mode}
+        outputGuardrailMode: ${var.agent_endpoint_guardrail_config_content_moderation_config_output_guardrail_mode}
+      personallyIdentifiableInformationConfig:
+      - inputGuardrailMode: ${var.agent_endpoint_guardrail_config_personally_identifiable_information_config_input_guardrail_mode}
+        outputGuardrailMode: ${var.agent_endpoint_guardrail_config_personally_identifiable_information_config_output_guardrail_mode}
+      promptInjectionConfig:
+      - inputGuardrailMode: ${var.agent_endpoint_guardrail_config_prompt_injection_config_input_guardrail_mode}
+    humanInputConfig:
+    - shouldEnableHumanInput: ${var.agent_endpoint_human_input_config_should_enable_human_input}
+    outputConfig:
+    - outputLocation:
+      - bucket: ${var.agent_endpoint_output_config_output_location_bucket}
+        namespace: ${var.agent_endpoint_output_config_output_location_namespace}
+        outputLocationType: ${var.agent_endpoint_output_config_output_location_output_location_type}
+        prefix: ${var.agent_endpoint_output_config_output_location_prefix}
+      retentionPeriodInMinutes: ${var.agent_endpoint_output_config_retention_period_in_minutes}
+    sessionConfig:
+    - idleTimeoutInSeconds: ${var.idle_timeout_in_seconds}
+    shouldEnableCitation: ${var.should_enable_citation}
+    shouldEnableMultiLanguage: ${var.agent_endpoint_should_enable_multi_language}
+    shouldEnableSession: ${var.should_enable_session}
+    shouldEnableTrace: ${var.should_enable_trace}

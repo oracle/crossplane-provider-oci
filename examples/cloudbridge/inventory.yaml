@@ -1,0 +1,17 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: Inventory
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/inventory
+  labels:
+    testing.upbound.io/example-name: test_inventory
+  name: test-inventory
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.inventory_defined_tags_value)}
+    displayName: ${var.inventory_display_name}
+    freeformTags: ${var.inventory_freeform_tags}

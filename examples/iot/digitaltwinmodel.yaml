@@ -1,0 +1,15 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: DigitalTwinModel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwinmodel
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_model
+  name: test-digital-twin-model
+spec:
+  forProvider:
+    description: ${var.digital_twin_model_description}
+    displayName: ${var.digital_twin_model_display_name}
+    freeformTags: ${var.digital_twin_model_freeform_tags}
+    iotDomainId: ${var.iot_domain_ocid}
+    spec: ${jsonencode(var.digital_twin_model_spec)}

@@ -1,0 +1,18 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: Endpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: test_endpoint
+  name: test-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dedicatedAiClusterId: ${data.oci_generative_ai_dedicated_ai_cluster.test_hosting_cluster.id}
+    description: ${var.test_endpoint_description}
+    displayName: ${var.test_endpoint_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    modelId: ${local.servering_model_id}

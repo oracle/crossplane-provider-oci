@@ -1,0 +1,43 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: DiscoveryJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/discoveryjob
+  labels:
+    testing.upbound.io/example-name: test_discovery_job
+  name: test-discovery-job
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    discoveryType: ${var.discovery_job_discovery_type}
+    freeformTags: ${var.discovery_job_freeform_tags}
+    isAppDefinedRelationDiscoveryEnabled: ${var.discovery_job_is_app_defined_relation_discovery_enabled}
+    isIncludeAllSchemas: ${var.discovery_job_is_include_all_schemas}
+    isIncludeAllSensitiveTypes: ${var.discovery_job_is_include_all_sensitive_types}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+    sensitiveTypeGroupIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_group_ids_for_discovery}
+
+---
+
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SensitiveDataModel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/discoveryjob
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_model
+  name: test-sensitive-data-model
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.sensitive_data_model_display_name}
+    schemasForDiscovery: ${var.sensitive_data_model_schemas_for_discovery}
+    sensitiveTypeGroupIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_group_ids_for_discovery}
+    sensitiveTypeIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_ids_for_discovery}
+    targetId: ${var.data_safe_target_ocid}

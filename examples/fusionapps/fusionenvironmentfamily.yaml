@@ -1,0 +1,22 @@
+apiVersion: fusionapps.oci.upbound.io/v1alpha1
+kind: FusionEnvironmentFamily
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentfamily
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_family
+  name: test-fusion-environment-family
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.fusion_environment_family_defined_tags_value)}
+    displayName: ${var.fusion_environment_family_display_name}
+    familyMaintenancePolicy:
+    - concurrentMaintenance: ${var.fusion_environment_family_family_maintenance_policy_concurrent_maintenance}
+      isMonthlyPatchingEnabled: ${var.fusion_environment_family_family_maintenance_policy_is_monthly_patching_enabled}
+      quarterlyUpgradeBeginTimes: ${var.fusion_environment_family_family_maintenance_policy_quarterly_upgrade_begin_times}
+    freeformTags: ${var.fusion_environment_family_freeform_tags}
+    subscriptionIds: ${var.fusion_environment_family_subscription_ids}

@@ -1,0 +1,39 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: EnterpriseManagerBridge
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/enterprisemanagerbridge
+  labels:
+    testing.upbound.io/example-name: test_enterprise_manager_bridge
+  name: test-enterprise-manager-bridge
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}",
+      "${var.enterprise_manager_bridge_defined_tags_value}")}
+    description: ${var.enterprise_manager_bridge_description}
+    displayName: ${var.enterprise_manager_bridge_display_name}
+    freeformTags: ${var.enterprise_manager_bridge_freeform_tags}
+    objectStorageBucketNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bucket
+
+---
+
+apiVersion: objectstorage.oci.upbound.io/v1alpha1
+kind: Bucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/enterprisemanagerbridge
+  labels:
+    testing.upbound.io/example-name: test_bucket
+  name: test-bucket
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: ${var.bucket_name}
+    namespace: ${data.oci_objectstorage_namespace.test_namespace.namespace}

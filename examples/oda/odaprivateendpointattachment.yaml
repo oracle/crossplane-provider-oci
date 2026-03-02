@@ -1,0 +1,35 @@
+apiVersion: oda.oci.upbound.io/v1alpha1
+kind: OdaPrivateEndpointAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odaprivateendpointattachment
+  labels:
+    testing.upbound.io/example-name: TFOdaPrivateEndpointAttachment
+  name: tfodaprivateendpointattachment
+spec:
+  forProvider:
+    odaInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: TFOdaInstance
+    odaPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: TFOdaPrivateEndpoint
+
+---
+
+apiVersion: networking.oci.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odaprivateendpointattachment
+  labels:
+    testing.upbound.io/example-name: pe_vcn
+  name: pe-vcn
+spec:
+  forProvider:
+    cidrBlock: ${var.vcn_cidr_block}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.vcn_display_name}
+    dnsLabel: ${var.vcn_dns_label}

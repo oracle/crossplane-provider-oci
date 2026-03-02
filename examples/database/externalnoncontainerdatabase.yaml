@@ -1,0 +1,16 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ExternalNonContainerDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externalnoncontainerdatabase
+  labels:
+    testing.upbound.io/example-name: test_external_non_container_database
+  name: test-external-non-container-database
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.external_non_container_database_display_name}
+    freeformTags:
+      Department: Finance

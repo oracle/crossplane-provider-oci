@@ -1,0 +1,23 @@
+apiVersion: database.oci.upbound.io/v1alpha1
+kind: ManagementManagedDatabasesChangeDatabaseParameter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementmanageddatabaseschangedatabaseparameter
+  labels:
+    testing.upbound.io/example-name: test_managed_databases_change_database_parameter
+  name: test-managed-databases-change-database-parameter
+spec:
+  forProvider:
+    credentials:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      role: ${var.managed_databases_database_parameter_credentials_role}
+      userName: ${var.managed_databases_database_parameter_credentials_username}
+    managedDatabaseId: ${var.managed_database_id}
+    parameters:
+    - name: ${var.managed_databases_database_parameter_parameters_name}
+      updateComment: ${var.managed_databases_database_parameter_update_comment}
+      value: ${var.managed_databases_database_parameter_parameters_value}
+    scope: ${var.managed_databases_database_parameter_scope}

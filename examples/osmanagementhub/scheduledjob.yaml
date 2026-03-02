@@ -1,0 +1,19 @@
+apiVersion: osmanagementhub.oci.upbound.io/v1alpha1
+kind: ScheduledJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/scheduledjob
+  labels:
+    testing.upbound.io/example-name: test_scheduled_job_windows_update
+  name: test-scheduled-job-windows-update
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    managedInstanceIdsRefs:
+    - name: test_managed_instance_windows
+    operations:
+    - operationType: INSTALL_OTHER_WINDOWS_UPDATES
+    scheduleType: ONETIME
+    timeNextExecution: "2024-03-27T23:00:49.382Z"

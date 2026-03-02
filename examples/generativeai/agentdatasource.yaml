@@ -1,0 +1,23 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: AgentDataSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/agentdatasource
+  labels:
+    testing.upbound.io/example-name: test_data_source
+  name: test-data-source
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dataSourceConfig:
+    - dataSourceConfigType: OCI_OBJECT_STORAGE
+      objectStoragePrefixes:
+      - bucket: ${var.test_bucket}
+        namespace: ${var.test_namespace}
+        prefix: ${var.test_prefix}
+    description: ${var.test_data_source_description}
+    displayName: ${var.test_data_source_display_name}
+    freeformTags: ${var.test_freeform_tags}
+    knowledgeBaseId: ${var.test_knowledge_base_id}

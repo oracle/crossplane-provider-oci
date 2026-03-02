@@ -1,0 +1,48 @@
+apiVersion: fleetappsmanagement.oci.upbound.io/v1alpha1
+kind: TaskRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/taskrecord
+  labels:
+    testing.upbound.io/example-name: test_task_record
+  name: test-task-record
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    description: description2
+    details:
+    - executionDetails:
+      - command: ls
+        content:
+        - bucket: bucket
+          checksum: checksum
+          namespace: namespace
+          object: object
+          sourceType: OBJECT_STORAGE_BUCKET
+        executionType: SCRIPT
+        isExecutableContent: "true"
+        isLocked: "true"
+        systemVariables:
+        - systemVariables
+        variables:
+        - inputVariables:
+          - description: description
+            name: name
+            type: OUTPUT_VARIABLE
+          outputVariables:
+          - outputVariables
+      isApplySubjectTask: "false"
+      isDiscoveryOutputTask: "true"
+      operation: Discovery
+      osType: WINDOWS
+      platform: test-compatible-product2
+      properties:
+      - numRetries: "11"
+        timeoutInSeconds: "11"
+      scope: SHARED
+    displayName: displayName2
+    freeformTags:
+      bar-key: value

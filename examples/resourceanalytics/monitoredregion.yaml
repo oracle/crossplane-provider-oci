@@ -1,0 +1,16 @@
+apiVersion: resourceanalytics.oci.upbound.io/v1alpha1
+kind: MonitoredRegion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourceanalytics/v1alpha1/monitoredregion
+  labels:
+    testing.upbound.io/example-name: test_monitored_regions
+  name: test-monitored-regions
+spec:
+  forProvider:
+    for_each: '${toset([for region in data.oci_identity_region_subscriptions.test_region_subscriptions.region_subscriptions
+      : region.region_name])}'
+    regionId: ${each.value}
+    resourceAnalyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_resource_analytics_instance

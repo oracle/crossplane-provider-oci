@@ -1,0 +1,23 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: TargetDatabaseGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/targetdatabasegroup
+  labels:
+    testing.upbound.io/example-name: test_target_database_group
+  name: test-target-database-group
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.target_database_group_display_name}
+    matchingCriteria:
+    - include:
+      - compartments:
+        - id: ${var.compartment_ocid}
+          isIncludeSubtree: true
+        freeformTags:
+          Department: ${var.freeformTagsExample}
+        targetDatabaseIds:
+        - ${var.target_database_id}

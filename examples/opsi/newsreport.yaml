@@ -1,0 +1,22 @@
+apiVersion: opsi.oci.upbound.io/v1alpha1
+kind: NewsReport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/newsreport
+  labels:
+    testing.upbound.io/example-name: test_news_report
+  name: test-news-report
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contentTypes:
+    - capacityPlanningResources: ${var.cp_resources}
+    description: ${var.news_report_description}
+    freeformTags: ${var.news_report_freeform_tags}
+    locale: ${var.news_locale}
+    name: ${var.news_report_name}
+    newsFrequency: ${var.news_frequency}
+    onsTopicId: ${var.topic_id}
+    status: ${var.resource_status}

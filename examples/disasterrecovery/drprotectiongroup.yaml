@@ -1,0 +1,25 @@
+apiVersion: disasterrecovery.oci.upbound.io/v1alpha1
+kind: DrProtectionGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/drprotectiongroup
+  labels:
+    testing.upbound.io/example-name: test_peer
+  name: test-peer
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.dr_protection_group_display_name}
+    logLocation:
+    - bucket: ${data.oci_objectstorage_bucket.test_bucket.name}
+      namespace: ${data.oci_objectstorage_namespace.test_namespace.namespace}
+    members:
+    - isMovable: ${var.dr_protection_group_members_is_movable}
+      memberId: ${data.oci_core_volume_groups.test_volume_groups.volume_groups.0.id}
+      memberType: ${var.dr_protection_group_members_member_type}
+    - bucket: ${data.oci_objectstorage_bucket.test_member_bucket.name}
+      memberId: ${data.oci_objectstorage_bucket.test_member_bucket.bucket_id}
+      memberType: ${var.dr_protection_group_members_member_type_object_storage}
+      namespace: ${data.oci_objectstorage_namespace.test_namespace.namespace}

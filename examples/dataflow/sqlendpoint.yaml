@@ -1,0 +1,30 @@
+apiVersion: dataflow.oci.upbound.io/v1alpha1
+kind: SqlEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dataflow/v1alpha1/sqlendpoint
+  labels:
+    testing.upbound.io/example-name: test_sql_endpoint
+  name: test-sql-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: test_sql_endpoint
+    driverShape: VM.Standard.E4.Flex
+    driverShapeConfig:
+    - memoryInGbs: 32
+      ocpus: 2
+    executorShape: VM.Standard.E4.Flex
+    executorShapeConfig:
+    - memoryInGbs: 32
+      ocpus: 2
+    freeformTags:
+      Department: Finance
+    maxExecutorCount: 2
+    metastoreId: ${var.metastore_id}
+    minExecutorCount: 1
+    networkConfiguration:
+    - networkType: SECURE_ACCESS
+    sqlEndpointVersion: 3.2.1

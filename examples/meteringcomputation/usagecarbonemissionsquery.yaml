@@ -1,0 +1,32 @@
+apiVersion: meteringcomputation.oci.upbound.io/v1alpha1
+kind: UsageCarbonEmissionsQuery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usagecarbonemissionsquery
+  labels:
+    testing.upbound.io/example-name: test_usage_carbon_emissions_query
+  name: test-usage-carbon-emissions-query
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    queryDefinition:
+    - costAnalysisUi:
+      - graph: BARS
+        isCumulativeGraph: false
+      displayName: tf_display_name
+      reportQuery:
+      - compartmentDepth: 1
+        dateRangeName: LAST_TWO_MONTHS
+        groupBy: []
+        isAggregateByTime: false
+        tenantId: ${var.tenancy_ocid}
+        usageCarbonEmissionsQueryFilter: "    {\n            \"operator\": \"AND\",\n
+          \           \"dimensions\": [],\n            \"tags\": [],\n            \"filters\":
+          [\n                {\n    \t\t\t\t\"operator\": \"OR\",\n                    \"dimensions\":
+          [\n    \t\t\t\t    {\n                            \"key\": \"compartmentName\",\n
+          \                           \"value\": \"${var.dimensions_value}\"\n    \t\t\t\t\t
+          \ }\n                    ],\n                    \"filters\": null,\n                    \"tags\":
+          []\n    \t\t    }\n            ]\n    }\n"
+      version: 1

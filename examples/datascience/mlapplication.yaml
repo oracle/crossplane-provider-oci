@@ -1,0 +1,16 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: MlApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/mlapplication
+  labels:
+    testing.upbound.io/example-name: test_ml_application
+  name: test-ml-application
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.ml_application_description}
+    freeformTags: ${var.ml_application_freeform_tags}
+    name: ${var.ml_application_name}

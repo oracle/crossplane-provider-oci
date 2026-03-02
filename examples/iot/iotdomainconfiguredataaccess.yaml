@@ -1,0 +1,18 @@
+apiVersion: iot.oci.upbound.io/v1alpha1
+kind: IotDomainConfigureDataAccess
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomainconfiguredataaccess
+  labels:
+    testing.upbound.io/example-name: test_iot_domain_configure_data_access
+  name: test-iot-domain-configure-data-access
+spec:
+  forProvider:
+    dbAllowListedIdentityGroupNames: ${var.iot_domain_configure_data_access_db_allow_listed_identity_group_names}
+    dbAllowedIdentityDomainHost: ${var.iot_domain_configure_data_access_db_allowed_identity_domain_host}
+    dbWorkspaceAdminInitialPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    iotDomainId: ${var.iot_domain_ocid}
+    type: ${var.iot_domain_configure_data_access_type}

@@ -1,0 +1,21 @@
+apiVersion: lustrefilestorage.oci.upbound.io/v1alpha1
+kind: ObjectStorageLink
+metadata:
+  annotations:
+    meta.upbound.io/example-id: lustrefilestorage/v1alpha1/objectstoragelink
+  labels:
+    testing.upbound.io/example-name: test_object_storage_link
+  name: test-object-storage-link
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.object_storage_link_display_name}
+    fileSystemPath: ${var.file_system_path}
+    isOverwrite: false
+    lustreFileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_lustre_file_system
+    objectStoragePrefix: ${data.oci_objectstorage_namespace.ns.namespace}:/${oci_objectstorage_bucket.bucket1.name}/${var.object_storage_prefix}

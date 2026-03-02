@@ -1,0 +1,21 @@
+apiVersion: datascience.oci.upbound.io/v1alpha1
+kind: Model
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/model
+  labels:
+    testing.upbound.io/example-name: tf_model
+  name: tf-model
+spec:
+  forProvider:
+    artifactContentDisposition: ${var.content_disposition}
+    artifactContentLength: ${var.artifact_content_length}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.model_description}
+    displayName: ${var.model_display_name}
+    modelArtifact: ${path.root}/artifact.zip
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tf_project

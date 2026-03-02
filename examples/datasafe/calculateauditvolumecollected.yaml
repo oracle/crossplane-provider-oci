@@ -1,0 +1,15 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: CalculateAuditVolumeCollected
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/calculateauditvolumecollected
+  labels:
+    testing.upbound.io/example-name: test_calculate_audit_volume_collected
+  name: test-calculate-audit-volume-collected
+spec:
+  forProvider:
+    auditProfileIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_audit_profile_management
+    timeFromMonth: ${var.calculate_audit_volume_collected_time_from_month}
+    timeToMonth: ${var.calculate_audit_volume_collected_time_to_month}

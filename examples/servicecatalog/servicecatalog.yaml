@@ -1,0 +1,15 @@
+apiVersion: servicecatalog.oci.upbound.io/v1alpha1
+kind: ServiceCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: servicecatalog/v1alpha1/servicecatalog
+  labels:
+    testing.upbound.io/example-name: test_service_catalog
+  name: test-service-catalog
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.service_catalog_display_name}
+    freeformTags: ${var.service_catalog_freeform_tags}

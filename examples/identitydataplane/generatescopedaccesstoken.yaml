@@ -1,0 +1,12 @@
+apiVersion: identitydataplane.oci.upbound.io/v1alpha1
+kind: GenerateScopedAccessToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydataplane/v1alpha1/generatescopedaccesstoken
+  labels:
+    testing.upbound.io/example-name: test_scoped_access_token
+  name: test-scoped-access-token
+spec:
+  forProvider:
+    publicKey: ${var.public_key}
+    scope: ${var.scope}

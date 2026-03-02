@@ -1,0 +1,102 @@
+apiVersion: cloudbridge.oci.upbound.io/v1alpha1
+kind: Asset
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/asset
+  labels:
+    testing.upbound.io/example-name: test_asset
+  name: test-asset
+spec:
+  forProvider:
+    assetSourceIds: ${var.asset_asset_source_ids}
+    assetType: ${var.asset_asset_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    compute:
+    - connectedNetworks: ${var.asset_compute_connected_networks}
+      coresCount: ${var.asset_compute_cores_count}
+      cpuModel: ${var.asset_compute_cpu_model}
+      description: ${var.asset_compute_description}
+      disks:
+      - bootOrder: ${var.asset_compute_disks_boot_order}
+        location: ${var.asset_compute_disks_location}
+        name: ${var.asset_compute_disks_name}
+        persistentMode: ${var.asset_compute_disks_persistent_mode}
+        sizeInMbs: ${var.asset_compute_disks_size_in_mbs}
+        uuid: ${var.asset_compute_disks_uuid}
+        uuidLun: ${var.asset_compute_disks_uuid_lun}
+      disksCount: ${var.asset_compute_disks_count}
+      dnsName: ${var.asset_compute_dns_name}
+      firmware: ${var.asset_compute_firmware}
+      gpuDevices:
+      - coresCount: ${var.asset_compute_gpu_devices_cores_count}
+        description: ${var.asset_compute_gpu_devices_description}
+        manufacturer: ${var.asset_compute_gpu_devices_manufacturer}
+        memoryInMbs: ${var.asset_compute_gpu_devices_memory_in_mbs}
+        name: ${var.asset_compute_gpu_devices_name}
+      gpuDevicesCount: ${var.asset_compute_gpu_devices_count}
+      guestState: ${var.asset_compute_guest_state}
+      hardwareVersion: ${var.asset_compute_hardware_version}
+      hostName: ${var.asset_compute_host_name}
+      isPmemEnabled: ${var.asset_compute_is_pmem_enabled}
+      isTpmEnabled: ${var.asset_compute_is_tpm_enabled}
+      latencySensitivity: ${var.asset_compute_latency_sensitivity}
+      memoryInMbs: ${var.asset_compute_memory_in_mbs}
+      nics:
+      - ipAddresses: ${var.asset_compute_nics_ip_addresses}
+        label: ${var.asset_compute_nics_label}
+        macAddress: ${var.asset_compute_nics_mac_address}
+        macAddressType: ${var.asset_compute_nics_mac_address_type}
+        networkName: ${var.asset_compute_nics_network_name}
+        switchName: ${var.asset_compute_nics_switch_name}
+      nicsCount: ${var.asset_compute_nics_count}
+      nvdimmController:
+      - busNumber: ${var.asset_compute_nvdimm_controller_bus_number}
+        label: ${var.asset_compute_nvdimm_controller_label}
+      nvdimms:
+      - controllerKey: ${var.asset_compute_nvdimms_controller_key}
+        label: ${var.asset_compute_nvdimms_label}
+        unitNumber: ${var.asset_compute_nvdimms_unit_number}
+      operatingSystem: ${var.asset_compute_operating_system}
+      operatingSystemVersion: ${var.asset_compute_operating_system_version}
+      pmemInMbs: ${var.asset_compute_pmem_in_mbs}
+      powerState: ${var.asset_compute_power_state}
+      primaryIp: ${var.asset_compute_primary_ip}
+      scsiController:
+      - label: ${var.asset_compute_scsi_controller_label}
+        sharedBus: ${var.asset_compute_scsi_controller_shared_bus}
+        unitNumber: ${var.asset_compute_scsi_controller_unit_number}
+      storageProvisionedInMbs: ${var.asset_compute_storage_provisioned_in_mbs}
+      threadsPerCoreCount: ${var.asset_compute_threads_per_core_count}
+    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
+      var.asset_defined_tags_value)}
+    displayName: ${var.asset_display_name}
+    externalAssetKey: ${var.asset_external_asset_key}
+    freeformTags: ${var.asset_freeform_tags}
+    inventoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_inventory
+    sourceKey: ${var.asset_source_key}
+    vm:
+    - hypervisorHost: ${var.asset_vm_hypervisor_host}
+      hypervisorVendor: ${var.asset_vm_hypervisor_vendor}
+      hypervisorVersion: ${var.asset_vm_hypervisor_version}
+    vmwareVcenter:
+    - dataCenter: ${var.asset_vmware_vcenter_data_center}
+      vcenterKey: ${var.asset_vmware_vcenter_vcenter_key}
+      vcenterVersion: ${var.asset_vmware_vcenter_vcenter_version}
+    vmwareVm:
+    - cluster: ${var.asset_vmware_vm_cluster}
+      customerFields: ${var.asset_vmware_vm_customer_fields}
+      customerTags:
+      - description: ${var.asset_vmware_vm_customer_tags_description}
+        name: ${var.asset_vmware_vm_customer_tags_name}
+      faultToleranceBandwidth: ${var.asset_vmware_vm_fault_tolerance_bandwidth}
+      faultToleranceSecondaryLatency: ${var.asset_vmware_vm_fault_tolerance_secondary_latency}
+      faultToleranceState: ${var.asset_vmware_vm_fault_tolerance_state}
+      instanceUuid: ${var.asset_vmware_vm_instance_uuid}
+      isDisksCbtEnabled: ${var.asset_vmware_vm_is_disks_cbt_enabled}
+      isDisksUuidEnabled: ${var.asset_vmware_vm_is_disks_uuid_enabled}
+      path: ${var.asset_vmware_vm_path}
+      vmwareToolsStatus: ${var.asset_vmware_vm_vmware_tools_status}
