@@ -1,0 +1,15 @@
+apiVersion: budget.oci.upbound.io/v1alpha1
+kind: Budget
+metadata:
+  name: budget1
+  labels:
+    testing.upbound.io/example-name: budget_label_1
+spec:
+  forProvider:
+    amount: 100.0
+    compartmentId: "${TENANCY_OCID}"
+    resetPeriod: "MONTHLY"
+    displayName: budget1
+    targetType: COMPARTMENT
+    targets:
+      - "${COMPARTMENT_OCID}"
