@@ -22,7 +22,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/registry/reference"
-
+	"github.com/oracle/provider-oci/config/budget"
 	"github.com/oracle/provider-oci/config/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/containerengine"
 	"github.com/oracle/provider-oci/config/core"
@@ -106,6 +106,7 @@ func GetProvider() *config.Provider {
 		recovery.Configure,
 		nosql.Configure,
 		email.Configure,
+		budget.Configure,
 	} {
 		configure(pc)
 	}
