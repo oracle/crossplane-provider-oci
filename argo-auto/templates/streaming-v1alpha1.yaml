@@ -77,11 +77,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-connectharness.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-streamingconnectharness.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-connectharness.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-streamingconnectharness.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-connectharness.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-streamingconnectharness.outputs.parameters.resourceGroup}}"
         - name: delete-streampool
           templateRef:
             name: test-template

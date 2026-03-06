@@ -126,11 +126,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-bucket.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-bucket.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-bucket.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceGroup}}"
         - name: delete-object
           templateRef:
             name: test-template

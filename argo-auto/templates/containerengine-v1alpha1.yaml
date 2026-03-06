@@ -101,8 +101,8 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-cluster.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-privateendpointcluster.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-cluster.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-privateendpointcluster.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-cluster.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-privateendpointcluster.outputs.parameters.resourceGroup}}"

@@ -319,11 +319,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-subnet.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-subnet.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-subnet.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceGroup}}"
         - name: delete-vcn
           templateRef:
             name: test-template

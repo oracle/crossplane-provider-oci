@@ -81,11 +81,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{ resolveDeleteParameters .Kind "Kind" }}"
+                value: "{{ resolveDeleteParameters .Name "Kind" }}"
               - name: resourceName
-                value: "{{ resolveDeleteParameters .Kind "Name" }}"
+                value: "{{ resolveDeleteParameters .Name "Name" }}"
               - name: resourceGroup
-                value: "{{ resolveDeleteParameters .Kind "Group" }}"
+                value: "{{ resolveDeleteParameters .Name "Group" }}"
               {{- if .TeardownFilePath }}
               - name: teardownFile
                 value: "{{ .TeardownFilePath | resolveResourceFile }}"

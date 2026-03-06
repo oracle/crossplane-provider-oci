@@ -284,11 +284,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceGroup}}"
         - name: delete-instanceconsoleconnection
           templateRef:
             name: test-template
@@ -340,8 +340,8 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-instancepool.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-instancepool.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-instancepool.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceGroup}}"

@@ -244,11 +244,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-sourcefilesystem.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-sourcefilesystem.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-sourcefilesystem.outputs.parameters.resourceGroup}}"
         - name: delete-targetfilesystem
           templateRef:
             name: test-template
@@ -258,11 +258,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-targetfilesystem.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-targetfilesystem.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-targetfilesystem.outputs.parameters.resourceGroup}}"
         - name: delete-filesystemquotarule
           templateRef:
             name: test-template

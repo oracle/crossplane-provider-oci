@@ -309,8 +309,8 @@ func joinDeleteDependencies(name string, dependentNames []string) string {
 }
 
 // resolveDeleteParameters references create-task output for delete requests.
-func resolveDeleteParameters(kind, resourceType string) string {
-	return fmt.Sprintf("{{tasks.create-%s.outputs.parameters.resource%s}}", kind, resourceType)
+func resolveDeleteParameters(name, resourceType string) string {
+	return fmt.Sprintf("{{tasks.create-%s.outputs.parameters.resource%s}}", name, resourceType)
 }
 
 // normalizeTaskName standardizes resource names to valid task IDs.

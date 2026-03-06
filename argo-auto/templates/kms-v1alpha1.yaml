@@ -187,11 +187,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-key.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-key.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-key.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceGroup}}"
         - name: delete-keyversion
           templateRef:
             name: test-template
@@ -243,11 +243,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-vault.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-vault.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-vault.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceGroup}}"
         - name: delete-vaultreplication
           templateRef:
             name: test-template

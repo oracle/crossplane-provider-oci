@@ -109,11 +109,11 @@ spec:
           arguments:
             parameters:
               - name: resourceKind
-                value: "{{tasks.create-log.outputs.parameters.resourceKind}}"
+                value: "{{tasks.create-customlog.outputs.parameters.resourceKind}}"
               - name: resourceName
-                value: "{{tasks.create-log.outputs.parameters.resourceName}}"
+                value: "{{tasks.create-customlog.outputs.parameters.resourceName}}"
               - name: resourceGroup
-                value: "{{tasks.create-log.outputs.parameters.resourceGroup}}"
+                value: "{{tasks.create-customlog.outputs.parameters.resourceGroup}}"
         - name: delete-loggroup
           templateRef:
             name: test-template
