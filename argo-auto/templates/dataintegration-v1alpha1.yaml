@@ -34,26 +34,6 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-workspaceproject
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-workspace]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/dataintegration/v1alpha1/workspaceproject.yaml"
-        - name: create-workspaceapplication
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-workspace]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/dataintegration/v1alpha1/workspaceapplication.yaml"
         - name: create-workspace
           templateRef:
             name: test-template
@@ -64,6 +44,26 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/dataintegration/v1alpha1/workspace.yaml"
+        - name: create-workspaceapplication
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-workspace]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dataintegration/v1alpha1/workspaceapplication.yaml"
+        - name: create-workspaceproject
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-workspace]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dataintegration/v1alpha1/workspaceproject.yaml"
         - name: delete-workspace
           templateRef:
             name: test-template

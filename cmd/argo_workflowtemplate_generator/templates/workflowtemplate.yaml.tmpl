@@ -12,10 +12,10 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    {{- range reverse .EnvVars }}
+    {{- range .EnvVars }}
     - name: {{ . }}
     {{- end }}
-    {{- range reverse .PrerequisiteResourceFiles }}
+    {{- range .PrerequisiteResourceFiles }}
     - name: create_{{ .Kind }}
       value: "true"
     {{- end }}
@@ -27,7 +27,7 @@ spec:
     - name: {{ .Service }}-tests-workflow
       dag:
         tasks:
-        {{- range reverse .PrerequisiteResourceFiles }}
+        {{- range .PrerequisiteResourceFiles }}
         - name: create-{{ .Kind }}
           templateRef:
             name: test-template
@@ -46,10 +46,10 @@ spec:
               {{- end }}
               {{- if .SetupFilePath }}
               - name: setupFile
-                value: "{{ .SetupFilePath }}"
+                value: "{{ .SetupFilePath | resolveResourceFile }}"
               {{- end }}
         {{- end }}
-        {{- range reverse .ResourceFiles }}
+        {{- range .ResourceFiles }}
         - name: create-{{ .Name }}
           templateRef:
             name: test-template
@@ -68,7 +68,7 @@ spec:
               {{- end }}
               {{- if .SetupFilePath }}
               - name: setupFile
-                value: "{{ .SetupFilePath }}"
+                value: "{{ .SetupFilePath | resolveResourceFile }}"
               {{- end }}
         {{- end }}
         {{- range .ResourceFiles }}
@@ -77,7 +77,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{ resolveWhen "delete" }} == true"
-          dependencies: [{{ joinDeleteDependencies .Name .DependentKinds }}]
+          dependencies: [{{ joinDeleteDependencies .Name .DependentNames }}]
           arguments:
             parameters:
               - name: resourceKind
@@ -88,7 +88,7 @@ spec:
                 value: "{{ resolveDeleteParameters .Kind "Group" }}"
               {{- if .TeardownFilePath }}
               - name: teardownFile
-                value: "{{ .TeardownFilePath }}"
+                value: "{{ .TeardownFilePath | resolveResourceFile }}"
               {{- end }}
         {{- end }}
 {{- end }}

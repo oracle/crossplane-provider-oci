@@ -13,11 +13,12 @@ spec:
   arguments:
     parameters:
     - name: compartment_ocid
-    - name: create_vcn
+    - name: usageplan_ocid
+    - name: create_compartment
       value: "true"
     - name: create_subnet
       value: "true"
-    - name: create_compartment
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -27,26 +28,6 @@ spec:
     - name: apigateway-tests-workflow
       dag:
         tasks:
-        - name: create-vcn
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vcn}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/vcn.yaml"
-        - name: create-subnet
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_subnet}} == true"
-          dependencies: [create-compartment, create-vcn]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/privatesubnet.yaml"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -58,46 +39,26 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-usageplan
+        - name: create-subnet
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
           dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/apigateway/v1alpha1/usageplan.yaml"
-        - name: create-subscriber
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/apigateway/v1alpha1/subscriber.yaml"
-        - name: create-gateway
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-subnet]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/apigateway/v1alpha1/gateway.yaml"
-        - name: create-deployment
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-gateway]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/apigateway/v1alpha1/deployment.yaml"
+                value: "examples/networking/v1alpha1/vcn.yaml"
         - name: create-api
           templateRef:
             name: test-template
@@ -108,6 +69,48 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/apigateway/v1alpha1/api.yaml"
+        - name: create-deployment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-gateway]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/deployment.yaml"
+        - name: create-gateway
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/gateway.yaml"
+        - name: create-subscriber
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/subscriber.yaml"
+              - name: envVars
+                value: "USAGEPLAN_OCID={{workflow.parameters.usageplan_ocid}}"
+        - name: create-usageplan
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/usageplan.yaml"
         - name: delete-api
           templateRef:
             name: test-template

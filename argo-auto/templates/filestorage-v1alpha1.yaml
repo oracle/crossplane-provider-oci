@@ -12,20 +12,20 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: vault_management_endpoint
-    - name: compartment_ocid
     - name: availability_domain
-    - name: create_vault
+    - name: compartment_ocid
+    - name: vault_management_endpoint
+    - name: create_compartment
       value: "true"
     - name: create_key
       value: "true"
     - name: create_secret
       value: "true"
-    - name: create_vcn
-      value: "true"
     - name: create_subnet
       value: "true"
-    - name: create_compartment
+    - name: create_vault
+      value: "true"
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -35,57 +35,6 @@ spec:
     - name: filestorage-tests-workflow
       dag:
         tasks:
-        - name: create-vault
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vault}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/kms/v1alpha1/vault.yaml"
-        - name: create-key
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_key}} == true"
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
-              - name: envVars
-                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
-        - name: create-secret
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_secret}} == true"
-          dependencies: [create-key, create-vault, create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/vault/v1alpha1/secret.yaml"
-        - name: create-vcn
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vcn}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/vcn.yaml"
-        - name: create-subnet
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_subnet}} == true"
-          dependencies: [create-compartment, create-vcn]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/privatesubnet.yaml"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -97,18 +46,77 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-targetfilesystem
+        - name: create-key
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
+          when: "{{workflow.parameters.create_key}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/key.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-secret
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_secret}} == true"
+          dependencies: [create-compartment, create-key, create-vault]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/vault/v1alpha1/secret.yaml"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vault
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vault}} == true"
           dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/targetfilesystem.yaml"
-              - name: envVars
-                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+                value: "examples/kms/v1alpha1/vault.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-export
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-exportset, create-sourcefilesystem]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/filestorage/v1alpha1/export.yaml"
+        - name: create-exportset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-mounttarget]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/filestorage/v1alpha1/exportset.yaml"
         - name: create-sourcefilesystem
           templateRef:
             name: test-template
@@ -121,36 +129,38 @@ spec:
                 value: "examples/filestorage/v1alpha1/sourcefilesystem.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
-        - name: create-snapshot
+        - name: create-targetfilesystem
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-filesystem]
+          dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/snapshot.yaml"
-        - name: create-replication
+                value: "examples/filestorage/v1alpha1/targetfilesystem.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-filesystemquotarule
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-filesystem, create-filesystem]
+          dependencies: [create-sourcefilesystem]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/replication.yaml"
-        - name: create-outboundconnector
+                value: "examples/filestorage/v1alpha1/filesystemquotarule.yaml"
+        - name: create-filesystemsnapshotpolicy
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-secret, create-compartment]
+          dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/outboundconnector.yaml"
+                value: "examples/filestorage/v1alpha1/filesystemsnapshotpolicy.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
         - name: create-mounttarget
@@ -165,48 +175,38 @@ spec:
                 value: "examples/filestorage/v1alpha1/mounttarget.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
-        - name: create-filesystemsnapshotpolicy
+        - name: create-outboundconnector
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
+          dependencies: [create-compartment, create-secret]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/filesystemsnapshotpolicy.yaml"
+                value: "examples/filestorage/v1alpha1/outboundconnector.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
-        - name: create-filesystemquotarule
+        - name: create-replication
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-filesystem]
+          dependencies: [create-compartment, create-sourcefilesystem, create-targetfilesystem]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/filesystemquotarule.yaml"
-        - name: create-exportset
+                value: "examples/filestorage/v1alpha1/replication.yaml"
+        - name: create-snapshot
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-mounttarget]
+          dependencies: [create-sourcefilesystem]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/filestorage/v1alpha1/exportset.yaml"
-        - name: create-export
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-exportset, create-filesystem]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/filestorage/v1alpha1/export.yaml"
+                value: "examples/filestorage/v1alpha1/snapshot.yaml"
         - name: delete-export
           templateRef:
             name: test-template
@@ -235,6 +235,34 @@ spec:
                 value: "{{tasks.create-exportset.outputs.parameters.resourceName}}"
               - name: resourceGroup
                 value: "{{tasks.create-exportset.outputs.parameters.resourceGroup}}"
+        - name: delete-sourcefilesystem
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-sourcefilesystem", "delete-export", "delete-filesystemquotarule", "delete-replication", "delete-snapshot"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"
+        - name: delete-targetfilesystem
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-targetfilesystem", "delete-replication"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"
         - name: delete-filesystemquotarule
           templateRef:
             name: test-template
@@ -319,31 +347,3 @@ spec:
                 value: "{{tasks.create-snapshot.outputs.parameters.resourceName}}"
               - name: resourceGroup
                 value: "{{tasks.create-snapshot.outputs.parameters.resourceGroup}}"
-        - name: delete-sourcefilesystem
-          templateRef:
-            name: test-template
-            template: delete-resource
-          when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-sourcefilesystem", "delete-snapshot", "delete-export", "delete-filesystemquotarule", "delete-replication", "delete-replication"]
-          arguments:
-            parameters:
-              - name: resourceKind
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
-              - name: resourceName
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
-              - name: resourceGroup
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"
-        - name: delete-targetfilesystem
-          templateRef:
-            name: test-template
-            template: delete-resource
-          when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-targetfilesystem", "delete-snapshot", "delete-export", "delete-filesystemquotarule", "delete-replication", "delete-replication"]
-          arguments:
-            parameters:
-              - name: resourceKind
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceKind}}"
-              - name: resourceName
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceName}}"
-              - name: resourceGroup
-                value: "{{tasks.create-filesystem.outputs.parameters.resourceGroup}}"

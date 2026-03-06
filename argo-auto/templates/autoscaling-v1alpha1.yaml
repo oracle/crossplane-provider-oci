@@ -13,6 +13,7 @@ spec:
   arguments:
     parameters:
     - name: compartment_ocid
+    - name: instancepool_ocid
     - name: create_compartment
       value: "true"
     - name: create_resources
@@ -44,6 +45,8 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/autoscaling/v1alpha1/autoscalingconfiguration.yaml"
+              - name: envVars
+                value: "INSTANCEPOOL_OCID={{workflow.parameters.instancepool_ocid}}"
         - name: delete-autoscalingconfiguration
           templateRef:
             name: test-template

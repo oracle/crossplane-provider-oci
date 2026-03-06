@@ -35,48 +35,16 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-replicationpolicy
+        - name: create-bucket
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/objectstorage/v1alpha1/replicationpolicy.yaml"
-              - name: envVars
-                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
-        - name: create-preauthrequest
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/objectstorage/v1alpha1/preauthrequest.yaml"
-              - name: envVars
-                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
-        - name: create-objectlifecyclepolicy
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/objectstorage/v1alpha1/objectlifecyclepolicy.yaml"
-              - name: envVars
-                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
-        - name: create-object
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/objectstorage/v1alpha1/object.yaml"
+                value: "examples/objectstorage/v1alpha1/bucket.yaml"
               - name: envVars
                 value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
         - name: create-bucketwithretentionrule
@@ -91,16 +59,48 @@ spec:
                 value: "examples/objectstorage/v1alpha1/bucketwithretentionrule.yaml"
               - name: envVars
                 value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
-        - name: create-bucket
+        - name: create-object
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/objectstorage/v1alpha1/bucket.yaml"
+                value: "examples/objectstorage/v1alpha1/object.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-objectlifecyclepolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/objectlifecyclepolicy.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-preauthrequest
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/preauthrequest.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-replicationpolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/replicationpolicy.yaml"
               - name: envVars
                 value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
         - name: delete-bucket

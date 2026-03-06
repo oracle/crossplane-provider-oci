@@ -12,8 +12,8 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: nosql_table_ddlstatement
     - name: compartment_ocid
+    - name: nosql_table_ddlstatement
     - name: create_compartment
       value: "true"
     - name: create_resources
@@ -35,7 +35,17 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-tablereplica
+        - name: create-configuration
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/nosql/v1alpha1/configuration.yaml"
+        - name: create-index
           templateRef:
             name: test-template
             template: create-resource
@@ -44,7 +54,7 @@ spec:
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/nosql/v1alpha1/tablereplica.yaml"
+                value: "examples/nosql/v1alpha1/index.yaml"
         - name: create-table
           templateRef:
             name: test-template
@@ -57,7 +67,7 @@ spec:
                 value: "examples/nosql/v1alpha1/table.yaml"
               - name: envVars
                 value: "NOSQL_TABLE_DDLSTATEMENT={{workflow.parameters.nosql_table_ddlstatement}}"
-        - name: create-index
+        - name: create-tablereplica
           templateRef:
             name: test-template
             template: create-resource
@@ -66,17 +76,7 @@ spec:
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/nosql/v1alpha1/index.yaml"
-        - name: create-configuration
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/nosql/v1alpha1/configuration.yaml"
+                value: "examples/nosql/v1alpha1/tablereplica.yaml"
         - name: delete-configuration
           templateRef:
             name: test-template

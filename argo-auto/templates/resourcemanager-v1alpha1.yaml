@@ -13,11 +13,11 @@ spec:
   arguments:
     parameters:
     - name: compartment_ocid
-    - name: create_vcn
-      value: "true"
     - name: create_compartment
       value: "true"
     - name: create_subnet
+      value: "true"
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -27,16 +27,6 @@ spec:
     - name: resourcemanager-tests-workflow
       dag:
         tasks:
-        - name: create-vcn
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vcn}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/vcn.yaml"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -58,12 +48,22 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/networking/v1alpha1/privatesubnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
         - name: create-privateendpoint
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-subnet, create-vcn, create-compartment]
+          dependencies: [create-compartment, create-privatesubnet, create-vcn]
           arguments:
             parameters:
               - name: resourceFile

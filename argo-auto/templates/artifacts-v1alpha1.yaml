@@ -12,15 +12,17 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: vault_management_endpoint
+    - name: compartment_ocid
     - name: image_instance_ocid
     - name: vault_key_signature
-    - name: compartment_ocid
-    - name: create_key
+    - name: vault_management_endpoint
+    - name: create_compartment
       value: "true"
     - name: create_image
       value: "true"
-    - name: create_compartment
+    - name: create_key
+      value: "true"
+    - name: create_keyversion
       value: "true"
     - name: create_resources
       value: "true"
@@ -30,17 +32,17 @@ spec:
     - name: artifacts-tests-workflow
       dag:
         tasks:
-        - name: create-key
+        - name: create-compartment
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_key}} == true"
+          when: "{{workflow.parameters.create_compartment}} == true"
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
+                value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
-                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}},COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
         - name: create-image
           templateRef:
             name: test-template
@@ -53,49 +55,29 @@ spec:
                 value: "examples/compute/v1alpha1/image.yaml"
               - name: envVars
                 value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
-        - name: create-compartment
+        - name: create-key
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_compartment}} == true"
+          when: "{{workflow.parameters.create_key}} == true"
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/identity/v1alpha1/compartment.yaml"
+                value: "examples/kms/v1alpha1/key.yaml"
               - name: envVars
-                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-repository
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-keyversion
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
+          when: "{{workflow.parameters.create_keyversion}} == true"
+          dependencies: [create-key]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/artifacts/v1alpha1/repository.yaml"
-        - name: create-containerrepository
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/artifacts/v1alpha1/containerrepository.yaml"
-        - name: create-containerimagesignature
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-image, create-key, create-kmskeyversion]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/artifacts/v1alpha1/containerimagesignature.yaml"
+                value: "examples/kms/v1alpha1/keyversion.yaml"
               - name: envVars
-                value: "VAULT_KEY_SIGNATURE={{workflow.parameters.vault_key_signature}}"
+                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
         - name: create-containerconfiguration
           templateRef:
             name: test-template
@@ -106,6 +88,38 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/artifacts/v1alpha1/containerconfiguration.yaml"
+        - name: create-containerimagesignature
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-image, create-key, create-keyversion]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/containerimagesignature.yaml"
+              - name: envVars
+                value: "VAULT_KEY_SIGNATURE={{workflow.parameters.vault_key_signature}}"
+        - name: create-containerrepository
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/containerrepository.yaml"
+        - name: create-repository
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/repository.yaml"
         - name: delete-containerconfiguration
           templateRef:
             name: test-template

@@ -15,9 +15,9 @@ spec:
     - name: compartment_ocid
     - name: create_compartment
       value: "true"
-    - name: create_vcn
-      value: "true"
     - name: create_subnet
+      value: "true"
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -38,6 +38,16 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
         - name: create-vcn
           templateRef:
             name: test-template
@@ -48,96 +58,6 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/networking/v1alpha1/vcn.yaml"
-        - name: create-subnet
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_subnet}} == true"
-          dependencies: [create-vcn, create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/privatesubnet.yaml"
-        - name: create-sslciphersuite
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/sslciphersuite.yaml"
-        - name: create-ruleset
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/ruleset.yaml"
-        - name: create-routingpolicy
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/routingpolicy.yaml"
-        - name: create-pathrouteset
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/pathrouteset.yaml"
-        - name: create-loadbalancer
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-subnet, create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/loadbalancer.yaml"
-        - name: create-listener
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer, create-backendset]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/listener.yaml"
-        - name: create-lbhostname
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/lbhostname.yaml"
-        - name: create-certificate
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-loadbalancer]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/loadbalancer/v1alpha1/certificate.yaml"
         - name: create-backendset
           templateRef:
             name: test-template
@@ -148,12 +68,92 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/loadbalancer/v1alpha1/backendset.yaml"
+        - name: create-certificate
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/certificate.yaml"
+        - name: create-lbhostname
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/lbhostname.yaml"
+        - name: create-listener
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/listener.yaml"
+        - name: create-loadbalancer
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/loadbalancer.yaml"
+        - name: create-pathrouteset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/pathrouteset.yaml"
+        - name: create-routingpolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/routingpolicy.yaml"
+        - name: create-ruleset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/ruleset.yaml"
+        - name: create-sslciphersuite
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/sslciphersuite.yaml"
         - name: delete-backendset
           templateRef:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-backendset", "delete-listener"]
+          dependencies: ["create-backendset", "delete-listener", "delete-pathrouteset", "delete-routingpolicy"]
           arguments:
             parameters:
               - name: resourceKind
@@ -209,7 +209,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-loadbalancer", "delete-backendset", "delete-lbhostname", "delete-routingpolicy", "delete-ruleset", "delete-certificate", "delete-listener", "delete-pathrouteset", "delete-sslciphersuite"]
+          dependencies: ["create-loadbalancer", "delete-backendset", "delete-certificate", "delete-lbhostname", "delete-listener", "delete-pathrouteset", "delete-routingpolicy", "delete-ruleset", "delete-sslciphersuite"]
           arguments:
             parameters:
               - name: resourceKind

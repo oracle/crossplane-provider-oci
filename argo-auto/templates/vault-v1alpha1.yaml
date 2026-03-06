@@ -12,13 +12,13 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: vault_management_endpoint
     - name: compartment_ocid
-    - name: create_vault
+    - name: vault_management_endpoint
+    - name: create_compartment
       value: "true"
     - name: create_key
       value: "true"
-    - name: create_compartment
+    - name: create_vault
       value: "true"
     - name: create_resources
       value: "true"
@@ -28,27 +28,6 @@ spec:
     - name: vault-tests-workflow
       dag:
         tasks:
-        - name: create-vault
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vault}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/kms/v1alpha1/vault.yaml"
-        - name: create-key
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_key}} == true"
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
-              - name: envVars
-                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}},COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -60,6 +39,27 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-key
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_key}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/key.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-vault
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vault}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/vault.yaml"
         - name: create-secret
           templateRef:
             name: test-template

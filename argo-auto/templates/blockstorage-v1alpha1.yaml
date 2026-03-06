@@ -12,13 +12,19 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: compartment_ocid
     - name: availability_domain
-    - name: create_policy
+    - name: boot_volume_source_id
+    - name: compartment_ocid
+    - name: image_instance_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_image
       value: "true"
     - name: create_instance
       value: "true"
-    - name: create_compartment
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -28,28 +34,6 @@ spec:
     - name: blockstorage-tests-workflow
       dag:
         tasks:
-        - name: create-policy
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_policy}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/identity/v1alpha1/policy.yaml"
-        - name: create-instance
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_instance}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/compute/v1alpha1/instance.yaml"
-              - name: envVars
-                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -61,39 +45,51 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-volumegroupbackup
+        - name: create-image
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-volumegroup]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumegroupbackup.yaml"
-        - name: create-volumegroup
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
+          when: "{{workflow.parameters.create_image}} == true"
           dependencies: [create-compartment]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumegroup.yaml"
+                value: "examples/compute/v1alpha1/image.yaml"
+              - name: envVars
+                value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
+        - name: create-instance
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_instance}} == true"
+          dependencies: [create-compartment, create-image, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instance.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
-        - name: create-volumebackuppolicyassignment
+        - name: create-subnet
           templateRef:
             name: test-template
             template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-asset, create-policy]
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumebackuppolicyassignment.yaml"
-        - name: create-volumebackuppolicy
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-bootvolume
           templateRef:
             name: test-template
             template: create-resource
@@ -102,27 +98,19 @@ spec:
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumebackuppolicy.yaml"
-        - name: create-volumebackup
+                value: "examples/blockstorage/v1alpha1/bootvolume.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}},BOOT_VOLUME_SOURCE_ID={{workflow.parameters.boot_volume_source_id}}"
+        - name: create-bootvolumebackup
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-volume]
+          dependencies: [create-bootvolume]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumebackup.yaml"
-        - name: create-volumeattachment
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-instance, create-volume]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/volumeattachment.yaml"
+                value: "examples/blockstorage/v1alpha1/bootvolumebackup.yaml"
         - name: create-volume
           templateRef:
             name: test-template
@@ -135,17 +123,27 @@ spec:
                 value: "examples/blockstorage/v1alpha1/volume.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
-        - name: create-bootvolumebackup
+        - name: create-volumeattachment
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-bootvolume]
+          dependencies: [create-instance, create-volume]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/bootvolumebackup.yaml"
-        - name: create-bootvolume
+                value: "examples/blockstorage/v1alpha1/volumeattachment.yaml"
+        - name: create-volumebackup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-volume]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/blockstorage/v1alpha1/volumebackup.yaml"
+        - name: create-volumebackuppolicy
           templateRef:
             name: test-template
             template: create-resource
@@ -154,9 +152,39 @@ spec:
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/blockstorage/v1alpha1/bootvolume.yaml"
+                value: "examples/blockstorage/v1alpha1/volumebackuppolicy.yaml"
+        - name: create-volumebackuppolicyassignment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-volume, create-volumebackuppolicy]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/blockstorage/v1alpha1/volumebackuppolicyassignment.yaml"
+        - name: create-volumegroup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-volume]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/blockstorage/v1alpha1/volumegroup.yaml"
               - name: envVars
                 value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-volumegroupbackup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-volumegroup]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/blockstorage/v1alpha1/volumegroupbackup.yaml"
         - name: delete-bootvolume
           templateRef:
             name: test-template
@@ -190,7 +218,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-volume", "delete-volumeattachment", "delete-volumebackup"]
+          dependencies: ["create-volume", "delete-volumeattachment", "delete-volumebackup", "delete-volumebackuppolicyassignment", "delete-volumegroup"]
           arguments:
             parameters:
               - name: resourceKind
@@ -232,7 +260,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-volumebackuppolicy"]
+          dependencies: ["create-volumebackuppolicy", "delete-volumebackuppolicyassignment"]
           arguments:
             parameters:
               - name: resourceKind

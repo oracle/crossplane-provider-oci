@@ -34,16 +34,6 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-subscription
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-notificationtopic]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/ons/v1alpha1/subscription.yaml"
         - name: create-notificationtopic
           templateRef:
             name: test-template
@@ -54,6 +44,16 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/ons/v1alpha1/notificationtopic.yaml"
+        - name: create-subscription
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-notificationtopic]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/ons/v1alpha1/subscription.yaml"
         - name: delete-notificationtopic
           templateRef:
             name: test-template

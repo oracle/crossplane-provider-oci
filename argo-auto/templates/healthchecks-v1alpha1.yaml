@@ -34,36 +34,6 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-pingprobe
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/healthchecks/v1alpha1/pingprobe.yaml"
-        - name: create-pingmonitor
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/healthchecks/v1alpha1/pingmonitor.yaml"
-        - name: create-httpprobe
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/healthchecks/v1alpha1/httpprobe.yaml"
         - name: create-httpmonitor
           templateRef:
             name: test-template
@@ -74,6 +44,36 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/healthchecks/v1alpha1/httpmonitor.yaml"
+        - name: create-httpprobe
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/healthchecks/v1alpha1/httpprobe.yaml"
+        - name: create-pingmonitor
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/healthchecks/v1alpha1/pingmonitor.yaml"
+        - name: create-pingprobe
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/healthchecks/v1alpha1/pingprobe.yaml"
         - name: delete-httpmonitor
           templateRef:
             name: test-template

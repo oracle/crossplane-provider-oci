@@ -12,13 +12,13 @@ spec:
         claimName: git-repo-pvc
   arguments:
     parameters:
-    - name: function_image
     - name: compartment_ocid
-    - name: create_vcn
+    - name: function_image
+    - name: create_compartment
       value: "true"
     - name: create_subnet
       value: "true"
-    - name: create_compartment
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -28,26 +28,6 @@ spec:
     - name: functions-tests-workflow
       dag:
         tasks:
-        - name: create-vcn
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_vcn}} == true"
-          dependencies: [create-compartment]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/vcn.yaml"
-        - name: create-subnet
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_subnet}} == true"
-          dependencies: [create-compartment, create-vcn]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/networking/v1alpha1/privatesubnet.yaml"
         - name: create-compartment
           templateRef:
             name: test-template
@@ -59,16 +39,36 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
-        - name: create-invokefunction
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-application
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-function]
+          dependencies: [create-compartment, create-subnet]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/functions/v1alpha1/invokefunction.yaml"
+                value: "examples/functions/v1alpha1/application.yaml"
         - name: create-function
           templateRef:
             name: test-template
@@ -81,16 +81,16 @@ spec:
                 value: "examples/functions/v1alpha1/function.yaml"
               - name: envVars
                 value: "FUNCTION_IMAGE={{workflow.parameters.function_image}}"
-        - name: create-application
+        - name: create-invokefunction
           templateRef:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-subnet]
+          dependencies: [create-function]
           arguments:
             parameters:
               - name: resourceFile
-                value: "examples/functions/v1alpha1/application.yaml"
+                value: "examples/functions/v1alpha1/invokefunction.yaml"
         - name: delete-application
           templateRef:
             name: test-template

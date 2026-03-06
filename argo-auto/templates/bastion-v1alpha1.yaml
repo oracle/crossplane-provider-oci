@@ -13,7 +13,13 @@ spec:
   arguments:
     parameters:
     - name: compartment_ocid
+    - name: ssh_public_key
+    - name: target_resource_ocid
     - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
       value: "true"
     - name: create_resources
       value: "true"
@@ -34,6 +40,36 @@ spec:
                 value: "examples/identity/v1alpha1/compartment.yaml"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-bastion
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/bastion/v1alpha1/bastion.yaml"
         - name: create-session
           templateRef:
             name: test-template
@@ -44,16 +80,8 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/bastion/v1alpha1/session.yaml"
-        - name: create-bastion
-          templateRef:
-            name: test-template
-            template: create-resource
-          when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-targetsubnet]
-          arguments:
-            parameters:
-              - name: resourceFile
-                value: "examples/bastion/v1alpha1/bastion.yaml"
+              - name: envVars
+                value: "SSH_PUBLIC_KEY={{workflow.parameters.ssh_public_key}},TARGET_RESOURCE_OCID={{workflow.parameters.target_resource_ocid}}"
         - name: delete-bastion
           templateRef:
             name: test-template

@@ -5,25 +5,41 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"text/template"
 
 	"gopkg.in/yaml.v3"
 )
 
-// ResourceFile represents a resource file processed by the generator, containing
-// metadata and configuration for the resource.
-type ResourceFile struct {
-	Path              string            // Path of the resource file relative to the root directory.
-	Kind              string            // Kind of the resource.
-	Name              string            // Name of the resource, extracted from the file name.
-	PrerequisiteKinds []string          // Kinds of resources that are prerequisites for this resource.
-	EnvVars           map[string]string // Environment variables for the resource.
-	DependentKinds    []string
-	SetupFilePath     string // Path of the setup file for this resource, if any.
-	TeardownFilePath  string // Path of the teardown file for this resource, if any.
+const (
+	exampleNameLabel = "testing.upbound.io/example-name"
+
+	workflowParamPrefix = "{{workflow.parameters."
+	createResourcesWhen = "{{workflow.parameters.create_resources}}"
+	deleteResourcesWhen = "{{workflow.parameters.delete_resources}}"
+)
+
+// Prerequisite represents a resource dependency resolved from selectors.
+type Prerequisite struct {
+	Kind       string
+	SelectorId string
 }
 
+// ResourceFile represents a resource file processed by the generator.
+type ResourceFile struct {
+	Path              string            // Relative to examples/.
+	Kind              string            // Resource kind.
+	Name              string            // File name without extension.
+	SelectorId        string            // Label: testing.upbound.io/example-name.
+	PrerequisiteKinds []Prerequisite    // Dependencies discovered from selectors.
+	EnvVars           map[string]string // Raw env var -> normalized env var name.
+	DependentNames    []string          // Names of resources that depend on this one.
+	SetupFilePath     string            // Optional setup file path relative to examples/.
+	TeardownFilePath  string            // Optional teardown file path relative to examples/.
+}
+
+// TemplateData is used to render the workflow template.
 type TemplateData struct {
 	Service                   string
 	Version                   string
@@ -33,241 +49,291 @@ type TemplateData struct {
 }
 
 var (
-	RootDir, _               = os.Getwd()
+	RootDir                  string
 	Version                  string
-	ExamplesDir              = filepath.Join(RootDir, "examples")
-	ArgoAutoTemplatesDir     = filepath.Join(RootDir, "argo-auto", "templates")
+	ExamplesDir              string
+	ArgoAutoTemplatesDir     string
+	WorkflowTemplateFilePath string
 	WorkflowTemplate         *template.Template
-	WorkflowTemplateFilePath                   = filepath.Join(RootDir, "cmd/argo_workflowtemplate_generator/templates/workflowtemplate.yaml.tmpl")
-	SelectorKindOverrides    map[string]string = map[string]string{
-		"ocicacheusersselector":                "ocicacheuser",
-		"subnetidsselector":                    "subnet",
-		"tablenameoridselector":                "table",
-		"sourceidselector":                     "filesystem",
-		"targetidselector":                     "filesystem",
-		"defaultbackendsetnameselector":        "backendset",
-		"dbsystemidselector":                   "mysqldbsystem",
-		"topicidselector":                      "notificationtopic",
-		"passwordsecretidselector":             "secret",
-		"kmskeyidselector":                     "key",
-		"issuercertificateauthorityidselector": "certificateauthority",
+
+	selectorKindOverrides = map[string]map[string]string{
+		"sourceidselector": {
+			"instance":    "image",
+			"replication": "filesystem",
+		},
+		"subnetidsselector": {
+			"*": "subnet",
+		},
+		"tablenameoridselector": {
+			"*": "table",
+		},
+		"targetidselector": {
+			"*": "filesystem",
+		},
+		"defaultbackendsetnameselector": {
+			"*": "backendset",
+		},
+		"backendsetnameselector": {
+			"*": "backendset",
+		},
+		"dbsystemidselector": {
+			"*": "mysqldbsystem",
+		},
+		"topicidselector": {
+			"*": "notificationtopic",
+		},
+		"passwordsecretidselector": {
+			"*": "secret",
+		},
+		"kmskeyidselector": {
+			"*": "key",
+		},
+		"kmskeyversionidselector": {
+			"*": "keyversion",
+		},
+		"issuercertificateauthorityidselector": {
+			"*": "certificateauthority",
+		},
+		"recoveryservicesubnetidselector": {
+			"*": "subnet",
+		},
+		"targetsubnetidselector": {
+			"*": "subnet",
+		},
+		"assetidselector": {
+			"*": "volume",
+		},
+		"policyidselector": {
+			"*":                            "policy",
+			"volumebackuppolicyassignment": "volumebackuppolicy",
+		},
+		"volumeidsselector": {
+			"*": "volume",
+		},
+		"primarysubnetidselector": {
+			"*": "subnet",
+		},
+		"parentresourceidselector": {
+			"*": "emaildomain",
+		},
+		"logobjectidselector": {
+			"*": "log",
+		},
+		"metriccompartmentidselector": {
+			"*": "compartment",
+		},
+		"destinationsselector": {
+			"*": "notificationtopic",
+		},
+		"networkentityidselector": {
+			"*": "natgateway",
+		},
+		"ocicacheusersselector": {
+			"*": "ocicacheuser",
+		},
 	}
-	ResourceKindToFileMapping map[string]string = make(map[string]string)
+
+	resourceKindToFileMapping = map[Prerequisite]string{}
 )
 
-// main is the entry point of the Argo workflow template generator.
 func main() {
-	// Set log flags to include date, time, and file information.
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
-	// Run the workflow template generator and log any fatal errors that occur.
 	if err := run(); err != nil {
 		log.Fatal(err)
 	}
 }
 
-// run is the main execution function of the workflow template generator, orchestrating
-// the processing of examples and generation of workflow template files.
+// run orchestrates CLI argument parsing, path initialization, and generation.
 func run() error {
-	// Log the command-line arguments passed to the generator.
-	log.Printf("os.Args: %+v\n", os.Args)
-
-	// Validate that the correct number of command-line arguments is provided.
-	if len(os.Args) != 2 {
-		return fmt.Errorf("usage: go run main.go <version>")
-	}
-
-	// Extract the version from the command-line arguments.
-	Version = os.Args[1]
-	log.Printf("Version: %s\n", Version)
-
-	// Determine the current working directory.
-	var err error
-	RootDir, err = os.Getwd()
+	parsedVersion, err := parseVersionArg(os.Args)
 	if err != nil {
 		return err
 	}
-	log.Printf("Root Dir: %s\n", RootDir)
-	log.Printf("Examples Dir: %s, Argo Auto Templates Dir: %s\n", ExamplesDir, ArgoAutoTemplatesDir)
+	Version = parsedVersion
 
-	// Process the examples and generate the corresponding workflow template files.
-	if err := processExamples(); err != nil {
+	wd, err := os.Getwd()
+	if err != nil {
 		return err
 	}
+	initPaths(wd)
 
-	return nil
+	log.Printf("Version: %s", Version)
+	log.Printf("Root Dir: %s", RootDir)
+	log.Printf("Examples Dir: %s, Argo Auto Templates Dir: %s", ExamplesDir, ArgoAutoTemplatesDir)
+
+	return processExamples()
 }
 
-// processExamples processes the examples directory, generating workflow template files
-// for each service version found.
+// parseVersionArg validates and returns the required generator version argument.
+func parseVersionArg(args []string) (string, error) {
+	if len(args) != 2 {
+		return "", fmt.Errorf("usage: go run main.go <version>")
+	}
+	return args[1], nil
+}
+
+// initPaths derives all runtime paths from the working directory.
+func initPaths(base string) {
+	RootDir = base
+	ExamplesDir = filepath.Join(RootDir, "examples")
+	ArgoAutoTemplatesDir = filepath.Join(RootDir, "argo-auto", "templates")
+	WorkflowTemplateFilePath = filepath.Join(RootDir, "cmd", "argo_workflowtemplate_generator", "templates", "workflowtemplate.yaml.tmpl")
+}
+
+// processExamples loads the workflow template and processes each service/version.
 func processExamples() error {
-	// Read the contents of the examples directory.
 	services, err := os.ReadDir(ExamplesDir)
 	if err != nil {
 		return err
 	}
+	sort.Slice(services, func(i, j int) bool { return services[i].Name() < services[j].Name() })
 
-	// Ensure the 'argo-auto' directory exists.
 	if err := os.MkdirAll(ArgoAutoTemplatesDir, os.ModePerm); err != nil {
 		return err
 	}
 
-	// Load the template with custom functions.
-	WorkflowTemplate, err = template.New(filepath.Base(WorkflowTemplateFilePath)).Funcs(template.FuncMap{
-		"quoteJoin": func(sep string, args []string) string {
-			quotedArgs := make([]string, len(args))
-			for i, arg := range args {
-				quotedArgs[i] = fmt.Sprintf("\"%s\"", arg)
-			}
-
-			return strings.Join(quotedArgs, sep)
-		},
-		"resolveEnvVars": func(envVars map[string]string) string {
-			envVarStr := ""
-			for k, v := range envVars {
-				envVarValue := strings.ToLower(v)
-				envVarStr += fmt.Sprintf("%s=${%s},", k, envVarValue)
-			}
-			envVarStr = strings.TrimSuffix(envVarStr, ",")
-			// Replace ${} with {{workflow.parameters.}} for Argo workflow template.
-			envVarStr = strings.ReplaceAll(envVarStr, "${", "{{workflow.parameters.")
-			return strings.ReplaceAll(envVarStr, "}", "}}")
-		},
-		"resolveWhen": func(mode string, kind ...string) string {
-			switch mode {
-			case "prerequisites":
-				if len(kind) == 0 {
-					return ""
-				}
-				return fmt.Sprintf("{{workflow.parameters.create_%s}}", strings.ToLower(kind[0]))
-			case "create":
-				return "{{workflow.parameters.create_resources}}"
-			case "delete":
-				return "{{workflow.parameters.delete_resources}}"
-			default:
-				return ""
-			}
-		},
-		"resolveResourceFile": func(path string) string {
-			return fmt.Sprintf("examples/%s", path)
-		},
-		"reverse": func(list interface{}) interface{} {
-			switch l := list.(type) {
-			case []ResourceFile:
-				reversed := make([]ResourceFile, len(l))
-				for i, v := range l {
-					reversed[len(l)-1-i] = v
-				}
-				return reversed
-			case []string:
-				reversed := make([]string, len(l))
-				for i, v := range l {
-					reversed[len(l)-1-i] = v
-				}
-				return reversed
-			default:
-				return nil
-			}
-		},
-		"joinCreateDependencies": func(dependentKinds []string) string {
-			createDependencies := make([]string, 0)
-			for _, dependentKind := range dependentKinds {
-				dependentTaskName := fmt.Sprintf("create-%s", strings.ReplaceAll(dependentKind, "_", "-"))
-				createDependencies = append(createDependencies, dependentTaskName)
-			}
-			return strings.Join(createDependencies, ", ")
-		},
-		"joinDeleteDependencies": func(kind string, dependentKinds []string) string {
-			deleteDependencies := make([]string, 0)
-			deleteDependencies = append(deleteDependencies, fmt.Sprintf("create-%s", strings.ReplaceAll(kind, "_", "-")))
-			for _, dependentKind := range dependentKinds {
-				dependentTaskName := fmt.Sprintf("delete-%s", strings.ReplaceAll(dependentKind, "_", "-"))
-				deleteDependencies = append(deleteDependencies, dependentTaskName)
-			}
-			// Add quotes around each dependency
-			for i, dep := range deleteDependencies {
-				deleteDependencies[i] = fmt.Sprintf("\"%s\"", dep)
-			}
-			return strings.Join(deleteDependencies, ", ")
-		},
-		"resolveDeleteParameters": func(kind string, resourceType string) string {
-			resource := fmt.Sprintf("{{tasks.create-%s.outputs.parameters.resource%s}}", kind, resourceType)
-			return resource
-		},
-	}).ParseFiles(WorkflowTemplateFilePath)
+	WorkflowTemplate, err = loadWorkflowTemplate()
 	if err != nil {
 		return err
 	}
 
-	// Iterate through services and process each version.
 	for _, service := range services {
-		if service.IsDir() {
-			servicePath := filepath.Join(ExamplesDir, service.Name())
-			versionPath := filepath.Join(servicePath, Version)
-			_, err := os.Stat(versionPath)
-			if err == nil {
-				log.Printf("Processing %s/%s\n", service.Name(), Version)
+		if !service.IsDir() {
+			continue
+		}
 
-				// Process the service and generate the workflow template file.
-				err := processService(service.Name(), versionPath)
-				if err != nil {
-					log.Printf("Error processing service %s: %v\n", service.Name(), err)
-				}
-			}
+		// Only process a service if the requested version directory exists.
+		servicePath := filepath.Join(ExamplesDir, service.Name())
+		versionPath := filepath.Join(servicePath, Version)
+		if _, err := os.Stat(versionPath); err != nil {
+			continue
+		}
+
+		log.Printf("Processing %s/%s", service.Name(), Version)
+		if err := processService(service.Name(), versionPath); err != nil {
+			log.Printf("Error processing service %s: %v", service.Name(), err)
 		}
 	}
+
 	return nil
 }
 
-// processService processes a specific service version, generating a workflow template file
-// based on the resource files found in the version directory.
-func processService(serviceName string, versionPath string) error {
-	// Retrieve the resource files for the specified service version.
+// loadWorkflowTemplate parses the Argo template file and wires helper functions.
+func loadWorkflowTemplate() (*template.Template, error) {
+	funcs := template.FuncMap{
+		"quoteJoin":               quoteJoin,
+		"resolveEnvVars":          resolveEnvVars,
+		"resolveWhen":             resolveWhen,
+		"resolveResourceFile":     resolveResourceFile,
+		"joinCreateDependencies":  joinCreateDependencies,
+		"joinDeleteDependencies":  joinDeleteDependencies,
+		"resolveDeleteParameters": resolveDeleteParameters,
+	}
+
+	return template.New(filepath.Base(WorkflowTemplateFilePath)).Funcs(funcs).ParseFiles(WorkflowTemplateFilePath)
+}
+
+// quoteJoin wraps each string in quotes and joins with the provided separator.
+func quoteJoin(sep string, args []string) string {
+	quoted := make([]string, 0, len(args))
+	for _, arg := range args {
+		quoted = append(quoted, fmt.Sprintf("\"%s\"", arg))
+	}
+	return strings.Join(quoted, sep)
+}
+
+// resolveEnvVars converts env vars into an Argo-compatible assignment string.
+func resolveEnvVars(envVars map[string]string) string {
+	keys := make([]string, 0, len(envVars))
+	for key := range envVars {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+
+	parts := make([]string, 0, len(keys))
+	for _, key := range keys {
+		value := envVars[key]
+		parts = append(parts, fmt.Sprintf("%s=${%s}", key, strings.ToLower(value)))
+	}
+
+	joined := strings.Join(parts, ",")
+	joined = strings.ReplaceAll(joined, "${", workflowParamPrefix)
+	return strings.ReplaceAll(joined, "}", "}}")
+}
+
+// resolveWhen returns the Argo `when` expression for a task mode.
+func resolveWhen(mode string, kind ...string) string {
+	switch mode {
+	case "prerequisites":
+		if len(kind) == 0 {
+			return ""
+		}
+		return fmt.Sprintf("{{workflow.parameters.create_%s}}", strings.ToLower(kind[0]))
+	case "create":
+		return createResourcesWhen
+	case "delete":
+		return deleteResourcesWhen
+	default:
+		return ""
+	}
+}
+
+// resolveResourceFile prefixes resource paths with the examples root for templates.
+func resolveResourceFile(path string) string {
+	return fmt.Sprintf("examples/%s", path)
+}
+
+// joinCreateDependencies returns comma-separated create task dependencies.
+func joinCreateDependencies(prerequisites []Prerequisite) string {
+	createDependencies := make([]string, 0, len(prerequisites))
+	for _, prerequisite := range prerequisites {
+		resourceName, err := getResourceFileName(prerequisite)
+		if err != nil {
+			log.Printf("Error getting resource file name for prerequisite %s: %v", prerequisite.Kind, err)
+			continue
+		}
+		createDependencies = append(createDependencies, "create-"+normalizeTaskName(resourceName))
+	}
+
+	return strings.Join(createDependencies, ", ")
+}
+
+// joinDeleteDependencies returns quoted dependencies for delete tasks.
+func joinDeleteDependencies(name string, dependentNames []string) string {
+	deps := make([]string, 0, len(dependentNames)+1)
+	deps = append(deps, fmt.Sprintf("\"create-%s\"", normalizeTaskName(name)))
+	for _, dependent := range dependentNames {
+		deps = append(deps, fmt.Sprintf("\"delete-%s\"", normalizeTaskName(dependent)))
+	}
+	return strings.Join(deps, ", ")
+}
+
+// resolveDeleteParameters references create-task output for delete requests.
+func resolveDeleteParameters(kind, resourceType string) string {
+	return fmt.Sprintf("{{tasks.create-%s.outputs.parameters.resource%s}}", kind, resourceType)
+}
+
+// normalizeTaskName standardizes resource names to valid task IDs.
+func normalizeTaskName(name string) string {
+	return strings.ReplaceAll(name, "_", "-")
+}
+
+// processService builds template data for a single service/version and writes output.
+func processService(serviceName, versionPath string) error {
 	resourceFiles, err := getResourceFiles(versionPath)
 	if err != nil {
 		return err
 	}
-	envVarSet := make(map[string]bool)
-	envVars := make([]string, 0)
+	sortResourceFiles(resourceFiles)
 
-	// Building dependentKind list only for resources in specific service.
-	// No cleanup is done for prerequisiteKinds in this service workflow template.
-	// Hence we are not including this logic in extractResourceFileDetails
-	resourceFilesByKind := make(map[string]ResourceFile)
-	for _, resourceFile := range resourceFiles {
-		resourceFilesByKind[resourceFile.Kind] = resourceFile
-	}
-	for kind, resourceFile := range resourceFilesByKind {
-		for _, dependentKind := range resourceFile.PrerequisiteKinds {
-			if dependentResourceFile, ok := resourceFilesByKind[dependentKind]; ok {
-				dependentResourceFile.DependentKinds = append(dependentResourceFile.DependentKinds, kind)
-				resourceFilesByKind[dependentKind] = dependentResourceFile
-			}
-		}
-	}
-	// Update resourceFiles with DependentResources from resourceFilesByKind
-	for i, resourceFile := range resourceFiles {
-		if rf, ok := resourceFilesByKind[resourceFile.Kind]; ok {
-			resourceFiles[i].DependentKinds = rf.DependentKinds
-		}
-	}
+	resourceIndex := indexResources(resourceFiles)
+	updateDependentNames(resourceIndex)
+	resourceFiles = applyDependentNames(resourceFiles, resourceIndex)
 
-	visitedPrerequisiteResourceSet := make(map[string]bool)
-	prerequisiteResourceFiles := make([]ResourceFile, 0)
+	prerequisiteResourceFiles, envVars := collectPrerequisitesAndEnvVars(resourceFiles)
 
-	for _, resourceFile := range resourceFiles {
-		getPrerequisiteResourceFiles(resourceFile, &prerequisiteResourceFiles, &resourceFiles, envVarSet, &envVars, visitedPrerequisiteResourceSet)
-	}
+	logServiceDetails(serviceName, resourceFiles, envVars, prerequisiteResourceFiles)
 
-	// Log service details for debugging purposes.
-	// fmt.Println("\n****Service Details***")
-	// fmt.Printf("Service: %s, Version: %s, ResourceFiles: %d, EnvVars: %d, PrerequisiteFiles: %d\n", serviceName, Version, len(resourceFiles), len(envVars), len(prerequisiteResourceFiles))
-	// for _, rf := range resourceFiles {
-	// 	fmt.Printf("ResourceFile Path: %s, Kind: %s, PrerequisiteKinds: %v, DependentKinds: %v\n", rf.Path, rf.Kind, rf.PrerequisiteKinds, rf.DependentKinds)
-	// }
-	// fmt.Printf("****Service Details End***\n\n")
-
-	// Prepare data for the workflow template.
 	data := TemplateData{
 		Service:                   serviceName,
 		Version:                   Version,
@@ -276,230 +342,455 @@ func processService(serviceName string, versionPath string) error {
 		EnvVars:                   envVars,
 	}
 
-	// Generate the workflow template file using the prepared data and template.
-	workflowTemplateFile := filepath.Join(ArgoAutoTemplatesDir, fmt.Sprintf("%s-%s.yaml", serviceName, Version))
-	if err := generateWorkflowTemplateFile(workflowTemplateFile, data); err != nil {
-		return err
-	}
-
-	return nil
+	workflowOutputPath := filepath.Join(ArgoAutoTemplatesDir, fmt.Sprintf("%s-%s.yaml", serviceName, Version))
+	return generateWorkflowTemplateFile(workflowOutputPath, data)
 }
 
-// getResourceFiles retrieves and processes resource files from a specific version directory.
+// indexResources indexes resources by (kind, selector) and seeds lookup cache.
+func indexResources(resourceFiles []ResourceFile) map[Prerequisite]ResourceFile {
+	index := make(map[Prerequisite]ResourceFile, len(resourceFiles))
+	for _, resourceFile := range resourceFiles {
+		key := Prerequisite{Kind: resourceFile.Kind, SelectorId: resourceFile.SelectorId}
+		index[key] = resourceFile
+		resourceKindToFileMapping[key] = resourceFile.Path
+	}
+	return index
+}
+
+// updateDependentNames annotates each prerequisite with reverse dependencies.
+func updateDependentNames(resourceIndex map[Prerequisite]ResourceFile) {
+	keys := sortedPrerequisiteKeys(resourceIndex)
+	for _, key := range keys {
+		resourceFile := resourceIndex[key]
+		for _, prerequisite := range resourceFile.PrerequisiteKinds {
+			if prerequisiteFile, ok := resourceIndex[prerequisite]; ok {
+				prerequisiteFile.DependentNames = append(prerequisiteFile.DependentNames, resourceFile.Name)
+				sort.Strings(prerequisiteFile.DependentNames)
+				resourceIndex[prerequisite] = prerequisiteFile
+			}
+		}
+	}
+}
+
+// applyDependentNames writes indexed dependent names back to the resource slice.
+func applyDependentNames(resourceFiles []ResourceFile, resourceIndex map[Prerequisite]ResourceFile) []ResourceFile {
+	for i, resourceFile := range resourceFiles {
+		key := Prerequisite{Kind: resourceFile.Kind, SelectorId: resourceFile.SelectorId}
+		if indexed, ok := resourceIndex[key]; ok {
+			sort.Strings(indexed.DependentNames)
+			resourceFiles[i].DependentNames = indexed.DependentNames
+		}
+		sortPrerequisites(resourceFiles[i].PrerequisiteKinds)
+	}
+	sortResourceFiles(resourceFiles)
+	return resourceFiles
+}
+
+// collectPrerequisitesAndEnvVars recursively discovers external prerequisites and env vars.
+func collectPrerequisitesAndEnvVars(resourceFiles []ResourceFile) ([]ResourceFile, []string) {
+	collector := &prerequisiteCollector{
+		resourceFiles:     resourceFiles,
+		visited:           map[Prerequisite]bool{},
+		envVarSet:         map[string]bool{},
+		envVars:           make([]string, 0),
+		prerequisiteFiles: make([]ResourceFile, 0),
+	}
+
+	for _, resourceFile := range resourceFiles {
+		collector.collectFrom(resourceFile)
+	}
+
+	sortResourceFiles(collector.prerequisiteFiles)
+	sort.Strings(collector.envVars)
+	return collector.prerequisiteFiles, collector.envVars
+}
+
+// prerequisiteCollector tracks recursive traversal state for prerequisite discovery.
+type prerequisiteCollector struct {
+	resourceFiles     []ResourceFile
+	visited           map[Prerequisite]bool
+	envVarSet         map[string]bool
+	envVars           []string
+	prerequisiteFiles []ResourceFile
+}
+
+// collectFrom recursively collects env vars and prerequisite resource files.
+func (c *prerequisiteCollector) collectFrom(resourceFile ResourceFile) {
+	// Env vars are normalized to lower-case once so template parameters are unique.
+	envVarValues := make([]string, 0, len(resourceFile.EnvVars))
+	for _, envVarValue := range resourceFile.EnvVars {
+		envVarValues = append(envVarValues, envVarValue)
+	}
+	sort.Strings(envVarValues)
+
+	for _, envVarValue := range envVarValues {
+		lower := strings.ToLower(envVarValue)
+		if c.envVarSet[lower] {
+			continue
+		}
+		c.envVarSet[lower] = true
+		c.envVars = append(c.envVars, lower)
+	}
+
+	sortPrerequisites(resourceFile.PrerequisiteKinds)
+	for _, prerequisite := range resourceFile.PrerequisiteKinds {
+		if c.visited[prerequisite] {
+			continue
+		}
+		// Mark before recursion to prevent cycles in dependency graphs.
+		c.visited[prerequisite] = true
+
+		if isResourceFilePresent(c.resourceFiles, prerequisite) {
+			continue
+		}
+
+		resourceFilePath, err := searchForResourceFile(prerequisite)
+		if err != nil {
+			log.Printf("Error finding resource file for %s: %v", prerequisite.Kind, err)
+			continue
+		}
+
+		prerequisiteFile, err := processResourceFile(ExamplesDir, resourceFilePath)
+		if err != nil {
+			log.Printf("Error processing resource file for %s: %v", prerequisite.Kind, err)
+			continue
+		}
+
+		c.prerequisiteFiles = append(c.prerequisiteFiles, prerequisiteFile)
+		// Recursively include transitive prerequisites.
+		c.collectFrom(prerequisiteFile)
+	}
+}
+
+// logServiceDetails emits verbose information to help debug generation order/data.
+func logServiceDetails(serviceName string, resourceFiles []ResourceFile, envVars []string, prerequisiteFiles []ResourceFile) {
+	fmt.Println("\n****Service Details***")
+	fmt.Printf(
+		"Service: %s, Version: %s, ResourceFiles: %d, EnvVars: %d, PrerequisiteFiles: %d\n",
+		serviceName,
+		Version,
+		len(resourceFiles),
+		len(envVars),
+		len(prerequisiteFiles),
+	)
+	for _, rf := range resourceFiles {
+		fmt.Printf(
+			"ResourceFile Path: %s, Kind: %s, PrerequisiteKinds: %v, DependentNames: %v, EnvVars: %v, SelectorId: %s\n",
+			rf.Path,
+			rf.Kind,
+			rf.PrerequisiteKinds,
+			rf.DependentNames,
+			rf.EnvVars,
+			rf.SelectorId,
+		)
+	}
+	fmt.Printf("****Service Details End***\n\n")
+}
+
+// getResourceFiles reads all YAML resources from a specific service version directory.
 func getResourceFiles(versionPath string) ([]ResourceFile, error) {
-	// Read the contents of the version directory.
 	files, err := os.ReadDir(versionPath)
 	if err != nil {
 		return nil, err
 	}
 
-	var resourceFiles []ResourceFile
+	resourceFiles := make([]ResourceFile, 0)
 	for _, file := range files {
-		// Process YAML files.
-		if filepath.Ext(file.Name()) == ".yaml" || filepath.Ext(file.Name()) == ".yml" {
-			resourceFile, err := processResourceFile(versionPath, file.Name())
-			if err != nil {
-				return nil, err
-			}
-			resourceFiles = append(resourceFiles, resourceFile)
+		ext := filepath.Ext(file.Name())
+		if ext != ".yaml" && ext != ".yml" {
+			continue
 		}
+
+		resourceFile, err := processResourceFile(versionPath, file.Name())
+		if err != nil {
+			return nil, err
+		}
+		resourceFiles = append(resourceFiles, resourceFile)
 	}
 
 	return resourceFiles, nil
 }
 
-// processResourceFile processes a single resource file, extracting relevant metadata.
-func processResourceFile(versionPath string, fileName string) (ResourceFile, error) {
-	// Read the file contents.
-	filePath := filepath.Join(versionPath, fileName)
+// processResourceFile parses one YAML resource and extracts generator metadata.
+func processResourceFile(basePath, fileName string) (ResourceFile, error) {
+	filePath := filepath.Join(basePath, fileName)
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		return ResourceFile{}, err
 	}
 
-	// Unmarshal YAML data.
 	var yamlData map[string]interface{}
-	err = yaml.Unmarshal(data, &yamlData)
-	if err != nil {
-		fmt.Printf("Failed to process resource file: %s\n", filePath)
-		return ResourceFile{}, err
+	if err := yaml.Unmarshal(data, &yamlData); err != nil {
+		return ResourceFile{}, fmt.Errorf("failed to process resource file %s: %w", filePath, err)
 	}
 
-	// Check if setup and teardown files exist for the resource and set their paths.
-	setupFilePath := filepath.Join(versionPath, "setup", fileName)
-	teardownFilePath := filepath.Join(versionPath, "teardown", fileName)
-
-	// For setup file
-	if _, err := os.Stat(setupFilePath); err == nil {
-		if rel, err := filepath.Rel(ExamplesDir, setupFilePath); err == nil {
-			setupFilePath = rel
-		} else {
-			setupFilePath = ""
-		}
-	} else {
-		setupFilePath = ""
+	kindValue, ok := yamlData["kind"].(string)
+	if !ok || kindValue == "" {
+		return ResourceFile{}, fmt.Errorf("resource file %s is missing a valid kind", filePath)
 	}
 
-	// For teardown file
-	if _, err := os.Stat(teardownFilePath); err == nil {
-		if rel, err := filepath.Rel(ExamplesDir, teardownFilePath); err == nil {
-			teardownFilePath = rel
-		} else {
-			teardownFilePath = ""
-		}
-	} else {
-		teardownFilePath = ""
-	}
-
-	// Extract the kind from the file name.
 	name := strings.TrimSuffix(filepath.Base(filePath), filepath.Ext(filePath))
-	kind := strings.ToLower(yamlData["kind"].(string))
-	prerequisiteKinds := make([]string, 0)
-	envVars := make(map[string]string)
+	kind := strings.ToLower(kindValue)
+	selectorID := extractSelectorID(yamlData)
+	prerequisites, envVars := extractMetadataFromForProvider(getForProvider(yamlData), kind)
 
-	// Process the 'spec' section of the YAML data.
-	spec, ok := yamlData["spec"].(map[string]interface{})
-	if ok {
-		forProvider, ok := spec["forProvider"].(map[string]interface{})
-		if ok {
-			for k, v := range forProvider {
-				// Extract selector kinds.
-				if selector, ok := v.(map[string]interface{}); ok && selector["matchLabels"] != nil {
-					overrideKind, hasOverride := SelectorKindOverrides[strings.ToLower(k)]
-					if hasOverride {
-						prerequisiteKinds = append(prerequisiteKinds, overrideKind)
-					} else {
-						prerequisiteKinds = append(prerequisiteKinds, strings.ToLower(strings.TrimSuffix(k, "IdSelector")))
-					}
-					log.Printf("PrerequisiteKinds: %+v\n", prerequisiteKinds)
-				}
-				// Extract environment variables.
-				if str, ok := v.(string); ok && strings.HasPrefix(str, "${") && strings.HasSuffix(str, "}") {
-
-					envVarName := strings.Trim(str, "${}")
-					envVarName = strings.TrimSpace(envVarName)
-					varName := strings.ReplaceAll(envVarName, ".", "_")
-					varName = strings.ReplaceAll(varName, "-", "_")
-					envVars[envVarName] = varName
-					log.Printf("envVars: %+v\n", envVars)
-				}
-			}
-		}
-	}
-
-	// Determine the relative path of the file.
 	relPath, err := filepath.Rel(ExamplesDir, filePath)
 	if err != nil {
 		return ResourceFile{}, err
 	}
-
-	// Create the ResourceFile object.
 	resourceFile := ResourceFile{
 		Path:              relPath,
 		Kind:              kind,
 		Name:              name,
+		SelectorId:        selectorID,
+		PrerequisiteKinds: prerequisites,
 		EnvVars:           envVars,
-		PrerequisiteKinds: prerequisiteKinds,
-		SetupFilePath:     setupFilePath,
-		TeardownFilePath:  teardownFilePath,
+		SetupFilePath:     optionalRelativePath(filepath.Join(basePath, "setup", fileName)),
+		TeardownFilePath:  optionalRelativePath(filepath.Join(basePath, "teardown", fileName)),
 	}
-	log.Printf("Processed resource file: %+v\n", resourceFile)
+
+	log.Printf("Processed resource file: %+v", resourceFile)
 	return resourceFile, nil
 }
 
-func getPrerequisiteResourceFiles(resourceFile ResourceFile, prerequisiteResourceFiles *[]ResourceFile, resourceFiles *[]ResourceFile, envVarSet map[string]bool, envVars *[]string, visitedPrerequisiteResourceSet map[string]bool) {
-	for _, envVarValue := range resourceFile.EnvVars {
-		lowerEnvVar := strings.ToLower(envVarValue)
-		if !envVarSet[lowerEnvVar] {
-			envVarSet[lowerEnvVar] = true
-			*envVars = append(*envVars, lowerEnvVar)
-		}
+// optionalRelativePath returns the path relative to examples/ if the file exists.
+func optionalRelativePath(path string) string {
+	fmt.Printf("In optional relative path for path: %q\n", path)
+	if _, err := os.Stat(path); err != nil {
+		return ""
 	}
-	for _, prerequisiteKind := range resourceFile.PrerequisiteKinds {
-		if visitedPrerequisiteResourceSet[prerequisiteKind] {
-			continue
-		}
-		visitedPrerequisiteResourceSet[prerequisiteKind] = true
-		if !isResourceFilePresent(*resourceFiles, prerequisiteKind) {
-			resourceFilePath, err := searchForResourceFile(prerequisiteKind)
-			if err != nil {
-				log.Printf("Error finding resource file for %s: %v\n", prerequisiteKind, err)
-				continue
-			}
-			prerequisiteResourceFile, err := processResourceFile(ExamplesDir, resourceFilePath)
-			if err != nil {
-				log.Printf("Error processing resource file for %s: %v\n", prerequisiteKind, err)
-				continue
-			}
-			*prerequisiteResourceFiles = append(*prerequisiteResourceFiles, prerequisiteResourceFile)
-			getPrerequisiteResourceFiles(prerequisiteResourceFile, prerequisiteResourceFiles, resourceFiles, envVarSet, envVars, visitedPrerequisiteResourceSet)
-		}
+	fmt.Printf("Found file for: %q\n", path)
+	relPath, err := filepath.Rel(ExamplesDir, path)
+	if err != nil {
+		return ""
 	}
+	fmt.Printf("Returning relative path for: %q\n", path)
+
+	return relPath
 }
 
-// isResourceFilePresent checks if a ResourceFile with the given kind exists in the provided list.
-func isResourceFilePresent(resourceFiles []ResourceFile, kind string) bool {
+// extractSelectorID gets testing label used to match prerequisite selectors.
+func extractSelectorID(yamlData map[string]interface{}) string {
+	metadata, ok := yamlData["metadata"].(map[string]interface{})
+	if !ok {
+		return ""
+	}
+	labels, ok := metadata["labels"].(map[string]interface{})
+	if !ok {
+		return ""
+	}
+	value, _ := labels[exampleNameLabel].(string)
+	return value
+}
+
+// getForProvider returns spec.forProvider when present.
+func getForProvider(yamlData map[string]interface{}) map[string]interface{} {
+	spec, ok := yamlData["spec"].(map[string]interface{})
+	if !ok {
+		return nil
+	}
+	forProvider, _ := spec["forProvider"].(map[string]interface{})
+	return forProvider
+}
+
+// extractMetadataFromForProvider walks forProvider to collect selectors and env vars.
+func extractMetadataFromForProvider(forProvider map[string]interface{}, kind string) ([]Prerequisite, map[string]string) {
+	prerequisites := make([]Prerequisite, 0)
+	envVars := make(map[string]string)
+
+	if forProvider == nil {
+		return prerequisites, envVars
+	}
+
+	var walk func(string, interface{})
+	walk = func(key string, value interface{}) {
+		switch typed := value.(type) {
+		case map[string]interface{}:
+			// Selector blocks are discovered via matchLabels and converted into prerequisites.
+			if matchLabels, ok := typed["matchLabels"].(map[string]interface{}); ok {
+				if selectorID, ok := matchLabels[exampleNameLabel].(string); ok {
+					if prerequisite, ok := resolvePrerequisite(key, kind, selectorID); ok {
+						prerequisites = append(prerequisites, prerequisite)
+					}
+				}
+			}
+			nestedKeys := sortedStringKeys(typed)
+			for _, nestedKey := range nestedKeys {
+				nestedValue := typed[nestedKey]
+				walk(nestedKey, nestedValue)
+			}
+		case []interface{}:
+			// Reuse the same key to preserve selector field context while traversing arrays.
+			for _, item := range typed {
+				walk(key, item)
+			}
+		case string:
+			if !strings.HasPrefix(typed, "${") || !strings.HasSuffix(typed, "}") {
+				return
+			}
+			// Normalize env var names to shell-friendly parameter names.
+			envVarName := strings.TrimSpace(strings.Trim(typed, "${}"))
+			normalized := strings.NewReplacer(".", "_", "-", "_").Replace(envVarName)
+			envVars[envVarName] = normalized
+		}
+	}
+
+	forProviderKeys := sortedStringKeys(forProvider)
+	for _, key := range forProviderKeys {
+		value := forProvider[key]
+		walk(key, value)
+	}
+	sortPrerequisites(prerequisites)
+
+	return prerequisites, envVars
+}
+
+// sortedStringKeys returns map keys in lexical order.
+func sortedStringKeys(m map[string]interface{}) []string {
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
+}
+
+// sortPrerequisites sorts prerequisites deterministically by kind then selector ID.
+func sortPrerequisites(prerequisites []Prerequisite) {
+	sort.Slice(prerequisites, func(i, j int) bool {
+		if prerequisites[i].Kind == prerequisites[j].Kind {
+			return prerequisites[i].SelectorId < prerequisites[j].SelectorId
+		}
+		return prerequisites[i].Kind < prerequisites[j].Kind
+	})
+}
+
+// sortResourceFiles sorts resource files by kind, selector ID, name, and path.
+func sortResourceFiles(resourceFiles []ResourceFile) {
+	sort.Slice(resourceFiles, func(i, j int) bool {
+		if resourceFiles[i].Kind != resourceFiles[j].Kind {
+			return resourceFiles[i].Kind < resourceFiles[j].Kind
+		}
+		if resourceFiles[i].SelectorId != resourceFiles[j].SelectorId {
+			return resourceFiles[i].SelectorId < resourceFiles[j].SelectorId
+		}
+		if resourceFiles[i].Name != resourceFiles[j].Name {
+			return resourceFiles[i].Name < resourceFiles[j].Name
+		}
+		return resourceFiles[i].Path < resourceFiles[j].Path
+	})
+}
+
+// sortedPrerequisiteKeys returns prerequisite map keys in deterministic order.
+func sortedPrerequisiteKeys(index map[Prerequisite]ResourceFile) []Prerequisite {
+	keys := make([]Prerequisite, 0, len(index))
+	for k := range index {
+		keys = append(keys, k)
+	}
+	sortPrerequisites(keys)
+	return keys
+}
+
+// resolvePrerequisite maps selector keys to prerequisite kinds with override support.
+func resolvePrerequisite(selectorKey, kind, selectorID string) (Prerequisite, bool) {
+	lowerKey := strings.ToLower(selectorKey)
+	// Priority 1: explicit per-selector overrides (kind-specific, then wildcard).
+	if overrideMap, hasOverride := selectorKindOverrides[lowerKey]; hasOverride {
+		if overrideKind, found := overrideMap[kind]; found {
+			return Prerequisite{Kind: overrideKind, SelectorId: selectorID}, true
+		}
+		if wildcardKind, found := overrideMap["*"]; found {
+			return Prerequisite{Kind: wildcardKind, SelectorId: selectorID}, true
+		}
+	}
+
+	// Priority 2: infer kind from conventional <kind>IdSelector naming.
+	if !strings.HasSuffix(lowerKey, "idselector") {
+		return Prerequisite{}, false
+	}
+
+	inferredKind := strings.TrimSuffix(lowerKey, "idselector")
+	if inferredKind == "" {
+		return Prerequisite{}, false
+	}
+
+	return Prerequisite{Kind: inferredKind, SelectorId: selectorID}, true
+}
+
+// isResourceFilePresent checks whether prerequisite already exists in the service set.
+func isResourceFilePresent(resourceFiles []ResourceFile, prerequisite Prerequisite) bool {
 	for _, resourceFile := range resourceFiles {
-		if resourceFile.Kind == kind {
+		if resourceFile.Kind == prerequisite.Kind && resourceFile.SelectorId == prerequisite.SelectorId {
 			return true
 		}
 	}
 	return false
 }
 
-// searchForResourceFile searches for a resource file of a specific kind within the examples directory.
-func searchForResourceFile(kind string) (string, error) {
-	resourceFilePath, ok := ResourceKindToFileMapping[kind]
-	if ok {
+// searchForResourceFile resolves a prerequisite by scanning all services for this version.
+func searchForResourceFile(prerequisite Prerequisite) (string, error) {
+	if resourceFilePath, ok := resourceKindToFileMapping[prerequisite]; ok {
 		return resourceFilePath, nil
 	}
-	// Read the contents of the examples directory.
+
 	services, err := os.ReadDir(ExamplesDir)
 	if err != nil {
 		return "", err
 	}
 
-	// Iterate through services to find a matching resource file.
 	for _, service := range services {
-		if service.IsDir() {
-			servicePath := filepath.Join(ExamplesDir, service.Name())
-			versionPath := filepath.Join(servicePath, Version)
-			_, err := os.Stat(versionPath)
-			if err == nil {
-				// fmt.Printf("Searching for resource file for kind %s in directory %s/%s\n", kind, service.Name(), Version)
-				resourceFiles, err := getResourceFiles(versionPath)
-				if err != nil {
-					return "", err
-				}
-				for _, resourceFile := range resourceFiles {
-					if resourceFile.Kind == kind {
-						ResourceKindToFileMapping[kind] = resourceFile.Path
-						return resourceFile.Path, nil
-					}
-				}
+		if !service.IsDir() {
+			continue
+		}
+
+		// This keeps prerequisite resolution version-scoped while crossing services.
+		versionPath := filepath.Join(ExamplesDir, service.Name(), Version)
+		if _, err := os.Stat(versionPath); err != nil {
+			continue
+		}
+
+		resourceFiles, err := getResourceFiles(versionPath)
+		if err != nil {
+			return "", err
+		}
+
+		for _, resourceFile := range resourceFiles {
+			if resourceFile.Kind == prerequisite.Kind && resourceFile.SelectorId == prerequisite.SelectorId {
+				resourceKindToFileMapping[prerequisite] = resourceFile.Path
+				return resourceFile.Path, nil
 			}
 		}
 	}
 
-	// Return an error if no matching resource file is found.
-	return "", fmt.Errorf("resource file for kind %s not found", kind)
+	return "", fmt.Errorf("resource file for kind %s not found", prerequisite.Kind)
 }
 
-// generateWorkflowTemplateFile generates a workflowtemplate file using a template and provided data.
+// generateWorkflowTemplateFile renders template data into a workflow YAML file.
 func generateWorkflowTemplateFile(workflowTemplateFile string, data interface{}) error {
-	// Create the workflowtemplate file.
 	file, err := os.Create(workflowTemplateFile)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
-	// Execute the template and write to the file.
-	err = WorkflowTemplate.Execute(file, data)
-	if err != nil {
+	if err := WorkflowTemplate.Execute(file, data); err != nil {
 		return err
 	}
 
 	fmt.Printf("Generated workflowtemplate file: %s\n", workflowTemplateFile)
 	return nil
+}
+
+// getResourceFileName resolves prerequisite file and returns basename without extension.
+func getResourceFileName(prerequisite Prerequisite) (string, error) {
+	resourceFilePath, ok := resourceKindToFileMapping[prerequisite]
+	if !ok {
+		var err error
+		resourceFilePath, err = searchForResourceFile(prerequisite)
+		if err != nil {
+			return "", fmt.Errorf("resource file for kind %s not found", prerequisite.Kind)
+		}
+	}
+
+	return strings.TrimSuffix(filepath.Base(resourceFilePath), filepath.Ext(resourceFilePath)), nil
 }
