@@ -1,0 +1,48 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-limits-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: limits-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: tenancy_ocid
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: limits-tests-workflow
+      dag:
+        tasks:
+        - name: create-quota
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/limits/v1alpha1/quota.yaml"
+              - name: envVars
+                value: "TENANCY_OCID={{workflow.parameters.tenancy_ocid}}"
+        - name: delete-quota
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-quota"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-quota.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-quota.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-quota.outputs.parameters.resourceGroup}}"

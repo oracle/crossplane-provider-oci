@@ -1,0 +1,179 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-dns-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: dns-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: dns-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-record
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/record.yaml"
+        - name: create-rrset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/rrset.yaml"
+        - name: create-steeringpolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/steeringpolicy.yaml"
+        - name: create-steeringpolicyattachment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-steeringpolicy, create-zone]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/steeringpolicyattachment.yaml"
+        - name: create-view
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/view.yaml"
+        - name: create-zone
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-view]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/dns/v1alpha1/zone.yaml"
+        - name: delete-record
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-record"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-record.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-record.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-record.outputs.parameters.resourceGroup}}"
+        - name: delete-rrset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-rrset"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-rrset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-rrset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-rrset.outputs.parameters.resourceGroup}}"
+        - name: delete-steeringpolicy
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-steeringpolicy", "delete-steeringpolicyattachment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-steeringpolicy.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-steeringpolicy.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-steeringpolicy.outputs.parameters.resourceGroup}}"
+        - name: delete-steeringpolicyattachment
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-steeringpolicyattachment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-steeringpolicyattachment.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-steeringpolicyattachment.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-steeringpolicyattachment.outputs.parameters.resourceGroup}}"
+        - name: delete-view
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-view", "delete-zone"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-view.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-view.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-view.outputs.parameters.resourceGroup}}"
+        - name: delete-zone
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-zone", "delete-steeringpolicyattachment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-zone.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-zone.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-zone.outputs.parameters.resourceGroup}}"

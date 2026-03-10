@@ -1,0 +1,183 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-apigateway-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: apigateway-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: usageplan_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: apigateway-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-api
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/api.yaml"
+        - name: create-deployment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-gateway]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/deployment.yaml"
+        - name: create-gateway
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/gateway.yaml"
+        - name: create-subscriber
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/subscriber.yaml"
+              - name: envVars
+                value: "USAGEPLAN_OCID={{workflow.parameters.usageplan_ocid}}"
+        - name: create-usageplan
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/apigateway/v1alpha1/usageplan.yaml"
+        - name: delete-api
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-api"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-api.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-api.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-api.outputs.parameters.resourceGroup}}"
+        - name: delete-deployment
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-deployment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-deployment.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-deployment.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-deployment.outputs.parameters.resourceGroup}}"
+        - name: delete-gateway
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-gateway", "delete-deployment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-gateway.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-gateway.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-gateway.outputs.parameters.resourceGroup}}"
+        - name: delete-subscriber
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-subscriber"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-subscriber.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-subscriber.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-subscriber.outputs.parameters.resourceGroup}}"
+        - name: delete-usageplan
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-usageplan"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-usageplan.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-usageplan.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-usageplan.outputs.parameters.resourceGroup}}"

@@ -1,0 +1,252 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-redis-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: redis-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: redis-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-ocicacheconfigset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/ocicacheconfigset.yaml"
+        - name: create-ocicacheconfigsetlistassociatedocicachecluster
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-ocicacheconfigset]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/ocicacheconfigsetlistassociatedocicachecluster.yaml"
+        - name: create-ocicacheuser
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/ocicacheuser.yaml"
+        - name: create-ocicacheusergetrediscluster
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-ocicacheuser]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/ocicacheusergetrediscluster.yaml"
+        - name: create-rediscluster
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/rediscluster.yaml"
+        - name: create-redisclusterattachocicacheuser
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-ocicacheuser, create-rediscluster]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/redisclusterattachocicacheuser.yaml"
+        - name: create-redisclusterdetachocicacheuser
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-ocicacheuser, create-rediscluster]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/redisclusterdetachocicacheuser.yaml"
+        - name: create-redisclustergetocicacheuser
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-rediscluster]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/redis/v1alpha1/redisclustergetocicacheuser.yaml"
+        - name: delete-ocicacheconfigset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-ocicacheconfigset", "delete-ocicacheconfigsetlistassociatedocicachecluster"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-ocicacheconfigset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-ocicacheconfigset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-ocicacheconfigset.outputs.parameters.resourceGroup}}"
+        - name: delete-ocicacheconfigsetlistassociatedocicachecluster
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-ocicacheconfigsetlistassociatedocicachecluster"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-ocicacheconfigsetlistassociatedocicachecluster.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-ocicacheconfigsetlistassociatedocicachecluster.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-ocicacheconfigsetlistassociatedocicachecluster.outputs.parameters.resourceGroup}}"
+        - name: delete-ocicacheuser
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-ocicacheuser", "delete-ocicacheusergetrediscluster", "delete-redisclusterattachocicacheuser", "delete-redisclusterdetachocicacheuser"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-ocicacheuser.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-ocicacheuser.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-ocicacheuser.outputs.parameters.resourceGroup}}"
+        - name: delete-ocicacheusergetrediscluster
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-ocicacheusergetrediscluster"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-ocicacheusergetrediscluster.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-ocicacheusergetrediscluster.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-ocicacheusergetrediscluster.outputs.parameters.resourceGroup}}"
+        - name: delete-rediscluster
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-rediscluster", "delete-redisclusterattachocicacheuser", "delete-redisclusterdetachocicacheuser", "delete-redisclustergetocicacheuser"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-rediscluster.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-rediscluster.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-rediscluster.outputs.parameters.resourceGroup}}"
+        - name: delete-redisclusterattachocicacheuser
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-redisclusterattachocicacheuser"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-redisclusterattachocicacheuser.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-redisclusterattachocicacheuser.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-redisclusterattachocicacheuser.outputs.parameters.resourceGroup}}"
+        - name: delete-redisclusterdetachocicacheuser
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-redisclusterdetachocicacheuser"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-redisclusterdetachocicacheuser.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-redisclusterdetachocicacheuser.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-redisclusterdetachocicacheuser.outputs.parameters.resourceGroup}}"
+        - name: delete-redisclustergetocicacheuser
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-redisclustergetocicacheuser"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-redisclustergetocicacheuser.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-redisclustergetocicacheuser.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-redisclustergetocicacheuser.outputs.parameters.resourceGroup}}"

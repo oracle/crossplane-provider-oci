@@ -1,0 +1,264 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-kms-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: kms-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: vault_crypto_endpoint
+    - name: vault_management_endpoint
+    - name: create_compartment
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: kms-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-encrypteddata
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-key]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/encrypteddata.yaml"
+              - name: envVars
+                value: "VAULT_CRYPTO_ENDPOINT={{workflow.parameters.vault_crypto_endpoint}}"
+        - name: create-generatedkey
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-key]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/generatedkey.yaml"
+              - name: envVars
+                value: "VAULT_CRYPTO_ENDPOINT={{workflow.parameters.vault_crypto_endpoint}}"
+        - name: create-key
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/key.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-asymmetrickey
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/asymmetrickey.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-keyversion
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-key]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/keyversion.yaml"
+              - name: envVars
+                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-sign
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-asymmetrickey]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/sign.yaml"
+              - name: envVars
+                value: "VAULT_CRYPTO_ENDPOINT={{workflow.parameters.vault_crypto_endpoint}}"
+        - name: create-vault
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/vault.yaml"
+        - name: create-virtualvault
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/virtualvault.yaml"
+        - name: create-vaultreplication
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-virtualvault]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/vaultreplication.yaml"
+        - name: delete-encrypteddata
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-encrypteddata"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-encrypteddata.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-encrypteddata.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-encrypteddata.outputs.parameters.resourceGroup}}"
+        - name: delete-generatedkey
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-generatedkey"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-generatedkey.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-generatedkey.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-generatedkey.outputs.parameters.resourceGroup}}"
+        - name: delete-key
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-key", "delete-encrypteddata", "delete-generatedkey", "delete-keyversion"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-key.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-key.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-key.outputs.parameters.resourceGroup}}"
+        - name: delete-asymmetrickey
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-asymmetrickey", "delete-sign"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-asymmetrickey.outputs.parameters.resourceGroup}}"
+        - name: delete-keyversion
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-keyversion"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-keyversion.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-keyversion.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-keyversion.outputs.parameters.resourceGroup}}"
+        - name: delete-sign
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-sign"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-sign.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-sign.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-sign.outputs.parameters.resourceGroup}}"
+        - name: delete-vault
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-vault"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-vault.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-vault.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-vault.outputs.parameters.resourceGroup}}"
+        - name: delete-virtualvault
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-virtualvault", "delete-vaultreplication"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-virtualvault.outputs.parameters.resourceGroup}}"
+        - name: delete-vaultreplication
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-vaultreplication"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-vaultreplication.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-vaultreplication.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-vaultreplication.outputs.parameters.resourceGroup}}"

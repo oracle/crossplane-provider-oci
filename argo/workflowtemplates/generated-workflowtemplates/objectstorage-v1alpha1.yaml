@@ -1,0 +1,189 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-objectstorage-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: objectstorage-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: objectstorage_namespace
+    - name: create_compartment
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: objectstorage-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-bucket
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/bucket.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-bucketwithretentionrule
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/bucketwithretentionrule.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-object
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/object.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-objectlifecyclepolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/objectlifecyclepolicy.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-preauthrequest
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/preauthrequest.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: create-replicationpolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/objectstorage/v1alpha1/replicationpolicy.yaml"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
+        - name: delete-bucket
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-bucket"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-bucket.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-bucket.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-bucket.outputs.parameters.resourceGroup}}"
+        - name: delete-bucketwithretentionrule
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-bucketwithretentionrule"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-bucketwithretentionrule.outputs.parameters.resourceGroup}}"
+        - name: delete-object
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-object"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-object.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-object.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-object.outputs.parameters.resourceGroup}}"
+        - name: delete-objectlifecyclepolicy
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-objectlifecyclepolicy"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-objectlifecyclepolicy.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-objectlifecyclepolicy.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-objectlifecyclepolicy.outputs.parameters.resourceGroup}}"
+        - name: delete-preauthrequest
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-preauthrequest"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-preauthrequest.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-preauthrequest.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-preauthrequest.outputs.parameters.resourceGroup}}"
+        - name: delete-replicationpolicy
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-replicationpolicy"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-replicationpolicy.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-replicationpolicy.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-replicationpolicy.outputs.parameters.resourceGroup}}"

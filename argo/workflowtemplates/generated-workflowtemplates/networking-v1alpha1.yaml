@@ -1,0 +1,354 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-networking-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: networking-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: availability_domain
+    - name: compartment_ocid
+    - name: image_instance_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_image
+      value: "true"
+    - name: create_instance
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: networking-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-image
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_image}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/image.yaml"
+              - name: envVars
+                value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
+        - name: create-instance
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_instance}} == true"
+          dependencies: [create-compartment, create-image, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instance.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-dhcpoptions
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/dhcpoptions.yaml"
+        - name: create-internetgateway
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/internetgateway.yaml"
+        - name: create-natgateway
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/natgateway.yaml"
+        - name: create-networksecuritygroup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/networksecuritygroup.yaml"
+        - name: create-networksecuritygroupsecurityrule
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-networksecuritygroup]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/networksecuritygroupsecurityrule.yaml"
+        - name: create-publicippool
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/publicippool.yaml"
+        - name: create-routetable
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-natgateway, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/routetable.yaml"
+        - name: create-securitylist
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/securitylist.yaml"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-privatesubnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/privatesubnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-vnicattachment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-instance]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vnicattachment.yaml"
+        - name: delete-dhcpoptions
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-dhcpoptions"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-dhcpoptions.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-dhcpoptions.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-dhcpoptions.outputs.parameters.resourceGroup}}"
+        - name: delete-internetgateway
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-internetgateway"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-internetgateway.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-internetgateway.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-internetgateway.outputs.parameters.resourceGroup}}"
+        - name: delete-natgateway
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-natgateway", "delete-routetable"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-natgateway.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-natgateway.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-natgateway.outputs.parameters.resourceGroup}}"
+        - name: delete-networksecuritygroup
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-networksecuritygroup", "delete-networksecuritygroupsecurityrule"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-networksecuritygroup.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-networksecuritygroup.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-networksecuritygroup.outputs.parameters.resourceGroup}}"
+        - name: delete-networksecuritygroupsecurityrule
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-networksecuritygroupsecurityrule"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-networksecuritygroupsecurityrule.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-networksecuritygroupsecurityrule.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-networksecuritygroupsecurityrule.outputs.parameters.resourceGroup}}"
+        - name: delete-publicippool
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-publicippool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-publicippool.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-publicippool.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-publicippool.outputs.parameters.resourceGroup}}"
+        - name: delete-routetable
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-routetable"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-routetable.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-routetable.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-routetable.outputs.parameters.resourceGroup}}"
+        - name: delete-securitylist
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-securitylist"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-securitylist.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-securitylist.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-securitylist.outputs.parameters.resourceGroup}}"
+        - name: delete-subnet
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-subnet"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-subnet.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-subnet.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-subnet.outputs.parameters.resourceGroup}}"
+        - name: delete-privatesubnet
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-privatesubnet"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-privatesubnet.outputs.parameters.resourceGroup}}"
+        - name: delete-vcn
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-vcn", "delete-dhcpoptions", "delete-internetgateway", "delete-natgateway", "delete-networksecuritygroup", "delete-privatesubnet", "delete-routetable", "delete-securitylist", "delete-subnet"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-vcn.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-vcn.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-vcn.outputs.parameters.resourceGroup}}"
+        - name: delete-vnicattachment
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-vnicattachment"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-vnicattachment.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-vnicattachment.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-vnicattachment.outputs.parameters.resourceGroup}}"

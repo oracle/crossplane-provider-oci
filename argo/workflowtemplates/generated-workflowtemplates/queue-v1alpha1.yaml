@@ -1,0 +1,60 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-queue-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: queue-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: queue-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-queue
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/queue/v1alpha1/queue.yaml"
+        - name: delete-queue
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-queue"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-queue.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-queue.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-queue.outputs.parameters.resourceGroup}}"

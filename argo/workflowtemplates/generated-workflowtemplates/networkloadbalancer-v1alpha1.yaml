@@ -1,0 +1,180 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-networkloadbalancer-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: networkloadbalancer-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: networkloadbalancer-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-backend
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-networkloadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networkloadbalancer/v1alpha1/backend.yaml"
+        - name: create-backendset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-networkloadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networkloadbalancer/v1alpha1/backendset.yaml"
+        - name: create-listener
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-networkloadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networkloadbalancer/v1alpha1/listener.yaml"
+        - name: create-networkloadbalancer
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networkloadbalancer/v1alpha1/networkloadbalancer.yaml"
+        - name: create-networkloadbalancersbackendsetsunified
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-networkloadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networkloadbalancer/v1alpha1/networkloadbalancersbackendsetsunified.yaml"
+        - name: delete-backend
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-backend"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-backend.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-backend.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-backend.outputs.parameters.resourceGroup}}"
+        - name: delete-backendset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-backendset"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-backendset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-backendset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-backendset.outputs.parameters.resourceGroup}}"
+        - name: delete-listener
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-listener"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-listener.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-listener.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-listener.outputs.parameters.resourceGroup}}"
+        - name: delete-networkloadbalancer
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-networkloadbalancer", "delete-backend", "delete-backendset", "delete-listener", "delete-networkloadbalancersbackendsetsunified"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-networkloadbalancer.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-networkloadbalancer.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-networkloadbalancer.outputs.parameters.resourceGroup}}"
+        - name: delete-networkloadbalancersbackendsetsunified
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-networkloadbalancersbackendsetsunified"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-networkloadbalancersbackendsetsunified.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-networkloadbalancersbackendsetsunified.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-networkloadbalancersbackendsetsunified.outputs.parameters.resourceGroup}}"

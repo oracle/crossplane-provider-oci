@@ -1,0 +1,96 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-monitoring-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: monitoring-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_notificationtopic
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: monitoring-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-notificationtopic
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_notificationtopic}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/ons/v1alpha1/notificationtopic.yaml"
+        - name: create-alarm
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-notificationtopic]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/monitoring/v1alpha1/alarm.yaml"
+        - name: create-alarmsuppression
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-alarm]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/monitoring/v1alpha1/alarmsuppression.yaml"
+        - name: delete-alarm
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-alarm", "delete-alarmsuppression"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-alarm.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-alarm.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-alarm.outputs.parameters.resourceGroup}}"
+        - name: delete-alarmsuppression
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-alarmsuppression"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-alarmsuppression.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-alarmsuppression.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-alarmsuppression.outputs.parameters.resourceGroup}}"

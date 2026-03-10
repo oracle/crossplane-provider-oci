@@ -1,0 +1,135 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-functions-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: functions-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: function_image
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: functions-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-application
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/functions/v1alpha1/application.yaml"
+        - name: create-function
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-application]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/functions/v1alpha1/function.yaml"
+              - name: envVars
+                value: "FUNCTION_IMAGE={{workflow.parameters.function_image}}"
+        - name: create-invokefunction
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-function]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/functions/v1alpha1/invokefunction.yaml"
+        - name: delete-application
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-application", "delete-function"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-application.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-application.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-application.outputs.parameters.resourceGroup}}"
+        - name: delete-function
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-function", "delete-invokefunction"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-function.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-function.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-function.outputs.parameters.resourceGroup}}"
+        - name: delete-invokefunction
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-invokefunction"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-invokefunction.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-invokefunction.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-invokefunction.outputs.parameters.resourceGroup}}"

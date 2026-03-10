@@ -1,0 +1,347 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-compute-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: compute-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: availability_domain
+    - name: compartment_ocid
+    - name: computehost_id
+    - name: image_instance_ocid
+    - name: instanceconsoleconnection_publickey
+    - name: instancemaintenanceevent_id
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: compute-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-computecapacityreport
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/computecapacityreport.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-computehost
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/computehost.yaml"
+              - name: envVars
+                value: "COMPUTEHOST_ID={{workflow.parameters.computehost_id}}"
+        - name: create-computehostgroup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/computehostgroup.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-image
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/image.yaml"
+              - name: envVars
+                value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
+        - name: create-instance
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-image, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instance.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-instanceconfiguration
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instanceconfiguration.yaml"
+        - name: create-autoscaleinstanceconfiguration
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-image]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/autoscaleinstanceconfiguration.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-instanceconsoleconnection
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-instance]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instanceconsoleconnection.yaml"
+              - name: envVars
+                value: "INSTANCECONSOLECONNECTION_PUBLICKEY={{workflow.parameters.instanceconsoleconnection_publickey}}"
+        - name: create-instancemaintenanceevent
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instancemaintenanceevent.yaml"
+              - name: envVars
+                value: "INSTANCEMAINTENANCEEVENT_ID={{workflow.parameters.instancemaintenanceevent_id}}"
+        - name: create-instancepool
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-instanceconfiguration]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/instancepool.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: create-autoscaleinstancepool
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-autoscaleinstanceconfiguration, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/autoscaleinstancepool.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: delete-computecapacityreport
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-computecapacityreport"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-computecapacityreport.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-computecapacityreport.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-computecapacityreport.outputs.parameters.resourceGroup}}"
+        - name: delete-computehost
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-computehost"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-computehost.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-computehost.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-computehost.outputs.parameters.resourceGroup}}"
+        - name: delete-computehostgroup
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-computehostgroup"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-computehostgroup.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-computehostgroup.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-computehostgroup.outputs.parameters.resourceGroup}}"
+        - name: delete-image
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-image", "delete-autoscaleinstanceconfiguration", "delete-instance"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-image.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-image.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-image.outputs.parameters.resourceGroup}}"
+        - name: delete-instance
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-instance", "delete-instanceconsoleconnection"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-instance.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-instance.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-instance.outputs.parameters.resourceGroup}}"
+        - name: delete-instanceconfiguration
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-instanceconfiguration", "delete-instancepool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-instanceconfiguration.outputs.parameters.resourceGroup}}"
+        - name: delete-autoscaleinstanceconfiguration
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-autoscaleinstanceconfiguration", "delete-autoscaleinstancepool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-autoscaleinstanceconfiguration.outputs.parameters.resourceGroup}}"
+        - name: delete-instanceconsoleconnection
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-instanceconsoleconnection"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-instanceconsoleconnection.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-instanceconsoleconnection.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-instanceconsoleconnection.outputs.parameters.resourceGroup}}"
+        - name: delete-instancemaintenanceevent
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-instancemaintenanceevent"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-instancemaintenanceevent.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-instancemaintenanceevent.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-instancemaintenanceevent.outputs.parameters.resourceGroup}}"
+        - name: delete-instancepool
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-instancepool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-instancepool.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-instancepool.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-instancepool.outputs.parameters.resourceGroup}}"
+        - name: delete-autoscaleinstancepool
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-autoscaleinstancepool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-autoscaleinstancepool.outputs.parameters.resourceGroup}}"

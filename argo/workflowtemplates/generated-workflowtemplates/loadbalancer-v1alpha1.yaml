@@ -1,0 +1,276 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-loadbalancer-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: loadbalancer-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: loadbalancer-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/subnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-backendset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/backendset.yaml"
+        - name: create-certificate
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/certificate.yaml"
+        - name: create-lbhostname
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/lbhostname.yaml"
+        - name: create-listener
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/listener.yaml"
+        - name: create-loadbalancer
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/loadbalancer.yaml"
+        - name: create-pathrouteset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/pathrouteset.yaml"
+        - name: create-routingpolicy
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-backendset, create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/routingpolicy.yaml"
+        - name: create-ruleset
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/ruleset.yaml"
+        - name: create-sslciphersuite
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-loadbalancer]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/loadbalancer/v1alpha1/sslciphersuite.yaml"
+        - name: delete-backendset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-backendset", "delete-listener", "delete-pathrouteset", "delete-routingpolicy"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-backendset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-backendset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-backendset.outputs.parameters.resourceGroup}}"
+        - name: delete-certificate
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-certificate"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-certificate.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-certificate.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-certificate.outputs.parameters.resourceGroup}}"
+        - name: delete-lbhostname
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-lbhostname"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-lbhostname.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-lbhostname.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-lbhostname.outputs.parameters.resourceGroup}}"
+        - name: delete-listener
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-listener"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-listener.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-listener.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-listener.outputs.parameters.resourceGroup}}"
+        - name: delete-loadbalancer
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-loadbalancer", "delete-backendset", "delete-certificate", "delete-lbhostname", "delete-listener", "delete-pathrouteset", "delete-routingpolicy", "delete-ruleset", "delete-sslciphersuite"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-loadbalancer.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-loadbalancer.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-loadbalancer.outputs.parameters.resourceGroup}}"
+        - name: delete-pathrouteset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-pathrouteset"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-pathrouteset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-pathrouteset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-pathrouteset.outputs.parameters.resourceGroup}}"
+        - name: delete-routingpolicy
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-routingpolicy"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-routingpolicy.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-routingpolicy.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-routingpolicy.outputs.parameters.resourceGroup}}"
+        - name: delete-ruleset
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-ruleset"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-ruleset.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-ruleset.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-ruleset.outputs.parameters.resourceGroup}}"
+        - name: delete-sslciphersuite
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-sslciphersuite"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-sslciphersuite.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-sslciphersuite.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-sslciphersuite.outputs.parameters.resourceGroup}}"

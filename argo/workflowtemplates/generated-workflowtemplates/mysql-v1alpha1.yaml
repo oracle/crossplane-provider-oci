@@ -1,0 +1,135 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-mysql-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: mysql-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: availability_domain
+    - name: compartment_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_subnet
+      value: "true"
+    - name: create_vcn
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: mysql-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-subnet
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_subnet}} == true"
+          dependencies: [create-compartment, create-vcn]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/privatesubnet.yaml"
+        - name: create-vcn
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_vcn}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/networking/v1alpha1/vcn.yaml"
+        - name: create-mysqlbackup
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-mysqldbsystem]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/mysql/v1alpha1/mysqlbackup.yaml"
+        - name: create-mysqlconfiguration
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/mysql/v1alpha1/mysqlconfiguration.yaml"
+        - name: create-mysqldbsystem
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-privatesubnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/mysql/v1alpha1/mysqldbsystem.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
+        - name: delete-mysqlbackup
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-mysqlbackup"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-mysqlbackup.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-mysqlbackup.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-mysqlbackup.outputs.parameters.resourceGroup}}"
+        - name: delete-mysqlconfiguration
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-mysqlconfiguration"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-mysqlconfiguration.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-mysqlconfiguration.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-mysqlconfiguration.outputs.parameters.resourceGroup}}"
+        - name: delete-mysqldbsystem
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-mysqldbsystem", "delete-mysqlbackup"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-mysqldbsystem.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-mysqldbsystem.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-mysqldbsystem.outputs.parameters.resourceGroup}}"

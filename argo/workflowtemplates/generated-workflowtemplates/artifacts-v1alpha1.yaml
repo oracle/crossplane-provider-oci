@@ -1,0 +1,178 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-artifacts-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: artifacts-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: image_instance_ocid
+    - name: vault_key_signature
+    - name: vault_management_endpoint
+    - name: create_compartment
+      value: "true"
+    - name: create_image
+      value: "true"
+    - name: create_key
+      value: "true"
+    - name: create_keyversion
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: artifacts-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-image
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_image}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/compute/v1alpha1/image.yaml"
+              - name: envVars
+                value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
+        - name: create-key
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_key}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/key.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}},VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-keyversion
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_keyversion}} == true"
+          dependencies: [create-key]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/kms/v1alpha1/keyversion.yaml"
+              - name: envVars
+                value: "VAULT_MANAGEMENT_ENDPOINT={{workflow.parameters.vault_management_endpoint}}"
+        - name: create-containerconfiguration
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/containerconfiguration.yaml"
+        - name: create-containerimagesignature
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment, create-image, create-key, create-keyversion]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/containerimagesignature.yaml"
+              - name: envVars
+                value: "VAULT_KEY_SIGNATURE={{workflow.parameters.vault_key_signature}}"
+        - name: create-containerrepository
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/containerrepository.yaml"
+        - name: create-repository
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/artifacts/v1alpha1/repository.yaml"
+        - name: delete-containerconfiguration
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-containerconfiguration"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-containerconfiguration.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-containerconfiguration.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-containerconfiguration.outputs.parameters.resourceGroup}}"
+        - name: delete-containerimagesignature
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-containerimagesignature"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-containerimagesignature.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-containerimagesignature.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-containerimagesignature.outputs.parameters.resourceGroup}}"
+        - name: delete-containerrepository
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-containerrepository"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-containerrepository.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-containerrepository.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-containerrepository.outputs.parameters.resourceGroup}}"
+        - name: delete-repository
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-repository"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-repository.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-repository.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-repository.outputs.parameters.resourceGroup}}"

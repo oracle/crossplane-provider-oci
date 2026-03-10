@@ -1,0 +1,158 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-email-v1alpha1-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: email-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    - name: compartment_ocid
+    - name: tenancy_ocid
+    - name: create_compartment
+      value: "true"
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: email-tests-workflow
+      dag:
+        tasks:
+        - name: create-compartment
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_compartment}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/identity/v1alpha1/compartment.yaml"
+              - name: envVars
+                value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-dkim
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-emaildomain]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/email/v1alpha1/dkim.yaml"
+        - name: create-emaildomain
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/email/v1alpha1/emaildomain.yaml"
+        - name: create-emailreturnpath
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-emaildomain]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/email/v1alpha1/emailreturnpath.yaml"
+        - name: create-sender
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/email/v1alpha1/sender.yaml"
+        - name: create-suppression
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/email/v1alpha1/suppression.yaml"
+              - name: envVars
+                value: "TENANCY_OCID={{workflow.parameters.tenancy_ocid}}"
+        - name: delete-dkim
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-dkim"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-dkim.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-dkim.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-dkim.outputs.parameters.resourceGroup}}"
+        - name: delete-emaildomain
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-emaildomain", "delete-dkim", "delete-emailreturnpath"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-emaildomain.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-emaildomain.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-emaildomain.outputs.parameters.resourceGroup}}"
+        - name: delete-emailreturnpath
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-emailreturnpath"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-emailreturnpath.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-emailreturnpath.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-emailreturnpath.outputs.parameters.resourceGroup}}"
+        - name: delete-sender
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-sender"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-sender.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-sender.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-sender.outputs.parameters.resourceGroup}}"
+        - name: delete-suppression
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-suppression"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-suppression.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-suppression.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-suppression.outputs.parameters.resourceGroup}}"
