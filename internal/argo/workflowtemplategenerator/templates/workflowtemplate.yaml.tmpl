@@ -1,0 +1,94 @@
+{{- if .ResourceFiles }}
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: oci-{{ .Service }}-{{ .Version }}-tests-template
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: {{ .Service }}-tests-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    {{- range .EnvVars }}
+    - name: {{ . }}
+    {{- end }}
+    {{- range .PrerequisiteResourceFiles }}
+    - name: create_{{ .Kind }}
+      value: "true"
+    {{- end }}
+    - name: create_resources
+      value: "true"
+    - name: delete_resources
+      value: "true"
+  templates:
+    - name: {{ .Service }}-tests-workflow
+      dag:
+        tasks:
+        {{- range .PrerequisiteResourceFiles }}
+        - name: create-{{ .Kind }}
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{ resolveWhen "prerequisites" .Kind }} == true"
+          {{- if .PrerequisiteKinds }}
+          dependencies: [{{ .PrerequisiteKinds | joinCreateDependencies }}]
+          {{- end }}
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "{{ .Path | resolveResourceFile }}"
+              {{- if .EnvVars }}
+              - name: envVars
+                value: "{{ .EnvVars | resolveEnvVars }}"
+              {{- end }}
+              {{- if .SetupFilePath }}
+              - name: setupFile
+                value: "{{ .SetupFilePath | resolveResourceFile }}"
+              {{- end }}
+        {{- end }}
+        {{- range .ResourceFiles }}
+        - name: create-{{ .Name }}
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{ resolveWhen "create" }} == true"
+          {{- if .PrerequisiteKinds }}
+          dependencies: [{{ .PrerequisiteKinds | joinCreateDependencies }}]
+          {{- end }}
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "{{ .Path | resolveResourceFile }}"
+              {{- if .EnvVars }}
+              - name: envVars
+                value: "{{ .EnvVars | resolveEnvVars }}"
+              {{- end }}
+              {{- if .SetupFilePath }}
+              - name: setupFile
+                value: "{{ .SetupFilePath | resolveResourceFile }}"
+              {{- end }}
+        {{- end }}
+        {{- range .ResourceFiles }}
+        - name: delete-{{ .Name }}
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{ resolveWhen "delete" }} == true"
+          dependencies: [{{ joinDeleteDependencies .Name .DependentNames }}]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{ resolveDeleteParameters .Name "Kind" }}"
+              - name: resourceName
+                value: "{{ resolveDeleteParameters .Name "Name" }}"
+              - name: resourceGroup
+                value: "{{ resolveDeleteParameters .Name "Group" }}"
+              {{- if .TeardownFilePath }}
+              - name: teardownFile
+                value: "{{ .TeardownFilePath | resolveResourceFile }}"
+              {{- end }}
+        {{- end }}
+{{- end }}

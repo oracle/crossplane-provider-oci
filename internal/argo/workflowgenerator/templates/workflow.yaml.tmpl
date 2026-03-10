@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: oci-crossplane-test-
+spec:
+  serviceAccountName: argo-workflow
+  entrypoint: crossplane-provider-oci-test-workflow
+  volumes:
+    - name: git-repo
+      persistentVolumeClaim:
+        claimName: git-repo-pvc
+  arguments:
+    parameters:
+    {{- range .Services }}
+    - name: {{ .RunParam }}
+      value: "false"
+    {{- end }}
+    {{- range .Parameters }}
+    - name: {{ .Name }}
+      {{- if .Value }}
+      value: "{{ .Value }}"
+      {{- end }}
+    {{- end }}
+  templates:
+    - name: crossplane-provider-oci-test-workflow
+      dag:
+        tasks:
+        {{- range .Services }}
+        - name: {{ .TaskName }}
+          templateRef:
+            name: {{ .Name }}
+            template: {{ .Entrypoint }}
+          when: "{{ resolveWhen .RunParam }}"
+          arguments:
+            parameters:
+            {{- range .Parameters }}
+              - name: {{ .Name }}
+                value: "{{ resolveParameter .Name }}"
+            {{- end }}
+        {{- end }}
