@@ -5,7 +5,7 @@ This directory contains the Argo assets used to run provider examples as Argo wo
 The directory is organized into four main areas:
 
 - `argo/setup/`: bootstrap manifests for the workflow service account, token secret, PVC, and provider config.
-- `argo/workflows/templates/`: hand-maintained reusable templates such as repository cloning, Crossplane installation, and generic create/delete resource helpers.
+- `argo/workflowtemplates/templates/`: hand-maintained reusable templates such as repository cloning, Crossplane installation, and generic create/delete resource helpers.
 - `argo/workflowtemplates/generated-workflowtemplates/`: generated per-service `WorkflowTemplate` manifests.
 - `argo/workflows/generated-workflows/`: generated top-level `Workflow` manifests that invoke one or more service templates.
 
@@ -47,7 +47,7 @@ These manifests use the `argo-workflow` service account in the `default` namespa
 Apply the reusable templates first:
 
 ```bash
-kubectl apply -f argo/workflows/templates/
+kubectl apply -f argo/workflowtemplates/templates/
 ```
 
 These three templates are the common runtime building blocks:
