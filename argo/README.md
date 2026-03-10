@@ -1,194 +1,200 @@
-# How to Setup and Test Argo Workflow
+# Argo Workflows Guide
 
-## Step 1: Install Argo Workflow
+This directory contains the Argo assets used to run provider examples as Argo workflows against a Kubernetes cluster.
 
-Install Argo workflow using the following command:
+The directory is organized into four main areas:
 
-<!-- TODO: Update instructions to install argo -->
+- `argo/setup/`: bootstrap manifests for the workflow service account, token secret, PVC, and provider config.
+- `argo/workflows/templates/`: hand-maintained reusable templates such as repository cloning, Crossplane installation, and generic create/delete resource helpers.
+- `argo/workflowtemplates/generated-workflowtemplates/`: generated per-service `WorkflowTemplate` manifests.
+- `argo/workflows/generated-workflows/`: generated top-level `Workflow` manifests that invoke one or more service templates.
+
+Generated content is kept separate from hand-maintained templates so regeneration does not overwrite the shared workflow building blocks.
+
+## Prerequisites
+
+Before using these workflows, make sure you have:
+
+- a working Kubernetes cluster and the correct `kubectl` context selected
+- `kubectl`, `helm`, and the `argo` CLI installed locally
+- permission to create namespaces, cluster roles, cluster role bindings, secrets, PVCs, and workflow resources
+- OCI access that works with `InstancePrincipal`
+
+Important: `argo/scripts/setup_crossplane.sh` creates the OCI credentials secret with `"auth": "InstancePrincipal"` and then applies `argo/setup/providerconfig.yaml`. If your test environment uses a different OCI auth method, update those files before running workflows.
+
+## Bootstrap Argo Workflows
+
+Install Argo Workflows into the `argo` namespace:
+
 ```bash
 kubectl create namespace argo
 kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.7.6/install.yaml
 ```
 
-## Step 2: Clone the Repository
-
-Clone the repository using the following command:
-<!-- Replace with oracle repo-->
-```bash
-git clone https://github.com/endurthiabhilash/crossplane-provider-oci.git -b argo-workflow
-```
-
-## Step 3: Create Argo Workflow Service Account
-
-Create the Argo workflow service account by running:
+Create the service account, token secret, and PVC used by the workflows in this repo:
 
 ```bash
 kubectl apply -f argo/setup/workflow-serviceaccount.yaml
-```
-
-## Step 4: Create Cluster Admin Role Binding
-
-Create the cluster admin role binding by running:
-
-```bash
 kubectl apply -f argo/setup/workflow-admin-clusterrolebinding.yaml
-```
-
-## Step 5: Create Secret for Argo Workflow Service Account
-
-Create the token by running:
-```bash
 kubectl apply -f argo/setup/workflow-token-secret.yaml
+kubectl apply -f argo/setup/git-repo-pvc.yaml
 ```
 
-## Step 6: Port-forward Argo Server
+These manifests use the `argo-workflow` service account in the `default` namespace because the checked-in workflow templates reference that identity directly.
 
-Port-forward the Argo server using the following command:
+## Register the Shared Templates
+
+Apply the reusable templates first:
+
+```bash
+kubectl apply -f argo/workflows/templates/
+```
+
+These three templates are the common runtime building blocks:
+
+- `clone-repo-template`: clones this repository into the shared PVC mounted at `/git-repo`
+- `crossplane-template`: installs or removes Crossplane and OCI providers
+- `test-template`: creates, deletes, and describes individual resources from files under `examples/`
+
+## Generate WorkflowTemplate and Workflow Manifests
+
+The generated outputs in this repo come from two generators:
+
+- `cmd/argo_workflowtemplate_generator`: creates per-service workflow templates
+- `cmd/argo_workflow_generator`: creates the consolidated top-level workflow
+
+Run them from the repository root:
+
+```bash
+go run ./cmd/argo_workflowtemplate_generator v1alpha1
+go run ./cmd/argo_workflow_generator v1alpha1
+```
+
+If you only want to regenerate a subset of services in the top-level workflow, pass the service names after the version:
+
+```bash
+go run ./cmd/argo_workflow_generator v1alpha1 networking identity
+```
+
+After generation, apply the generated service templates:
+
+```bash
+kubectl apply -f argo/workflowtemplates/generated-workflowtemplates/
+```
+
+If you want to run the checked-in consolidated workflow manifest directly, it is currently:
+
+```text
+argo/workflows/generated-workflows/crossplane-provider-oci-v1alpha1.yaml
+```
+
+## Optional: Access the Argo UI
+
+Port-forward the Argo server:
 
 ```bash
 kubectl -n argo port-forward deployment/argo-server 2746:2746
 ```
 
-## Step 7: Login to Argo Workflow UI
-
-Run below command to get ARGO_TOKEN
+Fetch a bearer token for the `argo-workflow` service account:
 
 ```bash
 ARGO_TOKEN="Bearer $(kubectl get secret argo-workflow.service-account-token -o=jsonpath='{.data.token}' | base64 --decode)"
-echo $ARGO_TOKEN
+echo "${ARGO_TOKEN}"
 ```
 
-Login to https://localhost:2746 by using the ARGO_TOKEN from above.
+Then sign in at `https://localhost:2746`.
 
-## Step 6: Create PVC for Workflow
+## Populate the Shared Repository PVC
 
-Create a PVC to store the cloned repository in the workflow by running:
+Most workflows in this directory mount `git-repo-pvc` and expect the repository contents to exist at `/git-repo` inside the workflow pod. Populate that PVC before running service tests:
 
 ```bash
-kubectl apply -f argo/setup/git-repo-pvc.yaml
+argo submit --from workflowtemplate/clone-repo-template \
+  -p git_repo=https://github.com/crossplane-providers/crossplane-provider-oci.git \
+  -p git_ref=main
 ```
 
-## Step 7: Submit the Workflow
-
-To start the workflow, run:
+If your Argo installation does not default ad hoc submissions to the `argo-workflow` service account, add:
 
 ```bash
-argo submit argo/workflows/test-workflow.yaml \
--p clone_repo=true \
--p setup_crossplane=true \
--p delete_crossplane=true \
--p region=us-ashburn-1 \
--p providers="provider-family-oci,provider-oci-identity,provider-oci-networking" \
--p provider-image-repo-name=iad.ocir.io/iddevjmhjw0n/aendurth \
--p family-provider-version=v0.0.3-dev \
--p git_ref=argo-workflow \
--p git_repo=https://github.com/endurthiabhilash/crossplane-provider-oci.git \
--p tenancy_ocid=ocid1.tenancy.oc1..xxx \
--p run_identity_tests=true \
--p run_network_tests=true \
--p create_compartment=true \
--p compartment_ocid=ocid1.compartment.oc1..xxx \
--p service_ocid=ocid1.service.oc1.iad.xxx
+--serviceaccount argo-workflow
 ```
 
-## Notes
+## Install Crossplane and OCI Providers from Argo
 
-- Make sure to replace the placeholders (`ocid1.tenancy.oc1.xxx`, `ocid1.compartment.oc1.xxx`, `ocid1.image.oc1.xxx`) with your actual OCI tenancy, compartment, and image IDs.
-- Update the `provider-image-repo-name` and `family-provider-version` parameters according to your setup.
-
-## Available Workflow Templates
-
-The `argo/workflows/templates` directory contains reusable workflow templates that can be referenced in your workflows. These templates provide common functionality for tasks such as cloning repositories, setting up Crossplane, and creating resources.
-
-### Available Templates
-
-1. **clone-repo-template**: Clones a Git repository into a Persistent Volume Claim (PVC).
-   - Parameters:
-     - `git_repo`: URL of the Git repository to clone.
-     - `git_ref`: Branch or commit to check out.
-
-2. **crossplane-template**: Sets up Crossplane with OCI providers.
-   - Parameters:
-     - `namespace`: Namespace to install Crossplane.
-     - `region`: OCI region.
-     - `providers`: Comma-separated list of Crossplane providers to install.
-     - `provider-image-repo-name`: Image repository for OCI provider.
-     - `family-provider-version`: Version of the OCI provider family.
-     - `tenancy`: OCI tenancy OCID.
-
-3. **test-template**: Creates resources from YAML files.
-   - Parameters:
-     - `resourceFile`: Path to the YAML file defining the resource.
-     - `envVars`: Environment variables to substitute in the YAML file.
-
-4. **identity-tests-template**: Tests OCI identity resources.
-   - Parameters:
-     - `create_compartment`: Whether to create a new compartment.
-     - `compartment_ocid`: OCID of the compartment.
-
-5. **network-tests-template**: Tests OCI network resources.
-   - Parameters:
-     - `create_compartment`: Whether to create a new compartment.
-     - `compartment_ocid`: OCID of the compartment.
-     - `service_ocid`: OCID of the service.
-
-6. **loadbalancer-tests-template**: Tests OCI load balancer resources.
-   - Parameters:
-     - `create_compartment`: Whether to create a new compartment.
-     - `compartment_ocid`: OCID of the compartment.
-     - `create_vcn`: Whether to create a new VCN.
-     - `create_subnet`: Whether to create a new subnet.
-
-7. **redis-tests-template**: Tests OCI Redis resources.
-   - Parameters:
-     - `create_compartment`: Whether to create a new compartment.
-     - `compartment_ocid`: OCID of the compartment.
-     - `create_vcn`: Whether to create a new VCN.
-     - `create_subnet`: Whether to create a new subnet.
-
-8. **mysql-tests-template**: Tests OCI MySQL resources.
-   - Parameters:
-     - `create_compartment`: Whether to create a new compartment.
-     - `compartment_ocid`: OCID of the compartment.
-     - `create_vcn`: Whether to create a new VCN.
-     - `create_subnet`: Whether to create a new subnet.
-
-## Using Templates in Workflows
-
-To use these templates in your workflows, first apply them to your Argo instance using:
+Run the shared Crossplane setup template:
 
 ```bash
-kubectl apply -f argo/workflows/templates/clone-repo.yaml
-kubectl apply -f argo/workflows/templates/crossplane.yaml
-kubectl apply -f argo/workflows/templates/test.yaml
-kubectl apply -f argo/workflows/templates/identity-tests.yaml
-kubectl apply -f argo/workflows/templates/network-tests.yaml
-kubectl apply -f argo/workflows/templates/loadbalancer-tests.yaml
-kubectl apply -f argo/workflows/templates/redis-tests.yaml
-kubectl apply -f argo/workflows/templates/mysql-tests.yaml
+argo submit --from workflowtemplate/crossplane-template \
+  --entrypoint setup-crossplane \
+  -p namespace=crossplane-system \
+  -p region=us-ashburn-1 \
+  -p providers=provider-family-oci,provider-oci-networking \
+  -p provider-image-repo-name=ghcr.io/oracle \
+  -p family-provider-version=v0.0.2 \
+  -p tenancy=<your-tenancy-ocid>
 ```
 
-Then, reference them in your workflow definition using `templateRef`. For example:
+This template:
 
-```yaml
-- name: clone-repo
-  templateRef:
-    name: clone-repo-template
-    template: clone-repo
-  arguments:
-    parameters:
-      - name: git_repo
-        value: "https://github.com/your/repo.git"
-      - name: git_ref
-        value: "main"
-```
+- creates the target namespace if needed
+- installs Crossplane with Helm
+- installs the OCI family provider and any requested sub-providers
+- creates the `oci-creds` secret in `crossplane-system`
+- applies `argo/setup/providerconfig.yaml`
 
-## Using Templates as Standalone Workflows
+If you publish provider images to a private registry, change `provider-image-repo-name` and the version parameters accordingly.
 
-To trigger workflows directly from templates, you can use below command after applying the templates to your Argo instance:
+## Run a Generated Top-Level Workflow
+
+The checked-in generated workflow currently dispatches the networking service template. Submit it like this:
 
 ```bash
-argo submit --from workflowtemplate/<template_name> \
--p <parameter_1>=<value_1> \
--p <parameter_2>=<value_2>
+argo submit argo/workflows/generated-workflows/crossplane-provider-oci-v1alpha1.yaml \
+  -p run_networking_tests=true \
+  -p availability_domain=<availability-domain> \
+  -p compartment_ocid=<compartment-ocid> \
+  -p image_instance_ocid=<image-source-instance-ocid> \
+  -p create_compartment=true \
+  -p create_image=true \
+  -p create_instance=true \
+  -p create_resources=true \
+  -p delete_resources=true
 ```
+
+Parameter notes:
+
+- `availability_domain`: used by the compute instance example referenced by the networking workflow
+- `compartment_ocid`: parent or target compartment depending on whether the workflow creates a compartment
+- `image_instance_ocid`: source instance OCID used by `examples/compute/v1alpha1/image.yaml`
+- `delete_resources=true`: cleans up the created resources after validation
+
+## Run a Generated Service WorkflowTemplate Directly
+
+For faster reruns of a single service, submit the service template directly after applying it:
+
+```bash
+argo submit --from workflowtemplate/oci-networking-v1alpha1-tests-template \
+  -p availability_domain=<availability-domain> \
+  -p compartment_ocid=<compartment-ocid> \
+  -p image_instance_ocid=<image-source-instance-ocid> \
+  -p create_compartment=true \
+  -p create_image=true \
+  -p create_instance=true \
+  -p create_resources=true \
+  -p delete_resources=true
+```
+
+The available service templates live under `argo/workflowtemplates/generated-workflowtemplates/` and follow this naming pattern:
+
+```text
+oci-<service>-<version>-tests-template
+```
+
+## Troubleshooting
+
+- If a workflow fails because `/git-repo/...` does not exist, rerun `clone-repo-template` to repopulate `git-repo-pvc`.
+- If provider installation stalls, inspect `kubectl get providers` and the Crossplane pods in `crossplane-system`.
+- If the UI token lookup fails, verify that `argo/setup/workflow-token-secret.yaml` exists in the `default` namespace and has been populated by the cluster.
+- If OCI authentication fails, confirm that the cluster can use `InstancePrincipal`, or update the provider setup to use a different credential source.
