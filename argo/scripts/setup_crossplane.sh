@@ -8,7 +8,7 @@ set -euo pipefail
 : "${KUBECONFIG:=}"  # Path to kubeconfig for target cluster
 : "${CONTEXT:=}"  # Context name for target cluster
 : "${PROVIDER_IMAGE_REPO_NAME:=ghcr.io/oracle}"  # OCI provider image repository
-: "${FAMILY_PROVIDER_VERSION:=v0.0.2}"  # Version of OCI provider family
+: "${FAMILY_PROVIDER_VERSION:=v0.2.0}"  # Version of OCI provider family
 : "${SUB_PROVIDERS_VERSION:=${FAMILY_PROVIDER_VERSION}}"  # Version of sub-providers (defaults to FAMILY_PROVIDER_VERSION)
 : "${TENANCY_OCID:=ocid1.tenancy.oc1.xxx}"
 
@@ -88,6 +88,7 @@ done
 
 
 # Step 3: Create InstancePrincipal secret
+# For more credential types, refer to quickstart guide in docs/quickstart.md
 echo "Creating InstancePrincipal secret..."
 kctl create secret generic oci-creds \
   --namespace="${NAMESPACE}" \

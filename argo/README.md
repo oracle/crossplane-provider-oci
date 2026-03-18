@@ -132,7 +132,7 @@ argo submit --from workflowtemplate/crossplane-template \
   -p region=us-ashburn-1 \
   -p providers=provider-family-oci,provider-oci-networking \
   -p provider-image-repo-name=ghcr.io/oracle \
-  -p family-provider-version=v0.0.2 \
+  -p family-provider-version=v0.2.0 \
   -p tenancy=<your-tenancy-ocid>
 ```
 
