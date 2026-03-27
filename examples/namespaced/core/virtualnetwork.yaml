@@ -1,0 +1,21 @@
+apiVersion: core.oci.m.upbound.io/v1alpha1
+kind: VirtualNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: core/v1alpha1/virtualnetwork
+  labels:
+    testing.upbound.io/example-name: test_vcn
+  name: test-vcn
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    cidrBlock: 10.1.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tfVCN
+    dnsLabel: tfvcn
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

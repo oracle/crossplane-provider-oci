@@ -1,0 +1,25 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: DeployArtifact
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployartifact
+  labels:
+    testing.upbound.io/example-name: test_deploy_ocir_artifact
+  name: test-deploy-ocir-artifact
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    argumentSubstitutionMode: NONE
+    deployArtifactSource:
+      - deployArtifactSourceType: OCIR
+        imageDigest: 38598585.fakedigest1
+        imageUri: iad.ocir.io/ax022wvgmjpq/fake/hello-java:0.0.2
+    deployArtifactType: DOCKER_IMAGE
+    displayName: Display_name
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

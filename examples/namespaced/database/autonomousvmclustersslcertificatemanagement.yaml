@@ -1,0 +1,19 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousVmClusterSslCertificateManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmclustersslcertificatemanagement
+  labels:
+    testing.upbound.io/example-name: test_avm_db_mgmt_res
+  name: test-avm-db-mgmt-res
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    certificateGenerationType: SYSTEM
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

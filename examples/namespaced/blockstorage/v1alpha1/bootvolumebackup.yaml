@@ -1,0 +1,20 @@
+apiVersion: blockstorage.oci.m.upbound.io/v1alpha1
+kind: BootVolumeBackup
+metadata:
+  labels:
+    testing.upbound.io/example-name: bootvolumebackup_label_1
+  name: bootvolumebackup1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/core_boot_volume_backup
+    bootVolumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: bootvolume_label_1
+    displayName: bootvolumebackup1
+    type: FULL
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

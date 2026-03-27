@@ -1,0 +1,21 @@
+apiVersion: oda.oci.m.upbound.io/v1alpha1
+kind: OdaPrivateEndpointAttachment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oda/v1alpha1/odaprivateendpointattachment
+  labels:
+    testing.upbound.io/example-name: TFOdaPrivateEndpointAttachment
+  name: tfodaprivateendpointattachment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    odaInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: TFOdaInstance
+    odaPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: TFOdaPrivateEndpoint
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

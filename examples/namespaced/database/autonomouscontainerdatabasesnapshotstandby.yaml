@@ -1,0 +1,18 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousContainerDatabaseSnapshotStandby
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_autonomous_container_database_snapshot_standby
+  name: test-autonomous-container-database-snapshot-standby
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousContainerDatabaseId: ${oci_database_autonomous_container_database_add_standby.test_autonomous_container_database_add_standby.dataguard_group_members.1.autonomous_container_database_id}
+    connectionStringsType: SNAPSHOT_SERVICES
+    role: SNAPSHOT_STANDBY
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

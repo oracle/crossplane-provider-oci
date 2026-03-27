@@ -1,0 +1,26 @@
+apiVersion: identity.oci.m.upbound.io/v1alpha1
+kind: Tag
+metadata:
+  labels:
+    testing.upbound.io/example-name: tag_label_1
+  name: tag1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    description: "Test Tag"
+    isCostTracking: false
+    isRetired: false
+    name: tag1
+    tagNamespaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tagnamespace_label_1
+    validator:
+      - validatorType: ENUM
+        values:
+          - "validator_value_1"
+          - "validator_value_2"
+          - "validator_value_3"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

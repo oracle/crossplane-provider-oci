@@ -1,0 +1,20 @@
+apiVersion: core.oci.m.upbound.io/v1alpha1
+kind: Byoasn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: core/v1alpha1/byoasn
+  labels:
+    testing.upbound.io/example-name: byoasn_test_resource
+  name: byoasn-test-resource
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    asn: ${var.byoasn_asn}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.byoasn_display_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

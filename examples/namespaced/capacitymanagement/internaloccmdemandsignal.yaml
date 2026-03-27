@@ -1,0 +1,16 @@
+apiVersion: capacitymanagement.oci.m.upbound.io/v1alpha1
+kind: InternalOccmDemandSignal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: capacitymanagement/v1alpha1/internaloccmdemandsignal
+  labels:
+    testing.upbound.io/example-name: test_internal_occm_demand_signal
+  name: test-internal-occm-demand-signal
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    occmDemandSignalId: ${var.occm_demand_signal_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

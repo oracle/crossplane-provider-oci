@@ -1,0 +1,17 @@
+apiVersion: opsi.oci.m.upbound.io/v1alpha1
+kind: AwrHubSourceAwrhubsourcesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsourceawrhubsourcesmanagement
+  labels:
+    testing.upbound.io/example-name: test_oci_opsi_awr_hub_source_awrhubsources_management
+  name: test-oci-opsi-awr-hub-source-awrhubsources-management
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    awrHubSourceId: ${var.awr_hub_source_ocid}
+    enableAwrhubsource: true
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

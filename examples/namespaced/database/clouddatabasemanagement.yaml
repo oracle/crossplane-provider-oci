@@ -1,0 +1,25 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: CloudDatabaseManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/clouddatabasemanagement
+  labels:
+    testing.upbound.io/example-name: test_database_cloud_database_management
+  name: test-database-cloud-database-management
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    credentialdetails:
+      - passwordSecretId: ${var.ssl_secret_id}
+        userName: sys
+    databaseId: ${data.oci_database_databases.test_databases.databases.0.id}
+    enableManagement: "true"
+    managementType: BASIC
+    privateEndPointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_management_private_endpoint
+    serviceName: ${data.oci_database_databases.test_databases.databases.0.db_unique_name}.${oci_core_subnet.test_subnet.subnet_domain_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

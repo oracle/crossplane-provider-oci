@@ -1,0 +1,20 @@
+apiVersion: networking.oci.m.upbound.io/v1alpha1
+kind: NetworkSecurityGroupSecurityRule
+metadata:
+  labels:
+    testing.upbound.io/example-name: networksecuritygroupsecurityrule_label_1
+  name: networksecuritygroupsecurityrule1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    direction: INGRESS
+    networkSecurityGroupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: networksecuritygroup_label_1
+    protocol: "6"
+    source: "10.0.1.0/24"
+    sourceType: "CIDR_BLOCK"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

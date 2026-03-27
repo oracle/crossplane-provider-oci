@@ -1,0 +1,20 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: MaintenanceRun
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/maintenancerun
+  labels:
+    testing.upbound.io/example-name: test_maintenance_run
+  name: test-maintenance-run
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    patchType: QUARTERLY
+    targetResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
+    timeScheduled: ${var.time_for_schedule_mr}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

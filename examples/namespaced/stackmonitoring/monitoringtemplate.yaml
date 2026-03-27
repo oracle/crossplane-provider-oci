@@ -1,0 +1,26 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: MonitoringTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplate
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_example
+  name: test-monitoring-template-example
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Example MT for resource type Apache Tomcat
+    destinationsRefs:
+      - name: test_notification_topic
+    displayName: MT_MonitoringTemplateTerraformExample
+    members:
+      - id: ocid1.stackmonitoringresourcetype.apache_tomcat
+        type: RESOURCE_TYPE
+    messageFormat: ONS_OPTIMIZED
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,71 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: BuildPipelineStage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipelinestage
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline_build_github_stage
+  name: test-build-pipeline-build-github-stage
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    buildPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_build_pipeline
+    buildPipelineStagePredecessorCollection:
+      - items:
+          - idSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_build_pipeline
+    buildPipelineStageType: BUILD
+    buildRunnerShapeConfig:
+      - buildRunnerType: CUSTOM
+        memoryInGbs: 4
+        ocpus: 1
+    buildSourceCollection:
+      - items:
+          - branch: branch
+            connectionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_github_connection
+            connectionType: GITHUB
+            name: primaryBuildSource
+            repositoryUrl: https://github.com/dlcbld/docktest
+          - branch: branch
+            connectionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_gitlab_connection
+            connectionType: GITLAB
+            name: source
+            repositoryUrl: https://gitlab.com/dlcbld/docktest
+          - branch: branch
+            connectionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_gitlab_server_connection
+            connectionType: GITLAB_SERVER
+            name: source1
+            repositoryUrl: https://gitlabserver.com/dlcbld/docktest
+          - branch: branch
+            connectionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_bitbucket_server_connection
+            connectionType: BITBUCKET_SERVER
+            name: source2
+            repositoryUrl: https://bitbucketserver.com/dlcbld/docktest
+          - branch: branch
+            connectionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: test_vbs_connection
+            connectionType: VBS
+            name: source3
+            repositoryUrl: https://vbs.com/dlcbld/docktest
+    buildSpecFile: build_spec.yml
+    description: Github build stage
+    displayName: github-build-stage
+    image: OL7_X86_64_STANDARD_10
+    primaryBuildSource: primaryBuildSource
+    stageExecutionTimeoutInSeconds: "10"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

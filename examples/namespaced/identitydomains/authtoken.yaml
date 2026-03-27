@@ -1,0 +1,37 @@
+apiVersion: identitydomains.oci.m.upbound.io/v1alpha1
+kind: AuthToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/authtoken
+  labels:
+    testing.upbound.io/example-name: test_auth_token
+  name: test-auth-token
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    attributeSets:
+      - all
+    attributes: ""
+    authorization: ${var.auth_token_authorization}
+    description: ${var.auth_token_description}
+    expiresOn: ${var.auth_token_expires_on}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+      - urn:ietf:params:scim:schemas:oracle:idcs:authToken
+    status: ${var.auth_token_status}
+    tags:
+      - key: ${var.auth_token_tags_key}
+        value: ${var.auth_token_tags_value}
+    urnietfparamsscimschemasoracleidcsextensionselfChangeUser:
+      - allowSelfChange: ${var.auth_token_urnietfparamsscimschemasoracleidcsextensionself_change_user_allow_self_change}
+    user:
+      - ocidSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
+        valueSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_user
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

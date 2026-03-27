@@ -1,0 +1,18 @@
+apiVersion: dns.oci.m.upbound.io/v1alpha1
+kind: Record
+metadata:
+  labels:
+    testing.upbound.io/example-name: record_label_1
+  name: record1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    domain: record1.zone1.oci-dns1
+    rdata: 192.168.0.1
+    rtype: A
+    ttl: 3600
+    zoneNameOrId: zone1.oci-dns1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

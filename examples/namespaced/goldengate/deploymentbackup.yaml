@@ -1,0 +1,27 @@
+apiVersion: goldengate.oci.m.upbound.io/v1alpha1
+kind: DeploymentBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/deploymentbackup
+  labels:
+    testing.upbound.io/example-name: test_deployment_backup
+  name: test-deployment-backup
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    bucket: ${var.objectstorage_bucket_name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    deploymentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deployment
+    displayName: ${var.deployment_display_name}
+    locks:
+      - {}
+    namespace: ${var.objectstorage_namespace}
+    object: object
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

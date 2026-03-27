@@ -1,0 +1,27 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: DataGuardAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_exadata_data_guard_association
+  name: test-exadata-data-guard-association
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    creationType: ExistingVmCluster
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseId: ${data.oci_database_databases.exadb.databases[0].id}
+    deleteStandbyDbHomeOnDelete: "true"
+    peerVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_vm_cluster_for_standby_db
+    protectionMode: MAXIMUM_PERFORMANCE
+    transportType: ASYNC
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

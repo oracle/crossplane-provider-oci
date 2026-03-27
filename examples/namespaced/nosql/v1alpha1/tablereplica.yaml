@@ -1,0 +1,17 @@
+apiVersion: nosql.oci.m.upbound.io/v1alpha1
+kind: TableReplica
+metadata:
+  labels:
+    testing.upbound.io/example-name: tablereplica_label_1
+  name: tablereplica1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    region: us-ashburn-1
+    tableNameOrIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: table_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

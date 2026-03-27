@@ -1,0 +1,45 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ExadbVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/exadbvmcluster
+  labels:
+    testing.upbound.io/example-name: test_exadb_vm_cluster
+  name: test-exadb-vm-cluster
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    availabilityDomain: ${local.ad}
+    backupSubnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_backup_subnet
+    clusterName: apollo
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ExampleExadbVmCluster
+    exascaleDbStorageVaultIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exascale_db_storage_vault
+    gridImageId: ${data.oci_database_gi_version_minor_versions.test_gi_minor_versions.gi_minor_versions[0].grid_image_id}
+    hostname: apollo
+    nodeConfig:
+      - enabledEcpuCountPerNode: "8"
+        totalEcpuCountPerNode: "16"
+        vmFileSystemStorageSizeGbsPerNode: "293"
+    nodeResource:
+      - nodeName: node1
+      - nodeName: node2
+      - nodeName: node3
+    shape: EXADBXS
+    shapeAttribute: ${local.shape_attribute}
+    sshPublicKeys:
+      - ${var.ssh_public_key}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadbxs_client_subnet
+    subscriptionId: ${var.subscription_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

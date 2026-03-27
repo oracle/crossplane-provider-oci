@@ -1,0 +1,22 @@
+apiVersion: osmanagementhub.oci.m.upbound.io/v1alpha1
+kind: Event
+metadata:
+  annotations:
+    meta.upbound.io/example-id: osmanagementhub/v1alpha1/event
+  labels:
+    testing.upbound.io/example-name: test_event
+  name: test-event
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    count: '${local.has_event_id ? 1 : 0}'
+    eventId: ${data.external.create_osmh_event.result.id}
+    freeformTags:
+      Department: Finance
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

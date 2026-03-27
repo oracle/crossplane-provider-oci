@@ -1,0 +1,25 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: BuildPipeline
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/buildpipeline
+  labels:
+    testing.upbound.io/example-name: test_build_pipeline
+  name: test-build-pipeline
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    buildPipelineParameters:
+      - items:
+          - defaultValue: ${var.build_pipeline_build_pipeline_parameters_items_default_value}
+            description: ${var.build_pipeline_build_pipeline_parameters_items_description}
+            name: ${var.build_pipeline_build_pipeline_parameters_items_name}
+    description: ${var.build_pipeline_description}
+    displayName: ${var.build_pipeline_display_name}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

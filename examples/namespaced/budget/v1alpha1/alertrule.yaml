@@ -1,0 +1,19 @@
+apiVersion: budget.oci.m.upbound.io/v1alpha1
+kind: AlertRule
+metadata:
+  name: alertrule1
+  labels:
+    testing.upbound.io/example-name: alertrule_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    budgetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: budget_label_1
+    threshold: 90.0
+    thresholdType: "PERCENTAGE"
+    type: "ACTUAL"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

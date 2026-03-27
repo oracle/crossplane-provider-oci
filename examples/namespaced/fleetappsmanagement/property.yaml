@@ -1,0 +1,24 @@
+apiVersion: fleetappsmanagement.oci.m.upbound.io/v1alpha1
+kind: Property
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/property
+  labels:
+    testing.upbound.io/example-name: test_property
+  name: test-property
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    displayName: displayName2
+    selection: MULTI_CHOICE
+    valueType: NUMERIC
+    values:
+      - values2
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

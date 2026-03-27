@@ -1,0 +1,30 @@
+apiVersion: psa.oci.m.upbound.io/v1alpha1
+kind: PrivateServiceAccess
+metadata:
+  annotations:
+    meta.upbound.io/example-id: psa/v1alpha1/privateserviceaccess
+  labels:
+    testing.upbound.io/example-name: test_private_service_access
+  name: test-private-service-access
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("example-tag-namespace-all.example-tag", var.private_service_access_defined_tags_value)}
+    description: ${var.private_service_access_description}
+    displayName: ${var.private_service_access_display_name}
+    freeformTags: ${var.private_service_access_freeform_tags}
+    ipv4ip: ${var.private_service_access_ipv4ip}
+    nsgIdsRefs:
+      - name: test_nsg
+    securityAttributes: ${var.private_service_access_security_attributes}
+    serviceId: ${data.oci_psa_psa_services.test_psa_services.psa_service_collection.0.items.0.id}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

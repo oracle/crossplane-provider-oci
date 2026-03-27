@@ -1,0 +1,25 @@
+apiVersion: opsi.oci.m.upbound.io/v1alpha1
+kind: AwrHubSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/awrhubsource
+  labels:
+    testing.upbound.io/example-name: test_awr_hub_source
+  name: test-awr-hub-source
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    awrHubIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_awr_hub
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}", "${var.awrhubsource_defined_tags_value}")}
+    freeformTags: ${var.awr_hub_source_freeform_tags}
+    name: ${var.awr_hub_source_name}
+    type: ${var.awr_hub_source_type}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

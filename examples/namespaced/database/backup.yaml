@@ -1,0 +1,17 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: Backup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/backup
+  labels:
+    testing.upbound.io/example-name: test_backup
+  name: test-backup
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    databaseId: ${oci_database_db_system.test_db_system.db_home[0].database[0].id}
+    displayName: FirstBackup
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

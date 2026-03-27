@@ -1,0 +1,21 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: CompareSecurityAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/comparesecurityassessment
+  labels:
+    testing.upbound.io/example-name: test_compare_security_assessment
+  name: test-compare-security-assessment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    comparisonSecurityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment1
+    securityAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_security_assessment2
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

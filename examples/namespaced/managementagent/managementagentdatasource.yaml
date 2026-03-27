@@ -1,0 +1,24 @@
+apiVersion: managementagent.oci.m.upbound.io/v1alpha1
+kind: ManagementAgentDataSource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managementagent/v1alpha1/managementagentdatasource
+  labels:
+    testing.upbound.io/example-name: add_datasource
+  name: add-datasource
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    allowMetrics: '*'
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    managementAgentId: ${data.oci_management_agent_management_agents.find_agent.management_agents[0].id}
+    name: PrometheusTestA
+    namespace: namespace
+    type: PROMETHEUS_EMITTER
+    url: http://localhost:1234
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

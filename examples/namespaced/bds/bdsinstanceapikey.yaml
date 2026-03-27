@@ -1,0 +1,23 @@
+apiVersion: bds.oci.m.upbound.io/v1alpha1
+kind: BdsInstanceApiKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstanceapikey
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_api_key
+  name: test-bds-instance-api-key
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    bdsInstanceId: ${var.bds_instance_id}
+    defaultRegion: ${var.bds_instance_api_key_default_region}
+    keyAlias: ${var.bds_instance_api_key_key_alias}
+    passphraseSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    userId: ${var.user_ocid}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,17 @@
+apiVersion: loganalytics.oci.m.upbound.io/v1alpha1
+kind: NamespaceStorageEnableDisableArchiving
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/namespacestorageenabledisablearchiving
+  labels:
+    testing.upbound.io/example-name: test_namespace_storage_enable_archiving
+  name: test-namespace-storage-enable-archiving
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    enableArchivingTenant: true
+    namespace: ${data.oci_log_analytics_namespaces.test_namespaces.namespace_collection.0.items.0.namespace}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

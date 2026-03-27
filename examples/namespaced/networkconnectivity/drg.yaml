@@ -1,0 +1,19 @@
+apiVersion: networkconnectivity.oci.m.upbound.io/v1alpha1
+kind: Drg
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/drg
+  labels:
+    testing.upbound.io/example-name: test_vcn_drg
+  name: test-vcn-drg
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: MyTestVcnDrg
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

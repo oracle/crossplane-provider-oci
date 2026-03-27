@@ -1,0 +1,17 @@
+apiVersion: compute.oci.m.upbound.io/v1alpha1
+kind: InstanceConsoleConnection
+metadata:
+  labels:
+    testing.upbound.io/example-name: instanceconsoleconnection_label_1
+  name: instanceconsoleconnection1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_label_1
+    publicKey: "${INSTANCECONSOLECONNECTION_PUBLICKEY}"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

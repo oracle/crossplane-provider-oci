@@ -1,0 +1,38 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousContainerDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabase
+  labels:
+    testing.upbound.io/example-name: autonomous_container_database_from_adsi
+  name: autonomous-container-database-from-adsi
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_vm_cluster
+    backupConfig:
+      - backupDestinationDetails:
+          - type: LOCAL
+        recoveryWindowInDays: "7"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseSoftwareImageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_database_software_image
+    dbUniqueName: ${random_string.db_unique_name_adsi_acd.result}
+    displayName: ACD-TFTest
+    freeformTags:
+      Department: Finance
+    isDstFileUpdateEnabled: false
+    maintenanceWindowDetails:
+      - preference: NO_PREFERENCE
+    patchModel: RELEASE_UPDATES
+    serviceLevelAgreementType: STANDARD
+    versionPreference: LATEST_RELEASE_UPDATE
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,23 @@
+apiVersion: iot.oci.m.upbound.io/v1alpha1
+kind: DigitalTwinInstanceInvokeRawCommand
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwininstanceinvokerawcommand
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_instance_invoke_raw_command
+  name: test-digital-twin-instance-invoke-raw-command
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    digitalTwinInstanceId: ${var.digital_twin_instance_ocid}
+    requestData: ${var.digital_twin_instance_invoke_raw_command_request_data}
+    requestDataContentType: ${var.digital_twin_instance_invoke_raw_command_request_data_content_type}
+    requestDataFormat: ${var.digital_twin_instance_invoke_raw_command_request_data_format}
+    requestDuration: ${var.digital_twin_instance_invoke_raw_command_request_duration}
+    requestEndpoint: ${var.digital_twin_instance_invoke_raw_command_request_endpoint}
+    responseDuration: ${var.digital_twin_instance_invoke_raw_command_response_duration}
+    responseEndpoint: ${var.digital_twin_instance_invoke_raw_command_response_endpoint}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

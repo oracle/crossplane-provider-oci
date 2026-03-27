@@ -1,0 +1,20 @@
+apiVersion: filestorage.oci.m.upbound.io/v1alpha1
+kind: FileSystemQuotaRule
+metadata:
+  name: filesystemquotarule1
+  labels:
+    testing.upbound.io/example-name: filesystemquotarule_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: filesystemquotarule1
+    fileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: filesystem_label_1
+    isHardQuota: true
+    principalType: "DEFAULT_USER"
+    quotaLimitInGigabytes: 0
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

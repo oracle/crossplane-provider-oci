@@ -1,0 +1,19 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ManagementExternalMySqlDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementexternalmysqldatabase
+  labels:
+    testing.upbound.io/example-name: test_external_my_sql_database
+  name: test-external-my-sql-database
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    dbName: ExampleNameTest
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,21 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: DeployEnvironment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployenvironment
+  labels:
+    testing.upbound.io/example-name: test_deploy_environment
+  name: test-deploy-environment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    clusterId: DummyCluster
+    deployEnvironmentType: OKE_CLUSTER
+    displayName: Display_name
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

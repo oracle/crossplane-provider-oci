@@ -1,0 +1,23 @@
+apiVersion: apmconfig.oci.m.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmconfig/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_config
+  name: test-config
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    configType: ${var.config_config_type}
+    description: ${var.config_description}
+    displayName: ${var.config_display_name}
+    filterText: ${var.config_filter_text}
+    freeformTags: ${var.config_freeform_tags}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,21 @@
+apiVersion: healthchecks.oci.m.upbound.io/v1alpha1
+kind: HTTPMonitor
+metadata:
+  labels:
+    testing.upbound.io/example-name: httpmonitor_label_1
+  name: httpmonitor1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: httpmonitor1
+    intervalInSeconds: 30
+    protocol: HTTPS
+    targets:
+      - www.example.com
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

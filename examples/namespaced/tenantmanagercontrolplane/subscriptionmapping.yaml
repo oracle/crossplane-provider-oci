@@ -1,0 +1,19 @@
+apiVersion: tenantmanagercontrolplane.oci.m.upbound.io/v1alpha1
+kind: SubscriptionMapping
+metadata:
+  annotations:
+    meta.upbound.io/example-id: tenantmanagercontrolplane/v1alpha1/subscriptionmapping
+  labels:
+    testing.upbound.io/example-name: test_subscription_mapping
+  name: test-subscription-mapping
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    subscriptionId: ${var.subscription_mapping_subscription_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

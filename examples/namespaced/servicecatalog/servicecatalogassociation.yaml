@@ -1,0 +1,22 @@
+apiVersion: servicecatalog.oci.m.upbound.io/v1alpha1
+kind: ServiceCatalogAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: servicecatalog/v1alpha1/servicecatalogassociation
+  labels:
+    testing.upbound.io/example-name: test_service_catalog_association
+  name: test-service-catalog-association
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    entityIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_private_application
+    entityType: ${var.service_catalog_association_entity_type}
+    serviceCatalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_service_catalog
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

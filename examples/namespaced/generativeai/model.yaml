@@ -1,0 +1,46 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: Model
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/model
+  labels:
+    testing.upbound.io/example-name: llama3_test_model
+  name: llama3-test-model
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    baseModelId: ${local.llama_base_model_id}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.test_model_description}
+    displayName: ${var.llama3_test_model_display_name}
+    fineTuneDetails:
+      - dedicatedAiClusterId: ${data.oci_generative_ai_dedicated_ai_cluster.test_dedicated_ai_cluster_large_generic.id}
+        trainingConfig:
+          - earlyStoppingPatience: "15"
+            earlyStoppingThreshold: "0.0001"
+            learningRate: "0.0002"
+            logModelMetricsIntervalInSteps: "10"
+            loraAlpha: "8"
+            loraDropout: "0.1"
+            loraR: "8"
+            totalTrainingEpochs: "3"
+            trainingBatchSize: "8"
+            trainingConfigType: LORA_TRAINING_CONFIG
+        trainingDataset:
+          - bucketSelector:
+              matchLabels:
+                testing.upbound.io/example-name: fine_tune_bucket
+            datasetType: OBJECT_STORAGE
+            namespace: ${data.oci_objectstorage_namespace.ns.namespace}
+            objectSelector:
+              matchLabels:
+                testing.upbound.io/example-name: fine_tune_object
+    freeformTags: ${var.test_freeform_tags}
+    vendor: ${var.test_model_vendor}
+    version: ${var.test_model_version}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

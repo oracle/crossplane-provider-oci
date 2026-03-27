@@ -1,0 +1,37 @@
+apiVersion: identitydomains.oci.m.upbound.io/v1alpha1
+kind: AppRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approle
+  labels:
+    testing.upbound.io/example-name: test_app_role
+  name: test-app-role
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    adminRole: ${var.app_role_admin_role}
+    app:
+      - valueSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_app
+    attributeSets:
+      - all
+    attributes: ""
+    authorization: ${var.app_role_authorization}
+    availableToClients: ${var.app_role_available_to_clients}
+    availableToGroups: ${var.app_role_available_to_groups}
+    availableToUsers: ${var.app_role_available_to_users}
+    description: ${var.app_role_description}
+    displayName: ${var.app_role_display_name}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    legacyGroupName: legacyGroupName
+    public: ${var.app_role_public}
+    schemas:
+      - urn:ietf:params:scim:schemas:oracle:idcs:AppRole
+    tags:
+      - key: ${var.app_role_tags_key}
+        value: ${var.app_role_tags_value}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

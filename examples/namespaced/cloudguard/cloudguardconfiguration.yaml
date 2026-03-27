@@ -1,0 +1,21 @@
+apiVersion: cloudguard.oci.m.upbound.io/v1alpha1
+kind: CloudGuardConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudguard/v1alpha1/cloudguardconfiguration
+  labels:
+    testing.upbound.io/example-name: test_cloud_guard_configuration
+  name: test-cloud-guard-configuration
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    reportingRegion: ${var.cloud_guard_configuration_reporting_region}
+    selfManageResources: ${var.cloud_guard_configuration_self_manage_resources}
+    status: ${var.cloud_guard_configuration_status}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

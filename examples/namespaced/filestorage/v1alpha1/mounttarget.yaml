@@ -1,0 +1,21 @@
+apiVersion: filestorage.oci.m.upbound.io/v1alpha1
+kind: MountTarget
+metadata:
+  name: mounttarget1
+  labels:
+    testing.upbound.io/example-name: mounttarget_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName:
+    availabilityDomain: ${AVAILABILITY_DOMAIN}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

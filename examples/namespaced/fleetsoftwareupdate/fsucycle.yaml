@@ -1,0 +1,26 @@
+apiVersion: fleetsoftwareupdate.oci.m.upbound.io/v1alpha1
+kind: FsuCycle
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetsoftwareupdate/v1alpha1/fsucycle
+  labels:
+    testing.upbound.io/example-name: test_fsu_cycle_upgrade_23
+  name: test-fsu-cycle-upgrade-23
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: tf-test-upgrade-cycle
+    fsuCollectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fsu_collection_db19
+    goalVersionDetails:
+      - type: VERSION
+        version: 23.6.0.24.10
+    type: UPGRADE
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

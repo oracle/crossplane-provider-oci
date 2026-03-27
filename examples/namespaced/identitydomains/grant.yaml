@@ -1,0 +1,33 @@
+apiVersion: identitydomains.oci.m.upbound.io/v1alpha1
+kind: Grant
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/grant
+  labels:
+    testing.upbound.io/example-name: test_grant
+  name: test-grant
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    app:
+      - value: ${data.oci_identity_domains_apps.test_grant_apps.apps.0.id}
+    attributeSets:
+      - all
+    attributes: ""
+    authorization: ${var.grant_authorization}
+    grantMechanism: ${var.grant_grant_mechanism}
+    grantee:
+      - type: ${var.grant_grantee_type}
+        valueSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_grant_user
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+      - urn:ietf:params:scim:schemas:oracle:idcs:Grant
+    tags:
+      - key: ${var.grant_tags_key}
+        value: ${var.grant_tags_value}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

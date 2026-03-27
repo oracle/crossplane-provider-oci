@@ -1,0 +1,24 @@
+apiVersion: apmsynthetics.oci.m.upbound.io/v1alpha1
+kind: OnPremiseVantagePointWorker
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/onpremisevantagepointworker
+  labels:
+    testing.upbound.io/example-name: test_on_premise_vantage_point_worker
+  name: test-on-premise-vantage-point-worker
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    name: ${var.on_premise_vantage_point_worker_name}
+    onPremiseVantagePointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_on_premise_vantage_point
+    resourcePrincipalTokenPublicKey: ${var.on_premise_vantage_point_worker_resource_principal_token_public_key}
+    version: ${var.on_premise_vantage_point_worker_version}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

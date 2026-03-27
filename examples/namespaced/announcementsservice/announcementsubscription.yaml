@@ -1,0 +1,30 @@
+apiVersion: announcementsservice.oci.m.upbound.io/v1alpha1
+kind: AnnouncementSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: announcementsservice/v1alpha1/announcementsubscription
+  labels:
+    testing.upbound.io/example-name: test_announcement_subscription
+  name: test-announcement-subscription
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: ${var.announcement_subscription_defined_tags_value}
+    description: ${var.announcement_subscription_description}
+    displayName: ${var.announcement_subscription_display_name}
+    filterGroups:
+      - filters:
+          - type: ${var.announcement_subscription_filter_groups_filters_type}
+            value: ${var.announcement_subscription_filter_groups_filters_value}
+    freeformTags: ${var.announcement_subscription_freeform_tags}
+    onsTopicIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_notification_topic
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

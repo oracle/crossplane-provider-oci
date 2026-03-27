@@ -1,0 +1,23 @@
+apiVersion: monitoring.oci.m.upbound.io/v1alpha1
+kind: AlarmSuppression
+metadata:
+  labels:
+    testing.upbound.io/example-name: alarmsuppression_label_1
+  name: alarmsuppression1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    alarmSuppressionTarget:
+      - alarmIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: alarm_label_1
+        targetType: ALARM
+    # timeSuppressFrom cannot be older than 5 min from current time.
+    timeSuppressFrom: "2026-02-22T20:43:40Z"
+    timeSuppressUntil: "2026-02-22T20:53:30Z"
+    displayName: alarmsuppression1
+    dimensions: {'availabilityDomain': 'phx-ad-1'}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

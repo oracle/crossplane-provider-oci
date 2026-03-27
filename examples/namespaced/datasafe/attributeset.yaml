@@ -1,0 +1,22 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: AttributeSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/attributeset
+  labels:
+    testing.upbound.io/example-name: test_attribute_set
+  name: test-attribute-set
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    attributeSetType: ${var.attribute_set_type}
+    attributeSetValues: ${var.attribute_set_values}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.attribute_set_description}
+    displayName: ${var.display_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

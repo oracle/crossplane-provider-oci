@@ -1,0 +1,19 @@
+apiVersion: dataintegration.oci.m.upbound.io/v1alpha1
+kind: WorkspaceProject
+metadata:
+  labels:
+    testing.upbound.io/example-name: workspaceproject_label_1
+  name: workspaceproject1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    description: "Test Workspace Project"
+    identifier: WORKSPACEPROJECT1
+    name: workspaceproject1
+    workspaceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: workspace_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

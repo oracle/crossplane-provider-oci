@@ -1,0 +1,23 @@
+apiVersion: blockstorage.oci.m.upbound.io/v1alpha1
+kind: VolumeAttachment
+metadata:
+  labels:
+    testing.upbound.io/example-name: volumeattachment_label_1
+  name: volumeattachment1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/core_volume_attachment
+    attachmentType: iscsi
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_label_1
+    volumeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: volume_label_1
+    displayName: volumeattachment1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

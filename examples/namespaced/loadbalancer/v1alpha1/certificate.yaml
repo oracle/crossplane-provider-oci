@@ -1,0 +1,17 @@
+apiVersion: loadbalancer.oci.m.upbound.io/v1alpha1
+kind: Certificate
+metadata:
+  labels:
+    testing.upbound.io/example-name: certificate_label_1
+  name: certificate1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loadbalancer_label_1
+    certificateName: "certificate1"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

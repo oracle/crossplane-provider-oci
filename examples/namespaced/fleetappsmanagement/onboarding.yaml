@@ -1,0 +1,23 @@
+apiVersion: fleetappsmanagement.oci.m.upbound.io/v1alpha1
+kind: Onboarding
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/onboarding
+  labels:
+    testing.upbound.io/example-name: test_onboarding
+  name: test-onboarding
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    freeformTags:
+      Department: Accounting
+    isCostTrackingTagEnabled: "false"
+    isFamsTagEnabled: "false"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,23 @@
+apiVersion: blockstorage.oci.m.upbound.io/v1alpha1
+kind: VolumeBackupPolicy
+metadata:
+  labels:
+    testing.upbound.io/example-name: volumebackuppolicy_label_1
+  name: volumebackuppolicy1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/core_volume_backup_policy
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: volumebackuppolicy1
+    schedules:
+      - backupType: INCREMENTAL
+        period: ONE_DAY
+        retentionSeconds: 604800
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

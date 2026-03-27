@@ -1,0 +1,20 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: DbNode
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/dbnode
+  labels:
+    testing.upbound.io/example-name: test_db_node
+  name: test-db-node
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    dbNodeId: ${data.oci_database_db_nodes.test_db_nodes.db_nodes[0]["id"]}
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    freeformTags:
+      Department: Accounting
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

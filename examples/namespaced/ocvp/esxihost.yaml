@@ -1,0 +1,18 @@
+apiVersion: ocvp.oci.m.upbound.io/v1alpha1
+kind: EsxiHost
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ocvp/v1alpha1/esxihost
+  labels:
+    testing.upbound.io/example-name: test_esxi_host
+  name: test-esxi-host
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    sddcIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sddc
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

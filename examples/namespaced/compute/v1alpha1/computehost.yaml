@@ -1,0 +1,14 @@
+apiVersion: compute.oci.m.upbound.io/v1alpha1
+kind: ComputeHost
+metadata:
+  labels:
+    testing.upbound.io/example-name: computehost_label_1
+  name: computehost1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    computeHostId: ${COMPUTEHOST_ID}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,22 @@
+apiVersion: meteringcomputation.oci.m.upbound.io/v1alpha1
+kind: UsageStatementEmailRecipientsGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: meteringcomputation/v1alpha1/usagestatementemailrecipientsgroup
+  labels:
+    testing.upbound.io/example-name: test_usage_statement_email_recipients_group
+  name: test-usage-statement-email-recipients-group
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    recipientsList:
+      - emailId: test@example.com
+        state: ACTIVE
+    subscriptionId: ${var.subscription_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

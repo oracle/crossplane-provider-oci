@@ -1,0 +1,29 @@
+apiVersion: apigateway.oci.m.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  name: deployment1
+  labels:
+    testing.upbound.io/example-name: deployment_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: deployment1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    gatewayIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: gateway_label_1
+    pathPrefix: "/api"
+    specification:
+      - routes:
+          - path: "/"
+            methods:
+              - "GET"
+            backend:
+              - type: HTTP_BACKEND
+                url: "https://example.com"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

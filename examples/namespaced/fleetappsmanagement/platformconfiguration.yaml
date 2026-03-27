@@ -1,0 +1,35 @@
+apiVersion: fleetappsmanagement.oci.m.upbound.io/v1alpha1
+kind: PlatformConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fleetappsmanagement/v1alpha1/platformconfiguration
+  labels:
+    testing.upbound.io/example-name: test_platform_configuration
+  name: test-platform-configuration
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configCategoryDetails:
+      - compatibleProducts:
+          - id: ocid1.famsplatformconfiguration.oc1.
+        components:
+          - components2
+        configCategory: PRODUCT
+        credentials:
+          - id: ocid1.famsplatformconfiguration.oc1.
+        patchTypes:
+          - id: ocid1.famsplatformconfiguration.oc1.
+        versions:
+          - "2"
+    definedTags: ${map("Oracle-Tags.CreatedBy", "updatedValue")}
+    description: description2
+    displayName: displayName2
+    freeformTags:
+      bar-key: value
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

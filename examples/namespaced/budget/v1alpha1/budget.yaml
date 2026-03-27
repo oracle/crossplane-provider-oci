@@ -1,0 +1,20 @@
+apiVersion: budget.oci.m.upbound.io/v1alpha1
+kind: Budget
+metadata:
+  name: budget1
+  labels:
+    testing.upbound.io/example-name: budget_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    amount: 100.0
+    compartmentId: "${TENANCY_OCID}"
+    resetPeriod: "MONTHLY"
+    displayName: budget1
+    targetType: COMPARTMENT
+    targets:
+      - "${COMPARTMENT_OCID}"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

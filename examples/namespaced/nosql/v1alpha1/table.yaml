@@ -1,0 +1,24 @@
+apiVersion: nosql.oci.m.upbound.io/v1alpha1
+kind: Table
+metadata:
+  labels:
+    testing.upbound.io/example-name: table_label_1
+  name: table1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    ddlStatement: ${NOSQL_TABLE_DDLSTATEMENT}
+    name: table1
+    tableLimits:
+      # ON_DEMAND capacityMode limits vary by tenancy
+      - capacityMode: PROVISIONED
+        maxReadUnits: 1
+        maxStorageInGbs: 1
+        maxWriteUnits: 1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

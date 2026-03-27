@@ -1,0 +1,22 @@
+apiVersion: globallydistributeddatabase.oci.m.upbound.io/v1alpha1
+kind: PrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: globallydistributeddatabase/v1alpha1/privateendpoint
+  labels:
+    testing.upbound.io/example-name: this
+  name: this
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Test OCI Globally Distributed Database 23ai Private Endpoint
+    displayName: GloballyDistributedDB23ai-PrivateEndpoint-Example
+    nsgIds: ${var.nsg_ocids}
+    subnetId: ${var.subnet_ocid}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

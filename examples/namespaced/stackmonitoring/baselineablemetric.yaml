@@ -1,0 +1,22 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: BaselineableMetric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/baselineablemetric
+  labels:
+    testing.upbound.io/example-name: test_baselineable_metric_evaluate_baselineable_metric
+  name: test-baselineable-metric-evaluate-baselineable-metric
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    column: metric_column
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: metric_name
+    namespace: my_namespace
+    resourceGroup: my_resource
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

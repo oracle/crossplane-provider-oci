@@ -1,0 +1,30 @@
+apiVersion: computecloudatcustomer.oci.m.upbound.io/v1alpha1
+kind: CccInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: computecloudatcustomer/v1alpha1/cccinfrastructure
+  labels:
+    testing.upbound.io/example-name: test_ccc_infrastructure
+  name: test-ccc-infrastructure
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    cccUpgradeScheduleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_ccc_upgrade_schedule
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionDetails: ${var.ccc_infrastructure_connection_details}
+    connectionState: ${var.ccc_infrastructure_connection_state}
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}", var.ccc_infrastructure_defined_tags_value)}
+    description: ${var.ccc_infrastructure_description}
+    displayName: ${var.ccc_infrastructure_display_name}
+    freeformTags: ${var.ccc_infrastructure_freeform_tags}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

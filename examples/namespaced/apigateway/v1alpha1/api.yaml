@@ -1,0 +1,17 @@
+apiVersion: apigateway.oci.m.upbound.io/v1alpha1
+kind: Api
+metadata:
+  labels:
+    testing.upbound.io/example-name: api_label_1
+  name: api1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: api1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

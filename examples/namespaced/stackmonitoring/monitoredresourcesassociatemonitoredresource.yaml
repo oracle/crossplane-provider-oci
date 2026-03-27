@@ -1,0 +1,25 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: MonitoredResourcesAssociateMonitoredResource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoredresourcesassociatemonitoredresource
+  labels:
+    testing.upbound.io/example-name: test_monitored_resources_associate_monitored_resource
+  name: test-monitored-resources-associate-monitored-resource
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    associationType: uses
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitored_resource2
+    sourceResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitored_resource1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

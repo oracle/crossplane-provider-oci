@@ -1,0 +1,20 @@
+apiVersion: integration.oci.m.upbound.io/v1alpha1
+kind: IntegrationInstance
+metadata:
+  labels:
+    testing.upbound.io/example-name: integrationinstance_label_1
+  name: integrationinstance1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: integrationinstance1
+    integrationInstanceType: "STANDARDX"
+    isByol: False
+    messagePacks: 1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

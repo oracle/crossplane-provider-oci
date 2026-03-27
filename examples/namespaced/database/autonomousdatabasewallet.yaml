@@ -1,0 +1,23 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousDatabaseWallet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasewallet
+  labels:
+    testing.upbound.io/example-name: autonomous_database_wallet
+  name: autonomous-database-wallet
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_database
+    base64EncodeContent: "true"
+    passwordSecretRef:
+      key: attribute.result
+      name: example-string
+      namespace: upbound-system
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,22 @@
+apiVersion: kms.oci.m.upbound.io/v1alpha1
+kind: GeneratedKey
+metadata:
+  labels:
+    testing.upbound.io/example-name: generatedkey_label_1
+  name: generatedkey1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # ref: https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/kms_generated_key
+    cryptoEndpoint: ${VAULT_CRYPTO_ENDPOINT}
+    includePlaintextKey: true
+    keyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key_label_1
+    keyShape:
+      - algorithm: "AES"
+        length: 32
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

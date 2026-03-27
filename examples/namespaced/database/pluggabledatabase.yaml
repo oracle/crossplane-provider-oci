@@ -1,0 +1,27 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: PluggableDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabase
+  labels:
+    testing.upbound.io/example-name: test_db1_pdb
+  name: test-db1-pdb
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    containerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db1
+    pdbAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    pdbName: DB1PDB
+    tdeWalletPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

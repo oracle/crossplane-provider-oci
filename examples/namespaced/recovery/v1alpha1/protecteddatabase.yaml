@@ -1,0 +1,32 @@
+apiVersion: recovery.oci.m.upbound.io/v1alpha1
+kind: ProtectedDatabase
+metadata:
+  labels:
+    testing.upbound.io/example-name: protecteddatabase_label_1
+  name: protecteddatabase1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/recovery_protected_database
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: protecteddatabase1
+    dbUniqueName: TESTDB
+    # Create a secret with name protected-db-secret containing the password
+    passwordSecretRef:
+      name: protected-db-secret
+      namespace: default
+      key: password
+    protectionPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: protectionpolicy_label_1
+    recoveryServiceSubnets:
+      - recoveryServiceSubnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: recoveryservicesubnet_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

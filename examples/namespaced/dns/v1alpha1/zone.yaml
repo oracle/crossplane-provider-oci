@@ -1,0 +1,22 @@
+apiVersion: dns.oci.m.upbound.io/v1alpha1
+kind: Zone
+metadata:
+  labels:
+    testing.upbound.io/example-name: zone_label_1
+  name: zone1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: zone1.oci-dns1
+    scope: PRIVATE
+    viewIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: view_label_1
+    zoneType: PRIMARY
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

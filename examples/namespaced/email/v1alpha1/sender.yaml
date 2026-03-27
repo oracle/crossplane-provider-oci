@@ -1,0 +1,17 @@
+apiVersion: email.oci.m.upbound.io/v1alpha1
+kind: Sender
+metadata:
+  labels:
+    testing.upbound.io/example-name: sender_label_1
+  name: sender1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    emailAddress: emailsender1@email.dummydomain.com
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

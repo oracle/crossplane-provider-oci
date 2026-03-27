@@ -1,0 +1,24 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousDatabaseSaasAdminUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesaasadminuser
+  labels:
+    testing.upbound.io/example-name: test_saas_admin_user
+  name: test-saas-admin-user
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    accessType: READ_WRITE
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    duration: 2
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

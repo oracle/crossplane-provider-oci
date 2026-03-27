@@ -1,0 +1,21 @@
+apiVersion: certificatesmanagement.oci.m.upbound.io/v1alpha1
+kind: CaBundle
+metadata:
+  labels:
+    testing.upbound.io/example-name: cabundle_label_1
+  name: cabundle1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    caBundlePem: |-
+      -----BEGIN CERTIFICATE-----
+      ...
+      -----END CERTIFICATE-----
+    name: cabundle1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

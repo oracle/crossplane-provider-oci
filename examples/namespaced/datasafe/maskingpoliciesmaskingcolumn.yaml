@@ -1,0 +1,21 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: MaskingPoliciesMaskingColumn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/maskingpoliciesmaskingcolumn
+  labels:
+    testing.upbound.io/example-name: test_masking_policies_masking_column
+  name: test-masking-policies-masking-column
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    columnName: ${var.masking_policies_masking_column_column_name_var}
+    maskingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_masking_policy
+    object: ${var.masking_policies_masking_column_object_var}
+    schemaName: ${var.masking_policies_masking_column_schema_name_var}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

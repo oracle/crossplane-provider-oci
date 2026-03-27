@@ -1,0 +1,20 @@
+apiVersion: cloudbridge.oci.m.upbound.io/v1alpha1
+kind: AgentPlugin
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cloudbridge/v1alpha1/agentplugin
+  labels:
+    testing.upbound.io/example-name: test_agent_plugin
+  name: test-agent-plugin
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    agentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_agent
+    desiredState: ${var.agent_plugin_desired_state}
+    pluginName: ${var.agent_plugin_plugin_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

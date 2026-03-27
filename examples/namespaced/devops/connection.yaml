@@ -1,0 +1,22 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: Connection
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/connection
+  labels:
+    testing.upbound.io/example-name: test_github_connection
+  name: test-github-connection
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    accessToken: ${var.access_token_vault_secret_id}
+    connectionType: GITHUB_ACCESS_TOKEN
+    description: Github access token
+    displayName: github_access_token
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_project
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

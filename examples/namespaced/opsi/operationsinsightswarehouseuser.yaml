@@ -1,0 +1,31 @@
+apiVersion: opsi.oci.m.upbound.io/v1alpha1
+kind: OperationsInsightsWarehouseUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: opsi/v1alpha1/operationsinsightswarehouseuser
+  labels:
+    testing.upbound.io/example-name: test_operations_insights_warehouse_user
+  name: test-operations-insights-warehouse-user
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}", "${var.wh_user_defined_tags_value}")}
+    freeformTags: ${var.wh_user_freeform_tags}
+    isAwrDataAccess: ${var.wh_user_is_awr_data_access}
+    isEmDataAccess: ${var.wh_user_is_em_data_access}
+    isOpsiDataAccess: ${var.wh_user_is_opsi_data_access}
+    name: ${var.wh_user_name}
+    operationsInsightsWarehouseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operations_insights_warehouse
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

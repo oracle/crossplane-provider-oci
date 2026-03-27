@@ -1,0 +1,21 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: Config
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/config
+  labels:
+    testing.upbound.io/example-name: test_config_autopromote
+  name: test-config-autopromote
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    configType: AUTO_PROMOTE
+    isEnabled: true
+    resourceType: HOST
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

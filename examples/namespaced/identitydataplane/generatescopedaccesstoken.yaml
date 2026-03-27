@@ -1,0 +1,17 @@
+apiVersion: identitydataplane.oci.m.upbound.io/v1alpha1
+kind: GenerateScopedAccessToken
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydataplane/v1alpha1/generatescopedaccesstoken
+  labels:
+    testing.upbound.io/example-name: test_scoped_access_token
+  name: test-scoped-access-token
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    publicKey: ${var.public_key}
+    scope: ${var.scope}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

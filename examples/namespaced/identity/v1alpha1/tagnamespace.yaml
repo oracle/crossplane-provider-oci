@@ -1,0 +1,19 @@
+apiVersion: identity.oci.m.upbound.io/v1alpha1
+kind: TagNamespace
+metadata:
+  labels:
+    testing.upbound.io/example-name: tagnamespace_label_1
+  name: tagnamespace1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    description: "Test Tag Namespace"
+    isRetired: false
+    name: tagnamespace1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,34 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: SensitiveDataModelReferentialRelation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivedatamodelreferentialrelation
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_model_referential_relation
+  name: test-sensitive-data-model-referential-relation
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    child:
+      - appName: HR
+        columnGroup:
+          - FIRST_NAME
+        object: EMPLOYEES
+        objectType: TABLE
+        schemaName: HR
+    isSensitive: ${var.is_sensitive}
+    parent:
+      - appName: HR
+        columnGroup:
+          - EMAIL
+        object: EMPLOYEES
+        objectType: TABLE
+        schemaName: HR
+    relationType: ${var.relation_type}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

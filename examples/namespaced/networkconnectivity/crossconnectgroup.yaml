@@ -1,0 +1,19 @@
+apiVersion: networkconnectivity.oci.m.upbound.io/v1alpha1
+kind: CrossConnectGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/crossconnectgroup
+  labels:
+    testing.upbound.io/example-name: cross_connect_group
+  name: cross-connect-group
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.cross_connect_group_display_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,19 @@
+apiVersion: networking.oci.m.upbound.io/v1alpha1
+kind: Vcn
+metadata:
+  labels:
+    testing.upbound.io/example-name: vcn_label_1
+  name: vcn1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    cidrBlocks:
+      - 10.0.0.0/16
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: vcn1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

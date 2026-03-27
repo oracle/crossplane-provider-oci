@@ -1,0 +1,40 @@
+apiVersion: vnmonitoring.oci.m.upbound.io/v1alpha1
+kind: PathAnalysi
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vnmonitoring/v1alpha1/pathanalysi
+  labels:
+    testing.upbound.io/example-name: test_path_analysi
+  name: test-path-analysi
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    destinationEndpoint:
+      - address: 10.1.20.55
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+        type: ${var.path_analysi_destination_endpoint_type}
+    protocol: ${var.path_analysi_protocol}
+    protocolParameters:
+      - destinationPort: ${var.path_analysi_protocol_parameters_destination_port}
+        icmpCode: ${var.path_analysi_protocol_parameters_icmp_code}
+        icmpType: ${var.path_analysi_protocol_parameters_icmp_type}
+        sourcePort: ${var.path_analysi_protocol_parameters_source_port}
+        type: ${var.path_analysi_protocol_parameters_type}
+    queryOptions:
+      - isBiDirectionalAnalysis: ${var.path_analysi_query_options_is_bi_directional_analysis}
+    sourceEndpoint:
+      - address: 10.1.21.55
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet2
+        type: ${var.path_analysi_source_endpoint_type}
+    type: ${var.path_analysi_type}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

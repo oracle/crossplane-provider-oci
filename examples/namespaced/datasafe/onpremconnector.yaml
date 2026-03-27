@@ -1,0 +1,21 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: OnPremConnector
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/onpremconnector
+  labels:
+    testing.upbound.io/example-name: test_on_prem_connector
+  name: test-on-prem-connector
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.on_prem_connector_description}
+    displayName: ${var.on_prem_connector_display_name}
+    freeformTags: ${var.on_prem_connector_freeform_tags}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

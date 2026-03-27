@@ -1,0 +1,17 @@
+apiVersion: waf.oci.m.upbound.io/v1alpha1
+kind: WebAppFirewallPolicy
+metadata:
+  name: webappfirewallpolicy1
+  labels:
+    testing.upbound.io/example-name: webappfirewallpolicy_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: webappfirewallpolicy1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

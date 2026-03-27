@@ -1,0 +1,30 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ManagementDbManagementPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/managementdbmanagementprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_db_management_private_endpoint_create
+  name: test-db-management-private-endpoint-create
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag_namespace1.name}.${oci_identity_tag.tag1.name}: ${var.pe_defined_tags_value}
+    description: ${var.db_management_private_endpoint_description}
+    freeformTags: ${var.pe_freeform_tags}
+    isCluster: ${var.db_management_private_endpoint_is_cluster}
+    isDnsResolutionEnabled: ${var.db_management_private_endpoint_is_dns_resolution_enabled}
+    name: ${var.db_management_private_endpoint_name}
+    nsgIdsRefs:
+      - name: test_network_security_group
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

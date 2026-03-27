@@ -1,0 +1,23 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: ProcessSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/processset
+  labels:
+    testing.upbound.io/example-name: test_process_set
+  name: test-process-set
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: javaProcessSet
+    specification:
+      - items:
+          - label: javaProcesses
+            processCommand: java
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

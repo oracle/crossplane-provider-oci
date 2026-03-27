@@ -1,0 +1,14 @@
+apiVersion: ons.oci.m.upbound.io/v1alpha1
+kind: NotificationTopic
+metadata:
+  name: notification-via-crossplane
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentId: "ocid1.compartment.oc1..ssss"
+    description: "Compartment created via crossplane"
+    name: "notification-via-crossplane"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

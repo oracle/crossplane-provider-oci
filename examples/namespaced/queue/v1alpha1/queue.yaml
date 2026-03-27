@@ -1,0 +1,17 @@
+apiVersion: queue.oci.m.upbound.io/v1alpha1
+kind: Queue
+metadata:
+  name: queue1
+  labels:
+    testing.upbound.io/example-name: queue_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: "queue1"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,25 @@
+apiVersion: monitoring.oci.m.upbound.io/v1alpha1
+kind: Alarm
+metadata:
+  labels:
+    testing.upbound.io/example-name: alarm_label_1
+  name: alarm1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: alarm1
+    isEnabled: false
+    namespace: "alarmnamespace1"
+    query: "CpuUtilization[10m].percentile(0.9) < 85"
+    severity: "WARNING"
+    metricCompartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    destinationsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: notificationtopic_label_1
+    isNotificationsPerMetricDimensionEnabled: true
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

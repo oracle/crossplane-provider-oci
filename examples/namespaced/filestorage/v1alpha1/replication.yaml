@@ -1,0 +1,23 @@
+apiVersion: filestorage.oci.m.upbound.io/v1alpha1
+kind: Replication
+metadata:
+  name: replication1
+  labels:
+    testing.upbound.io/example-name: replication_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: replication1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    sourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: filesystem_label_1
+    targetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: filesystem_label_2
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

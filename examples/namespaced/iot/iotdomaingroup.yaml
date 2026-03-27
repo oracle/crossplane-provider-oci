@@ -1,0 +1,21 @@
+apiVersion: iot.oci.m.upbound.io/v1alpha1
+kind: IotDomainGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomaingroup
+  labels:
+    testing.upbound.io/example-name: test_iot_domain_group
+  name: test-iot-domain-group
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.iot_domain_group_description}
+    displayName: ${var.iot_domain_group_display_name}
+    freeformTags: ${var.iot_domain_group_freeform_tags}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,28 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: SchedulingPlan
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/schedulingplan
+  labels:
+    testing.upbound.io/example-name: test_scheduling_plan
+  name: test-scheduling-plan
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.scheduling_plan_defined_tags_value}
+    freeformTags: ${var.scheduling_plan_freeform_tags}
+    isUsingRecommendedScheduledActions: ${var.scheduling_plan_is_using_recommended_scheduled_actions}
+    resourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    schedulingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_policy
+    serviceType: ${var.scheduling_plan_service_type}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,21 @@
+apiVersion: fusionapps.oci.m.upbound.io/v1alpha1
+kind: FusionEnvironmentRefreshActivity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: fusionapps/v1alpha1/fusionenvironmentrefreshactivity
+  labels:
+    testing.upbound.io/example-name: test_fusion_environment_refresh_activity
+  name: test-fusion-environment-refresh-activity
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    fusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+    sourceFusionEnvironmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_fusion_environment
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

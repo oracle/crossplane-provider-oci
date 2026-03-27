@@ -1,0 +1,26 @@
+apiVersion: datascience.oci.m.upbound.io/v1alpha1
+kind: NotebookSession
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datascience/v1alpha1/notebooksession
+  labels:
+    testing.upbound.io/example-name: tf_notebook_session
+  name: tf-notebook-session
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    notebookSessionConfigurationDetails:
+      - shape: ${var.shape}
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: tf_subnet
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: tf_project
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

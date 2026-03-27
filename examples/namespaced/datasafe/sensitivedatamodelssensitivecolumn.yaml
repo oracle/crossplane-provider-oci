@@ -1,0 +1,21 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: SensitiveDataModelsSensitiveColumn
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/sensitivedatamodelssensitivecolumn
+  labels:
+    testing.upbound.io/example-name: test_sensitive_data_models_sensitive_column
+  name: test-sensitive-data-models-sensitive-column
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    columnName: ${var.sensitive_data_models_sensitive_column_column_name_var}
+    object: ${var.sensitive_data_models_sensitive_column_object_var}
+    schemaName: ${var.sensitive_data_models_sensitive_column_schema_name_var}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

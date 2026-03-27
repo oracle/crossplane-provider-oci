@@ -1,0 +1,24 @@
+apiVersion: loadbalancer.oci.m.upbound.io/v1alpha1
+kind: PathRouteSet
+metadata:
+  labels:
+    testing.upbound.io/example-name: pathrouteset_label_1
+  name: pathrouteset1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loadbalancer_label_1
+    name: "pathrouteset1"
+    pathRoutes:
+      - backendSetNameSelector:
+          matchLabels:
+            testing.upbound.io/example-name: backendset_label_1
+        path: "/example/video/123"
+        pathMatchType:
+          - matchType: "EXACT_MATCH"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

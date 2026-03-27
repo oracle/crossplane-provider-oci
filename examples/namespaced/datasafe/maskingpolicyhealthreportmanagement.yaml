@@ -1,0 +1,17 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: MaskingPolicyHealthReportManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/maskingpolicyhealthreportmanagement
+  labels:
+    testing.upbound.io/example-name: test_health_report
+  name: test-health-report
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    maskingPolicyId: ${var.data_safe_masking_policy_id}
+    targetId: ${var.data_safe_target_ocid}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

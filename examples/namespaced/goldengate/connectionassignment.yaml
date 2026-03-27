@@ -1,0 +1,20 @@
+apiVersion: goldengate.oci.m.upbound.io/v1alpha1
+kind: ConnectionAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: goldengate/v1alpha1/connectionassignment
+  labels:
+    testing.upbound.io/example-name: test_connection_assignment
+  name: test-connection-assignment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    connectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_connection
+    deploymentId: ${var.deployment_ocid}
+    isLockOverride: ${var.is_lock_override}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

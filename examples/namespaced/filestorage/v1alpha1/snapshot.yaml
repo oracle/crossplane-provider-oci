@@ -1,0 +1,17 @@
+apiVersion: filestorage.oci.m.upbound.io/v1alpha1
+kind: Snapshot
+metadata:
+  name: snapshot1
+  labels:
+    testing.upbound.io/example-name: snapshot_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    fileSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: filesystem_label_1
+    name: "snapshot1"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

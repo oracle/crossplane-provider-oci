@@ -1,0 +1,18 @@
+apiVersion: loadbalancer.oci.m.upbound.io/v1alpha1
+kind: LBHostname
+metadata:
+  labels:
+    testing.upbound.io/example-name: lbhostname_label_1
+  name: lbhostname1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    hostname: "lbhostname1.example.com"
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loadbalancer_label_1
+    name: "lbhostname1"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

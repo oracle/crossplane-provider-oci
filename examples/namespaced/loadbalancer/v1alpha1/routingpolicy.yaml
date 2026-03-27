@@ -1,0 +1,26 @@
+apiVersion: loadbalancer.oci.m.upbound.io/v1alpha1
+kind: RoutingPolicy
+metadata:
+  labels:
+    testing.upbound.io/example-name: routingpolicy_label_1
+  name: routingpolicy1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    loadBalancerIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: loadbalancer_label_1
+    conditionLanguageVersion: "V1"
+    name: "routingpolicy1"
+    rules:
+      - name: "example_routing_rules"
+        condition: "all(http.request.url.path eq (i ''))"
+        actions:
+          - name: "FORWARD_TO_BACKENDSET"
+            backendSetNameSelector:
+              matchLabels:
+                testing.upbound.io/example-name: backendset_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

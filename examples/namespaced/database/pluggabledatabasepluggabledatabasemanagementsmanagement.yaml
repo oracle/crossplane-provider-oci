@@ -1,0 +1,33 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: PluggableDatabasePluggabledatabasemanagementsManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/pluggabledatabasepluggabledatabasemanagementsmanagement
+  labels:
+    testing.upbound.io/example-name: test_pluggable_database_pluggabledatabasemanagements_management
+  name: test-pluggable-database-pluggabledatabasemanagements-management
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    credentialDetails:
+      - passwordSecretIdSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        userName: ${var.ssl_user_name}
+    enablePluggabledatabasemanagement: ${var.enable_pluggabledatabasemanagement}
+    pluggableDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_pluggable_database
+    port: ${var.pluggable_database_pluggabledatabasemanagements_management_port}
+    privateEndPointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_management_private_endpoint
+    protocol: ${var.pluggable_database_pluggabledatabasemanagements_management_protocol}
+    role: ${var.pluggable_database_pluggabledatabasemanagements_management_role}
+    serviceName: ${join("", [data.oci_database_databases.t.databases.0.db_unique_name, oci_core_subnet.t.subnet_domain_name])}
+    sslSecretId: ${var.ssl_secret_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

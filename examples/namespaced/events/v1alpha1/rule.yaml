@@ -1,0 +1,27 @@
+apiVersion: events.oci.m.upbound.io/v1alpha1
+kind: Rule
+metadata:
+  name: rule1
+  labels:
+    testing.upbound.io/example-name: rule_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: rule1
+    isEnabled: true
+    condition: "{}"
+    actions:
+      - actions:
+          - actionType: "FAAS"
+            isEnabled: true
+            description: "invoke function"
+            functionIdSelector:
+              matchLabels:
+                testing.upbound.io/example-name: function_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,26 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: MonitoringTemplateAlarmCondition
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/monitoringtemplatealarmcondition
+  labels:
+    testing.upbound.io/example-name: test_monitoring_template_alarm_condition_example
+  name: test-monitoring-template-alarm-condition-example
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    conditionType: FIXED
+    conditions:
+      - body: Garbage collection throughput exceeds the warning threshold value
+        query: GarbageCollectionThroughput[10m].mean() > 0.3
+        severity: WARNING
+    metricName: GarbageCollectionThroughput
+    monitoringTemplateIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_monitoring_template_example
+    namespace: oracle_appmgmt
+    resourceType: ocid1.stackmonitoringresourcetype.apache_tomcat
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

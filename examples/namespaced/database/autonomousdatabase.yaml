@@ -1,0 +1,31 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabase
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database
+  name: test-autonomous-database
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    adminPasswordSecretRef:
+      key: attribute.result
+      name: example-string
+      namespace: upbound-system
+    autonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: dg_autonomous_container_database
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCount: 16
+    dataStorageSizeInTbs: "1"
+    dbName: atpdb1
+    dbWorkload: OLTP
+    displayName: exacc_tf-adb
+    isDedicated: "true"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

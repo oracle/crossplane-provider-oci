@@ -1,0 +1,24 @@
+apiVersion: recovery.oci.m.upbound.io/v1alpha1
+kind: RecoveryServiceSubnet
+metadata:
+  labels:
+    testing.upbound.io/example-name: recoveryservicesubnet_label_1
+  name: recoveryservicesubnet1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/recovery_recovery_service_subnet
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1
+    displayName: recoveryservicesubnet1
+    subnets:
+      - ${SUBNET_OCID}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,26 @@
+apiVersion: clusterplacementgroups.oci.m.upbound.io/v1alpha1
+kind: ClusterPlacementGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: clusterplacementgroups/v1alpha1/clusterplacementgroup
+  labels:
+    testing.upbound.io/example-name: test_cpg
+  name: test-cpg
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    clusterPlacementGroupType: STANDARD
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: value
+    description: cpg for compute & block resources
+    freeformTags:
+      Department: Finance
+    name: ${local.cpg_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

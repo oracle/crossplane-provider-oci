@@ -1,0 +1,27 @@
+apiVersion: devops.oci.m.upbound.io/v1alpha1
+kind: Deployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: devops/v1alpha1/deployment
+  labels:
+    testing.upbound.io/example-name: test_deployment
+  name: test-deployment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    deployPipelineIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_deploy_pipeline
+    deployStageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_helm_deploy_stage
+    deploymentArguments:
+      - items:
+          - name: PLAN_DRY_RUN
+            value: "true"
+    deploymentType: PIPELINE_DEPLOYMENT
+    displayName: HelmDiffDeployment
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

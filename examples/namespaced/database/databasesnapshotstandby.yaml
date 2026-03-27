@@ -1,0 +1,24 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: DatabaseSnapshotStandby
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/databasesnapshotstandby
+  labels:
+    testing.upbound.io/example-name: test_database_snapshot_standby
+  name: test-database-snapshot-standby
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    databaseAdminPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    databaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: standby_database
+    snapshotDurationInDays: 10
+    standbyConversionType: SNAPSHOT
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,18 @@
+apiVersion: logging.oci.m.upbound.io/v1alpha1
+kind: LogSavedSearch
+metadata:
+  name: logsavedsearch1
+  labels:
+    testing.upbound.io/example-name: logsavedsearch_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    name: "examplesavedsearch"
+    query: "exampleQuery"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

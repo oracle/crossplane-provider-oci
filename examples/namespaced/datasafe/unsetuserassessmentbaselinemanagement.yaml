@@ -1,0 +1,21 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: UnsetUserAssessmentBaselineManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/unsetuserassessmentbaselinemanagement
+  labels:
+    testing.upbound.io/example-name: test_unset_user_assessment_baseline_management
+  name: test-unset-user-assessment-baseline-management
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    userAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_set_user_assessment_baseline_management
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

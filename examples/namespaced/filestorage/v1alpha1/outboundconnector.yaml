@@ -1,0 +1,27 @@
+apiVersion: filestorage.oci.m.upbound.io/v1alpha1
+kind: OutboundConnector
+metadata:
+  name: outboundconnector1
+  labels:
+    testing.upbound.io/example-name: outboundconnector_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: outboundconnector1
+    availabilityDomain: ${AVAILABILITY_DOMAIN}
+    bindDistinguishedName: "cn=binduser,dc=example,dc=com"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    connectorType: "LDAPBIND"
+    endpoints:
+      - hostname: "ldap.example.com"
+        port: "636"
+    passwordSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: secret_label_1
+    passwordSecretVersion: 1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,26 @@
+apiVersion: waa.oci.m.upbound.io/v1alpha1
+kind: WebAppAcceleration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waa/v1alpha1/webappacceleration
+  labels:
+    testing.upbound.io/example-name: test_web_app_acceleration
+  name: test-web-app-acceleration
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    backendType: LOAD_BALANCER
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.web_app_acceleration_display_name}
+    freeformTags:
+      bar-key: value
+    loadBalancerId: ${oci_load_balancer.test_load_balancer.id}
+    webAppAccelerationPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_web_app_acceleration_policy
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

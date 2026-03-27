@@ -1,0 +1,28 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: CloudAutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/cloudautonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
+  name: test-cloud-autonomous-vm-cluster
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    cloudExadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_exadata_infrastructure
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeModel: ECPU
+    displayName: TestCloudAutonomousVmCluster
+    freeformTags: ${var.autonomous_database_freeform_tags}
+    licenseModel: LICENSE_INCLUDED
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadata_subnet
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

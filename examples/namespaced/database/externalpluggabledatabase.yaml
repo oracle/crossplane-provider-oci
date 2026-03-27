@@ -1,0 +1,24 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ExternalPluggableDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/externalpluggabledatabase
+  labels:
+    testing.upbound.io/example-name: test_external_pluggable_database
+  name: test-external-pluggable-database
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.external_pluggable_database_display_name}
+    externalContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_external_container_database
+    freeformTags:
+      Department: Finance
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,25 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousContainerDatabaseDataguardAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomouscontainerdatabasedataguardassociation
+  labels:
+    testing.upbound.io/example-name: test_autonomous_container_database_dataguard_association
+  name: test-autonomous-container-database-dataguard-association
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database_primary
+    isAutomaticFailoverEnabled: false
+    peerAutonomousContainerDatabaseCompartmentId: ${var.compartment_ocid}
+    peerAutonomousContainerDatabaseDisplayName: StandbyACD
+    peerCloudAutonomousVmClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster_standby
+    protectionMode: MAXIMUM_AVAILABILITY
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

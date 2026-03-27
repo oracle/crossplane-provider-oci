@@ -1,0 +1,17 @@
+apiVersion: networking.oci.m.upbound.io/v1alpha1
+kind: PublicIpPool
+metadata:
+  labels:
+    testing.upbound.io/example-name: publicippool_label_1
+  name: publicippool1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: publicippool1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

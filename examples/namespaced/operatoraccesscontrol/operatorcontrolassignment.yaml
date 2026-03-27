@@ -1,0 +1,33 @@
+apiVersion: operatoraccesscontrol.oci.m.upbound.io/v1alpha1
+kind: OperatorControlAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: operatoraccesscontrol/v1alpha1/operatorcontrolassignment
+  labels:
+    testing.upbound.io/example-name: test_operator_control_assignment
+  name: test-operator-control-assignment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    comment: ${var.operator_control_assignment_comment}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isAutoApproveDuringMaintenance: ${var.operator_control_assignment_is_auto_approve_during_maintenance}
+    isEnforcedAlways: ${var.operator_control_assignment_is_enforced_always}
+    isHypervisorLogForwarded: ${var.operator_control_assignment_is_hypervisor_log_forwarded}
+    isLogForwarded: ${var.operator_control_assignment_is_log_forwarded}
+    operatorControlIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_operator_control
+    remoteSyslogServerAddress: ${var.operator_control_assignment_remote_syslog_server_address}
+    remoteSyslogServerCaCert: ${var.operator_control_assignment_remote_syslog_server_ca_cert}
+    remoteSyslogServerPort: ${var.operator_control_assignment_remote_syslog_server_port}
+    resourceCompartmentId: ${var.compartment_id}
+    resourceId: ocid1.exadatainfrastructure.test..${random_string.random_suffix.result}
+    resourceName: ${var.operator_control_assignment_resource_name}
+    resourceType: ${var.operator_control_assignment_resource_type}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,17 @@
+apiVersion: dns.oci.m.upbound.io/v1alpha1
+kind: View
+metadata:
+  labels:
+    testing.upbound.io/example-name: view_label_1
+  name: view1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    scope: PRIVATE
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

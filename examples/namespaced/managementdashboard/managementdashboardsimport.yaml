@@ -1,0 +1,16 @@
+apiVersion: managementdashboard.oci.m.upbound.io/v1alpha1
+kind: ManagementDashboardsImport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: managementdashboard/v1alpha1/managementdashboardsimport
+  labels:
+    testing.upbound.io/example-name: test_import_via_tf_variable
+  name: test-import-via-tf-variable
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    importDetails: ${var.test_import_details}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

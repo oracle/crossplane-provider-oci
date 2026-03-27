@@ -1,0 +1,36 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousVmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousvmcluster
+  labels:
+    testing.upbound.io/example-name: test_autonomous_vm_cluster
+  name: test-autonomous-vm-cluster
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousDataStorageSizeInTbs: "2.0"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCountPerNode: "20"
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: value
+    displayName: autonomousVmCluster
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Finance
+    isLocalBackupEnabled: "false"
+    licenseModel: LICENSE_INCLUDED
+    memoryPerOracleComputeUnitInGbs: "5"
+    timeZone: US/Pacific
+    totalContainerDatabases: "2"
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network2
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

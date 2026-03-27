@@ -1,0 +1,19 @@
+apiVersion: apmsynthetics.oci.m.upbound.io/v1alpha1
+kind: OnPremiseVantagePoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: apmsynthetics/v1alpha1/onpremisevantagepoint
+  labels:
+    testing.upbound.io/example-name: test_on_premise_vantage_point
+  name: test-on-premise-vantage-point
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    apmDomainIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_apm_domain
+    name: ${var.on_premise_vantage_point_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,42 @@
+apiVersion: mysql.oci.m.upbound.io/v1alpha1
+kind: MysqlDbSystem
+metadata:
+  labels:
+    testing.upbound.io/example-name: mysqldbsystem_label_1
+  name: mysqldbsystem1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/mysql_mysql_db_system
+    availabilityDomain: "${AVAILABILITY_DOMAIN}"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    shapeName: "MySQL.2"
+    displayName: mysqldbsystem1 #Optional_field
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_2
+    adminPasswordSecretRef:
+      # Prerequisite: Before creating the MysqlDbSystem resource, copy the following Secret manifest
+      # into a separate YAML file (e.g., mysql-db-admin-secret.yaml) and apply it using:
+      # kubectl apply -f mysql-db-admin-secret.yaml
+      #
+      # Example:
+      #apiVersion: v1
+      #kind: Secret
+      #metadata:
+      #  name: mysql-db-admin-secret
+      #  namespace: crossplane-system
+      #type: Opaque
+      #data:
+      #  example-key: xyz     #encoded secret
+      key: example-key # Key within the Secret
+      name: mysql-db-admin-secret # Secret name
+      namespace: crossplane-system # Secret namespace
+    adminUsername: myadminuser # Administrative username
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

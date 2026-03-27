@@ -1,0 +1,16 @@
+apiVersion: stackmonitoring.oci.m.upbound.io/v1alpha1
+kind: MaintenanceWindowsRetryFailedOperation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: stackmonitoring/v1alpha1/maintenancewindowsretryfailedoperation
+  labels:
+    testing.upbound.io/example-name: test_maintenance_windows_retry_failed_operation
+  name: test-maintenance-windows-retry-failed-operation
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    maintenanceWindowId: ${var.maintenance_window_id}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

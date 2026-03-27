@@ -1,0 +1,26 @@
+apiVersion: licensemanager.oci.m.upbound.io/v1alpha1
+kind: LicenseRecord
+metadata:
+  annotations:
+    meta.upbound.io/example-id: licensemanager/v1alpha1/licenserecord
+  labels:
+    testing.upbound.io/example-name: test_license_record
+  name: test-license-record
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: ${var.license_record_display_name}
+    expirationDate: ${var.license_record_expiration_date}
+    freeformTags: ${var.license_record_freeform_tags}
+    isPerpetual: ${var.license_record_is_perpetual}
+    isUnlimited: ${var.license_record_is_unlimited}
+    licenseCount: ${var.license_record_license_count}
+    productId: ${var.product_id}
+    productLicenseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_product_license
+    supportEndDate: ${var.license_record_support_end_date}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

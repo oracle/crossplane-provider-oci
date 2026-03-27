@@ -1,0 +1,17 @@
+apiVersion: networking.oci.m.upbound.io/v1alpha1
+kind: VnicAttachment
+metadata:
+  labels:
+    testing.upbound.io/example-name: vnicattachment_label_1
+  name: vnicattachment1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: vnicattachment1
+    instanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: instance_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

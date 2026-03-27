@@ -1,0 +1,23 @@
+apiVersion: waf.oci.m.upbound.io/v1alpha1
+kind: NetworkAddressList
+metadata:
+  name: networkaddresslist1
+  labels:
+    testing.upbound.io/example-name: networkaddresslist_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    displayName: networkaddresslist1
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    type: "VCN_ADDRESSES"
+    vcnAddresses:
+      - vcnIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: vcn_label_1
+        addresses: "10.0.0.0/24"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

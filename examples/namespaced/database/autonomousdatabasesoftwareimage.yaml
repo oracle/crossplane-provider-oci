@@ -1,0 +1,25 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousDatabaseSoftwareImage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasesoftwareimage
+  labels:
+    testing.upbound.io/example-name: autonomous_database_software_image
+  name: autonomous-database-software-image
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ADSI-TFTest1
+    freeformTags:
+      Department: Finance
+    imageShapeFamily: EXACC_SHAPE
+    sourceCdbIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: autonomous_container_database
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

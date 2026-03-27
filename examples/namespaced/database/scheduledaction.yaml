@@ -1,0 +1,27 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ScheduledAction
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/scheduledaction
+  labels:
+    testing.upbound.io/example-name: test_scheduled_action
+  name: test-scheduled-action
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    actionType: ${var.scheduled_action_action_type}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags: ${var.scheduled_action_defined_tags_value}
+    freeformTags: ${var.scheduled_action_freeform_tags}
+    schedulingPlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_plan
+    schedulingWindowIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_scheduling_policy_scheduling_window
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

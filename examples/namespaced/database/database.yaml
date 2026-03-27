@@ -1,0 +1,28 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: Database
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/database
+  labels:
+    testing.upbound.io/example-name: primary_database
+  name: primary-database
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    database:
+      - adminPasswordSecretRef:
+          key: example-key
+          name: example-secret
+          namespace: upbound-system
+        characterSet: AL32UTF8
+        dbName: PrimDb
+        dbWorkload: OLTP
+        ncharacterSet: AL16UTF16
+    dbHomeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_db_home
+    source: NONE
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

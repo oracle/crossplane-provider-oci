@@ -1,0 +1,24 @@
+apiVersion: waas.oci.m.upbound.io/v1alpha1
+kind: ProtectionRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: waas/v1alpha1/protectionrule
+  labels:
+    testing.upbound.io/example-name: test_waas_protection_rule
+  name: test-waas-protection-rule
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    action: DETECT
+    exclusions:
+      - exclusions:
+          - example.com
+        target: REQUEST_COOKIES
+    key: "933161"
+    waasPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_waas_policy
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

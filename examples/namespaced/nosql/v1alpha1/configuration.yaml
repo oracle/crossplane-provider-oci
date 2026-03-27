@@ -1,0 +1,17 @@
+apiVersion: nosql.oci.m.upbound.io/v1alpha1
+kind: Configuration
+metadata:
+  labels:
+    testing.upbound.io/example-name: configuration_label_1
+  name: configuration1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    environment: HOSTED
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

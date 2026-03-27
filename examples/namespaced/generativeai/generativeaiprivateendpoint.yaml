@@ -1,0 +1,27 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: GenerativeAiPrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/generativeaiprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_generative_ai_private_endpoint
+  name: test-generative-ai-private-endpoint
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.generative_ai_private_endpoint_description}
+    displayName: ${var.generative_ai_private_endpoint_display_name}
+    dnsPrefix: ${var.generative_ai_private_endpoint_dns_prefix}
+    freeformTags:
+      Department: Marketing
+    nsgIds: []
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_subnet
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,24 @@
+apiVersion: identitydomains.oci.m.upbound.io/v1alpha1
+kind: MyApiKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/myapikey
+  labels:
+    testing.upbound.io/example-name: test_my_api_key
+  name: test-my-api-key
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    authorization: ${var.my_api_key_authorization}
+    description: ${var.my_api_key_description}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain_for_my_endpoint.url}
+    key: ${var.my_api_key_key}
+    schemas:
+      - urn:ietf:params:scim:schemas:oracle:idcs:apikey
+    tags:
+      - key: ${var.my_api_key_tags_key}
+        value: ${var.my_api_key_tags_value}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

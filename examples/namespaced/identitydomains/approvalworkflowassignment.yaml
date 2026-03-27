@@ -1,0 +1,34 @@
+apiVersion: identitydomains.oci.m.upbound.io/v1alpha1
+kind: ApprovalWorkflowAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitydomains/v1alpha1/approvalworkflowassignment
+  labels:
+    testing.upbound.io/example-name: test_approval_workflow_assignment
+  name: test-approval-workflow-assignment
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    approvalWorkflow:
+      - type: ${var.approval_workflow_assignment_approval_workflow_type}
+        valueSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_approval_workflow_assignment_approval_workflow
+    assignedTo:
+      - type: ${var.approval_workflow_assignment_assigned_to_type}
+        value: ${var.approval_workflow_assignment_assigned_to_value}
+    assignmentType: ${var.approval_workflow_assignment_assignment_type}
+    attributeSets:
+      - all
+    attributes: ""
+    authorization: ${var.approval_workflow_assignment_authorization}
+    idcsEndpoint: ${data.oci_identity_domain.test_domain.url}
+    schemas:
+      - urn:ietf:params:scim:schemas:oracle:idcs:ApprovalWorkflowAssignment
+    tags:
+      - key: ${var.approval_workflow_assignment_tags_key}
+        value: ${var.approval_workflow_assignment_tags_value}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

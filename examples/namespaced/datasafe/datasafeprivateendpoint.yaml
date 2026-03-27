@@ -1,0 +1,25 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: DataSafePrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/datasafeprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_data_safe_private_endpoint
+  name: test-data-safe-private-endpoint
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: PE2
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

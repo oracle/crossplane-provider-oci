@@ -1,0 +1,21 @@
+apiVersion: dbmulticloud.oci.m.upbound.io/v1alpha1
+kind: MultiCloudResourceDiscovery
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/multicloudresourcediscovery
+  labels:
+    testing.upbound.io/example-name: test_multi_cloud_resource_discovery
+  name: test-multi-cloud-resource-discovery
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: Tersi_Discover_Test
+    oracleDbConnectorId: ${var.oracle_db_azure_connector_id}
+    resourceType: VAULTS
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

@@ -1,0 +1,25 @@
+apiVersion: certificatesmanagement.oci.m.upbound.io/v1alpha1
+kind: CertificateAuthority
+metadata:
+  labels:
+    testing.upbound.io/example-name: certificateauthority_label_1
+  name: certificateauthority1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    certificateAuthorityConfig:
+      - configType: ROOT_CA_GENERATED_INTERNALLY
+        signingAlgorithm: "SHA256_WITH_RSA"
+        subject:
+          - commonName: www.example.com
+    kmsKeyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: key_label_2
+    name: certificateauthority1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

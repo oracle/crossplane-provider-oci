@@ -1,0 +1,26 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousDatabaseBackup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousdatabasebackup
+  labels:
+    testing.upbound.io/example-name: test_autonomous_database_backup
+  name: test-autonomous-database-backup
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    autonomousDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_database
+    backupDestinationDetails:
+      - idSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_backup_destination
+        type: NFS
+    displayName: DbBackupName
+    isLongTermBackup: "true"
+    retentionPeriodInDays: 90
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

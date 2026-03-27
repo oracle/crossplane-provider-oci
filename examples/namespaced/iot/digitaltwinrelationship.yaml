@@ -1,0 +1,23 @@
+apiVersion: iot.oci.m.upbound.io/v1alpha1
+kind: DigitalTwinRelationship
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/digitaltwinrelationship
+  labels:
+    testing.upbound.io/example-name: test_digital_twin_relationship
+  name: test-digital-twin-relationship
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    content: ${jsonencode(var.digital_twin_relationship_content)}
+    contentPath: ${var.digital_twin_relationship_content_path}
+    description: ${var.digital_twin_relationship_description}
+    displayName: ${var.digital_twin_relationship_display_name}
+    freeformTags: ${var.digital_twin_relationship_freeform_tags}
+    iotDomainId: ${var.iot_domain_ocid}
+    sourceDigitalTwinInstanceId: ${var.digital_twin_source_instance_ocid}
+    targetDigitalTwinInstanceId: ${var.digital_twin_target_instance_ocid}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

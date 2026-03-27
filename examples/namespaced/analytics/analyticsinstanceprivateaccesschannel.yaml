@@ -1,0 +1,28 @@
+apiVersion: analytics.oci.m.upbound.io/v1alpha1
+kind: AnalyticsInstancePrivateAccessChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceprivateaccesschannel
+  labels:
+    testing.upbound.io/example-name: test_private_access_channel
+  name: test-private-access-channel
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    analyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_oce_instance_public
+    displayName: ExamplePAC
+    privateSourceDnsZones:
+      - description: Example dns zone
+        dnsZone: examplecorp.com
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vcn
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

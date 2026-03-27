@@ -1,0 +1,15 @@
+apiVersion: ons.oci.m.upbound.io/v1alpha1
+kind: Subscription
+metadata:
+  name: subscription-via-crossplane
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentId: "ocid1.compartment.oc1..ssss"
+    topicId: "ocid1.onstopic.oc1.phx.ssss"
+    protocol: "EMAIL"
+    endpoint: "ssssss@oracle.com"
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

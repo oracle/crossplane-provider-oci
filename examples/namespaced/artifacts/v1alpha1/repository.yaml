@@ -1,0 +1,18 @@
+apiVersion: artifacts.oci.m.upbound.io/v1alpha1
+kind: Repository
+metadata:
+  labels:
+    testing.upbound.io/example-name: repository_label_1
+  name: repository1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    isImmutable: false
+    repositoryType: GENERIC
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

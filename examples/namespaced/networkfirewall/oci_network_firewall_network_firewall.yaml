@@ -1,0 +1,17 @@
+apiVersion: network.oci.m.upbound.io/v1alpha1
+kind: FirewallNetworkFirewall
+metadata:
+  name: nwfw-via-crossplane
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdRef:
+      name: compartment-via-crossplane1
+    subnetIdRef:
+      name: subnet-via-crossplane
+    networkFirewallPolicyIdRef:
+      name: nwfwpolicy-via-crossplane
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

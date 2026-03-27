@@ -1,0 +1,24 @@
+apiVersion: bastion.oci.m.upbound.io/v1alpha1
+kind: Session
+metadata:
+  labels:
+    testing.upbound.io/example-name: session_label_1
+  name: session1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    # Refer to following terraform example for brief resource fields
+    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/bastion_session
+    bastionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: bastion_label_1
+    keyDetails:
+      - publicKeyContent: ${SSH_PUBLIC_KEY}
+    targetResourceDetails:
+      - sessionType: "PORT_FORWARDING"
+        targetResourceId: ${TARGET_RESOURCE_OCID}
+        targetResourcePort: 22
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

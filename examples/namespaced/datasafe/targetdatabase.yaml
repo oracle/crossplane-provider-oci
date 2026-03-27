@@ -1,0 +1,24 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: TargetDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/targetdatabase
+  labels:
+    testing.upbound.io/example-name: test_adb_target_database
+  name: test-adb-target-database
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseDetails:
+      - autonomousDatabaseId: ${var.autonomous_db_id}
+        databaseType: AUTONOMOUS_DATABASE
+        infrastructureType: ORACLE_CLOUD
+    description: ${var.target_database_description}
+    displayName: ${var.target_database_display_name}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

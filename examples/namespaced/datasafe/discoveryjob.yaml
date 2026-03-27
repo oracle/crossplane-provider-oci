@@ -1,0 +1,27 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: DiscoveryJob
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/discoveryjob
+  labels:
+    testing.upbound.io/example-name: test_discovery_job
+  name: test-discovery-job
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    discoveryType: ${var.discovery_job_discovery_type}
+    freeformTags: ${var.discovery_job_freeform_tags}
+    isAppDefinedRelationDiscoveryEnabled: ${var.discovery_job_is_app_defined_relation_discovery_enabled}
+    isIncludeAllSchemas: ${var.discovery_job_is_include_all_schemas}
+    isIncludeAllSensitiveTypes: ${var.discovery_job_is_include_all_sensitive_types}
+    sensitiveDataModelIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_sensitive_data_model
+    sensitiveTypeGroupIdsForDiscovery: ${var.sensitive_data_model_sensitive_type_group_ids_for_discovery}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

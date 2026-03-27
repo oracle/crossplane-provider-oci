@@ -1,0 +1,24 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: ToolsDatabaseToolsIdentity
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/toolsdatabasetoolsidentity
+  labels:
+    testing.upbound.io/example-name: example_identity
+  name: example-identity
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    credentialKey: MY_TEST_CREDENTIAL
+    databaseToolsConnectionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example_connection
+    displayName: My Identity
+    type: ORACLE_DATABASE_RESOURCE_PRINCIPAL
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

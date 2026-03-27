@@ -1,0 +1,52 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: VmCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/vmcluster
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster
+  name: test-vm-cluster
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    cloudAutomationUpdateDetails:
+      - applyUpdateTimePreference:
+          - applyUpdatePreferredEndTime: "08:00"
+            applyUpdatePreferredStartTime: "02:00"
+        isEarlyAdoptionEnabled: "true"
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    cpuCoreCount: "16"
+    dataCollectionOptions:
+      - isDiagnosticsEventsEnabled: "true"
+        isHealthMonitoringEnabled: "true"
+        isIncidentLogsEnabled: "true"
+    dataStorageSizeInTbs: "84"
+    dbNodeStorageSizeInGbs: "120"
+    dbServers:
+      - ${data.oci_database_db_servers.test_db_servers.db_servers.0.id}
+      - ${data.oci_database_db_servers.test_db_servers.db_servers.1.id}
+    definedTags:
+      ${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}: updatedvalue
+    displayName: testVmCluster
+    exadataInfrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_exadata_infrastructure
+    freeformTags:
+      Department: Accounting
+    giVersion: ${data.oci_database_gi_versions.gi_version.gi_versions.0.version}
+    isLocalBackupEnabled: "false"
+    isSparseDiskgroupEnabled: "false"
+    licenseModel: LICENSE_INCLUDED
+    memorySizeInGbs: "60"
+    sshPublicKeys:
+      - ${var.ssh_public_key}
+    vmClusterNetworkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vm_cluster_network
+    vmClusterType: REGULAR
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

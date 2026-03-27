@@ -1,0 +1,25 @@
+apiVersion: disasterrecovery.oci.m.upbound.io/v1alpha1
+kind: DrPlanExecution
+metadata:
+  annotations:
+    meta.upbound.io/example-id: disasterrecovery/v1alpha1/drplanexecution
+  labels:
+    testing.upbound.io/example-name: test_dr_plan_execution
+  name: test-dr-plan-execution
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    definedTags: ${map("${oci_identity_tag_namespace.tag-namespace1.name}.${oci_identity_tag.tag1.name}", "${var.dr_plan_execution_defined_tags_value}")}
+    displayName: ${var.dr_plan_execution_display_name}
+    executionOptions:
+      - arePrechecksEnabled: ${var.dr_plan_execution_execution_options_are_prechecks_enabled}
+        areWarningsIgnored: ${var.dr_plan_execution_execution_options_are_warnings_ignored}
+        planExecutionType: ${var.dr_plan_execution_execution_options_plan_execution_type}
+    freeformTags: ${var.dr_plan_execution_freeform_tags}
+    planIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_dr_plan
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

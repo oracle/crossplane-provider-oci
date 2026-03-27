@@ -1,0 +1,17 @@
+apiVersion: iot.oci.m.upbound.io/v1alpha1
+kind: IotDomainGroupConfigureDataAccess
+metadata:
+  annotations:
+    meta.upbound.io/example-id: iot/v1alpha1/iotdomaingroupconfiguredataaccess
+  labels:
+    testing.upbound.io/example-name: test_iot_domain_group_configure_data_access
+  name: test-iot-domain-group-configure-data-access
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    dbAllowListedVcnIds: ${var.iot_domain_group_configure_data_access_db_allow_listed_vcn_ids}
+    iotDomainGroupId: ${var.iot_domain_group_ocid}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

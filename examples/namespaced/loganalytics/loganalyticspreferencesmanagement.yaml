@@ -1,0 +1,19 @@
+apiVersion: loganalytics.oci.m.upbound.io/v1alpha1
+kind: LogAnalyticsPreferencesManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: loganalytics/v1alpha1/loganalyticspreferencesmanagement
+  labels:
+    testing.upbound.io/example-name: rest_api_timezone_property
+  name: rest-api-timezone-property
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    items:
+      - name: ${local.property_name}
+        value: ${local.property_value}
+    namespace: ${local.namespace}
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

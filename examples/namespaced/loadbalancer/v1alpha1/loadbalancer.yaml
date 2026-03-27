@@ -1,0 +1,24 @@
+apiVersion: loadbalancer.oci.m.upbound.io/v1alpha1
+kind: LoadBalancer
+metadata:
+  name: loadbalancer1
+  labels:
+    testing.upbound.io/example-name: loadbalancer_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: "loadbalancer1"
+    shape: "flexible"
+    subnetIdsSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_1
+    shapeDetails:
+      - maximumBandwidthInMbps: 10
+        minimumBandwidthInMbps: 10
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

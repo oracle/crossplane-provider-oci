@@ -1,0 +1,43 @@
+apiVersion: database.oci.m.upbound.io/v1alpha1
+kind: AutonomousExadataInfrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: database/v1alpha1/autonomousexadatainfrastructure
+  labels:
+    testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
+  name: test-autonomous-exadata-infrastructure
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    availabilityDomain: ${data.oci_identity_availability_domain.ad.name}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    createAsync: true
+    displayName: TestExadata11
+    domain: ${var.autonomous_exadata_infrastructure_domain}
+    freeformTags: ${var.autonomous_database_freeform_tags}
+    licenseModel: LICENSE_INCLUDED
+    maintenanceWindowDetails:
+      - daysOfWeek:
+          - name: MONDAY
+        hoursOfDay:
+          - "4"
+        months:
+          - name: JANUARY
+          - name: APRIL
+          - name: JULY
+          - name: OCTOBER
+        preference: CUSTOM_PREFERENCE
+        weeksOfMonth:
+          - "2"
+    nsgIdsRefs:
+      - name: test_network_security_group
+    shape: Exadata.Quarter2.92
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: exadata_subnet
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig

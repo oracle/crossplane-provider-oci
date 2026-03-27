@@ -1,0 +1,23 @@
+apiVersion: resourcemanager.oci.m.upbound.io/v1alpha1
+kind: PrivateEndpoint
+metadata:
+  name: privateendpoint1
+  labels:
+    testing.upbound.io/example-name: privateendpoint_label_1
+  namespace: ${TARGET_NAMESPACE}
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: compartment_label_1
+    displayName: "privateendpoint1"
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: subnet_label_2
+    vcnIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: vcn_label_1
+  # providerConfig defaults to "ClusterProviderConfig"; set providerConfigRef to "ProviderConfig" to use namespaced providerConfig.
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
