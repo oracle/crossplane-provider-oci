@@ -82,6 +82,7 @@ spec:
       pullSecretRef:
         name: private-registry-credentials
 ```
+
 ## Configure family provider for OCI
 
 The official provider-family requires credentials to create and manage OCI resources. Choose one of the following authentication methods:
@@ -207,9 +208,27 @@ This method uses OCI Workload Identity for authentication in OKE environments.
    EOF
    ```
 
-After choosing one authentication method above, register the provider configuration:
+After choosing one authentication method above, create the ProviderConfig objects that match your workloads:
+
+- **Legacy resources (`*.oci.upbound.io`)** continue to use a cluster-scoped `ProviderConfig.oci.upbound.io`.
+- **Modern namespaced resources (`*.oci.m.upbound.io`)** default to a cluster-scoped `ClusterProviderConfig.oci.m.upbound.io`.
+- **Optional isolation:** create additional namespaced `ProviderConfig.oci.m.upbound.io` objects (one per namespace) when teams need their own credentials stored with namespace-local secrets.
+
+Register the cluster-wide configs:
 ```bash
 cat <<EOF | kubectl apply -f -
+apiVersion: oci.m.upbound.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: oci-creds
+      namespace: crossplane-system
+      key: credentials
+---
 apiVersion: oci.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
@@ -224,8 +243,29 @@ spec:
 EOF
 ```
 
+To isolate a namespace, create a namespaced ProviderConfig that references a secret in that namespace (repeat per namespace as needed):
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: oci.m.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+  namespace: <target-namespace>
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: oci-creds
+      namespace: <target-namespace>
+      key: credentials
+EOF
+```
+
 > [!NOTE]
 > If the provider configuration is incorrect (for example, wrong credentials or authentication settings), managed resources can report `READY=False` and `SYNCED=False` until the configuration is fixed.
+>
+> `ClusterProviderConfig.oci.m.upbound.io` is the modern default for namespaced managed resources (`*.oci.m.upbound.io`). Use namespaced `ProviderConfig.oci.m.upbound.io` objects when you need per-namespace credential isolation.
+> Legacy cluster-scoped managed resources (`*.oci.upbound.io`) continue to use `ProviderConfig.oci.upbound.io`.
 
 
 ## Create a managed resource
@@ -235,20 +275,43 @@ Create a managed resource to verify the provider-oci-objectstorage is functionin
 Use this command to instruct Crossplane to create the bucket in the OCI tenancy.
 
 ```bash
-# Edit examples/objectstorage/bucket.yaml with your compartment and storage name space as documented.
+# Edit examples/cluster/objectstorage/v1alpha1/bucket.yaml with your compartment and storage name space as documented.
 # Apply the example that creates an Object Storage bucket
 
-kubectl apply -f examples/objectstorage/bucket.yaml
+# Legacy cluster-scoped example (uses ProviderConfig.oci.upbound.io)
+kubectl apply -f examples/cluster/objectstorage/v1alpha1/bucket.yaml
 ```
+
+For namespaced managed resources (`apiVersion: *.oci.m.upbound.io/*`), the default `ClusterProviderConfig` is used when `providerConfigRef` is omitted. To target a namespace-specific ProviderConfig, set:
+```yaml
+metadata:
+  namespace: <target-namespace>
+spec:
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default
+```
+
+Apply the namespaced example to create a bucket scoped to `<target-namespace>` (e.g: namespace1):
+```bash
+# Modern namespaced example (uses namespaced ProviderConfig when specified)
+kubectl apply -f examples/namespaced/objectstorage/v1alpha1/bucket.yaml
+```
+
+For local namespaced secret references inside namespaced resources, do not set `namespace` in the local ref fields.
 
 Verify the status of the resource by running this command (example output is shown).
 ```bash
-kubectl get managed
+kubectl get managed --all-namespaces
+kubectl get bucket.objectstorage.oci.upbound.io
+kubectl get bucket.objectstorage.oci.m.upbound.io -A
 ```
 ```
 # Sample output
-NAME                                                         READY   SYNCED   EXTERNAL-NAME                            AGE
-bucket.objectstorage.oci.upbound.io/bucket-via-crossplane4   True    True     n/idimd1fghobk/b/bucket-via-crossplane   10m
+NAMESPACE             NAME                                            READY   SYNCED   EXTERNAL-NAME                   AGE
+                      bucket.objectstorage.oci.upbound.io/bucket1     True    True     n/idimd1fghobk/b/bucket1        10m
+namespace1            bucket.objectstorage.oci.m.upbound.io/bucket1   True    True     n/idimd1fghobk/b/bucket1        10m
+
 ```
 Upbound created the bucket when the values `READY` and `SYNCED` are True. This may take up to 5 minutes.
 
@@ -257,11 +320,11 @@ If the `READY` or `SYNCED` are blank or False use kubectl describe to understand
 Here is an example of a failure because the `spec.providerConfigRef.name` value in the `Bucket` doesn't match the `ProviderConfig` `metadata.name`.
 
 ```bash
-kubectl describe bucket
+kubectl describe bucket.objectstorage.oci.upbound.io bucket1
 ```
 ```
 # Sample output
-Name:         bucket-via-crossplane4
+Name:         bucket1
 Namespace:    
 Labels:       provider=oci
 Annotations:  <none>
@@ -272,7 +335,7 @@ Spec:
   Deletion Policy:  Delete
   For Provider:
     Compartment Id:  ocid1.compartment.oc1..xxx
-    Name:            bucket-via-crossplane
+    Name:            bucket1
     Namespace:       id8pypxcqtqs
   Management Policies:
     *
@@ -296,28 +359,77 @@ Events:
 The output indicates the `Bucket` is using a `ProviderConfig` named `default`. The applied `ProviderConfig` is `oci-provider`.
 
 ```bash
-kubectl get providerconfig
+kubectl get clusterproviderconfigs.oci.m.upbound.io
+kubectl get providerconfigs.oci.upbound.io
 ```
+
+## Observing a managed resource
+
+### Management policies
+
+Crossplane v2 adds `spec.managementPolicies` to every managed resource so you can explicitly scope the actions a controller executes against the target cloud API. The default policy (`"*"` or omitting the field) permits Crossplane to create, observe, update, late-initialize, and delete the external resource. Supplying a narrowed list constrains those operations accordingly:
+
+| `managementPolicies` | Effect | Typical use |
+| --- | --- | --- |
+| `["*"]` (default) | Full lifecycle: create, observe, update, late-initialize, delete | Standard Crossplane-managed resources |
+| `["Observe"]` | Observe-only; Crossplane reads state but never mutates or deletes the cloud resource | Importing pre-existing buckets, VCNs, policies, etc., without risking drift correction |
+
+> [!IMPORTANT]
+> `managementPolicies` always overrides `deletionPolicy`. If `Delete` is absent, the external resource is orphaned even when `deletionPolicy: Delete` is set. Conversely, including `Delete` forces cleanup even when `deletionPolicy: Orphan` is specified.
+
+Pair observe-only policies with the `metadata.annotations["crossplane.io/external-name"]` selector (and any compartment / region fields) so the controller can resolve the existing OCI object.
+
+### Example: Observe-only import of an existing KMS Vault
+
+```yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: kms.oci.m.upbound.io/v1alpha1
+kind: Vault
+metadata:
+  name: vault1
+  namespace: <TARGET_NAMESPACE>
+  annotations:
+    crossplane.io/external-name: <EXTERNAL_RESOURCE_OCID>
+spec:
+  managementPolicies:
+    - Observe
+  forProvider:
+    compartmentId: <COMPARTMENT_OCID>
+    displayName: vault1
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default
+EOF
 ```
-# Sample output
-NAME           AGE
-oci-provider   7s
+
+Apply the manifest and confirm Crossplane observes the existing vault in KMS without changing it:
+
+```bash
+kubectl get vault.kms.oci.m.upbound.io vault1 -A
 ```
+
+This pattern delivers Kubernetes-level visibility into OCI resources provisioned outside Crossplane while preventing accidental mutation or deletion.
 
 ## Delete the managed resource
 
-Remove the managed resource by using `kubectl delete -f examples/objectstorage/bucket.yaml`. Verify removal of the bucket with kubectl get buckets
+Remove the managed resources by using the matching manifest(s). Verify removal of the buckets afterwards.
 
 ```bash
-kubectl delete -f examples/objectstorage/bucket.yaml
+# Legacy cluster-scoped bucket
+kubectl delete -f examples/cluster/objectstorage/v1alpha1/bucket.yaml
+
+# Namespaced bucket (repeat per namespace if you created multiple)
+kubectl delete -f examples/namespaced/objectstorage/v1alpha1/bucket.yaml
 ```
 ```
 # Sample output
-bucket.objectstorage.oci.upbound.io "bucket-via-crossplane4" deleted
+bucket.objectstorage.oci.upbound.io "bucket1" deleted
+bucket.objectstorage.oci.m.upbound.io "bucket1" deleted
 ```
 
 ```bash
-kubectl get buckets
+kubectl get bucket.objectstorage.oci.upbound.io
+kubectl get bucket.objectstorage.oci.m.upbound.io -A
 ```
 ```
 # Sample output
