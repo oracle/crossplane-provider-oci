@@ -11,9 +11,7 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
-    vcnIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: vcn_label_1
+    vcnId: ${VCN_OCID}
     displayName: recoveryservicesubnet1
     subnets:
       - ${SUBNET_OCID}
