@@ -49,7 +49,7 @@ jobs:
       - id: calc
         run: |
           if [ "${{ inputs.subpackages }}" = "all" ]; then
-            SERVICES_LIST=$(find examples-generated -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -n1 basename | tr '\n' ',' | sed 's/,$//' || echo "")
+            SERVICES_LIST=$(find examples-generated/cluster -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -n1 basename | tr '\n' ',' | sed 's/,$//' || echo "")
             if [ -n "$SERVICES_LIST" ]; then
               SUBPACKAGES="config,$SERVICES_LIST"
             else
