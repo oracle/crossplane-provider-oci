@@ -47,12 +47,50 @@ jobs:
       indices: ${{ steps.calc.outputs.indices }}
       subpackages: ${{ steps.calc.outputs.subpackages }}
     steps:
+      - name: Validate workflow inputs
+        env:
+          INPUT_SUBPACKAGES: ${{ inputs.subpackages }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_PLATFORM: ${{ inputs.platform }}
+          INPUT_SIZE: ${{ inputs.size }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$INPUT_SUBPACKAGES" =~ ^(all|[a-z0-9]+([,-][a-z0-9]+)*)$ ]]; then
+            echo "Invalid subpackages input: $INPUT_SUBPACKAGES" >&2
+            exit 1
+          fi
+
+          if [[ -n "$INPUT_VERSION" && ! "$INPUT_VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid version input: $INPUT_VERSION" >&2
+            exit 1
+          fi
+
+          if [[ ! "$INPUT_SIZE" =~ ^[1-9][0-9]*$ ]]; then
+            echo "Invalid size input: $INPUT_SIZE" >&2
+            exit 1
+          fi
+
+          case "$INPUT_PLATFORM" in
+            "linux_amd64 linux_arm64"|"linux_amd64"|"linux_arm64")
+              ;;
+            *)
+              echo "Invalid platform input: $INPUT_PLATFORM" >&2
+              exit 1
+              ;;
+          esac
+
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
 
       - id: calc
+        env:
+          INPUT_SUBPACKAGES: ${{ inputs.subpackages }}
+          INPUT_SIZE: ${{ inputs.size }}
         run: |
-          if [ "${{ inputs.subpackages }}" = "all" ]; then
+          set -euo pipefail
+
+          if [ "$INPUT_SUBPACKAGES" = "all" ]; then
             SERVICES_LIST=$(find examples-generated/cluster -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -n1 basename | tr '\n' ',' | sed 's/,$//' || echo "")
             if [ -n "$SERVICES_LIST" ]; then
               SUBPACKAGES="config,$SERVICES_LIST"
@@ -60,9 +98,19 @@ jobs:
               SUBPACKAGES="config"
             fi
           else
-            SUBPACKAGES="${{ inputs.subpackages }}"
+            SUBPACKAGES="$INPUT_SUBPACKAGES"
           fi
-          python3 -c "import math; print(f'indices={list(range(0, math.ceil(len(\"$SUBPACKAGES\".split(',')) / int(\"${{ inputs.size }}\"))))}')" >> "$GITHUB_OUTPUT"
+          export SUBPACKAGES
+          INDICES=$(python3 - <<'PY'
+          import math
+          import os
+
+          subpackages = [pkg for pkg in os.environ["SUBPACKAGES"].split(",") if pkg]
+          size = int(os.environ["INPUT_SIZE"])
+          print(list(range(0, math.ceil(len(subpackages) / size))))
+          PY
+          )
+          echo "indices=$INDICES" >> "$GITHUB_OUTPUT"
           echo "subpackages=$SUBPACKAGES" >> "$GITHUB_OUTPUT"
 
   publish-artifacts:
@@ -132,28 +180,53 @@ jobs:
 
       - name: Calculate packages to build & push
         id: packages
+        env:
+          ALL_PACKAGES: ${{ needs.index.outputs.subpackages }}
+          MATRIX_INDEX: ${{ matrix.index }}
+          INPUT_SIZE: ${{ inputs.size }}
         run: |
-          PACKAGES_BATCH=$(python3 -c "
-          all_packages = \"${{ needs.index.outputs.subpackages }}\".split(',')
-          start_idx = int(\"${{ matrix.index }}\") * int(\"${{ inputs.size }}\")
-          batch = all_packages[start_idx:start_idx + int(\"${{ inputs.size }}\")]
-          if 'config' not in batch:
-              batch = ['config'] + batch
-          print(','.join(batch))
-          ")
+          set -euo pipefail
+
+          PACKAGES_BATCH=$(python3 - <<'PY'
+          import os
+
+          all_packages = [pkg for pkg in os.environ["ALL_PACKAGES"].split(",") if pkg]
+          size = int(os.environ["INPUT_SIZE"])
+          start_idx = int(os.environ["MATRIX_INDEX"]) * size
+          batch = all_packages[start_idx:start_idx + size]
+          if "config" not in batch:
+              batch = ["config"] + batch
+          print(",".join(batch))
+          PY
+          )
           echo "packages_batch=$PACKAGES_BATCH" >> "$GITHUB_OUTPUT"
 
       - name: Build Artifacts
         id: build_artifacts
-        run: |
-          go install golang.org/x/tools/cmd/goimports@latest
-          make generate
-          make SUBPACKAGES="${{ steps.packages.outputs.packages_batch }}" PLATFORMS="${{ inputs.platform }}" build
         env:
+          INPUT_PLATFORM: ${{ inputs.platform }}
           # We're using docker buildx, which doesn't actually load the images it
           # builds by default. Specifying --load does so.
           BUILD_ARGS: "--load"
+        run: |
+          set -euo pipefail
+          go install golang.org/x/tools/cmd/goimports@latest
+          make generate
+          make SUBPACKAGES="${{ steps.packages.outputs.packages_batch }}" PLATFORMS="$INPUT_PLATFORM" build
 
       - name: Publish Artifacts
+        env:
+          PACKAGES_BATCH: ${{ steps.packages.outputs.packages_batch }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_PLATFORM: ${{ inputs.platform }}
+          REGISTRY_ORG: ${{ env.CROSSPLANE_REGORG }}
         run: |
-          make SUBPACKAGES_FOR_BATCH="${{ steps.packages.outputs.packages_batch }}" XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" VERSION=${{ inputs.version }} BATCH_PLATFORMS="$(echo ${{ inputs.platform }} | tr ' ' ',')" publish-subpackages
+          set -euo pipefail
+
+          batch_platforms=$(tr ' ' ',' <<<"$INPUT_PLATFORM")
+          make \
+            SUBPACKAGES_FOR_BATCH="$PACKAGES_BATCH" \
+            XPKG_REG_ORGS="$REGISTRY_ORG" \
+            VERSION="$INPUT_VERSION" \
+            BATCH_PLATFORMS="$batch_platforms" \
+            publish-subpackages
