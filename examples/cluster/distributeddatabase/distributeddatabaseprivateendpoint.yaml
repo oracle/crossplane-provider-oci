@@ -1,0 +1,17 @@
+apiVersion: distributeddatabase.oci.upbound.io/v1alpha1
+kind: DistributedDatabasePrivateEndpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: distributeddatabase/v1alpha1/distributeddatabaseprivateendpoint
+  labels:
+    testing.upbound.io/example-name: test_distributed_database_private_endpoint
+  name: test-distributed-database-private-endpoint
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    displayName: ${var.distributed_database_private_endpoint_display_name}
+    subnetIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subnet

@@ -1,0 +1,36 @@
+apiVersion: distributeddatabase.oci.upbound.io/v1alpha1
+kind: DistributedDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: distributeddatabase/v1alpha1/distributeddatabase
+  labels:
+    testing.upbound.io/example-name: test_distributed_database
+  name: test-distributed-database
+spec:
+  forProvider:
+    catalogDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      source: ${var.distributed_database_catalog_details_source}
+    characterSet: ${var.distributed_database_character_set}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    databaseVersion: ${var.distributed_database_database_version}
+    dbDeploymentType: ${var.distributed_database_db_deployment_type}
+    displayName: ${var.distributed_database_display_name}
+    listenerPort: ${var.distributed_database_listener_port}
+    ncharacterSet: ${var.distributed_database_ncharacter_set}
+    onsPortLocal: ${var.distributed_database_ons_port_local}
+    onsPortRemote: ${var.distributed_database_ons_port_remote}
+    prefix: ${var.distributed_database_prefix}
+    privateEndpointIds: ${var.distributed_database_private_endpoint_ids}
+    shardDetails:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      source: ${var.distributed_database_shard_details_source}
+    shardingMethod: ${var.distributed_database_sharding_method}

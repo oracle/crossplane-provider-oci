@@ -12,6 +12,8 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
     displayName: instance1
+    instanceOptions:
+      - areLegacyImdsEndpointsDisabled: true
     shape: "VM.Standard.E4.Flex"
     shapeConfig:
       - baselineOcpuUtilization: "BASELINE_1_8"

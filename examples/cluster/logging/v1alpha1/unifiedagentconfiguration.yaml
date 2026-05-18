@@ -17,8 +17,7 @@ spec:
         destination:
           - logObjectIdSelector:
               matchLabels:
-                # required a custom log to be created first
-                testing.upbound.io/example-name: log_label_2
+                testing.upbound.io/example-name: object_label_1
         sources:
           - name: "src1"
             parser:

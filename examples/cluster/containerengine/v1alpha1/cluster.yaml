@@ -6,8 +6,7 @@ metadata:
   name: cluster1
 spec:
   forProvider:
-    # Refer to following terraform example for brief resource fields
-    # https://registry.terraform.io/providers/oracle/oci/7.27.0/docs/resources/containerengine_cluster
+    type: BASIC_CLUSTER
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: compartment_label_1
@@ -15,4 +14,13 @@ spec:
     vcnIdSelector:
       matchLabels:
         testing.upbound.io/example-name: vcn_label_1
-    kubernetesVersion: v1.34.1
+    kubernetesVersion: v1.35.2
+    clusterPodNetworkOptions:
+      - cniType: OCI_VCN_IP_NATIVE
+    # Ensure the selected subnet has a route table with internet gateway access
+    # and a security list that allows the required traffic.
+    endpointConfig:
+      - isPublicIpEnabled: true
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: subnet_label_1

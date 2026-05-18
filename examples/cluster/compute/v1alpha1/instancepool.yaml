@@ -16,5 +16,8 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: instanceconfiguration_label_1
     placementConfigurations:
-    - availabilityDomain: ${AVAILABILITY_DOMAIN}
+      - availabilityDomain: ${AVAILABILITY_DOMAIN}
+        primarySubnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: subnet_label_1
     size: 1

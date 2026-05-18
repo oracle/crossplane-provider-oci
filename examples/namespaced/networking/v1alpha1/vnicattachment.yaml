@@ -7,6 +7,12 @@ metadata:
   namespace: ${TARGET_NAMESPACE}
 spec:
   forProvider:
+    createVnicDetails:
+      - assignPublicIp: "false"
+        displayName: vnicattachment1
+        subnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: subnet_label_2
     displayName: vnicattachment1
     instanceIdSelector:
       matchLabels:
