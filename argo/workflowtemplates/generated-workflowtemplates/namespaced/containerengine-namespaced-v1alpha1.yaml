@@ -13,8 +13,12 @@ spec:
   arguments:
     parameters:
     - name: target_namespace
+    - name: availability_domain
     - name: compartment_ocid
+    - name: image_instance_ocid
     - name: create_compartment
+      value: "true"
+    - name: create_image
       value: "true"
     - name: create_subnet
       value: "true"
@@ -45,6 +49,20 @@ spec:
                 value: "{{inputs.parameters.target_namespace}}"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-image
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_image}} == true"
+          dependencies: [create-compartment]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/namespaced/compute/v1alpha1/image.yaml"
+              - name: namespace
+                value: "{{inputs.parameters.target_namespace}}"
+              - name: envVars
+                value: "IMAGE_INSTANCE_OCID={{workflow.parameters.image_instance_ocid}}"
         - name: create-subnet
           templateRef:
             name: test-template
@@ -74,7 +92,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-vcn]
+          dependencies: [create-compartment, create-subnet, create-vcn]
           arguments:
             parameters:
               - name: resourceFile
@@ -93,12 +111,26 @@ spec:
                 value: "examples/namespaced/containerengine/v1alpha1/privateendpointcluster.yaml"
               - name: namespace
                 value: "{{inputs.parameters.target_namespace}}"
+        - name: create-nodepool
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_resources}} == true"
+          dependencies: [create-cluster, create-compartment, create-image, create-subnet]
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/namespaced/containerengine/v1alpha1/nodepool.yaml"
+              - name: namespace
+                value: "{{inputs.parameters.target_namespace}}"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
         - name: delete-cluster
           templateRef:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-cluster"]
+          dependencies: ["create-cluster", "delete-nodepool"]
           arguments:
             parameters:
               - name: resourceKind
@@ -123,5 +155,21 @@ spec:
                 value: "{{tasks.create-privateendpointcluster.outputs.parameters.resourceName}}"
               - name: resourceGroup
                 value: "{{tasks.create-privateendpointcluster.outputs.parameters.resourceGroup}}"
+              - name: namespace
+                value: "{{inputs.parameters.target_namespace}}"
+        - name: delete-nodepool
+          templateRef:
+            name: test-template
+            template: delete-resource
+          when: "{{workflow.parameters.delete_resources}} == true"
+          dependencies: ["create-nodepool"]
+          arguments:
+            parameters:
+              - name: resourceKind
+                value: "{{tasks.create-nodepool.outputs.parameters.resourceKind}}"
+              - name: resourceName
+                value: "{{tasks.create-nodepool.outputs.parameters.resourceName}}"
+              - name: resourceGroup
+                value: "{{tasks.create-nodepool.outputs.parameters.resourceGroup}}"
               - name: namespace
                 value: "{{inputs.parameters.target_namespace}}"

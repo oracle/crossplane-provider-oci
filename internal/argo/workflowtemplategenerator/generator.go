@@ -138,7 +138,8 @@ var selectorKindOverrides = map[string]map[string]string{
 		"*": "emaildomain",
 	},
 	"logobjectidselector": {
-		"*": "log",
+		"unifiedagentconfiguration": "object",
+		"*":                         "log",
 	},
 	"metriccompartmentidselector": {
 		"*": "compartment",

@@ -127,11 +127,13 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment]
+          dependencies: [create-compartment, create-image]
           arguments:
             parameters:
               - name: resourceFile
                 value: "examples/cluster/compute/v1alpha1/instanceconfiguration.yaml"
+              - name: envVars
+                value: "AVAILABILITY_DOMAIN={{workflow.parameters.availability_domain}}"
         - name: create-autoscaleinstanceconfiguration
           templateRef:
             name: test-template
@@ -172,7 +174,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-instanceconfiguration]
+          dependencies: [create-compartment, create-instanceconfiguration, create-subnet]
           arguments:
             parameters:
               - name: resourceFile
@@ -238,7 +240,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-image", "delete-autoscaleinstanceconfiguration", "delete-instance"]
+          dependencies: ["create-image", "delete-autoscaleinstanceconfiguration", "delete-instance", "delete-instanceconfiguration"]
           arguments:
             parameters:
               - name: resourceKind

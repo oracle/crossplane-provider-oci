@@ -212,7 +212,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-instance]
+          dependencies: [create-instance, create-privatesubnet]
           arguments:
             parameters:
               - name: resourceFile
@@ -368,7 +368,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-privatesubnet"]
+          dependencies: ["create-privatesubnet", "delete-vnicattachment"]
           arguments:
             parameters:
               - name: resourceKind

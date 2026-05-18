@@ -14,7 +14,10 @@ spec:
     parameters:
     - name: target_namespace
     - name: compartment_ocid
+    - name: objectstorage_namespace
     - name: create_compartment
+      value: "true"
+    - name: create_object
       value: "true"
     - name: create_resources
       value: "true"
@@ -41,6 +44,19 @@ spec:
                 value: "{{inputs.parameters.target_namespace}}"
               - name: envVars
                 value: "COMPARTMENT_OCID={{workflow.parameters.compartment_ocid}}"
+        - name: create-object
+          templateRef:
+            name: test-template
+            template: create-resource
+          when: "{{workflow.parameters.create_object}} == true"
+          arguments:
+            parameters:
+              - name: resourceFile
+                value: "examples/namespaced/objectstorage/v1alpha1/object.yaml"
+              - name: namespace
+                value: "{{inputs.parameters.target_namespace}}"
+              - name: envVars
+                value: "OBJECTSTORAGE_NAMESPACE={{workflow.parameters.objectstorage_namespace}}"
         - name: create-log
           templateRef:
             name: test-template
@@ -96,7 +112,7 @@ spec:
             name: test-template
             template: create-resource
           when: "{{workflow.parameters.create_resources}} == true"
-          dependencies: [create-compartment, create-customlog]
+          dependencies: [create-compartment, create-object]
           arguments:
             parameters:
               - name: resourceFile
@@ -124,7 +140,7 @@ spec:
             name: test-template
             template: delete-resource
           when: "{{workflow.parameters.delete_resources}} == true"
-          dependencies: ["create-customlog", "delete-unifiedagentconfiguration"]
+          dependencies: ["create-customlog"]
           arguments:
             parameters:
               - name: resourceKind
