@@ -27,7 +27,7 @@ on:
         required: false
       size:
         description: "Number of smaller provider packages to build and push with each build job"
-        default: '30'
+        default: '10'
         required: true
 
 permissions:
@@ -115,6 +115,7 @@ jobs:
 
   publish-artifacts:
     strategy:
+      max-parallel: 4
       matrix:
         index: ${{ fromJSON(needs.index.outputs.indices) }}
 
@@ -124,6 +125,16 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Free disk space
+        run: |
+          set -euo pipefail
+          echo "Disk usage before cleanup:"
+          df -h
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL || true
+          docker system prune -af || true
+          echo "Disk usage after cleanup:"
+          df -h
+
       - name: Setup QEMU
         uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7 # v2
         with:
@@ -201,18 +212,16 @@ jobs:
           )
           echo "packages_batch=$PACKAGES_BATCH" >> "$GITHUB_OUTPUT"
 
-      - name: Build Artifacts
-        id: build_artifacts
+      - name: Generate Artifacts
+        id: generate_artifacts
         env:
-          INPUT_PLATFORM: ${{ inputs.platform }}
-          # We're using docker buildx, which doesn't actually load the images it
-          # builds by default. Specifying --load does so.
-          BUILD_ARGS: "--load"
+          PACKAGES_BATCH: ${{ steps.packages.outputs.packages_batch }}
         run: |
           set -euo pipefail
+          echo "Generating artifacts for: $PACKAGES_BATCH"
           go install golang.org/x/tools/cmd/goimports@latest
           make generate
-          make SUBPACKAGES="${{ steps.packages.outputs.packages_batch }}" PLATFORMS="$INPUT_PLATFORM" build
+          df -h
 
       - name: Publish Artifacts
         env:
@@ -220,11 +229,16 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
           INPUT_PLATFORM: ${{ inputs.platform }}
           REGISTRY_ORG: ${{ env.CROSSPLANE_REGORG }}
+          # We're using docker buildx, which doesn't actually load the images it
+          # builds by default. Specifying --load does so.
+          BUILD_ARGS: "--load"
         run: |
           set -euo pipefail
 
           batch_platforms=$(tr ' ' ',' <<<"$INPUT_PLATFORM")
+          df -h
           make \
+            CONCURRENCY=5 \
             SUBPACKAGES_FOR_BATCH="$PACKAGES_BATCH" \
             XPKG_REG_ORGS="$REGISTRY_ORG" \
             VERSION="$INPUT_VERSION" \

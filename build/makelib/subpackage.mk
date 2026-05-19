@@ -121,7 +121,11 @@ batch-process: $(UP) kustomize-crds
 build-subpackages:
 	@PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
 	$(MAKE) build PLATFORMS="$$PLATFORMS_FOR_BUILD" SUBPACKAGES="$(SUBPACKAGES_FOR_BATCH)"; \
+	$(GO) clean -cache -testcache || true; \
+	docker buildx prune -af || true; \
 	for platform in $$PLATFORMS_FOR_BUILD; do \
+		docker buildx prune -af || true; \
+		docker image prune -f || true; \
 		$(MAKE) build.family.image PLATFORM=$$platform || exit 1; \
 	done; \
 	$(MAKE) batch-process SUBPACKAGES_FOR_BATCH="$(SUBPACKAGES_FOR_BATCH)" BUILD_ONLY=true BATCH_PLATFORMS="$(BATCH_PLATFORMS)"
@@ -132,7 +136,11 @@ build-subpackages:
 publish-subpackages: kustomize-crds
 	@PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
 	$(MAKE) build PLATFORMS="$$PLATFORMS_FOR_BUILD" SUBPACKAGES="$(SUBPACKAGES_FOR_BATCH)"; \
+	$(GO) clean -cache -testcache || true; \
+	docker buildx prune -af || true; \
 	for platform in $$PLATFORMS_FOR_BUILD; do \
+		docker buildx prune -af || true; \
+		docker image prune -f || true; \
 		$(MAKE) build.family.image PLATFORM=$$platform || exit 1; \
 	done; \
 	$(MAKE) batch-process SUBPACKAGES_FOR_BATCH="$(SUBPACKAGES_FOR_BATCH)" BUILD_ONLY=false BATCH_PLATFORMS="$(BATCH_PLATFORMS)"
