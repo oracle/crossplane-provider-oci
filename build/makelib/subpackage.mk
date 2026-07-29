@@ -138,7 +138,10 @@ build-subpackages:
 publish-subpackages: kustomize-crds
 	@PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
 	$(MAKE) build PLATFORMS="$$PLATFORMS_FOR_BUILD" SUBPACKAGES="$(SUBPACKAGES_FOR_BATCH)"; \
-	if [ "$(SKIP_GO_CACHE_CLEAN)" != "true" ]; then $(GO) clean -cache -testcache || true; fi; \
+	if [ "$(SKIP_GO_CACHE_CLEAN)" != "true" ]; then \
+		$(GO) clean -cache -testcache || true; \
+		if [ -n "$(NOFORK_GOCACHE)" ]; then rm -rf "$(NOFORK_GOCACHE)"; fi; \
+	fi; \
 	docker buildx prune -af || true; \
 	for platform in $$PLATFORMS_FOR_BUILD; do \
 		docker buildx prune -af || true; \
@@ -146,6 +149,21 @@ publish-subpackages: kustomize-crds
 		$(MAKE) build.family.image PLATFORM=$$platform || exit 1; \
 	done; \
 	$(MAKE) batch-process SUBPACKAGES_FOR_BATCH="$(SUBPACKAGES_FOR_BATCH)" BUILD_ONLY=false BATCH_PLATFORMS="$(BATCH_PLATFORMS)"
+
+# Publish a prebuilt family binary after its Go cache has been saved and removed.
+publish-built-family-subpackage: kustomize-crds
+	@if [ "$(SUBPACKAGES_FOR_BATCH)" != "config" ]; then \
+		echo "Error: publish-built-family-subpackage requires SUBPACKAGES_FOR_BATCH=config."; \
+		exit 1; \
+	fi
+	@PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
+	docker buildx prune -af || true; \
+	for platform in $$PLATFORMS_FOR_BUILD; do \
+		docker buildx prune -af || true; \
+		docker image prune -f || true; \
+		$(MAKE) build.family.image PLATFORM=$$platform || exit 1; \
+	done; \
+	$(MAKE) batch-process SUBPACKAGES_FOR_BATCH=config BUILD_ONLY=false BATCH_PLATFORMS="$(BATCH_PLATFORMS)"
 
 # Build and push service sub-packages using an already published family provider image.
 # Usage: make publish-service-subpackages SUBPACKAGES_FOR_BATCH="networking,containerengine" FAMILY_BASE_IMAGE=ghcr.io/org/provider-family-oci:v1.0.0
@@ -160,8 +178,15 @@ publish-service-subpackages:
 		echo "Error: FAMILY_BASE_IMAGE must reference the pulled provider-family-oci image."; \
 		exit 1; \
 	fi
-	@PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
+	@set -e; \
+	PLATFORMS_FOR_BUILD=$$(echo "$(BATCH_PLATFORMS)" | tr ',' ' '); \
 	$(MAKE) build PLATFORMS="$$PLATFORMS_FOR_BUILD" SUBPACKAGES="$(SUBPACKAGES_FOR_BATCH)"; \
+	if [ "$(SKIP_GO_CACHE_CLEAN)" != "true" ]; then \
+		if [ -d "$(NOFORK_GOCACHE)" ]; then \
+			du -sh "$(NOFORK_GOCACHE)"; \
+			rm -rf "$(NOFORK_GOCACHE)"; \
+		fi; \
+	fi; \
 	$(MAKE) batch-process SUBPACKAGES_FOR_BATCH="$(SUBPACKAGES_FOR_BATCH)" BUILD_ONLY=false BATCH_PLATFORMS="$(BATCH_PLATFORMS)" FAMILY_BASE_IMAGE="$(FAMILY_BASE_IMAGE)"
 
-.PHONY: batch-process build-subpackages publish-subpackages publish-service-subpackages build.family.image
+.PHONY: batch-process build-subpackages publish-subpackages publish-built-family-subpackage publish-service-subpackages build.family.image

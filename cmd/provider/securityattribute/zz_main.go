@@ -22,6 +22,8 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
+	crmetrics "sigs.k8s.io/controller-runtime/pkg/metrics"
+	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	xpcontroller "github.com/crossplane/crossplane-runtime/v2/pkg/controller"
@@ -31,8 +33,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
-	"github.com/crossplane/upjet/v2/pkg/terraform"
 
 	"github.com/oracle/provider-oci/apis"
 	"github.com/oracle/provider-oci/config"
@@ -43,23 +45,36 @@ import (
 	namespacedcontroller "github.com/oracle/provider-oci/internal/controller/namespaced"
 )
 
+var terraformProviderVersion = "8.22.0"
+
+func defaultProviderVersion() string {
+	return "provider-oci:" + terraformProviderVersion
+}
+
 func main() {
 	var (
 		app              = kingpin.New(filepath.Base(os.Args[0]), "OCI support for Crossplane - securityattribute Service.").DefaultEnvars()
 		debug            = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
 		syncPeriod       = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
 		pollInterval     = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
+		metricsBindAddress = app.Flag("metrics-bind-address", "Address the controller manager metrics endpoint binds to. Use 0 to disable metrics.").Default(":8080").Envar("METRICS_BIND_ADDRESS").String()
+		metricsStatePollInterval = app.Flag("metrics-state-poll", "Interval for recording managed resource state metrics.").Default("30s").Envar("METRICS_STATE_POLL").Duration()
 		leaderElection   = app.Flag("leader-election", "Use leader election for the controller manager.").Short('l').Default("false").Envar("LEADER_ELECTION").Bool()
-		terraformVersion = app.Flag("terraform-version", "Terraform version.").Required().Envar("TERRAFORM_VERSION").String()
-		providerSource   = app.Flag("terraform-provider-source", "Terraform provider source.").Required().Envar("TERRAFORM_PROVIDER_SOURCE").String()
-		providerVersion  = app.Flag("terraform-provider-version", "Terraform provider version.").Required().Envar("TERRAFORM_PROVIDER_VERSION").String()
+		providerVersion  = app.Flag("provider-version", "Provider version included in change log records.").Default(defaultProviderVersion()).Envar("PROVIDER_VERSION").String()
 		maxReconcileRate = app.Flag("max-reconcile-rate", "The global maximum rate per second at which resources may checked for drift from the desired state.").Default("10").Int()
 		changelogsSocketPath = app.Flag("changelogs-socket-path", "Path for changelogs socket (if enabled).").Default("/var/run/changelogs/changelogs.sock").Envar("CHANGELOGS_SOCKET_PATH").String()
 		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for ManagementPolicies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
 		enableChangeLogs = app.Flag("enable-changelogs", "Enable support for capturing change logs during reconciliation.").Default("false").Envar("ENABLE_CHANGE_LOGS").Bool()
 	)
 
+	app.Flag("terraform-version", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
+	app.Flag("terraform-provider-source", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
+	app.Flag("terraform-provider-version", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
+
 	kingpin.MustParse(app.Parse(os.Args[1:]))
+	if *metricsBindAddress != "0" && *metricsStatePollInterval <= 0 {
+		kingpin.Fatalf("--metrics-state-poll must be greater than 0 when metrics are enabled")
+	}
 
 	debugValue := *debug
 	zl := zap.New(zap.UseDevMode(debugValue))
@@ -83,6 +98,9 @@ func main() {
 		Cache: cache.Options{
 			SyncPeriod: syncPeriod,
 		},
+		Metrics: metricsserver.Options{
+			BindAddress: *metricsBindAddress,
+		},
 		LeaderElection:             *leaderElection,
 		LeaderElectionID:           "crossplane-leader-election-provider-oci-securityattribute",
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
@@ -93,6 +111,19 @@ func main() {
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Oci APIs to scheme")
 	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot add apiextensions APIs to scheme")
 	kingpin.FatalIfError(resolverapis.BuildScheme(apis.AddToSchemes), "Cannot register the OCI APIs with the API resolver's runtime scheme")
+
+	var metricOptions *xpcontroller.MetricOptions
+	if *metricsBindAddress != "0" {
+		mrMetrics := managed.NewMRMetricRecorder()
+		mrStateMetrics := statemetrics.NewMRStateMetrics()
+		crmetrics.Registry.MustRegister(mrMetrics, mrStateMetrics)
+		metricOptions = &xpcontroller.MetricOptions{
+			PollStateMetricInterval: *metricsStatePollInterval,
+			MRMetrics:               mrMetrics,
+			MRStateMetrics:          mrStateMetrics,
+		}
+	}
+
 	o := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  log,
@@ -100,12 +131,14 @@ func main() {
 			PollInterval:            *pollInterval,
 			MaxConcurrentReconciles: *maxReconcileRate,
 			Features:                &feature.Flags{},
+			MetricOptions:           metricOptions,
 		},
 		Provider: config.GetProvider(),
-		// use the following WorkspaceStoreOption to enable the shared gRPC mode
-		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		WorkspaceStore: terraform.NewWorkspaceStore(log),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
+		OperationTrackerStore: tjcontroller.NewOperationStore(log),
+		SetupFn: clients.TerraformSetupBuilder(
+			clients.WithSDKv2ResourcePredicate(config.IsSDKv2Resource),
+			clients.WithFrameworkProvider(config.HasFrameworkResources()),
+		),
 	}
 
 	if *enableManagementPolicies {
@@ -122,7 +155,7 @@ func main() {
 		o.ChangeLogOptions = &xpcontroller.ChangeLogOptions{
 			ChangeLogger: managed.NewGRPCChangeLogger(
 				changelogsv1alpha1.NewChangeLogServiceClient(conn),
-				managed.WithProviderVersion(*providerSource+":"+*providerVersion)),
+				managed.WithProviderVersion(*providerVersion)),
 		}
 	}
 

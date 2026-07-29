@@ -49,6 +49,7 @@ env:
 
   # Registry/Org names
   CROSSPLANE_REGORG: 'ghcr.io/${{ github.repository_owner }}' # xpkg.crossplane.io/crossplane-contrib
+  NOFORK_GOCACHE_PATH: .cache/nofork-go-build
 jobs:
   index:
     runs-on: ubuntu-latest
@@ -56,6 +57,7 @@ jobs:
       indices: ${{ steps.calc.outputs.indices }}
       subpackages: ${{ steps.calc.outputs.subpackages }}
       has_services: ${{ steps.calc.outputs.has_services }}
+      platform_key: ${{ steps.calc.outputs.platform_key }}
     steps:
       - name: Validate workflow inputs
         env:
@@ -103,12 +105,35 @@ jobs:
         env:
           INPUT_SUBPACKAGES: ${{ inputs.subpackages }}
           INPUT_SIZE: ${{ inputs.size }}
+          INPUT_PLATFORM: ${{ inputs.platform }}
         run: |
           set -euo pipefail
 
           if [ "$INPUT_SUBPACKAGES" = "all" ]; then
-            SERVICES_LIST=$(find examples-generated/cluster -mindepth 1 -maxdepth 1 -type d 2>/dev/null | xargs -n1 basename | tr '\n' ',' | sed 's/,$//' || echo "")
-            SUBPACKAGES="$SERVICES_LIST"
+            SERVICES_LIST=$(find examples-generated/cluster -mindepth 1 -maxdepth 1 -type d -exec basename {} \; 2>/dev/null | LC_ALL=C sort | paste -sd, -)
+            export SERVICES_LIST
+            SUBPACKAGES=$(python3 - <<'PY'
+          import math
+          import os
+
+          services = [pkg for pkg in os.environ["SERVICES_LIST"].split(",") if pkg]
+          size = int(os.environ["INPUT_SIZE"])
+          batch_count = math.ceil(len(services) / size)
+          batches = [[] for _ in range(batch_count)]
+          capacities = [size] * batch_count
+          if batches:
+              capacities[-1] = len(services) - size * (batch_count - 1)
+
+          batch_index = 0
+          for service in services:
+              while len(batches[batch_index]) >= capacities[batch_index]:
+                  batch_index = (batch_index + 1) % batch_count
+              batches[batch_index].append(service)
+              batch_index = (batch_index + 1) % batch_count
+
+          print(",".join(pkg for batch in batches for pkg in batch))
+          PY
+          )
           else
             SUBPACKAGES=$(python3 - <<'PY'
           import os
@@ -134,6 +159,7 @@ jobs:
           )
           echo "indices=$INDICES" >> "$GITHUB_OUTPUT"
           echo "subpackages=$SUBPACKAGES" >> "$GITHUB_OUTPUT"
+          echo "platform_key=${INPUT_PLATFORM// /-}" >> "$GITHUB_OUTPUT"
           if [ -n "$SUBPACKAGES" ]; then
             echo "has_services=true" >> "$GITHUB_OUTPUT"
           else
@@ -192,6 +218,17 @@ jobs:
           cache: true
           cache-dependency-path: go.sum
 
+      - name: Restore Family No-Fork Go Build Cache
+        id: nofork-family-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ env.NOFORK_GOCACHE_PATH }}
+          key: nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-${{ hashFiles('go.mod', 'go.sum', 'Makefile', 'build/nofork/**', 'config/*nofork*.tmpl', 'internal/clients/*nofork*.tmpl') }}-${{ github.sha }}
+          restore-keys: |
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-${{ hashFiles('go.mod', 'go.sum', 'Makefile', 'build/nofork/**', 'config/*nofork*.tmpl', 'internal/clients/*nofork*.tmpl') }}-
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-
+
       - name: Vendor Dependencies
         run: make vendor vendor.check
 
@@ -212,8 +249,38 @@ jobs:
       - name: Install goimports
         run: go install golang.org/x/tools/cmd/goimports@latest
 
-      - name: Check Generated Diff
-        run: make check-diff
+      - name: Check Generated Diff and Build Family Provider Binaries
+        env:
+          INPUT_PLATFORM: ${{ inputs.platform }}
+          GOTMPDIR: ${{ runner.temp }}/go-build
+        run: |
+          set -euo pipefail
+
+          started=$(date +%s)
+          gomodcache=$(go env GOMODCACHE)
+          rm -rf "$GOTMPDIR" /tmp/go-build*
+          mkdir -p "$GOTMPDIR"
+          echo "Runner CPUs: $(nproc)"
+          df -h
+          make \
+            NOFORK_GOMODCACHE="$gomodcache" \
+            PLATFORMS="$INPUT_PLATFORM" \
+            ci-family-check-build
+          du -sh "${{ env.NOFORK_GOCACHE_PATH }}"
+          df -h
+          echo "Family generation validation and binary build completed in $(( $(date +%s) - started ))s"
+
+      - name: Save Family No-Fork Go Build Cache
+        if: ${{ needs.index.outputs.has_services == 'true' && steps.nofork-family-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ env.NOFORK_GOCACHE_PATH }}
+          key: ${{ steps.nofork-family-cache.outputs.cache-primary-key }}
+
+      - name: Remove Local No-Fork Go Build Cache
+        run: |
+          rm -rf "${{ env.NOFORK_GOCACHE_PATH }}"
+          df -h
 
       - name: Publish Family Provider
         env:
@@ -227,16 +294,20 @@ jobs:
         run: |
           set -euo pipefail
 
+          started=$(date +%s)
           batch_platforms=$(tr ' ' ',' <<<"$INPUT_PLATFORM")
+          docker buildx prune -af || true
+          docker image prune -af || true
           df -h
           make \
             CONCURRENCY="$INPUT_CONCURRENCY" \
             SUBPACKAGES_FOR_BATCH="config" \
             XPKG_REG_ORGS="$REGISTRY_ORG" \
             VERSION="$INPUT_VERSION" \
-            SKIP_GO_CACHE_CLEAN=true \
             BATCH_PLATFORMS="$batch_platforms" \
-            publish-subpackages
+            publish-built-family-subpackage
+          df -h
+          echo "Family publish completed in $(( $(date +%s) - started ))s"
 
   publish-services:
     if: ${{ needs.index.outputs.has_services == 'true' }}
@@ -295,6 +366,16 @@ jobs:
           cache: true
           cache-dependency-path: go.sum
 
+      - name: Restore Family No-Fork Go Build Cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ env.NOFORK_GOCACHE_PATH }}
+          key: nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-${{ hashFiles('go.mod', 'go.sum', 'Makefile', 'build/nofork/**', 'config/*nofork*.tmpl', 'internal/clients/*nofork*.tmpl') }}-${{ github.sha }}
+          restore-keys: |
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-${{ hashFiles('go.mod', 'go.sum', 'Makefile', 'build/nofork/**', 'config/*nofork*.tmpl', 'internal/clients/*nofork*.tmpl') }}-
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-${{ needs.index.outputs.platform_key }}-
+            nofork-family-go-build-${{ runner.os }}-go-${{ inputs.go-version }}-
+
       - name: Vendor Dependencies
         run: make vendor vendor.check
 
@@ -352,19 +433,28 @@ jobs:
           INPUT_CONCURRENCY: ${{ inputs.concurrency }}
           REGISTRY_ORG: ${{ env.CROSSPLANE_REGORG }}
           FAMILY_BASE_IMAGE: ${{ steps.family.outputs.family_base_image }}
+          GOTMPDIR: ${{ runner.temp }}/go-build
           # We're using docker buildx, which doesn't actually load the images it
           # builds by default. Specifying --load does so.
           BUILD_ARGS: "--load"
         run: |
           set -euo pipefail
 
+          started=$(date +%s)
           batch_platforms=$(tr ' ' ',' <<<"$INPUT_PLATFORM")
+          gomodcache=$(go env GOMODCACHE)
+          rm -rf "$GOTMPDIR" /tmp/go-build*
+          mkdir -p "$GOTMPDIR"
+          echo "Runner CPUs: $(nproc)"
           df -h
           make \
             CONCURRENCY="$INPUT_CONCURRENCY" \
+            NOFORK_GOMODCACHE="$gomodcache" \
             SUBPACKAGES_FOR_BATCH="$PACKAGES_BATCH" \
             FAMILY_BASE_IMAGE="$FAMILY_BASE_IMAGE" \
             XPKG_REG_ORGS="$REGISTRY_ORG" \
             VERSION="$INPUT_VERSION" \
             BATCH_PLATFORMS="$batch_platforms" \
             publish-service-subpackages
+          df -h
+          echo "Service publish completed in $(( $(date +%s) - started ))s"

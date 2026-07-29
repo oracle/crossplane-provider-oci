@@ -39,10 +39,6 @@ var providerSchema string
 //go:embed provider-metadata.yaml
 var providerMetadata string
 
-var ServiceWildcards = []string{
-	".*",
-}
-
 // ProblematicResources returns a list of regex patterns for resources that should be
 // skipped during generation due to known issues or incompatibilities.
 // These resources can be added to support later after resolving their specific issues.
@@ -71,11 +67,21 @@ func ProblematicResources() []string {
 	}
 }
 
-func newProvider(rootGroup string, register func(*ujconfig.Provider)) *ujconfig.Provider {
+func newProvider(rootGroup string, register func(*ujconfig.Provider), useTerraformJSONGenerationSchema bool) *ujconfig.Provider {
+	sdkProvider := terraformSDKProvider()
+	if useTerraformJSONGenerationSchema {
+		applyTerraformJSONGenerationSchemas(sdkProvider, []byte(providerSchema))
+	}
+
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithRootGroup(rootGroup),
-		// This will include manually configured resources + resources corresponding to services listed in wildcards
-		ujconfig.WithIncludeList(append(ExternalNameConfigured(), ServiceWildcards...)),
+		// Disable Upjet's Terraform CLI route. All generated OCI resources are
+		// routed through in-process no-fork connectors.
+		ujconfig.WithIncludeList(nil),
+		ujconfig.WithTerraformProvider(sdkProvider),
+		ujconfig.WithTerraformPluginSDKIncludeList(terraformPluginSDKIncludeList()),
+		ujconfig.WithTerraformPluginFrameworkProvider(terraformFrameworkProvider()),
+		ujconfig.WithTerraformPluginFrameworkIncludeList(terraformPluginFrameworkIncludeList),
 		ujconfig.WithSkipList(ProblematicResources()),
 		ujconfig.WithDefaultResourceOptions(
 			GroupKindOverrides(),
@@ -92,6 +98,7 @@ func newProvider(rootGroup string, register func(*ujconfig.Provider)) *ujconfig.
 	)
 
 	register(pc)
+	configureSDKv2ScalarMapServerSideApplyMergeStrategies(pc)
 	pc.ConfigureResources()
 	return pc
 }
@@ -102,7 +109,7 @@ func GetProvider() *ujconfig.Provider {
 		for _, configure := range cluster.ProviderConfiguration {
 			configure(pc)
 		}
-	})
+	}, false)
 }
 
 // GetProviderNamespaced returns namespaced provider configuration.
@@ -111,5 +118,27 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		for _, configure := range namespaced.ProviderConfiguration {
 			configure(pc)
 		}
-	})
+	}, false)
+}
+
+// GetProviderForGeneration returns the cluster-scoped provider configuration
+// with compatibility transformations that preserve the existing public API and
+// CRD shapes. Runtime controllers must use GetProvider so the embedded SDKv2
+// connector retains the provider's native schema.
+func GetProviderForGeneration() *ujconfig.Provider {
+	return newProvider("oci.upbound.io", func(pc *ujconfig.Provider) {
+		for _, configure := range cluster.ProviderConfiguration {
+			configure(pc)
+		}
+	}, true)
+}
+
+// GetProviderNamespacedForGeneration returns the namespaced provider
+// configuration with generation-only public API compatibility transformations.
+func GetProviderNamespacedForGeneration() *ujconfig.Provider {
+	return newProvider("oci.m.upbound.io", func(pc *ujconfig.Provider) {
+		for _, configure := range namespaced.ProviderConfiguration {
+			configure(pc)
+		}
+	}, true)
 }

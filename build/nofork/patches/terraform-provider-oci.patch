@@ -1,0 +1,1749 @@
+diff --git a/internal/acctest/test_helpers.go b/internal/acctest/test_helpers.go
+index 1cda4545fccbe6bf7f87335ea1f1deec5e93f77c..54c88330c3bc5b0c3240855dc226df2c38313fc4 100644
+--- a/internal/acctest/test_helpers.go
++++ b/internal/acctest/test_helpers.go
+@@ -857,7 +857,6 @@ func GetTestClients(data *schema.ResourceData) *tf_client.OracleClients {
+ 		d.Set(globalvar.DefinedTagsToIgnore, ignoreDefinedTags)
+ 	}
+ 
+-	tf_provider.TerraformCLIVersion = globalvar.TestTerraformCLIVersion
+ 	client, err := tfProviderConfigVar(d)
+ 	if err != nil {
+ 		panic(err)
+diff --git a/internal/client/object_storage_clients.go b/internal/client/object_storage_clients.go
+index 2245abbe5483b4910f5dcb2bd837ac2bb05933be..7001a1e8edb4ac3e10f6c97d421e3f7fb62eb447 100644
+--- a/internal/client/object_storage_clients.go
++++ b/internal/client/object_storage_clients.go
+@@ -4,8 +4,6 @@
+ package client
+ 
+ import (
+-	"os"
+-
+ 	oci_object_storage "github.com/oracle/oci-go-sdk/v65/objectstorage"
+ 
+ 	oci_common "github.com/oracle/oci-go-sdk/v65/common"
+@@ -16,10 +14,6 @@ func init() {
+ }
+ 
+ func initObjectstorageObjectStorageClient(configProvider oci_common.ConfigurationProvider, configureClient ConfigureClient, serviceClientOverrides ServiceClientOverrides) (interface{}, error) {
+-	err := os.Setenv("OCI_REALM_SPECIFIC_SERVICE_ENDPOINT_TEMPLATE_ENABLED", "false")
+-	if err != nil {
+-		return nil, err
+-	}
+ 	client, err := oci_object_storage.NewObjectStorageClientWithConfigurationProvider(configProvider)
+ 	if err != nil {
+ 		return nil, err
+diff --git a/internal/client/provider_clients.go b/internal/client/provider_clients.go
+index e83195c0d95badaf62a136b0c7b850784aae2ab3..69cd3d0e1c9e9fabae4b9f51aa1d9c64f9a7eba4 100644
+--- a/internal/client/provider_clients.go
++++ b/internal/client/provider_clients.go
+@@ -7,6 +7,7 @@ import (
+ 	"fmt"
+ 	"strconv"
+ 	"strings"
++	"sync"
+ 
+ 	"github.com/oracle/terraform-provider-oci/internal/tfresource"
+ 
+@@ -26,8 +27,17 @@ import (
+ )
+ 
+ var OracleClientRegistrationsVar *OracleClientRegistrations // This is a global registration for all oracle clients. This is invariant information about all clients regardless of region
++var oracleClientRegistrationState struct {
++	sync.Mutex
++	frozen bool
++}
+ 
+ func RegisterOracleClient(name string, client *OracleClient) {
++	oracleClientRegistrationState.Lock()
++	defer oracleClientRegistrationState.Unlock()
++	if oracleClientRegistrationState.frozen {
++		panic(fmt.Sprintf("cannot register Oracle client %q after registrations are frozen", name))
++	}
+ 	if OracleClientRegistrationsVar == nil {
+ 		OracleClientRegistrationsVar = &OracleClientRegistrations{
+ 			RegisteredClients: make(map[string]*OracleClient),
+@@ -36,9 +46,13 @@ func RegisterOracleClient(name string, client *OracleClient) {
+ 	OracleClientRegistrationsVar.RegisteredClients[name] = client
+ }
+ 
+-type ConfigureClient func(client *oci_common.BaseClient) error
++func FreezeOracleClientRegistrations() {
++	oracleClientRegistrationState.Lock()
++	defer oracleClientRegistrationState.Unlock()
++	oracleClientRegistrationState.frozen = true
++}
+ 
+-var ConfigureClientVar ConfigureClient // global fn ref used to configure all clients initially and others later on
++type ConfigureClient func(client *oci_common.BaseClient) error
+ 
+ type InitSdkClientFn func(oci_common.ConfigurationProvider, ConfigureClient, ServiceClientOverrides) (interface{}, error)
+ 
+@@ -58,18 +72,26 @@ type OracleClients struct {
+ 	Configuration     map[string]string
+ 	SdkClientMap      map[string]interface{}
+ 	WorkRequestClient *oci_work_requests.WorkRequestClient
++	ConfigureClient   ConfigureClient
+ }
+ 
+ func (m *OracleClients) GetClient(name string) interface{} {
+ 	return m.SdkClientMap[name]
+ }
+ 
++func (m *OracleClients) ConfigureBaseClient(client *oci_common.BaseClient) error {
++	if m != nil && m.ConfigureClient != nil {
++		return m.ConfigureClient(client)
++	}
++	return fmt.Errorf("cannot configure OCI client: no configure client is registered")
++}
++
+ // The following clients require special endpoint information that is only known at Terraform apply time; so they
+ // Create duplicate clients reusing the same Configuration provider as the initialized client and adding the endpoint
+ // here.
+ func (m *OracleClients) FunctionsInvokeClientWithEndpoint(endpoint string) (*oci_functions.FunctionsInvokeClient, error) {
+ 	if client, err := oci_functions.NewFunctionsInvokeClientWithConfigurationProvider(*m.FunctionsInvokeClient().ConfigurationProvider(), endpoint); err == nil {
+-		if err = ConfigureClientVar(&client.BaseClient); err != nil {
++		if err = m.ConfigureBaseClient(&client.BaseClient); err != nil {
+ 			return nil, err
+ 		}
+ 		return &client, nil
+@@ -79,7 +101,7 @@ func (m *OracleClients) FunctionsInvokeClientWithEndpoint(endpoint string) (*oci
+ }
+ func (m *OracleClients) KmsCryptoClientWithEndpoint(endpoint string) (*oci_kms.KmsCryptoClient, error) {
+ 	if client, err := oci_kms.NewKmsCryptoClientWithConfigurationProvider(*m.KmsCryptoClient().ConfigurationProvider(), endpoint); err == nil {
+-		if err = ConfigureClientVar(&client.BaseClient); err != nil {
++		if err = m.ConfigureBaseClient(&client.BaseClient); err != nil {
+ 			return nil, err
+ 		}
+ 		return &client, nil
+@@ -90,7 +112,7 @@ func (m *OracleClients) KmsCryptoClientWithEndpoint(endpoint string) (*oci_kms.K
+ 
+ func (m *OracleClients) KmsManagementClientWithEndpoint(endpoint string) (*oci_kms.KmsManagementClient, error) {
+ 	if client, err := oci_kms.NewKmsManagementClientWithConfigurationProvider(*m.KmsManagementClient().ConfigurationProvider(), endpoint); err == nil {
+-		if err = ConfigureClientVar(&client.BaseClient); err != nil {
++		if err = m.ConfigureBaseClient(&client.BaseClient); err != nil {
+ 			return nil, err
+ 		}
+ 		return &client, nil
+@@ -101,7 +123,7 @@ func (m *OracleClients) KmsManagementClientWithEndpoint(endpoint string) (*oci_k
+ 
+ func (m *OracleClients) IdentityDomainsClientWithEndpoint(endpoint string) (*oci_identity_domains.IdentityDomainsClient, error) {
+ 	if client, err := oci_identity_domains.NewIdentityDomainsClientWithConfigurationProvider(*m.IdentityDomainsClient().ConfigurationProvider(), endpoint); err == nil {
+-		if err = ConfigureClientVar(&client.BaseClient); err != nil {
++		if err = m.ConfigureBaseClient(&client.BaseClient); err != nil {
+ 			return nil, err
+ 		}
+ 		return &client, nil
+@@ -130,6 +152,8 @@ func getClientHostOverrides() map[string]string {
+ }
+ 
+ func CreateSDKClients(clients *OracleClients, configProvider oci_common.ConfigurationProvider, configureClient ConfigureClient) (err error) {
++	clients.ConfigureClient = configureClient
++
+ 	if OracleClientRegistrationsVar == nil || len(OracleClientRegistrationsVar.RegisteredClients) == 0 {
+ 		return fmt.Errorf("there are no clients to Create")
+ 	}
+diff --git a/internal/client/provider_clients_nofork_test.go b/internal/client/provider_clients_nofork_test.go
+new file mode 100644
+index 0000000000000000000000000000000000000000..9dc06ef5263769b1f0115f25172513e60bfd6f0b
+--- /dev/null
++++ b/internal/client/provider_clients_nofork_test.go
+@@ -0,0 +1,211 @@
++// Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
++// Licensed under the Mozilla Public License v2.0
++
++package client
++
++import (
++	"crypto/rand"
++	"crypto/rsa"
++	"sync"
++	"sync/atomic"
++	"testing"
++
++	oci_common "github.com/oracle/oci-go-sdk/v65/common"
++	oci_functions "github.com/oracle/oci-go-sdk/v65/functions"
++	oci_identity_domains "github.com/oracle/oci-go-sdk/v65/identitydomains"
++	oci_kms "github.com/oracle/oci-go-sdk/v65/keymanagement"
++)
++
++func TestOracleClientsConfigureBaseClientIsolation(t *testing.T) {
++	var firstCalls atomic.Int64
++	var secondCalls atomic.Int64
++
++	first := &OracleClients{ConfigureClient: func(*oci_common.BaseClient) error {
++		firstCalls.Add(1)
++		return nil
++	}}
++	second := &OracleClients{ConfigureClient: func(*oci_common.BaseClient) error {
++		secondCalls.Add(1)
++		return nil
++	}}
++
++	const calls = 100
++	var wg sync.WaitGroup
++	wg.Add(2)
++	go func() {
++		defer wg.Done()
++		for range calls {
++			if err := first.ConfigureBaseClient(&oci_common.BaseClient{}); err != nil {
++				t.Errorf("first ConfigureBaseClient returned error: %v", err)
++				return
++			}
++		}
++	}()
++	go func() {
++		defer wg.Done()
++		for range calls {
++			if err := second.ConfigureBaseClient(&oci_common.BaseClient{}); err != nil {
++				t.Errorf("second ConfigureBaseClient returned error: %v", err)
++				return
++			}
++		}
++	}()
++	wg.Wait()
++
++	if got := firstCalls.Load(); got != calls {
++		t.Fatalf("first callback calls = %d, want %d", got, calls)
++	}
++	if got := secondCalls.Load(); got != calls {
++		t.Fatalf("second callback calls = %d, want %d", got, calls)
++	}
++}
++
++func TestOracleClientsConfigureBaseClientRequiresCallback(t *testing.T) {
++	if err := (&OracleClients{}).ConfigureBaseClient(&oci_common.BaseClient{}); err == nil {
++		t.Fatal("ConfigureBaseClient returned nil error without a callback")
++	}
++}
++
++func TestEndpointSpecificClientsUseInstanceCallback(t *testing.T) {
++	first := newEndpointTestClients(t, "first-provider-config")
++	second := newEndpointTestClients(t, "second-provider-config")
++
++	testCases := []struct {
++		name   string
++		create func(*OracleClients) (*oci_common.BaseClient, error)
++	}{
++		{
++			name: "Functions",
++			create: func(clients *OracleClients) (*oci_common.BaseClient, error) {
++				client, err := clients.FunctionsInvokeClientWithEndpoint("https://functions.example.com")
++				return &client.BaseClient, err
++			},
++		},
++		{
++			name: "KMS crypto",
++			create: func(clients *OracleClients) (*oci_common.BaseClient, error) {
++				client, err := clients.KmsCryptoClientWithEndpoint("https://kms-crypto.example.com")
++				return &client.BaseClient, err
++			},
++		},
++		{
++			name: "KMS management",
++			create: func(clients *OracleClients) (*oci_common.BaseClient, error) {
++				client, err := clients.KmsManagementClientWithEndpoint("https://kms-management.example.com")
++				return &client.BaseClient, err
++			},
++		},
++		{
++			name: "Identity Domains",
++			create: func(clients *OracleClients) (*oci_common.BaseClient, error) {
++				client, err := clients.IdentityDomainsClientWithEndpoint("https://identity-domains.example.com")
++				return &client.BaseClient, err
++			},
++		},
++	}
++
++	for _, testCase := range testCases {
++		t.Run(testCase.name, func(t *testing.T) {
++			var firstClient *oci_common.BaseClient
++			var secondClient *oci_common.BaseClient
++			var firstErr error
++			var secondErr error
++
++			var wg sync.WaitGroup
++			wg.Add(2)
++			go func() {
++				defer wg.Done()
++				firstClient, firstErr = testCase.create(first)
++			}()
++			go func() {
++				defer wg.Done()
++				secondClient, secondErr = testCase.create(second)
++			}()
++			wg.Wait()
++
++			if firstErr != nil {
++				t.Fatalf("first client creation returned error: %v", firstErr)
++			}
++			if secondErr != nil {
++				t.Fatalf("second client creation returned error: %v", secondErr)
++			}
++			if got := firstClient.UserAgent; got != "first-provider-config" {
++				t.Fatalf("first client user agent = %q, want first ProviderConfig callback", got)
++			}
++			if got := secondClient.UserAgent; got != "second-provider-config" {
++				t.Fatalf("second client user agent = %q, want second ProviderConfig callback", got)
++			}
++		})
++	}
++}
++
++func newEndpointTestClients(t *testing.T, userAgent string) *OracleClients {
++	t.Helper()
++	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
++	if err != nil {
++		t.Fatalf("generate test private key: %v", err)
++	}
++	configProvider := endpointTestConfiguration{privateKey: privateKey}
++
++	functionsClient, err := oci_functions.NewFunctionsInvokeClientWithConfigurationProvider(configProvider, "https://functions-primary.example.com")
++	if err != nil {
++		t.Fatalf("create primary Functions client: %v", err)
++	}
++	kmsCryptoClient, err := oci_kms.NewKmsCryptoClientWithConfigurationProvider(configProvider, "https://kms-crypto-primary.example.com")
++	if err != nil {
++		t.Fatalf("create primary KMS crypto client: %v", err)
++	}
++	kmsManagementClient, err := oci_kms.NewKmsManagementClientWithConfigurationProvider(configProvider, "https://kms-management-primary.example.com")
++	if err != nil {
++		t.Fatalf("create primary KMS management client: %v", err)
++	}
++	identityDomainsClient, err := oci_identity_domains.NewIdentityDomainsClientWithConfigurationProvider(configProvider, "https://identity-domains-primary.example.com")
++	if err != nil {
++		t.Fatalf("create primary Identity Domains client: %v", err)
++	}
++
++	return &OracleClients{
++		SdkClientMap: map[string]interface{}{
++			"oci_functions.FunctionsInvokeClient":        &functionsClient,
++			"oci_kms.KmsCryptoClient":                    &kmsCryptoClient,
++			"oci_kms.KmsManagementClient":                &kmsManagementClient,
++			"oci_identity_domains.IdentityDomainsClient": &identityDomainsClient,
++		},
++		ConfigureClient: func(client *oci_common.BaseClient) error {
++			client.UserAgent = userAgent
++			return nil
++		},
++	}
++}
++
++type endpointTestConfiguration struct {
++	privateKey *rsa.PrivateKey
++}
++
++func (c endpointTestConfiguration) PrivateRSAKey() (*rsa.PrivateKey, error) {
++	return c.privateKey, nil
++}
++
++func (endpointTestConfiguration) KeyID() (string, error) {
++	return "tenancy/user/fingerprint", nil
++}
++
++func (endpointTestConfiguration) TenancyOCID() (string, error) {
++	return "tenancy", nil
++}
++
++func (endpointTestConfiguration) UserOCID() (string, error) {
++	return "user", nil
++}
++
++func (endpointTestConfiguration) KeyFingerprint() (string, error) {
++	return "fingerprint", nil
++}
++
++func (endpointTestConfiguration) Region() (string, error) {
++	return "us-ashburn-1", nil
++}
++
++func (endpointTestConfiguration) AuthType() (oci_common.AuthConfig, error) {
++	return oci_common.AuthConfig{AuthType: oci_common.UserPrincipal}, nil
++}
+diff --git a/internal/integrationtest/helpers_autonomous_database.go b/internal/integrationtest/helpers_autonomous_database.go
+index 05c6f02e768b3a92312962038bd614a56c3683d7..158cfcaf6a7597bac27b61b0511a6acdf4ab662b 100644
+--- a/internal/integrationtest/helpers_autonomous_database.go
++++ b/internal/integrationtest/helpers_autonomous_database.go
+@@ -259,7 +259,7 @@ func createDatabaseClient(clients *tf_client.OracleClients, region string) (clie
+ 	if err != nil {
+ 		return client, fmt.Errorf("cannot create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&databaseClient.BaseClient)
++	err = clients.ConfigureBaseClient(&databaseClient.BaseClient)
+ 	if err != nil {
+ 		return client, fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+diff --git a/internal/integrationtest/helpers_core_test.go b/internal/integrationtest/helpers_core_test.go
+index 05762b7df4c41db4804546cfb44a45d805981f38..537714781cd12e56c869d0462d3e5b0d4e8f9b42 100644
+--- a/internal/integrationtest/helpers_core_test.go
++++ b/internal/integrationtest/helpers_core_test.go
+@@ -189,7 +189,7 @@ func createVolumeInRegion(clients *tf_client.OracleClients, region string) (stri
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -198,7 +198,7 @@ func createVolumeInRegion(clients *tf_client.OracleClients, region string) (stri
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&identityClient.BaseClient)
++	err = clients.ConfigureBaseClient(&identityClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -249,7 +249,7 @@ func createVolumeGroupInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -258,7 +258,7 @@ func createVolumeGroupInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&identityClient.BaseClient)
++	err = clients.ConfigureBaseClient(&identityClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -312,7 +312,7 @@ func createVolumeBackupInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -350,7 +350,7 @@ func createVolumeGroupBackupInRegion(clients *tf_client.OracleClients, region st
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -388,7 +388,7 @@ func deleteVolumeInRegion(clients *tf_client.OracleClients, region string, volum
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -412,7 +412,7 @@ func deleteVolumeGroupInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -436,7 +436,7 @@ func deleteVolumeBackupInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -460,7 +460,7 @@ func deleteVolumeGroupBackupInRegion(clients *tf_client.OracleClients, region st
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -518,7 +518,7 @@ func createBootVolumeInRegion(clients *tf_client.OracleClients, region string) (
+ 	if err != nil {
+ 		return "", "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -527,7 +527,7 @@ func createBootVolumeInRegion(clients *tf_client.OracleClients, region string) (
+ 	if err != nil {
+ 		return "", "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&identityClient.BaseClient)
++	err = clients.ConfigureBaseClient(&identityClient.BaseClient)
+ 	if err != nil {
+ 		return "", "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -638,7 +638,7 @@ func createBootVolumeBackupInRegion(clients *tf_client.OracleClients, region str
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -676,7 +676,7 @@ func deleteBootVolumeInRegion(clients *tf_client.OracleClients, region string, b
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -700,7 +700,7 @@ func deleteBootVolumeBackupInRegion(clients *tf_client.OracleClients, region str
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&blockStorageClient.BaseClient)
++	err = clients.ConfigureBaseClient(&blockStorageClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+@@ -724,7 +724,7 @@ func terminateInstanceInRegion(clients *tf_client.OracleClients, region string,
+ 	if err != nil {
+ 		return fmt.Errorf("cannot Create client for the source region %s: %v", region, err)
+ 	}
+-	err = tf_client.ConfigureClientVar(&computeClient.BaseClient)
++	err = clients.ConfigureBaseClient(&computeClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 	}
+diff --git a/internal/integrationtest/helpers_mysql_test.go b/internal/integrationtest/helpers_mysql_test.go
+index f4d8c05cf513061d4355bb59bac37e98781e49ac..881a2384ed5714636b4cd5fda3454cf0156d62e8 100644
+--- a/internal/integrationtest/helpers_mysql_test.go
++++ b/internal/integrationtest/helpers_mysql_test.go
+@@ -25,7 +25,7 @@ func createDbSystemInRegion(clients *tf_client.OracleClients, region string) (st
+ 		return "", fmt.Errorf("cannot Create client for the region %s: %v", region, err)
+ 	}
+ 
+-	err = tf_client.ConfigureClientVar(&dbSystemClient.BaseClient)
++	err = clients.ConfigureBaseClient(&dbSystemClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the region: %v", err)
+ 	}
+@@ -37,7 +37,7 @@ func createDbSystemInRegion(clients *tf_client.OracleClients, region string) (st
+ 		return "", fmt.Errorf("cannot Create client for the region %s: %v", region, err)
+ 	}
+ 
+-	err = tf_client.ConfigureClientVar(&identityClient.BaseClient)
++	err = clients.ConfigureBaseClient(&identityClient.BaseClient)
+ 	if err != nil {
+ 		return "", fmt.Errorf("cannot configure client for the region: %v", err)
+ 	}
+@@ -173,7 +173,7 @@ func deleteDbSystemInRegion(clients *tf_client.OracleClients, region string, mys
+ 		return fmt.Errorf("cannot Create client for the region %s: %v", region, err)
+ 	}
+ 
+-	err = tf_client.ConfigureClientVar(&dbSystemClient.BaseClient)
++	err = clients.ConfigureBaseClient(&dbSystemClient.BaseClient)
+ 	if err != nil {
+ 		return fmt.Errorf("cannot configure client for the region: %v", err)
+ 	}
+@@ -226,7 +226,7 @@ func initializeDbBackupsClientWithConfigurationProvider(clients *tf_client.Oracl
+ 		return nil, fmt.Errorf("cannot create client for the region %s: %v", region, err)
+ 	}
+ 
+-	err = tf_client.ConfigureClientVar(&dbBackupsClient.BaseClient)
++	err = clients.ConfigureBaseClient(&dbBackupsClient.BaseClient)
+ 	if err != nil {
+ 		return nil, fmt.Errorf("cannot configure client for the region: %v", err)
+ 	}
+diff --git a/internal/provider/provider.go b/internal/provider/provider.go
+index 7cfed98a6c1e6cb3a2f935a93f133c8cc17ff529..47e18eeb1dd8ae805c8f66d7c53131ab23103ecd 100644
+--- a/internal/provider/provider.go
++++ b/internal/provider/provider.go
+@@ -13,6 +13,7 @@ import (
+ 	"path/filepath"
+ 	"strconv"
+ 	"strings"
++	"sync"
+ 	"time"
+ 
+ 	tf_core "github.com/oracle/terraform-provider-oci/internal/service/core"
+@@ -41,11 +42,10 @@ import (
+ 
+ var descriptions map[string]string
+ var ApiKeyConfigAttributes = [5]string{globalvar.UserOcidAttrName, globalvar.FingerprintAttrName, globalvar.PrivateKeyAttrName, globalvar.PrivateKeyPathAttrName, globalvar.PrivateKeyPasswordAttrName}
+-var ociProvider *schema.Provider
+ 
+-var TerraformCLIVersion = globalvar.UnknownTerraformCLIVersion
+ var schemaMultiEnvDefaultFuncVar = schema.MultiEnvDefaultFunc
+ var AvoidWaitingForDeleteTarget bool
++var providerRegistrationsOnce sync.Once
+ 
+ // creating an interface to aid in unit tests
+ type schemaResourceData interface {
+@@ -123,13 +123,16 @@ func init() {
+ }
+ 
+ func Provider() *schema.Provider {
+-	ociProvider = &schema.Provider{
++	prepareProviderRegistrations()
++	p := &schema.Provider{
+ 		DataSourcesMap: DataSourcesMap(),
+ 		Schema:         SchemaMap(),
+ 		ResourcesMap:   ResourcesMap(),
+-		ConfigureFunc:  ProviderConfig,
+ 	}
+-	return ociProvider
++	p.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
++		return providerConfig(d, p.TerraformVersion)
++	}
++	return p
+ }
+ 
+ func SchemaMap() map[string]*schema.Schema {
+@@ -300,60 +303,29 @@ func SchemaMap() map[string]*schema.Schema {
+ // This returns a map of all data sources to register with Terraform
+ // The OciDatasources map is populated by each datasource's init function being invoked before it gets here
+ func DataSourcesMap() map[string]*schema.Resource {
+-	// Register some aliases of registered datasources. These are registered for convenience and legacy reasons.
+-	if oci_common.CheckForEnabledServices(globalvar.CoreService) {
+-		tf_resource.RegisterDatasource("oci_core_listing_resource_version", tf_core.CoreAppCatalogListingResourceVersionDataSource())
+-		tf_resource.RegisterDatasource("oci_core_listing_resource_versions", tf_core.CoreAppCatalogListingResourceVersionsDataSource())
+-		tf_resource.RegisterDatasource("oci_core_shape", tf_core.CoreShapesDataSource())
+-		tf_resource.RegisterDatasource("oci_core_virtual_networks", tf_core.CoreVcnsDataSource())
+-	}
+-	if oci_common.CheckForEnabledServices(globalvar.LoadBalancerService) {
+-		tf_resource.RegisterDatasource("oci_load_balancers", tf_load_balancer.LoadBalancerLoadBalancersDataSource())
+-		tf_resource.RegisterDatasource("oci_load_balancer_backendsets", tf_load_balancer.LoadBalancerBackendSetsDataSource())
+-	}
+-	return globalvar.OciDatasources
++	prepareProviderRegistrations()
++	return cloneSDKv2ResourceMap(globalvar.OciDatasources)
+ }
+ 
+ // This returns a map of all resources to register with Terraform
+ // The OciResource map is populated by each resource's init function being invoked before it gets here
+ func ResourcesMap() map[string]*schema.Resource {
+-	// Register some aliases of registered resources. These are registered for convenience and legacy reasons.
+-	if oci_common.CheckForEnabledServices(globalvar.CoreService) {
+-		tf_resource.RegisterResource("oci_core_virtual_network", tf_core.CoreVcnResource())
+-	}
+-	if oci_common.CheckForEnabledServices(globalvar.LoadBalancerService) {
+-		tf_resource.RegisterResource("oci_load_balancer", tf_load_balancer.LoadBalancerLoadBalancerResource())
+-		tf_resource.RegisterResource("oci_load_balancer_backendset", tf_load_balancer.LoadBalancerBackendSetResource())
+-	}
+-	return globalvar.OciResources
++	prepareProviderRegistrations()
++	return cloneSDKv2ResourceMap(globalvar.OciResources)
+ }
+ 
+ func ProviderConfig(d *schema.ResourceData) (interface{}, error) {
+-	tf_resource.DefinedTagsToSuppress = IgnoreDefinedTags(d)
+-	tf_resource.RealmSpecificServiceEndpointTemplateEnabled = realmSpecificServiceEndpointTemplateEnabled(d)
+-	tf_resource.DualStackEndpointTemplateEnabled = dualStackEndpointEnabled(d)
+-	clients := &tf_client.OracleClients{
+-		SdkClientMap:  make(map[string]interface{}, len(tf_client.OracleClientRegistrationsVar.RegisteredClients)),
+-		Configuration: make(map[string]string),
+-	}
++	return providerConfig(d, globalvar.UnknownTerraformCLIVersion)
++}
+ 
+-	if d.Get(globalvar.DisableAutoRetriesAttrName).(bool) {
+-		tf_resource.ShortRetryTime = 0
+-		tf_resource.LongRetryTime = 0
+-	} else if retryDurationSeconds, exists := d.GetOkExists(globalvar.RetryDurationSecondsAttrName); exists {
+-		val := time.Duration(retryDurationSeconds.(int)) * time.Second
+-		if retryDurationSeconds.(int) < 0 {
+-			// Retry for maximum amount of time, if a negative value was specified
+-			val = time.Duration(globalvar.MaxInt64)
+-		}
+-		tf_resource.ConfiguredRetryDuration = &val
++func providerConfig(d *schema.ResourceData, terraformVersion string) (interface{}, error) {
++	if err := validateNoForkProviderGlobalConfig(d); err != nil {
++		return nil, err
+ 	}
+ 
+-	if retriesConfigFile, exists := d.GetOkExists(globalvar.RetriesConfigFile); exists {
+-		err := tf_resource.SetRetriesConfig(retriesConfigFile.(string))
+-		if err != nil {
+-			return nil, err
+-		}
++	clients := &tf_client.OracleClients{
++		SdkClientMap:  make(map[string]interface{}, len(tf_client.OracleClientRegistrationsVar.RegisteredClients)),
++		Configuration: make(map[string]string),
+ 	}
+ 
+ 	sdkConfigProvider, err := GetSdkConfigProvider(d, clients)
+@@ -363,22 +335,113 @@ func ProviderConfig(d *schema.ResourceData) (interface{}, error) {
+ 
+ 	httpClient := BuildHttpClient()
+ 
+-	// beware: global variable `configureClient` set here--used elsewhere outside this execution path
+-	tf_client.ConfigureClientVar, err = BuildConfigureClientFn(sdkConfigProvider, httpClient)
++	configureClient, err := buildConfigureClientFn(sdkConfigProvider, httpClient, terraformVersion)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	err = tf_client.CreateSDKClients(clients, sdkConfigProvider, tf_client.ConfigureClientVar)
++	err = tf_client.CreateSDKClients(clients, sdkConfigProvider, configureClient)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	AvoidWaitingForDeleteTarget, _ = strconv.ParseBool(utils.GetEnvSettingWithDefault("avoid_waiting_for_delete_target", "false"))
+-
+ 	return clients, nil
+ }
+ 
++func prepareProviderRegistrations() {
++	providerRegistrationsOnce.Do(func() {
++		if oci_common.CheckForEnabledServices(globalvar.CoreService) {
++			tf_resource.RegisterDatasource("oci_core_listing_resource_version", tf_core.CoreAppCatalogListingResourceVersionDataSource())
++			tf_resource.RegisterDatasource("oci_core_listing_resource_versions", tf_core.CoreAppCatalogListingResourceVersionsDataSource())
++			tf_resource.RegisterDatasource("oci_core_shape", tf_core.CoreShapesDataSource())
++			tf_resource.RegisterDatasource("oci_core_virtual_networks", tf_core.CoreVcnsDataSource())
++			tf_resource.RegisterResource("oci_core_virtual_network", tf_core.CoreVcnResource())
++		}
++		if oci_common.CheckForEnabledServices(globalvar.LoadBalancerService) {
++			tf_resource.RegisterDatasource("oci_load_balancers", tf_load_balancer.LoadBalancerLoadBalancersDataSource())
++			tf_resource.RegisterDatasource("oci_load_balancer_backendsets", tf_load_balancer.LoadBalancerBackendSetsDataSource())
++			tf_resource.RegisterResource("oci_load_balancer", tf_load_balancer.LoadBalancerLoadBalancerResource())
++			tf_resource.RegisterResource("oci_load_balancer_backendset", tf_load_balancer.LoadBalancerBackendSetResource())
++		}
++		tf_resource.FreezeRegistrations()
++		tf_client.FreezeOracleClientRegistrations()
++	})
++}
++
++func cloneSDKv2ResourceMap(source map[string]*schema.Resource) map[string]*schema.Resource {
++	result := make(map[string]*schema.Resource, len(source))
++	for name, resource := range source {
++		result[name] = cloneSDKv2Resource(resource)
++	}
++	return result
++}
++
++func cloneSDKv2Resource(source *schema.Resource) *schema.Resource {
++	if source == nil {
++		return nil
++	}
++	result := *source
++	result.Schema = cloneSDKv2SchemaMap(source.Schema)
++	if source.SchemaFunc != nil {
++		schemaFunc := source.SchemaFunc
++		result.SchemaFunc = func() map[string]*schema.Schema {
++			return cloneSDKv2SchemaMap(schemaFunc())
++		}
++	}
++	return &result
++}
++
++func cloneSDKv2SchemaMap(source map[string]*schema.Schema) map[string]*schema.Schema {
++	if source == nil {
++		return nil
++	}
++	result := make(map[string]*schema.Schema, len(source))
++	for name, field := range source {
++		result[name] = cloneSDKv2Schema(field)
++	}
++	return result
++}
++
++func cloneSDKv2Schema(source *schema.Schema) *schema.Schema {
++	if source == nil {
++		return nil
++	}
++	result := *source
++	switch element := source.Elem.(type) {
++	case *schema.Schema:
++		result.Elem = cloneSDKv2Schema(element)
++	case *schema.Resource:
++		result.Elem = cloneSDKv2Resource(element)
++	}
++	return &result
++}
++
++func validateNoForkProviderGlobalConfig(d *schema.ResourceData) error {
++	unsupported := []string{}
++	if tags := IgnoreDefinedTags(d); len(tags) != 0 {
++		unsupported = append(unsupported, globalvar.DefinedTagsToIgnore)
++	}
++	if realmSpecificServiceEndpointTemplateEnabled(d) != "" {
++		unsupported = append(unsupported, globalvar.RealmSpecificServiceEndpointTemplateEnabled)
++	}
++	if dualStackEndpointEnabled(d) != "" {
++		unsupported = append(unsupported, globalvar.DualStackEndpointEnabled)
++	}
++	if d.Get(globalvar.DisableAutoRetriesAttrName).(bool) {
++		unsupported = append(unsupported, globalvar.DisableAutoRetriesAttrName)
++	}
++	if _, exists := d.GetOkExists(globalvar.RetryDurationSecondsAttrName); exists {
++		unsupported = append(unsupported, globalvar.RetryDurationSecondsAttrName)
++	}
++	if _, exists := d.GetOkExists(globalvar.RetriesConfigFile); exists {
++		unsupported = append(unsupported, globalvar.RetriesConfigFile)
++	}
++	if len(unsupported) != 0 {
++		return fmt.Errorf("provider-global Terraform option(s) are not supported by OCI no-fork runtime: %s", strings.Join(unsupported, ", "))
++	}
++	return nil
++}
++
+ func GetSdkConfigProvider(d *schema.ResourceData, clients *tf_client.OracleClients) (oci_common.ConfigurationProvider, error) {
+ 
+ 	auth := strings.ToLower(d.Get(globalvar.AuthAttrName).(string))
+@@ -719,12 +782,15 @@ func UserAgentFromEnv() string {
+ }
+ 
+ func BuildConfigureClientFn(configProvider oci_common.ConfigurationProvider, httpClient *http.Client) (tf_client.ConfigureClient, error) {
++	return buildConfigureClientFn(configProvider, httpClient, globalvar.UnknownTerraformCLIVersion)
++}
+ 
+-	if ociProvider != nil && len(ociProvider.TerraformVersion) > 0 {
+-		TerraformCLIVersion = ociProvider.TerraformVersion
++func buildConfigureClientFn(configProvider oci_common.ConfigurationProvider, httpClient *http.Client, terraformVersion string) (tf_client.ConfigureClient, error) {
++	if terraformVersion == "" {
++		terraformVersion = globalvar.UnknownTerraformCLIVersion
+ 	}
+ 	userAgentProviderName := UserAgentFromEnv()
+-	userAgent := fmt.Sprintf(globalvar.UserAgentFormatter, oci_common.Version(), runtime.Version(), runtime.GOOS, runtime.GOARCH, sdkMeta.SDKVersionString(), TerraformCLIVersion, userAgentProviderName, globalvar.Version)
++	userAgent := fmt.Sprintf(globalvar.UserAgentFormatter, oci_common.Version(), runtime.Version(), runtime.GOOS, runtime.GOARCH, sdkMeta.SDKVersionString(), terraformVersion, userAgentProviderName, globalvar.Version)
+ 
+ 	useOboToken, err := strconv.ParseBool(utils.GetEnvSettingWithDefault("use_obo_token", "false"))
+ 	if err != nil {
+diff --git a/internal/provider/provider_framework.go b/internal/provider/provider_framework.go
+index 8fab264ca9cc488bb5787f76ba389b2921cda4f8..b584ba15cb27d5efe11d5b8c0c703b91f3d6b96c 100644
+--- a/internal/provider/provider_framework.go
++++ b/internal/provider/provider_framework.go
+@@ -11,7 +11,6 @@ import (
+ 	"path/filepath"
+ 	"strconv"
+ 	"strings"
+-	"time"
+ 
+ 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+ 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+@@ -24,7 +23,6 @@ import (
+ 	oci_common_auth "github.com/oracle/oci-go-sdk/v65/common/auth"
+ 	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
+ 	"github.com/oracle/terraform-provider-oci/internal/globalvar"
+-	tf_resource "github.com/oracle/terraform-provider-oci/internal/tfresource"
+ 	"github.com/oracle/terraform-provider-oci/internal/utils"
+ )
+ 
+@@ -88,6 +86,7 @@ type ociProviderModel struct {
+ }
+ 
+ func New() provider.Provider {
++	prepareProviderRegistrations()
+ 	return &ociPluginProvider{}
+ }
+ 
+@@ -235,6 +234,7 @@ func (p *ociPluginProvider) Configure(ctx context.Context, req provider.Configur
+ 	clients, err := p.SetProviderConfig()
+ 	if err != nil {
+ 		log.Println("PluginProvider Configure err....", err)
++		resp.Diagnostics.AddError("Unable to configure OCI provider", err.Error())
+ 		return
+ 	}
+ 
+@@ -244,11 +244,13 @@ func (p *ociPluginProvider) Configure(ctx context.Context, req provider.Configur
+ }
+ 
+ func (p *ociPluginProvider) Resources(_ context.Context) []func() resource.Resource {
+-	return globalvar.OciFrameworkResources
++	prepareProviderRegistrations()
++	return append([]func() resource.Resource(nil), globalvar.OciFrameworkResources...)
+ }
+ 
+ func (p *ociPluginProvider) DataSources(_ context.Context) []func() datasource.DataSource {
+-	return globalvar.OciFrameworkDataSources
++	prepareProviderRegistrations()
++	return append([]func() datasource.DataSource(nil), globalvar.OciFrameworkDataSources...)
+ }
+ 
+ func (p *ociPluginProvider) SetDefaults(config *ociProviderModel) {
+@@ -361,44 +363,23 @@ func (p *ociPluginProvider) SetDefaults(config *ociProviderModel) {
+ 	p.disableAutoRetries = config.DisableAutoRetries.ValueBool()
+ 	p.retryDurationSeconds = config.RetryDurationSeconds.ValueInt64()
+ 	p.configFileProfile = config.ConfigFileProfile.ValueString()
+-	p.configured = true
+-	tf_resource.RealmSpecificServiceEndpointTemplateEnabled = getStringFromFwBool(config.RealmSpecificServiceEndpointTemplateEnabled)
+-	tf_resource.DualStackEndpointTemplateEnabled = getStringFromFwBool(config.DualStackEndpointEnabled)
++	p.realmSpecificServiceEndpointTemplateEnabled = config.RealmSpecificServiceEndpointTemplateEnabled.ValueBool()
++	p.dualStackEndpointEnabled = config.DualStackEndpointEnabled.ValueBool()
+ 	p.retriesConfigFile = config.RetriesConfigFile.ValueString()
++	p.configured = true
+ 
+ }
+ 
+ func (p *ociPluginProvider) SetProviderConfig() (interface{}, error) {
+-	//tf_resource.DefinedTagsToSuppress = IgnoreDefinedTags(req)
++	if err := p.validateNoForkProviderGlobalConfig(); err != nil {
++		return nil, err
++	}
++
+ 	clients := &tf_client.OracleClients{
+ 		SdkClientMap:  make(map[string]interface{}, len(tf_client.OracleClientRegistrationsVar.RegisteredClients)),
+ 		Configuration: make(map[string]string),
+ 	}
+ 
+-	disableAutoRetries := p.disableAutoRetries
+-
+-	retryDurationSeconds := p.retryDurationSeconds
+-
+-	if disableAutoRetries {
+-		tf_resource.ShortRetryTime = 0
+-		tf_resource.LongRetryTime = 0
+-	} else if retryDurationSeconds > 0 {
+-		val := time.Duration(retryDurationSeconds) * time.Second
+-		if retryDurationSeconds < 0 {
+-			// Retry for maximum amount of time, if a negative value was specified
+-			val = time.Duration(globalvar.MaxInt64)
+-		}
+-		tf_resource.ConfiguredRetryDuration = &val
+-	}
+-
+-	retriesConfigFile := p.retriesConfigFile
+-	if len(retriesConfigFile) > 0 {
+-		err := tf_resource.SetRetriesConfig(retriesConfigFile)
+-		if err != nil {
+-			return nil, err
+-		}
+-	}
+-
+ 	sdkConfigProvider, err := p._GetSdkConfigProvider(clients)
+ 	if err != nil {
+ 		return nil, err
+@@ -406,22 +387,45 @@ func (p *ociPluginProvider) SetProviderConfig() (interface{}, error) {
+ 
+ 	httpClient := BuildHttpClient()
+ 
+-	// beware: global variable `configureClient` set here--used elsewhere outside this execution path
+-	tf_client.ConfigureClientVar, err = BuildConfigureClientFn(sdkConfigProvider, httpClient)
++	configureClient, err := BuildConfigureClientFn(sdkConfigProvider, httpClient)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	err = tf_client.CreateSDKClients(clients, sdkConfigProvider, tf_client.ConfigureClientVar)
++	err = tf_client.CreateSDKClients(clients, sdkConfigProvider, configureClient)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+-	AvoidWaitingForDeleteTarget, _ = strconv.ParseBool(utils.GetEnvSettingWithDefault("avoid_waiting_for_delete_target", "false"))
+-
+ 	return clients, nil
+ }
+ 
++func (p *ociPluginProvider) validateNoForkProviderGlobalConfig() error {
++	unsupported := []string{}
++	if len(p.ignoreDefinedTags) != 0 {
++		unsupported = append(unsupported, globalvar.DefinedTagsToIgnore)
++	}
++	if p.realmSpecificServiceEndpointTemplateEnabled {
++		unsupported = append(unsupported, globalvar.RealmSpecificServiceEndpointTemplateEnabled)
++	}
++	if p.dualStackEndpointEnabled {
++		unsupported = append(unsupported, globalvar.DualStackEndpointEnabled)
++	}
++	if p.disableAutoRetries {
++		unsupported = append(unsupported, globalvar.DisableAutoRetriesAttrName)
++	}
++	if p.retryDurationSeconds != 0 {
++		unsupported = append(unsupported, globalvar.RetryDurationSecondsAttrName)
++	}
++	if p.retriesConfigFile != "" {
++		unsupported = append(unsupported, globalvar.RetriesConfigFile)
++	}
++	if len(unsupported) != 0 {
++		return fmt.Errorf("provider-global Terraform option(s) are not supported by OCI no-fork runtime: %s", strings.Join(unsupported, ", "))
++	}
++	return nil
++}
++
+ func (p *ociPluginProvider) _GetSdkConfigProvider(clients *tf_client.OracleClients) (oci_common.ConfigurationProvider, error) {
+ 	auth := strings.ToLower(p.auth)
+ 	profile := p.configFileProfile
+diff --git a/internal/provider/provider_test.go b/internal/provider/provider_test.go
+index e37034ccc543a1316b99b4938449f0a0cb1a757b..9aba935333ef8689d91524d740acde6afd7fc568 100644
+--- a/internal/provider/provider_test.go
++++ b/internal/provider/provider_test.go
+@@ -683,6 +683,44 @@ func TestUnit_RegisterResourceMap(t *testing.T) {
+ 	}
+ }
+ 
++func TestUnit_ProviderInstancesAreIsolated(t *testing.T) {
++	first := Provider()
++	second := Provider()
++	if first == second {
++		t.Fatal("Provider returned a shared instance")
++	}
++
++	for resourceName, firstResource := range first.ResourcesMap {
++		secondResource := second.ResourcesMap[resourceName]
++		if firstResource == nil || secondResource == nil || len(firstResource.Schema) == 0 {
++			continue
++		}
++		if firstResource == secondResource {
++			t.Fatalf("resource %q is shared between provider instances", resourceName)
++		}
++
++		for fieldName, firstField := range firstResource.Schema {
++			secondField := secondResource.Schema[fieldName]
++			if firstField == nil || secondField == nil {
++				continue
++			}
++			if firstField == secondField {
++				t.Fatalf("resource %q field %q is shared between provider instances", resourceName, fieldName)
++			}
++			firstField.Description = "mutated provider instance"
++			if secondField.Description == firstField.Description {
++				t.Fatalf("mutating resource %q field %q affected another provider instance", resourceName, fieldName)
++			}
++			delete(first.ResourcesMap, resourceName)
++			if second.ResourcesMap[resourceName] == nil {
++				t.Fatalf("deleting resource %q affected another provider instance", resourceName)
++			}
++			return
++		}
++	}
++	t.Fatal("could not find a provider resource schema to test")
++}
++
+ func TestUnit_DataSourcesMap(t *testing.T) {
+ 	tests := []struct {
+ 		name string
+diff --git a/internal/resourcediscovery/export_compartment.go b/internal/resourcediscovery/export_compartment.go
+index 5dfe2df396c8fab1db7181b3e94eb4c293c47e7e..99e945ca0c4675e6baf2aa815fd2a210e87e83a3 100644
+--- a/internal/resourcediscovery/export_compartment.go
++++ b/internal/resourcediscovery/export_compartment.go
+@@ -381,7 +381,6 @@ func getExportConfig(d *schema.ResourceData) (interface{}, error) {
+ 		return nil, err
+ 	}
+ 
+-	// beware: global variable `configureClient` set here--used elsewhere outside this execution path
+ 	configureClientLocal, err := tfProviderBuildConfigureClientFn(sdkConfigProvider, httpClient)
+ 	if err != nil {
+ 		return nil, err
+@@ -394,8 +393,6 @@ func getExportConfig(d *schema.ResourceData) (interface{}, error) {
+ 		client.UserAgent = userAgentString
+ 		return nil
+ 	}
+-	// beware: global variable `configureClient` set here--used elsewhere outside this execution path
+-	tf_client.ConfigureClientVar = configureClientWithUserAgent
+ 	err = createSDKClientsVar(clients, sdkConfigProvider, configureClientWithUserAgent)
+ 	if err != nil {
+ 		return nil, err
+diff --git a/internal/service/core/core_boot_volume_backup_resource.go b/internal/service/core/core_boot_volume_backup_resource.go
+index 2ddb0204ec8aec995106b693a158edb35be35eea..59c4002c11d3a6f4d51e90fcd3c54dd4dde50772 100644
+--- a/internal/service/core/core_boot_volume_backup_resource.go
++++ b/internal/service/core/core_boot_volume_backup_resource.go
+@@ -154,6 +154,7 @@ func createCoreBootVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreBootVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	compartment, ok := sync.D.GetOkExists("compartment_id")
+@@ -186,6 +187,7 @@ func readCoreBootVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreBootVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	return tfresource.ReadResource(sync)
+@@ -195,6 +197,7 @@ func updateCoreBootVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreBootVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	return tfresource.UpdateResource(d, sync)
+@@ -204,6 +207,7 @@ func deleteCoreBootVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreBootVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 	sync.DisableNotFoundRetries = true
+ 
+@@ -213,6 +217,7 @@ func deleteCoreBootVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ type CoreBootVolumeBackupResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	Client                 *oci_core.BlockstorageClient
++	ConfigureClient        client.ConfigureClient
+ 	SourceRegionClient     *oci_core.BlockstorageClient
+ 	workRequestClient      *oci_work_requests.WorkRequestClient
+ 	Res                    *oci_core.BootVolumeBackup
+diff --git a/internal/service/core/core_volume_backup_resource.go b/internal/service/core/core_volume_backup_resource.go
+index bdc12aea093d7df5585ec4ef7b0bfc3da2b91bea..4a995eaf837967955e8ddc35ed355258d5af49dc 100644
+--- a/internal/service/core/core_volume_backup_resource.go
++++ b/internal/service/core/core_volume_backup_resource.go
+@@ -159,6 +159,7 @@ func createCoreVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	compartment, ok := sync.D.GetOkExists("compartment_id")
+@@ -191,6 +192,7 @@ func readCoreVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	return tfresource.ReadResource(sync)
+@@ -200,6 +202,7 @@ func updateCoreVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 
+ 	return tfresource.UpdateResource(d, sync)
+@@ -209,6 +212,7 @@ func deleteCoreVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.workRequestClient = m.(*client.OracleClients).WorkRequestClient
+ 	sync.DisableNotFoundRetries = true
+ 
+@@ -218,6 +222,7 @@ func deleteCoreVolumeBackup(d *schema.ResourceData, m interface{}) error {
+ type CoreVolumeBackupResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	Client                 *oci_core.BlockstorageClient
++	ConfigureClient        client.ConfigureClient
+ 	SourceRegionClient     *oci_core.BlockstorageClient
+ 	workRequestClient      *oci_work_requests.WorkRequestClient
+ 	Res                    *oci_core.VolumeBackup
+diff --git a/internal/service/core/core_volume_group_backup_resource.go b/internal/service/core/core_volume_group_backup_resource.go
+index 793b4e7889bf779f2b1264475adf2526c5f70f5a..75dec2df322fe6f551951a66302e3f0a7c0ba6d8 100644
+--- a/internal/service/core/core_volume_group_backup_resource.go
++++ b/internal/service/core/core_volume_group_backup_resource.go
+@@ -153,6 +153,7 @@ func createCoreVolumeGroupBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeGroupBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	// Issue logged with service team for `Create` not supporting non-default compartment_id
+ 	// Remove custom code after issue is fixed.
+@@ -185,6 +186,7 @@ func readCoreVolumeGroupBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeGroupBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.ReadResource(sync)
+ }
+@@ -193,6 +195,7 @@ func updateCoreVolumeGroupBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeGroupBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.UpdateResource(d, sync)
+ }
+@@ -201,6 +204,7 @@ func deleteCoreVolumeGroupBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &CoreVolumeGroupBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).BlockstorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.DisableNotFoundRetries = true
+ 
+ 	return tfresource.DeleteResource(d, sync)
+@@ -210,6 +214,7 @@ type CoreVolumeGroupBackupResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	SourceRegionClient     *oci_core.BlockstorageClient
+ 	Client                 *oci_core.BlockstorageClient
++	ConfigureClient        client.ConfigureClient
+ 	Res                    *oci_core.VolumeGroupBackup
+ 	DisableNotFoundRetries bool
+ }
+diff --git a/internal/service/core/helpers_core.go b/internal/service/core/helpers_core.go
+index 3b1716fc80b8539e145d3d8f3ee6c282f97eca7c..1a6b5867d779f50e369bc7457e21f0423291cf13 100644
+--- a/internal/service/core/helpers_core.go
++++ b/internal/service/core/helpers_core.go
+@@ -14,7 +14,6 @@ import (
+ 
+ 	"github.com/hashicorp/go-cty/cty"
+ 	oci_common "github.com/oracle/oci-go-sdk/v65/common"
+-	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
+ 	"github.com/oracle/terraform-provider-oci/internal/tfresource"
+ 
+ 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+@@ -163,7 +162,7 @@ func (s *CoreVolumeBackupResourceCrud) createBlockStorageSourceRegionClient(regi
+ 		if err != nil {
+ 			return fmt.Errorf("cannot Create client for the source region: %v", err)
+ 		}
+-		err = tf_client.ConfigureClientVar(&sourceBlockStorageClient.BaseClient)
++		err = s.ConfigureClient(&sourceBlockStorageClient.BaseClient)
+ 		if err != nil {
+ 			return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 		}
+@@ -180,7 +179,7 @@ func (s *CoreVolumeGroupBackupResourceCrud) createBlockStorageSourceRegionClient
+ 		if err != nil {
+ 			return fmt.Errorf("cannot Create client for the source region: %v", err)
+ 		}
+-		err = tf_client.ConfigureClientVar(&sourceBlockStorageClient.BaseClient)
++		err = s.ConfigureClient(&sourceBlockStorageClient.BaseClient)
+ 		if err != nil {
+ 			return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 		}
+@@ -197,7 +196,7 @@ func (s *CoreBootVolumeBackupResourceCrud) createBlockStorageSourceRegionClient(
+ 		if err != nil {
+ 			return fmt.Errorf("cannot Create client for the source region: %v", err)
+ 		}
+-		err = tf_client.ConfigureClientVar(&sourceBlockStorageClient.BaseClient)
++		err = s.ConfigureClient(&sourceBlockStorageClient.BaseClient)
+ 		if err != nil {
+ 			return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 		}
+diff --git a/internal/service/mysql/helpers_mysql.go b/internal/service/mysql/helpers_mysql.go
+index bcc3f579e6d5894b7d426c58edc87db9f7a44724..5c70a2b080944db0210d72749c54fc170dd2db15 100644
+--- a/internal/service/mysql/helpers_mysql.go
++++ b/internal/service/mysql/helpers_mysql.go
+@@ -4,22 +4,20 @@ import (
+ 	"fmt"
+ 
+ 	oci_mysql "github.com/oracle/oci-go-sdk/v65/mysql"
+-	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
+ )
+ 
+-func (s *MysqlMysqlBackupResourceCrud) createDbBackupClientInRegion(region string) error {
++func (s *MysqlMysqlBackupResourceCrud) createDbBackupClientInRegion(region string) (*oci_mysql.DbBackupsClient, error) {
+ 	if s.Client == nil {
+-		dbBackupClient, err := oci_mysql.NewDbBackupsClientWithConfigurationProvider(*s.Client.ConfigurationProvider())
+-		if err != nil {
+-			return fmt.Errorf("cannot Create client for the region: %v", err)
+-		}
+-		err = tf_client.ConfigureClientVar(&dbBackupClient.BaseClient)
+-		if err != nil {
+-			return fmt.Errorf("cannot configure client for the region: %v", err)
+-		}
+-		s.Client = &dbBackupClient
++		return nil, fmt.Errorf("cannot create client for the region: primary MySQL backup client is nil")
+ 	}
+-	s.Client.SetRegion(region)
+ 
+-	return nil
++	dbBackupClient, err := oci_mysql.NewDbBackupsClientWithConfigurationProvider(*s.Client.ConfigurationProvider())
++	if err != nil {
++		return nil, fmt.Errorf("cannot create client for the region: %v", err)
++	}
++	if err := s.ConfigureClient(&dbBackupClient.BaseClient); err != nil {
++		return nil, fmt.Errorf("cannot configure client for the region: %v", err)
++	}
++	dbBackupClient.SetRegion(region)
++	return &dbBackupClient, nil
+ }
+diff --git a/internal/service/mysql/helpers_mysql_nofork_test.go b/internal/service/mysql/helpers_mysql_nofork_test.go
+new file mode 100644
+index 0000000000000000000000000000000000000000..f8914dfb1538e1c338f83595b501369aedf1163f
+--- /dev/null
++++ b/internal/service/mysql/helpers_mysql_nofork_test.go
+@@ -0,0 +1,88 @@
++// Copyright (c) 2026, Oracle and/or its affiliates. All rights reserved.
++// Licensed under the Mozilla Public License v2.0
++
++package mysql
++
++import (
++	"crypto/rand"
++	"crypto/rsa"
++	"testing"
++
++	oci_common "github.com/oracle/oci-go-sdk/v65/common"
++	oci_mysql "github.com/oracle/oci-go-sdk/v65/mysql"
++	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
++)
++
++func TestCreateDbBackupClientInRegionDoesNotMutatePrimaryClient(t *testing.T) {
++	privateKey, err := rsa.GenerateKey(rand.Reader, 1024)
++	if err != nil {
++		t.Fatalf("generate test private key: %v", err)
++	}
++	configProvider := mysqlEndpointTestConfiguration{privateKey: privateKey}
++	primary, err := oci_mysql.NewDbBackupsClientWithConfigurationProvider(configProvider)
++	if err != nil {
++		t.Fatalf("create primary MySQL backup client: %v", err)
++	}
++	primary.UserAgent = "primary-client"
++	primaryHost := primary.Host
++
++	crud := &MysqlMysqlBackupResourceCrud{
++		Client: &primary,
++		ConfigureClient: tf_client.ConfigureClient(func(client *oci_common.BaseClient) error {
++			client.UserAgent = "copy-client"
++			return nil
++		}),
++	}
++	copyClient, err := crud.createDbBackupClientInRegion("us-phoenix-1")
++	if err != nil {
++		t.Fatalf("create copy client: %v", err)
++	}
++
++	if copyClient == crud.Client {
++		t.Fatal("copy operation reused the primary MySQL backup client")
++	}
++	if got := copyClient.UserAgent; got != "copy-client" {
++		t.Fatalf("copy client user agent = %q, want ProviderConfig callback value", got)
++	}
++	if got := crud.Client.UserAgent; got != "primary-client" {
++		t.Fatalf("primary client user agent changed to %q", got)
++	}
++	if got := crud.Client.Host; got != primaryHost {
++		t.Fatalf("primary client host changed from %q to %q", primaryHost, got)
++	}
++	if got := copyClient.Host; got == primaryHost {
++		t.Fatalf("copy client host = %q, want regional endpoint distinct from primary", got)
++	}
++}
++
++type mysqlEndpointTestConfiguration struct {
++	privateKey *rsa.PrivateKey
++}
++
++func (c mysqlEndpointTestConfiguration) PrivateRSAKey() (*rsa.PrivateKey, error) {
++	return c.privateKey, nil
++}
++
++func (mysqlEndpointTestConfiguration) KeyID() (string, error) {
++	return "tenancy/user/fingerprint", nil
++}
++
++func (mysqlEndpointTestConfiguration) TenancyOCID() (string, error) {
++	return "tenancy", nil
++}
++
++func (mysqlEndpointTestConfiguration) UserOCID() (string, error) {
++	return "user", nil
++}
++
++func (mysqlEndpointTestConfiguration) KeyFingerprint() (string, error) {
++	return "fingerprint", nil
++}
++
++func (mysqlEndpointTestConfiguration) Region() (string, error) {
++	return "us-ashburn-1", nil
++}
++
++func (mysqlEndpointTestConfiguration) AuthType() (oci_common.AuthConfig, error) {
++	return oci_common.AuthConfig{AuthType: oci_common.UserPrincipal}, nil
++}
+diff --git a/internal/service/mysql/mysql_mysql_backup_resource.go b/internal/service/mysql/mysql_mysql_backup_resource.go
+index c909d3a91072911e9adc3a801ee3a3e476cf01da..c19cfe12753bba57b431bce1a23c71f1d5983a88 100644
+--- a/internal/service/mysql/mysql_mysql_backup_resource.go
++++ b/internal/service/mysql/mysql_mysql_backup_resource.go
+@@ -855,6 +855,7 @@ func createMysqlMysqlBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &MysqlMysqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).DbBackupsClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.CreateResource(d, sync)
+ }
+@@ -863,6 +864,7 @@ func readMysqlMysqlBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &MysqlMysqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).DbBackupsClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.ReadResource(sync)
+ }
+@@ -871,6 +873,7 @@ func updateMysqlMysqlBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &MysqlMysqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).DbBackupsClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	if _, ok := sync.D.GetOkExists("validate_trigger"); ok && sync.D.HasChange("validate_trigger") {
+ 		oldRaw, newRaw := sync.D.GetChange("validate_trigger")
+@@ -899,6 +902,7 @@ func deleteMysqlMysqlBackup(d *schema.ResourceData, m interface{}) error {
+ 	sync := &MysqlMysqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).DbBackupsClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.DisableNotFoundRetries = true
+ 
+ 	return tfresource.DeleteResource(d, sync)
+@@ -907,6 +911,7 @@ func deleteMysqlMysqlBackup(d *schema.ResourceData, m interface{}) error {
+ type MysqlMysqlBackupResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	Client                 *oci_mysql.DbBackupsClient
++	ConfigureClient        client.ConfigureClient
+ 	Res                    *oci_mysql.Backup
+ 	DisableNotFoundRetries bool
+ }
+@@ -1080,12 +1085,12 @@ func (s *MysqlMysqlBackupResourceCrud) createMysqlBackupCopy() error {
+ 		}
+ 	}
+ 
+-	err := s.createDbBackupClientInRegion(currentRegion)
++	copyClient, err := s.createDbBackupClientInRegion(currentRegion)
+ 	if err != nil {
+ 		return err
+ 	}
+ 
+-	response, err := s.Client.CopyBackup(context.Background(), copyMysqlBackupRequest)
++	response, err := copyClient.CopyBackup(context.Background(), copyMysqlBackupRequest)
+ 	if err != nil {
+ 		return err
+ 	}
+diff --git a/internal/service/objectstorage/helpers_objectstorage.go b/internal/service/objectstorage/helpers_objectstorage.go
+index 69fd52ef8475320a121606bd439ce880be507b3a..439acb19d01df964b08e5a3a9cf7b862450599a8 100644
+--- a/internal/service/objectstorage/helpers_objectstorage.go
++++ b/internal/service/objectstorage/helpers_objectstorage.go
+@@ -15,8 +15,6 @@ import (
+ 	"sync"
+ 	"time"
+ 
+-	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
+-
+ 	"github.com/oracle/terraform-provider-oci/internal/tfresource"
+ 
+ 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
+@@ -422,7 +420,7 @@ func (s *ObjectStorageObjectResourceCrud) createSourceRegionClient(region string
+ 		if err != nil {
+ 			return fmt.Errorf("cannot Create client for the source region: %v", err)
+ 		}
+-		err = tf_client.ConfigureClientVar(&sourceObjectStorageClient.BaseClient)
++		err = s.ConfigureClient(&sourceObjectStorageClient.BaseClient)
+ 		if err != nil {
+ 			return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 		}
+diff --git a/internal/service/objectstorage/objectstorage_object_resource.go b/internal/service/objectstorage/objectstorage_object_resource.go
+index 4f03ebc8c8dd482defce00bf6f84dd7d4b610037..797f7896c0b2276cea527eaeda9d91e0481d4cfa 100644
+--- a/internal/service/objectstorage/objectstorage_object_resource.go
++++ b/internal/service/objectstorage/objectstorage_object_resource.go
+@@ -246,6 +246,7 @@ func createObjectStorageObject(d *schema.ResourceData, m interface{}) error {
+ 	sync := &ObjectStorageObjectResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).ObjectStorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.CreateResource(d, sync)
+ }
+@@ -492,6 +493,7 @@ func readObjectStorageObject(d *schema.ResourceData, m interface{}) error {
+ 	}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).ObjectStorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.ReadResource(sync)
+ }
+@@ -500,6 +502,7 @@ func updateObjectStorageObject(d *schema.ResourceData, m interface{}) error {
+ 	sync := &ObjectStorageObjectResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).ObjectStorageClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.UpdateResource(d, sync)
+ }
+@@ -526,6 +529,7 @@ type ObjectStorageObject struct {
+ type ObjectStorageObjectResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	Client                 *oci_object_storage.ObjectStorageClient
++	ConfigureClient        client.ConfigureClient
+ 	SourceRegionClient     *oci_object_storage.ObjectStorageClient
+ 	Res                    *ObjectStorageObject
+ 	DisableNotFoundRetries bool
+diff --git a/internal/service/opensearch/opensearch_opensearch_cluster_resource.go b/internal/service/opensearch/opensearch_opensearch_cluster_resource.go
+index 328179e5acec3e8d1bec6ae488908a27fb5324e0..91a0c491428dc265627da067e42a391d86a5f7f7 100644
+--- a/internal/service/opensearch/opensearch_opensearch_cluster_resource.go
++++ b/internal/service/opensearch/opensearch_opensearch_cluster_resource.go
+@@ -677,6 +677,7 @@ type OpensearchOpensearchClusterResourceCrud struct {
+ 	Client                 *oci_opensearch.OpensearchClusterClient
+ 	Res                    *oci_opensearch.OpensearchCluster
+ 	DisableNotFoundRetries bool
++	RetryPolicyOptionals   []interface{}
+ }
+ 
+ func (s *OpensearchOpensearchClusterResourceCrud) ID() string {
+@@ -1183,7 +1184,7 @@ func (s *OpensearchOpensearchClusterResourceCrud) Get() error {
+ 	tmp := s.D.Id()
+ 	request.OpensearchClusterId = &tmp
+ 
+-	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch")
++	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch", s.RetryPolicyOptionals...)
+ 
+ 	response, err := s.Client.GetOpensearchCluster(context.Background(), request)
+ 	if err != nil {
+@@ -1812,7 +1813,11 @@ func (s *OpensearchOpensearchClusterResourceCrud) UpgradeOpenSearchCluster() err
+ 	return s.getOpensearchClusterFromWorkRequest(workId, tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch"), oci_opensearch.ActionTypeUpdated, s.D.Timeout(schema.TimeoutUpdate))
+ }
+ func (s *OpensearchOpensearchClusterResourceCrud) ResizeOpensearchClusterHorizontal() error {
+-	tfresource.ShortRetryTime = tfresource.LongRetryTime * 5
++	s.RetryPolicyOptionals = []interface{}{tfresource.GetShortRetryDurationFunction(tfresource.LongRetryTime * 5)}
++	defer func() {
++		s.RetryPolicyOptionals = nil
++	}()
++
+ 	request := oci_opensearch.ResizeOpensearchClusterHorizontalRequest{}
+ 
+ 	if coordinatorNodeCount, ok := s.D.GetOkExists("coordinator_node_count"); ok {
+@@ -1848,7 +1853,7 @@ func (s *OpensearchOpensearchClusterResourceCrud) ResizeOpensearchClusterHorizon
+ 		request.SearchNodeCount = &tmp
+ 	}
+ 
+-	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch")
++	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch", s.RetryPolicyOptionals...)
+ 
+ 	response, err := s.Client.ResizeOpensearchClusterHorizontal(context.Background(), request)
+ 	if err != nil {
+@@ -1860,7 +1865,11 @@ func (s *OpensearchOpensearchClusterResourceCrud) ResizeOpensearchClusterHorizon
+ }
+ 
+ func (s *OpensearchOpensearchClusterResourceCrud) ResizeOpensearchClusterVertical() error {
+-	tfresource.ShortRetryTime = tfresource.LongRetryTime * 5
++	s.RetryPolicyOptionals = []interface{}{tfresource.GetShortRetryDurationFunction(tfresource.LongRetryTime * 5)}
++	defer func() {
++		s.RetryPolicyOptionals = nil
++	}()
++
+ 	request := oci_opensearch.ResizeOpensearchClusterVerticalRequest{}
+ 
+ 	if coordinatorNodeHostMemoryGB, ok := s.D.GetOkExists("coordinator_node_host_memory_gb"); ok {
+@@ -1971,7 +1980,7 @@ func (s *OpensearchOpensearchClusterResourceCrud) ResizeOpensearchClusterVertica
+ 		request.SearchNodeStorageGB = &tmp
+ 	}
+ 
+-	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch")
++	request.RequestMetadata.RetryPolicy = tfresource.GetRetryPolicy(s.DisableNotFoundRetries, "opensearch", s.RetryPolicyOptionals...)
+ 
+ 	response, err := s.Client.ResizeOpensearchClusterVertical(context.Background(), request)
+ 	if err != nil {
+diff --git a/internal/service/psql/helpers_psql.go b/internal/service/psql/helpers_psql.go
+index 12adc53de279dd91d60ddd6ebace5178a9584eb3..f102392cf908060bcec955f2572c8f5b4294449b 100644
+--- a/internal/service/psql/helpers_psql.go
++++ b/internal/service/psql/helpers_psql.go
+@@ -4,7 +4,6 @@ import (
+ 	"fmt"
+ 
+ 	oci_psql "github.com/oracle/oci-go-sdk/v65/psql"
+-	tf_client "github.com/oracle/terraform-provider-oci/internal/client"
+ )
+ 
+ func (s *PsqlBackupResourceCrud) createPsqlSourceRegionClient(region string) error {
+@@ -13,7 +12,7 @@ func (s *PsqlBackupResourceCrud) createPsqlSourceRegionClient(region string) err
+ 		if err != nil {
+ 			return fmt.Errorf("cannot Create client for the source region: %v", err)
+ 		}
+-		err = tf_client.ConfigureClientVar(&sourcePsqlClient.BaseClient)
++		err = s.ConfigureClient(&sourcePsqlClient.BaseClient)
+ 		if err != nil {
+ 			return fmt.Errorf("cannot configure client for the source region: %v", err)
+ 		}
+diff --git a/internal/service/psql/psql_backup_resource.go b/internal/service/psql/psql_backup_resource.go
+index afebdbdf0a1a6a13b11dae16946dd1f2dd9d2d47..8cb9b2c74a3e2daf307a830db5c2b66bc08d9cb4 100644
+--- a/internal/service/psql/psql_backup_resource.go
++++ b/internal/service/psql/psql_backup_resource.go
+@@ -199,6 +199,7 @@ func createPsqlBackupWithContext(ctx context.Context, d *schema.ResourceData, m
+ 	sync := &PsqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).PostgresqlClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.HandleDiagError(m, tfresource.CreateResourceWithContext(ctx, d, sync))
+ }
+@@ -207,6 +208,7 @@ func readPsqlBackupWithContext(ctx context.Context, d *schema.ResourceData, m in
+ 	sync := &PsqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).PostgresqlClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.HandleDiagError(m, tfresource.ReadResourceWithContext(ctx, sync))
+ }
+@@ -215,6 +217,7 @@ func updatePsqlBackupWithContext(ctx context.Context, d *schema.ResourceData, m
+ 	sync := &PsqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).PostgresqlClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 
+ 	return tfresource.HandleDiagError(m, tfresource.UpdateResourceWithContext(ctx, d, sync))
+ }
+@@ -223,6 +226,7 @@ func deletePsqlBackupWithContext(ctx context.Context, d *schema.ResourceData, m
+ 	sync := &PsqlBackupResourceCrud{}
+ 	sync.D = d
+ 	sync.Client = m.(*client.OracleClients).PostgresqlClient()
++	sync.ConfigureClient = m.(*client.OracleClients).ConfigureClient
+ 	sync.DisableNotFoundRetries = true
+ 
+ 	return tfresource.HandleDiagError(m, tfresource.DeleteResourceWithContext(ctx, d, sync))
+@@ -231,6 +235,7 @@ func deletePsqlBackupWithContext(ctx context.Context, d *schema.ResourceData, m
+ type PsqlBackupResourceCrud struct {
+ 	tfresource.BaseCrud
+ 	Client                 *oci_psql.PostgresqlClient
++	ConfigureClient        client.ConfigureClient
+ 	SourceRegionClient     *oci_psql.PostgresqlClient
+ 	Res                    *oci_psql.Backup
+ 	DisableNotFoundRetries bool
+diff --git a/internal/tfresource/register_helpers.go b/internal/tfresource/register_helpers.go
+index 10bd90623172b938fb7e4e5fdb2d3784b34c7916..c3f9a8e50a52c2591ce98dc49be632cb68d55455 100644
+--- a/internal/tfresource/register_helpers.go
++++ b/internal/tfresource/register_helpers.go
+@@ -1,13 +1,24 @@
+ package tfresource
+ 
+ import (
++	"fmt"
++	"sync"
++
+ 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+ 	"github.com/hashicorp/terraform-plugin-framework/resource"
+ 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+ 	"github.com/oracle/terraform-provider-oci/internal/globalvar"
+ )
+ 
++var registrationState struct {
++	sync.Mutex
++	frozen bool
++}
++
+ func RegisterResource(name string, resourceSchema *schema.Resource) {
++	registrationState.Lock()
++	defer registrationState.Unlock()
++	panicIfRegistrationsFrozen(name)
+ 	if globalvar.OciResources == nil {
+ 		globalvar.OciResources = make(map[string]*schema.Resource)
+ 	}
+@@ -15,6 +26,9 @@ func RegisterResource(name string, resourceSchema *schema.Resource) {
+ }
+ 
+ func RegisterDatasource(name string, datasourceSchema *schema.Resource) {
++	registrationState.Lock()
++	defer registrationState.Unlock()
++	panicIfRegistrationsFrozen(name)
+ 	if globalvar.OciDatasources == nil {
+ 		globalvar.OciDatasources = make(map[string]*schema.Resource)
+ 	}
+@@ -22,6 +36,9 @@ func RegisterDatasource(name string, datasourceSchema *schema.Resource) {
+ }
+ 
+ func RegisterFrameworkDatasource(ds func() datasource.DataSource) {
++	registrationState.Lock()
++	defer registrationState.Unlock()
++	panicIfRegistrationsFrozen("Framework datasource")
+ 	if globalvar.OciFrameworkDataSources == nil {
+ 		globalvar.OciFrameworkDataSources = make([]func() datasource.DataSource, 0)
+ 	}
+@@ -29,8 +46,23 @@ func RegisterFrameworkDatasource(ds func() datasource.DataSource) {
+ }
+ 
+ func RegisterFrameworkResource(ds func() resource.Resource) {
++	registrationState.Lock()
++	defer registrationState.Unlock()
++	panicIfRegistrationsFrozen("Framework resource")
+ 	if globalvar.OciFrameworkResources == nil {
+ 		globalvar.OciFrameworkResources = make([]func() resource.Resource, 0)
+ 	}
+ 	globalvar.OciFrameworkResources = append(globalvar.OciFrameworkResources, ds)
+ }
++
++func FreezeRegistrations() {
++	registrationState.Lock()
++	defer registrationState.Unlock()
++	registrationState.frozen = true
++}
++
++func panicIfRegistrationsFrozen(name string) {
++	if registrationState.frozen {
++		panic(fmt.Sprintf("cannot register %q after OCI provider registration is frozen", name))
++	}
++}
+diff --git a/internal/tfresource/retry.go b/internal/tfresource/retry.go
+index 164ee6dfe4f1fff7bd9a3082041b35e704a2e01b..873f9182fbb9508dc7e47e30e2992a7f58993be1 100644
+--- a/internal/tfresource/retry.go
++++ b/internal/tfresource/retry.go
+@@ -285,7 +285,11 @@ func GetRetryMaxDurationConfigured(statusCode int) (time.Duration, bool) {
+ }
+ 
+ func GetDefaultExpectedRetryDuration(response oci_common.OCIOperationResponse, disableNotFoundRetries bool) time.Duration {
+-	defaultRetryTime := ShortRetryTime
++	return getDefaultExpectedRetryDuration(response, disableNotFoundRetries, ShortRetryTime, LongRetryTime, ConfiguredRetryDuration)
++}
++
++func getDefaultExpectedRetryDuration(response oci_common.OCIOperationResponse, disableNotFoundRetries bool, shortRetryTime, longRetryTime time.Duration, configuredRetryDuration *time.Duration) time.Duration {
++	defaultRetryTime := shortRetryTime
+ 
+ 	if IsNetworkError(response.Error) {
+ 		log.Printf("[DEBUG] Retrying for network error...")
+@@ -329,10 +333,10 @@ func GetDefaultExpectedRetryDuration(response oci_common.OCIOperationResponse, d
+ 		if ok {
+ 			return value
+ 		}
+-		if ConfiguredRetryDuration != nil {
+-			return *ConfiguredRetryDuration
++		if configuredRetryDuration != nil {
++			return *configuredRetryDuration
+ 		}
+-		defaultRetryTime = LongRetryTime
++		defaultRetryTime = longRetryTime
+ 	case 500:
+ 		if e != nil && (strings.Contains(e.Error(), "Out of host capacity")) {
+ 			return 0
+@@ -341,8 +345,8 @@ func GetDefaultExpectedRetryDuration(response oci_common.OCIOperationResponse, d
+ 		if ok {
+ 			return value
+ 		}
+-		if ConfiguredRetryDuration != nil {
+-			return *ConfiguredRetryDuration
++		if configuredRetryDuration != nil {
++			return *configuredRetryDuration
+ 		}
+ 	}
+ 
+@@ -354,6 +358,12 @@ func GetDefaultExpectedRetryDuration(response oci_common.OCIOperationResponse, d
+ 	return defaultRetryTime
+ }
+ 
++func GetShortRetryDurationFunction(shortRetryTime time.Duration) expectedRetryDurationFn {
++	return func(response oci_common.OCIOperationResponse, disableNotFoundRetries bool, service string, optionals ...interface{}) time.Duration {
++		return getDefaultExpectedRetryDuration(response, disableNotFoundRetries, shortRetryTime, LongRetryTime, ConfiguredRetryDuration)
++	}
++}
++
+ func isRetriableByEc(r oci_common.OCIOperationResponse) (bool, *time.Duration) {
+ 	if _, ok := isServiceErrorVar(r.Error); ok {
+ 		now := time.Now()
+diff --git a/oci/provider.go b/oci/provider.go
+new file mode 100644
+index 0000000000000000000000000000000000000000..4286611739ee5d9bbf559f0e75cd546d08ebf10d
+--- /dev/null
++++ b/oci/provider.go
+@@ -0,0 +1,20 @@
++// Copyright (c) 2024, Oracle and/or its affiliates.
++// Licensed under the Mozilla Public License Version 2.0
++
++package oci
++
++import (
++	fwprovider "github.com/hashicorp/terraform-plugin-framework/provider"
++	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
++	internalprovider "github.com/oracle/terraform-provider-oci/internal/provider"
++)
++
++// Provider returns a fresh SDKv2 provider instance.
++func Provider() *schema.Provider {
++	return internalprovider.Provider()
++}
++
++// New returns a fresh Plugin Framework provider instance.
++func New() fwprovider.Provider {
++	return internalprovider.New()
++}
