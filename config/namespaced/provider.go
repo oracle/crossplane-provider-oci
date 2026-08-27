@@ -1,6 +1,8 @@
 package namespaced
 
 import (
+	"github.com/oracle/provider-oci/config/namespaced/aidataplatform"
+	"github.com/oracle/provider-oci/config/namespaced/bds"
 	"github.com/oracle/provider-oci/config/namespaced/budget"
 	"github.com/oracle/provider-oci/config/namespaced/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/namespaced/containerengine"
@@ -26,6 +28,8 @@ import (
 )
 
 func init() {
+	ProviderConfiguration.AddConfig(aidataplatform.Configure)
+	ProviderConfiguration.AddConfig(bds.Configure)
 	ProviderConfiguration.AddConfig(budget.Configure)
 	ProviderConfiguration.AddConfig(certificatesmanagement.Configure)
 	ProviderConfiguration.AddConfig(containerengine.Configure)

@@ -22,6 +22,8 @@ import (
 
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("oci_mysql_blue_green_deployment", configureBlueGreenDeployment)
+
 	// oci_mysql_mysql_db_system
 	p.AddResourceConfigurator("oci_mysql_mysql_db_system", func(r *config.Resource) {
 
@@ -78,4 +80,12 @@ func Configure(p *config.Provider) {
 			TerraformName: "oci_identity_compartment",
 		}
 	})
+}
+
+func configureBlueGreenDeployment(r *config.Resource) {
+	r.OverrideFieldNames = map[string]string{
+		"SSLCACertificateInitParameters": "BlueGreenDeploymentSSLCACertificateInitParameters",
+		"SSLCACertificateObservation":    "BlueGreenDeploymentSSLCACertificateObservation",
+		"SSLCACertificateParameters":     "BlueGreenDeploymentSSLCACertificateParameters",
+	}
 }

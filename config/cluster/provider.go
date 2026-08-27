@@ -1,6 +1,8 @@
 package cluster
 
 import (
+	"github.com/oracle/provider-oci/config/cluster/aidataplatform"
+	"github.com/oracle/provider-oci/config/cluster/bds"
 	"github.com/oracle/provider-oci/config/cluster/budget"
 	"github.com/oracle/provider-oci/config/cluster/certificatesmanagement"
 	"github.com/oracle/provider-oci/config/cluster/containerengine"
@@ -26,6 +28,8 @@ import (
 )
 
 func init() {
+	ProviderConfiguration.AddConfig(aidataplatform.Configure)
+	ProviderConfiguration.AddConfig(bds.Configure)
 	ProviderConfiguration.AddConfig(budget.Configure)
 	ProviderConfiguration.AddConfig(certificatesmanagement.Configure)
 	ProviderConfiguration.AddConfig(containerengine.Configure)
