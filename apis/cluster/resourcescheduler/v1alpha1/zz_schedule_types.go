@@ -167,6 +167,9 @@ type ScheduleInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) IANA timezone identifier (e.g., 'America/New_York', 'UTC', 'Europe/London'). This determines the timezone context for evaluating the recurrence expression.
+	LocalTimeZone *string `json:"localTimeZone,omitempty" tf:"local_time_zone,omitempty"`
+
 	// (Updatable) This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.
 	RecurrenceDetails *string `json:"recurrenceDetails,omitempty" tf:"recurrence_details,omitempty"`
 
@@ -216,6 +219,9 @@ type ScheduleObservation struct {
 
 	// This is the status of the last work request.
 	LastRunStatus *string `json:"lastRunStatus,omitempty" tf:"last_run_status,omitempty"`
+
+	// (Updatable) IANA timezone identifier (e.g., 'America/New_York', 'UTC', 'Europe/London'). This determines the timezone context for evaluating the recurrence expression.
+	LocalTimeZone *string `json:"localTimeZone,omitempty" tf:"local_time_zone,omitempty"`
 
 	// (Updatable) This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.
 	RecurrenceDetails *string `json:"recurrenceDetails,omitempty" tf:"recurrence_details,omitempty"`
@@ -291,6 +297,10 @@ type ScheduleParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) IANA timezone identifier (e.g., 'America/New_York', 'UTC', 'Europe/London'). This determines the timezone context for evaluating the recurrence expression.
+	// +kubebuilder:validation:Optional
+	LocalTimeZone *string `json:"localTimeZone,omitempty" tf:"local_time_zone,omitempty"`
 
 	// (Updatable) This is the frequency of recurrence of a schedule. The frequency field can either conform to RFC-5545 formatting or UNIX cron formatting for recurrences, based on the value specified by the recurrenceType field.
 	// +kubebuilder:validation:Optional

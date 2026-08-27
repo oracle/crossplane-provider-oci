@@ -146,6 +146,9 @@ type SnapshotObservation struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
+	// Bytes referenced only by this snapshot; deducted from compartment usage immediately upon deletion.
+	ExclusiveBytes *string `json:"exclusiveBytes,omitempty" tf:"exclusive_bytes,omitempty"`
+
 	// (Updatable) The time when this snapshot will be deleted.
 	ExpirationTime *string `json:"expirationTime,omitempty" tf:"expiration_time,omitempty"`
 

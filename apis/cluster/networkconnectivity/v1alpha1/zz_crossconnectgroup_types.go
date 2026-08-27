@@ -41,8 +41,20 @@ type CrossConnectGroupInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
 	// (Updatable) Properties used to configure MACsec (if capable).
 	MacsecProperties []CrossConnectGroupMacsecPropertiesInitParameters `json:"macsecProperties,omitempty" tf:"macsec_properties,omitempty"`
+
+	// (Updatable)  Minimum number of active cross-connects required for the cross-connect group to be considered operational. During create cross-connect-group operation this value can only be set to 1 (If not specified, this value defaults to 1) and can be edited using the update cross-connect group operation. Value must not exceed the total number of cross-connects in the cross-connect group.
+	MinimumLinks *float64 `json:"minimumLinks,omitempty" tf:"minimum_links,omitempty"`
 }
 
 type CrossConnectGroupMacsecPropertiesInitParameters struct {
@@ -116,8 +128,20 @@ type CrossConnectGroupObservation struct {
 	// The cross-connect group's Oracle ID (OCID).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
 	// (Updatable) Properties used to configure MACsec (if capable).
 	MacsecProperties []CrossConnectGroupMacsecPropertiesObservation `json:"macsecProperties,omitempty" tf:"macsec_properties,omitempty"`
+
+	// (Updatable)  Minimum number of active cross-connects required for the cross-connect group to be considered operational. During create cross-connect-group operation this value can only be set to 1 (If not specified, this value defaults to 1) and can be edited using the update cross-connect group operation. Value must not exceed the total number of cross-connects in the cross-connect group.
+	MinimumLinks *float64 `json:"minimumLinks,omitempty" tf:"minimum_links,omitempty"`
 
 	// The FastConnect device that terminates the logical connection. This device might be different than the device that terminates the physical connection.
 	OciLogicalDeviceName *string `json:"ociLogicalDeviceName,omitempty" tf:"oci_logical_device_name,omitempty"`
@@ -165,9 +189,25 @@ type CrossConnectGroupParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	// +kubebuilder:validation:Optional
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	// +kubebuilder:validation:Optional
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	// +kubebuilder:validation:Optional
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
 	// (Updatable) Properties used to configure MACsec (if capable).
 	// +kubebuilder:validation:Optional
 	MacsecProperties []CrossConnectGroupMacsecPropertiesParameters `json:"macsecProperties,omitempty" tf:"macsec_properties,omitempty"`
+
+	// (Updatable)  Minimum number of active cross-connects required for the cross-connect group to be considered operational. During create cross-connect-group operation this value can only be set to 1 (If not specified, this value defaults to 1) and can be edited using the update cross-connect group operation. Value must not exceed the total number of cross-connects in the cross-connect group.
+	// +kubebuilder:validation:Optional
+	MinimumLinks *float64 `json:"minimumLinks,omitempty" tf:"minimum_links,omitempty"`
 }
 
 type MacsecPropertiesPrimaryKeyInitParameters struct {

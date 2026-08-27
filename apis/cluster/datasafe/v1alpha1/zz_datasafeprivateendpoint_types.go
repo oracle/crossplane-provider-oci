@@ -48,6 +48,10 @@ type DataSafePrivateEndpointInitParameters struct {
 	// The private IP address of the private endpoint.
 	PrivateEndpointIP *string `json:"privateEndpointIp,omitempty" tf:"private_endpoint_ip,omitempty"`
 
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
 	// The OCID of the subnet.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -110,6 +114,10 @@ type DataSafePrivateEndpointObservation struct {
 	// The private IP address of the private endpoint.
 	PrivateEndpointIP *string `json:"privateEndpointIp,omitempty" tf:"private_endpoint_ip,omitempty"`
 
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
 	// The current state of the private endpoint.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
@@ -168,6 +176,11 @@ type DataSafePrivateEndpointParameters struct {
 	// The private IP address of the private endpoint.
 	// +kubebuilder:validation:Optional
 	PrivateEndpointIP *string `json:"privateEndpointIp,omitempty" tf:"private_endpoint_ip,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The OCID of the subnet.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet

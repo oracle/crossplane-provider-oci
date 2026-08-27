@@ -8,6 +8,11 @@ metadata:
   name: test-bds-instance
 spec:
   forProvider:
+    bdsCapacityReservationConfigurations:
+    - bdsCapacityReservationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_bds_capacity_reservation
+      displayName: ${var.bds_instance_bds_capacity_reservation_configurations_display_name}
     bdsClusterVersionSummary:
     - bdsVersion: ${var.bds_instance_bds_cluster_version_summary_bds_version}
       odhVersion: ${var.bds_instance_bds_cluster_version_summary_odh_version}
@@ -78,9 +83,6 @@ spec:
     networkConfig:
     - cidrBlock: ${var.bds_instance_network_config_cidr_block}
       isNatGatewayRequired: ${var.bds_instance_network_config_is_nat_gateway_required}
-    secretIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: test_secret
     utilNode:
     - blockVolumeSizeInGbs: ${var.bds_instance_nodes_block_volume_size_in_gbs}
       numberOfNodes: ${var.bds_instance_number_of_nodes}

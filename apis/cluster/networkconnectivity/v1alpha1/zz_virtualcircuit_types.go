@@ -163,6 +163,9 @@ type VirtualCircuitInitParameters struct {
 	// (Updatable) Set to true for the virtual circuit to carry only encrypted traffic, or set to false for the virtual circuit to carry unencrypted traffic. If this is not set, the default is false.
 	IsTransportMode *bool `json:"isTransportMode,omitempty" tf:"is_transport_mode,omitempty"`
 
+	// The OCI's FastConnect MultiCloud Provider/Partner remote region name associated with the Oracle Cloud Infrastructure region. To get the list of associated provider remote region use the ListProviderRemoteRegions operation
+	ProviderRemoteRegion *string `json:"providerRemoteRegion,omitempty" tf:"provider_remote_region,omitempty"`
+
 	// The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see ListFastConnectProviderServices.
 	ProviderServiceID *string `json:"providerServiceId,omitempty" tf:"provider_service_id,omitempty"`
 
@@ -175,8 +178,14 @@ type VirtualCircuitInitParameters struct {
 	// The Oracle Cloud Infrastructure region where this virtual circuit is located. Example: phx
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Customer's account on Provider/Partner cloud (AWS, GCP or any other)
+	RemoteAccountID *string `json:"remoteAccountId,omitempty" tf:"remote_account_id,omitempty"`
+
 	// (Updatable) The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: ORACLE_SERVICE_NETWORK, REGIONAL, MARKET_LEVEL, and GLOBAL. See Route Filtering for details. By default, routing information is shared for all routes in the same market.
 	RoutingPolicy []*string `json:"routingPolicy,omitempty" tf:"routing_policy,omitempty"`
+
+	// (Updatable) The traffic mode to be set with this Virtual Circuit. This controls whether the traffic is to be drained for the associated Virtual Circuit or not.
+	TrafficMode *string `json:"trafficMode,omitempty" tf:"traffic_mode,omitempty"`
 
 	// The type of IP addresses used in this virtual circuit. PRIVATE means RFC 1918 addresses (10.0.0.0/8, 172.16/12, and 192.168/16).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -240,6 +249,9 @@ type VirtualCircuitObservation struct {
 	// The Oracle BGP ASN.
 	OracleBGPAsn *float64 `json:"oracleBgpAsn,omitempty" tf:"oracle_bgp_asn,omitempty"`
 
+	// The OCI's FastConnect MultiCloud Provider/Partner remote region name associated with the Oracle Cloud Infrastructure region. To get the list of associated provider remote region use the ListProviderRemoteRegions operation
+	ProviderRemoteRegion *string `json:"providerRemoteRegion,omitempty" tf:"provider_remote_region,omitempty"`
+
 	// The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see ListFastConnectProviderServices.
 	ProviderServiceID *string `json:"providerServiceId,omitempty" tf:"provider_service_id,omitempty"`
 
@@ -258,17 +270,26 @@ type VirtualCircuitObservation struct {
 	// The Oracle Cloud Infrastructure region where this virtual circuit is located. Example: phx
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Customer's account on Provider/Partner cloud (AWS, GCP or any other)
+	RemoteAccountID *string `json:"remoteAccountId,omitempty" tf:"remote_account_id,omitempty"`
+
 	// (Updatable) The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: ORACLE_SERVICE_NETWORK, REGIONAL, MARKET_LEVEL, and GLOBAL. See Route Filtering for details. By default, routing information is shared for all routes in the same market.
 	RoutingPolicy []*string `json:"routingPolicy,omitempty" tf:"routing_policy,omitempty"`
 
 	// Provider service type.
 	ServiceType *string `json:"serviceType,omitempty" tf:"service_type,omitempty"`
 
+	// The Shared unique identifier for the connection between the multicloud interconnect providers
+	SharedConnectionUUID *string `json:"sharedConnectionUuid,omitempty" tf:"shared_connection_uuid,omitempty"`
+
 	// The virtual circuit's current state. For information about the different states, see FastConnect Overview.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
 	// The date and time the virtual circuit was created, in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
+
+	// (Updatable) The traffic mode to be set with this Virtual Circuit. This controls whether the traffic is to be drained for the associated Virtual Circuit or not.
+	TrafficMode *string `json:"trafficMode,omitempty" tf:"traffic_mode,omitempty"`
 
 	// The type of IP addresses used in this virtual circuit. PRIVATE means RFC 1918 addresses (10.0.0.0/8, 172.16/12, and 192.168/16).
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -342,6 +363,10 @@ type VirtualCircuitParameters struct {
 	// +kubebuilder:validation:Optional
 	IsTransportMode *bool `json:"isTransportMode,omitempty" tf:"is_transport_mode,omitempty"`
 
+	// The OCI's FastConnect MultiCloud Provider/Partner remote region name associated with the Oracle Cloud Infrastructure region. To get the list of associated provider remote region use the ListProviderRemoteRegions operation
+	// +kubebuilder:validation:Optional
+	ProviderRemoteRegion *string `json:"providerRemoteRegion,omitempty" tf:"provider_remote_region,omitempty"`
+
 	// The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see ListFastConnectProviderServices.
 	// +kubebuilder:validation:Optional
 	ProviderServiceID *string `json:"providerServiceId,omitempty" tf:"provider_service_id,omitempty"`
@@ -358,9 +383,17 @@ type VirtualCircuitParameters struct {
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// Customer's account on Provider/Partner cloud (AWS, GCP or any other)
+	// +kubebuilder:validation:Optional
+	RemoteAccountID *string `json:"remoteAccountId,omitempty" tf:"remote_account_id,omitempty"`
+
 	// (Updatable) The routing policy sets how routing information about the Oracle cloud is shared over a public virtual circuit. Policies available are: ORACLE_SERVICE_NETWORK, REGIONAL, MARKET_LEVEL, and GLOBAL. See Route Filtering for details. By default, routing information is shared for all routes in the same market.
 	// +kubebuilder:validation:Optional
 	RoutingPolicy []*string `json:"routingPolicy,omitempty" tf:"routing_policy,omitempty"`
+
+	// (Updatable) The traffic mode to be set with this Virtual Circuit. This controls whether the traffic is to be drained for the associated Virtual Circuit or not.
+	// +kubebuilder:validation:Optional
+	TrafficMode *string `json:"trafficMode,omitempty" tf:"traffic_mode,omitempty"`
 
 	// The type of IP addresses used in this virtual circuit. PRIVATE means RFC 1918 addresses (10.0.0.0/8, 172.16/12, and 192.168/16).
 	// +kubebuilder:validation:Optional

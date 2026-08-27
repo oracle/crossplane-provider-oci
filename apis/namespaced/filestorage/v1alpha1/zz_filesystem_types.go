@@ -162,6 +162,9 @@ type FileSystemObservation struct {
 	// (Updatable) The OCID of the compartment to create the file system in.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// Displays the compartment-level quota enforcement state affecting this file system.
+	CompartmentQuotaEnforcementState *string `json:"compartmentQuotaEnforcementState,omitempty" tf:"compartment_quota_enforcement_state,omitempty"`
+
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`

@@ -18,6 +18,11 @@ import (
 	agenttool "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/agenttool"
 	dedicatedaicluster "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/dedicatedaicluster"
 	endpoint "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/endpoint"
+	generativeaiprivateendpoint "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/generativeaiprivateendpoint"
+	hostedapplication "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplication"
+	hostedapplicationiam "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplicationiam"
+	hostedapplicationstorage "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplicationstorage"
+	hosteddeployment "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hosteddeployment"
 	importedmodel "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/importedmodel"
 	model "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/model"
 	project "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/project"
@@ -37,6 +42,11 @@ func Setup_generativeai(mgr ctrl.Manager, o controller.Options) error {
 		agenttool.Setup,
 		dedicatedaicluster.Setup,
 		endpoint.Setup,
+		generativeaiprivateendpoint.Setup,
+		hostedapplication.Setup,
+		hostedapplicationiam.Setup,
+		hostedapplicationstorage.Setup,
+		hosteddeployment.Setup,
 		importedmodel.Setup,
 		model.Setup,
 		project.Setup,
@@ -62,6 +72,11 @@ func SetupGated_generativeai(mgr ctrl.Manager, o controller.Options) error {
 		agenttool.SetupGated,
 		dedicatedaicluster.SetupGated,
 		endpoint.SetupGated,
+		generativeaiprivateendpoint.SetupGated,
+		hostedapplication.SetupGated,
+		hostedapplicationiam.SetupGated,
+		hostedapplicationstorage.SetupGated,
+		hosteddeployment.SetupGated,
 		importedmodel.SetupGated,
 		model.SetupGated,
 		project.SetupGated,

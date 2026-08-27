@@ -10,6 +10,9 @@ package v1alpha1
 func (tr *DefaultDhcpOptions) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DefaultDrgRouteTable) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DefaultRouteTable) Hub() {}
 
 // Hub marks this type as a conversion hub.

@@ -438,6 +438,11 @@ func (in *ScheduleInitParameters) DeepCopyInto(out *ScheduleInitParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.LocalTimeZone != nil {
+		in, out := &in.LocalTimeZone, &out.LocalTimeZone
+		*out = new(string)
+		**out = **in
+	}
 	if in.RecurrenceDetails != nil {
 		in, out := &in.RecurrenceDetails, &out.RecurrenceDetails
 		*out = new(string)
@@ -583,6 +588,11 @@ func (in *ScheduleObservation) DeepCopyInto(out *ScheduleObservation) {
 	}
 	if in.LastRunStatus != nil {
 		in, out := &in.LastRunStatus, &out.LastRunStatus
+		*out = new(string)
+		**out = **in
+	}
+	if in.LocalTimeZone != nil {
+		in, out := &in.LocalTimeZone, &out.LocalTimeZone
 		*out = new(string)
 		**out = **in
 	}
@@ -737,6 +747,11 @@ func (in *ScheduleParameters) DeepCopyInto(out *ScheduleParameters) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.LocalTimeZone != nil {
+		in, out := &in.LocalTimeZone, &out.LocalTimeZone
+		*out = new(string)
+		**out = **in
 	}
 	if in.RecurrenceDetails != nil {
 		in, out := &in.RecurrenceDetails, &out.RecurrenceDetails

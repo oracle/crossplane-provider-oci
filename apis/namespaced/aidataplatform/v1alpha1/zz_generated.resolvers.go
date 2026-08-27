@@ -10,6 +10,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	apisresolver "github.com/oracle/provider-oci/internal/apis"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -64,6 +65,26 @@ func (mg *AiDataPlatform) ResolveReferences( // ResolveReferences of this AiData
 	mg.Spec.ForProvider.DefaultWorkspaceName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DefaultWorkspaceNameRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.VectorDBAdminSecretID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.VectorDBAdminSecretIDRef,
+			Selector:     mg.Spec.ForProvider.VectorDBAdminSecretIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.VectorDBAdminSecretID")
+	}
+	mg.Spec.ForProvider.VectorDBAdminSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.VectorDBAdminSecretIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -103,6 +124,26 @@ func (mg *AiDataPlatform) ResolveReferences( // ResolveReferences of this AiData
 	}
 	mg.Spec.InitProvider.DefaultWorkspaceName = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DefaultWorkspaceNameRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.VectorDBAdminSecretID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.VectorDBAdminSecretIDRef,
+			Selector:     mg.Spec.InitProvider.VectorDBAdminSecretIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.VectorDBAdminSecretID")
+	}
+	mg.Spec.InitProvider.VectorDBAdminSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.VectorDBAdminSecretIDRef = rsp.ResolvedReference
 
 	return nil
 }

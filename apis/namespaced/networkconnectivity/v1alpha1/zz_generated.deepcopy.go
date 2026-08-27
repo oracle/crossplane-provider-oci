@@ -607,12 +607,32 @@ func (in *CrossConnectGroupInitParameters) DeepCopyInto(out *CrossConnectGroupIn
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 }
 
@@ -824,12 +844,32 @@ func (in *CrossConnectGroupObservation) DeepCopyInto(out *CrossConnectGroupObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 	if in.OciLogicalDeviceName != nil {
 		in, out := &in.OciLogicalDeviceName, &out.OciLogicalDeviceName
@@ -923,12 +963,32 @@ func (in *CrossConnectGroupParameters) DeepCopyInto(out *CrossConnectGroupParame
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 }
 
@@ -1067,6 +1127,11 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1076,6 +1141,23 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -1373,6 +1455,11 @@ func (in *CrossConnectObservation) DeepCopyInto(out *CrossConnectObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1382,6 +1469,23 @@ func (in *CrossConnectObservation) DeepCopyInto(out *CrossConnectObservation) {
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -1532,6 +1636,11 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1541,6 +1650,23 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -5587,6 +5713,81 @@ func (in *IpsecStatus) DeepCopy() *IpsecStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesInitParameters) DeepCopyInto(out *LoaPropertiesInitParameters) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesInitParameters.
+func (in *LoaPropertiesInitParameters) DeepCopy() *LoaPropertiesInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesObservation) DeepCopyInto(out *LoaPropertiesObservation) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesObservation.
+func (in *LoaPropertiesObservation) DeepCopy() *LoaPropertiesObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesParameters) DeepCopyInto(out *LoaPropertiesParameters) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesParameters.
+func (in *LoaPropertiesParameters) DeepCopy() *LoaPropertiesParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *MacsecPropertiesInitParameters) DeepCopyInto(out *MacsecPropertiesInitParameters) {
 	*out = *in
 	if in.EncryptionCipher != nil {
@@ -6934,6 +7135,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -6956,6 +7162,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -6966,6 +7177,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 				**out = **in
 			}
 		}
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
+		*out = new(string)
+		**out = **in
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
@@ -7133,6 +7349,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -7165,6 +7386,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -7181,6 +7407,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.SharedConnectionUUID != nil {
+		in, out := &in.SharedConnectionUUID, &out.SharedConnectionUUID
+		*out = new(string)
+		**out = **in
+	}
 	if in.State != nil {
 		in, out := &in.State, &out.State
 		*out = new(string)
@@ -7188,6 +7419,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 	}
 	if in.TimeCreated != nil {
 		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
 		*out = new(string)
 		**out = **in
 	}
@@ -7317,6 +7553,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -7339,6 +7580,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -7349,6 +7595,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 				**out = **in
 			}
 		}
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
+		*out = new(string)
+		**out = **in
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type

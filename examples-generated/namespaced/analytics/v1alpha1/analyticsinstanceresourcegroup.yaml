@@ -1,0 +1,18 @@
+apiVersion: analytics.oci.m.upbound.io/v1alpha1
+kind: AnalyticsInstanceResourceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: analytics/v1alpha1/analyticsinstanceresourcegroup
+  labels:
+    testing.upbound.io/example-name: test_analytics_instance_resource_group
+  name: test-analytics-instance-resource-group
+  namespace: upbound-system
+spec:
+  forProvider:
+    analyticsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_analytics_instance
+    capacity: ${var.analytics_instance_resource_group_capacity}
+    description: ${var.analytics_instance_resource_group_description}
+    displayName: ${var.analytics_instance_resource_group_display_name}
+    resourceName: ${oci_cloud_guard_resource.test_resource.name}

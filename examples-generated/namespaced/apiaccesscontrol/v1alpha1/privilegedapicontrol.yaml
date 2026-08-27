@@ -10,6 +10,11 @@ metadata:
 spec:
   forProvider:
     approverGroupIdList: ${var.privileged_api_control_approver_group_id_list}
+    approverGroupLevelList:
+    - groupIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_group
+      groupLevel: ${var.privileged_api_control_approver_group_level_list_group_level}
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

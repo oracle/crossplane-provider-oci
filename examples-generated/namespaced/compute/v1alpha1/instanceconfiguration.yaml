@@ -17,6 +17,22 @@ spec:
     displayName: ${var.instance_configuration_display_name}
     freeformTags:
       Department: Finance
+    gmcConfigs:
+    - availabilityDomain: ${var.instance_configuration_gmc_configs_availability_domain}
+      compartmentId: ${var.compartment_id}
+      definedTags:
+        Operations.CostCenter: "42"
+      displayName: ${var.instance_configuration_gmc_configs_display_name}
+      freeformTags:
+        Department: Finance
+      gpuMemoryClusterScaleConfig:
+      - isDownsizeEnabled: ${var.instance_configuration_gmc_configs_gpu_memory_cluster_scale_config_is_downsize_enabled}
+        isUpsizeEnabled: ${var.instance_configuration_gmc_configs_gpu_memory_cluster_scale_config_is_upsize_enabled}
+        targetSize: ${var.instance_configuration_gmc_configs_gpu_memory_cluster_scale_config_target_size}
+      instanceConfigurationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_instance_configuration
+      size: ${var.instance_configuration_gmc_configs_size}
     instanceDetails:
     - blockVolumes:
       - attachDetails:

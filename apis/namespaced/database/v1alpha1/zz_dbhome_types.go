@@ -14,6 +14,55 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationInitParameters struct {
+
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.BackupDestination
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Reference to a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDRef *v1.NamespacedReference `json:"backupDestinationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDSelector *v1.NamespacedSelector `json:"backupDestinationIdSelector,omitempty" tf:"-"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
+type DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationObservation struct {
+
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
+type DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationParameters struct {
+
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.BackupDestination
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Reference to a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDRef *v1.NamespacedReference `json:"backupDestinationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDSelector *v1.NamespacedSelector `json:"backupDestinationIdSelector,omitempty" tf:"-"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	// +kubebuilder:validation:Optional
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
 type DbHomeDatabaseConnectionStringsInitParameters struct {
 }
 
@@ -60,6 +109,9 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsInitParameters struct {
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
 
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination for the TDE wallet backups.
+	TdeWalletBackupDestination []DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationInitParameters `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
+
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Type of the database backup destination. Supported values: NFS.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -87,6 +139,9 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
+
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination for the TDE wallet backups.
+	TdeWalletBackupDestination []DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationObservation `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Type of the database backup destination. Supported values: NFS.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -129,6 +184,10 @@ type DbHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters struct {
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	// +kubebuilder:validation:Optional
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
+
+	// (Applicable when source=NONE | VM_CLUSTER_NEW) Backup destination for the TDE wallet backups.
+	// +kubebuilder:validation:Optional
+	TdeWalletBackupDestination []DBBackupConfigBackupDestinationDetailsTdeWalletBackupDestinationParameters `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
 
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) Type of the database backup destination. Supported values: NFS.
 	// +kubebuilder:validation:Optional
@@ -232,7 +291,7 @@ type DbHomeDatabaseDBBackupConfigParameters struct {
 
 type DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters struct {
 
-	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	// Provide the key OCID of a registered AWS key.
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
 	// Provide the key OCID of a registered Azure key.
@@ -260,7 +319,7 @@ type DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters struct {
 
 type DbHomeDatabaseEncryptionKeyLocationDetailsObservation struct {
 
-	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	// Provide the key OCID of a registered AWS key.
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
 	// Provide the key OCID of a registered Azure key.
@@ -275,7 +334,7 @@ type DbHomeDatabaseEncryptionKeyLocationDetailsObservation struct {
 
 type DbHomeDatabaseEncryptionKeyLocationDetailsParameters struct {
 
-	// (Applicable when source=NONE | VM_CLUSTER_NEW) The OCID of the backup destination.
+	// Provide the key OCID of a registered AWS key.
 	// +kubebuilder:validation:Optional
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
@@ -421,8 +480,11 @@ type DbHomeDatabaseInitParameters struct {
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.
 	PdbName *string `json:"pdbName,omitempty" tf:"pdb_name,omitempty"`
 
-	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP) The list of pluggable databases that needs to be restored into new database.
+	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of pluggable databases that needs to be restored into new database.
 	PluggableDatabases []*string `json:"pluggableDatabases,omitempty" tf:"pluggable_databases,omitempty"`
+
+	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The password for the VPC user that is used to access the Recovery Appliance, if the given backup is from a backup destination of type RECOVERY_APPLIANCE.
+	RecoveryApplianceVPCPasswordSecretRef *v1.LocalSecretKeySelector `json:"recoveryApplianceVpcPasswordSecretRef,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | NONE | VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) The database storage size details. This database option is supported for the Exadata VM cluster on Exascale Infrastructure.
 	StorageSizeDetails []DbHomeDatabaseStorageSizeDetailsInitParameters `json:"storageSizeDetails,omitempty" tf:"storage_size_details,omitempty"`
@@ -522,10 +584,10 @@ type DbHomeDatabaseObservation struct {
 	// (Applicable when source=NONE | VM_CLUSTER_NEW) The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.
 	PdbName *string `json:"pdbName,omitempty" tf:"pdb_name,omitempty"`
 
-	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP) The list of pluggable databases that needs to be restored into new database.
+	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of pluggable databases that needs to be restored into new database.
 	PluggableDatabases []*string `json:"pluggableDatabases,omitempty" tf:"pluggable_databases,omitempty"`
 
-	// (Applicable when source=DB_BACKUP | NONE | VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) Specifies a prefix for the Oracle SID of the database to be created.
+	// Specifies a prefix for the Oracle SID of the database to be created.
 	SidPrefix *string `json:"sidPrefix,omitempty" tf:"sid_prefix,omitempty"`
 
 	// The current state of the Database Home.
@@ -679,9 +741,13 @@ type DbHomeDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	PdbName *string `json:"pdbName,omitempty" tf:"pdb_name,omitempty"`
 
-	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP) The list of pluggable databases that needs to be restored into new database.
+	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of pluggable databases that needs to be restored into new database.
 	// +kubebuilder:validation:Optional
 	PluggableDatabases []*string `json:"pluggableDatabases,omitempty" tf:"pluggable_databases,omitempty"`
+
+	// (Applicable when source=DATABASE | DB_BACKUP | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The password for the VPC user that is used to access the Recovery Appliance, if the given backup is from a backup destination of type RECOVERY_APPLIANCE.
+	// +kubebuilder:validation:Optional
+	RecoveryApplianceVPCPasswordSecretRef *v1.LocalSecretKeySelector `json:"recoveryApplianceVpcPasswordSecretRef,omitempty" tf:"-"`
 
 	// (Applicable when source=DB_BACKUP | NONE | VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) The database storage size details. This database option is supported for the Exadata VM cluster on Exascale Infrastructure.
 	// +kubebuilder:validation:Optional

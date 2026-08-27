@@ -60,8 +60,7 @@ spec:
               forProvider:
                 properties:
                   accessKeyId:
-                    description: '(Updatable) Access key ID to access the Amazon S3
-                      bucket. e.g.: "this-is-not-the-secret"'
+                    description: (Updatable) Access key ID for Amazon connection types.
                     type: string
                   accessKeyIdRef:
                     description: Reference to a Key in kms to populate accessKeyId.
@@ -235,7 +234,8 @@ spec:
                       when ''authenticationType'' is set to ''SHARED_KEY''. e.g.:
                       pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==
                       Deprecated: This field is deprecated and replaced by "accountKeySecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -264,6 +264,221 @@ spec:
                           type: string
                       type: object
                     type: array
+                  authDetails:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      The information about new authentication details for an AI Model
+                      connection.
+                    items:
+                      properties:
+                        apiKey:
+                          description: '(Updatable) API key for the AI model connection.
+                            Deprecated: This field is deprecated and replaced by "apiKeySecretId".
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
+                          type: string
+                        apiKeySecretId:
+                          description: (Updatable) API key secret OCID for the AI
+                            model connection.
+                          type: string
+                        apiKeySecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            apiKeySecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        apiKeySecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            apiKeySecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        authType:
+                          description: (Updatable) Authentication type used by the
+                            AI model connection.
+                          type: string
+                        baseUrl:
+                          description: (Applicable when auth_type=API_KEY) (Updatable)
+                            Base URL of the AI model endpoint. If not specified, the
+                            default base URL for the selected AI provider will be
+                            used.
+                          type: string
+                        keyFingerprint:
+                          description: (Updatable) Oracle Cloud Infrastructure Generative
+                            AI key fingerprint.
+                          type: string
+                        region:
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
+                          type: string
+                        tenancyId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI tenancy OCID.
+                            If this value is not provided, or is updated to an empty
+                            value, it defaults to the tenancy OCID of the user who
+                            is executing the operation.
+                          type: string
+                        userId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI user OCID. If
+                            this value is not provided, or is updated to an empty
+                            value, it defaults to the OCID of the user who is executing
+                            the operation.
+                          type: string
+                        userIdRef:
+                          description: Reference to a User in identity to populate
+                            userId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        userIdSelector:
+                          description: Selector for a User in identity to populate
+                            userId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
                   authenticationMode:
                     description: (Applicable when connection_type=ORACLE) (Updatable)
                       Authentication mode. It can be provided at creation of Oracle
@@ -271,9 +486,8 @@ spec:
                       is provided. The default value is MTLS.
                     type: string
                   authenticationType:
-                    description: (Updatable) Authentication type for Java Message
-                      Service.  If not provided, default is NONE. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: '(Updatable) Used authentication mechanism to be
+                      provided for the following connection types:'
                     type: string
                   azureAuthorityHost:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -516,8 +730,7 @@ spec:
                               type: object
                           type: object
                         uri:
-                          description: '(Updatable) The URL endpoint for the Polaris
-                            API. e.g.: ''https://.snowflakecomputing.com/polaris/api/catalog'''
+                          description: (Updatable)
                           type: string
                       type: object
                     type: array
@@ -890,13 +1103,13 @@ spec:
                       ''com.stc.jmsjca.core.JConnectionFactoryXA'''
                     type: string
                   connectionString:
-                    description: '(Updatable) JDBC connection string. e.g.: ''jdbc:sqlserver://.sql.azuresynapse.net:1433;database=;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'''
+                    description: (Updatable)
                     type: string
                   connectionType:
                     description: (Updatable) The connection type.
                     type: string
                   connectionUrl:
-                    description: '(Updatable) Connection URL. e.g.: ''jdbc:databricks://adb-33934.4.azuredatabricks.net:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3393########44/0##3-7-hlrb'''
+                    description: (Updatable)
                     type: string
                   consumerProperties:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
@@ -1264,11 +1477,9 @@ spec:
                       provided via Secrets.
                     type: boolean
                   endpoint:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
-                      | MICROSOFT_FABRIC) (Updatable) The endpoint URL of the Amazon
-                      Kinesis service. e.g.: ''https://kinesis.us-east-1.amazonaws.com''
-                      If not provided, GoldenGate will default to ''https://kinesis..amazonaws.com''.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
+                      | MICROSOFT_FABRIC) (Updatable)
                     type: string
                   fingerprint:
                     description: '(Applicable when connection_type=ELASTICSEARCH)
@@ -1394,7 +1605,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE)
                       (Updatable) The password associated to the principal. Deprecated:
                       This field is deprecated and replaced by "jndiSecurityCredentialsSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -1411,9 +1623,9 @@ spec:
                       be authenticated. e.g.: ''admin2'''
                     type: string
                   keyId:
-                    description: (Updatable) Refers to the customer's master key OCID.  If
-                      provided, it references a key to manage secrets. Customers must
-                      add policies to permit GoldenGate to use this key.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault key in the Oracle Cloud Infrastructure Vault identified
+                      by vaultId.
                     type: string
                   keyIdRef:
                     description: Reference to a Key in kms to populate keyId.
@@ -1496,11 +1708,8 @@ spec:
                         type: object
                     type: object
                   keyStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl KeyStore password is stored.
-                      Note: When provided, ''keyStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   keyStorePasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate keyStorePasswordSecretId.
@@ -1586,8 +1795,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The KeyStore
                       password. Deprecated: This field is deprecated and replaced
-                      by "keyStorePasswordSecretId". This field will be removed after
-                      February 15 2026.'
+                      by "keyStorePasswordSecretId". This change follows the GoldenGate
+                      "Plain Text Fields in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -1688,8 +1897,9 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The base64
                       encoded content of the KeyStore file. Deprecated: This field
-                      is deprecated and replaced by "keyStoreSecretId". This field
-                      will be removed after February 15 2026.'
+                      is deprecated and replaced by "keyStoreSecretId". This change
+                      follows the GoldenGate "Plain Text Fields in Connections" deprecation:
+                      https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -1714,6 +1924,14 @@ spec:
                           type: string
                       type: object
                     type: array
+                  maxInputChars:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      Maximum number of input characters supported by this AI model
+                      connection.
+                    type: number
+                  modelKey:
+                    description: (Updatable) AI model identifier.
+                    type: string
                   nsgIds:
                     description: (Updatable) An array of Network Security Group OCIDs
                       used to define network access for either Deployments or Connections.
@@ -1815,16 +2033,7 @@ spec:
                         type: object
                     type: object
                   passwordSecretRef:
-                    description: '(Applicable when connection_type=AMAZON_REDSHIFT
-                      | AZURE_SYNAPSE_ANALYTICS | DATABRICKS | DB2 | ELASTICSEARCH
-                      | GOLDENGATE | JAVA_MESSAGE_SERVICE | KAFKA | KAFKA_SCHEMA_REGISTRY
-                      | MICROSOFT_SQLSERVER | MONGODB | MYSQL | ORACLE | POSTGRESQL
-                      | REDIS | SNOWFLAKE) (Updatable) The password Oracle GoldenGate
-                      uses to connect the associated system of the given technology.
-                      It must conform to the specific security requirements including
-                      length, case sensitivity, and so on. Deprecated: This field
-                      is deprecated and replaced by "passwordSecretId". This field
-                      will be removed after February 15 2026.'
+                    description: managed encryption keys to encrypt the stored data.
                     properties:
                       key:
                         type: string
@@ -1929,11 +2138,13 @@ spec:
                     type: object
                   privateKeyFileSecretRef:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_NOSQL | SNOWFLAKE) (Updatable) The base64 encoded content
-                      of the private key file (PEM file) corresponding to the API
-                      key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL | SNOWFLAKE) (Updatable)
+                      The base64 encoded content of the private key file (PEM file)
+                      corresponding to the API key of the fingerprint. See documentation:
+                      https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm
                       Deprecated: This field is deprecated and replaced by "privateKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -2033,10 +2244,11 @@ spec:
                     type: object
                   privateKeyPassphraseSecretRef:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_NOSQL | SNOWFLAKE) (Updatable) Password if the private
-                      key file is encrypted. Deprecated: This field is deprecated
-                      and replaced by "privateKeyPassphraseSecretId". This field will
-                      be removed after February 15 2026.'
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL | SNOWFLAKE) (Updatable)
+                      Password if the private key file is encrypted. Deprecated: This
+                      field is deprecated and replaced by "privateKeyPassphraseSecretId".
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -2050,6 +2262,10 @@ spec:
                   producerProperties:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
                       The base64 encoded content of the producer.properties file.
+                    type: string
+                  providerType:
+                    description: (Applicable when connection_type=AI_MODEL) AI Provider
+                      type used by the AI Model Connection.
                     type: string
                   publicKeyFingerprint:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
@@ -2144,23 +2360,20 @@ spec:
                         type: object
                     type: object
                   region:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM |
-                      ORACLE_NOSQL) (Updatable) The name of the AWS region where the
-                      bucket is created. If not provided, GoldenGate will default
-                      to ''us-west-2''. Note: this property will become mandatory
-                      after May 20, 2026.'
+                    description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      The name of the region. e.g.: us-ashburn-1 If the region is
+                      not provided, backend will default to the default region.'
                     type: string
                   routingMethod:
                     description: '(Updatable) Controls the network traffic direction
-                      to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through
+                      to the target: SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows
+                      from the assigned deployment''s private endpoint through the
+                      deployment''s subnet. DEDICATED_ENDPOINT: A dedicated private
+                      endpoint is created in the target VCN subnet for the connection.
+                      The subnetId is required when DEDICATED_ENDPOINT networking
+                      is selected. SHARED_SERVICE_ENDPOINT: Traffic flows through
                       the Goldengate Service''s network to public hosts. Cannot be
-                      used for private targets.  SHARED_DEPLOYMENT_ENDPOINT: Network
-                      traffic flows from the assigned deployment''s private endpoint
-                      through the deployment''s subnet. DEDICATED_ENDPOINT: A dedicated
-                      private endpoint is created in the target VCN subnet for the
-                      connection. The subnetId is required when DEDICATED_ENDPOINT
-                      networking is selected.'
+                      used for private targets.'
                     type: string
                   sasTokenSecretId:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -2254,7 +2467,8 @@ spec:
                       when ''authenticationType'' is set to ''SHARED_ACCESS_SIGNATURE''.
                       e.g.: ?sv=2020-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2020-09-10T20:27:28Z&st=2022-08-05T12:27:28Z&spr=https&sig=C1IgHsiLBmTSStYkXXGLTP8it0xBrArcgCqOsZbXwIQ%3D
                       Deprecated: This field is deprecated and replaced by "sasTokenSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -2266,10 +2480,8 @@ spec:
                     - name
                     type: object
                   secretAccessKeySecretId:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3) (Updatable) The OCID of the Secret where the secret
-                      access key is stored. Note: When provided, ''secretAccessKey''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3) (Updatable)
                     type: string
                   secretAccessKeySecretIdRef:
                     description: Reference to a Secret in vault to populate secretAccessKeySecretId.
@@ -2352,11 +2564,8 @@ spec:
                         type: object
                     type: object
                   secretAccessKeySecretRef:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3) (Updatable) Secret access key to access the Amazon
-                      S3 bucket. e.g.: "this-is-not-the-secret" Deprecated: This field
-                      is deprecated and replaced by "secretAccessKeySecretId". This
-                      field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3) (Updatable)
                     properties:
                       key:
                         type: string
@@ -2377,24 +2586,14 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   securityProtocol:
-                    description: (Updatable) Security protocol for Java Message Service.
-                      If not provided, default is PLAIN. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: (Updatable)
                     type: string
                   servers:
-                    description: '(Updatable) Comma separated list of Elasticsearch
-                      server addresses, specified as host:port entries, where :port
-                      is optional.  If port is not specified, it defaults to 9200.
-                      Used for establishing the initial connection to the Elasticsearch
-                      cluster. Example: "server1.example.com:4000,server2.example.com:4000"'
+                    description: (Updatable)
                     type: string
                   serviceAccountKeyFileSecretId:
-                    description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The OCID
-                      of the Secret where the content of the service account key file
-                      is stored, which contains the credentials required to use Google
-                      Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                     type: string
                   serviceAccountKeyFileSecretIdRef:
                     description: Reference to a Secret in vault to populate serviceAccountKeyFileSecretId.
@@ -2477,12 +2676,8 @@ spec:
                         type: object
                     type: object
                   serviceAccountKeyFileSecretRef:
-                    description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The base64
-                      encoded content of the service account key file containing the
-                      credentials required to use Google Cloud Storage. Deprecated:
-                      This field is deprecated and replaced by "serviceAccountKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                     properties:
                       key:
                         type: string
@@ -2509,13 +2704,8 @@ spec:
                       Interface (JNDI) properties should be provided.
                     type: boolean
                   shouldUseResourcePrincipal:
-                    description: '(Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) Specifies
-                      that the user intends to authenticate to the instance using
-                      a resource principal. Applicable only for Oracle Cloud Infrastructure
-                      Streaming connections. Only available from 23.9.0.0.0 GoldenGate
-                      versions. Note: When specified, ''username''/''password''/''passwordSecretId''
-                      fields must not be provided. Default: false'
+                    description: (Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable)
                     type: boolean
                   shouldValidateServerCertificate:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER)
@@ -2524,17 +2714,11 @@ spec:
                     type: boolean
                   sslCa:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER
-                      | MYSQL | POSTGRESQL) (Updatable) The base64 encoded certificate
-                      of the trusted certificate authorities (Trusted CA) for PostgreSQL.  The
-                      supported file formats are .pem and .crt. It is not included
-                      in GET responses if the view=COMPACT query parameter is specified.
+                      | MYSQL | POSTGRESQL) (Updatable)
                     type: string
                   sslCert:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) Client Certificate - The base64 encoded content
-                      of a .pem or .crt file containing the client public key (for
-                      2-way SSL). It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.
+                      (Updatable)
                     type: string
                   sslClientKeystashSecretId:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -2742,20 +2926,12 @@ spec:
                     - name
                     type: object
                   sslCrl:
-                    description: '(Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The base64 encoded list of certificates revoked
-                      by the trusted certificate authorities (Trusted CA). Note: This
-                      is an optional property and only applicable if TLS/MTLS option
-                      is selected. It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.'
+                    description: (Applicable when connection_type=MYSQL | POSTGRESQL)
+                      (Updatable)
                     type: string
                   sslKeyPasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable) The OCID of the
-                      Secret where the password is stored for the cert inside of the
-                      Keystore. In case it differs from the KeyStore password, it
-                      should be provided. Note: When provided, ''sslKeyPassword''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable)
                     type: string
                   sslKeyPasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate sslKeyPasswordSecretId.
@@ -2843,7 +3019,8 @@ spec:
                       the cert inside of the KeyStore. In case it differs from the
                       KeyStore password, it should be provided. Deprecated: This field
                       is deprecated and replaced by "sslKeyPasswordSecretId". This
-                      field will be removed after February 15 2026.'
+                      change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -2856,7 +3033,7 @@ spec:
                     type: object
                   sslKeySecretId:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The OCID of the Secret that stores the Client Key
+                      (Updatable)
                     type: string
                   sslKeySecretIdRef:
                     description: Reference to a Secret in vault to populate sslKeySecretId.
@@ -2939,11 +3116,8 @@ spec:
                         type: object
                     type: object
                   sslKeySecretRef:
-                    description: '(Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) Client Key - The base64 encoded content of a .pem
-                      or .crt file containing the client private key (for 2-way SSL).
-                      Deprecated: This field is deprecated and replaced by "sslKeySecretId".
-                      This field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=MYSQL | POSTGRESQL)
+                      (Updatable)
                     properties:
                       key:
                         type: string
@@ -2956,7 +3130,7 @@ spec:
                     type: object
                   sslMode:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) SSL modes for PostgreSQL.
+                      (Updatable)
                     type: string
                   sslServerCertificate:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -2971,8 +3145,8 @@ spec:
                     items:
                       properties:
                         accessKeyId:
-                          description: '(Updatable) Access key ID to access the Amazon
-                            S3 bucket. e.g.: "this-is-not-the-secret"'
+                          description: (Updatable) Access key ID for Amazon connection
+                            types.
                           type: string
                         accessKeyIdRef:
                           description: Reference to a Key in kms to populate accessKeyId.
@@ -3060,7 +3234,8 @@ spec:
                             required when ''authenticationType'' is set to ''SHARED_KEY''.
                             e.g.: pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==
                             Deprecated: This field is deprecated and replaced by "accountKeySecretId".
-                            This field will be removed after February 15 2026.'
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                           type: string
                         accountKeySecretId:
                           description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -3155,20 +3330,16 @@ spec:
                             name.
                           type: string
                         bucket:
-                          description: (Updatable) Google Cloud Storage bucket where
-                            Iceberg stores metadata and data files.
+                          description: (Updatable)
                           type: string
                         container:
                           description: (Updatable) The Azure Blob Storage container
                             where Iceberg tables are stored.
                           type: string
                         endpoint:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
+                          description: (Applicable when connection_type=AMAZON_KINESIS
                             | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY
                             | GOOGLE_CLOUD_STORAGE | MICROSOFT_FABRIC) (Updatable)
-                            The endpoint URL of the Amazon Kinesis service. e.g.:
-                            ''https://kinesis.us-east-1.amazonaws.com'' If not provided,
-                            GoldenGate will default to ''https://kinesis..amazonaws.com''.'
                           type: string
                         projectId:
                           description: (Updatable) The Google Cloud Project where
@@ -3257,28 +3428,20 @@ spec:
                               type: object
                           type: object
                         region:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM
-                            | ORACLE_NOSQL) (Updatable) The name of the AWS region
-                            where the bucket is created. If not provided, GoldenGate
-                            will default to ''us-west-2''. Note: this property will
-                            become mandatory after May 20, 2026.'
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
                           type: string
                         schemeType:
                           description: (Updatable) The scheme of the storage.
                           type: string
                         secretAccessKey:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) Secret access key to access the
-                            Amazon S3 bucket. e.g.: "this-is-not-the-secret" Deprecated:
-                            This field is deprecated and replaced by "secretAccessKeySecretId".
-                            This field will be removed after February 15 2026.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         secretAccessKeySecretId:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) The OCID of the Secret where
-                            the secret access key is stored. Note: When provided,
-                            ''secretAccessKey'' field must not be provided.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         secretAccessKeySecretIdRef:
                           description: Reference to a Secret in vault to populate
@@ -3363,21 +3526,12 @@ spec:
                               type: object
                           type: object
                         serviceAccountKeyFile:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            base64 encoded content of the service account key file
-                            containing the credentials required to use Google Cloud
-                            Storage. Deprecated: This field is deprecated and replaced
-                            by "serviceAccountKeyFileSecretId". This field will be
-                            removed after February 15 2026.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         serviceAccountKeyFileSecretId:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            OCID of the Secret where the content of the service account
-                            key file is stored, which contains the credentials required
-                            to use Google Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                            field must not be provided.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         serviceAccountKeyFileSecretIdRef:
                           description: Reference to a Secret in vault to populate
@@ -3647,13 +3801,13 @@ spec:
                       needs to be associated with.
                     type: string
                   technologyType:
-                    description: The Kafka (e.g. Confluent) Schema Registry technology
-                      type.
+                    description: The technology type.
                     type: string
                   tenancyId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the related Oracle Cloud Infrastructure tenancy.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI tenancy OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the tenancy OCID of the user who is executing the operation.
                     type: string
                   tenantId:
                     description: '(Updatable) Azure tenant ID of the application.
@@ -3671,7 +3825,8 @@ spec:
                       Client Certificate - The base64 encoded content of a .pem file,
                       containing the client public key (for 2-way SSL). Deprecated:
                       This field is deprecated and replaced by "tlsCertificateKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     type: string
                   tlsCertificateKeyFilePasswordSecretIdSecretRef:
                     description: '(Applicable when connection_type=MONGODB) (Updatable)
@@ -3692,7 +3847,8 @@ spec:
                     description: '(Applicable when connection_type=MONGODB) (Updatable)
                       Client Certificate key file password. Deprecated: This field
                       is deprecated and replaced by "tlsCertificateKeyFilePasswordSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -3791,11 +3947,8 @@ spec:
                   triggerRefresh:
                     type: boolean
                   trustStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl TrustStore password is stored.
-                      Note: When provided, ''trustStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   trustStorePasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate trustStorePasswordSecretId.
@@ -3881,8 +4034,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The TrustStore
                       password. Deprecated: This field is deprecated and replaced
-                      by "trustStorePasswordSecretId". This field will be removed
-                      after February 15 2026.'
+                      by "trustStorePasswordSecretId". This change follows the GoldenGate
+                      "Plain Text Fields in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -3983,8 +4136,9 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The base64
                       encoded content of the TrustStore file. Deprecated: This field
-                      is deprecated and replaced by "trustStoreSecretId". This field
-                      will be removed after February 15 2026.'
+                      is deprecated and replaced by "trustStoreSecretId". This change
+                      follows the GoldenGate "Plain Text Fields in Connections" deprecation:
+                      https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -3999,12 +4153,10 @@ spec:
                     description: '(Updatable) Kafka Schema Registry URL. e.g.: ''https://server1.us.oracle.com:8081'''
                     type: string
                   userId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the Oracle Cloud Infrastructure user who will access the
-                      Oracle NoSQL database. The user must have write access to the
-                      table they want to connect to. If the user is not provided,
-                      backend will default to the user who is calling the API endpoint.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI user OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the OCID of the user who is executing the operation.
                     type: string
                   userIdRef:
                     description: Reference to a User in identity to populate userId.
@@ -4094,10 +4246,9 @@ spec:
                       defined in it.
                     type: string
                   vaultId:
-                    description: (Updatable) Refers to the customer's vault OCID.  If
-                      provided, it references a vault where GoldenGate can manage
-                      secrets. Customers must add policies to permit GoldenGate to
-                      manage secrets contained within this vault.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault that contains the customer-managed encryption key identified
+                      by keyId.
                     type: string
                   vaultIdRef:
                     description: Reference to a Vault in kms to populate vaultId.
@@ -4271,7 +4422,8 @@ spec:
                       The wallet contents Oracle GoldenGate uses to make connections
                       to a database. This attribute is expected to be base64 encoded.
                       Deprecated: This field is deprecated and replaced by "walletSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -4297,8 +4449,7 @@ spec:
                   autoscaler.
                 properties:
                   accessKeyId:
-                    description: '(Updatable) Access key ID to access the Amazon S3
-                      bucket. e.g.: "this-is-not-the-secret"'
+                    description: (Updatable) Access key ID for Amazon connection types.
                     type: string
                   accessKeyIdRef:
                     description: Reference to a Key in kms to populate accessKeyId.
@@ -4472,7 +4623,8 @@ spec:
                       when ''authenticationType'' is set to ''SHARED_KEY''. e.g.:
                       pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==
                       Deprecated: This field is deprecated and replaced by "accountKeySecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -4501,6 +4653,221 @@ spec:
                           type: string
                       type: object
                     type: array
+                  authDetails:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      The information about new authentication details for an AI Model
+                      connection.
+                    items:
+                      properties:
+                        apiKey:
+                          description: '(Updatable) API key for the AI model connection.
+                            Deprecated: This field is deprecated and replaced by "apiKeySecretId".
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
+                          type: string
+                        apiKeySecretId:
+                          description: (Updatable) API key secret OCID for the AI
+                            model connection.
+                          type: string
+                        apiKeySecretIdRef:
+                          description: Reference to a Secret in vault to populate
+                            apiKeySecretId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        apiKeySecretIdSelector:
+                          description: Selector for a Secret in vault to populate
+                            apiKeySecretId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        authType:
+                          description: (Updatable) Authentication type used by the
+                            AI model connection.
+                          type: string
+                        baseUrl:
+                          description: (Applicable when auth_type=API_KEY) (Updatable)
+                            Base URL of the AI model endpoint. If not specified, the
+                            default base URL for the selected AI provider will be
+                            used.
+                          type: string
+                        keyFingerprint:
+                          description: (Updatable) Oracle Cloud Infrastructure Generative
+                            AI key fingerprint.
+                          type: string
+                        region:
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
+                          type: string
+                        tenancyId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI tenancy OCID.
+                            If this value is not provided, or is updated to an empty
+                            value, it defaults to the tenancy OCID of the user who
+                            is executing the operation.
+                          type: string
+                        userId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI user OCID. If
+                            this value is not provided, or is updated to an empty
+                            value, it defaults to the OCID of the user who is executing
+                            the operation.
+                          type: string
+                        userIdRef:
+                          description: Reference to a User in identity to populate
+                            userId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        userIdSelector:
+                          description: Selector for a User in identity to populate
+                            userId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
                   authenticationMode:
                     description: (Applicable when connection_type=ORACLE) (Updatable)
                       Authentication mode. It can be provided at creation of Oracle
@@ -4508,9 +4875,8 @@ spec:
                       is provided. The default value is MTLS.
                     type: string
                   authenticationType:
-                    description: (Updatable) Authentication type for Java Message
-                      Service.  If not provided, default is NONE. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: '(Updatable) Used authentication mechanism to be
+                      provided for the following connection types:'
                     type: string
                   azureAuthorityHost:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -4753,8 +5119,7 @@ spec:
                               type: object
                           type: object
                         uri:
-                          description: '(Updatable) The URL endpoint for the Polaris
-                            API. e.g.: ''https://.snowflakecomputing.com/polaris/api/catalog'''
+                          description: (Updatable)
                           type: string
                       type: object
                     type: array
@@ -5127,13 +5492,13 @@ spec:
                       ''com.stc.jmsjca.core.JConnectionFactoryXA'''
                     type: string
                   connectionString:
-                    description: '(Updatable) JDBC connection string. e.g.: ''jdbc:sqlserver://.sql.azuresynapse.net:1433;database=;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'''
+                    description: (Updatable)
                     type: string
                   connectionType:
                     description: (Updatable) The connection type.
                     type: string
                   connectionUrl:
-                    description: '(Updatable) Connection URL. e.g.: ''jdbc:databricks://adb-33934.4.azuredatabricks.net:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3393########44/0##3-7-hlrb'''
+                    description: (Updatable)
                     type: string
                   consumerProperties:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
@@ -5501,11 +5866,9 @@ spec:
                       provided via Secrets.
                     type: boolean
                   endpoint:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
-                      | MICROSOFT_FABRIC) (Updatable) The endpoint URL of the Amazon
-                      Kinesis service. e.g.: ''https://kinesis.us-east-1.amazonaws.com''
-                      If not provided, GoldenGate will default to ''https://kinesis..amazonaws.com''.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
+                      | MICROSOFT_FABRIC) (Updatable)
                     type: string
                   fingerprint:
                     description: '(Applicable when connection_type=ELASTICSEARCH)
@@ -5631,7 +5994,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE)
                       (Updatable) The password associated to the principal. Deprecated:
                       This field is deprecated and replaced by "jndiSecurityCredentialsSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -5648,9 +6012,9 @@ spec:
                       be authenticated. e.g.: ''admin2'''
                     type: string
                   keyId:
-                    description: (Updatable) Refers to the customer's master key OCID.  If
-                      provided, it references a key to manage secrets. Customers must
-                      add policies to permit GoldenGate to use this key.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault key in the Oracle Cloud Infrastructure Vault identified
+                      by vaultId.
                     type: string
                   keyIdRef:
                     description: Reference to a Key in kms to populate keyId.
@@ -5733,11 +6097,8 @@ spec:
                         type: object
                     type: object
                   keyStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl KeyStore password is stored.
-                      Note: When provided, ''keyStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   keyStorePasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate keyStorePasswordSecretId.
@@ -5823,8 +6184,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The KeyStore
                       password. Deprecated: This field is deprecated and replaced
-                      by "keyStorePasswordSecretId". This field will be removed after
-                      February 15 2026.'
+                      by "keyStorePasswordSecretId". This change follows the GoldenGate
+                      "Plain Text Fields in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -5925,8 +6286,9 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The base64
                       encoded content of the KeyStore file. Deprecated: This field
-                      is deprecated and replaced by "keyStoreSecretId". This field
-                      will be removed after February 15 2026.'
+                      is deprecated and replaced by "keyStoreSecretId". This change
+                      follows the GoldenGate "Plain Text Fields in Connections" deprecation:
+                      https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -5951,6 +6313,14 @@ spec:
                           type: string
                       type: object
                     type: array
+                  maxInputChars:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      Maximum number of input characters supported by this AI model
+                      connection.
+                    type: number
+                  modelKey:
+                    description: (Updatable) AI model identifier.
+                    type: string
                   nsgIds:
                     description: (Updatable) An array of Network Security Group OCIDs
                       used to define network access for either Deployments or Connections.
@@ -6052,16 +6422,7 @@ spec:
                         type: object
                     type: object
                   passwordSecretRef:
-                    description: '(Applicable when connection_type=AMAZON_REDSHIFT
-                      | AZURE_SYNAPSE_ANALYTICS | DATABRICKS | DB2 | ELASTICSEARCH
-                      | GOLDENGATE | JAVA_MESSAGE_SERVICE | KAFKA | KAFKA_SCHEMA_REGISTRY
-                      | MICROSOFT_SQLSERVER | MONGODB | MYSQL | ORACLE | POSTGRESQL
-                      | REDIS | SNOWFLAKE) (Updatable) The password Oracle GoldenGate
-                      uses to connect the associated system of the given technology.
-                      It must conform to the specific security requirements including
-                      length, case sensitivity, and so on. Deprecated: This field
-                      is deprecated and replaced by "passwordSecretId". This field
-                      will be removed after February 15 2026.'
+                    description: managed encryption keys to encrypt the stored data.
                     properties:
                       key:
                         type: string
@@ -6166,11 +6527,13 @@ spec:
                     type: object
                   privateKeyFileSecretRef:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_NOSQL | SNOWFLAKE) (Updatable) The base64 encoded content
-                      of the private key file (PEM file) corresponding to the API
-                      key of the fingerprint. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL | SNOWFLAKE) (Updatable)
+                      The base64 encoded content of the private key file (PEM file)
+                      corresponding to the API key of the fingerprint. See documentation:
+                      https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm
                       Deprecated: This field is deprecated and replaced by "privateKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -6270,10 +6633,11 @@ spec:
                     type: object
                   privateKeyPassphraseSecretRef:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_NOSQL | SNOWFLAKE) (Updatable) Password if the private
-                      key file is encrypted. Deprecated: This field is deprecated
-                      and replaced by "privateKeyPassphraseSecretId". This field will
-                      be removed after February 15 2026.'
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL | SNOWFLAKE) (Updatable)
+                      Password if the private key file is encrypted. Deprecated: This
+                      field is deprecated and replaced by "privateKeyPassphraseSecretId".
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -6287,6 +6651,10 @@ spec:
                   producerProperties:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
                       The base64 encoded content of the producer.properties file.
+                    type: string
+                  providerType:
+                    description: (Applicable when connection_type=AI_MODEL) AI Provider
+                      type used by the AI Model Connection.
                     type: string
                   publicKeyFingerprint:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
@@ -6381,23 +6749,20 @@ spec:
                         type: object
                     type: object
                   region:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM |
-                      ORACLE_NOSQL) (Updatable) The name of the AWS region where the
-                      bucket is created. If not provided, GoldenGate will default
-                      to ''us-west-2''. Note: this property will become mandatory
-                      after May 20, 2026.'
+                    description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      The name of the region. e.g.: us-ashburn-1 If the region is
+                      not provided, backend will default to the default region.'
                     type: string
                   routingMethod:
                     description: '(Updatable) Controls the network traffic direction
-                      to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through
+                      to the target: SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows
+                      from the assigned deployment''s private endpoint through the
+                      deployment''s subnet. DEDICATED_ENDPOINT: A dedicated private
+                      endpoint is created in the target VCN subnet for the connection.
+                      The subnetId is required when DEDICATED_ENDPOINT networking
+                      is selected. SHARED_SERVICE_ENDPOINT: Traffic flows through
                       the Goldengate Service''s network to public hosts. Cannot be
-                      used for private targets.  SHARED_DEPLOYMENT_ENDPOINT: Network
-                      traffic flows from the assigned deployment''s private endpoint
-                      through the deployment''s subnet. DEDICATED_ENDPOINT: A dedicated
-                      private endpoint is created in the target VCN subnet for the
-                      connection. The subnetId is required when DEDICATED_ENDPOINT
-                      networking is selected.'
+                      used for private targets.'
                     type: string
                   sasTokenSecretId:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -6491,7 +6856,8 @@ spec:
                       when ''authenticationType'' is set to ''SHARED_ACCESS_SIGNATURE''.
                       e.g.: ?sv=2020-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2020-09-10T20:27:28Z&st=2022-08-05T12:27:28Z&spr=https&sig=C1IgHsiLBmTSStYkXXGLTP8it0xBrArcgCqOsZbXwIQ%3D
                       Deprecated: This field is deprecated and replaced by "sasTokenSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -6503,10 +6869,8 @@ spec:
                     - name
                     type: object
                   secretAccessKeySecretId:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3) (Updatable) The OCID of the Secret where the secret
-                      access key is stored. Note: When provided, ''secretAccessKey''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3) (Updatable)
                     type: string
                   secretAccessKeySecretIdRef:
                     description: Reference to a Secret in vault to populate secretAccessKeySecretId.
@@ -6589,11 +6953,8 @@ spec:
                         type: object
                     type: object
                   secretAccessKeySecretRef:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3) (Updatable) Secret access key to access the Amazon
-                      S3 bucket. e.g.: "this-is-not-the-secret" Deprecated: This field
-                      is deprecated and replaced by "secretAccessKeySecretId". This
-                      field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3) (Updatable)
                     properties:
                       key:
                         type: string
@@ -6614,24 +6975,14 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   securityProtocol:
-                    description: (Updatable) Security protocol for Java Message Service.
-                      If not provided, default is PLAIN. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: (Updatable)
                     type: string
                   servers:
-                    description: '(Updatable) Comma separated list of Elasticsearch
-                      server addresses, specified as host:port entries, where :port
-                      is optional.  If port is not specified, it defaults to 9200.
-                      Used for establishing the initial connection to the Elasticsearch
-                      cluster. Example: "server1.example.com:4000,server2.example.com:4000"'
+                    description: (Updatable)
                     type: string
                   serviceAccountKeyFileSecretId:
-                    description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The OCID
-                      of the Secret where the content of the service account key file
-                      is stored, which contains the credentials required to use Google
-                      Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                     type: string
                   serviceAccountKeyFileSecretIdRef:
                     description: Reference to a Secret in vault to populate serviceAccountKeyFileSecretId.
@@ -6714,12 +7065,8 @@ spec:
                         type: object
                     type: object
                   serviceAccountKeyFileSecretRef:
-                    description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The base64
-                      encoded content of the service account key file containing the
-                      credentials required to use Google Cloud Storage. Deprecated:
-                      This field is deprecated and replaced by "serviceAccountKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                     properties:
                       key:
                         type: string
@@ -6746,13 +7093,8 @@ spec:
                       Interface (JNDI) properties should be provided.
                     type: boolean
                   shouldUseResourcePrincipal:
-                    description: '(Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) Specifies
-                      that the user intends to authenticate to the instance using
-                      a resource principal. Applicable only for Oracle Cloud Infrastructure
-                      Streaming connections. Only available from 23.9.0.0.0 GoldenGate
-                      versions. Note: When specified, ''username''/''password''/''passwordSecretId''
-                      fields must not be provided. Default: false'
+                    description: (Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable)
                     type: boolean
                   shouldValidateServerCertificate:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER)
@@ -6761,17 +7103,11 @@ spec:
                     type: boolean
                   sslCa:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER
-                      | MYSQL | POSTGRESQL) (Updatable) The base64 encoded certificate
-                      of the trusted certificate authorities (Trusted CA) for PostgreSQL.  The
-                      supported file formats are .pem and .crt. It is not included
-                      in GET responses if the view=COMPACT query parameter is specified.
+                      | MYSQL | POSTGRESQL) (Updatable)
                     type: string
                   sslCert:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) Client Certificate - The base64 encoded content
-                      of a .pem or .crt file containing the client public key (for
-                      2-way SSL). It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.
+                      (Updatable)
                     type: string
                   sslClientKeystashSecretId:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -6979,20 +7315,12 @@ spec:
                     - name
                     type: object
                   sslCrl:
-                    description: '(Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The base64 encoded list of certificates revoked
-                      by the trusted certificate authorities (Trusted CA). Note: This
-                      is an optional property and only applicable if TLS/MTLS option
-                      is selected. It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.'
+                    description: (Applicable when connection_type=MYSQL | POSTGRESQL)
+                      (Updatable)
                     type: string
                   sslKeyPasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable) The OCID of the
-                      Secret where the password is stored for the cert inside of the
-                      Keystore. In case it differs from the KeyStore password, it
-                      should be provided. Note: When provided, ''sslKeyPassword''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable)
                     type: string
                   sslKeyPasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate sslKeyPasswordSecretId.
@@ -7080,7 +7408,8 @@ spec:
                       the cert inside of the KeyStore. In case it differs from the
                       KeyStore password, it should be provided. Deprecated: This field
                       is deprecated and replaced by "sslKeyPasswordSecretId". This
-                      field will be removed after February 15 2026.'
+                      change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -7093,7 +7422,7 @@ spec:
                     type: object
                   sslKeySecretId:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The OCID of the Secret that stores the Client Key
+                      (Updatable)
                     type: string
                   sslKeySecretIdRef:
                     description: Reference to a Secret in vault to populate sslKeySecretId.
@@ -7176,11 +7505,8 @@ spec:
                         type: object
                     type: object
                   sslKeySecretRef:
-                    description: '(Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) Client Key - The base64 encoded content of a .pem
-                      or .crt file containing the client private key (for 2-way SSL).
-                      Deprecated: This field is deprecated and replaced by "sslKeySecretId".
-                      This field will be removed after February 15 2026.'
+                    description: (Applicable when connection_type=MYSQL | POSTGRESQL)
+                      (Updatable)
                     properties:
                       key:
                         type: string
@@ -7193,7 +7519,7 @@ spec:
                     type: object
                   sslMode:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) SSL modes for PostgreSQL.
+                      (Updatable)
                     type: string
                   sslServerCertificate:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -7208,8 +7534,8 @@ spec:
                     items:
                       properties:
                         accessKeyId:
-                          description: '(Updatable) Access key ID to access the Amazon
-                            S3 bucket. e.g.: "this-is-not-the-secret"'
+                          description: (Updatable) Access key ID for Amazon connection
+                            types.
                           type: string
                         accessKeyIdRef:
                           description: Reference to a Key in kms to populate accessKeyId.
@@ -7297,7 +7623,8 @@ spec:
                             required when ''authenticationType'' is set to ''SHARED_KEY''.
                             e.g.: pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==
                             Deprecated: This field is deprecated and replaced by "accountKeySecretId".
-                            This field will be removed after February 15 2026.'
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                           type: string
                         accountKeySecretId:
                           description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -7392,20 +7719,16 @@ spec:
                             name.
                           type: string
                         bucket:
-                          description: (Updatable) Google Cloud Storage bucket where
-                            Iceberg stores metadata and data files.
+                          description: (Updatable)
                           type: string
                         container:
                           description: (Updatable) The Azure Blob Storage container
                             where Iceberg tables are stored.
                           type: string
                         endpoint:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
+                          description: (Applicable when connection_type=AMAZON_KINESIS
                             | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY
                             | GOOGLE_CLOUD_STORAGE | MICROSOFT_FABRIC) (Updatable)
-                            The endpoint URL of the Amazon Kinesis service. e.g.:
-                            ''https://kinesis.us-east-1.amazonaws.com'' If not provided,
-                            GoldenGate will default to ''https://kinesis..amazonaws.com''.'
                           type: string
                         projectId:
                           description: (Updatable) The Google Cloud Project where
@@ -7494,28 +7817,20 @@ spec:
                               type: object
                           type: object
                         region:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM
-                            | ORACLE_NOSQL) (Updatable) The name of the AWS region
-                            where the bucket is created. If not provided, GoldenGate
-                            will default to ''us-west-2''. Note: this property will
-                            become mandatory after May 20, 2026.'
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
                           type: string
                         schemeType:
                           description: (Updatable) The scheme of the storage.
                           type: string
                         secretAccessKey:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) Secret access key to access the
-                            Amazon S3 bucket. e.g.: "this-is-not-the-secret" Deprecated:
-                            This field is deprecated and replaced by "secretAccessKeySecretId".
-                            This field will be removed after February 15 2026.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         secretAccessKeySecretId:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) The OCID of the Secret where
-                            the secret access key is stored. Note: When provided,
-                            ''secretAccessKey'' field must not be provided.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         secretAccessKeySecretIdRef:
                           description: Reference to a Secret in vault to populate
@@ -7600,21 +7915,12 @@ spec:
                               type: object
                           type: object
                         serviceAccountKeyFile:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            base64 encoded content of the service account key file
-                            containing the credentials required to use Google Cloud
-                            Storage. Deprecated: This field is deprecated and replaced
-                            by "serviceAccountKeyFileSecretId". This field will be
-                            removed after February 15 2026.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         serviceAccountKeyFileSecretId:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            OCID of the Secret where the content of the service account
-                            key file is stored, which contains the credentials required
-                            to use Google Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                            field must not be provided.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         serviceAccountKeyFileSecretIdRef:
                           description: Reference to a Secret in vault to populate
@@ -7884,13 +8190,13 @@ spec:
                       needs to be associated with.
                     type: string
                   technologyType:
-                    description: The Kafka (e.g. Confluent) Schema Registry technology
-                      type.
+                    description: The technology type.
                     type: string
                   tenancyId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the related Oracle Cloud Infrastructure tenancy.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI tenancy OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the tenancy OCID of the user who is executing the operation.
                     type: string
                   tenantId:
                     description: '(Updatable) Azure tenant ID of the application.
@@ -7908,7 +8214,8 @@ spec:
                       Client Certificate - The base64 encoded content of a .pem file,
                       containing the client public key (for 2-way SSL). Deprecated:
                       This field is deprecated and replaced by "tlsCertificateKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     type: string
                   tlsCertificateKeyFilePasswordSecretIdSecretRef:
                     description: '(Applicable when connection_type=MONGODB) (Updatable)
@@ -7929,7 +8236,8 @@ spec:
                     description: '(Applicable when connection_type=MONGODB) (Updatable)
                       Client Certificate key file password. Deprecated: This field
                       is deprecated and replaced by "tlsCertificateKeyFilePasswordSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -8028,11 +8336,8 @@ spec:
                   triggerRefresh:
                     type: boolean
                   trustStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl TrustStore password is stored.
-                      Note: When provided, ''trustStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   trustStorePasswordSecretIdRef:
                     description: Reference to a Secret in vault to populate trustStorePasswordSecretId.
@@ -8118,8 +8423,8 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The TrustStore
                       password. Deprecated: This field is deprecated and replaced
-                      by "trustStorePasswordSecretId". This field will be removed
-                      after February 15 2026.'
+                      by "trustStorePasswordSecretId". This change follows the GoldenGate
+                      "Plain Text Fields in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -8220,8 +8525,9 @@ spec:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
                       | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The base64
                       encoded content of the TrustStore file. Deprecated: This field
-                      is deprecated and replaced by "trustStoreSecretId". This field
-                      will be removed after February 15 2026.'
+                      is deprecated and replaced by "trustStoreSecretId". This change
+                      follows the GoldenGate "Plain Text Fields in Connections" deprecation:
+                      https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -8236,12 +8542,10 @@ spec:
                     description: '(Updatable) Kafka Schema Registry URL. e.g.: ''https://server1.us.oracle.com:8081'''
                     type: string
                   userId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the Oracle Cloud Infrastructure user who will access the
-                      Oracle NoSQL database. The user must have write access to the
-                      table they want to connect to. If the user is not provided,
-                      backend will default to the user who is calling the API endpoint.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI user OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the OCID of the user who is executing the operation.
                     type: string
                   userIdRef:
                     description: Reference to a User in identity to populate userId.
@@ -8331,10 +8635,9 @@ spec:
                       defined in it.
                     type: string
                   vaultId:
-                    description: (Updatable) Refers to the customer's vault OCID.  If
-                      provided, it references a vault where GoldenGate can manage
-                      secrets. Customers must add policies to permit GoldenGate to
-                      manage secrets contained within this vault.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault that contains the customer-managed encryption key identified
+                      by keyId.
                     type: string
                   vaultIdRef:
                     description: Reference to a Vault in kms to populate vaultId.
@@ -8508,7 +8811,8 @@ spec:
                       The wallet contents Oracle GoldenGate uses to make connections
                       to a database. This attribute is expected to be base64 encoded.
                       Deprecated: This field is deprecated and replaced by "walletSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     properties:
                       key:
                         type: string
@@ -8599,8 +8903,7 @@ spec:
               atProvider:
                 properties:
                   accessKeyId:
-                    description: '(Updatable) Access key ID to access the Amazon S3
-                      bucket. e.g.: "this-is-not-the-secret"'
+                    description: (Updatable) Access key ID for Amazon connection types.
                     type: string
                   accountKeySecretId:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -8626,6 +8929,57 @@ spec:
                           type: string
                       type: object
                     type: array
+                  authDetails:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      The information about new authentication details for an AI Model
+                      connection.
+                    items:
+                      properties:
+                        apiKey:
+                          description: '(Updatable) API key for the AI model connection.
+                            Deprecated: This field is deprecated and replaced by "apiKeySecretId".
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
+                          type: string
+                        apiKeySecretId:
+                          description: (Updatable) API key secret OCID for the AI
+                            model connection.
+                          type: string
+                        authType:
+                          description: (Updatable) Authentication type used by the
+                            AI model connection.
+                          type: string
+                        baseUrl:
+                          description: (Applicable when auth_type=API_KEY) (Updatable)
+                            Base URL of the AI model endpoint. If not specified, the
+                            default base URL for the selected AI provider will be
+                            used.
+                          type: string
+                        keyFingerprint:
+                          description: (Updatable) Oracle Cloud Infrastructure Generative
+                            AI key fingerprint.
+                          type: string
+                        region:
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
+                          type: string
+                        tenancyId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI tenancy OCID.
+                            If this value is not provided, or is updated to an empty
+                            value, it defaults to the tenancy OCID of the user who
+                            is executing the operation.
+                          type: string
+                        userId:
+                          description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            Oracle Cloud Infrastructure Generative AI user OCID. If
+                            this value is not provided, or is updated to an empty
+                            value, it defaults to the OCID of the user who is executing
+                            the operation.
+                          type: string
+                      type: object
+                    type: array
                   authenticationMode:
                     description: (Applicable when connection_type=ORACLE) (Updatable)
                       Authentication mode. It can be provided at creation of Oracle
@@ -8633,9 +8987,8 @@ spec:
                       is provided. The default value is MTLS.
                     type: string
                   authenticationType:
-                    description: (Updatable) Authentication type for Java Message
-                      Service.  If not provided, default is NONE. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: '(Updatable) Used authentication mechanism to be
+                      provided for the following connection types:'
                     type: string
                   azureAuthorityHost:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -8720,8 +9073,7 @@ spec:
                             the REST catalog. See documentation: https://docs.oracle.com/en-us/iaas/Content/Identity/Tasks/managingcredentials.htm'
                           type: string
                         uri:
-                          description: '(Updatable) The URL endpoint for the Polaris
-                            API. e.g.: ''https://.snowflakecomputing.com/polaris/api/catalog'''
+                          description: (Updatable)
                           type: string
                       type: object
                     type: array
@@ -8755,13 +9107,13 @@ spec:
                       ''com.stc.jmsjca.core.JConnectionFactoryXA'''
                     type: string
                   connectionString:
-                    description: '(Updatable) JDBC connection string. e.g.: ''jdbc:sqlserver://.sql.azuresynapse.net:1433;database=;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=300;'''
+                    description: (Updatable)
                     type: string
                   connectionType:
                     description: (Updatable) The connection type.
                     type: string
                   connectionUrl:
-                    description: '(Updatable) Connection URL. e.g.: ''jdbc:databricks://adb-33934.4.azuredatabricks.net:443/default;transportMode=http;ssl=1;httpPath=sql/protocolv1/o/3393########44/0##3-7-hlrb'''
+                    description: (Updatable)
                     type: string
                   consumerProperties:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
@@ -8807,11 +9159,9 @@ spec:
                       provided via Secrets.
                     type: boolean
                   endpoint:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
-                      | MICROSOFT_FABRIC) (Updatable) The endpoint URL of the Amazon
-                      Kinesis service. e.g.: ''https://kinesis.us-east-1.amazonaws.com''
-                      If not provided, GoldenGate will default to ''https://kinesis..amazonaws.com''.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY | GOOGLE_CLOUD_STORAGE
+                      | MICROSOFT_FABRIC) (Updatable)
                     type: string
                   fingerprint:
                     description: '(Applicable when connection_type=ELASTICSEARCH)
@@ -8875,16 +9225,13 @@ spec:
                       be authenticated. e.g.: ''admin2'''
                     type: string
                   keyId:
-                    description: (Updatable) Refers to the customer's master key OCID.  If
-                      provided, it references a key to manage secrets. Customers must
-                      add policies to permit GoldenGate to use this key.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault key in the Oracle Cloud Infrastructure Vault identified
+                      by vaultId.
                     type: string
                   keyStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl KeyStore password is stored.
-                      Note: When provided, ''keyStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   keyStoreSecretId:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
@@ -8919,6 +9266,14 @@ spec:
                           type: string
                       type: object
                     type: array
+                  maxInputChars:
+                    description: (Applicable when connection_type=AI_MODEL) (Updatable)
+                      Maximum number of input characters supported by this AI model
+                      connection.
+                    type: number
+                  modelKey:
+                    description: (Updatable) AI model identifier.
+                    type: string
                   nsgIds:
                     description: (Updatable) An array of Network Security Group OCIDs
                       used to define network access for either Deployments or Connections.
@@ -8967,6 +9322,10 @@ spec:
                     description: (Applicable when connection_type=KAFKA) (Updatable)
                       The base64 encoded content of the producer.properties file.
                     type: string
+                  providerType:
+                    description: (Applicable when connection_type=AI_MODEL) AI Provider
+                      type used by the AI Model Connection.
+                    type: string
                   publicKeyFingerprint:
                     description: '(Applicable when connection_type=OCI_OBJECT_STORAGE
                       | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The fingerprint
@@ -8978,23 +9337,20 @@ spec:
                       The OCID of the Redis cluster.
                     type: string
                   region:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM |
-                      ORACLE_NOSQL) (Updatable) The name of the AWS region where the
-                      bucket is created. If not provided, GoldenGate will default
-                      to ''us-west-2''. Note: this property will become mandatory
-                      after May 20, 2026.'
+                    description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      The name of the region. e.g.: us-ashburn-1 If the region is
+                      not provided, backend will default to the default region.'
                     type: string
                   routingMethod:
                     description: '(Updatable) Controls the network traffic direction
-                      to the target: SHARED_SERVICE_ENDPOINT: Traffic flows through
+                      to the target: SHARED_DEPLOYMENT_ENDPOINT: Network traffic flows
+                      from the assigned deployment''s private endpoint through the
+                      deployment''s subnet. DEDICATED_ENDPOINT: A dedicated private
+                      endpoint is created in the target VCN subnet for the connection.
+                      The subnetId is required when DEDICATED_ENDPOINT networking
+                      is selected. SHARED_SERVICE_ENDPOINT: Traffic flows through
                       the Goldengate Service''s network to public hosts. Cannot be
-                      used for private targets.  SHARED_DEPLOYMENT_ENDPOINT: Network
-                      traffic flows from the assigned deployment''s private endpoint
-                      through the deployment''s subnet. DEDICATED_ENDPOINT: A dedicated
-                      private endpoint is created in the target VCN subnet for the
-                      connection. The subnetId is required when DEDICATED_ENDPOINT
-                      networking is selected.'
+                      used for private targets.'
                     type: string
                   sasTokenSecretId:
                     description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -9002,10 +9358,8 @@ spec:
                       Note: When provided, ''sasToken'' field must not be provided.'
                     type: string
                   secretAccessKeySecretId:
-                    description: '(Applicable when connection_type=AMAZON_KINESIS
-                      | AMAZON_S3) (Updatable) The OCID of the Secret where the secret
-                      access key is stored. Note: When provided, ''secretAccessKey''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=AMAZON_KINESIS |
+                      AMAZON_S3) (Updatable)
                     type: string
                   securityAttributes:
                     additionalProperties:
@@ -9017,24 +9371,14 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   securityProtocol:
-                    description: (Updatable) Security protocol for Java Message Service.
-                      If not provided, default is PLAIN. Optional until 2024-06-27,
-                      in the release after it will be made required.
+                    description: (Updatable)
                     type: string
                   servers:
-                    description: '(Updatable) Comma separated list of Elasticsearch
-                      server addresses, specified as host:port entries, where :port
-                      is optional.  If port is not specified, it defaults to 9200.
-                      Used for establishing the initial connection to the Elasticsearch
-                      cluster. Example: "server1.example.com:4000,server2.example.com:4000"'
+                    description: (Updatable)
                     type: string
                   serviceAccountKeyFileSecretId:
-                    description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The OCID
-                      of the Secret where the content of the service account key file
-                      is stored, which contains the credentials required to use Google
-                      Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                      | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                     type: string
                   sessionMode:
                     description: (Applicable when connection_type=ORACLE) (Updatable)
@@ -9052,13 +9396,8 @@ spec:
                       Interface (JNDI) properties should be provided.
                     type: boolean
                   shouldUseResourcePrincipal:
-                    description: '(Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) Specifies
-                      that the user intends to authenticate to the instance using
-                      a resource principal. Applicable only for Oracle Cloud Infrastructure
-                      Streaming connections. Only available from 23.9.0.0.0 GoldenGate
-                      versions. Note: When specified, ''username''/''password''/''passwordSecretId''
-                      fields must not be provided. Default: false'
+                    description: (Applicable when connection_type=KAFKA | OCI_OBJECT_STORAGE
+                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable)
                     type: boolean
                   shouldValidateServerCertificate:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER)
@@ -9067,17 +9406,11 @@ spec:
                     type: boolean
                   sslCa:
                     description: (Applicable when connection_type=MICROSOFT_SQLSERVER
-                      | MYSQL | POSTGRESQL) (Updatable) The base64 encoded certificate
-                      of the trusted certificate authorities (Trusted CA) for PostgreSQL.  The
-                      supported file formats are .pem and .crt. It is not included
-                      in GET responses if the view=COMPACT query parameter is specified.
+                      | MYSQL | POSTGRESQL) (Updatable)
                     type: string
                   sslCert:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) Client Certificate - The base64 encoded content
-                      of a .pem or .crt file containing the client public key (for
-                      2-way SSL). It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.
+                      (Updatable)
                     type: string
                   sslClientKeystashSecretId:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -9094,28 +9427,20 @@ spec:
                       for i, as client TLS mode is not available.
                     type: string
                   sslCrl:
-                    description: '(Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The base64 encoded list of certificates revoked
-                      by the trusted certificate authorities (Trusted CA). Note: This
-                      is an optional property and only applicable if TLS/MTLS option
-                      is selected. It is not included in GET responses if the view=COMPACT
-                      query parameter is specified.'
+                    description: (Applicable when connection_type=MYSQL | POSTGRESQL)
+                      (Updatable)
                     type: string
                   sslKeyPasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable) The OCID of the
-                      Secret where the password is stored for the cert inside of the
-                      Keystore. In case it differs from the KeyStore password, it
-                      should be provided. Note: When provided, ''sslKeyPassword''
-                      field must not be provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY) (Updatable)
                     type: string
                   sslKeySecretId:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) The OCID of the Secret that stores the Client Key
+                      (Updatable)
                     type: string
                   sslMode:
                     description: (Applicable when connection_type=MYSQL | POSTGRESQL)
-                      (Updatable) SSL modes for PostgreSQL.
+                      (Updatable)
                     type: string
                   sslServerCertificate:
                     description: (Applicable when connection_type=DB2) (Updatable)
@@ -9133,8 +9458,8 @@ spec:
                     items:
                       properties:
                         accessKeyId:
-                          description: '(Updatable) Access key ID to access the Amazon
-                            S3 bucket. e.g.: "this-is-not-the-secret"'
+                          description: (Updatable) Access key ID for Amazon connection
+                            types.
                           type: string
                         accountKey:
                           description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -9142,7 +9467,8 @@ spec:
                             required when ''authenticationType'' is set to ''SHARED_KEY''.
                             e.g.: pa3WbhVATzj56xD4DH1VjOUhApRGEGHvOo58eQJVWIzX+j8j4CUVFcTjpIqDSRaSa1Wo2LbWY5at+AStEgLOIQ==
                             Deprecated: This field is deprecated and replaced by "accountKeySecretId".
-                            This field will be removed after February 15 2026.'
+                            This change follows the GoldenGate "Plain Text Fields
+                            in Connections" deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                           type: string
                         accountKeySecretId:
                           description: '(Applicable when connection_type=AZURE_DATA_LAKE_STORAGE)
@@ -9155,65 +9481,44 @@ spec:
                             name.
                           type: string
                         bucket:
-                          description: (Updatable) Google Cloud Storage bucket where
-                            Iceberg stores metadata and data files.
+                          description: (Updatable)
                           type: string
                         container:
                           description: (Updatable) The Azure Blob Storage container
                             where Iceberg tables are stored.
                           type: string
                         endpoint:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
+                          description: (Applicable when connection_type=AMAZON_KINESIS
                             | AMAZON_S3 | AZURE_DATA_LAKE_STORAGE | GOOGLE_BIGQUERY
                             | GOOGLE_CLOUD_STORAGE | MICROSOFT_FABRIC) (Updatable)
-                            The endpoint URL of the Amazon Kinesis service. e.g.:
-                            ''https://kinesis.us-east-1.amazonaws.com'' If not provided,
-                            GoldenGate will default to ''https://kinesis..amazonaws.com''.'
                           type: string
                         projectId:
                           description: (Updatable) The Google Cloud Project where
                             the bucket exists.
                           type: string
                         region:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3 | OCI_OBJECT_STORAGE | ORACLE_AI_DATA_PLATFORM
-                            | ORACLE_NOSQL) (Updatable) The name of the AWS region
-                            where the bucket is created. If not provided, GoldenGate
-                            will default to ''us-west-2''. Note: this property will
-                            become mandatory after May 20, 2026.'
+                          description: '(Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                            The name of the region. e.g.: us-ashburn-1 If the region
+                            is not provided, backend will default to the default region.'
                           type: string
                         schemeType:
                           description: (Updatable) The scheme of the storage.
                           type: string
                         secretAccessKey:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) Secret access key to access the
-                            Amazon S3 bucket. e.g.: "this-is-not-the-secret" Deprecated:
-                            This field is deprecated and replaced by "secretAccessKeySecretId".
-                            This field will be removed after February 15 2026.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         secretAccessKeySecretId:
-                          description: '(Applicable when connection_type=AMAZON_KINESIS
-                            | AMAZON_S3) (Updatable) The OCID of the Secret where
-                            the secret access key is stored. Note: When provided,
-                            ''secretAccessKey'' field must not be provided.'
+                          description: (Applicable when connection_type=AMAZON_KINESIS
+                            | AMAZON_S3) (Updatable)
                           type: string
                         serviceAccountKeyFile:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            base64 encoded content of the service account key file
-                            containing the credentials required to use Google Cloud
-                            Storage. Deprecated: This field is deprecated and replaced
-                            by "serviceAccountKeyFileSecretId". This field will be
-                            removed after February 15 2026.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         serviceAccountKeyFileSecretId:
-                          description: '(Applicable when connection_type=GOOGLE_BIGQUERY
-                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable) The
-                            OCID of the Secret where the content of the service account
-                            key file is stored, which contains the credentials required
-                            to use Google Cloud Storage. Note: When provided, ''serviceAccountKeyFile''
-                            field must not be provided.'
+                          description: (Applicable when connection_type=GOOGLE_BIGQUERY
+                            | GOOGLE_CLOUD_STORAGE | GOOGLE_PUBSUB) (Updatable)
                           type: string
                         storageType:
                           description: (Updatable) The storage type used in the Iceberg
@@ -9249,13 +9554,13 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   technologyType:
-                    description: The Kafka (e.g. Confluent) Schema Registry technology
-                      type.
+                    description: The technology type.
                     type: string
                   tenancyId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the related Oracle Cloud Infrastructure tenancy.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI tenancy OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the tenancy OCID of the user who is executing the operation.
                     type: string
                   tenantId:
                     description: '(Updatable) Azure tenant ID of the application.
@@ -9280,7 +9585,8 @@ spec:
                       Client Certificate - The base64 encoded content of a .pem file,
                       containing the client public key (for 2-way SSL). Deprecated:
                       This field is deprecated and replaced by "tlsCertificateKeyFileSecretId".
-                      This field will be removed after February 15 2026.'
+                      This change follows the GoldenGate "Plain Text Fields in Connections"
+                      deprecation: https://docs.oracle.com/en-us/iaas/Content/servicechanges.htm#servicechanges_topic-GoldenGate'
                     type: string
                   tlsCertificateKeyFileSecretId:
                     description: (Applicable when connection_type=MONGODB) (Updatable)
@@ -9290,11 +9596,8 @@ spec:
                   triggerRefresh:
                     type: boolean
                   trustStorePasswordSecretId:
-                    description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
-                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable) The OCID
-                      of the Secret where the kafka Ssl TrustStore password is stored.
-                      Note: When provided, ''trustStorePassword'' field must not be
-                      provided.'
+                    description: (Applicable when connection_type=JAVA_MESSAGE_SERVICE
+                      | KAFKA | KAFKA_SCHEMA_REGISTRY | REDIS) (Updatable)
                     type: string
                   trustStoreSecretId:
                     description: '(Applicable when connection_type=JAVA_MESSAGE_SERVICE
@@ -9306,12 +9609,10 @@ spec:
                     description: '(Updatable) Kafka Schema Registry URL. e.g.: ''https://server1.us.oracle.com:8081'''
                     type: string
                   userId:
-                    description: (Applicable when connection_type=OCI_OBJECT_STORAGE
-                      | ORACLE_AI_DATA_PLATFORM | ORACLE_NOSQL) (Updatable) The OCID
-                      of the Oracle Cloud Infrastructure user who will access the
-                      Oracle NoSQL database. The user must have write access to the
-                      table they want to connect to. If the user is not provided,
-                      backend will default to the user who is calling the API endpoint.
+                    description: (Applicable when auth_type=OCI_GEN_AI) (Updatable)
+                      Oracle Cloud Infrastructure Generative AI user OCID. If this
+                      value is not provided, or is updated to an empty value, it defaults
+                      to the OCID of the user who is executing the operation.
                     type: string
                   username:
                     description: (Updatable) The username Oracle GoldenGate uses to
@@ -9321,10 +9622,9 @@ spec:
                       defined in it.
                     type: string
                   vaultId:
-                    description: (Updatable) Refers to the customer's vault OCID.  If
-                      provided, it references a vault where GoldenGate can manage
-                      secrets. Customers must add policies to permit GoldenGate to
-                      manage secrets contained within this vault.
+                    description: (Updatable) References the Oracle Cloud Infrastructure
+                      Vault that contains the customer-managed encryption key identified
+                      by keyId.
                     type: string
                   walletSecretId:
                     description: '(Applicable when connection_type=ORACLE) (Updatable)

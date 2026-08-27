@@ -115,6 +115,11 @@ func (in *AiDataPlatformInitParameters) DeepCopyInto(out *AiDataPlatformInitPara
 			(*out)[key] = outVal
 		}
 	}
+	if in.IsEnableAIFeature != nil {
+		in, out := &in.IsEnableAIFeature, &out.IsEnableAIFeature
+		*out = new(bool)
+		**out = **in
+	}
 	if in.SystemTags != nil {
 		in, out := &in.SystemTags, &out.SystemTags
 		*out = make(map[string]*string, len(*in))
@@ -130,6 +135,31 @@ func (in *AiDataPlatformInitParameters) DeepCopyInto(out *AiDataPlatformInitPara
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.VectorDBAdminCred != nil {
+		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminSecretID != nil {
+		in, out := &in.VectorDBAdminSecretID, &out.VectorDBAdminSecretID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminSecretIDRef != nil {
+		in, out := &in.VectorDBAdminSecretIDRef, &out.VectorDBAdminSecretIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VectorDBAdminSecretIDSelector != nil {
+		in, out := &in.VectorDBAdminSecretIDSelector, &out.VectorDBAdminSecretIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VectorDBID != nil {
+		in, out := &in.VectorDBID, &out.VectorDBID
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -180,6 +210,11 @@ func (in *AiDataPlatformObservation) DeepCopyInto(out *AiDataPlatformObservation
 	*out = *in
 	if in.AIDataPlatformType != nil {
 		in, out := &in.AIDataPlatformType, &out.AIDataPlatformType
+		*out = new(string)
+		**out = **in
+	}
+	if in.AIFeatureStatus != nil {
+		in, out := &in.AIFeatureStatus, &out.AIFeatureStatus
 		*out = new(string)
 		**out = **in
 	}
@@ -245,6 +280,11 @@ func (in *AiDataPlatformObservation) DeepCopyInto(out *AiDataPlatformObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.IsEnableAIFeature != nil {
+		in, out := &in.IsEnableAIFeature, &out.IsEnableAIFeature
+		*out = new(bool)
+		**out = **in
+	}
 	if in.LifecycleDetails != nil {
 		in, out := &in.LifecycleDetails, &out.LifecycleDetails
 		*out = new(string)
@@ -278,6 +318,21 @@ func (in *AiDataPlatformObservation) DeepCopyInto(out *AiDataPlatformObservation
 	}
 	if in.TimeUpdated != nil {
 		in, out := &in.TimeUpdated, &out.TimeUpdated
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminCred != nil {
+		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminSecretID != nil {
+		in, out := &in.VectorDBAdminSecretID, &out.VectorDBAdminSecretID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBID != nil {
+		in, out := &in.VectorDBID, &out.VectorDBID
 		*out = new(string)
 		**out = **in
 	}
@@ -373,6 +428,11 @@ func (in *AiDataPlatformParameters) DeepCopyInto(out *AiDataPlatformParameters) 
 			(*out)[key] = outVal
 		}
 	}
+	if in.IsEnableAIFeature != nil {
+		in, out := &in.IsEnableAIFeature, &out.IsEnableAIFeature
+		*out = new(bool)
+		**out = **in
+	}
 	if in.SystemTags != nil {
 		in, out := &in.SystemTags, &out.SystemTags
 		*out = make(map[string]*string, len(*in))
@@ -388,6 +448,31 @@ func (in *AiDataPlatformParameters) DeepCopyInto(out *AiDataPlatformParameters) 
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.VectorDBAdminCred != nil {
+		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminSecretID != nil {
+		in, out := &in.VectorDBAdminSecretID, &out.VectorDBAdminSecretID
+		*out = new(string)
+		**out = **in
+	}
+	if in.VectorDBAdminSecretIDRef != nil {
+		in, out := &in.VectorDBAdminSecretIDRef, &out.VectorDBAdminSecretIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VectorDBAdminSecretIDSelector != nil {
+		in, out := &in.VectorDBAdminSecretIDSelector, &out.VectorDBAdminSecretIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VectorDBID != nil {
+		in, out := &in.VectorDBID, &out.VectorDBID
+		*out = new(string)
+		**out = **in
 	}
 }
 

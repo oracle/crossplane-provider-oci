@@ -28,6 +28,12 @@ type SchedulesInitParameters struct {
 	// (Updatable) The hour of the day to schedule the volume backup.
 	HourOfDay *float64 `json:"hourOfDay,omitempty" tf:"hour_of_day,omitempty"`
 
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The month of the year to schedule the volume backup.
 	Month *string `json:"month,omitempty" tf:"month,omitempty"`
 
@@ -39,6 +45,9 @@ type SchedulesInitParameters struct {
 
 	// (Updatable) The volume backup frequency.
 	Period *string `json:"period,omitempty" tf:"period,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []SchedulesRetentionPeriodInitParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// (Updatable) How long, in seconds, to keep the volume backups created by this schedule.
 	RetentionSeconds *float64 `json:"retentionSeconds,omitempty" tf:"retention_seconds,omitempty"`
@@ -62,6 +71,12 @@ type SchedulesObservation struct {
 	// (Updatable) The hour of the day to schedule the volume backup.
 	HourOfDay *float64 `json:"hourOfDay,omitempty" tf:"hour_of_day,omitempty"`
 
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The month of the year to schedule the volume backup.
 	Month *string `json:"month,omitempty" tf:"month,omitempty"`
 
@@ -73,6 +88,9 @@ type SchedulesObservation struct {
 
 	// (Updatable) The volume backup frequency.
 	Period *string `json:"period,omitempty" tf:"period,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []SchedulesRetentionPeriodObservation `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// (Updatable) How long, in seconds, to keep the volume backups created by this schedule.
 	RetentionSeconds *float64 `json:"retentionSeconds,omitempty" tf:"retention_seconds,omitempty"`
@@ -100,6 +118,14 @@ type SchedulesParameters struct {
 	// +kubebuilder:validation:Optional
 	HourOfDay *float64 `json:"hourOfDay,omitempty" tf:"hour_of_day,omitempty"`
 
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	// +kubebuilder:validation:Optional
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	// +kubebuilder:validation:Optional
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The month of the year to schedule the volume backup.
 	// +kubebuilder:validation:Optional
 	Month *string `json:"month,omitempty" tf:"month,omitempty"`
@@ -116,6 +142,10 @@ type SchedulesParameters struct {
 	// +kubebuilder:validation:Optional
 	Period *string `json:"period" tf:"period,omitempty"`
 
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	// +kubebuilder:validation:Optional
+	RetentionPeriod []SchedulesRetentionPeriodParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+
 	// (Updatable) How long, in seconds, to keep the volume backups created by this schedule.
 	// +kubebuilder:validation:Optional
 	RetentionSeconds *float64 `json:"retentionSeconds" tf:"retention_seconds,omitempty"`
@@ -124,6 +154,35 @@ type SchedulesParameters struct {
 	// enum:
 	// +kubebuilder:validation:Optional
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+}
+
+type SchedulesRetentionPeriodInitParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type SchedulesRetentionPeriodObservation struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type SchedulesRetentionPeriodParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	// +kubebuilder:validation:Optional
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	// +kubebuilder:validation:Optional
+	RetentionTimeUnit *string `json:"retentionTimeUnit" tf:"retention_time_unit,omitempty"`
 }
 
 type VolumeBackupPolicyInitParameters struct {

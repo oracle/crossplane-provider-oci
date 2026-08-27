@@ -571,6 +571,12 @@ spec:
                     description: Specifies the format of report to be .xls or .pdf
                       or .json
                     type: string
+                  nextReportId:
+                    description: The OCID of the next report generated.
+                    type: string
+                  previousReportId:
+                    description: The OCID of the previous report generated.
+                    type: string
                   reportDefinitionId:
                     description: The OCID of the report definition.
                     type: string

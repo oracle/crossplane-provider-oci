@@ -56,6 +56,9 @@ type ConnectionAssignmentObservation struct {
 	// The OCID of the connection being referenced.
 	ConnectionID *string `json:"connectionId,omitempty" tf:"connection_id,omitempty"`
 
+	// The connection type.
+	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
+
 	// The OCID of the deployment being referenced.
 	DeploymentID *string `json:"deploymentId,omitempty" tf:"deployment_id,omitempty"`
 

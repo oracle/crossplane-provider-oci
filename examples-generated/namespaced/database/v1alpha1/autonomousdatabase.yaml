@@ -30,6 +30,7 @@ spec:
       maintenanceEndTime: ${var.autonomous_database_autonomous_database_maintenance_window_maintenance_end_time}
       maintenanceStartTime: ${var.autonomous_database_autonomous_database_maintenance_window_maintenance_start_time}
     autonomousMaintenanceScheduleType: ${var.autonomous_database_autonomous_maintenance_schedule_type}
+    availabilityDomain: ${var.autonomous_database_availability_domain}
     backupRetentionPeriodInDays: ${var.autonomous_database_backup_retention_period_in_days}
     byolComputeCountLimit: ${var.autonomous_database_byol_compute_count_limit}
     characterSet: ${var.autonomous_database_character_set}

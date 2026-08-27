@@ -28,38 +28,105 @@ type AttachedBlockVolumesObservation struct {
 type AttachedBlockVolumesParameters struct {
 }
 
+type BdsCapacityReservationConfigurationsInitParameters struct {
+
+	// The OCID of the BDS capacity reservation to associate with the BDS cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/bds/v1alpha1.BdsCapacityReservation
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	BdsCapacityReservationID *string `json:"bdsCapacityReservationId,omitempty" tf:"bds_capacity_reservation_id,omitempty"`
+
+	// Reference to a BdsCapacityReservation in bds to populate bdsCapacityReservationId.
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationIDRef *v1.Reference `json:"bdsCapacityReservationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BdsCapacityReservation in bds to populate bdsCapacityReservationId.
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationIDSelector *v1.Selector `json:"bdsCapacityReservationIdSelector,omitempty" tf:"-"`
+
+	// A user-friendly name for the BDS capacity reservation configuration.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+}
+
+type BdsCapacityReservationConfigurationsObservation struct {
+
+	// The OCID of the BDS capacity reservation to associate with the BDS cluster.
+	BdsCapacityReservationID *string `json:"bdsCapacityReservationId,omitempty" tf:"bds_capacity_reservation_id,omitempty"`
+
+	// The OCID of the BDS cluster associated with the BDS capacity reservation.
+	BdsInstanceID *string `json:"bdsInstanceId,omitempty" tf:"bds_instance_id,omitempty"`
+
+	// A user-friendly name for the BDS capacity reservation configuration.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The OCID of the BDS capacity reservation configuration.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Updatable) The target state for the Bds Instance. Could be set to ACTIVE or INACTIVE.
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// The time the BDS capacity reservation configuration was created, shown as an RFC 3339 formatted datetime string.
+	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
+
+	// The time the BDS capacity reservation configuration was updated, shown as an RFC 3339 formatted datetime string.
+	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
+}
+
+type BdsCapacityReservationConfigurationsParameters struct {
+
+	// The OCID of the BDS capacity reservation to associate with the BDS cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/bds/v1alpha1.BdsCapacityReservation
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationID *string `json:"bdsCapacityReservationId,omitempty" tf:"bds_capacity_reservation_id,omitempty"`
+
+	// Reference to a BdsCapacityReservation in bds to populate bdsCapacityReservationId.
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationIDRef *v1.Reference `json:"bdsCapacityReservationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BdsCapacityReservation in bds to populate bdsCapacityReservationId.
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationIDSelector *v1.Selector `json:"bdsCapacityReservationIdSelector,omitempty" tf:"-"`
+
+	// A user-friendly name for the BDS capacity reservation configuration.
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+}
+
 type BdsClusterVersionSummaryInitParameters struct {
 
-	// BDS version to be used for cluster creation
+	// BDS version to be used for cluster creation.
 	BdsVersion *string `json:"bdsVersion,omitempty" tf:"bds_version,omitempty"`
 
-	// ODH version to be used for cluster creation
+	// ODH version to be used for cluster creation.
 	OdhVersion *string `json:"odhVersion,omitempty" tf:"odh_version,omitempty"`
 }
 
 type BdsClusterVersionSummaryObservation struct {
 
-	// BDS version to be used for cluster creation
+	// BDS version to be used for cluster creation.
 	BdsVersion *string `json:"bdsVersion,omitempty" tf:"bds_version,omitempty"`
 
-	// ODH version to be used for cluster creation
+	// ODH version to be used for cluster creation.
 	OdhVersion *string `json:"odhVersion,omitempty" tf:"odh_version,omitempty"`
 }
 
 type BdsClusterVersionSummaryParameters struct {
 
-	// BDS version to be used for cluster creation
+	// BDS version to be used for cluster creation.
 	// +kubebuilder:validation:Optional
-	BdsVersion *string `json:"bdsVersion" tf:"bds_version,omitempty"`
+	BdsVersion *string `json:"bdsVersion,omitempty" tf:"bds_version,omitempty"`
 
-	// ODH version to be used for cluster creation
+	// ODH version to be used for cluster creation.
 	// +kubebuilder:validation:Optional
 	OdhVersion *string `json:"odhVersion,omitempty" tf:"odh_version,omitempty"`
 }
 
 type BdsInstanceInitParameters struct {
 
-	// Cluster version details including bds and odh version information.
+	// Optional BDS capacity reservation configurations to associate with the cluster during creation.
+	BdsCapacityReservationConfigurations []BdsCapacityReservationConfigurationsInitParameters `json:"bdsCapacityReservationConfigurations,omitempty" tf:"bds_capacity_reservation_configurations,omitempty"`
+
+	// Cluster version details including BDS and ODH version information. When this block is specified, provide at least one of bds_version or odh_version; if both values are null, the service rejects the request.
 	BdsClusterVersionSummary []BdsClusterVersionSummaryInitParameters `json:"bdsClusterVersionSummary,omitempty" tf:"bds_cluster_version_summary,omitempty"`
 
 	// (Updatable) Pre-authenticated URL of the script in Object Store that is downloaded and executed.
@@ -92,13 +159,14 @@ type BdsInstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
+	// The compute-only worker node in the BDS instance
 	ComputeOnlyWorkerNode []ComputeOnlyWorkerNodeInitParameters `json:"computeOnlyWorkerNode,omitempty" tf:"compute_only_worker_node,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key": "value"}
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
-	// (Updatable) Name of the BDS instance
+	// A user-friendly name for the BDS capacity reservation configuration.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	EdgeNode []EdgeNodeInitParameters `json:"edgeNode,omitempty" tf:"edge_node,omitempty"`
@@ -142,30 +210,20 @@ type BdsInstanceInitParameters struct {
 	// The master node in the BDS instance
 	MasterNode []MasterNodeInitParameters `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
-	// (Updatable) Additional configuration of the user's network.
+	// Additional configuration of the user's network.
 	NetworkConfig []NetworkConfigInitParameters `json:"networkConfig,omitempty" tf:"network_config,omitempty"`
 
-	// (Updatable) The version of the patch to be upated.
+	// (Updatable) The version of the patch to be updated.
 	OsPatchVersion *string `json:"osPatchVersion,omitempty" tf:"os_patch_version,omitempty"`
 
-	// (Updatable) An optional property when used triggers Remove Node. Takes the node ocid as input.
+	// (Updatable) An optional property when used triggers Remove Node from an Active Cluster. Takes the node ocid as input
 	RemoveNode *string `json:"removeNode,omitempty" tf:"remove_node,omitempty"`
 
 	// The list of nodes in the Big Data Service cluster.
 	RemoveNodes []*string `json:"removeNodes,omitempty" tf:"remove_nodes,omitempty"`
 
 	// (Updatable) The secretId for the clusterAdminPassword.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
-
-	// Reference to a Secret in vault to populate secretId.
-	// +kubebuilder:validation:Optional
-	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
-
-	// Selector for a Secret in vault to populate secretId.
-	// +kubebuilder:validation:Optional
-	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	StartClusterShapeConfigs []StartClusterShapeConfigsInitParameters `json:"startClusterShapeConfigs,omitempty" tf:"start_cluster_shape_configs,omitempty"`
 
@@ -175,12 +233,16 @@ type BdsInstanceInitParameters struct {
 	// The utility node in the BDS instance
 	UtilNode []UtilNodeInitParameters `json:"utilNode,omitempty" tf:"util_node,omitempty"`
 
+	// The worker node in the BDS instance
 	WorkerNode []WorkerNodeInitParameters `json:"workerNode,omitempty" tf:"worker_node,omitempty"`
 }
 
 type BdsInstanceObservation struct {
 
-	// Cluster version details including bds and odh version information.
+	// Optional BDS capacity reservation configurations to associate with the cluster during creation.
+	BdsCapacityReservationConfigurations []BdsCapacityReservationConfigurationsObservation `json:"bdsCapacityReservationConfigurations,omitempty" tf:"bds_capacity_reservation_configurations,omitempty"`
+
+	// Cluster version details including BDS and ODH version information. When this block is specified, provide at least one of bds_version or odh_version; if both values are null, the service rejects the request.
 	BdsClusterVersionSummary []BdsClusterVersionSummaryObservation `json:"bdsClusterVersionSummary,omitempty" tf:"bds_cluster_version_summary,omitempty"`
 
 	// (Updatable) Pre-authenticated URL of the script in Object Store that is downloaded and executed.
@@ -204,6 +266,7 @@ type BdsInstanceObservation struct {
 	// (Updatable) The OCID of the compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// The compute-only worker node in the BDS instance
 	ComputeOnlyWorkerNode []ComputeOnlyWorkerNodeObservation `json:"computeOnlyWorkerNode,omitempty" tf:"compute_only_worker_node,omitempty"`
 
 	// The user who created the cluster.
@@ -213,7 +276,7 @@ type BdsInstanceObservation struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
-	// (Updatable) Name of the BDS instance
+	// A user-friendly name for the BDS capacity reservation configuration.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	EdgeNode []EdgeNodeObservation `json:"edgeNode,omitempty" tf:"edge_node,omitempty"`
@@ -222,7 +285,7 @@ type BdsInstanceObservation struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// The OCID of the Big Data Service resource.
+	// The OCID of the BDS capacity reservation configuration.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Tag to ignore changing the shape of existing worker, master, utility, compute_only_worker, edge, kafka_broker nodes, in a list format, when new nodes are added with a different shape.
@@ -260,7 +323,7 @@ type BdsInstanceObservation struct {
 	// The master node in the BDS instance
 	MasterNode []MasterNodeObservation `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
-	// (Updatable) Additional configuration of the user's network.
+	// Additional configuration of the user's network.
 	NetworkConfig []NetworkConfigObservation `json:"networkConfig,omitempty" tf:"network_config,omitempty"`
 
 	// The list of nodes in the Big Data Service cluster.
@@ -272,10 +335,10 @@ type BdsInstanceObservation struct {
 	// Number of nodes that require a maintenance reboot
 	NumberOfNodesRequiringMaintenanceReboot *float64 `json:"numberOfNodesRequiringMaintenanceReboot,omitempty" tf:"number_of_nodes_requiring_maintenance_reboot,omitempty"`
 
-	// (Updatable) The version of the patch to be upated.
+	// (Updatable) The version of the patch to be updated.
 	OsPatchVersion *string `json:"osPatchVersion,omitempty" tf:"os_patch_version,omitempty"`
 
-	// (Updatable) An optional property when used triggers Remove Node. Takes the node ocid as input.
+	// (Updatable) An optional property when used triggers Remove Node from an Active Cluster. Takes the node ocid as input
 	RemoveNode *string `json:"removeNode,omitempty" tf:"remove_node,omitempty"`
 
 	// The list of nodes in the Big Data Service cluster.
@@ -289,24 +352,29 @@ type BdsInstanceObservation struct {
 	// (Updatable) The target state for the Bds Instance. Could be set to ACTIVE or INACTIVE.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// The time the cluster was created, shown as an RFC 3339 formatted datetime string.
+	// The time the BDS capacity reservation configuration was created, shown as an RFC 3339 formatted datetime string.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
 	// The earliest time of certificate expiration date across the certificates of all current nodes under this cluster.
 	TimeEarliestCertificateExpiration *string `json:"timeEarliestCertificateExpiration,omitempty" tf:"time_earliest_certificate_expiration,omitempty"`
 
-	// The time the cluster was updated, shown as an RFC 3339 formatted datetime string.
+	// The time the BDS capacity reservation configuration was updated, shown as an RFC 3339 formatted datetime string.
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 
 	// The utility node in the BDS instance
 	UtilNode []UtilNodeObservation `json:"utilNode,omitempty" tf:"util_node,omitempty"`
 
+	// The worker node in the BDS instance
 	WorkerNode []WorkerNodeObservation `json:"workerNode,omitempty" tf:"worker_node,omitempty"`
 }
 
 type BdsInstanceParameters struct {
 
-	// Cluster version details including bds and odh version information.
+	// Optional BDS capacity reservation configurations to associate with the cluster during creation.
+	// +kubebuilder:validation:Optional
+	BdsCapacityReservationConfigurations []BdsCapacityReservationConfigurationsParameters `json:"bdsCapacityReservationConfigurations,omitempty" tf:"bds_capacity_reservation_configurations,omitempty"`
+
+	// Cluster version details including BDS and ODH version information. When this block is specified, provide at least one of bds_version or odh_version; if both values are null, the service rejects the request.
 	// +kubebuilder:validation:Optional
 	BdsClusterVersionSummary []BdsClusterVersionSummaryParameters `json:"bdsClusterVersionSummary,omitempty" tf:"bds_cluster_version_summary,omitempty"`
 
@@ -347,6 +415,7 @@ type BdsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
+	// The compute-only worker node in the BDS instance
 	// +kubebuilder:validation:Optional
 	ComputeOnlyWorkerNode []ComputeOnlyWorkerNodeParameters `json:"computeOnlyWorkerNode,omitempty" tf:"compute_only_worker_node,omitempty"`
 
@@ -355,7 +424,7 @@ type BdsInstanceParameters struct {
 	// +mapType=granular
 	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
 
-	// (Updatable) Name of the BDS instance
+	// A user-friendly name for the BDS capacity reservation configuration.
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
@@ -414,15 +483,15 @@ type BdsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	MasterNode []MasterNodeParameters `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
-	// (Updatable) Additional configuration of the user's network.
+	// Additional configuration of the user's network.
 	// +kubebuilder:validation:Optional
 	NetworkConfig []NetworkConfigParameters `json:"networkConfig,omitempty" tf:"network_config,omitempty"`
 
-	// (Updatable) The version of the patch to be upated.
+	// (Updatable) The version of the patch to be updated.
 	// +kubebuilder:validation:Optional
 	OsPatchVersion *string `json:"osPatchVersion,omitempty" tf:"os_patch_version,omitempty"`
 
-	// (Updatable) An optional property when used triggers Remove Node. Takes the node ocid as input.
+	// (Updatable) An optional property when used triggers Remove Node from an Active Cluster. Takes the node ocid as input
 	// +kubebuilder:validation:Optional
 	RemoveNode *string `json:"removeNode,omitempty" tf:"remove_node,omitempty"`
 
@@ -431,18 +500,8 @@ type BdsInstanceParameters struct {
 	RemoveNodes []*string `json:"removeNodes,omitempty" tf:"remove_nodes,omitempty"`
 
 	// (Updatable) The secretId for the clusterAdminPassword.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
-
-	// Reference to a Secret in vault to populate secretId.
-	// +kubebuilder:validation:Optional
-	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
-
-	// Selector for a Secret in vault to populate secretId.
-	// +kubebuilder:validation:Optional
-	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	StartClusterShapeConfigs []StartClusterShapeConfigsParameters `json:"startClusterShapeConfigs,omitempty" tf:"start_cluster_shape_configs,omitempty"`
@@ -455,6 +514,7 @@ type BdsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	UtilNode []UtilNodeParameters `json:"utilNode,omitempty" tf:"util_node,omitempty"`
 
+	// The worker node in the BDS instance
 	// +kubebuilder:validation:Optional
 	WorkerNode []WorkerNodeParameters `json:"workerNode,omitempty" tf:"worker_node,omitempty"`
 }
@@ -516,7 +576,7 @@ type ClusterDetailsObservation struct {
 	// Big Data Manager version installed in the cluster.
 	BdmVersion *string `json:"bdmVersion,omitempty" tf:"bdm_version,omitempty"`
 
-	// BDS version to be used for cluster creation
+	// BDS version to be used for cluster creation.
 	BdsVersion *string `json:"bdsVersion,omitempty" tf:"bds_version,omitempty"`
 
 	// The URL of Big Data Manager.
@@ -537,13 +597,13 @@ type ClusterDetailsObservation struct {
 	// The URL of the Jupyterhub.
 	JupyterHubURL *string `json:"jupyterHubUrl,omitempty" tf:"jupyter_hub_url,omitempty"`
 
-	// ODH version to be used for cluster creation
+	// ODH version to be used for cluster creation.
 	OdhVersion *string `json:"odhVersion,omitempty" tf:"odh_version,omitempty"`
 
 	// Oracle Linux version installed in the cluster.
 	OsVersion *string `json:"osVersion,omitempty" tf:"os_version,omitempty"`
 
-	// The time the cluster was created, shown as an RFC 3339 formatted datetime string.
+	// The time the BDS capacity reservation configuration was created, shown as an RFC 3339 formatted datetime string.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
 	// The time the cluster was automatically or manually refreshed, shown as an RFC 3339 formatted datetime string.
@@ -1042,29 +1102,29 @@ type MasterNodeShapeConfigParameters struct {
 
 type NetworkConfigInitParameters struct {
 
-	// (Updatable) The CIDR IP address block of the VCN.
+	// The CIDR IP address block of the VCN.
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// (Updatable) A boolean flag whether to configure a NAT gateway.
+	// A boolean flag whether to configure a NAT gateway.
 	IsNATGatewayRequired *bool `json:"isNatGatewayRequired,omitempty" tf:"is_nat_gateway_required,omitempty"`
 }
 
 type NetworkConfigObservation struct {
 
-	// (Updatable) The CIDR IP address block of the VCN.
+	// The CIDR IP address block of the VCN.
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// (Updatable) A boolean flag whether to configure a NAT gateway.
+	// A boolean flag whether to configure a NAT gateway.
 	IsNATGatewayRequired *bool `json:"isNatGatewayRequired,omitempty" tf:"is_nat_gateway_required,omitempty"`
 }
 
 type NetworkConfigParameters struct {
 
-	// (Updatable) The CIDR IP address block of the VCN.
+	// The CIDR IP address block of the VCN.
 	// +kubebuilder:validation:Optional
 	CidrBlock *string `json:"cidrBlock,omitempty" tf:"cidr_block,omitempty"`
 
-	// (Updatable) A boolean flag whether to configure a NAT gateway.
+	// A boolean flag whether to configure a NAT gateway.
 	// +kubebuilder:validation:Optional
 	IsNATGatewayRequired *bool `json:"isNatGatewayRequired,omitempty" tf:"is_nat_gateway_required,omitempty"`
 }
@@ -1109,7 +1169,7 @@ type NodesObservation struct {
 	// The name of the availability domain in which the node is running.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
-	// (Updatable) Name of the BDS instance
+	// A user-friendly name for the BDS capacity reservation configuration.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The name of the fault domain in which the node is running.
@@ -1145,7 +1205,7 @@ type NodesObservation struct {
 	// The total number of OCPUs available to the node.
 	Ocpus *float64 `json:"ocpus,omitempty" tf:"ocpus,omitempty"`
 
-	// ODH version to be used for cluster creation
+	// ODH version to be used for cluster creation.
 	OdhVersion *string `json:"odhVersion,omitempty" tf:"odh_version,omitempty"`
 
 	// Oracle Linux version installed in the cluster.
@@ -1163,7 +1223,7 @@ type NodesObservation struct {
 	// The OCID of the subnet in which the node will be created.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// The time the cluster was created, shown as an RFC 3339 formatted datetime string.
+	// The time the BDS capacity reservation configuration was created, shown as an RFC 3339 formatted datetime string.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
 	// The date and time the instance is expected to be stopped / started, in the format defined by RFC3339.

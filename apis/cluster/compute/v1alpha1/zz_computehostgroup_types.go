@@ -137,6 +137,9 @@ type ConfigurationsInitParameters struct {
 	// (Updatable) The OCID for firmware bundle
 	FirmwareBundleID *string `json:"firmwareBundleId,omitempty" tf:"firmware_bundle_id,omitempty"`
 
+	// (Updatable) Additional quick recycle settings.
+	QuickRecycleSettings []QuickRecycleSettingsInitParameters `json:"quickRecycleSettings,omitempty" tf:"quick_recycle_settings,omitempty"`
+
 	// (Updatable) Preferred recycle level for hosts associated with the reservation config.
 	RecycleLevel *string `json:"recycleLevel,omitempty" tf:"recycle_level,omitempty"`
 
@@ -151,6 +154,9 @@ type ConfigurationsObservation struct {
 
 	// (Updatable) The OCID for firmware bundle
 	FirmwareBundleID *string `json:"firmwareBundleId,omitempty" tf:"firmware_bundle_id,omitempty"`
+
+	// (Updatable) Additional quick recycle settings.
+	QuickRecycleSettings []QuickRecycleSettingsObservation `json:"quickRecycleSettings,omitempty" tf:"quick_recycle_settings,omitempty"`
 
 	// (Updatable) Preferred recycle level for hosts associated with the reservation config.
 	RecycleLevel *string `json:"recycleLevel,omitempty" tf:"recycle_level,omitempty"`
@@ -168,6 +174,10 @@ type ConfigurationsParameters struct {
 	// +kubebuilder:validation:Optional
 	FirmwareBundleID *string `json:"firmwareBundleId,omitempty" tf:"firmware_bundle_id,omitempty"`
 
+	// (Updatable) Additional quick recycle settings.
+	// +kubebuilder:validation:Optional
+	QuickRecycleSettings []QuickRecycleSettingsParameters `json:"quickRecycleSettings,omitempty" tf:"quick_recycle_settings,omitempty"`
+
 	// (Updatable) Preferred recycle level for hosts associated with the reservation config.
 	// +kubebuilder:validation:Optional
 	RecycleLevel *string `json:"recycleLevel,omitempty" tf:"recycle_level,omitempty"`
@@ -179,6 +189,25 @@ type ConfigurationsParameters struct {
 	// (Updatable) Either the platform name or compute shape that the configuration is targeting
 	// +kubebuilder:validation:Optional
 	Target *string `json:"target,omitempty" tf:"target,omitempty"`
+}
+
+type QuickRecycleSettingsInitParameters struct {
+
+	// (Updatable) Whether to wipe NVMe data during quick recycle.
+	NvmeWipe *bool `json:"nvmeWipe,omitempty" tf:"nvme_wipe,omitempty"`
+}
+
+type QuickRecycleSettingsObservation struct {
+
+	// (Updatable) Whether to wipe NVMe data during quick recycle.
+	NvmeWipe *bool `json:"nvmeWipe,omitempty" tf:"nvme_wipe,omitempty"`
+}
+
+type QuickRecycleSettingsParameters struct {
+
+	// (Updatable) Whether to wipe NVMe data during quick recycle.
+	// +kubebuilder:validation:Optional
+	NvmeWipe *bool `json:"nvmeWipe,omitempty" tf:"nvme_wipe,omitempty"`
 }
 
 // ComputeHostGroupSpec defines the desired state of ComputeHostGroup

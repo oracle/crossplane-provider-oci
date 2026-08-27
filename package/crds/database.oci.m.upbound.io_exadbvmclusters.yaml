@@ -631,6 +631,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  registerPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Register Pkcs. Could be set to any integer value.
+                    type: number
                   scanListenerPortTcp:
                     description: The TCP Single Client Access Name (SCAN) port. The
                       default port is 1521.
@@ -755,10 +759,17 @@ spec:
                   systemVersion:
                     description: (Updatable) Operating system version of the image.
                     type: string
+                  tdeKeyStoreType:
+                    description: TDE keystore type
+                    type: string
                   timeZone:
                     description: The time zone to use for the Exadata VM cluster on
                       Exascale Infrastructure. For details, see Time Zones.
                     type: string
+                  unregisterPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Unregister Pkcs. Could be set to any integer value.
+                    type: number
                 type: object
               initProvider:
                 description: |-
@@ -1345,6 +1356,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  registerPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Register Pkcs. Could be set to any integer value.
+                    type: number
                   scanListenerPortTcp:
                     description: The TCP Single Client Access Name (SCAN) port. The
                       default port is 1521.
@@ -1469,10 +1484,17 @@ spec:
                   systemVersion:
                     description: (Updatable) Operating system version of the image.
                     type: string
+                  tdeKeyStoreType:
+                    description: TDE keystore type
+                    type: string
                   timeZone:
                     description: The time zone to use for the Exadata VM cluster on
                       Exascale Infrastructure. For details, see Time Zones.
                     type: string
+                  unregisterPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Unregister Pkcs. Could be set to any integer value.
+                    type: number
                 type: object
               managementPolicies:
                 default:
@@ -1746,6 +1768,20 @@ spec:
                     description: The port number configured for the listener on the
                       Exadata VM cluster on Exascale Infrastructure.
                     type: string
+                  multiCloudIdentityConnectorConfigs:
+                    description: Details of the multi cloud identity connectors of
+                      the VM cluster.
+                    items:
+                      properties:
+                        cloudProvider:
+                          description: Cloud provider
+                          type: string
+                        id:
+                          description: The OCID of the Exadata VM cluster on Exascale
+                            Infrastructure.
+                          type: string
+                      type: object
+                    type: array
                   nodeConfig:
                     description: (Updatable) The configuration of each node in the
                       Exadata VM cluster on Exascale Infrastructure.
@@ -1815,6 +1851,10 @@ spec:
                     description: The private zone ID in which you want DNS records
                       to be created.
                     type: string
+                  registerPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Register Pkcs. Could be set to any integer value.
+                    type: number
                   scanDnsName:
                     description: The FQDN of the DNS record for the SCAN IP addresses
                       that are associated with the Exadata VM cluster on Exascale
@@ -1890,6 +1930,9 @@ spec:
                   systemVersion:
                     description: (Updatable) Operating system version of the image.
                     type: string
+                  tdeKeyStoreType:
+                    description: TDE keystore type
+                    type: string
                   timeCreated:
                     description: The date and time that the Exadata VM cluster on
                       Exascale Infrastructure was created.
@@ -1898,6 +1941,10 @@ spec:
                     description: The time zone to use for the Exadata VM cluster on
                       Exascale Infrastructure. For details, see Time Zones.
                     type: string
+                  unregisterPkcsTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Unregister Pkcs. Could be set to any integer value.
+                    type: number
                   vipIds:
                     description: The OCID of the virtual IP (VIP) addresses associated
                       with the Exadata VM cluster on Exascale Infrastructure.  The

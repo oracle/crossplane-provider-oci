@@ -1,0 +1,46 @@
+apiVersion: datacc.oci.upbound.io/v1alpha1
+kind: VmClusterNetwork
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacc/v1alpha1/vmclusternetwork
+  labels:
+    testing.upbound.io/example-name: test_vm_cluster_network
+  name: test-vm-cluster-network
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    consumerType: ${var.vm_cluster_network_consumer_type}
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.vm_cluster_network_display_name}
+    dnsServers: ${var.vm_cluster_network_dns_servers}
+    freeformTags:
+      bar-key: value
+    infrastructureIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_infrastructure
+    listenerPort: ${var.vm_cluster_network_listener_port}
+    listenerPortSsl: ${var.vm_cluster_network_listener_port_ssl}
+    nodeCount: ${var.vm_cluster_network_node_count}
+    ntpServers: ${var.vm_cluster_network_ntp_servers}
+    scans:
+    - hostname: ${var.vm_cluster_network_scans_hostname}
+      ips: ${var.vm_cluster_network_scans_ips}
+    vmNetworks:
+    - domainNameSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_domain
+      gateway: ${var.vm_cluster_network_vm_networks_gateway}
+      netmask: ${var.vm_cluster_network_vm_networks_netmask}
+      networkType: ${var.vm_cluster_network_vm_networks_network_type}
+      nodes:
+      - hostname: ${var.vm_cluster_network_vm_networks_nodes_hostname}
+        ip: ${var.vm_cluster_network_vm_networks_nodes_ip}
+        vip: ${var.vm_cluster_network_vm_networks_nodes_vip}
+        vipHostname: ${var.vm_cluster_network_vm_networks_nodes_vip_hostname}
+      prefix: ${var.vm_cluster_network_vm_networks_prefix}
+      vlanIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_vlan

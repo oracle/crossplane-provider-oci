@@ -64,6 +64,9 @@ type AutonomousContainerDatabaseInitParameters struct {
 	// The OCID of the source ACD backup that you will clone to create a new ACD.
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) A list of Autonomous Databases ( display name of the ADB in specific ) to be cloned from backup of the source Autonomous Container Database.
+	AutonomousDatabasesToClone []*string `json:"autonomousDatabasesToClone,omitempty" tf:"autonomous_databases_to_clone,omitempty"`
+
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.AutonomousExadataInfrastructure
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -92,6 +95,12 @@ type AutonomousContainerDatabaseInitParameters struct {
 
 	// (Updatable) Backup options for the Autonomous Container Database.
 	BackupConfig []BackupConfigInitParameters `json:"backupConfig,omitempty" tf:"backup_config,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) The speed at which the Autonomous Container Database Clone from backup operation to be performed by OCI.
+	CloneBandWidth *string `json:"cloneBandWidth,omitempty" tf:"clone_band_width,omitempty"`
+
+	// The Autonomous AI Database clone type.
+	CloneType *string `json:"cloneType,omitempty" tf:"clone_type,omitempty"`
 
 	// The OCID of the cloud Autonomous Exadata VM Cluster.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.CloudAutonomousVmCluster
@@ -298,14 +307,33 @@ type AutonomousContainerDatabaseInitParameters struct {
 	// The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.
 	ServiceLevelAgreementType *string `json:"serviceLevelAgreementType,omitempty" tf:"service_level_agreement_type,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) If set to true, Oracle Cloud Infrastructure shall attempt to create a point in time to the latest available backup of the source Autonomous Container Database.
+	ShouldUseLatestAvailableBackupTimeStamp *bool `json:"shouldUseLatestAvailableBackupTimeStamp,omitempty" tf:"should_use_latest_available_backup_time_stamp,omitempty"`
+
 	// The source of the database. Use NONE to create a new Autonomous Container Database (ACD). Use BACKUP_FROM_ID to create a new ACD from a specified backup.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// The OCID of the source ACD that you will clone to create a new ACD.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	SourceAutonomousContainerDatabaseID *string `json:"sourceAutonomousContainerDatabaseId,omitempty" tf:"source_autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate sourceAutonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceAutonomousContainerDatabaseIDRef *v1.NamespacedReference `json:"sourceAutonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate sourceAutonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceAutonomousContainerDatabaseIDSelector *v1.NamespacedSelector `json:"sourceAutonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.
 	StandbyMaintenanceBufferInDays *float64 `json:"standbyMaintenanceBufferInDays,omitempty" tf:"standby_maintenance_buffer_in_days,omitempty"`
 
 	// (Updatable) An optional property when incremented triggers Switchover. Could be set to any integer value.
 	SwitchoverTrigger *float64 `json:"switchoverTrigger,omitempty" tf:"switchover_trigger,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) The time stamp representing the point in time to which the Autonomous Container Database should be cloned from backup. And the requested timeStamp should be in the past.
+	TimeStampToUseForCloning *string `json:"timeStampToUseForCloning,omitempty" tf:"time_stamp_to_use_for_cloning,omitempty"`
 
 	// (Updatable) The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.
 	VMFailoverReservation *float64 `json:"vmFailoverReservation,omitempty" tf:"vm_failover_reservation,omitempty"`
@@ -335,6 +363,9 @@ type AutonomousContainerDatabaseObservation struct {
 	// The OCID of the source ACD backup that you will clone to create a new ACD.
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) A list of Autonomous Databases ( display name of the ADB in specific ) to be cloned from backup of the source Autonomous Container Database.
+	AutonomousDatabasesToClone []*string `json:"autonomousDatabasesToClone,omitempty" tf:"autonomous_databases_to_clone,omitempty"`
+
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
 	AutonomousExadataInfrastructureID *string `json:"autonomousExadataInfrastructureId,omitempty" tf:"autonomous_exadata_infrastructure_id,omitempty"`
 
@@ -352,6 +383,12 @@ type AutonomousContainerDatabaseObservation struct {
 
 	// This list describes the backup destination properties associated with the Autonomous Container Database (ACD) 's preferred backup destination. The object at a given index is associated with the destination present at the same index in the backup destination details list of the ACD Backup Configuration.
 	BackupDestinationPropertiesList []BackupDestinationPropertiesListObservation `json:"backupDestinationPropertiesList,omitempty" tf:"backup_destination_properties_list,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) The speed at which the Autonomous Container Database Clone from backup operation to be performed by OCI.
+	CloneBandWidth *string `json:"cloneBandWidth,omitempty" tf:"clone_band_width,omitempty"`
+
+	// The Autonomous AI Database clone type.
+	CloneType *string `json:"cloneType,omitempty" tf:"clone_type,omitempty"`
 
 	// The OCID of the cloud Autonomous Exadata VM Cluster.
 	CloudAutonomousVMClusterID *string `json:"cloudAutonomousVmClusterId,omitempty" tf:"cloud_autonomous_vm_cluster_id,omitempty"`
@@ -537,8 +574,14 @@ type AutonomousContainerDatabaseObservation struct {
 	// The service level agreement type of the Autonomous Container Database. The default is STANDARD. For an autonomous dataguard Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.
 	ServiceLevelAgreementType *string `json:"serviceLevelAgreementType,omitempty" tf:"service_level_agreement_type,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) If set to true, Oracle Cloud Infrastructure shall attempt to create a point in time to the latest available backup of the source Autonomous Container Database.
+	ShouldUseLatestAvailableBackupTimeStamp *bool `json:"shouldUseLatestAvailableBackupTimeStamp,omitempty" tf:"should_use_latest_available_backup_time_stamp,omitempty"`
+
 	// The source of the database. Use NONE to create a new Autonomous Container Database (ACD). Use BACKUP_FROM_ID to create a new ACD from a specified backup.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// The OCID of the source ACD that you will clone to create a new ACD.
+	SourceAutonomousContainerDatabaseID *string `json:"sourceAutonomousContainerDatabaseId,omitempty" tf:"source_autonomous_container_database_id,omitempty"`
 
 	// (Updatable) The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.
 	StandbyMaintenanceBufferInDays *float64 `json:"standbyMaintenanceBufferInDays,omitempty" tf:"standby_maintenance_buffer_in_days,omitempty"`
@@ -562,6 +605,9 @@ type AutonomousContainerDatabaseObservation struct {
 	// The date and time the Autonomous Container Database will be reverted to Standby from Snapshot Standby.
 	TimeSnapshotStandbyRevert *string `json:"timeSnapshotStandbyRevert,omitempty" tf:"time_snapshot_standby_revert,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) The time stamp representing the point in time to which the Autonomous Container Database should be cloned from backup. And the requested timeStamp should be in the past.
+	TimeStampToUseForCloning *string `json:"timeStampToUseForCloning,omitempty" tf:"time_stamp_to_use_for_cloning,omitempty"`
+
 	// The number of CPUs allocated to the Autonomous VM cluster.
 	TotalCpus *float64 `json:"totalCpus,omitempty" tf:"total_cpus,omitempty"`
 
@@ -580,6 +626,10 @@ type AutonomousContainerDatabaseParameters struct {
 	// The OCID of the source ACD backup that you will clone to create a new ACD.
 	// +kubebuilder:validation:Optional
 	AutonomousContainerDatabaseBackupID *string `json:"autonomousContainerDatabaseBackupId,omitempty" tf:"autonomous_container_database_backup_id,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) A list of Autonomous Databases ( display name of the ADB in specific ) to be cloned from backup of the source Autonomous Container Database.
+	// +kubebuilder:validation:Optional
+	AutonomousDatabasesToClone []*string `json:"autonomousDatabasesToClone,omitempty" tf:"autonomous_databases_to_clone,omitempty"`
 
 	// No longer used. This parameter is no longer used for Autonomous AI Database on dedicated Exadata infrasture. Specify a cloudAutonomousVmClusterId instead. Using this parameter will cause the operation to fail.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.AutonomousExadataInfrastructure
@@ -612,6 +662,14 @@ type AutonomousContainerDatabaseParameters struct {
 	// (Updatable) Backup options for the Autonomous Container Database.
 	// +kubebuilder:validation:Optional
 	BackupConfig []BackupConfigParameters `json:"backupConfig,omitempty" tf:"backup_config,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_ID | BACKUP_FROM_TIMESTAMP) The speed at which the Autonomous Container Database Clone from backup operation to be performed by OCI.
+	// +kubebuilder:validation:Optional
+	CloneBandWidth *string `json:"cloneBandWidth,omitempty" tf:"clone_band_width,omitempty"`
+
+	// The Autonomous AI Database clone type.
+	// +kubebuilder:validation:Optional
+	CloneType *string `json:"cloneType,omitempty" tf:"clone_type,omitempty"`
 
 	// The OCID of the cloud Autonomous Exadata VM Cluster.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.CloudAutonomousVmCluster
@@ -853,9 +911,27 @@ type AutonomousContainerDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceLevelAgreementType *string `json:"serviceLevelAgreementType,omitempty" tf:"service_level_agreement_type,omitempty"`
 
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) If set to true, Oracle Cloud Infrastructure shall attempt to create a point in time to the latest available backup of the source Autonomous Container Database.
+	// +kubebuilder:validation:Optional
+	ShouldUseLatestAvailableBackupTimeStamp *bool `json:"shouldUseLatestAvailableBackupTimeStamp,omitempty" tf:"should_use_latest_available_backup_time_stamp,omitempty"`
+
 	// The source of the database. Use NONE to create a new Autonomous Container Database (ACD). Use BACKUP_FROM_ID to create a new ACD from a specified backup.
 	// +kubebuilder:validation:Optional
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// The OCID of the source ACD that you will clone to create a new ACD.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.AutonomousContainerDatabase
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	SourceAutonomousContainerDatabaseID *string `json:"sourceAutonomousContainerDatabaseId,omitempty" tf:"source_autonomous_container_database_id,omitempty"`
+
+	// Reference to a AutonomousContainerDatabase in database to populate sourceAutonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceAutonomousContainerDatabaseIDRef *v1.NamespacedReference `json:"sourceAutonomousContainerDatabaseIdRef,omitempty" tf:"-"`
+
+	// Selector for a AutonomousContainerDatabase in database to populate sourceAutonomousContainerDatabaseId.
+	// +kubebuilder:validation:Optional
+	SourceAutonomousContainerDatabaseIDSelector *v1.NamespacedSelector `json:"sourceAutonomousContainerDatabaseIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The scheduling detail for the quarterly maintenance window of the standby Autonomous Container Database. This value represents the number of days before scheduled maintenance of the primary database.
 	// +kubebuilder:validation:Optional
@@ -864,6 +940,10 @@ type AutonomousContainerDatabaseParameters struct {
 	// (Updatable) An optional property when incremented triggers Switchover. Could be set to any integer value.
 	// +kubebuilder:validation:Optional
 	SwitchoverTrigger *float64 `json:"switchoverTrigger,omitempty" tf:"switchover_trigger,omitempty"`
+
+	// (Applicable when source=BACKUP_FROM_TIMESTAMP) The time stamp representing the point in time to which the Autonomous Container Database should be cloned from backup. And the requested timeStamp should be in the past.
+	// +kubebuilder:validation:Optional
+	TimeStampToUseForCloning *string `json:"timeStampToUseForCloning,omitempty" tf:"time_stamp_to_use_for_cloning,omitempty"`
 
 	// (Updatable) The percentage of CPUs reserved across nodes to support node failover. Allowed values are 0%, 25%, 50%, 75%, and 100%, with 50% being the default option.
 	// +kubebuilder:validation:Optional

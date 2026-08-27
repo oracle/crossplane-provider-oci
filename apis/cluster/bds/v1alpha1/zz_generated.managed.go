@@ -107,6 +107,56 @@ func (mg *BdsCapacityReport) SetWriteConnectionSecretToReference(r *xpv1.SecretR
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this BdsClusterAdminPasswordResetAction.
 func (mg *BdsClusterAdminPasswordResetAction) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -254,6 +304,56 @@ func (mg *BdsInstanceApiKey) SetProviderConfigReference(r *xpv1.Reference) {
 
 // SetWriteConnectionSecretToReference of this BdsInstanceApiKey.
 func (mg *BdsInstanceApiKey) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

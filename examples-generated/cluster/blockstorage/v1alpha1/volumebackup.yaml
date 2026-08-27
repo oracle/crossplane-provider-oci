@@ -13,9 +13,15 @@ spec:
     displayName: ${var.volume_backup_display_name}
     freeformTags:
       Department: Finance
+    isIndefiniteRetentionEnabled: ${var.volume_backup_is_indefinite_retention_enabled}
+    isPreventDeletionEnabled: ${var.volume_backup_is_prevent_deletion_enabled}
+    isRetentionLockEnabled: ${var.volume_backup_is_retention_lock_enabled}
     kmsKeyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_key
+    retentionPeriod:
+    - retentionTimeAmount: ${var.volume_backup_retention_period_retention_time_amount}
+      retentionTimeUnit: ${var.volume_backup_retention_period_retention_time_unit}
     type: ${var.volume_backup_type}
     volumeIdSelector:
       matchLabels:

@@ -87,6 +87,46 @@ func (mg *BdsCapacityReport) SetWriteConnectionSecretToReference(r *xpv1.LocalSe
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetManagementPolicies of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetManagementPolicies of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this BdsClusterAdminPasswordResetAction.
 func (mg *BdsClusterAdminPasswordResetAction) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -204,6 +244,46 @@ func (mg *BdsInstanceApiKey) SetProviderConfigReference(r *xpv1.ProviderConfigRe
 
 // SetWriteConnectionSecretToReference of this BdsInstanceApiKey.
 func (mg *BdsInstanceApiKey) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetManagementPolicies of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetManagementPolicies of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

@@ -81,6 +81,12 @@ type ReportObservation struct {
 	// Specifies the format of report to be .xls or .pdf or .json
 	MimeType *string `json:"mimeType,omitempty" tf:"mime_type,omitempty"`
 
+	// The OCID of the next report generated.
+	NextReportID *string `json:"nextReportId,omitempty" tf:"next_report_id,omitempty"`
+
+	// The OCID of the previous report generated.
+	PreviousReportID *string `json:"previousReportId,omitempty" tf:"previous_report_id,omitempty"`
+
 	// The OCID of the report definition.
 	ReportDefinitionID *string `json:"reportDefinitionId,omitempty" tf:"report_definition_id,omitempty"`
 

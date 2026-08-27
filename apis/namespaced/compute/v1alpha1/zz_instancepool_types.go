@@ -66,7 +66,7 @@ type InstancePoolInitParameters struct {
 	// (Updatable) The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
 	PlacementConfigurations []InstancePoolPlacementConfigurationsInitParameters `json:"placementConfigurations,omitempty" tf:"placement_configurations,omitempty"`
 
-	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute.
+	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// (Updatable) The target state for the instance pool update operation (ignored at create time and should not be set). Could be set to RUNNING or STOPPED.
@@ -214,7 +214,10 @@ type InstancePoolObservation struct {
 	// (Updatable) The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
 	PlacementConfigurations []InstancePoolPlacementConfigurationsObservation `json:"placementConfigurations,omitempty" tf:"placement_configurations,omitempty"`
 
-	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute.
+	// The type of resources managed by the pool.
+	PoolType *string `json:"poolType,omitempty" tf:"pool_type,omitempty"`
+
+	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// (Updatable) The target state for the instance pool update operation (ignored at create time and should not be set). Could be set to RUNNING or STOPPED.
@@ -286,7 +289,7 @@ type InstancePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	PlacementConfigurations []InstancePoolPlacementConfigurationsParameters `json:"placementConfigurations,omitempty" tf:"placement_configurations,omitempty"`
 
-	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute.
+	// (Updatable) The number of instances that should be in the instance pool. Modifying this value will override the size of the instance pool. If the instance pool is linked with autoscaling configuration, autoscaling configuration could resize the instance pool at a later point. The instance pool's actual size may differ from the configured size if it is associated with an autoscaling configuration, instance pool's actual size will be reflected in this size attribute. For a GMC-enabled resource pool, this is the number of GMC resources that should be in the pool.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 

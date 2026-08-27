@@ -39,6 +39,18 @@ type VolumeGroupBackupInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []VolumeGroupBackupRetentionPeriodInitParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+
 	// Details of the volume group backup source in the cloud.
 	SourceDetails []VolumeGroupBackupSourceDetailsInitParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
 
@@ -80,6 +92,18 @@ type VolumeGroupBackupObservation struct {
 	// The OCID of the volume group backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []VolumeGroupBackupRetentionPeriodObservation `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+
 	// The aggregate size of the volume group backup, in GBs.
 	SizeInGbs *string `json:"sizeInGbs,omitempty" tf:"size_in_gbs,omitempty"`
 
@@ -103,6 +127,9 @@ type VolumeGroupBackupObservation struct {
 
 	// The date and time the request to create the volume group backup was received. Format defined by RFC3339.
 	TimeRequestReceived *string `json:"timeRequestReceived,omitempty" tf:"time_request_received,omitempty"`
+
+	// The date and time when a backup’s retention period ends and it is set to expire. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	TimeRetentionExpiresAt *string `json:"timeRetentionExpiresAt,omitempty" tf:"time_retention_expires_at,omitempty"`
 
 	// The type of backup to create. If omitted, defaults to incremental.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -149,6 +176,22 @@ type VolumeGroupBackupParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	// +kubebuilder:validation:Optional
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	// +kubebuilder:validation:Optional
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	// +kubebuilder:validation:Optional
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	// +kubebuilder:validation:Optional
+	RetentionPeriod []VolumeGroupBackupRetentionPeriodParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
+
 	// Details of the volume group backup source in the cloud.
 	// +kubebuilder:validation:Optional
 	SourceDetails []VolumeGroupBackupSourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
@@ -169,6 +212,35 @@ type VolumeGroupBackupParameters struct {
 	// Selector for a VolumeGroup in blockstorage to populate volumeGroupId.
 	// +kubebuilder:validation:Optional
 	VolumeGroupIDSelector *v1.NamespacedSelector `json:"volumeGroupIdSelector,omitempty" tf:"-"`
+}
+
+type VolumeGroupBackupRetentionPeriodInitParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type VolumeGroupBackupRetentionPeriodObservation struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type VolumeGroupBackupRetentionPeriodParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	// +kubebuilder:validation:Optional
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	// +kubebuilder:validation:Optional
+	RetentionTimeUnit *string `json:"retentionTimeUnit" tf:"retention_time_unit,omitempty"`
 }
 
 type VolumeGroupBackupSourceDetailsInitParameters struct {

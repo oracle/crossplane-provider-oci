@@ -76,7 +76,7 @@ spec:
               forProvider:
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   analyticsInstanceIdRef:
                     description: Reference to a AnalyticsInstance in analytics to
@@ -155,20 +155,20 @@ spec:
                         type: object
                     type: object
                   caCertificate:
-                    description: (Updatable) PEM CA certificate(s) for HTTPS connections.
+                    description: (Updatable) PEM CA certificates for HTTPS connections.
                       This may include multiple PEM certificates.
                     type: string
                   description:
                     description: Optional description.
                     type: string
                   hosts:
-                    description: List of fully qualified hostnames supported by this
-                      vanity URL definition (max of 3).
+                    description: List of fully-qualified hostnames supported by this
+                      vanity URL definition (maximum of 3).
                     items:
                       type: string
                     type: array
                   passphraseSecretRef:
-                    description: (Updatable) Passphrase for the PEM Private key (if
+                    description: (Updatable) Passphrase for the PEM private key (if
                       any).
                     properties:
                       key:
@@ -186,7 +186,7 @@ spec:
                     - namespace
                     type: object
                   privateKeySecretRef:
-                    description: (Updatable) PEM Private key for HTTPS connections.
+                    description: (Updatable) PEM private key for HTTPS connections.
                     properties:
                       key:
                         description: The key to select.
@@ -220,7 +220,7 @@ spec:
                   autoscaler.
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   analyticsInstanceIdRef:
                     description: Reference to a AnalyticsInstance in analytics to
@@ -299,20 +299,20 @@ spec:
                         type: object
                     type: object
                   caCertificate:
-                    description: (Updatable) PEM CA certificate(s) for HTTPS connections.
+                    description: (Updatable) PEM CA certificates for HTTPS connections.
                       This may include multiple PEM certificates.
                     type: string
                   description:
                     description: Optional description.
                     type: string
                   hosts:
-                    description: List of fully qualified hostnames supported by this
-                      vanity URL definition (max of 3).
+                    description: List of fully-qualified hostnames supported by this
+                      vanity URL definition (maximum of 3).
                     items:
                       type: string
                     type: array
                   passphraseSecretRef:
-                    description: (Updatable) Passphrase for the PEM Private key (if
+                    description: (Updatable) Passphrase for the PEM private key (if
                       any).
                     properties:
                       key:
@@ -330,7 +330,7 @@ spec:
                     - namespace
                     type: object
                   privateKeySecretRef:
-                    description: (Updatable) PEM Private key for HTTPS connections.
+                    description: (Updatable) PEM private key for HTTPS connections.
                     properties:
                       key:
                         description: The key to select.
@@ -463,18 +463,18 @@ spec:
               atProvider:
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   caCertificate:
-                    description: (Updatable) PEM CA certificate(s) for HTTPS connections.
+                    description: (Updatable) PEM CA certificates for HTTPS connections.
                       This may include multiple PEM certificates.
                     type: string
                   description:
                     description: Optional description.
                     type: string
                   hosts:
-                    description: List of fully qualified hostnames supported by this
-                      vanity URL definition (max of 3).
+                    description: List of fully-qualified hostnames supported by this
+                      vanity URL definition (maximum of 3).
                     items:
                       type: string
                     type: array

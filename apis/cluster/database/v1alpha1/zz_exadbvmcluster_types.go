@@ -161,6 +161,9 @@ type ExadbVmClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateZoneIDSelector *v1.Selector `json:"privateZoneIdSelector,omitempty" tf:"-"`
 
+	// (Updatable) An optional property when incremented triggers Register Pkcs. Could be set to any integer value.
+	RegisterPkcsTrigger *float64 `json:"registerPkcsTrigger,omitempty" tf:"register_pkcs_trigger,omitempty"`
+
 	// (Updatable) The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure.
 	SSHPublicKeys []*string `json:"sshPublicKeys,omitempty" tf:"ssh_public_keys,omitempty"`
 
@@ -199,8 +202,14 @@ type ExadbVmClusterInitParameters struct {
 	// (Updatable) Operating system version of the image.
 	SystemVersion *string `json:"systemVersion,omitempty" tf:"system_version,omitempty"`
 
+	// TDE keystore type
+	TdeKeyStoreType *string `json:"tdeKeyStoreType,omitempty" tf:"tde_key_store_type,omitempty"`
+
 	// The time zone to use for the Exadata VM cluster on Exascale Infrastructure. For details, see Time Zones.
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Unregister Pkcs. Could be set to any integer value.
+	UnregisterPkcsTrigger *float64 `json:"unregisterPkcsTrigger,omitempty" tf:"unregister_pkcs_trigger,omitempty"`
 }
 
 type ExadbVmClusterIormConfigCacheDBPlansInitParameters struct {
@@ -240,6 +249,21 @@ type ExadbVmClusterIormConfigCacheObservation struct {
 }
 
 type ExadbVmClusterIormConfigCacheParameters struct {
+}
+
+type ExadbVmClusterMultiCloudIdentityConnectorConfigsInitParameters struct {
+}
+
+type ExadbVmClusterMultiCloudIdentityConnectorConfigsObservation struct {
+
+	// Cloud provider
+	CloudProvider *string `json:"cloudProvider,omitempty" tf:"cloud_provider,omitempty"`
+
+	// The OCID of the Exadata VM cluster on Exascale Infrastructure.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
+type ExadbVmClusterMultiCloudIdentityConnectorConfigsParameters struct {
 }
 
 type ExadbVmClusterObservation struct {
@@ -313,6 +337,9 @@ type ExadbVmClusterObservation struct {
 	// The port number configured for the listener on the Exadata VM cluster on Exascale Infrastructure.
 	ListenerPort *string `json:"listenerPort,omitempty" tf:"listener_port,omitempty"`
 
+	// Details of the multi cloud identity connectors of the VM cluster.
+	MultiCloudIdentityConnectorConfigs []ExadbVmClusterMultiCloudIdentityConnectorConfigsObservation `json:"multiCloudIdentityConnectorConfigs,omitempty" tf:"multi_cloud_identity_connector_configs,omitempty"`
+
 	// (Updatable) The configuration of each node in the Exadata VM cluster on Exascale Infrastructure.
 	NodeConfig []NodeConfigObservation `json:"nodeConfig,omitempty" tf:"node_config,omitempty"`
 
@@ -325,6 +352,9 @@ type ExadbVmClusterObservation struct {
 
 	// The private zone ID in which you want DNS records to be created.
 	PrivateZoneID *string `json:"privateZoneId,omitempty" tf:"private_zone_id,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Register Pkcs. Could be set to any integer value.
+	RegisterPkcsTrigger *float64 `json:"registerPkcsTrigger,omitempty" tf:"register_pkcs_trigger,omitempty"`
 
 	// (Updatable) The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure.
 	SSHPublicKeys []*string `json:"sshPublicKeys,omitempty" tf:"ssh_public_keys,omitempty"`
@@ -370,11 +400,17 @@ type ExadbVmClusterObservation struct {
 	// (Updatable) Operating system version of the image.
 	SystemVersion *string `json:"systemVersion,omitempty" tf:"system_version,omitempty"`
 
+	// TDE keystore type
+	TdeKeyStoreType *string `json:"tdeKeyStoreType,omitempty" tf:"tde_key_store_type,omitempty"`
+
 	// The date and time that the Exadata VM cluster on Exascale Infrastructure was created.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
 	// The time zone to use for the Exadata VM cluster on Exascale Infrastructure. For details, see Time Zones.
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Unregister Pkcs. Could be set to any integer value.
+	UnregisterPkcsTrigger *float64 `json:"unregisterPkcsTrigger,omitempty" tf:"unregister_pkcs_trigger,omitempty"`
 
 	// The OCID of the virtual IP (VIP) addresses associated with the Exadata VM cluster on Exascale Infrastructure.  The Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the Exadata Cloud Service instance to  enable failover. If one node fails, then the VIP is reassigned to another active node in the cluster.
 	VipIds []*string `json:"vipIds,omitempty" tf:"vip_ids,omitempty"`
@@ -510,6 +546,10 @@ type ExadbVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateZoneIDSelector *v1.Selector `json:"privateZoneIdSelector,omitempty" tf:"-"`
 
+	// (Updatable) An optional property when incremented triggers Register Pkcs. Could be set to any integer value.
+	// +kubebuilder:validation:Optional
+	RegisterPkcsTrigger *float64 `json:"registerPkcsTrigger,omitempty" tf:"register_pkcs_trigger,omitempty"`
+
 	// (Updatable) The public key portion of one or more key pairs used for SSH access to the Exadata VM cluster on Exascale Infrastructure.
 	// +kubebuilder:validation:Optional
 	SSHPublicKeys []*string `json:"sshPublicKeys,omitempty" tf:"ssh_public_keys,omitempty"`
@@ -557,9 +597,17 @@ type ExadbVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SystemVersion *string `json:"systemVersion,omitempty" tf:"system_version,omitempty"`
 
+	// TDE keystore type
+	// +kubebuilder:validation:Optional
+	TdeKeyStoreType *string `json:"tdeKeyStoreType,omitempty" tf:"tde_key_store_type,omitempty"`
+
 	// The time zone to use for the Exadata VM cluster on Exascale Infrastructure. For details, see Time Zones.
 	// +kubebuilder:validation:Optional
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Unregister Pkcs. Could be set to any integer value.
+	// +kubebuilder:validation:Optional
+	UnregisterPkcsTrigger *float64 `json:"unregisterPkcsTrigger,omitempty" tf:"unregister_pkcs_trigger,omitempty"`
 }
 
 type NodeConfigInitParameters struct {

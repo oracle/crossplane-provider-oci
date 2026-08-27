@@ -201,6 +201,21 @@ spec:
                           description: (Updatable) The hour of the day to schedule
                             the volume backup.
                           type: number
+                        isPreventDeletionEnabled:
+                          description: (Updatable) Prevent backups from being deleted
+                            during the configured retention period. This is an optional
+                            field. If it is not specified, it is set to null, prevent
+                            deletion will not be applied to the backups.
+                          type: boolean
+                        isRetentionLockEnabled:
+                          description: (Updatable) feature that prevents deletion
+                            or alteration of backup data for a specified period to
+                            ensure data protection and regulatory compliance. This
+                            is an optional field. If it is not specified, it is set
+                            to null, no retention lock will be applied to the backups.
+                            This feature should be used in conjunction with the retention-period
+                            field.
+                          type: boolean
                         month:
                           description: (Updatable) The month of the year to schedule
                             the volume backup.
@@ -222,6 +237,29 @@ spec:
                         period:
                           description: (Updatable) The volume backup frequency.
                           type: string
+                        retentionPeriod:
+                          description: (Updatable) This field is used to define the
+                            retention period for backups. This is an optional field.
+                            If it is not specified, it is set to null, no retention
+                            period will be applied to the backups.
+                          items:
+                            properties:
+                              retentionTimeAmount:
+                                description: (Updatable) The value to enter for the
+                                  amount of retention time should be a numerical figure
+                                  (such as 1, 7, 30, etc.) that corresponds to the
+                                  period specified in the retention time unit property
+                                  (such as YEARS, DAYS). The combination of these
+                                  two properties determines the total length of the
+                                  retention period.
+                                type: number
+                              retentionTimeUnit:
+                                description: (Updatable) The value you can assign
+                                  to the Time Unit property for this Duration may
+                                  be either "YEARS" or "DAYS".
+                                type: string
+                            type: object
+                          type: array
                         retentionSeconds:
                           description: (Updatable) How long, in seconds, to keep the
                             volume backups created by this schedule.
@@ -374,6 +412,21 @@ spec:
                           description: (Updatable) The hour of the day to schedule
                             the volume backup.
                           type: number
+                        isPreventDeletionEnabled:
+                          description: (Updatable) Prevent backups from being deleted
+                            during the configured retention period. This is an optional
+                            field. If it is not specified, it is set to null, prevent
+                            deletion will not be applied to the backups.
+                          type: boolean
+                        isRetentionLockEnabled:
+                          description: (Updatable) feature that prevents deletion
+                            or alteration of backup data for a specified period to
+                            ensure data protection and regulatory compliance. This
+                            is an optional field. If it is not specified, it is set
+                            to null, no retention lock will be applied to the backups.
+                            This feature should be used in conjunction with the retention-period
+                            field.
+                          type: boolean
                         month:
                           description: (Updatable) The month of the year to schedule
                             the volume backup.
@@ -395,6 +448,29 @@ spec:
                         period:
                           description: (Updatable) The volume backup frequency.
                           type: string
+                        retentionPeriod:
+                          description: (Updatable) This field is used to define the
+                            retention period for backups. This is an optional field.
+                            If it is not specified, it is set to null, no retention
+                            period will be applied to the backups.
+                          items:
+                            properties:
+                              retentionTimeAmount:
+                                description: (Updatable) The value to enter for the
+                                  amount of retention time should be a numerical figure
+                                  (such as 1, 7, 30, etc.) that corresponds to the
+                                  period specified in the retention time unit property
+                                  (such as YEARS, DAYS). The combination of these
+                                  two properties determines the total length of the
+                                  retention period.
+                                type: number
+                              retentionTimeUnit:
+                                description: (Updatable) The value you can assign
+                                  to the Time Unit property for this Duration may
+                                  be either "YEARS" or "DAYS".
+                                type: string
+                            type: object
+                          type: array
                         retentionSeconds:
                           description: (Updatable) How long, in seconds, to keep the
                             volume backups created by this schedule.
@@ -554,6 +630,21 @@ spec:
                           description: (Updatable) The hour of the day to schedule
                             the volume backup.
                           type: number
+                        isPreventDeletionEnabled:
+                          description: (Updatable) Prevent backups from being deleted
+                            during the configured retention period. This is an optional
+                            field. If it is not specified, it is set to null, prevent
+                            deletion will not be applied to the backups.
+                          type: boolean
+                        isRetentionLockEnabled:
+                          description: (Updatable) feature that prevents deletion
+                            or alteration of backup data for a specified period to
+                            ensure data protection and regulatory compliance. This
+                            is an optional field. If it is not specified, it is set
+                            to null, no retention lock will be applied to the backups.
+                            This feature should be used in conjunction with the retention-period
+                            field.
+                          type: boolean
                         month:
                           description: (Updatable) The month of the year to schedule
                             the volume backup.
@@ -575,6 +666,29 @@ spec:
                         period:
                           description: (Updatable) The volume backup frequency.
                           type: string
+                        retentionPeriod:
+                          description: (Updatable) This field is used to define the
+                            retention period for backups. This is an optional field.
+                            If it is not specified, it is set to null, no retention
+                            period will be applied to the backups.
+                          items:
+                            properties:
+                              retentionTimeAmount:
+                                description: (Updatable) The value to enter for the
+                                  amount of retention time should be a numerical figure
+                                  (such as 1, 7, 30, etc.) that corresponds to the
+                                  period specified in the retention time unit property
+                                  (such as YEARS, DAYS). The combination of these
+                                  two properties determines the total length of the
+                                  retention period.
+                                type: number
+                              retentionTimeUnit:
+                                description: (Updatable) The value you can assign
+                                  to the Time Unit property for this Duration may
+                                  be either "YEARS" or "DAYS".
+                                type: string
+                            type: object
+                          type: array
                         retentionSeconds:
                           description: (Updatable) How long, in seconds, to keep the
                             volume backups created by this schedule.

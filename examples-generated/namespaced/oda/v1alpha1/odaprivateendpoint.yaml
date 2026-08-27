@@ -19,6 +19,7 @@ spec:
     freeformTags:
       bar-key: value
     nsgIds: ${var.oda_private_endpoint_nsg_ids}
+    securityAttributes: ${var.oda_private_endpoint_security_attributes}
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_subnet

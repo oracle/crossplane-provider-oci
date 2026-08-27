@@ -11,6 +11,7 @@ import (
 
 	analyticsinstance "github.com/oracle/provider-oci/internal/controller/namespaced/analytics/analyticsinstance"
 	analyticsinstanceprivateaccesschannel "github.com/oracle/provider-oci/internal/controller/namespaced/analytics/analyticsinstanceprivateaccesschannel"
+	analyticsinstanceresourcegroup "github.com/oracle/provider-oci/internal/controller/namespaced/analytics/analyticsinstanceresourcegroup"
 	analyticsinstancevanityurl "github.com/oracle/provider-oci/internal/controller/namespaced/analytics/analyticsinstancevanityurl"
 )
 
@@ -20,6 +21,7 @@ func Setup_analytics(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		analyticsinstance.Setup,
 		analyticsinstanceprivateaccesschannel.Setup,
+		analyticsinstanceresourcegroup.Setup,
 		analyticsinstancevanityurl.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
@@ -35,6 +37,7 @@ func SetupGated_analytics(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		analyticsinstance.SetupGated,
 		analyticsinstanceprivateaccesschannel.SetupGated,
+		analyticsinstanceresourcegroup.SetupGated,
 		analyticsinstancevanityurl.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {

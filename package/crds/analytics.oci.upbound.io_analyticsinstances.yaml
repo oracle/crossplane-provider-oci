@@ -75,11 +75,13 @@ spec:
               forProvider:
                 properties:
                   adminUser:
-                    description: user name of the authorized user.
+                    description: 'The Analytics instance administrator user. This
+                      must be the user name (not OCID) of a user in the nominated
+                      identity domain. For example: john.smith@example.com.'
                     type: string
                   capacity:
-                    description: 'Service instance capacity metadata (e.g.: OLPU count,
-                      number of users, ...etc...).'
+                    description: Service instance capacity metadata (for example,
+                      OLPU count, number of users, and so on).
                     items:
                       properties:
                         capacityType:
@@ -91,7 +93,7 @@ spec:
                             the number of OCPUs (OLPU_COUNT) or the number of users
                             (USER_COUNT). This parameter affects the number of OCPUs,
                             amount of memory, and other resources allocated to the
-                            instance.
+                            Analytics instance.
                           type: number
                       type: object
                     type: array
@@ -186,7 +188,8 @@ spec:
                     description: (Updatable) Optional description.
                     type: string
                   domainId:
-                    description: domain id for which the user is authorized.
+                    description: 'The OCID of the identity domain to use for the new
+                      Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.'
                     type: string
                   domainIdRef:
                     description: Reference to a Domain in identity to populate domainId.
@@ -269,7 +272,8 @@ spec:
                     description: The feature set of an Analytics instance.
                     type: string
                   featureSet:
-                    description: Analytics feature set.
+                    description: The feature set. Either SELF_SERVICE_ANALYTICS (Professional
+                      Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
                     type: string
                   freeformTags:
                     additionalProperties:
@@ -301,7 +305,8 @@ spec:
                   kmsKeyId:
                     description: OCID of the Oracle Cloud Infrastructure Vault Key
                       encrypting the customer data stored in this Analytics instance.
-                      A null value indicates Oracle managed default encryption.
+                      A null value indicates that the default Oracle-managed encryption
+                      is used.
                     type: string
                   kmsKeyIdRef:
                     description: Reference to a Key in kms to populate kmsKeyId.
@@ -382,7 +387,9 @@ spec:
                     type: string
                   name:
                     description: The name of the Analytics instance. This name must
-                      be unique in the tenancy and cannot be changed.
+                      be unique in the tenancy and can't be changed. The name must
+                      start with a letter and can contain only letters, numbers and
+                      dash (-).
                     type: string
                   networkEndpointDetails:
                     description: Base representation of a network endpoint.
@@ -393,7 +400,7 @@ spec:
                           type: string
                         networkSecurityGroupIds:
                           description: (Applicable when network_endpoint_type=PRIVATE)
-                            Network Security Group OCIDs for an Analytics instance.
+                            Network Security Group OCIDs for the Analytics instance.
                           items:
                             type: string
                           type: array
@@ -564,7 +571,7 @@ spec:
                           type: array
                         whitelistedServices:
                           description: (Applicable when network_endpoint_type=PUBLIC)
-                            Oracle Cloud Services that are allowed to access this
+                            Oracle Cloud services that are allowed to access this
                             Analytics instance.
                           items:
                             type: string
@@ -611,11 +618,13 @@ spec:
                   autoscaler.
                 properties:
                   adminUser:
-                    description: user name of the authorized user.
+                    description: 'The Analytics instance administrator user. This
+                      must be the user name (not OCID) of a user in the nominated
+                      identity domain. For example: john.smith@example.com.'
                     type: string
                   capacity:
-                    description: 'Service instance capacity metadata (e.g.: OLPU count,
-                      number of users, ...etc...).'
+                    description: Service instance capacity metadata (for example,
+                      OLPU count, number of users, and so on).
                     items:
                       properties:
                         capacityType:
@@ -627,7 +636,7 @@ spec:
                             the number of OCPUs (OLPU_COUNT) or the number of users
                             (USER_COUNT). This parameter affects the number of OCPUs,
                             amount of memory, and other resources allocated to the
-                            instance.
+                            Analytics instance.
                           type: number
                       type: object
                     type: array
@@ -722,7 +731,8 @@ spec:
                     description: (Updatable) Optional description.
                     type: string
                   domainId:
-                    description: domain id for which the user is authorized.
+                    description: 'The OCID of the identity domain to use for the new
+                      Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.'
                     type: string
                   domainIdRef:
                     description: Reference to a Domain in identity to populate domainId.
@@ -805,7 +815,8 @@ spec:
                     description: The feature set of an Analytics instance.
                     type: string
                   featureSet:
-                    description: Analytics feature set.
+                    description: The feature set. Either SELF_SERVICE_ANALYTICS (Professional
+                      Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
                     type: string
                   freeformTags:
                     additionalProperties:
@@ -837,7 +848,8 @@ spec:
                   kmsKeyId:
                     description: OCID of the Oracle Cloud Infrastructure Vault Key
                       encrypting the customer data stored in this Analytics instance.
-                      A null value indicates Oracle managed default encryption.
+                      A null value indicates that the default Oracle-managed encryption
+                      is used.
                     type: string
                   kmsKeyIdRef:
                     description: Reference to a Key in kms to populate kmsKeyId.
@@ -918,7 +930,9 @@ spec:
                     type: string
                   name:
                     description: The name of the Analytics instance. This name must
-                      be unique in the tenancy and cannot be changed.
+                      be unique in the tenancy and can't be changed. The name must
+                      start with a letter and can contain only letters, numbers and
+                      dash (-).
                     type: string
                   networkEndpointDetails:
                     description: Base representation of a network endpoint.
@@ -929,7 +943,7 @@ spec:
                           type: string
                         networkSecurityGroupIds:
                           description: (Applicable when network_endpoint_type=PRIVATE)
-                            Network Security Group OCIDs for an Analytics instance.
+                            Network Security Group OCIDs for the Analytics instance.
                           items:
                             type: string
                           type: array
@@ -1100,7 +1114,7 @@ spec:
                           type: array
                         whitelistedServices:
                           description: (Applicable when network_endpoint_type=PUBLIC)
-                            Oracle Cloud Services that are allowed to access this
+                            Oracle Cloud services that are allowed to access this
                             Analytics instance.
                           items:
                             type: string
@@ -1244,11 +1258,13 @@ spec:
               atProvider:
                 properties:
                   adminUser:
-                    description: user name of the authorized user.
+                    description: 'The Analytics instance administrator user. This
+                      must be the user name (not OCID) of a user in the nominated
+                      identity domain. For example: john.smith@example.com.'
                     type: string
                   capacity:
-                    description: 'Service instance capacity metadata (e.g.: OLPU count,
-                      number of users, ...etc...).'
+                    description: Service instance capacity metadata (for example,
+                      OLPU count, number of users, and so on).
                     items:
                       properties:
                         capacityType:
@@ -1260,7 +1276,7 @@ spec:
                             the number of OCPUs (OLPU_COUNT) or the number of users
                             (USER_COUNT). This parameter affects the number of OCPUs,
                             amount of memory, and other resources allocated to the
-                            instance.
+                            Analytics instance.
                           type: number
                       type: object
                     type: array
@@ -1279,7 +1295,8 @@ spec:
                     description: (Updatable) Optional description.
                     type: string
                   domainId:
-                    description: domain id for which the user is authorized.
+                    description: 'The OCID of the identity domain to use for the new
+                      Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.'
                     type: string
                   emailNotification:
                     description: (Updatable) Email address receiving notifications.
@@ -1288,7 +1305,8 @@ spec:
                     description: The feature set of an Analytics instance.
                     type: string
                   featureSet:
-                    description: Analytics feature set.
+                    description: The feature set. Either SELF_SERVICE_ANALYTICS (Professional
+                      Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
                     type: string
                   freeformTags:
                     additionalProperties:
@@ -1305,14 +1323,17 @@ spec:
                   kmsKeyId:
                     description: OCID of the Oracle Cloud Infrastructure Vault Key
                       encrypting the customer data stored in this Analytics instance.
-                      A null value indicates Oracle managed default encryption.
+                      A null value indicates that the default Oracle-managed encryption
+                      is used.
                     type: string
                   licenseType:
                     description: (Updatable) The license used for the service.
                     type: string
                   name:
                     description: The name of the Analytics instance. This name must
-                      be unique in the tenancy and cannot be changed.
+                      be unique in the tenancy and can't be changed. The name must
+                      start with a letter and can contain only letters, numbers and
+                      dash (-).
                     type: string
                   networkEndpointDetails:
                     description: Base representation of a network endpoint.
@@ -1323,7 +1344,7 @@ spec:
                           type: string
                         networkSecurityGroupIds:
                           description: (Applicable when network_endpoint_type=PRIVATE)
-                            Network Security Group OCIDs for an Analytics instance.
+                            Network Security Group OCIDs for the Analytics instance.
                           items:
                             type: string
                           type: array
@@ -1342,7 +1363,7 @@ spec:
                           type: array
                         whitelistedServices:
                           description: (Applicable when network_endpoint_type=PUBLIC)
-                            Oracle Cloud Services that are allowed to access this
+                            Oracle Cloud services that are allowed to access this
                             Analytics instance.
                           items:
                             type: string
@@ -1367,8 +1388,31 @@ spec:
                           type: array
                       type: object
                     type: array
+                  resourceGroups:
+                    description: List of resource groups for this Analytics instance.
+                      The resource group id must be unique within the instance.
+                    items:
+                      properties:
+                        capacity:
+                          description: Service instance capacity metadata (for example,
+                            OLPU count, number of users, and so on).
+                          type: number
+                        description:
+                          description: (Updatable) Optional description.
+                          type: string
+                        displayName:
+                          description: Display name of the private access channel.
+                          type: string
+                        id:
+                          description: The Virtual Cloud Network OCID.
+                          type: string
+                        resourceName:
+                          description: Meaningful name of resource group for end user
+                          type: string
+                      type: object
+                    type: array
                   serviceUrl:
-                    description: URL of the Analytics service.
+                    description: URL of the Analytics instance.
                     type: string
                   state:
                     description: (Updatable) The target state for the Analytics Instance.
@@ -1382,13 +1426,14 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   timeCreated:
-                    description: 'The date and time the instance was created, in the
-                      format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z'
+                    description: 'The date and time the Analytics instance was created,
+                      in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z'
                     type: string
                   timeUpdated:
-                    description: The date and time the instance was last updated (in
-                      the format defined by RFC3339). This timestamp represents updates
-                      made through this API. External events do not influence it.
+                    description: The date and time the Analytics instance was last
+                      updated (in the format defined by RFC3339). This timestamp represents
+                      updates made through this API. External events don't affect
+                      it.
                     type: string
                   updateChannel:
                     description: (Updatable) Analytics instance update channel.

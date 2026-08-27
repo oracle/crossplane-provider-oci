@@ -395,6 +395,10 @@ spec:
                       follows a schedule applying patches prior to the REGULAR schedule.
                       A REGULAR maintenance schedule follows the normal cycle
                     type: string
+                  availabilityDomain:
+                    description: (Updatable) The Autonomous Database Serverless instance's
+                      availability domain.
+                    type: string
                   backupRetentionPeriodInDays:
                     description: (Updatable) Retention period, in days, for long-term
                       backups
@@ -1072,6 +1076,8 @@ spec:
                       more compute or storage resources, you may upgrade to a full
                       paid production database.
                     type: boolean
+                  isDisableAdUpdateSchedule:
+                    type: boolean
                   isDisableDbVersionUpgradeSchedule:
                     type: boolean
                   isDisconnectPeer:
@@ -1110,6 +1116,8 @@ spec:
                       backups are replicated across regions for Cross-Region ADB or
                       Backup-Based DR between Primary and Standby. If false, the backups
                       taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleAdUpdateToEarliest:
                     type: boolean
                   isScheduleDbVersionUpgradeToEarliest:
                     type: boolean
@@ -1599,6 +1607,10 @@ spec:
                       only the start time for the first refresh operation. Subsequent
                       (ongoing) refresh operations have start times controlled by
                       the value of the autoRefreshFrequencyInSeconds parameter.
+                    type: string
+                  timeScheduledAdUpdate:
+                    description: The date and time to which the Autonomous Database
+                      availability domain update is scheduled.
                     type: string
                   timeScheduledDbVersionUpgrade:
                     description: The date and time the Autonomous AI Database scheduled
@@ -2069,6 +2081,10 @@ spec:
                       follows a schedule applying patches prior to the REGULAR schedule.
                       A REGULAR maintenance schedule follows the normal cycle
                     type: string
+                  availabilityDomain:
+                    description: (Updatable) The Autonomous Database Serverless instance's
+                      availability domain.
+                    type: string
                   backupRetentionPeriodInDays:
                     description: (Updatable) Retention period, in days, for long-term
                       backups
@@ -2746,6 +2762,8 @@ spec:
                       more compute or storage resources, you may upgrade to a full
                       paid production database.
                     type: boolean
+                  isDisableAdUpdateSchedule:
+                    type: boolean
                   isDisableDbVersionUpgradeSchedule:
                     type: boolean
                   isDisconnectPeer:
@@ -2784,6 +2802,8 @@ spec:
                       backups are replicated across regions for Cross-Region ADB or
                       Backup-Based DR between Primary and Standby. If false, the backups
                       taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleAdUpdateToEarliest:
                     type: boolean
                   isScheduleDbVersionUpgradeToEarliest:
                     type: boolean
@@ -3274,6 +3294,10 @@ spec:
                       (ongoing) refresh operations have start times controlled by
                       the value of the autoRefreshFrequencyInSeconds parameter.
                     type: string
+                  timeScheduledAdUpdate:
+                    description: The date and time to which the Autonomous Database
+                      availability domain update is scheduled.
+                    type: string
                   timeScheduledDbVersionUpgrade:
                     description: The date and time the Autonomous AI Database scheduled
                       to upgrade to 26ai.
@@ -3511,6 +3535,10 @@ spec:
                     description: The current amount of storage in use for user and
                       system data, in terabytes (TB).
                     type: number
+                  adScheduledForUpdate:
+                    description: The Availability Domain which is planned for Scheduled
+                      Update
+                    type: string
                   additionalAttributes:
                     additionalProperties:
                       type: string
@@ -3612,8 +3640,8 @@ spec:
                       A REGULAR maintenance schedule follows the normal cycle
                     type: string
                   availabilityDomain:
-                    description: The availability domain where the Autonomous AI Database
-                      Serverless instance is located.
+                    description: (Updatable) The Autonomous Database Serverless instance's
+                      availability domain.
                     type: string
                   availableUpgradeVersions:
                     description: List of Oracle AI Database versions available for
@@ -4218,6 +4246,8 @@ spec:
                       more compute or storage resources, you may upgrade to a full
                       paid production database.
                     type: boolean
+                  isDisableAdUpdateSchedule:
+                    type: boolean
                   isDisableDbVersionUpgradeSchedule:
                     type: boolean
                   isDisconnectPeer:
@@ -4270,6 +4300,8 @@ spec:
                       backups are replicated across regions for Cross-Region ADB or
                       Backup-Based DR between Primary and Standby. If false, the backups
                       taken on the Primary are not replicated to the Standby database.
+                    type: boolean
+                  isScheduleAdUpdateToEarliest:
                     type: boolean
                   isScheduleDbVersionUpgradeToEarliest:
                     type: boolean
@@ -4376,8 +4408,8 @@ spec:
                     items:
                       properties:
                         availabilityDomain:
-                          description: The availability domain where the Autonomous
-                            AI Database Serverless instance is located.
+                          description: (Updatable) The Autonomous Database Serverless
+                            instance's availability domain.
                           type: string
                         externalLocationZone:
                           description: The external logical zone where the Autonomous
@@ -4734,8 +4766,8 @@ spec:
                     items:
                       properties:
                         availabilityDomain:
-                          description: The availability domain where the Autonomous
-                            AI Database Serverless instance is located.
+                          description: (Updatable) The Autonomous Database Serverless
+                            instance's availability domain.
                           type: string
                         externalLocationZone:
                           description: The external logical zone where the Autonomous
@@ -4843,9 +4875,17 @@ spec:
                     description: The date and time the Disaster Recovery role was
                       switched for the standby Autonomous AI Database.
                     type: string
+                  timeEarliestAvailableAdUpdate:
+                    description: The earliest date and time to which you can schedule
+                      an Autonomous Database availability domain update.
+                    type: string
                   timeEarliestAvailableDbVersionUpgrade:
                     description: The earliest(min) date and time the Autonomous AI
                       Database can be scheduled to upgrade to 26ai.
+                    type: string
+                  timeLatestAvailableAdUpdate:
+                    description: The latest date and time to which you can schedule
+                      an Autonomous Database availability domain update.
                     type: string
                   timeLatestAvailableDbVersionUpgrade:
                     description: The max date and time the Autonomous AI Database
@@ -4901,6 +4941,10 @@ spec:
                       stopped because of inactivity. If this time is reached without
                       any database activity, the database will automatically be put
                       into the STOPPED state.
+                    type: string
+                  timeScheduledAdUpdate:
+                    description: The date and time to which the Autonomous Database
+                      availability domain update is scheduled.
                     type: string
                   timeScheduledDbVersionUpgrade:
                     description: The date and time the Autonomous AI Database scheduled

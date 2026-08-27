@@ -216,7 +216,7 @@ type ChannelsSourceObservation struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Applicable when source_type=DBSYSTEM) The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
-	SSLCACertificate []SourceSSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []ChannelsSourceSSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// The SSL mode of the Channel.
 	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
@@ -229,6 +229,21 @@ type ChannelsSourceObservation struct {
 }
 
 type ChannelsSourceParameters struct {
+}
+
+type ChannelsSourceSSLCACertificateInitParameters struct {
+}
+
+type ChannelsSourceSSLCACertificateObservation struct {
+
+	// The type of CA certificate.
+	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
+
+	// The string containing the CA certificate in PEM format.
+	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
+}
+
+type ChannelsSourceSSLCACertificateParameters struct {
 }
 
 type ChannelsTargetInitParameters struct {
@@ -1596,21 +1611,6 @@ type SourceAnonymousTransactionsHandlingObservation struct {
 }
 
 type SourceAnonymousTransactionsHandlingParameters struct {
-}
-
-type SourceSSLCACertificateInitParameters struct {
-}
-
-type SourceSSLCACertificateObservation struct {
-
-	// The type of CA certificate.
-	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
-
-	// The string containing the CA certificate in PEM format.
-	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
-}
-
-type SourceSSLCACertificateParameters struct {
 }
 
 type TargetFiltersInitParameters struct {

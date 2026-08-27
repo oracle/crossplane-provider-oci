@@ -1388,6 +1388,9 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        poolType:
+                          description: The type of resources managed by the pool.
+                          type: string
                         size:
                           description: (Updatable) The number of instances that should
                             be in the instance pool.

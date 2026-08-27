@@ -25,6 +25,9 @@ type ApproverDetailsObservation struct {
 	// Comment specified by the approver of the request.
 	ApprovalComment *string `json:"approvalComment,omitempty" tf:"approval_comment,omitempty"`
 
+	// The group level at which the approver approved.
+	ApproverGroupLevel *float64 `json:"approverGroupLevel,omitempty" tf:"approver_group_level,omitempty"`
+
 	// The userId of the approver.
 	ApproverID *string `json:"approverId,omitempty" tf:"approver_id,omitempty"`
 

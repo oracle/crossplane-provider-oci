@@ -10,6 +10,7 @@ metadata:
 spec:
   forProvider:
     autonomousContainerDatabaseBackupId: ${oci_database_autonomous_container_database_backup.test_autonomous_container_database_backup.id}
+    autonomousDatabasesToClone: ${var.autonomous_container_database_autonomous_databases_to_clone}
     autonomousExadataInfrastructureIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_autonomous_exadata_infrastructure
@@ -31,6 +32,8 @@ spec:
           name: example-secret
         vpcUser: ${var.autonomous_container_database_backup_config_backup_destination_details_vpc_user}
       recoveryWindowInDays: ${var.autonomous_container_database_backup_config_recovery_window_in_days}
+    cloneBandWidth: ${var.autonomous_container_database_clone_band_width}
+    cloneType: ${var.autonomous_container_database_clone_type}
     cloudAutonomousVmClusterIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_cloud_autonomous_vm_cluster
@@ -116,8 +119,13 @@ spec:
     peerDbUniqueName: ${var.autonomous_container_database_peer_db_unique_name}
     protectionMode: ${var.autonomous_container_database_protection_mode}
     serviceLevelAgreementType: ${var.autonomous_container_database_service_level_agreement_type}
+    shouldUseLatestAvailableBackupTimeStamp: ${var.autonomous_container_database_should_use_latest_available_backup_time_stamp}
     source: ${var.autonomous_container_database_source}
+    sourceAutonomousContainerDatabaseIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_autonomous_container_database
     standbyMaintenanceBufferInDays: ${var.autonomous_container_database_standby_maintenance_buffer_in_days}
+    timeStampToUseForCloning: ${var.autonomous_container_database_time_stamp_to_use_for_cloning}
     vaultIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_vault

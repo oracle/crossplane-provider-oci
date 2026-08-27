@@ -168,6 +168,151 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  gmcConfigs:
+                    description: The GPU Memory Cluster configuration entries for.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: 'The availability domain of the block volume
+                            replica.  Example: Uocm:PHX-AD-1'
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment containing
+                            the instance configuration.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Defined tags for this resource.
+                            Each key is predefined and scoped to a namespace. For
+                            more information, see Resource Tags.  Example: {"Operations.CostCenter":
+                            "42"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: (Updatable) A user-friendly name. Does not
+                            have to be unique, and it's changeable. Avoid entering
+                            confidential information.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        gpuMemoryClusterScaleConfig:
+                          description: (Applicable when source=GMC) Configuration
+                            settings for GPU Memory Cluster scaling.
+                          items:
+                            properties:
+                              isDownsizeEnabled:
+                                description: (Applicable when source=GMC) Enables
+                                  downsizing towards the target size.
+                                type: boolean
+                              isUpsizeEnabled:
+                                description: Enables upsizing towards the target size.
+                                type: boolean
+                              targetSize:
+                                description: (Applicable when source=GMC) The configured
+                                  target size for the GPU Memory Cluster.
+                                type: string
+                            type: object
+                          type: array
+                        instanceConfigurationId:
+                          description: The OCID of the base compute instance configuration
+                            associated with this GMC configuration entry.
+                          type: string
+                        instanceConfigurationIdRef:
+                          description: Reference to a InstanceConfiguration in compute
+                            to populate instanceConfigurationId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        instanceConfigurationIdSelector:
+                          description: Selector for a InstanceConfiguration in compute
+                            to populate instanceConfigurationId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        size:
+                          description: (Applicable when source=GMC) The desired number
+                            of instances for this GMC configuration entry.
+                          type: string
+                      type: object
+                    type: array
                   instanceDetails:
                     items:
                       properties:
@@ -1485,7 +1630,7 @@ spec:
                                   type: object
                                 type: array
                               licensingConfigs:
-                                description: (Applicable when instance_type=instance_options)
+                                description: (Applicable when instance_type=compute)
                                   List of licensing configurations associated with
                                   target launch values.
                                 items:
@@ -3480,7 +3625,7 @@ spec:
                                         type: object
                                       type: array
                                     licensingConfigs:
-                                      description: (Applicable when instance_type=instance_options)
+                                      description: (Applicable when instance_type=compute)
                                         List of licensing configurations associated
                                         with target launch values.
                                       items:
@@ -5119,6 +5264,151 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  gmcConfigs:
+                    description: The GPU Memory Cluster configuration entries for.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: 'The availability domain of the block volume
+                            replica.  Example: Uocm:PHX-AD-1'
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment containing
+                            the instance configuration.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Defined tags for this resource.
+                            Each key is predefined and scoped to a namespace. For
+                            more information, see Resource Tags.  Example: {"Operations.CostCenter":
+                            "42"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: (Updatable) A user-friendly name. Does not
+                            have to be unique, and it's changeable. Avoid entering
+                            confidential information.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        gpuMemoryClusterScaleConfig:
+                          description: (Applicable when source=GMC) Configuration
+                            settings for GPU Memory Cluster scaling.
+                          items:
+                            properties:
+                              isDownsizeEnabled:
+                                description: (Applicable when source=GMC) Enables
+                                  downsizing towards the target size.
+                                type: boolean
+                              isUpsizeEnabled:
+                                description: Enables upsizing towards the target size.
+                                type: boolean
+                              targetSize:
+                                description: (Applicable when source=GMC) The configured
+                                  target size for the GPU Memory Cluster.
+                                type: string
+                            type: object
+                          type: array
+                        instanceConfigurationId:
+                          description: The OCID of the base compute instance configuration
+                            associated with this GMC configuration entry.
+                          type: string
+                        instanceConfigurationIdRef:
+                          description: Reference to a InstanceConfiguration in compute
+                            to populate instanceConfigurationId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        instanceConfigurationIdSelector:
+                          description: Selector for a InstanceConfiguration in compute
+                            to populate instanceConfigurationId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        size:
+                          description: (Applicable when source=GMC) The desired number
+                            of instances for this GMC configuration entry.
+                          type: string
+                      type: object
+                    type: array
                   instanceDetails:
                     items:
                       properties:
@@ -6436,7 +6726,7 @@ spec:
                                   type: object
                                 type: array
                               licensingConfigs:
-                                description: (Applicable when instance_type=instance_options)
+                                description: (Applicable when instance_type=compute)
                                   List of licensing configurations associated with
                                   target launch values.
                                 items:
@@ -8431,7 +8721,7 @@ spec:
                                         type: object
                                       type: array
                                     licensingConfigs:
-                                      description: (Applicable when instance_type=instance_options)
+                                      description: (Applicable when instance_type=compute)
                                         List of licensing configurations associated
                                         with target launch values.
                                       items:
@@ -10049,6 +10339,69 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  gmcConfigs:
+                    description: The GPU Memory Cluster configuration entries for.
+                    items:
+                      properties:
+                        availabilityDomain:
+                          description: 'The availability domain of the block volume
+                            replica.  Example: Uocm:PHX-AD-1'
+                          type: string
+                        compartmentId:
+                          description: (Updatable) The OCID of the compartment containing
+                            the instance configuration.
+                          type: string
+                        definedTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Defined tags for this resource.
+                            Each key is predefined and scoped to a namespace. For
+                            more information, see Resource Tags.  Example: {"Operations.CostCenter":
+                            "42"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        displayName:
+                          description: (Updatable) A user-friendly name. Does not
+                            have to be unique, and it's changeable. Avoid entering
+                            confidential information.
+                          type: string
+                        freeformTags:
+                          additionalProperties:
+                            type: string
+                          description: '(Updatable) Free-form tags for this resource.
+                            Each tag is a simple key-value pair with no predefined
+                            name, type, or namespace. For more information, see Resource
+                            Tags.  Example: {"Department": "Finance"}'
+                          type: object
+                          x-kubernetes-map-type: granular
+                        gpuMemoryClusterScaleConfig:
+                          description: (Applicable when source=GMC) Configuration
+                            settings for GPU Memory Cluster scaling.
+                          items:
+                            properties:
+                              isDownsizeEnabled:
+                                description: (Applicable when source=GMC) Enables
+                                  downsizing towards the target size.
+                                type: boolean
+                              isUpsizeEnabled:
+                                description: Enables upsizing towards the target size.
+                                type: boolean
+                              targetSize:
+                                description: (Applicable when source=GMC) The configured
+                                  target size for the GPU Memory Cluster.
+                                type: string
+                            type: object
+                          type: array
+                        instanceConfigurationId:
+                          description: The OCID of the base compute instance configuration
+                            associated with this GMC configuration entry.
+                          type: string
+                        size:
+                          description: (Applicable when source=GMC) The desired number
+                            of instances for this GMC configuration entry.
+                          type: string
+                      type: object
+                    type: array
                   id:
                     description: The OCID of the volume backup.
                     type: string
@@ -10625,7 +10978,7 @@ spec:
                                   type: object
                                 type: array
                               licensingConfigs:
-                                description: (Applicable when instance_type=instance_options)
+                                description: (Applicable when instance_type=compute)
                                   List of licensing configurations associated with
                                   target launch values.
                                 items:
@@ -11534,7 +11887,7 @@ spec:
                                         type: object
                                       type: array
                                     licensingConfigs:
-                                      description: (Applicable when instance_type=instance_options)
+                                      description: (Applicable when instance_type=compute)
                                         List of licensing configurations associated
                                         with target launch values.
                                       items:

@@ -21,7 +21,7 @@ func (mg *DbHome) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this DbHome
 func (tr *DbHome) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"database[*].admin_password": "database[*].adminPasswordSecretRef", "database[*].backup_tde_password": "database[*].backupTdePasswordSecretRef", "database[*].db_backup_config[*].backup_destination_details[*].vpc_password": "database[*].dbBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef", "database[*].encryption_key_location_details[*].hsm_password": "database[*].encryptionKeyLocationDetails[*].hsmPasswordSecretRef", "database[*].tde_wallet_password": "database[*].tdeWalletPasswordSecretRef"}
+	return map[string]string{"database[*].admin_password": "database[*].adminPasswordSecretRef", "database[*].backup_tde_password": "database[*].backupTdePasswordSecretRef", "database[*].db_backup_config[*].backup_destination_details[*].vpc_password": "database[*].dbBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef", "database[*].encryption_key_location_details[*].hsm_password": "database[*].encryptionKeyLocationDetails[*].hsmPasswordSecretRef", "database[*].recovery_appliance_vpc_password": "database[*].recoveryApplianceVpcPasswordSecretRef", "database[*].tde_wallet_password": "database[*].tdeWalletPasswordSecretRef"}
 }
 
 // GetObservation of this DbHome

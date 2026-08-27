@@ -21,4 +21,10 @@ spec:
     displayName: ${var.ai_data_platform_display_name}
     freeformTags:
       Department: Finance
+    isEnableAiFeature: ${var.ai_data_platform_is_enable_ai_feature}
     systemTags: ${var.ai_data_platform_system_tags}
+    vectorDbAdminCred: ${var.ai_data_platform_vector_db_admin_cred}
+    vectorDbAdminSecretIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_secret
+    vectorDbId: ${oci_ai_data_platform_vector_db.test_vector_db.id}

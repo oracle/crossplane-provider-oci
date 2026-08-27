@@ -23,9 +23,14 @@ spec:
       dayOfMonth: ${var.volume_backup_policy_schedules_day_of_month}
       dayOfWeek: ${var.volume_backup_policy_schedules_day_of_week}
       hourOfDay: ${var.volume_backup_policy_schedules_hour_of_day}
+      isPreventDeletionEnabled: ${var.volume_backup_policy_schedules_is_prevent_deletion_enabled}
+      isRetentionLockEnabled: ${var.volume_backup_policy_schedules_is_retention_lock_enabled}
       month: ${var.volume_backup_policy_schedules_month}
       offsetSeconds: ${var.volume_backup_policy_schedules_offset_seconds}
       offsetType: ${var.volume_backup_policy_schedules_offset_type}
       period: ${var.volume_backup_policy_schedules_period}
+      retentionPeriod:
+      - retentionTimeAmount: ${var.volume_backup_policy_schedules_retention_period_retention_time_amount}
+        retentionTimeUnit: ${var.volume_backup_policy_schedules_retention_period_retention_time_unit}
       retentionSeconds: ${var.volume_backup_policy_schedules_retention_seconds}
       timeZone: ${var.volume_backup_policy_schedules_time_zone}

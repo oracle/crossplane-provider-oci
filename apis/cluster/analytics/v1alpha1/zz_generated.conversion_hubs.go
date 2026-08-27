@@ -13,4 +13,7 @@ func (tr *AnalyticsInstance) Hub() {}
 func (tr *AnalyticsInstancePrivateAccessChannel) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *AnalyticsInstanceResourceGroup) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *AnalyticsInstanceVanityUrl) Hub() {}

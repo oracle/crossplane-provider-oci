@@ -141,6 +141,9 @@ type AutonomousDatabaseInitParameters struct {
 	// (Updatable) The maintenance schedule type of the Autonomous AI Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle
 	AutonomousMaintenanceScheduleType *string `json:"autonomousMaintenanceScheduleType,omitempty" tf:"autonomous_maintenance_schedule_type,omitempty"`
 
+	// (Updatable) The Autonomous Database Serverless instance's availability domain.
+	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
+
 	// (Updatable) Retention period, in days, for long-term backups
 	BackupRetentionPeriodInDays *float64 `json:"backupRetentionPeriodInDays,omitempty" tf:"backup_retention_period_in_days,omitempty"`
 
@@ -251,6 +254,8 @@ type AutonomousDatabaseInitParameters struct {
 	// (Updatable) Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.
 	IsDevTier *bool `json:"isDevTier,omitempty" tf:"is_dev_tier,omitempty"`
 
+	IsDisableAdUpdateSchedule *bool `json:"isDisableAdUpdateSchedule,omitempty" tf:"is_disable_ad_update_schedule,omitempty"`
+
 	IsDisableDBVersionUpgradeSchedule *bool `json:"isDisableDbVersionUpgradeSchedule,omitempty" tf:"is_disable_db_version_upgrade_schedule,omitempty"`
 
 	IsDisconnectPeer *bool `json:"isDisconnectPeer,omitempty" tf:"is_disconnect_peer,omitempty"`
@@ -272,6 +277,8 @@ type AutonomousDatabaseInitParameters struct {
 
 	// (Applicable when source=CROSS_REGION_DISASTER_RECOVERY | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database.
 	IsReplicateAutomaticBackups *bool `json:"isReplicateAutomaticBackups,omitempty" tf:"is_replicate_automatic_backups,omitempty"`
+
+	IsScheduleAdUpdateToEarliest *bool `json:"isScheduleAdUpdateToEarliest,omitempty" tf:"is_schedule_ad_update_to_earliest,omitempty"`
 
 	IsScheduleDBVersionUpgradeToEarliest *bool `json:"isScheduleDbVersionUpgradeToEarliest,omitempty" tf:"is_schedule_db_version_upgrade_to_earliest,omitempty"`
 
@@ -417,6 +424,9 @@ type AutonomousDatabaseInitParameters struct {
 	// (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable) The the date and time that auto-refreshing will begin for an Autonomous AI Database refreshable clone. This value controls only the start time for the first refresh operation. Subsequent (ongoing) refresh operations have start times controlled by the value of the autoRefreshFrequencyInSeconds parameter.
 	TimeOfAutoRefreshStart *string `json:"timeOfAutoRefreshStart,omitempty" tf:"time_of_auto_refresh_start,omitempty"`
 
+	// The date and time to which the Autonomous Database availability domain update is scheduled.
+	TimeScheduledAdUpdate *string `json:"timeScheduledAdUpdate,omitempty" tf:"time_scheduled_ad_update,omitempty"`
+
 	// The date and time the Autonomous AI Database scheduled to upgrade to 26ai.
 	TimeScheduledDBVersionUpgrade *string `json:"timeScheduledDbVersionUpgrade,omitempty" tf:"time_scheduled_db_version_upgrade,omitempty"`
 
@@ -515,6 +525,9 @@ type AutonomousDatabaseObservation struct {
 	// The current amount of storage in use for user and system data, in terabytes (TB).
 	ActualUsedDataStorageSizeInTbs *float64 `json:"actualUsedDataStorageSizeInTbs,omitempty" tf:"actual_used_data_storage_size_in_tbs,omitempty"`
 
+	// The Availability Domain which is planned for Scheduled Update
+	AdScheduledForUpdate *string `json:"adScheduledForUpdate,omitempty" tf:"ad_scheduled_for_update,omitempty"`
+
 	// Additional attributes for this resource. Each attribute is a simple key-value pair with no predefined name, type, or namespace. Example: { "gcpAccountName": "gcpName" }
 	// +mapType=granular
 	AdditionalAttributes map[string]*string `json:"additionalAttributes,omitempty" tf:"additional_attributes,omitempty"`
@@ -549,7 +562,7 @@ type AutonomousDatabaseObservation struct {
 	// (Updatable) The maintenance schedule type of the Autonomous AI Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle
 	AutonomousMaintenanceScheduleType *string `json:"autonomousMaintenanceScheduleType,omitempty" tf:"autonomous_maintenance_schedule_type,omitempty"`
 
-	// The availability domain where the Autonomous AI Database Serverless instance is located.
+	// (Updatable) The Autonomous Database Serverless instance's availability domain.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// List of Oracle AI Database versions available for a database upgrade. If there are no version upgrades available, this list is empty.
@@ -695,6 +708,8 @@ type AutonomousDatabaseObservation struct {
 	// (Updatable) Autonomous AI Database for Developers are fixed-shape Autonomous AI Databases that developers can use to build and test new applications. On Serverless, these are low-cost and billed per instance, on Dedicated and Cloud@Customer there is no additional cost to create Developer databases. Developer databases come with limited resources and is not intended for large-scale testing and production deployments. When you need more compute or storage resources, you may upgrade to a full paid production database.
 	IsDevTier *bool `json:"isDevTier,omitempty" tf:"is_dev_tier,omitempty"`
 
+	IsDisableAdUpdateSchedule *bool `json:"isDisableAdUpdateSchedule,omitempty" tf:"is_disable_ad_update_schedule,omitempty"`
+
 	IsDisableDBVersionUpgradeSchedule *bool `json:"isDisableDbVersionUpgradeSchedule,omitempty" tf:"is_disable_db_version_upgrade_schedule,omitempty"`
 
 	IsDisconnectPeer *bool `json:"isDisconnectPeer,omitempty" tf:"is_disconnect_peer,omitempty"`
@@ -725,6 +740,8 @@ type AutonomousDatabaseObservation struct {
 
 	// (Applicable when source=CROSS_REGION_DISASTER_RECOVERY | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database.
 	IsReplicateAutomaticBackups *bool `json:"isReplicateAutomaticBackups,omitempty" tf:"is_replicate_automatic_backups,omitempty"`
+
+	IsScheduleAdUpdateToEarliest *bool `json:"isScheduleAdUpdateToEarliest,omitempty" tf:"is_schedule_ad_update_to_earliest,omitempty"`
 
 	IsScheduleDBVersionUpgradeToEarliest *bool `json:"isScheduleDbVersionUpgradeToEarliest,omitempty" tf:"is_schedule_db_version_upgrade_to_earliest,omitempty"`
 
@@ -922,8 +939,14 @@ type AutonomousDatabaseObservation struct {
 	// The date and time the Disaster Recovery role was switched for the standby Autonomous AI Database.
 	TimeDisasterRecoveryRoleChanged *string `json:"timeDisasterRecoveryRoleChanged,omitempty" tf:"time_disaster_recovery_role_changed,omitempty"`
 
+	// The earliest date and time to which you can schedule an Autonomous Database availability domain update.
+	TimeEarliestAvailableAdUpdate *string `json:"timeEarliestAvailableAdUpdate,omitempty" tf:"time_earliest_available_ad_update,omitempty"`
+
 	// The earliest(min) date and time the Autonomous AI Database can be scheduled to upgrade to 26ai.
 	TimeEarliestAvailableDBVersionUpgrade *string `json:"timeEarliestAvailableDbVersionUpgrade,omitempty" tf:"time_earliest_available_db_version_upgrade,omitempty"`
+
+	// The latest date and time to which you can schedule an Autonomous Database availability domain update.
+	TimeLatestAvailableAdUpdate *string `json:"timeLatestAvailableAdUpdate,omitempty" tf:"time_latest_available_ad_update,omitempty"`
 
 	// The max date and time the Autonomous AI Database can be scheduled to upgrade to 26ai.
 	TimeLatestAvailableDBVersionUpgrade *string `json:"timeLatestAvailableDbVersionUpgrade,omitempty" tf:"time_latest_available_db_version_upgrade,omitempty"`
@@ -963,6 +986,9 @@ type AutonomousDatabaseObservation struct {
 
 	// The date and time the Always Free database will be stopped because of inactivity. If this time is reached without any database activity, the database will automatically be put into the STOPPED state.
 	TimeReclamationOfFreeAutonomousDatabase *string `json:"timeReclamationOfFreeAutonomousDatabase,omitempty" tf:"time_reclamation_of_free_autonomous_database,omitempty"`
+
+	// The date and time to which the Autonomous Database availability domain update is scheduled.
+	TimeScheduledAdUpdate *string `json:"timeScheduledAdUpdate,omitempty" tf:"time_scheduled_ad_update,omitempty"`
 
 	// The date and time the Autonomous AI Database scheduled to upgrade to 26ai.
 	TimeScheduledDBVersionUpgrade *string `json:"timeScheduledDbVersionUpgrade,omitempty" tf:"time_scheduled_db_version_upgrade,omitempty"`
@@ -1072,6 +1098,10 @@ type AutonomousDatabaseParameters struct {
 	// (Updatable) The maintenance schedule type of the Autonomous AI Database Serverless. An EARLY maintenance schedule follows a schedule applying patches prior to the REGULAR schedule. A REGULAR maintenance schedule follows the normal cycle
 	// +kubebuilder:validation:Optional
 	AutonomousMaintenanceScheduleType *string `json:"autonomousMaintenanceScheduleType,omitempty" tf:"autonomous_maintenance_schedule_type,omitempty"`
+
+	// (Updatable) The Autonomous Database Serverless instance's availability domain.
+	// +kubebuilder:validation:Optional
+	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// (Updatable) Retention period, in days, for long-term backups
 	// +kubebuilder:validation:Optional
@@ -1217,6 +1247,9 @@ type AutonomousDatabaseParameters struct {
 	IsDevTier *bool `json:"isDevTier,omitempty" tf:"is_dev_tier,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	IsDisableAdUpdateSchedule *bool `json:"isDisableAdUpdateSchedule,omitempty" tf:"is_disable_ad_update_schedule,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	IsDisableDBVersionUpgradeSchedule *bool `json:"isDisableDbVersionUpgradeSchedule,omitempty" tf:"is_disable_db_version_upgrade_schedule,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -1245,6 +1278,9 @@ type AutonomousDatabaseParameters struct {
 	// (Applicable when source=CROSS_REGION_DISASTER_RECOVERY | CROSS_TENANCY_DISASTER_RECOVERY) If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database.
 	// +kubebuilder:validation:Optional
 	IsReplicateAutomaticBackups *bool `json:"isReplicateAutomaticBackups,omitempty" tf:"is_replicate_automatic_backups,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IsScheduleAdUpdateToEarliest *bool `json:"isScheduleAdUpdateToEarliest,omitempty" tf:"is_schedule_ad_update_to_earliest,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	IsScheduleDBVersionUpgradeToEarliest *bool `json:"isScheduleDbVersionUpgradeToEarliest,omitempty" tf:"is_schedule_db_version_upgrade_to_earliest,omitempty"`
@@ -1427,6 +1463,10 @@ type AutonomousDatabaseParameters struct {
 	// (Applicable when source=CLONE_TO_REFRESHABLE) (Updatable) The the date and time that auto-refreshing will begin for an Autonomous AI Database refreshable clone. This value controls only the start time for the first refresh operation. Subsequent (ongoing) refresh operations have start times controlled by the value of the autoRefreshFrequencyInSeconds parameter.
 	// +kubebuilder:validation:Optional
 	TimeOfAutoRefreshStart *string `json:"timeOfAutoRefreshStart,omitempty" tf:"time_of_auto_refresh_start,omitempty"`
+
+	// The date and time to which the Autonomous Database availability domain update is scheduled.
+	// +kubebuilder:validation:Optional
+	TimeScheduledAdUpdate *string `json:"timeScheduledAdUpdate,omitempty" tf:"time_scheduled_ad_update,omitempty"`
 
 	// The date and time the Autonomous AI Database scheduled to upgrade to 26ai.
 	// +kubebuilder:validation:Optional
@@ -1950,7 +1990,7 @@ type LocalStandbyDBInitParameters struct {
 
 type LocalStandbyDBObservation struct {
 
-	// The availability domain where the Autonomous AI Database Serverless instance is located.
+	// (Updatable) The Autonomous Database Serverless instance's availability domain.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// The external logical zone where the Autonomous AI Database Serverless instance is located (Intended for multicloud use).
@@ -2244,7 +2284,7 @@ type StandbyDBInitParameters struct {
 
 type StandbyDBObservation struct {
 
-	// The availability domain where the Autonomous AI Database Serverless instance is located.
+	// (Updatable) The Autonomous Database Serverless instance's availability domain.
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
 	// The external logical zone where the Autonomous AI Database Serverless instance is located (Intended for multicloud use).

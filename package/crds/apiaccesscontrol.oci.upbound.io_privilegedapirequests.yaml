@@ -817,6 +817,9 @@ spec:
                         approvalComment:
                           description: Comment specified by the approver of the request.
                           type: string
+                        approverGroupLevel:
+                          description: The group level at which the approver approved.
+                          type: number
                         approverId:
                           description: The userId of the approver.
                           type: string

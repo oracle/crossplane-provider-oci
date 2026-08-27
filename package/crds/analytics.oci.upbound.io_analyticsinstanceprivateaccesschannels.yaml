@@ -76,7 +76,7 @@ spec:
               forProvider:
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   analyticsInstanceIdRef:
                     description: Reference to a AnalyticsInstance in analytics to
@@ -155,57 +155,57 @@ spec:
                         type: object
                     type: object
                   displayName:
-                    description: (Updatable) Display Name of the Private Access Channel.
+                    description: (Updatable) Display name of the private access channel.
                     type: string
                   networkSecurityGroupIds:
-                    description: (Updatable) Network Security Group OCIDs for an Analytics
-                      instance.
+                    description: (Updatable) Network Security Group OCIDs for the
+                      Analytics instance.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   privateSourceDnsZones:
-                    description: (Updatable) List of Private Source DNS zones registered
-                      with Private Access Channel, where datasource hostnames from
-                      these dns zones / domains will be resolved in the peered VCN
-                      for access from Analytics Instance. Min of 1 is required and
-                      Max of 30 Private Source DNS zones can be registered.
+                    description: (Updatable) List of private source DNS zones registered
+                      with the private access channel. The datasource hostnames from
+                      these DNS zones / domains will be resolved in the peered VCN
+                      for access from  the Analytics instance. Minimum 1 private source
+                      is required. Maximum 30 private source DNS zones can be registered.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         dnsZone:
-                          description: '(Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com,
-                            corp.example.com.'
+                          description: '(Updatable) Private source DNS zone. For example:
+                            example-vcn.oraclevcn.com, corp.example.com.'
                           type: string
                       type: object
                     type: array
                   privateSourceScanHosts:
-                    description: (Updatable) List of Private Source DB SCAN hosts
-                      registered with Private Access Channel for access from Analytics
-                      Instance.
+                    description: (Updatable) List of private source database SCAN
+                      hosts registered with the private access channel for access
+                      from the Analytics instance.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         scanHostname:
-                          description: '(Updatable) Private Source Scan hostname.
-                            Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
+                          description: '(Updatable) Private source SCAN hostname.
+                            For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
                           type: string
                         scanPort:
-                          description: (Updatable) Private Source Scan host port.
-                            This is the source port where SCAN protocol will get connected
-                            (e.g. 1521).
+                          description: (Updatable) Private source SCAN host port.
+                            This is the source port where the SCAN protocol connects
+                            (for example, 1521).
                           type: number
                       type: object
                     type: array
                   subnetId:
                     description: (Updatable) OCID of the customer subnet connected
-                      to private access channel.
+                      to the private access channel.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in networking to populate subnetId.
@@ -283,7 +283,7 @@ spec:
                     type: object
                   vcnId:
                     description: (Updatable) OCID of the customer VCN peered with
-                      private access channel.
+                      the private access channel.
                     type: string
                   vcnIdRef:
                     description: Reference to a Vcn in networking to populate vcnId.
@@ -374,7 +374,7 @@ spec:
                   autoscaler.
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   analyticsInstanceIdRef:
                     description: Reference to a AnalyticsInstance in analytics to
@@ -453,57 +453,57 @@ spec:
                         type: object
                     type: object
                   displayName:
-                    description: (Updatable) Display Name of the Private Access Channel.
+                    description: (Updatable) Display name of the private access channel.
                     type: string
                   networkSecurityGroupIds:
-                    description: (Updatable) Network Security Group OCIDs for an Analytics
-                      instance.
+                    description: (Updatable) Network Security Group OCIDs for the
+                      Analytics instance.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   privateSourceDnsZones:
-                    description: (Updatable) List of Private Source DNS zones registered
-                      with Private Access Channel, where datasource hostnames from
-                      these dns zones / domains will be resolved in the peered VCN
-                      for access from Analytics Instance. Min of 1 is required and
-                      Max of 30 Private Source DNS zones can be registered.
+                    description: (Updatable) List of private source DNS zones registered
+                      with the private access channel. The datasource hostnames from
+                      these DNS zones / domains will be resolved in the peered VCN
+                      for access from  the Analytics instance. Minimum 1 private source
+                      is required. Maximum 30 private source DNS zones can be registered.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         dnsZone:
-                          description: '(Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com,
-                            corp.example.com.'
+                          description: '(Updatable) Private source DNS zone. For example:
+                            example-vcn.oraclevcn.com, corp.example.com.'
                           type: string
                       type: object
                     type: array
                   privateSourceScanHosts:
-                    description: (Updatable) List of Private Source DB SCAN hosts
-                      registered with Private Access Channel for access from Analytics
-                      Instance.
+                    description: (Updatable) List of private source database SCAN
+                      hosts registered with the private access channel for access
+                      from the Analytics instance.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         scanHostname:
-                          description: '(Updatable) Private Source Scan hostname.
-                            Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
+                          description: '(Updatable) Private source SCAN hostname.
+                            For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
                           type: string
                         scanPort:
-                          description: (Updatable) Private Source Scan host port.
-                            This is the source port where SCAN protocol will get connected
-                            (e.g. 1521).
+                          description: (Updatable) Private source SCAN host port.
+                            This is the source port where the SCAN protocol connects
+                            (for example, 1521).
                           type: number
                       type: object
                     type: array
                   subnetId:
                     description: (Updatable) OCID of the customer subnet connected
-                      to private access channel.
+                      to the private access channel.
                     type: string
                   subnetIdRef:
                     description: Reference to a Subnet in networking to populate subnetId.
@@ -581,7 +581,7 @@ spec:
                     type: object
                   vcnId:
                     description: (Updatable) OCID of the customer VCN peered with
-                      private access channel.
+                      the private access channel.
                     type: string
                   vcnIdRef:
                     description: Reference to a Vcn in networking to populate vcnId.
@@ -762,80 +762,80 @@ spec:
               atProvider:
                 properties:
                   analyticsInstanceId:
-                    description: The OCID of the AnalyticsInstance.
+                    description: The OCID of the Analytics instance.
                     type: string
                   displayName:
-                    description: (Updatable) Display Name of the Private Access Channel.
+                    description: (Updatable) Display name of the private access channel.
                     type: string
                   egressSourceIpAddresses:
-                    description: The list of IP addresses from the customer subnet
-                      connected to private access channel, used as a source Ip by
-                      Private Access Channel for network traffic from the AnalyticsInstance
-                      to Private Sources.
+                    description: List of IP addresses from the customer subnet connected
+                      to the private access channel, used as a source IP by the private
+                      access channel for network traffic from the Analytics instance
+                      to the private sources.
                     items:
                       type: string
                     type: array
                   id:
                     type: string
                   ipAddress:
-                    description: IP Address of the Private Access channel.
+                    description: IP address of the private access channel.
                     type: string
                   key:
-                    description: Private Access Channel unique identifier key.
+                    description: Private access channel unique identifier key.
                     type: string
                   networkSecurityGroupIds:
-                    description: (Updatable) Network Security Group OCIDs for an Analytics
-                      instance.
+                    description: (Updatable) Network Security Group OCIDs for the
+                      Analytics instance.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   privateSourceDnsZones:
-                    description: (Updatable) List of Private Source DNS zones registered
-                      with Private Access Channel, where datasource hostnames from
-                      these dns zones / domains will be resolved in the peered VCN
-                      for access from Analytics Instance. Min of 1 is required and
-                      Max of 30 Private Source DNS zones can be registered.
+                    description: (Updatable) List of private source DNS zones registered
+                      with the private access channel. The datasource hostnames from
+                      these DNS zones / domains will be resolved in the peered VCN
+                      for access from  the Analytics instance. Minimum 1 private source
+                      is required. Maximum 30 private source DNS zones can be registered.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         dnsZone:
-                          description: '(Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com,
-                            corp.example.com.'
+                          description: '(Updatable) Private source DNS zone. For example:
+                            example-vcn.oraclevcn.com, corp.example.com.'
                           type: string
                       type: object
                     type: array
                   privateSourceScanHosts:
-                    description: (Updatable) List of Private Source DB SCAN hosts
-                      registered with Private Access Channel for access from Analytics
-                      Instance.
+                    description: (Updatable) List of private source database SCAN
+                      hosts registered with the private access channel for access
+                      from the Analytics instance.
                     items:
                       properties:
                         description:
-                          description: (Updatable) Description of private source dns
-                            zone.
+                          description: (Updatable) Description of the private source
+                            DNS zone.
                           type: string
                         scanHostname:
-                          description: '(Updatable) Private Source Scan hostname.
-                            Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
+                          description: '(Updatable) Private source SCAN hostname.
+                            For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.'
                           type: string
                         scanPort:
-                          description: (Updatable) Private Source Scan host port.
-                            This is the source port where SCAN protocol will get connected
-                            (e.g. 1521).
+                          description: (Updatable) Private source SCAN host port.
+                            This is the source port where the SCAN protocol connects
+                            (for example, 1521).
                           type: number
                       type: object
                     type: array
                   subnetId:
                     description: (Updatable) OCID of the customer subnet connected
-                      to private access channel.
+                      to the private access channel.
                     type: string
                   vcnId:
                     description: (Updatable) OCID of the customer VCN peered with
-                      private access channel.
+                      the private access channel.
                     type: string
                 type: object
               conditions:

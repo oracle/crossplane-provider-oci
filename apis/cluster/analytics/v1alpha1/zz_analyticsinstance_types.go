@@ -15,10 +15,10 @@ import (
 
 type AnalyticsInstanceInitParameters struct {
 
-	// user name of the authorized user.
+	// The Analytics instance administrator user. This must be the user name (not OCID) of a user in the nominated identity domain. For example: john.smith@example.com.
 	AdminUser *string `json:"adminUser,omitempty" tf:"admin_user,omitempty"`
 
-	// Service instance capacity metadata (e.g.: OLPU count, number of users, ...etc...).
+	// Service instance capacity metadata (for example, OLPU count, number of users, and so on).
 	Capacity []CapacityInitParameters `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
@@ -40,7 +40,7 @@ type AnalyticsInstanceInitParameters struct {
 	// (Updatable) Optional description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// domain id for which the user is authorized.
+	// The OCID of the identity domain to use for the new Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/identity/v1alpha1.Domain
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
@@ -59,7 +59,7 @@ type AnalyticsInstanceInitParameters struct {
 	// The feature set of an Analytics instance.
 	FeatureBundle *string `json:"featureBundle,omitempty" tf:"feature_bundle,omitempty"`
 
-	// Analytics feature set.
+	// The feature set. Either SELF_SERVICE_ANALYTICS (Professional Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
 	FeatureSet *string `json:"featureSet,omitempty" tf:"feature_set,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
@@ -69,7 +69,7 @@ type AnalyticsInstanceInitParameters struct {
 	// IDCS access token identifying a stripe and service administrator user.
 	IdcsAccessTokenSecretRef *v1.SecretKeySelector `json:"idcsAccessTokenSecretRef,omitempty" tf:"-"`
 
-	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.
+	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates that the default Oracle-managed encryption is used.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
@@ -85,7 +85,7 @@ type AnalyticsInstanceInitParameters struct {
 	// (Updatable) The license used for the service.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.
+	// The name of the Analytics instance. This name must be unique in the tenancy and can't be changed. The name must start with a letter and can contain only letters, numbers and dash (-).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Base representation of a network endpoint.
@@ -100,10 +100,10 @@ type AnalyticsInstanceInitParameters struct {
 
 type AnalyticsInstanceObservation struct {
 
-	// user name of the authorized user.
+	// The Analytics instance administrator user. This must be the user name (not OCID) of a user in the nominated identity domain. For example: john.smith@example.com.
 	AdminUser *string `json:"adminUser,omitempty" tf:"admin_user,omitempty"`
 
-	// Service instance capacity metadata (e.g.: OLPU count, number of users, ...etc...).
+	// Service instance capacity metadata (for example, OLPU count, number of users, and so on).
 	Capacity []CapacityObservation `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
 	// (Updatable) The OCID of the compartment.
@@ -116,7 +116,7 @@ type AnalyticsInstanceObservation struct {
 	// (Updatable) Optional description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// domain id for which the user is authorized.
+	// The OCID of the identity domain to use for the new Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.
 	DomainID *string `json:"domainId,omitempty" tf:"domain_id,omitempty"`
 
 	// (Updatable) Email address receiving notifications.
@@ -125,7 +125,7 @@ type AnalyticsInstanceObservation struct {
 	// The feature set of an Analytics instance.
 	FeatureBundle *string `json:"featureBundle,omitempty" tf:"feature_bundle,omitempty"`
 
-	// Analytics feature set.
+	// The feature set. Either SELF_SERVICE_ANALYTICS (Professional Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
 	FeatureSet *string `json:"featureSet,omitempty" tf:"feature_set,omitempty"`
 
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
@@ -135,19 +135,22 @@ type AnalyticsInstanceObservation struct {
 	// The Virtual Cloud Network OCID.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.
+	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates that the default Oracle-managed encryption is used.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// (Updatable) The license used for the service.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.
+	// The name of the Analytics instance. This name must be unique in the tenancy and can't be changed. The name must start with a letter and can contain only letters, numbers and dash (-).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Base representation of a network endpoint.
 	NetworkEndpointDetails []NetworkEndpointDetailsObservation `json:"networkEndpointDetails,omitempty" tf:"network_endpoint_details,omitempty"`
 
-	// URL of the Analytics service.
+	// List of resource groups for this Analytics instance. The resource group id must be unique within the instance.
+	ResourceGroups []ResourceGroupsObservation `json:"resourceGroups,omitempty" tf:"resource_groups,omitempty"`
+
+	// URL of the Analytics instance.
 	ServiceURL *string `json:"serviceUrl,omitempty" tf:"service_url,omitempty"`
 
 	// (Updatable) The target state for the Analytics Instance. Could be set to ACTIVE or INACTIVE.
@@ -157,10 +160,10 @@ type AnalyticsInstanceObservation struct {
 	// +mapType=granular
 	SystemTags map[string]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
 
-	// The date and time the instance was created, in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z
+	// The date and time the Analytics instance was created, in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
-	// The date and time the instance was last updated (in the format defined by RFC3339). This timestamp represents updates made through this API. External events do not influence it.
+	// The date and time the Analytics instance was last updated (in the format defined by RFC3339). This timestamp represents updates made through this API. External events don't affect it.
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 
 	// (Updatable) Analytics instance update channel.
@@ -169,11 +172,11 @@ type AnalyticsInstanceObservation struct {
 
 type AnalyticsInstanceParameters struct {
 
-	// user name of the authorized user.
+	// The Analytics instance administrator user. This must be the user name (not OCID) of a user in the nominated identity domain. For example: john.smith@example.com.
 	// +kubebuilder:validation:Optional
 	AdminUser *string `json:"adminUser,omitempty" tf:"admin_user,omitempty"`
 
-	// Service instance capacity metadata (e.g.: OLPU count, number of users, ...etc...).
+	// Service instance capacity metadata (for example, OLPU count, number of users, and so on).
 	// +kubebuilder:validation:Optional
 	Capacity []CapacityParameters `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
@@ -199,7 +202,7 @@ type AnalyticsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// domain id for which the user is authorized.
+	// The OCID of the identity domain to use for the new Analytics instance. For example: ocid1.domain.oc1..ocid1.domain.oc1..aaaaaa111111bbbbbb222222cccccc333333dddddd444444eeeeee5555.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/identity/v1alpha1.Domain
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -221,7 +224,7 @@ type AnalyticsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	FeatureBundle *string `json:"featureBundle,omitempty" tf:"feature_bundle,omitempty"`
 
-	// Analytics feature set.
+	// The feature set. Either SELF_SERVICE_ANALYTICS (Professional Edition) or ENTERPRISE_ANALYTICS (Enterprise Edition).
 	// +kubebuilder:validation:Optional
 	FeatureSet *string `json:"featureSet,omitempty" tf:"feature_set,omitempty"`
 
@@ -234,7 +237,7 @@ type AnalyticsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	IdcsAccessTokenSecretRef *v1.SecretKeySelector `json:"idcsAccessTokenSecretRef,omitempty" tf:"-"`
 
-	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates Oracle managed default encryption.
+	// OCID of the Oracle Cloud Infrastructure Vault Key encrypting the customer data stored in this Analytics instance. A null value indicates that the default Oracle-managed encryption is used.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -252,7 +255,7 @@ type AnalyticsInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.
+	// The name of the Analytics instance. This name must be unique in the tenancy and can't be changed. The name must start with a letter and can contain only letters, numbers and dash (-).
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -274,7 +277,7 @@ type CapacityInitParameters struct {
 	// The capacity model to use. Accepted values are: OLPU_COUNT, USER_COUNT
 	CapacityType *string `json:"capacityType,omitempty" tf:"capacity_type,omitempty"`
 
-	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the instance.
+	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the Analytics instance.
 	CapacityValue *float64 `json:"capacityValue,omitempty" tf:"capacity_value,omitempty"`
 }
 
@@ -283,7 +286,7 @@ type CapacityObservation struct {
 	// The capacity model to use. Accepted values are: OLPU_COUNT, USER_COUNT
 	CapacityType *string `json:"capacityType,omitempty" tf:"capacity_type,omitempty"`
 
-	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the instance.
+	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the Analytics instance.
 	CapacityValue *float64 `json:"capacityValue,omitempty" tf:"capacity_value,omitempty"`
 }
 
@@ -293,7 +296,7 @@ type CapacityParameters struct {
 	// +kubebuilder:validation:Optional
 	CapacityType *string `json:"capacityType" tf:"capacity_type,omitempty"`
 
-	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the instance.
+	// (Updatable) The capacity value selected, either the number of OCPUs (OLPU_COUNT) or the number of users (USER_COUNT). This parameter affects the number of OCPUs, amount of memory, and other resources allocated to the Analytics instance.
 	// +kubebuilder:validation:Optional
 	CapacityValue *float64 `json:"capacityValue" tf:"capacity_value,omitempty"`
 }
@@ -303,7 +306,7 @@ type NetworkEndpointDetailsInitParameters struct {
 	// The type of network endpoint.
 	NetworkEndpointType *string `json:"networkEndpointType,omitempty" tf:"network_endpoint_type,omitempty"`
 
-	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for an Analytics instance.
+	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for the Analytics instance.
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
 
@@ -336,7 +339,7 @@ type NetworkEndpointDetailsInitParameters struct {
 	// (Applicable when network_endpoint_type=PUBLIC) Source IP addresses or IP address ranges in ingress rules.
 	WhitelistedIps []*string `json:"whitelistedIps,omitempty" tf:"whitelisted_ips,omitempty"`
 
-	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud Services that are allowed to access this Analytics instance.
+	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud services that are allowed to access this Analytics instance.
 	WhitelistedServices []*string `json:"whitelistedServices,omitempty" tf:"whitelisted_services,omitempty"`
 
 	// (Applicable when network_endpoint_type=PUBLIC) Virtual Cloud Networks allowed to access this network endpoint.
@@ -348,7 +351,7 @@ type NetworkEndpointDetailsObservation struct {
 	// The type of network endpoint.
 	NetworkEndpointType *string `json:"networkEndpointType,omitempty" tf:"network_endpoint_type,omitempty"`
 
-	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for an Analytics instance.
+	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for the Analytics instance.
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
 
@@ -361,7 +364,7 @@ type NetworkEndpointDetailsObservation struct {
 	// (Applicable when network_endpoint_type=PUBLIC) Source IP addresses or IP address ranges in ingress rules.
 	WhitelistedIps []*string `json:"whitelistedIps,omitempty" tf:"whitelisted_ips,omitempty"`
 
-	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud Services that are allowed to access this Analytics instance.
+	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud services that are allowed to access this Analytics instance.
 	WhitelistedServices []*string `json:"whitelistedServices,omitempty" tf:"whitelisted_services,omitempty"`
 
 	// (Applicable when network_endpoint_type=PUBLIC) Virtual Cloud Networks allowed to access this network endpoint.
@@ -374,7 +377,7 @@ type NetworkEndpointDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkEndpointType *string `json:"networkEndpointType" tf:"network_endpoint_type,omitempty"`
 
-	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for an Analytics instance.
+	// (Applicable when network_endpoint_type=PRIVATE) Network Security Group OCIDs for the Analytics instance.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
@@ -411,13 +414,37 @@ type NetworkEndpointDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	WhitelistedIps []*string `json:"whitelistedIps,omitempty" tf:"whitelisted_ips,omitempty"`
 
-	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud Services that are allowed to access this Analytics instance.
+	// (Applicable when network_endpoint_type=PUBLIC) Oracle Cloud services that are allowed to access this Analytics instance.
 	// +kubebuilder:validation:Optional
 	WhitelistedServices []*string `json:"whitelistedServices,omitempty" tf:"whitelisted_services,omitempty"`
 
 	// (Applicable when network_endpoint_type=PUBLIC) Virtual Cloud Networks allowed to access this network endpoint.
 	// +kubebuilder:validation:Optional
 	WhitelistedVcns []WhitelistedVcnsParameters `json:"whitelistedVcns,omitempty" tf:"whitelisted_vcns,omitempty"`
+}
+
+type ResourceGroupsInitParameters struct {
+}
+
+type ResourceGroupsObservation struct {
+
+	// Service instance capacity metadata (for example, OLPU count, number of users, and so on).
+	Capacity *float64 `json:"capacity,omitempty" tf:"capacity,omitempty"`
+
+	// (Updatable) Optional description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Display name of the private access channel.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The Virtual Cloud Network OCID.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Meaningful name of resource group for end user
+	ResourceName *string `json:"resourceName,omitempty" tf:"resource_name,omitempty"`
+}
+
+type ResourceGroupsParameters struct {
 }
 
 type WhitelistedVcnsInitParameters struct {

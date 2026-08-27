@@ -10,7 +10,7 @@ spec:
   forProvider:
     availabilityDomain: ${var.migration_asset_availability_domain}
     displayName: ${var.migration_asset_display_name}
-    inventoryAssetId: ${oci_cloud_migrations_inventory_asset.test_inventory_asset.id}
+    inventoryAssetId: ${var.inventory_asset_id}
     migrationAssetDependsOn: ${var.migration_asset_migration_asset_depends_on}
     migrationIdSelector:
       matchLabels:

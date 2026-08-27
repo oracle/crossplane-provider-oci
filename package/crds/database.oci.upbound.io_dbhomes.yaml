@@ -549,6 +549,100 @@ spec:
                                         about valid region names, see Regions and
                                         Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE |
+                                        VM_CLUSTER_NEW) Backup destination for the
+                                        TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE
+                                              | VM_CLUSTER_NEW) The OCID of the backup
+                                              destination.
+                                            type: string
+                                          backupDestinationIdRef:
+                                            description: Reference to a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          backupDestinationIdSelector:
+                                            description: Selector for a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: '(Applicable when source=NONE |
                                         VM_CLUSTER_NEW) Type of the database backup
@@ -628,8 +722,8 @@ spec:
                           items:
                             properties:
                               awsEncryptionKeyId:
-                                description: (Applicable when source=NONE | VM_CLUSTER_NEW)
-                                  The OCID of the backup destination.
+                                description: Provide the key OCID of a registered
+                                  AWS key.
                                 type: string
                               azureEncryptionKeyId:
                                 description: Provide the key OCID of a registered
@@ -1013,11 +1107,33 @@ spec:
                           type: string
                         pluggableDatabases:
                           description: (Applicable when source=DATABASE | DB_BACKUP
-                            | VM_CLUSTER_BACKUP) The list of pluggable databases that
-                            needs to be restored into new database.
+                            | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of
+                            pluggable databases that needs to be restored into new
+                            database.
                           items:
                             type: string
                           type: array
+                        recoveryApplianceVpcPasswordSecretRef:
+                          description: (Applicable when source=DATABASE | DB_BACKUP
+                            | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The password
+                            for the VPC user that is used to access the Recovery Appliance,
+                            if the given backup is from a backup destination of type
+                            RECOVERY_APPLIANCE.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
                         storageSizeDetails:
                           description: (Applicable when source=DB_BACKUP | NONE |
                             VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) The database storage
@@ -2160,6 +2276,100 @@ spec:
                                         about valid region names, see Regions and
                                         Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE |
+                                        VM_CLUSTER_NEW) Backup destination for the
+                                        TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE
+                                              | VM_CLUSTER_NEW) The OCID of the backup
+                                              destination.
+                                            type: string
+                                          backupDestinationIdRef:
+                                            description: Reference to a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          backupDestinationIdSelector:
+                                            description: Selector for a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: '(Applicable when source=NONE |
                                         VM_CLUSTER_NEW) Type of the database backup
@@ -2239,8 +2449,8 @@ spec:
                           items:
                             properties:
                               awsEncryptionKeyId:
-                                description: (Applicable when source=NONE | VM_CLUSTER_NEW)
-                                  The OCID of the backup destination.
+                                description: Provide the key OCID of a registered
+                                  AWS key.
                                 type: string
                               azureEncryptionKeyId:
                                 description: Provide the key OCID of a registered
@@ -2624,11 +2834,33 @@ spec:
                           type: string
                         pluggableDatabases:
                           description: (Applicable when source=DATABASE | DB_BACKUP
-                            | VM_CLUSTER_BACKUP) The list of pluggable databases that
-                            needs to be restored into new database.
+                            | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of
+                            pluggable databases that needs to be restored into new
+                            database.
                           items:
                             type: string
                           type: array
+                        recoveryApplianceVpcPasswordSecretRef:
+                          description: (Applicable when source=DATABASE | DB_BACKUP
+                            | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The password
+                            for the VPC user that is used to access the Recovery Appliance,
+                            if the given backup is from a backup destination of type
+                            RECOVERY_APPLIANCE.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
                         storageSizeDetails:
                           description: (Applicable when source=DB_BACKUP | NONE |
                             VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) The database storage
@@ -3527,6 +3759,23 @@ spec:
                                         about valid region names, see Regions and
                                         Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE |
+                                        VM_CLUSTER_NEW) Backup destination for the
+                                        TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE
+                                              | VM_CLUSTER_NEW) The OCID of the backup
+                                              destination.
+                                            type: string
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: '(Applicable when source=NONE |
                                         VM_CLUSTER_NEW) Type of the database backup
@@ -3590,8 +3839,8 @@ spec:
                           items:
                             properties:
                               awsEncryptionKeyId:
-                                description: (Applicable when source=NONE | VM_CLUSTER_NEW)
-                                  The OCID of the backup destination.
+                                description: Provide the key OCID of a registered
+                                  AWS key.
                                 type: string
                               azureEncryptionKeyId:
                                 description: Provide the key OCID of a registered
@@ -3668,15 +3917,15 @@ spec:
                           type: string
                         pluggableDatabases:
                           description: (Applicable when source=DATABASE | DB_BACKUP
-                            | VM_CLUSTER_BACKUP) The list of pluggable databases that
-                            needs to be restored into new database.
+                            | VM_CLUSTER_BACKUP | VM_CLUSTER_DATABASE) The list of
+                            pluggable databases that needs to be restored into new
+                            database.
                           items:
                             type: string
                           type: array
                         sidPrefix:
-                          description: (Applicable when source=DB_BACKUP | NONE |
-                            VM_CLUSTER_BACKUP | VM_CLUSTER_NEW) Specifies a prefix
-                            for the Oracle SID of the database to be created.
+                          description: Specifies a prefix for the Oracle SID of the
+                            database to be created.
                           type: string
                         state:
                           description: The current state of the Database Home.

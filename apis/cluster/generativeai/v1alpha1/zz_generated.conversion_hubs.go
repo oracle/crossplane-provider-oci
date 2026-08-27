@@ -34,6 +34,21 @@ func (tr *DedicatedAiCluster) Hub() {}
 func (tr *Endpoint) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *GenerativeAiPrivateEndpoint) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *HostedApplication) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *HostedApplicationIam) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *HostedApplicationStorage) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *HostedDeployment) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ImportedModel) Hub() {}
 
 // Hub marks this type as a conversion hub.

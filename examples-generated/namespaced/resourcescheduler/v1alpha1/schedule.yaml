@@ -13,24 +13,28 @@ spec:
     compartmentIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    definedTags: ${map(oci_identity_tag_namespace.tag-namespace1.name.oci_identity_tag.tag1.name,
-      var.schedule_defined_tags_value)}
+    definedTags:
+      Operations.CostCenter: "42"
     description: ${var.schedule_description}
     displayName: ${var.schedule_display_name}
-    freeformTags: ${var.schedule_freeform_tags}
+    freeformTags:
+      Department: Finance
+    localTimeZone: ${var.schedule_local_time_zone}
     recurrenceDetails: ${var.schedule_recurrence_details}
     recurrenceType: ${var.schedule_recurrence_type}
     resourceFilters:
-    - attribute: DEFINED_TAGS
+    - attribute: ${var.schedule_resource_filters_attribute}
+      condition: ${var.schedule_resource_filters_condition}
+      shouldIncludeChildCompartments: ${var.schedule_resource_filters_should_include_child_compartments}
       value:
-      - namespace: SampleNamespace
-        tagKey: SampleTagKey
-        value: SampleValue
-    - attribute: LIFECYCLE_STATE
-      value:
-      - value: SampleLifecycleState
-    - attribute: COMPARTMENT_ID
-      value:
-      - value: ${var.compartment_id}
+      - namespace: ${var.schedule_resource_filters_value_namespace}
+        tagKey: ${var.schedule_resource_filters_value_tag_key}
+        value: ${var.schedule_resource_filters_value_value}
+    resources:
+    - id: ${var.schedule_resources_id}
+      metadata: ${var.schedule_resources_metadata}
+      parameters:
+      - parameterType: ${var.schedule_resources_parameters_parameter_type}
+        value: ${var.schedule_resources_parameters_value}
     timeEnds: ${var.schedule_time_ends}
     timeStarts: ${var.schedule_time_starts}

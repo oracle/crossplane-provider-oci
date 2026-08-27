@@ -87,6 +87,46 @@ func (mg *AnalyticsInstancePrivateAccessChannel) SetWriteConnectionSecretToRefer
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetManagementPolicies of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetManagementPolicies of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AnalyticsInstanceResourceGroup.
+func (mg *AnalyticsInstanceResourceGroup) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this AnalyticsInstanceVanityUrl.
 func (mg *AnalyticsInstanceVanityUrl) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)

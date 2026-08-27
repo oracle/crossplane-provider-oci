@@ -278,6 +278,9 @@ type ReportDefinitionObservation struct {
 	// The OCID of the report definition.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Indicates if the reports being generated should be paginated. If set to true, multiple reports can be generated and the details of next and previous report are present in Report. Values can either be 'true' or 'false'.
+	IsSchedulePaginationEnabled *bool `json:"isSchedulePaginationEnabled,omitempty" tf:"is_schedule_pagination_enabled,omitempty"`
+
 	// Signifies whether the definition is seeded or user defined. Values can either be 'true' or 'false'.
 	IsSeeded *bool `json:"isSeeded,omitempty" tf:"is_seeded,omitempty"`
 

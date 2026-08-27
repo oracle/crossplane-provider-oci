@@ -276,6 +276,9 @@ type CloudVmClusterInitParameters struct {
 	// The time zone to use for the cloud VM cluster. For details, see Time Zones.
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
+	// (Updatable) Details specifying which maintenance update to apply to the cloud VM cluster and which action to perform. Use update_mode for DomU live update modes or regular full OS update mode.
+	UpdateDetails []UpdateDetailsInitParameters `json:"updateDetails,omitempty" tf:"update_details,omitempty"`
+
 	// (Updatable) Specifies the type of VM Backups Storage and supported values are LOCAL and EXASCALE. - LOCAL if selected then VM Backups storage will be on DB Servers. - EXASCALE if selected then VM Backups storage will be on Exascale Storage Servers. Default Value is LOCAL
 	VMBackupStorageType *string `json:"vmBackupStorageType,omitempty" tf:"vm_backup_storage_type,omitempty"`
 
@@ -401,6 +404,9 @@ type CloudVmClusterObservation struct {
 	// The port number configured for the listener on the cloud VM cluster.
 	ListenerPort *string `json:"listenerPort,omitempty" tf:"listener_port,omitempty"`
 
+	// Details about the most recent live image version applied on the VM Cluster, if any. If a full OS update was applied, the fields would be blank.
+	LiveImageVersionDetails []LiveImageVersionDetailsObservation `json:"liveImageVersionDetails,omitempty" tf:"live_image_version_details,omitempty"`
+
 	// (Updatable) The memory to be allocated in GBs.
 	MemorySizeInGbs *float64 `json:"memorySizeInGbs,omitempty" tf:"memory_size_in_gbs,omitempty"`
 
@@ -416,6 +422,9 @@ type CloudVmClusterObservation struct {
 
 	// (Updatable) The number of OCPU cores to enable for a cloud VM cluster. Only 1 decimal place is allowed for the fractional part.
 	OcpuCount *float64 `json:"ocpuCount,omitempty" tf:"ocpu_count,omitempty"`
+
+	// Oracle Linux version for the respective Exadata Image.
+	OracleLinuxVersion *string `json:"oracleLinuxVersion,omitempty" tf:"oracle_linux_version,omitempty"`
 
 	// The private zone id in which DNS records need to be created.
 	PrivateZoneID *string `json:"privateZoneId,omitempty" tf:"private_zone_id,omitempty"`
@@ -484,6 +493,9 @@ type CloudVmClusterObservation struct {
 
 	// The time zone to use for the cloud VM cluster. For details, see Time Zones.
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
+
+	// (Updatable) Details specifying which maintenance update to apply to the cloud VM cluster and which action to perform. Use update_mode for DomU live update modes or regular full OS update mode.
+	UpdateDetails []UpdateDetailsObservation `json:"updateDetails,omitempty" tf:"update_details,omitempty"`
 
 	// (Updatable) Specifies the type of VM Backups Storage and supported values are LOCAL and EXASCALE. - LOCAL if selected then VM Backups storage will be on DB Servers. - EXASCALE if selected then VM Backups storage will be on Exascale Storage Servers. Default Value is LOCAL
 	VMBackupStorageType *string `json:"vmBackupStorageType,omitempty" tf:"vm_backup_storage_type,omitempty"`
@@ -729,6 +741,10 @@ type CloudVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	TimeZone *string `json:"timeZone,omitempty" tf:"time_zone,omitempty"`
 
+	// (Updatable) Details specifying which maintenance update to apply to the cloud VM cluster and which action to perform. Use update_mode for DomU live update modes or regular full OS update mode.
+	// +kubebuilder:validation:Optional
+	UpdateDetails []UpdateDetailsParameters `json:"updateDetails,omitempty" tf:"update_details,omitempty"`
+
 	// (Updatable) Specifies the type of VM Backups Storage and supported values are LOCAL and EXASCALE. - LOCAL if selected then VM Backups storage will be on DB Servers. - EXASCALE if selected then VM Backups storage will be on Exascale Storage Servers. Default Value is LOCAL
 	// +kubebuilder:validation:Optional
 	VMBackupStorageType *string `json:"vmBackupStorageType,omitempty" tf:"vm_backup_storage_type,omitempty"`
@@ -876,6 +892,66 @@ type IormConfigCacheObservation struct {
 }
 
 type IormConfigCacheParameters struct {
+}
+
+type LiveImageVersionDetailsInitParameters struct {
+}
+
+type LiveImageVersionDetailsObservation struct {
+
+	// Indicates whether OS updates that require node reboot are pending after the previous online update was applied.
+	HasPendingUpdates *bool `json:"hasPendingUpdates,omitempty" tf:"has_pending_updates,omitempty"`
+
+	// The release date and time for the applied Live Exadata Image OS version.
+	TimeReleased *string `json:"timeReleased,omitempty" tf:"time_released,omitempty"`
+
+	// (Updatable) The OS update mode. Supported values are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES, PENDING_UPDATES, and FULL_UPDATE.
+	UpdateMode *string `json:"updateMode,omitempty" tf:"update_mode,omitempty"`
+
+	// Live Exadata Image Version of the Guest OS Update applied.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type LiveImageVersionDetailsParameters struct {
+}
+
+type UpdateDetailsInitParameters struct {
+
+	// (Updatable) The update action. Supported values include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and ROLLBACK.
+	UpdateAction *string `json:"updateAction,omitempty" tf:"update_action,omitempty"`
+
+	// (Updatable) The OCID of the maintenance update.
+	UpdateID *string `json:"updateId,omitempty" tf:"update_id,omitempty"`
+
+	// (Updatable) The OS update mode. Supported values are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES, PENDING_UPDATES, and FULL_UPDATE.
+	UpdateMode *string `json:"updateMode,omitempty" tf:"update_mode,omitempty"`
+}
+
+type UpdateDetailsObservation struct {
+
+	// (Updatable) The update action. Supported values include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and ROLLBACK.
+	UpdateAction *string `json:"updateAction,omitempty" tf:"update_action,omitempty"`
+
+	// (Updatable) The OCID of the maintenance update.
+	UpdateID *string `json:"updateId,omitempty" tf:"update_id,omitempty"`
+
+	// (Updatable) The OS update mode. Supported values are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES, PENDING_UPDATES, and FULL_UPDATE.
+	UpdateMode *string `json:"updateMode,omitempty" tf:"update_mode,omitempty"`
+}
+
+type UpdateDetailsParameters struct {
+
+	// (Updatable) The update action. Supported values include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and ROLLBACK.
+	// +kubebuilder:validation:Optional
+	UpdateAction *string `json:"updateAction,omitempty" tf:"update_action,omitempty"`
+
+	// (Updatable) The OCID of the maintenance update.
+	// +kubebuilder:validation:Optional
+	UpdateID *string `json:"updateId,omitempty" tf:"update_id,omitempty"`
+
+	// (Updatable) The OS update mode. Supported values are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES, PENDING_UPDATES, and FULL_UPDATE.
+	// +kubebuilder:validation:Optional
+	UpdateMode *string `json:"updateMode,omitempty" tf:"update_mode,omitempty"`
 }
 
 // CloudVmClusterSpec defines the desired state of CloudVmCluster

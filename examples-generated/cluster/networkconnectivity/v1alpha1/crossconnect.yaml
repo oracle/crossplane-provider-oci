@@ -23,7 +23,12 @@ spec:
         testing.upbound.io/example-name: test_cross_connect_group
     freeformTags:
       Department: Finance
+    interfaceDownTimerValueInMilliseconds: ${var.cross_connect_interface_down_timer_value_in_milliseconds}
     interfaceName: ${var.cross_connect_interface_name}
+    isInterfaceHoldTimerEnabled: ${var.cross_connect_is_interface_hold_timer_enabled}
+    isQosEnabled: ${var.cross_connect_is_qos_enabled}
+    loaProperties:
+    - authorizedAgent: ${var.cross_connect_loa_properties_authorized_agent}
     locationName: ${var.cross_connect_location_name}
     macsecProperties:
     - encryptionCipher: ${var.cross_connect_macsec_properties_encryption_cipher}

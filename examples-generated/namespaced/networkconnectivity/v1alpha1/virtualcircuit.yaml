@@ -33,10 +33,13 @@ spec:
     ipMtu: ${var.virtual_circuit_ip_mtu}
     isBfdEnabled: ${var.virtual_circuit_is_bfd_enabled}
     isTransportMode: ${var.virtual_circuit_is_transport_mode}
+    providerRemoteRegion: ${var.virtual_circuit_provider_remote_region}
     providerServiceId: ${data.oci_core_fast_connect_provider_services.test_fast_connect_provider_services.fast_connect_provider_services.0.id}
     providerServiceKeyName: ${var.virtual_circuit_provider_service_key_name}
     publicPrefixes:
     - cidrBlock: ${var.virtual_circuit_public_prefixes_cidr_block}
     region: ${var.virtual_circuit_region}
+    remoteAccountId: ${oci_core_remote_account.test_remote_account.id}
     routingPolicy: ${var.virtual_circuit_routing_policy}
+    trafficMode: ${var.virtual_circuit_traffic_mode}
     type: ${var.virtual_circuit_type}

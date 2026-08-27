@@ -70,6 +70,9 @@ type TargetAlertPolicyAssociationInitParameters struct {
 	// Selector for a Target in cloudguard to populate targetId.
 	// +kubebuilder:validation:Optional
 	TargetIDSelector *v1.NamespacedSelector `json:"targetIdSelector,omitempty" tf:"-"`
+
+	// The resource type that is represented by the alert policy association. Default is considered as TARGET_DATABASE.
+	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 }
 
 type TargetAlertPolicyAssociationObservation struct {
@@ -112,6 +115,9 @@ type TargetAlertPolicyAssociationObservation struct {
 
 	// The OCID of the target or target database group.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
+
+	// The resource type that is represented by the alert policy association. Default is considered as TARGET_DATABASE.
+	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 
 	// Creation date and time of the alert policy, in the format defined by RFC3339.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
@@ -184,6 +190,10 @@ type TargetAlertPolicyAssociationParameters struct {
 	// Selector for a Target in cloudguard to populate targetId.
 	// +kubebuilder:validation:Optional
 	TargetIDSelector *v1.NamespacedSelector `json:"targetIdSelector,omitempty" tf:"-"`
+
+	// The resource type that is represented by the alert policy association. Default is considered as TARGET_DATABASE.
+	// +kubebuilder:validation:Optional
+	TargetType *string `json:"targetType,omitempty" tf:"target_type,omitempty"`
 }
 
 // TargetAlertPolicyAssociationSpec defines the desired state of TargetAlertPolicyAssociation

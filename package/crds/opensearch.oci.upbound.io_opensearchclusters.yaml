@@ -486,8 +486,10 @@ spec:
                       per node for the cluster's ML nodes.
                     type: number
                   nsgId:
-                    description: The OCID of the NSG where the private endpoint vnic
-                      will be attached.
+                    description: (Updatable) The OCID of the NSG where the private
+                      endpoint vnic will be attached. Set this value to an empty string
+                      to detach the cluster from the NSG. Set this value to null to
+                      leave the existing NSG unchanged.
                     type: string
                   opendashboardNodeCount:
                     description: (Updatable) The number of OpenSearch Dashboard nodes
@@ -1553,8 +1555,10 @@ spec:
                       per node for the cluster's ML nodes.
                     type: number
                   nsgId:
-                    description: The OCID of the NSG where the private endpoint vnic
-                      will be attached.
+                    description: (Updatable) The OCID of the NSG where the private
+                      endpoint vnic will be attached. Set this value to an empty string
+                      to detach the cluster from the NSG. Set this value to null to
+                      leave the existing NSG unchanged.
                     type: string
                   opendashboardNodeCount:
                     description: (Updatable) The number of OpenSearch Dashboard nodes
@@ -2557,8 +2561,10 @@ spec:
                       per node for the cluster's ML nodes.
                     type: number
                   nsgId:
-                    description: The OCID of the NSG where the private endpoint vnic
-                      will be attached.
+                    description: (Updatable) The OCID of the NSG where the private
+                      endpoint vnic will be attached. Set this value to an empty string
+                      to detach the cluster from the NSG. Set this value to null to
+                      leave the existing NSG unchanged.
                     type: string
                   opendashboardFqdn:
                     description: The fully qualified domain name (FQDN) for the cluster's

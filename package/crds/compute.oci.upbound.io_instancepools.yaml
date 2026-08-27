@@ -911,7 +911,9 @@ spec:
                       the instance pool at a later point. The instance pool's actual
                       size may differ from the configured size if it is associated
                       with an autoscaling configuration, instance pool's actual size
-                      will be reflected in this size attribute.
+                      will be reflected in this size attribute. For a GMC-enabled
+                      resource pool, this is the number of GMC resources that should
+                      be in the pool.
                     type: number
                   state:
                     description: (Updatable) The target state for the instance pool
@@ -1770,7 +1772,9 @@ spec:
                       the instance pool at a later point. The instance pool's actual
                       size may differ from the configured size if it is associated
                       with an autoscaling configuration, instance pool's actual size
-                      will be reflected in this size attribute.
+                      will be reflected in this size attribute. For a GMC-enabled
+                      resource pool, this is the number of GMC resources that should
+                      be in the pool.
                     type: number
                   state:
                     description: (Updatable) The target state for the instance pool
@@ -2126,6 +2130,9 @@ spec:
                           type: array
                       type: object
                     type: array
+                  poolType:
+                    description: The type of resources managed by the pool.
+                    type: string
                   size:
                     description: (Updatable) The number of instances that should be
                       in the instance pool. Modifying this value will override the
@@ -2134,7 +2141,9 @@ spec:
                       the instance pool at a later point. The instance pool's actual
                       size may differ from the configured size if it is associated
                       with an autoscaling configuration, instance pool's actual size
-                      will be reflected in this size attribute.
+                      will be reflected in this size attribute. For a GMC-enabled
+                      resource pool, this is the number of GMC resources that should
+                      be in the pool.
                     type: number
                   state:
                     description: (Updatable) The target state for the instance pool

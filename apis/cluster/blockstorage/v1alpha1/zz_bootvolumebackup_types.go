@@ -51,6 +51,15 @@ type BootVolumeBackupInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -63,6 +72,9 @@ type BootVolumeBackupInitParameters struct {
 	// Selector for a Key in kms to populate kmsKeyId.
 	// +kubebuilder:validation:Optional
 	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []RetentionPeriodInitParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// Details of the volume backup source in the cloud. Cannot be defined if boot_volume_id is defined.
 	SourceDetails []BootVolumeBackupSourceDetailsInitParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
@@ -99,8 +111,20 @@ type BootVolumeBackupObservation struct {
 	// The image OCID used to create the boot volume the backup is taken from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	RetentionPeriod []RetentionPeriodObservation `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// The size of the boot volume, in GBs.
 	SizeInGbs *string `json:"sizeInGbs,omitempty" tf:"size_in_gbs,omitempty"`
@@ -127,11 +151,17 @@ type BootVolumeBackupObservation struct {
 	// The date and time the request to create the boot volume backup was received. Format defined by RFC3339.
 	TimeRequestReceived *string `json:"timeRequestReceived,omitempty" tf:"time_request_received,omitempty"`
 
+	// The date and time when a backup’s retention period ends and it is set to expire. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	TimeRetentionExpiresAt *string `json:"timeRetentionExpiresAt,omitempty" tf:"time_retention_expires_at,omitempty"`
+
 	// The type of backup to create. If omitted, defaults to incremental. Supported values are 'FULL' or 'INCREMENTAL'.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The size used by the backup, in GBs. It is typically smaller than sizeInGBs, depending on the space consumed on the boot volume and whether the backup is full or incremental.
 	UniqueSizeInGbs *string `json:"uniqueSizeInGbs,omitempty" tf:"unique_size_in_gbs,omitempty"`
+
+	// The OCID of the volume group backup associated with the backup. This is an optional field. If it is not present in the response, the backup does not belong to a volume group.
+	VolumeGroupBackupID *string `json:"volumeGroupBackupId,omitempty" tf:"volume_group_backup_id,omitempty"`
 }
 
 type BootVolumeBackupParameters struct {
@@ -177,6 +207,18 @@ type BootVolumeBackupParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) feature that preserves backup data from modification or deletion to ensure it remains available for legal or regulatory investigations or litigation, regardless of standard retention policies. This is an optional field. If it is not specified, it is set to null, no legal hold will be applied to the backups.
+	// +kubebuilder:validation:Optional
+	IsIndefiniteRetentionEnabled *bool `json:"isIndefiniteRetentionEnabled,omitempty" tf:"is_indefinite_retention_enabled,omitempty"`
+
+	// (Updatable) Prevent backups from being deleted during the configured retention period. This is an optional field. If it is not specified, it is set to null, prevent deletion will not be applied to the backups.
+	// +kubebuilder:validation:Optional
+	IsPreventDeletionEnabled *bool `json:"isPreventDeletionEnabled,omitempty" tf:"is_prevent_deletion_enabled,omitempty"`
+
+	// (Updatable) feature that prevents deletion or alteration of backup data for a specified period to ensure data protection and regulatory compliance. This is an optional field. If it is not specified, it is set to null, no retention lock will be applied to the backups. This feature should be used in conjunction with the retention-period field.
+	// +kubebuilder:validation:Optional
+	IsRetentionLockEnabled *bool `json:"isRetentionLockEnabled,omitempty" tf:"is_retention_lock_enabled,omitempty"`
+
 	// (Updatable) The OCID of the Vault service key which is the master encryption key for the volume backup. For more information about the Vault service and encryption keys, see Overview of Vault service and Using Keys.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -190,6 +232,10 @@ type BootVolumeBackupParameters struct {
 	// Selector for a Key in kms to populate kmsKeyId.
 	// +kubebuilder:validation:Optional
 	KMSKeyIDSelector *v1.Selector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) This field is used to define the retention period for backups. This is an optional field. If it is not specified, it is set to null, no retention period will be applied to the backups.
+	// +kubebuilder:validation:Optional
+	RetentionPeriod []RetentionPeriodParameters `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
 	// Details of the volume backup source in the cloud. Cannot be defined if boot_volume_id is defined.
 	// +kubebuilder:validation:Optional
@@ -237,6 +283,35 @@ type BootVolumeBackupSourceDetailsParameters struct {
 	// The region of the volume backup source.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region" tf:"region,omitempty"`
+}
+
+type RetentionPeriodInitParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type RetentionPeriodObservation struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount,omitempty" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	RetentionTimeUnit *string `json:"retentionTimeUnit,omitempty" tf:"retention_time_unit,omitempty"`
+}
+
+type RetentionPeriodParameters struct {
+
+	// (Updatable) The value to enter for the amount of retention time should be a numerical figure (such as 1, 7, 30, etc.) that corresponds to the period specified in the retention time unit property (such as YEARS, DAYS). The combination of these two properties determines the total length of the retention period.
+	// +kubebuilder:validation:Optional
+	RetentionTimeAmount *float64 `json:"retentionTimeAmount" tf:"retention_time_amount,omitempty"`
+
+	// (Updatable) The value you can assign to the Time Unit property for this Duration may be either "YEARS" or "DAYS".
+	// +kubebuilder:validation:Optional
+	RetentionTimeUnit *string `json:"retentionTimeUnit" tf:"retention_time_unit,omitempty"`
 }
 
 // BootVolumeBackupSpec defines the desired state of BootVolumeBackup

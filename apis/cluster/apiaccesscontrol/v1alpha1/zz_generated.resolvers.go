@@ -23,13 +23,36 @@ func (mg *PrivilegedApiControl) ResolveReferences( // ResolveReferences of this 
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.ApproverGroupLevelList); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupID),
+				Extract:       resource.ExtractResourceID(),
+				Namespace:     mg.GetNamespace(),
+				References:    mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupIDRefs,
+				Selector:      mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupIDSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupID")
+		}
+		mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupID = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.ForProvider.ApproverGroupLevelList[i3].GroupIDRefs = mrsp.ResolvedReferences
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
-
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -85,6 +108,28 @@ func (mg *PrivilegedApiControl) ResolveReferences( // ResolveReferences of this 
 		}
 		mg.Spec.ForProvider.PrivilegedOperationList[i3].APIName = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.PrivilegedOperationList[i3].APINameRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.ApproverGroupLevelList); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Group", "GroupList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupID),
+				Extract:       resource.ExtractResourceID(),
+				Namespace:     mg.GetNamespace(),
+				References:    mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupIDRefs,
+				Selector:      mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupIDSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupID")
+		}
+		mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupID = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.InitProvider.ApproverGroupLevelList[i3].GroupIDRefs = mrsp.ResolvedReferences
 
 	}
 	{

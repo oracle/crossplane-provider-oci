@@ -87,7 +87,7 @@ type DedicatedVmHostInitParameters struct {
 	IsMemoryEncryptionEnabled *bool `json:"isMemoryEncryptionEnabled,omitempty" tf:"is_memory_encryption_enabled,omitempty"`
 
 	// The details for providing placement constraints.
-	PlacementConstraintDetails []PlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []DedicatedVmHostPlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
 type DedicatedVmHostObservation struct {
@@ -131,7 +131,7 @@ type DedicatedVmHostObservation struct {
 	IsMemoryEncryptionEnabled *bool `json:"isMemoryEncryptionEnabled,omitempty" tf:"is_memory_encryption_enabled,omitempty"`
 
 	// The details for providing placement constraints.
-	PlacementConstraintDetails []PlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []DedicatedVmHostPlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// The remaining local volume of the capacity bucket, in GBs.
 	RemainingLocalVolumeInGbs *float64 `json:"remainingLocalVolumeInGbs,omitempty" tf:"remaining_local_volume_in_gbs,omitempty"`
@@ -209,10 +209,10 @@ type DedicatedVmHostParameters struct {
 
 	// The details for providing placement constraints.
 	// +kubebuilder:validation:Optional
-	PlacementConstraintDetails []PlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []DedicatedVmHostPlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
-type PlacementConstraintDetailsInitParameters struct {
+type DedicatedVmHostPlacementConstraintDetailsInitParameters struct {
 
 	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
@@ -221,7 +221,7 @@ type PlacementConstraintDetailsInitParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type PlacementConstraintDetailsObservation struct {
+type DedicatedVmHostPlacementConstraintDetailsObservation struct {
 
 	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	ComputeBareMetalHostID *string `json:"computeBareMetalHostId,omitempty" tf:"compute_bare_metal_host_id,omitempty"`
@@ -230,7 +230,7 @@ type PlacementConstraintDetailsObservation struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type PlacementConstraintDetailsParameters struct {
+type DedicatedVmHostPlacementConstraintDetailsParameters struct {
 
 	// The OCID of the compute bare metal host. This is only available for dedicated capacity customers.
 	// +kubebuilder:validation:Optional

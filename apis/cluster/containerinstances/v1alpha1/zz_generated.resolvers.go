@@ -89,6 +89,28 @@ func (mg *ContainerInstance) ResolveReferences( // ResolveReferences of this Con
 		mg.Spec.ForProvider.Vnics[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Volumes); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Volumes[i3].SubnetID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.Volumes[i3].SubnetIDRef,
+				Selector:     mg.Spec.ForProvider.Volumes[i3].SubnetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Volumes[i3].SubnetID")
+		}
+		mg.Spec.ForProvider.Volumes[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Volumes[i3].SubnetIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
@@ -151,6 +173,28 @@ func (mg *ContainerInstance) ResolveReferences( // ResolveReferences of this Con
 		}
 		mg.Spec.InitProvider.Vnics[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.Vnics[i3].SubnetIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Volumes); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Volumes[i3].SubnetID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.Volumes[i3].SubnetIDRef,
+				Selector:     mg.Spec.InitProvider.Volumes[i3].SubnetIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Volumes[i3].SubnetID")
+		}
+		mg.Spec.InitProvider.Volumes[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Volumes[i3].SubnetIDRef = rsp.ResolvedReference
 
 	}
 

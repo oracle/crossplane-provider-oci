@@ -13,6 +13,9 @@ func (tr *AutoScalingConfiguration) Hub() {}
 func (tr *BdsCapacityReport) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *BdsCapacityReservation) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *BdsClusterAdminPasswordResetAction) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -20,6 +23,9 @@ func (tr *BdsInstance) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *BdsInstanceApiKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *BdsInstanceBdsCapacityReservationConfiguration) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *BdsInstanceBdsCertificateConfiguration) Hub() {}

@@ -16,7 +16,7 @@ import (
 
 type AnalyticsInstanceVanityUrlInitParameters struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/analytics/v1alpha1.AnalyticsInstance
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	AnalyticsInstanceID *string `json:"analyticsInstanceId,omitempty" tf:"analytics_instance_id,omitempty"`
@@ -29,19 +29,19 @@ type AnalyticsInstanceVanityUrlInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AnalyticsInstanceIDSelector *v1.NamespacedSelector `json:"analyticsInstanceIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) PEM CA certificate(s) for HTTPS connections. This may include multiple PEM certificates.
+	// (Updatable) PEM CA certificates for HTTPS connections. This may include multiple PEM certificates.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 
 	// Optional description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of fully qualified hostnames supported by this vanity URL definition (max of 3).
+	// List of fully-qualified hostnames supported by this vanity URL definition (maximum of 3).
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
-	// (Updatable) Passphrase for the PEM Private key (if any).
+	// (Updatable) Passphrase for the PEM private key (if any).
 	PassphraseSecretRef *v1.LocalSecretKeySelector `json:"passphraseSecretRef,omitempty" tf:"-"`
 
-	// (Updatable) PEM Private key for HTTPS connections.
+	// (Updatable) PEM private key for HTTPS connections.
 	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 
 	// (Updatable) PEM certificate for HTTPS connections.
@@ -50,16 +50,16 @@ type AnalyticsInstanceVanityUrlInitParameters struct {
 
 type AnalyticsInstanceVanityUrlObservation struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	AnalyticsInstanceID *string `json:"analyticsInstanceId,omitempty" tf:"analytics_instance_id,omitempty"`
 
-	// (Updatable) PEM CA certificate(s) for HTTPS connections. This may include multiple PEM certificates.
+	// (Updatable) PEM CA certificates for HTTPS connections. This may include multiple PEM certificates.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 
 	// Optional description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of fully qualified hostnames supported by this vanity URL definition (max of 3).
+	// List of fully-qualified hostnames supported by this vanity URL definition (maximum of 3).
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -70,7 +70,7 @@ type AnalyticsInstanceVanityUrlObservation struct {
 
 type AnalyticsInstanceVanityUrlParameters struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/analytics/v1alpha1.AnalyticsInstance
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -84,7 +84,7 @@ type AnalyticsInstanceVanityUrlParameters struct {
 	// +kubebuilder:validation:Optional
 	AnalyticsInstanceIDSelector *v1.NamespacedSelector `json:"analyticsInstanceIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) PEM CA certificate(s) for HTTPS connections. This may include multiple PEM certificates.
+	// (Updatable) PEM CA certificates for HTTPS connections. This may include multiple PEM certificates.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 
@@ -92,15 +92,15 @@ type AnalyticsInstanceVanityUrlParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of fully qualified hostnames supported by this vanity URL definition (max of 3).
+	// List of fully-qualified hostnames supported by this vanity URL definition (maximum of 3).
 	// +kubebuilder:validation:Optional
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
-	// (Updatable) Passphrase for the PEM Private key (if any).
+	// (Updatable) Passphrase for the PEM private key (if any).
 	// +kubebuilder:validation:Optional
 	PassphraseSecretRef *v1.LocalSecretKeySelector `json:"passphraseSecretRef,omitempty" tf:"-"`
 
-	// (Updatable) PEM Private key for HTTPS connections.
+	// (Updatable) PEM private key for HTTPS connections.
 	// +kubebuilder:validation:Optional
 	PrivateKeySecretRef v1.LocalSecretKeySelector `json:"privateKeySecretRef" tf:"-"`
 

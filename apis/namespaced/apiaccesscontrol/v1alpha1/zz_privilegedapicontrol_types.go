@@ -14,10 +14,62 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type ApproverGroupLevelListInitParameters struct {
+
+	// (Updatable) id of the group.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	GroupID []*string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// References to Group in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRefs []v1.NamespacedReference `json:"groupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Group in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) level of the group.
+	GroupLevel *float64 `json:"groupLevel,omitempty" tf:"group_level,omitempty"`
+}
+
+type ApproverGroupLevelListObservation struct {
+
+	// (Updatable) id of the group.
+	GroupID []*string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (Updatable) level of the group.
+	GroupLevel *float64 `json:"groupLevel,omitempty" tf:"group_level,omitempty"`
+}
+
+type ApproverGroupLevelListParameters struct {
+
+	// (Updatable) id of the group.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	GroupID []*string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// References to Group in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRefs []v1.NamespacedReference `json:"groupIdRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Group in identity to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) level of the group.
+	// +kubebuilder:validation:Optional
+	GroupLevel *float64 `json:"groupLevel" tf:"group_level,omitempty"`
+}
+
 type PrivilegedApiControlInitParameters struct {
 
 	// (Updatable) List of user IAM group ids who can approve an privilegedApi request associated with a resource governed by this operator control.
 	ApproverGroupIDList []*string `json:"approverGroupIdList,omitempty" tf:"approver_group_id_list,omitempty"`
+
+	// (Updatable) List of Group containing the levels at which the users belonging to the group can authorize.
+	ApproverGroupLevelList []ApproverGroupLevelListInitParameters `json:"approverGroupLevelList,omitempty" tf:"approver_group_level_list,omitempty"`
 
 	// (Updatable) The OCID of the compartment to create the PrivilegedApiControl in.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.Compartment
@@ -45,7 +97,7 @@ type PrivilegedApiControlInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Delegation Control.
+	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Privileged Api Control.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/ons/v1alpha1.NotificationTopic
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	NotificationTopicID *string `json:"notificationTopicId,omitempty" tf:"notification_topic_id,omitempty"`
@@ -76,6 +128,9 @@ type PrivilegedApiControlObservation struct {
 	// (Updatable) List of user IAM group ids who can approve an privilegedApi request associated with a resource governed by this operator control.
 	ApproverGroupIDList []*string `json:"approverGroupIdList,omitempty" tf:"approver_group_id_list,omitempty"`
 
+	// (Updatable) List of Group containing the levels at which the users belonging to the group can authorize.
+	ApproverGroupLevelList []ApproverGroupLevelListObservation `json:"approverGroupLevelList,omitempty" tf:"approver_group_level_list,omitempty"`
+
 	// (Updatable) The OCID of the compartment to create the PrivilegedApiControl in.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
@@ -99,7 +154,7 @@ type PrivilegedApiControlObservation struct {
 	// A message that describes the current state of the PrivilegedApiControl in more detail. For example, can be used to provide actionable information for a resource in the Failed state.
 	LifecycleDetails *string `json:"lifecycleDetails,omitempty" tf:"lifecycle_details,omitempty"`
 
-	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Delegation Control.
+	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Privileged Api Control.
 	NotificationTopicID *string `json:"notificationTopicId,omitempty" tf:"notification_topic_id,omitempty"`
 
 	// (Updatable) Number of approvers required to approve an privilegedApi request.
@@ -124,7 +179,7 @@ type PrivilegedApiControlObservation struct {
 	// +mapType=granular
 	SystemTags map[string]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
 
-	// The date and time the PrivilegedApiControl was created, in the format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z
+	// The date and time the PrivilegedApiControl was created, in the format defined by RFC 3339. Example: 2016-08-25T21:10:29.600Z
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
 	// The date and time the PrivilegedApiControl was marked for delete, in the format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z
@@ -139,6 +194,10 @@ type PrivilegedApiControlParameters struct {
 	// (Updatable) List of user IAM group ids who can approve an privilegedApi request associated with a resource governed by this operator control.
 	// +kubebuilder:validation:Optional
 	ApproverGroupIDList []*string `json:"approverGroupIdList,omitempty" tf:"approver_group_id_list,omitempty"`
+
+	// (Updatable) List of Group containing the levels at which the users belonging to the group can authorize.
+	// +kubebuilder:validation:Optional
+	ApproverGroupLevelList []ApproverGroupLevelListParameters `json:"approverGroupLevelList,omitempty" tf:"approver_group_level_list,omitempty"`
 
 	// (Updatable) The OCID of the compartment to create the PrivilegedApiControl in.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.Compartment
@@ -171,7 +230,7 @@ type PrivilegedApiControlParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Delegation Control.
+	// (Updatable) The OCID of the Oracle Cloud Infrastructure Notification topic to publish messages related to this Privileged Api Control.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/ons/v1alpha1.NotificationTopic
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -298,7 +357,6 @@ type PrivilegedApiControl struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.approverGroupIdList) || (has(self.initProvider) && has(self.initProvider.approverGroupIdList))",message="spec.forProvider.approverGroupIdList is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.privilegedOperationList) || (has(self.initProvider) && has(self.initProvider.privilegedOperationList))",message="spec.forProvider.privilegedOperationList is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resourceType) || (has(self.initProvider) && has(self.initProvider.resourceType))",message="spec.forProvider.resourceType is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resources) || (has(self.initProvider) && has(self.initProvider.resources))",message="spec.forProvider.resources is a required parameter"
 	Spec   PrivilegedApiControlSpec   `json:"spec"`
 	Status PrivilegedApiControlStatus `json:"status,omitempty"`
 }

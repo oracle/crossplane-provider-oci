@@ -127,6 +127,9 @@ type ContainerInstanceInitParameters struct {
 	// The image pulls secrets so you can access private registry to pull container images.
 	ImagePullSecrets []ImagePullSecretsInitParameters `json:"imagePullSecrets,omitempty" tf:"image_pull_secrets,omitempty"`
 
+	// Security context for container.
+	SecurityContext []ContainerInstanceSecurityContextInitParameters `json:"securityContext,omitempty" tf:"security_context,omitempty"`
+
 	// The shape of the container instance. The shape determines the resources available to the container instance.
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
 
@@ -180,7 +183,7 @@ type ContainerInstanceObservation struct {
 	// The amount of time that processes in a container have to gracefully end when the container must be stopped. For example, when you delete a container instance. After the timeout is reached, the processes are sent a signal to be deleted.
 	GracefulShutdownTimeoutInSeconds *string `json:"gracefulShutdownTimeoutInSeconds,omitempty" tf:"graceful_shutdown_timeout_in_seconds,omitempty"`
 
-	// An OCID that cannot be changed.
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The image pulls secrets so you can access private registry to pull container images.
@@ -188,6 +191,9 @@ type ContainerInstanceObservation struct {
 
 	// A message that describes the current state of the container in more detail. Can be used to provide actionable information.
 	LifecycleDetails *string `json:"lifecycleDetails,omitempty" tf:"lifecycle_details,omitempty"`
+
+	// Security context for container.
+	SecurityContext []ContainerInstanceSecurityContextObservation `json:"securityContext,omitempty" tf:"security_context,omitempty"`
 
 	// The shape of the container instance. The shape determines the resources available to the container instance.
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
@@ -201,6 +207,9 @@ type ContainerInstanceObservation struct {
 	// Usage of system tag keys. These predefined keys are scoped to namespaces. Example: {"orcl-cloud.free-tier-retained": "true"}.
 	// +mapType=granular
 	SystemTags map[string]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
+
+	// TenantId id of the container instance.
+	TenantID *string `json:"tenantId,omitempty" tf:"tenant_id,omitempty"`
 
 	// The time the container instance was created, in the format defined by RFC 3339.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
@@ -275,6 +284,10 @@ type ContainerInstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ImagePullSecrets []ImagePullSecretsParameters `json:"imagePullSecrets,omitempty" tf:"image_pull_secrets,omitempty"`
 
+	// Security context for container.
+	// +kubebuilder:validation:Optional
+	SecurityContext []ContainerInstanceSecurityContextParameters `json:"securityContext,omitempty" tf:"security_context,omitempty"`
+
 	// The shape of the container instance. The shape determines the resources available to the container instance.
 	// +kubebuilder:validation:Optional
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
@@ -294,6 +307,45 @@ type ContainerInstanceParameters struct {
 	// A volume is a directory with data that is accessible across multiple containers in a container instance.
 	// +kubebuilder:validation:Optional
 	Volumes []VolumesParameters `json:"volumes,omitempty" tf:"volumes,omitempty"`
+}
+
+type ContainerInstanceSecurityContextInitParameters struct {
+
+	// A special supplemental group that applies to all containers in the container instance. Some volume types allow the container instance to change ownership of the volume. The owning GID will be the fsGroup, the setgid bit will be set (new files will be owned by the fsGroup), and the permission bits are OR'd with rw-rw----. If unset, the container instance will not modify the ownership and permissions of volumes.
+	FsGroup *float64 `json:"fsGroup,omitempty" tf:"fs_group,omitempty"`
+
+	// Defines behavior of changing ownership and permission of the volume before being exposed inside the containers. This only applies to volumes which support fsGroup ownership and permissions, and will have no effect on ephemeral volumes. ON_ROOT_MISMATCH only changes permissions and ownership if the permission and ownership of the root directory does not match the expected permissions and ownership of the volume. This can improve container instance start times. ALWAYS  changes permission and ownership of the volume when it is mounted. If unset, ALWAYS is used.
+	FsGroupChangePolicy *string `json:"fsGroupChangePolicy,omitempty" tf:"fs_group_change_policy,omitempty"`
+
+	// The type of security context
+	SecurityContextType *string `json:"securityContextType,omitempty" tf:"security_context_type,omitempty"`
+}
+
+type ContainerInstanceSecurityContextObservation struct {
+
+	// A special supplemental group that applies to all containers in the container instance. Some volume types allow the container instance to change ownership of the volume. The owning GID will be the fsGroup, the setgid bit will be set (new files will be owned by the fsGroup), and the permission bits are OR'd with rw-rw----. If unset, the container instance will not modify the ownership and permissions of volumes.
+	FsGroup *float64 `json:"fsGroup,omitempty" tf:"fs_group,omitempty"`
+
+	// Defines behavior of changing ownership and permission of the volume before being exposed inside the containers. This only applies to volumes which support fsGroup ownership and permissions, and will have no effect on ephemeral volumes. ON_ROOT_MISMATCH only changes permissions and ownership if the permission and ownership of the root directory does not match the expected permissions and ownership of the volume. This can improve container instance start times. ALWAYS  changes permission and ownership of the volume when it is mounted. If unset, ALWAYS is used.
+	FsGroupChangePolicy *string `json:"fsGroupChangePolicy,omitempty" tf:"fs_group_change_policy,omitempty"`
+
+	// The type of security context
+	SecurityContextType *string `json:"securityContextType,omitempty" tf:"security_context_type,omitempty"`
+}
+
+type ContainerInstanceSecurityContextParameters struct {
+
+	// A special supplemental group that applies to all containers in the container instance. Some volume types allow the container instance to change ownership of the volume. The owning GID will be the fsGroup, the setgid bit will be set (new files will be owned by the fsGroup), and the permission bits are OR'd with rw-rw----. If unset, the container instance will not modify the ownership and permissions of volumes.
+	// +kubebuilder:validation:Optional
+	FsGroup *float64 `json:"fsGroup,omitempty" tf:"fs_group,omitempty"`
+
+	// Defines behavior of changing ownership and permission of the volume before being exposed inside the containers. This only applies to volumes which support fsGroup ownership and permissions, and will have no effect on ephemeral volumes. ON_ROOT_MISMATCH only changes permissions and ownership if the permission and ownership of the root directory does not match the expected permissions and ownership of the volume. This can improve container instance start times. ALWAYS  changes permission and ownership of the volume when it is mounted. If unset, ALWAYS is used.
+	// +kubebuilder:validation:Optional
+	FsGroupChangePolicy *string `json:"fsGroupChangePolicy,omitempty" tf:"fs_group_change_policy,omitempty"`
+
+	// The type of security context
+	// +kubebuilder:validation:Optional
+	SecurityContextType *string `json:"securityContextType,omitempty" tf:"security_context_type,omitempty"`
 }
 
 type ContainersInitParameters struct {
@@ -358,7 +410,7 @@ type ContainersObservation struct {
 	// The OCID of the container.
 	ContainerID *string `json:"containerId,omitempty" tf:"container_id,omitempty"`
 
-	// An OCID that cannot be changed.
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
 	ContainerInstanceID *string `json:"containerInstanceId,omitempty" tf:"container_instance_id,omitempty"`
 
 	// Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: {"foo-namespace.bar-key": "value"}.
@@ -516,6 +568,35 @@ type DNSConfigParameters struct {
 	// Search list for host-name lookup. If null, we will use searches from subnet dhcpDnsOptios.
 	// +kubebuilder:validation:Optional
 	Searches []*string `json:"searches,omitempty" tf:"searches,omitempty"`
+}
+
+type ExportInitParameters struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Export details. The value must be an OCID unless your tenancy is allowed to use PATH as a value.
+	OciFssExportType *string `json:"ociFssExportType,omitempty" tf:"oci_fss_export_type,omitempty"`
+}
+
+type ExportObservation struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Export details. The value must be an OCID unless your tenancy is allowed to use PATH as a value.
+	OciFssExportType *string `json:"ociFssExportType,omitempty" tf:"oci_fss_export_type,omitempty"`
+}
+
+type ExportParameters struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Export details. The value must be an OCID unless your tenancy is allowed to use PATH as a value.
+	// +kubebuilder:validation:Optional
+	OciFssExportType *string `json:"ociFssExportType,omitempty" tf:"oci_fss_export_type,omitempty"`
 }
 
 type HeadersInitParameters struct {
@@ -756,6 +837,83 @@ type ImagePullSecretsParameters struct {
 	Username *string `json:"username,omitempty" tf:"username,omitempty"`
 }
 
+type MountCommandInitParameters struct {
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) List of mount options to be used in the mount command. The order of this array will be maintained while preparing the mount command.
+	MountOptions []MountOptionsInitParameters `json:"mountOptions,omitempty" tf:"mount_options,omitempty"`
+}
+
+type MountCommandObservation struct {
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) List of mount options to be used in the mount command. The order of this array will be maintained while preparing the mount command.
+	MountOptions []MountOptionsObservation `json:"mountOptions,omitempty" tf:"mount_options,omitempty"`
+}
+
+type MountCommandParameters struct {
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) List of mount options to be used in the mount command. The order of this array will be maintained while preparing the mount command.
+	// +kubebuilder:validation:Optional
+	MountOptions []MountOptionsParameters `json:"mountOptions,omitempty" tf:"mount_options,omitempty"`
+}
+
+type MountOptionsInitParameters struct {
+
+	// A generic (https://man7.org/linux/man-pages/man8/mount.8.html) or nfs (https://man7.org/linux/man-pages/man5/nfs.5.html) mount option.
+	Option *string `json:"option,omitempty" tf:"option,omitempty"`
+
+	// Container HTTP header value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type MountOptionsObservation struct {
+
+	// A generic (https://man7.org/linux/man-pages/man8/mount.8.html) or nfs (https://man7.org/linux/man-pages/man5/nfs.5.html) mount option.
+	Option *string `json:"option,omitempty" tf:"option,omitempty"`
+
+	// Container HTTP header value.
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type MountOptionsParameters struct {
+
+	// A generic (https://man7.org/linux/man-pages/man8/mount.8.html) or nfs (https://man7.org/linux/man-pages/man5/nfs.5.html) mount option.
+	// +kubebuilder:validation:Optional
+	Option *string `json:"option,omitempty" tf:"option,omitempty"`
+
+	// Container HTTP header value.
+	// +kubebuilder:validation:Optional
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type MountTargetInitParameters struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Mount target details. The value must be an OCID unless your tenancy is allowed to use HOST as a value.
+	OciFssMountTargetType *string `json:"ociFssMountTargetType,omitempty" tf:"oci_fss_mount_target_type,omitempty"`
+}
+
+type MountTargetObservation struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Mount target details. The value must be an OCID unless your tenancy is allowed to use HOST as a value.
+	OciFssMountTargetType *string `json:"ociFssMountTargetType,omitempty" tf:"oci_fss_mount_target_type,omitempty"`
+}
+
+type MountTargetParameters struct {
+
+	// The OCID of the Oracle Cloud Infrastructure File Storage Service (FSS) Export.
+	// +kubebuilder:validation:Optional
+	ID *string `json:"id" tf:"id,omitempty"`
+
+	// Determines the mode for supplying the Oracle Cloud Infrastructure File Storage Service (FSS) Mount target details. The value must be an OCID unless your tenancy is allowed to use HOST as a value.
+	// +kubebuilder:validation:Optional
+	OciFssMountTargetType *string `json:"ociFssMountTargetType,omitempty" tf:"oci_fss_mount_target_type,omitempty"`
+}
+
 type ResourceConfigInitParameters struct {
 
 	// The maximum amount of memory that can be consumed by the container's process.
@@ -852,6 +1010,35 @@ type SecurityContextParameters struct {
 	// The type of security context
 	// +kubebuilder:validation:Optional
 	SecurityContextType *string `json:"securityContextType,omitempty" tf:"security_context_type,omitempty"`
+}
+
+type SecurityInitParameters struct {
+
+	// NFS authentication type to be used. Currently, only auth type SYS is supported.
+	Auth *string `json:"auth,omitempty" tf:"auth,omitempty"`
+
+	// Determines whether in-transit encryption needs to be enables.  Check https://docs.oracle.com/en-us/iaas/Content/File/Tasks/intransitencryption.htm#Using_Intransit_Encryption for more details.
+	IsEncryptedInTransit *bool `json:"isEncryptedInTransit,omitempty" tf:"is_encrypted_in_transit,omitempty"`
+}
+
+type SecurityObservation struct {
+
+	// NFS authentication type to be used. Currently, only auth type SYS is supported.
+	Auth *string `json:"auth,omitempty" tf:"auth,omitempty"`
+
+	// Determines whether in-transit encryption needs to be enables.  Check https://docs.oracle.com/en-us/iaas/Content/File/Tasks/intransitencryption.htm#Using_Intransit_Encryption for more details.
+	IsEncryptedInTransit *bool `json:"isEncryptedInTransit,omitempty" tf:"is_encrypted_in_transit,omitempty"`
+}
+
+type SecurityParameters struct {
+
+	// NFS authentication type to be used. Currently, only auth type SYS is supported.
+	// +kubebuilder:validation:Optional
+	Auth *string `json:"auth,omitempty" tf:"auth,omitempty"`
+
+	// Determines whether in-transit encryption needs to be enables.  Check https://docs.oracle.com/en-us/iaas/Content/File/Tasks/intransitencryption.htm#Using_Intransit_Encryption for more details.
+	// +kubebuilder:validation:Optional
+	IsEncryptedInTransit *bool `json:"isEncryptedInTransit,omitempty" tf:"is_encrypted_in_transit,omitempty"`
 }
 
 type ShapeConfigInitParameters struct {
@@ -1087,8 +1274,33 @@ type VolumesInitParameters struct {
 	// (Applicable when volume_type=CONFIGFILE) Contains key value pairs which can be mounted as individual files inside the container. The value needs to be base64 encoded. It is decoded to plain text before the mount.
 	Configs []ConfigsInitParameters `json:"configs,omitempty" tf:"configs,omitempty"`
 
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Export. Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/Export/ for more details.
+	Export []ExportInitParameters `json:"export,omitempty" tf:"export,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Specifications for the mount command to mount the Oracle Cloud Infrastructure File Storage Service (FSS) File System to Containers.
+	MountCommand []MountCommandInitParameters `json:"mountCommand,omitempty" tf:"mount_command,omitempty"`
+
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Mount Target.  Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/MountTarget for more details.
+	MountTarget []MountTargetInitParameters `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
 	// Container HTTP header Key.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Security options for Oracle Cloud Infrastructure FSS File System.
+	Security []SecurityInitParameters `json:"security,omitempty" tf:"security,omitempty"`
+
+	// The OCID of the subnet to create the VNIC in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The type of volume.
 	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
@@ -1102,8 +1314,23 @@ type VolumesObservation struct {
 	// (Applicable when volume_type=CONFIGFILE) Contains key value pairs which can be mounted as individual files inside the container. The value needs to be base64 encoded. It is decoded to plain text before the mount.
 	Configs []ConfigsObservation `json:"configs,omitempty" tf:"configs,omitempty"`
 
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Export. Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/Export/ for more details.
+	Export []ExportObservation `json:"export,omitempty" tf:"export,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Specifications for the mount command to mount the Oracle Cloud Infrastructure File Storage Service (FSS) File System to Containers.
+	MountCommand []MountCommandObservation `json:"mountCommand,omitempty" tf:"mount_command,omitempty"`
+
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Mount Target.  Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/MountTarget for more details.
+	MountTarget []MountTargetObservation `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
 	// Container HTTP header Key.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Security options for Oracle Cloud Infrastructure FSS File System.
+	Security []SecurityObservation `json:"security,omitempty" tf:"security,omitempty"`
+
+	// The OCID of the subnet to create the VNIC in.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// The type of volume.
 	VolumeType *string `json:"volumeType,omitempty" tf:"volume_type,omitempty"`
@@ -1119,9 +1346,39 @@ type VolumesParameters struct {
 	// +kubebuilder:validation:Optional
 	Configs []ConfigsParameters `json:"configs,omitempty" tf:"configs,omitempty"`
 
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Export. Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/Export/ for more details.
+	// +kubebuilder:validation:Optional
+	Export []ExportParameters `json:"export,omitempty" tf:"export,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Specifications for the mount command to mount the Oracle Cloud Infrastructure File Storage Service (FSS) File System to Containers.
+	// +kubebuilder:validation:Optional
+	MountCommand []MountCommandParameters `json:"mountCommand,omitempty" tf:"mount_command,omitempty"`
+
+	// An Oracle Cloud Infrastructure File Storage Service (FSS) Mount Target.  Check https://docs.oracle.com/en-us/iaas/api/#/en/filestorage/20171215/MountTarget for more details.
+	// +kubebuilder:validation:Optional
+	MountTarget []MountTargetParameters `json:"mountTarget,omitempty" tf:"mount_target,omitempty"`
+
 	// Container HTTP header Key.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
+
+	// (Applicable when volume_type=OCI_FSS_FILE_SYSTEM) Security options for Oracle Cloud Infrastructure FSS File System.
+	// +kubebuilder:validation:Optional
+	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
+
+	// The OCID of the subnet to create the VNIC in.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in networking to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The type of volume.
 	// +kubebuilder:validation:Optional

@@ -10,6 +10,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	defaultdhcpoptions "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultdhcpoptions"
+	defaultdrgroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultdrgroutetable"
 	defaultroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultroutetable"
 	defaultsecuritylist "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultsecuritylist"
 	dhcpoptions "github.com/oracle/provider-oci/internal/controller/namespaced/networking/dhcpoptions"
@@ -39,6 +40,7 @@ import (
 func Setup_networking(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		defaultdhcpoptions.Setup,
+		defaultdrgroutetable.Setup,
 		defaultroutetable.Setup,
 		defaultsecuritylist.Setup,
 		dhcpoptions.Setup,
@@ -74,6 +76,7 @@ func Setup_networking(mgr ctrl.Manager, o controller.Options) error {
 func SetupGated_networking(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		defaultdhcpoptions.SetupGated,
+		defaultdrgroutetable.SetupGated,
 		defaultroutetable.SetupGated,
 		defaultsecuritylist.SetupGated,
 		dhcpoptions.SetupGated,

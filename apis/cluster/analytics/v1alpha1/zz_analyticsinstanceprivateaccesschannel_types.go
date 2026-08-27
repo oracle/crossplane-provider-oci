@@ -15,7 +15,7 @@ import (
 
 type AnalyticsInstancePrivateAccessChannelInitParameters struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/analytics/v1alpha1.AnalyticsInstance
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	AnalyticsInstanceID *string `json:"analyticsInstanceId,omitempty" tf:"analytics_instance_id,omitempty"`
@@ -28,20 +28,20 @@ type AnalyticsInstancePrivateAccessChannelInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AnalyticsInstanceIDSelector *v1.Selector `json:"analyticsInstanceIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) Display Name of the Private Access Channel.
+	// (Updatable) Display name of the private access channel.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
-	// (Updatable) Network Security Group OCIDs for an Analytics instance.
+	// (Updatable) Network Security Group OCIDs for the Analytics instance.
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
 
-	// (Updatable) List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
+	// (Updatable) List of private source DNS zones registered with the private access channel. The datasource hostnames from these DNS zones / domains will be resolved in the peered VCN for access from  the Analytics instance. Minimum 1 private source is required. Maximum 30 private source DNS zones can be registered.
 	PrivateSourceDNSZones []PrivateSourceDNSZonesInitParameters `json:"privateSourceDnsZones,omitempty" tf:"private_source_dns_zones,omitempty"`
 
-	// (Updatable) List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
+	// (Updatable) List of private source database SCAN hosts registered with the private access channel for access from the Analytics instance.
 	PrivateSourceScanHosts []PrivateSourceScanHostsInitParameters `json:"privateSourceScanHosts,omitempty" tf:"private_source_scan_hosts,omitempty"`
 
-	// (Updatable) OCID of the customer subnet connected to private access channel.
+	// (Updatable) OCID of the customer subnet connected to the private access channel.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -54,7 +54,7 @@ type AnalyticsInstancePrivateAccessChannelInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) OCID of the customer VCN peered with private access channel.
+	// (Updatable) OCID of the customer VCN peered with the private access channel.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Vcn
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	VcnID *string `json:"vcnId,omitempty" tf:"vcn_id,omitempty"`
@@ -70,43 +70,43 @@ type AnalyticsInstancePrivateAccessChannelInitParameters struct {
 
 type AnalyticsInstancePrivateAccessChannelObservation struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	AnalyticsInstanceID *string `json:"analyticsInstanceId,omitempty" tf:"analytics_instance_id,omitempty"`
 
-	// (Updatable) Display Name of the Private Access Channel.
+	// (Updatable) Display name of the private access channel.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
-	// The list of IP addresses from the customer subnet connected to private access channel, used as a source Ip by Private Access Channel for network traffic from the AnalyticsInstance to Private Sources.
+	// List of IP addresses from the customer subnet connected to the private access channel, used as a source IP by the private access channel for network traffic from the Analytics instance to the private sources.
 	EgressSourceIPAddresses []*string `json:"egressSourceIpAddresses,omitempty" tf:"egress_source_ip_addresses,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// IP Address of the Private Access channel.
+	// IP address of the private access channel.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// Private Access Channel unique identifier key.
+	// Private access channel unique identifier key.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (Updatable) Network Security Group OCIDs for an Analytics instance.
+	// (Updatable) Network Security Group OCIDs for the Analytics instance.
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
 
-	// (Updatable) List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
+	// (Updatable) List of private source DNS zones registered with the private access channel. The datasource hostnames from these DNS zones / domains will be resolved in the peered VCN for access from  the Analytics instance. Minimum 1 private source is required. Maximum 30 private source DNS zones can be registered.
 	PrivateSourceDNSZones []PrivateSourceDNSZonesObservation `json:"privateSourceDnsZones,omitempty" tf:"private_source_dns_zones,omitempty"`
 
-	// (Updatable) List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
+	// (Updatable) List of private source database SCAN hosts registered with the private access channel for access from the Analytics instance.
 	PrivateSourceScanHosts []PrivateSourceScanHostsObservation `json:"privateSourceScanHosts,omitempty" tf:"private_source_scan_hosts,omitempty"`
 
-	// (Updatable) OCID of the customer subnet connected to private access channel.
+	// (Updatable) OCID of the customer subnet connected to the private access channel.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (Updatable) OCID of the customer VCN peered with private access channel.
+	// (Updatable) OCID of the customer VCN peered with the private access channel.
 	VcnID *string `json:"vcnId,omitempty" tf:"vcn_id,omitempty"`
 }
 
 type AnalyticsInstancePrivateAccessChannelParameters struct {
 
-	// The OCID of the AnalyticsInstance.
+	// The OCID of the Analytics instance.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/analytics/v1alpha1.AnalyticsInstance
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -120,24 +120,24 @@ type AnalyticsInstancePrivateAccessChannelParameters struct {
 	// +kubebuilder:validation:Optional
 	AnalyticsInstanceIDSelector *v1.Selector `json:"analyticsInstanceIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) Display Name of the Private Access Channel.
+	// (Updatable) Display name of the private access channel.
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
-	// (Updatable) Network Security Group OCIDs for an Analytics instance.
+	// (Updatable) Network Security Group OCIDs for the Analytics instance.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	NetworkSecurityGroupIds []*string `json:"networkSecurityGroupIds,omitempty" tf:"network_security_group_ids,omitempty"`
 
-	// (Updatable) List of Private Source DNS zones registered with Private Access Channel, where datasource hostnames from these dns zones / domains will be resolved in the peered VCN for access from Analytics Instance. Min of 1 is required and Max of 30 Private Source DNS zones can be registered.
+	// (Updatable) List of private source DNS zones registered with the private access channel. The datasource hostnames from these DNS zones / domains will be resolved in the peered VCN for access from  the Analytics instance. Minimum 1 private source is required. Maximum 30 private source DNS zones can be registered.
 	// +kubebuilder:validation:Optional
 	PrivateSourceDNSZones []PrivateSourceDNSZonesParameters `json:"privateSourceDnsZones,omitempty" tf:"private_source_dns_zones,omitempty"`
 
-	// (Updatable) List of Private Source DB SCAN hosts registered with Private Access Channel for access from Analytics Instance.
+	// (Updatable) List of private source database SCAN hosts registered with the private access channel for access from the Analytics instance.
 	// +kubebuilder:validation:Optional
 	PrivateSourceScanHosts []PrivateSourceScanHostsParameters `json:"privateSourceScanHosts,omitempty" tf:"private_source_scan_hosts,omitempty"`
 
-	// (Updatable) OCID of the customer subnet connected to private access channel.
+	// (Updatable) OCID of the customer subnet connected to the private access channel.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -151,7 +151,7 @@ type AnalyticsInstancePrivateAccessChannelParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (Updatable) OCID of the customer VCN peered with private access channel.
+	// (Updatable) OCID of the customer VCN peered with the private access channel.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Vcn
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
@@ -168,68 +168,68 @@ type AnalyticsInstancePrivateAccessChannelParameters struct {
 
 type PrivateSourceDNSZonesInitParameters struct {
 
-	// (Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com, corp.example.com.
+	// (Updatable) Private source DNS zone. For example: example-vcn.oraclevcn.com, corp.example.com.
 	DNSZone *string `json:"dnsZone,omitempty" tf:"dns_zone,omitempty"`
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 }
 
 type PrivateSourceDNSZonesObservation struct {
 
-	// (Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com, corp.example.com.
+	// (Updatable) Private source DNS zone. For example: example-vcn.oraclevcn.com, corp.example.com.
 	DNSZone *string `json:"dnsZone,omitempty" tf:"dns_zone,omitempty"`
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 }
 
 type PrivateSourceDNSZonesParameters struct {
 
-	// (Updatable) Private Source DNS Zone. Ex: example-vcn.oraclevcn.com, corp.example.com.
+	// (Updatable) Private source DNS zone. For example: example-vcn.oraclevcn.com, corp.example.com.
 	// +kubebuilder:validation:Optional
 	DNSZone *string `json:"dnsZone" tf:"dns_zone,omitempty"`
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 }
 
 type PrivateSourceScanHostsInitParameters struct {
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Updatable) Private Source Scan hostname. Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
+	// (Updatable) Private source SCAN hostname. For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
 	ScanHostname *string `json:"scanHostname,omitempty" tf:"scan_hostname,omitempty"`
 
-	// (Updatable) Private Source Scan host port. This is the source port where SCAN protocol will get connected (e.g. 1521).
+	// (Updatable) Private source SCAN host port. This is the source port where the SCAN protocol connects (for example, 1521).
 	ScanPort *float64 `json:"scanPort,omitempty" tf:"scan_port,omitempty"`
 }
 
 type PrivateSourceScanHostsObservation struct {
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Updatable) Private Source Scan hostname. Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
+	// (Updatable) Private source SCAN hostname. For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
 	ScanHostname *string `json:"scanHostname,omitempty" tf:"scan_hostname,omitempty"`
 
-	// (Updatable) Private Source Scan host port. This is the source port where SCAN protocol will get connected (e.g. 1521).
+	// (Updatable) Private source SCAN host port. This is the source port where the SCAN protocol connects (for example, 1521).
 	ScanPort *float64 `json:"scanPort,omitempty" tf:"scan_port,omitempty"`
 }
 
 type PrivateSourceScanHostsParameters struct {
 
-	// (Updatable) Description of private source dns zone.
+	// (Updatable) Description of the private source DNS zone.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Updatable) Private Source Scan hostname. Ex: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
+	// (Updatable) Private source SCAN hostname. For example: db01-scan.corp.example.com, prd-db01-scan.mycompany.com.
 	// +kubebuilder:validation:Optional
 	ScanHostname *string `json:"scanHostname" tf:"scan_hostname,omitempty"`
 
-	// (Updatable) Private Source Scan host port. This is the source port where SCAN protocol will get connected (e.g. 1521).
+	// (Updatable) Private source SCAN host port. This is the source port where the SCAN protocol connects (for example, 1521).
 	// +kubebuilder:validation:Optional
 	ScanPort *float64 `json:"scanPort" tf:"scan_port,omitempty"`
 }
