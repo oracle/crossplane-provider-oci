@@ -3140,6 +3140,16 @@ func (in *BdsInstanceInitParameters) DeepCopyInto(out *BdsInstanceInitParameters
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretIDRef != nil {
+		in, out := &in.SecretIDRef, &out.SecretIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretIDSelector != nil {
+		in, out := &in.SecretIDSelector, &out.SecretIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.StartClusterShapeConfigs != nil {
 		in, out := &in.StartClusterShapeConfigs, &out.StartClusterShapeConfigs
 		*out = make([]StartClusterShapeConfigsInitParameters, len(*in))
@@ -5592,6 +5602,16 @@ func (in *BdsInstanceParameters) DeepCopyInto(out *BdsInstanceParameters) {
 		in, out := &in.SecretID, &out.SecretID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SecretIDRef != nil {
+		in, out := &in.SecretIDRef, &out.SecretIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecretIDSelector != nil {
+		in, out := &in.SecretIDSelector, &out.SecretIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StartClusterShapeConfigs != nil {
 		in, out := &in.StartClusterShapeConfigs, &out.StartClusterShapeConfigs

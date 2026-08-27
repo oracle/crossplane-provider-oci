@@ -136,9 +136,9 @@ func (in *AiDataPlatformInitParameters) DeepCopyInto(out *AiDataPlatformInitPara
 			(*out)[key] = outVal
 		}
 	}
-	if in.VectorDBAdminCred != nil {
-		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
-		*out = new(string)
+	if in.VectorDBAdminCredSecretRef != nil {
+		in, out := &in.VectorDBAdminCredSecretRef, &out.VectorDBAdminCredSecretRef
+		*out = new(v1.LocalSecretKeySelector)
 		**out = **in
 	}
 	if in.VectorDBAdminSecretID != nil {
@@ -321,11 +321,6 @@ func (in *AiDataPlatformObservation) DeepCopyInto(out *AiDataPlatformObservation
 		*out = new(string)
 		**out = **in
 	}
-	if in.VectorDBAdminCred != nil {
-		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
-		*out = new(string)
-		**out = **in
-	}
 	if in.VectorDBAdminSecretID != nil {
 		in, out := &in.VectorDBAdminSecretID, &out.VectorDBAdminSecretID
 		*out = new(string)
@@ -449,9 +444,9 @@ func (in *AiDataPlatformParameters) DeepCopyInto(out *AiDataPlatformParameters) 
 			(*out)[key] = outVal
 		}
 	}
-	if in.VectorDBAdminCred != nil {
-		in, out := &in.VectorDBAdminCred, &out.VectorDBAdminCred
-		*out = new(string)
+	if in.VectorDBAdminCredSecretRef != nil {
+		in, out := &in.VectorDBAdminCredSecretRef, &out.VectorDBAdminCredSecretRef
+		*out = new(v1.LocalSecretKeySelector)
 		**out = **in
 	}
 	if in.VectorDBAdminSecretID != nil {

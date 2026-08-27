@@ -21,7 +21,7 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/oracle/provider-oci/apis/namespaced/networking/v1alpha1"
+	v1alpha1 "github.com/oracle/provider-oci/apis/namespaced/networkconnectivity/v1alpha1"
 	features "github.com/oracle/provider-oci/internal/features"
 )
 

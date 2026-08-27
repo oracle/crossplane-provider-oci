@@ -193,13 +193,42 @@ type BlueGreenDeploymentParameters struct {
 	TargetDBSystemDetails []TargetDBSystemDetailsParameters `json:"targetDbSystemDetails,omitempty" tf:"target_db_system_details,omitempty"`
 }
 
+type BlueGreenDeploymentSSLCACertificateInitParameters struct {
+
+	// The type of CA certificate.
+	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
+
+	// The string containing the CA certificate in PEM format.
+	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
+}
+
+type BlueGreenDeploymentSSLCACertificateObservation struct {
+
+	// The type of CA certificate.
+	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
+
+	// The string containing the CA certificate in PEM format.
+	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
+}
+
+type BlueGreenDeploymentSSLCACertificateParameters struct {
+
+	// The type of CA certificate.
+	// +kubebuilder:validation:Optional
+	CertificateType *string `json:"certificateType" tf:"certificate_type,omitempty"`
+
+	// The string containing the CA certificate in PEM format.
+	// +kubebuilder:validation:Optional
+	Contents *string `json:"contents" tf:"contents,omitempty"`
+}
+
 type ChannelDetailsInitParameters struct {
 
 	// The username for the replication applier of the target MySQL DB System.
 	ApplierUsername *string `json:"applierUsername,omitempty" tf:"applier_username,omitempty"`
 
 	// The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
-	SSLCACertificate []SSLCACertificateInitParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []BlueGreenDeploymentSSLCACertificateInitParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// The SSL mode of the replication channel created by the blue/green workflow. VERIFY_CA and VERIFY_IDENTITY require sslCaCertificate. REQUIRED and DISABLED must not include sslCaCertificate.
 	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
@@ -217,7 +246,7 @@ type ChannelDetailsObservation struct {
 	ApplierUsername *string `json:"applierUsername,omitempty" tf:"applier_username,omitempty"`
 
 	// The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
-	SSLCACertificate []SSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []BlueGreenDeploymentSSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// The SSL mode of the replication channel created by the blue/green workflow. VERIFY_CA and VERIFY_IDENTITY require sslCaCertificate. REQUIRED and DISABLED must not include sslCaCertificate.
 	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
@@ -234,7 +263,7 @@ type ChannelDetailsParameters struct {
 
 	// The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
 	// +kubebuilder:validation:Optional
-	SSLCACertificate []SSLCACertificateParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []BlueGreenDeploymentSSLCACertificateParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// The SSL mode of the replication channel created by the blue/green workflow. VERIFY_CA and VERIFY_IDENTITY require sslCaCertificate. REQUIRED and DISABLED must not include sslCaCertificate.
 	// +kubebuilder:validation:Optional
@@ -247,35 +276,6 @@ type ChannelDetailsParameters struct {
 	// The username on the source DB system used by the blue/green workflow to configure the replication channel. The username has a maximum length of 96 characters. For more information, please see the MySQL documentation
 	// +kubebuilder:validation:Optional
 	SourceUsername *string `json:"sourceUsername" tf:"source_username,omitempty"`
-}
-
-type SSLCACertificateInitParameters struct {
-
-	// The type of CA certificate.
-	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
-
-	// The string containing the CA certificate in PEM format.
-	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
-}
-
-type SSLCACertificateObservation struct {
-
-	// The type of CA certificate.
-	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
-
-	// The string containing the CA certificate in PEM format.
-	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
-}
-
-type SSLCACertificateParameters struct {
-
-	// The type of CA certificate.
-	// +kubebuilder:validation:Optional
-	CertificateType *string `json:"certificateType" tf:"certificate_type,omitempty"`
-
-	// The string containing the CA certificate in PEM format.
-	// +kubebuilder:validation:Optional
-	Contents *string `json:"contents" tf:"contents,omitempty"`
 }
 
 type TargetDBSystemDetailsInitParameters struct {

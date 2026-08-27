@@ -34,6 +34,15 @@ func (l *CrossConnectList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this DefaultDrgRouteTableList.
+func (l *DefaultDrgRouteTableList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DrgAttachmentList.
 func (l *DrgAttachmentList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

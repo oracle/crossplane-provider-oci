@@ -22,7 +22,10 @@ spec:
       Department: Finance
     isEnableAiFeature: ${var.ai_data_platform_is_enable_ai_feature}
     systemTags: ${var.ai_data_platform_system_tags}
-    vectorDbAdminCred: ${var.ai_data_platform_vector_db_admin_cred}
+    vectorDbAdminCredSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
     vectorDbAdminSecretIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_secret

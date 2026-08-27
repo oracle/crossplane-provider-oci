@@ -765,6 +765,7 @@ import (
 	cpe "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/cpe"
 	crossconnect "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/crossconnect"
 	crossconnectgroup "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/crossconnectgroup"
+	defaultdrgroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/defaultdrgroutetable"
 	drg "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drg"
 	drgattachment "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drgattachment"
 	drgattachmentmanagement "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drgattachmentmanagement"
@@ -789,7 +790,6 @@ import (
 	networkfirewallpolicyservice "github.com/oracle/provider-oci/internal/controller/namespaced/networkfirewall/networkfirewallpolicyservice"
 	networkfirewallpolicytunnelinspectionrule "github.com/oracle/provider-oci/internal/controller/namespaced/networkfirewall/networkfirewallpolicytunnelinspectionrule"
 	defaultdhcpoptions "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultdhcpoptions"
-	defaultdrgroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultdrgroutetable"
 	defaultroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultroutetable"
 	defaultsecuritylist "github.com/oracle/provider-oci/internal/controller/namespaced/networking/defaultsecuritylist"
 	dhcpoptions "github.com/oracle/provider-oci/internal/controller/namespaced/networking/dhcpoptions"
@@ -1769,6 +1769,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		cpe.Setup,
 		crossconnect.Setup,
 		crossconnectgroup.Setup,
+		defaultdrgroutetable.Setup,
 		drg.Setup,
 		drgattachment.Setup,
 		drgattachmentmanagement.Setup,
@@ -1793,7 +1794,6 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		networkfirewallpolicyservice.Setup,
 		networkfirewallpolicytunnelinspectionrule.Setup,
 		defaultdhcpoptions.Setup,
-		defaultdrgroutetable.Setup,
 		defaultroutetable.Setup,
 		defaultsecuritylist.Setup,
 		dhcpoptions.Setup,
@@ -2779,6 +2779,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		cpe.SetupGated,
 		crossconnect.SetupGated,
 		crossconnectgroup.SetupGated,
+		defaultdrgroutetable.SetupGated,
 		drg.SetupGated,
 		drgattachment.SetupGated,
 		drgattachmentmanagement.SetupGated,
@@ -2803,7 +2804,6 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		networkfirewallpolicyservice.SetupGated,
 		networkfirewallpolicytunnelinspectionrule.SetupGated,
 		defaultdhcpoptions.SetupGated,
-		defaultdrgroutetable.SetupGated,
 		defaultroutetable.SetupGated,
 		defaultsecuritylist.SetupGated,
 		dhcpoptions.SetupGated,

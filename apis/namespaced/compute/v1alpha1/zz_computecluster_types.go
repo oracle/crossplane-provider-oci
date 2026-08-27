@@ -43,7 +43,7 @@ type ComputeClusterInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The details for providing placement constraints.
-	PlacementConstraintDetails []PlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
 type ComputeClusterObservation struct {
@@ -69,7 +69,7 @@ type ComputeClusterObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Updatable) The details for providing placement constraints.
-	PlacementConstraintDetails []PlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 
 	// The current state of the compute cluster.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -116,10 +116,10 @@ type ComputeClusterParameters struct {
 
 	// (Updatable) The details for providing placement constraints.
 	// +kubebuilder:validation:Optional
-	PlacementConstraintDetails []PlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
-type PlacementConstraintDetailsInitParameters struct {
+type ComputeClusterPlacementConstraintDetailsInitParameters struct {
 
 	// The OCID of the HPC island for the compute cluster.
 	HpcIslandID *string `json:"hpcIslandId,omitempty" tf:"hpc_island_id,omitempty"`
@@ -137,7 +137,7 @@ type PlacementConstraintDetailsInitParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type PlacementConstraintDetailsObservation struct {
+type ComputeClusterPlacementConstraintDetailsObservation struct {
 
 	// The OCID of the HPC island for the compute cluster.
 	HpcIslandID *string `json:"hpcIslandId,omitempty" tf:"hpc_island_id,omitempty"`
@@ -155,7 +155,7 @@ type PlacementConstraintDetailsObservation struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type PlacementConstraintDetailsParameters struct {
+type ComputeClusterPlacementConstraintDetailsParameters struct {
 
 	// The OCID of the HPC island for the compute cluster.
 	// +kubebuilder:validation:Optional

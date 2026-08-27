@@ -269,10 +269,24 @@ spec:
                       "true"}'
                     type: object
                     x-kubernetes-map-type: granular
-                  vectorDbAdminCred:
+                  vectorDbAdminCredSecretRef:
                     description: (Updatable) The Vector DB Lakehouse 26ai ADMIN user
                       password.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   vectorDbAdminSecretId:
                     description: (Updatable) The OCID of the Oracle Cloud Infrastructure
                       Vault secret holding the vector db Lakehouse 26ai Admin user
@@ -564,10 +578,24 @@ spec:
                       "true"}'
                     type: object
                     x-kubernetes-map-type: granular
-                  vectorDbAdminCred:
+                  vectorDbAdminCredSecretRef:
                     description: (Updatable) The Vector DB Lakehouse 26ai ADMIN user
                       password.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   vectorDbAdminSecretId:
                     description: (Updatable) The OCID of the Oracle Cloud Infrastructure
                       Vault secret holding the vector db Lakehouse 26ai Admin user
@@ -815,10 +843,6 @@ spec:
                   timeUpdated:
                     description: 'The date and time the AiDataPlatform was updated,
                       in the format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z'
-                    type: string
-                  vectorDbAdminCred:
-                    description: (Updatable) The Vector DB Lakehouse 26ai ADMIN user
-                      password.
                     type: string
                   vectorDbAdminSecretId:
                     description: (Updatable) The OCID of the Oracle Cloud Infrastructure

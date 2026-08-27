@@ -12,6 +12,7 @@ import (
 	cpe "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/cpe"
 	crossconnect "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/crossconnect"
 	crossconnectgroup "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/crossconnectgroup"
+	defaultdrgroutetable "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/defaultdrgroutetable"
 	drg "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drg"
 	drgattachment "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drgattachment"
 	drgattachmentmanagement "github.com/oracle/provider-oci/internal/controller/namespaced/networkconnectivity/drgattachmentmanagement"
@@ -32,6 +33,7 @@ func Setup_networkconnectivity(mgr ctrl.Manager, o controller.Options) error {
 		cpe.Setup,
 		crossconnect.Setup,
 		crossconnectgroup.Setup,
+		defaultdrgroutetable.Setup,
 		drg.Setup,
 		drgattachment.Setup,
 		drgattachmentmanagement.Setup,
@@ -58,6 +60,7 @@ func SetupGated_networkconnectivity(mgr ctrl.Manager, o controller.Options) erro
 		cpe.SetupGated,
 		crossconnect.SetupGated,
 		crossconnectgroup.SetupGated,
+		defaultdrgroutetable.SetupGated,
 		drg.SetupGated,
 		drgattachment.SetupGated,
 		drgattachmentmanagement.SetupGated,

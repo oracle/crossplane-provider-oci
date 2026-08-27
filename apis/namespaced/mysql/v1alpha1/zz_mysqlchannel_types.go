@@ -223,6 +223,35 @@ type MysqlChannelParameters struct {
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
 }
 
+type SSLCACertificateInitParameters struct {
+
+	// (Updatable) The type of CA certificate.
+	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
+
+	// (Updatable) The string containing the CA certificate in PEM format.
+	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
+}
+
+type SSLCACertificateObservation struct {
+
+	// (Updatable) The type of CA certificate.
+	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
+
+	// (Updatable) The string containing the CA certificate in PEM format.
+	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
+}
+
+type SSLCACertificateParameters struct {
+
+	// (Updatable) The type of CA certificate.
+	// +kubebuilder:validation:Optional
+	CertificateType *string `json:"certificateType" tf:"certificate_type,omitempty"`
+
+	// (Updatable) The string containing the CA certificate in PEM format.
+	// +kubebuilder:validation:Optional
+	Contents *string `json:"contents" tf:"contents,omitempty"`
+}
+
 type SourceInitParameters struct {
 
 	// (Updatable) Specifies how the replication channel handles replicated transactions without an identifier, enabling replication from a source that does not use transaction-id-based replication to a replica that does.
@@ -241,7 +270,7 @@ type SourceInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
-	SSLCACertificate []SourceSSLCACertificateInitParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []SSLCACertificateInitParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// (Updatable) The SSL mode of the Channel.
 	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
@@ -268,7 +297,7 @@ type SourceObservation struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// (Updatable) The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
-	SSLCACertificate []SourceSSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []SSLCACertificateObservation `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// (Updatable) The SSL mode of the Channel.
 	SSLMode *string `json:"sslMode,omitempty" tf:"ssl_mode,omitempty"`
@@ -304,7 +333,7 @@ type SourceParameters struct {
 
 	// (Updatable) The CA certificate of the server used for VERIFY_IDENTITY and VERIFY_CA ssl modes.
 	// +kubebuilder:validation:Optional
-	SSLCACertificate []SourceSSLCACertificateParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
+	SSLCACertificate []SSLCACertificateParameters `json:"sslCaCertificate,omitempty" tf:"ssl_ca_certificate,omitempty"`
 
 	// (Updatable) The SSL mode of the Channel.
 	// +kubebuilder:validation:Optional
@@ -317,35 +346,6 @@ type SourceParameters struct {
 	// (Updatable) The name of the replication user on the source MySQL instance. The username has a maximum length of 96 characters. For more information, please see the MySQL documentation
 	// +kubebuilder:validation:Optional
 	Username *string `json:"username" tf:"username,omitempty"`
-}
-
-type SourceSSLCACertificateInitParameters struct {
-
-	// (Updatable) The type of CA certificate.
-	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
-
-	// (Updatable) The string containing the CA certificate in PEM format.
-	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
-}
-
-type SourceSSLCACertificateObservation struct {
-
-	// (Updatable) The type of CA certificate.
-	CertificateType *string `json:"certificateType,omitempty" tf:"certificate_type,omitempty"`
-
-	// (Updatable) The string containing the CA certificate in PEM format.
-	Contents *string `json:"contents,omitempty" tf:"contents,omitempty"`
-}
-
-type SourceSSLCACertificateParameters struct {
-
-	// (Updatable) The type of CA certificate.
-	// +kubebuilder:validation:Optional
-	CertificateType *string `json:"certificateType" tf:"certificate_type,omitempty"`
-
-	// (Updatable) The string containing the CA certificate in PEM format.
-	// +kubebuilder:validation:Optional
-	Contents *string `json:"contents" tf:"contents,omitempty"`
 }
 
 type TargetInitParameters struct {

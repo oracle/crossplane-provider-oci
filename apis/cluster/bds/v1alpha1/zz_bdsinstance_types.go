@@ -223,7 +223,16 @@ type BdsInstanceInitParameters struct {
 	RemoveNodes []*string `json:"removeNodes,omitempty" tf:"remove_nodes,omitempty"`
 
 	// (Updatable) The secretId for the clusterAdminPassword.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	StartClusterShapeConfigs []StartClusterShapeConfigsInitParameters `json:"startClusterShapeConfigs,omitempty" tf:"start_cluster_shape_configs,omitempty"`
 
@@ -500,8 +509,17 @@ type BdsInstanceParameters struct {
 	RemoveNodes []*string `json:"removeNodes,omitempty" tf:"remove_nodes,omitempty"`
 
 	// (Updatable) The secretId for the clusterAdminPassword.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDRef *v1.Reference `json:"secretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate secretId.
+	// +kubebuilder:validation:Optional
+	SecretIDSelector *v1.Selector `json:"secretIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	StartClusterShapeConfigs []StartClusterShapeConfigsParameters `json:"startClusterShapeConfigs,omitempty" tf:"start_cluster_shape_configs,omitempty"`

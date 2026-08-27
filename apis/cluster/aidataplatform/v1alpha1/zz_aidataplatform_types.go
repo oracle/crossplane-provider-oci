@@ -61,7 +61,7 @@ type AiDataPlatformInitParameters struct {
 	SystemTags map[string]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
 
 	// (Updatable) The Vector DB Lakehouse 26ai ADMIN user password.
-	VectorDBAdminCred *string `json:"vectorDbAdminCred,omitempty" tf:"vector_db_admin_cred,omitempty"`
+	VectorDBAdminCredSecretRef *v1.SecretKeySelector `json:"vectorDbAdminCredSecretRef,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Oracle Cloud Infrastructure Vault secret holding the vector db Lakehouse 26ai Admin user password.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret
@@ -133,9 +133,6 @@ type AiDataPlatformObservation struct {
 	// The date and time the AiDataPlatform was updated, in the format defined by RFC 3339.  Example: 2016-08-25T21:10:29.600Z
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 
-	// (Updatable) The Vector DB Lakehouse 26ai ADMIN user password.
-	VectorDBAdminCred *string `json:"vectorDbAdminCred,omitempty" tf:"vector_db_admin_cred,omitempty"`
-
 	// (Updatable) The OCID of the Oracle Cloud Infrastructure Vault secret holding the vector db Lakehouse 26ai Admin user password.
 	VectorDBAdminSecretID *string `json:"vectorDbAdminSecretId,omitempty" tf:"vector_db_admin_secret_id,omitempty"`
 
@@ -203,7 +200,7 @@ type AiDataPlatformParameters struct {
 
 	// (Updatable) The Vector DB Lakehouse 26ai ADMIN user password.
 	// +kubebuilder:validation:Optional
-	VectorDBAdminCred *string `json:"vectorDbAdminCred,omitempty" tf:"vector_db_admin_cred,omitempty"`
+	VectorDBAdminCredSecretRef *v1.SecretKeySelector `json:"vectorDbAdminCredSecretRef,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the Oracle Cloud Infrastructure Vault secret holding the vector db Lakehouse 26ai Admin user password.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1.Secret

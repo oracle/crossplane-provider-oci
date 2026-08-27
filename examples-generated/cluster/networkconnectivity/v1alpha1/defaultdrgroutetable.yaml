@@ -1,12 +1,11 @@
-apiVersion: networking.oci.m.upbound.io/v1alpha1
+apiVersion: networkconnectivity.oci.upbound.io/v1alpha1
 kind: DefaultDrgRouteTable
 metadata:
   annotations:
-    meta.upbound.io/example-id: networking/v1alpha1/defaultdrgroutetable
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/defaultdrgroutetable
   labels:
     testing.upbound.io/example-name: default_drg_route_table
   name: default-drg-route-table
-  namespace: upbound-system
 spec:
   forProvider:
     definedTags:
