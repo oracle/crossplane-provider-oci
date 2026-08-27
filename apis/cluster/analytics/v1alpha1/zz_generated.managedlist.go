@@ -25,6 +25,15 @@ func (l *AnalyticsInstancePrivateAccessChannelList) GetItems() []resource.Manage
 	return items
 }
 
+// GetItems of this AnalyticsInstanceResourceGroupList.
+func (l *AnalyticsInstanceResourceGroupList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this AnalyticsInstanceVanityUrlList.
 func (l *AnalyticsInstanceVanityUrlList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

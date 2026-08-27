@@ -837,6 +837,28 @@ spec:
                     description: The time zone to use for the cloud VM cluster. For
                       details, see Time Zones.
                     type: string
+                  updateDetails:
+                    description: (Updatable) Details specifying which maintenance
+                      update to apply to the cloud VM cluster and which action to
+                      perform. Use update_mode for DomU live update modes or regular
+                      full OS update mode.
+                    items:
+                      properties:
+                        updateAction:
+                          description: (Updatable) The update action. Supported values
+                            include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and
+                            ROLLBACK.
+                          type: string
+                        updateId:
+                          description: (Updatable) The OCID of the maintenance update.
+                          type: string
+                        updateMode:
+                          description: (Updatable) The OS update mode. Supported values
+                            are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES,
+                            PENDING_UPDATES, and FULL_UPDATE.
+                          type: string
+                      type: object
+                    type: array
                   vmBackupStorageType:
                     description: (Updatable) Specifies the type of VM Backups Storage
                       and supported values are LOCAL and EXASCALE. - LOCAL if selected
@@ -1632,6 +1654,28 @@ spec:
                     description: The time zone to use for the cloud VM cluster. For
                       details, see Time Zones.
                     type: string
+                  updateDetails:
+                    description: (Updatable) Details specifying which maintenance
+                      update to apply to the cloud VM cluster and which action to
+                      perform. Use update_mode for DomU live update modes or regular
+                      full OS update mode.
+                    items:
+                      properties:
+                        updateAction:
+                          description: (Updatable) The update action. Supported values
+                            include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and
+                            ROLLBACK.
+                          type: string
+                        updateId:
+                          description: (Updatable) The OCID of the maintenance update.
+                          type: string
+                        updateMode:
+                          description: (Updatable) The OS update mode. Supported values
+                            are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES,
+                            PENDING_UPDATES, and FULL_UPDATE.
+                          type: string
+                      type: object
+                    type: array
                   vmBackupStorageType:
                     description: (Updatable) Specifies the type of VM Backups Storage
                       and supported values are LOCAL and EXASCALE. - LOCAL if selected
@@ -2064,6 +2108,32 @@ spec:
                     description: The port number configured for the listener on the
                       cloud VM cluster.
                     type: string
+                  liveImageVersionDetails:
+                    description: Details about the most recent live image version
+                      applied on the VM Cluster, if any. If a full OS update was applied,
+                      the fields would be blank.
+                    items:
+                      properties:
+                        hasPendingUpdates:
+                          description: Indicates whether OS updates that require node
+                            reboot are pending after the previous online update was
+                            applied.
+                          type: boolean
+                        timeReleased:
+                          description: The release date and time for the applied Live
+                            Exadata Image OS version.
+                          type: string
+                        updateMode:
+                          description: (Updatable) The OS update mode. Supported values
+                            are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES,
+                            PENDING_UPDATES, and FULL_UPDATE.
+                          type: string
+                        version:
+                          description: Live Exadata Image Version of the Guest OS
+                            Update applied.
+                          type: string
+                      type: object
+                    type: array
                   memorySizeInGbs:
                     description: (Updatable) The memory to be allocated in GBs.
                     type: number
@@ -2097,6 +2167,9 @@ spec:
                       a cloud VM cluster. Only 1 decimal place is allowed for the
                       fractional part.
                     type: number
+                  oracleLinuxVersion:
+                    description: Oracle Linux version for the respective Exadata Image.
+                    type: string
                   privateZoneId:
                     description: The private zone id in which DNS records need to
                       be created.
@@ -2209,6 +2282,28 @@ spec:
                     description: The time zone to use for the cloud VM cluster. For
                       details, see Time Zones.
                     type: string
+                  updateDetails:
+                    description: (Updatable) Details specifying which maintenance
+                      update to apply to the cloud VM cluster and which action to
+                      perform. Use update_mode for DomU live update modes or regular
+                      full OS update mode.
+                    items:
+                      properties:
+                        updateAction:
+                          description: (Updatable) The update action. Supported values
+                            include ROLLING_APPLY, NON_ROLLING_APPLY, PRECHECK, and
+                            ROLLBACK.
+                          type: string
+                        updateId:
+                          description: (Updatable) The OCID of the maintenance update.
+                          type: string
+                        updateMode:
+                          description: (Updatable) The OS update mode. Supported values
+                            are ONLINE_HIGHCVSS, ONLINE_ALLCVSS, ONLINE_ALL_UPDATES,
+                            PENDING_UPDATES, and FULL_UPDATE.
+                          type: string
+                      type: object
+                    type: array
                   vipIds:
                     description: The OCID of the virtual IP (VIP) IPv4 addresses associated
                       with the cloud VM cluster. The Cluster Ready Services (CRS)

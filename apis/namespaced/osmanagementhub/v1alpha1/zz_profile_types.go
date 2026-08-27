@@ -86,7 +86,7 @@ type ProfileInitParameters struct {
 	// The type of instance to register.
 	RegistrationType *string `json:"registrationType,omitempty" tf:"registration_type,omitempty"`
 
-	// The list of software source OCIDs that the registration profile will use.
+	// (Applicable when profile_type=SOFTWARESOURCE) The list of software source OCIDs that the registration profile will use.
 	SoftwareSourceIds []*string `json:"softwareSourceIds,omitempty" tf:"software_source_ids,omitempty"`
 
 	// The vendor of the operating system for the instance.
@@ -199,7 +199,7 @@ type ProfileObservation struct {
 	// The type of instance to register.
 	RegistrationType *string `json:"registrationType,omitempty" tf:"registration_type,omitempty"`
 
-	// The list of software source OCIDs that the registration profile will use.
+	// (Applicable when profile_type=SOFTWARESOURCE) The list of software source OCIDs that the registration profile will use.
 	SoftwareSourceIds []*string `json:"softwareSourceIds,omitempty" tf:"software_source_ids,omitempty"`
 
 	// The list of software sources that the registration profile will use.
@@ -307,7 +307,7 @@ type ProfileParameters struct {
 	// +kubebuilder:validation:Optional
 	RegistrationType *string `json:"registrationType,omitempty" tf:"registration_type,omitempty"`
 
-	// The list of software source OCIDs that the registration profile will use.
+	// (Applicable when profile_type=SOFTWARESOURCE) The list of software source OCIDs that the registration profile will use.
 	// +kubebuilder:validation:Optional
 	SoftwareSourceIds []*string `json:"softwareSourceIds,omitempty" tf:"software_source_ids,omitempty"`
 

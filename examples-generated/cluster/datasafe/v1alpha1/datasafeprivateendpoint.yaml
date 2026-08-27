@@ -19,6 +19,7 @@ spec:
       Department: Finance
     nsgIds: ${var.data_safe_private_endpoint_nsg_ids}
     privateEndpointIp: ${var.data_safe_private_endpoint_private_endpoint_ip}
+    securityAttributes: ${var.data_safe_private_endpoint_security_attributes}
     subnetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_subnet

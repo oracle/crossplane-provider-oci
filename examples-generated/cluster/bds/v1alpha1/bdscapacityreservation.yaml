@@ -1,0 +1,20 @@
+apiVersion: bds.oci.upbound.io/v1alpha1
+kind: BdsCapacityReservation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdscapacityreservation
+  labels:
+    testing.upbound.io/example-name: test_bds_capacity_reservation
+  name: test-bds-capacity-reservation
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    computeCapacityReservations:
+    - domain1reservationId: ${var.domain1reservation_id}
+      domain2reservationId: ${var.domain2reservation_id}
+      domain3reservationId: ${var.domain3reservation_id}
+    definedTags: ${var.bds_capacity_reservation_defined_tags}
+    displayName: ${var.bds_capacity_reservation_display_name}
+    freeformTags: ${var.bds_capacity_reservation_freeform_tags}

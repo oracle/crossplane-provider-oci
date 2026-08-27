@@ -21,7 +21,7 @@ func (mg *AiDataPlatform) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this AiDataPlatform
 func (tr *AiDataPlatform) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"vector_db_admin_cred": "vectorDbAdminCredSecretRef"}
 }
 
 // GetObservation of this AiDataPlatform

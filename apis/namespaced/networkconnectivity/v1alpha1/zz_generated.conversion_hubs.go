@@ -16,6 +16,9 @@ func (tr *CrossConnect) Hub() {}
 func (tr *CrossConnectGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DefaultDrgRouteTable) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Drg) Hub() {}
 
 // Hub marks this type as a conversion hub.

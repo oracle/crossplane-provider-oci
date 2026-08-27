@@ -511,6 +511,26 @@ func (mg *AutonomousContainerDatabase) ResolveReferences(ctx context.Context, c 
 	mg.Spec.ForProvider.PeerCloudAutonomousVMClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PeerCloudAutonomousVMClusterIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "AutonomousContainerDatabase", "AutonomousContainerDatabaseList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SourceAutonomousContainerDatabaseID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.SourceAutonomousContainerDatabaseIDRef,
+			Selector:     mg.Spec.ForProvider.SourceAutonomousContainerDatabaseIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SourceAutonomousContainerDatabaseID")
+	}
+	mg.Spec.ForProvider.SourceAutonomousContainerDatabaseID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SourceAutonomousContainerDatabaseIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Vault", "VaultList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -792,6 +812,26 @@ func (mg *AutonomousContainerDatabase) ResolveReferences(ctx context.Context, c 
 	}
 	mg.Spec.InitProvider.PeerCloudAutonomousVMClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.PeerCloudAutonomousVMClusterIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "AutonomousContainerDatabase", "AutonomousContainerDatabaseList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SourceAutonomousContainerDatabaseID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.SourceAutonomousContainerDatabaseIDRef,
+			Selector:     mg.Spec.InitProvider.SourceAutonomousContainerDatabaseIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.SourceAutonomousContainerDatabaseID")
+	}
+	mg.Spec.InitProvider.SourceAutonomousContainerDatabaseID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.SourceAutonomousContainerDatabaseIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Vault", "VaultList")
 		if err != nil {
@@ -3855,6 +3895,34 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "BackupDestination", "BackupDestinationList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID),
+							Extract:      resource.ExtractResourceID(),
+							Namespace:    mg.GetNamespace(),
+							Reference:    mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef,
+							Selector:     mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID")
+					}
+					mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "DatabaseSoftwareImage", "DatabaseSoftwareImageList")
 			if err != nil {
@@ -4163,6 +4231,34 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 				mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].DbrsPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 				mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].DbrsPolicyIDRef = rsp.ResolvedReference
 
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "BackupDestination", "BackupDestinationList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID),
+							Extract:      resource.ExtractResourceID(),
+							Namespace:    mg.GetNamespace(),
+							Reference:    mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef,
+							Selector:     mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID")
+					}
+					mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef = rsp.ResolvedReference
+
+				}
 			}
 		}
 	}
@@ -4784,6 +4880,34 @@ func (mg *DbHome) ResolveReferences(ctx context.Context, c client.Reader) error 
 		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "BackupDestination", "BackupDestinationList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID),
+							Extract:      resource.ExtractResourceID(),
+							Namespace:    mg.GetNamespace(),
+							Reference:    mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef,
+							Selector:     mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID")
+					}
+					mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.ForProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef = rsp.ResolvedReference
+
+				}
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "Database", "DatabaseList")
 			if err != nil {
@@ -5106,6 +5230,34 @@ func (mg *DbHome) ResolveReferences(ctx context.Context, c client.Reader) error 
 				mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].DbrsPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
 				mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].DbrsPolicyIDRef = rsp.ResolvedReference
 
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails); i5++ {
+				for i6 := 0; i6 < len(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination); i6++ {
+					{
+						m, l, err = apisresolver.GetManagedResource("database.oci.m.upbound.io", "v1alpha1", "BackupDestination", "BackupDestinationList")
+						if err != nil {
+							return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+						}
+						rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+							CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID),
+							Extract:      resource.ExtractResourceID(),
+							Namespace:    mg.GetNamespace(),
+							Reference:    mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef,
+							Selector:     mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDSelector,
+							To:           reference.To{List: l, Managed: m},
+						})
+					}
+					if err != nil {
+						return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID")
+					}
+					mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationID = reference.ToPtrValue(rsp.ResolvedValue)
+					mg.Spec.InitProvider.Database[i3].DBBackupConfig[i4].BackupDestinationDetails[i5].TdeWalletBackupDestination[i6].BackupDestinationIDRef = rsp.ResolvedReference
+
+				}
 			}
 		}
 	}

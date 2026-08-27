@@ -560,6 +560,9 @@ spec:
                       configuration.
                     items:
                       properties:
+                        managedAutoFailOverReadiness:
+                          description: Specifies readiness of Managed Automatic failover.
+                          type: string
                         members:
                           description: List of Data Guard members, representing each
                             database that is part of Data Guard.
@@ -590,16 +593,28 @@ spec:
                                 type: string
                               failoverReadiness:
                                 description: The failover readiness status of the
-                                  Data Guard member.
+                                  Data Guard member. HEALTHY_AND_NOT_ROLECHANGE_TARGET
+                                  - Indicates that the respective standby member is
+                                  healthy  but not currently designated to take failover,
+                                  when auto failover is enabled.
                                 type: string
                               failoverReadinessMessage:
                                 description: 'The message explaining failover readiness
                                   status. Example: This standby database is not failover
                                   ready.'
                                 type: string
+                              failoverTargets:
+                                description: Specifies the DB_UNIQUE_NAME of the data
+                                  guard group member databases.
+                                items:
+                                  type: string
+                                type: array
                               isActiveDataGuardEnabled:
                                 description: True if active Data Guard is enabled.
                                 type: boolean
+                              managedAutoFailover:
+                                description: The state of managed auto failover.
+                                type: string
                               role:
                                 description: The role of the reporting database in
                                   this Data Guard association.

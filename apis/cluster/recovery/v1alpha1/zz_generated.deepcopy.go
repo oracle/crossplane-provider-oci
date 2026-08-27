@@ -1093,6 +1093,11 @@ func (in *RecoveryServiceSubnetInitParameters) DeepCopyInto(out *RecoveryService
 			}
 		}
 	}
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
@@ -1244,6 +1249,11 @@ func (in *RecoveryServiceSubnetObservation) DeepCopyInto(out *RecoveryServiceSub
 			}
 		}
 	}
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = new(string)
+		**out = **in
+	}
 	if in.State != nil {
 		in, out := &in.State, &out.State
 		*out = new(string)
@@ -1373,6 +1383,11 @@ func (in *RecoveryServiceSubnetParameters) DeepCopyInto(out *RecoveryServiceSubn
 				**out = **in
 			}
 		}
+	}
+	if in.SecurityAttributes != nil {
+		in, out := &in.SecurityAttributes, &out.SecurityAttributes
+		*out = new(string)
+		**out = **in
 	}
 	if in.SubnetID != nil {
 		in, out := &in.SubnetID, &out.SubnetID

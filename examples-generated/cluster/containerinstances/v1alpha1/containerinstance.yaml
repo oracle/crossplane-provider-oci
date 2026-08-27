@@ -77,6 +77,10 @@ spec:
           testing.upbound.io/example-name: test_secret
       secretType: ${var.container_instance_image_pull_secrets_secret_type}
       username: ${var.container_instance_image_pull_secrets_username}
+    securityContext:
+    - fsGroup: ${var.container_instance_security_context_fs_group}
+      fsGroupChangePolicy: ${var.container_instance_security_context_fs_group_change_policy}
+      securityContextType: ${var.container_instance_security_context_security_context_type}
     shape: ${var.container_instance_shape}
     shapeConfig:
     - memoryInGbs: ${var.container_instance_shape_config_memory_in_gbs}
@@ -99,5 +103,21 @@ spec:
       - data: ${var.container_instance_volumes_configs_data}
         fileName: ${var.container_instance_volumes_configs_file_name}
         path: ${var.container_instance_volumes_configs_path}
+      export:
+      - id: ${var.container_instance_volumes_export_id}
+        ociFssExportType: ${var.container_instance_volumes_export_oci_fss_export_type}
+      mountCommand:
+      - mountOptions:
+        - option: ${var.container_instance_volumes_mount_command_mount_options_option}
+          value: ${var.container_instance_volumes_mount_command_mount_options_value}
+      mountTarget:
+      - id: ${var.container_instance_volumes_mount_target_id}
+        ociFssMountTargetType: ${var.container_instance_volumes_mount_target_oci_fss_mount_target_type}
       name: ${var.container_instance_volumes_name}
+      security:
+      - auth: ${var.container_instance_volumes_security_auth}
+        isEncryptedInTransit: ${var.container_instance_volumes_security_is_encrypted_in_transit}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_subnet
       volumeType: ${var.container_instance_volumes_volume_type}

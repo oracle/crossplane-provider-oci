@@ -342,6 +342,10 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  interfaceDownTimerValueInMilliseconds:
+                    description: (Updatable) The duration of the interface down timer
+                      in milliseconds between 0 and 3000 in multiples of 500.
+                    type: number
                   interfaceName:
                     description: The name of the FastConnect interface where this
                       cross-connect is installed. Option will be provided only on
@@ -354,6 +358,34 @@ spec:
                       your side of the interface is up. Activation indicates to Oracle
                       that the physical connection is ready.
                     type: boolean
+                  isInterfaceHoldTimerEnabled:
+                    description: (Updatable) The flag to enable or disable the down
+                      timer for the interface.
+                    type: boolean
+                  isQosEnabled:
+                    description: When true, restricts placement so cross-connects
+                      lands only on QoS-capable devices. When false (default), placement
+                      may use any supported device. If no QoS-capable devices are
+                      available in the selected location, the request fails.
+                    type: boolean
+                  loaProperties:
+                    description: (Updatable) Properties used to manage the Letter
+                      of Authority associated with this cross-connect.
+                    items:
+                      properties:
+                        authorizedAgent:
+                          description: (Updatable) Name of a customer authorized agent
+                            to append to the LOA as Authorized Agent. Set this to
+                            an empty string to remove the current authorized agent.
+                          type: string
+                        expiryExtensionCount:
+                          description: Increase this value by 1 to request one additional
+                            expiry extension. This value cannot be decreased or increased
+                            by more than 1 in a single update. The service enforces
+                            the maximum number of allowed extensions.
+                          type: number
+                      type: object
+                    type: array
                   locationName:
                     description: 'The name of the FastConnect location where this
                       cross-connect will be installed. To get a list of the available
@@ -933,6 +965,10 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  interfaceDownTimerValueInMilliseconds:
+                    description: (Updatable) The duration of the interface down timer
+                      in milliseconds between 0 and 3000 in multiples of 500.
+                    type: number
                   interfaceName:
                     description: The name of the FastConnect interface where this
                       cross-connect is installed. Option will be provided only on
@@ -945,6 +981,34 @@ spec:
                       your side of the interface is up. Activation indicates to Oracle
                       that the physical connection is ready.
                     type: boolean
+                  isInterfaceHoldTimerEnabled:
+                    description: (Updatable) The flag to enable or disable the down
+                      timer for the interface.
+                    type: boolean
+                  isQosEnabled:
+                    description: When true, restricts placement so cross-connects
+                      lands only on QoS-capable devices. When false (default), placement
+                      may use any supported device. If no QoS-capable devices are
+                      available in the selected location, the request fails.
+                    type: boolean
+                  loaProperties:
+                    description: (Updatable) Properties used to manage the Letter
+                      of Authority associated with this cross-connect.
+                    items:
+                      properties:
+                        authorizedAgent:
+                          description: (Updatable) Name of a customer authorized agent
+                            to append to the LOA as Authorized Agent. Set this to
+                            an empty string to remove the current authorized agent.
+                          type: string
+                        expiryExtensionCount:
+                          description: Increase this value by 1 to request one additional
+                            expiry extension. This value cannot be decreased or increased
+                            by more than 1 in a single update. The service enforces
+                            the maximum number of allowed extensions.
+                          type: number
+                      type: object
+                    type: array
                   locationName:
                     description: 'The name of the FastConnect location where this
                       cross-connect will be installed. To get a list of the available
@@ -1388,6 +1452,10 @@ spec:
                   id:
                     description: The cross-connect's Oracle ID (OCID).
                     type: string
+                  interfaceDownTimerValueInMilliseconds:
+                    description: (Updatable) The duration of the interface down timer
+                      in milliseconds between 0 and 3000 in multiples of 500.
+                    type: number
                   interfaceName:
                     description: The name of the FastConnect interface where this
                       cross-connect is installed. Option will be provided only on
@@ -1400,6 +1468,34 @@ spec:
                       your side of the interface is up. Activation indicates to Oracle
                       that the physical connection is ready.
                     type: boolean
+                  isInterfaceHoldTimerEnabled:
+                    description: (Updatable) The flag to enable or disable the down
+                      timer for the interface.
+                    type: boolean
+                  isQosEnabled:
+                    description: When true, restricts placement so cross-connects
+                      lands only on QoS-capable devices. When false (default), placement
+                      may use any supported device. If no QoS-capable devices are
+                      available in the selected location, the request fails.
+                    type: boolean
+                  loaProperties:
+                    description: (Updatable) Properties used to manage the Letter
+                      of Authority associated with this cross-connect.
+                    items:
+                      properties:
+                        authorizedAgent:
+                          description: (Updatable) Name of a customer authorized agent
+                            to append to the LOA as Authorized Agent. Set this to
+                            an empty string to remove the current authorized agent.
+                          type: string
+                        expiryExtensionCount:
+                          description: Increase this value by 1 to request one additional
+                            expiry extension. This value cannot be decreased or increased
+                            by more than 1 in a single update. The service enforces
+                            the maximum number of allowed extensions.
+                          type: number
+                      type: object
+                    type: array
                   locationName:
                     description: 'The name of the FastConnect location where this
                       cross-connect will be installed. To get a list of the available

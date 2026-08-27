@@ -1,0 +1,21 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: HostedApplicationStorage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/hostedapplicationstorage
+  labels:
+    testing.upbound.io/example-name: test_hosted_application_storage
+  name: test-hosted-application-storage
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.hosted_application_storage_description}
+    displayName: ${var.hosted_application_storage_display_name}
+    freeformTags:
+      Department: Finance
+    storageType: ${var.hosted_application_storage_storage_type}

@@ -1,0 +1,33 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: HostedDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/hosteddeployment
+  labels:
+    testing.upbound.io/example-name: test_hosted_deployment
+  name: test-hosted-deployment
+  namespace: upbound-system
+spec:
+  forProvider:
+    activeArtifact:
+    - artifactType: ${var.hosted_deployment_active_artifact_artifact_type}
+      containerUri: ${var.hosted_deployment_active_artifact_container_uri}
+      hostedDeploymentIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_hosted_deployment
+      id: ${var.hosted_deployment_active_artifact_id}
+      isVulnerabilityScanRequired: ${var.hosted_deployment_active_artifact_is_vulnerability_scan_required}
+      status: ${var.hosted_deployment_active_artifact_status}
+      tag: ${var.hosted_deployment_active_artifact_tag}
+      timeCreated: ${var.hosted_deployment_active_artifact_time_created}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.hosted_deployment_display_name}
+    freeformTags:
+      Department: Finance
+    hostedApplicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_hosted_application_iam

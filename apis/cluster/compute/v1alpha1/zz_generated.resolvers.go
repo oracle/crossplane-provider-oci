@@ -1821,6 +1821,28 @@ func (mg *InstanceConfiguration) ResolveReferences(ctx context.Context, c client
 	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.GmcConfigs); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationIDRef,
+				Selector:     mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationID")
+		}
+		mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.GmcConfigs[i3].InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceDetails); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes); i4++ {
 			for i5 := 0; i5 < len(mg.Spec.ForProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {
@@ -2689,6 +2711,28 @@ func (mg *InstanceConfiguration) ResolveReferences(ctx context.Context, c client
 	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.GmcConfigs); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("compute.oci.upbound.io", "v1alpha1", "InstanceConfiguration", "InstanceConfigurationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationIDRef,
+				Selector:     mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationID")
+		}
+		mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.GmcConfigs[i3].InstanceConfigurationIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.InstanceDetails); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes); i4++ {
 			for i5 := 0; i5 < len(mg.Spec.InitProvider.InstanceDetails[i3].BlockVolumes[i4].CreateDetails); i5++ {

@@ -1,0 +1,18 @@
+apiVersion: bds.oci.m.upbound.io/v1alpha1
+kind: BdsInstanceBdsCapacityReservationConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bds/v1alpha1/bdsinstancebdscapacityreservationconfiguration
+  labels:
+    testing.upbound.io/example-name: test_bds_instance_bds_capacity_reservation_configuration
+  name: test-bds-instance-bds-capacity-reservation-configuration
+  namespace: upbound-system
+spec:
+  forProvider:
+    bdsCapacityReservationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_capacity_reservation
+    bdsInstanceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_bds_instance
+    displayName: ${var.bds_instance_bds_capacity_reservation_configuration_display_name}

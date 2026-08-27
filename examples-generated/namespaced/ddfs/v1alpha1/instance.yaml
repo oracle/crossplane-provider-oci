@@ -1,0 +1,20 @@
+apiVersion: ddfs.oci.m.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ddfs/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: test_instance
+  name: test-instance
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.instance_display_name}
+    freeformTags:
+      Department: Finance
+    idcsUrl: ${var.instance_idcs_url}

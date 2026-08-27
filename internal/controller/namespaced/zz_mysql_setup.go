@@ -9,6 +9,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/controller"
 
+	bluegreendeployment "github.com/oracle/provider-oci/internal/controller/namespaced/mysql/bluegreendeployment"
 	mysqlbackup "github.com/oracle/provider-oci/internal/controller/namespaced/mysql/mysqlbackup"
 	mysqlchannel "github.com/oracle/provider-oci/internal/controller/namespaced/mysql/mysqlchannel"
 	mysqlconfiguration "github.com/oracle/provider-oci/internal/controller/namespaced/mysql/mysqlconfiguration"
@@ -21,6 +22,7 @@ import (
 // the supplied manager.
 func Setup_mysql(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		bluegreendeployment.Setup,
 		mysqlbackup.Setup,
 		mysqlchannel.Setup,
 		mysqlconfiguration.Setup,
@@ -39,6 +41,7 @@ func Setup_mysql(mgr ctrl.Manager, o controller.Options) error {
 // the supplied manager gated.
 func SetupGated_mysql(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		bluegreendeployment.SetupGated,
 		mysqlbackup.SetupGated,
 		mysqlchannel.SetupGated,
 		mysqlconfiguration.SetupGated,

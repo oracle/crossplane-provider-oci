@@ -42,6 +42,9 @@ type RecoveryServiceSubnetInitParameters struct {
 	// +listType=set
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
 
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	SecurityAttributes *string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
 	// Deprecated. One of the subnets associated with the Recovery Service subnet.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -98,6 +101,9 @@ type RecoveryServiceSubnetObservation struct {
 	// (Updatable) A list of network security group (NSG) OCIDs that are associated with the Recovery Service subnet. You can specify a maximum of 5 unique OCIDs, which implies that you can associate a maximum of 5 NSGs to each Recovery Service subnet. Specify an empty array if you want to remove all the associated NSGs from a Recovery Service subnet. See Network Security Groups for more information.
 	// +listType=set
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	SecurityAttributes *string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// The current state of the recovery service subnet.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
@@ -156,6 +162,10 @@ type RecoveryServiceSubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	NsgIds []*string `json:"nsgIds,omitempty" tf:"nsg_ids,omitempty"`
+
+	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
+	// +kubebuilder:validation:Optional
+	SecurityAttributes *string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
 	// Deprecated. One of the subnets associated with the Recovery Service subnet.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1.Subnet

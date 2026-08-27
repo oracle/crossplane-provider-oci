@@ -128,14 +128,20 @@ type DatabaseUpgradeDataGuardGroupMembersObservation struct {
 	// The database OCID.
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
-	// The failover readiness status of the Data Guard member.
+	// The failover readiness status of the Data Guard member. HEALTHY_AND_NOT_ROLECHANGE_TARGET - Indicates that the respective standby member is healthy  but not currently designated to take failover, when auto failover is enabled.
 	FailoverReadiness *string `json:"failoverReadiness,omitempty" tf:"failover_readiness,omitempty"`
 
 	// The message explaining failover readiness status. Example: This standby database is not failover ready.
 	FailoverReadinessMessage *string `json:"failoverReadinessMessage,omitempty" tf:"failover_readiness_message,omitempty"`
 
+	// Specifies the DB_UNIQUE_NAME of the data guard group member databases.
+	FailoverTargets []*string `json:"failoverTargets,omitempty" tf:"failover_targets,omitempty"`
+
 	// True if active Data Guard is enabled.
 	IsActiveDataGuardEnabled *bool `json:"isActiveDataGuardEnabled,omitempty" tf:"is_active_data_guard_enabled,omitempty"`
+
+	// The state of managed auto failover.
+	ManagedAutoFailover *string `json:"managedAutoFailover,omitempty" tf:"managed_auto_failover,omitempty"`
 
 	// The role of the reporting database in this Data Guard association.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
@@ -163,6 +169,9 @@ type DatabaseUpgradeDataGuardGroupMembersParameters struct {
 }
 
 type DatabaseUpgradeDataGuardGroupObservation struct {
+
+	// Specifies readiness of Managed Automatic failover.
+	ManagedAutoFailOverReadiness *string `json:"managedAutoFailOverReadiness,omitempty" tf:"managed_auto_fail_over_readiness,omitempty"`
 
 	// List of Data Guard members, representing each database that is part of Data Guard.
 	Members []DatabaseUpgradeDataGuardGroupMembersObservation `json:"members,omitempty" tf:"members,omitempty"`

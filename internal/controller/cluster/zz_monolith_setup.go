@@ -29,6 +29,7 @@ import (
 	visionprivateendpoint "github.com/oracle/provider-oci/internal/controller/cluster/aivision/visionprivateendpoint"
 	analyticsinstance "github.com/oracle/provider-oci/internal/controller/cluster/analytics/analyticsinstance"
 	analyticsinstanceprivateaccesschannel "github.com/oracle/provider-oci/internal/controller/cluster/analytics/analyticsinstanceprivateaccesschannel"
+	analyticsinstanceresourcegroup "github.com/oracle/provider-oci/internal/controller/cluster/analytics/analyticsinstanceresourcegroup"
 	analyticsinstancevanityurl "github.com/oracle/provider-oci/internal/controller/cluster/analytics/analyticsinstancevanityurl"
 	announcementsubscription "github.com/oracle/provider-oci/internal/controller/cluster/announcementsservice/announcementsubscription"
 	announcementsubscriptionsactionschangecompartment "github.com/oracle/provider-oci/internal/controller/cluster/announcementsservice/announcementsubscriptionsactionschangecompartment"
@@ -67,9 +68,11 @@ import (
 	batchtaskprofile "github.com/oracle/provider-oci/internal/controller/cluster/batch/batchtaskprofile"
 	autoscalingconfigurationbds "github.com/oracle/provider-oci/internal/controller/cluster/bds/autoscalingconfiguration"
 	bdscapacityreport "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdscapacityreport"
+	bdscapacityreservation "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdscapacityreservation"
 	bdsclusteradminpasswordresetaction "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsclusteradminpasswordresetaction"
 	bdsinstance "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstance"
 	bdsinstanceapikey "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstanceapikey"
+	bdsinstancebdscapacityreservationconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstancebdscapacityreservationconfiguration"
 	bdsinstancebdscertificateconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstancebdscertificateconfiguration"
 	bdsinstanceexecutebootstrapscriptaction "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstanceexecutebootstrapscriptaction"
 	bdsinstanceidentityconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/bds/bdsinstanceidentityconfiguration"
@@ -336,6 +339,9 @@ import (
 	connection "github.com/oracle/provider-oci/internal/controller/cluster/datacatalog/connection"
 	dataasset "github.com/oracle/provider-oci/internal/controller/cluster/datacatalog/dataasset"
 	metastore "github.com/oracle/provider-oci/internal/controller/cluster/datacatalog/metastore"
+	infrastructure "github.com/oracle/provider-oci/internal/controller/cluster/datacc/infrastructure"
+	vmclusternetworkdatacc "github.com/oracle/provider-oci/internal/controller/cluster/datacc/vmclusternetwork"
+	vminstance "github.com/oracle/provider-oci/internal/controller/cluster/datacc/vminstance"
 	application "github.com/oracle/provider-oci/internal/controller/cluster/dataflow/application"
 	invokerun "github.com/oracle/provider-oci/internal/controller/cluster/dataflow/invokerun"
 	pool "github.com/oracle/provider-oci/internal/controller/cluster/dataflow/pool"
@@ -455,6 +461,7 @@ import (
 	oracledbazurevaultassociation "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbazurevaultassociation"
 	oracledbgcpidentityconnector "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbgcpidentityconnector"
 	oracledbgcpkeyring "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbgcpkeyring"
+	instanceddfs "github.com/oracle/provider-oci/internal/controller/cluster/ddfs/instance"
 	delegationcontrol "github.com/oracle/provider-oci/internal/controller/cluster/delegateaccesscontrol/delegationcontrol"
 	delegationsubscription "github.com/oracle/provider-oci/internal/controller/cluster/delegateaccesscontrol/delegationsubscription"
 	occdemandsignal "github.com/oracle/provider-oci/internal/controller/cluster/demandsignal/occdemandsignal"
@@ -551,6 +558,11 @@ import (
 	agenttool "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/agenttool"
 	dedicatedaicluster "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/dedicatedaicluster"
 	endpointgenerativeai "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/endpoint"
+	generativeaiprivateendpoint "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/generativeaiprivateendpoint"
+	hostedapplication "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplication"
+	hostedapplicationiam "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplicationiam"
+	hostedapplicationstorage "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hostedapplicationstorage"
+	hosteddeployment "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/hosteddeployment"
 	importedmodel "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/importedmodel"
 	modelgenerativeai "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/model"
 	projectgenerativeai "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/project"
@@ -743,6 +755,7 @@ import (
 	alarmsuppression "github.com/oracle/provider-oci/internal/controller/cluster/monitoring/alarmsuppression"
 	capturefilter "github.com/oracle/provider-oci/internal/controller/cluster/monitoring/capturefilter"
 	vtap "github.com/oracle/provider-oci/internal/controller/cluster/monitoring/vtap"
+	bluegreendeployment "github.com/oracle/provider-oci/internal/controller/cluster/mysql/bluegreendeployment"
 	mysqlbackup "github.com/oracle/provider-oci/internal/controller/cluster/mysql/mysqlbackup"
 	mysqlchannel "github.com/oracle/provider-oci/internal/controller/cluster/mysql/mysqlchannel"
 	mysqlconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/mysql/mysqlconfiguration"
@@ -752,6 +765,7 @@ import (
 	cpe "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/cpe"
 	crossconnect "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/crossconnect"
 	crossconnectgroup "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/crossconnectgroup"
+	defaultdrgroutetable "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/defaultdrgroutetable"
 	drg "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drg"
 	drgattachment "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachment"
 	drgattachmentmanagement "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachmentmanagement"
@@ -1019,6 +1033,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		visionprivateendpoint.Setup,
 		analyticsinstance.Setup,
 		analyticsinstanceprivateaccesschannel.Setup,
+		analyticsinstanceresourcegroup.Setup,
 		analyticsinstancevanityurl.Setup,
 		announcementsubscription.Setup,
 		announcementsubscriptionsactionschangecompartment.Setup,
@@ -1057,9 +1072,11 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		batchtaskprofile.Setup,
 		autoscalingconfigurationbds.Setup,
 		bdscapacityreport.Setup,
+		bdscapacityreservation.Setup,
 		bdsclusteradminpasswordresetaction.Setup,
 		bdsinstance.Setup,
 		bdsinstanceapikey.Setup,
+		bdsinstancebdscapacityreservationconfiguration.Setup,
 		bdsinstancebdscertificateconfiguration.Setup,
 		bdsinstanceexecutebootstrapscriptaction.Setup,
 		bdsinstanceidentityconfiguration.Setup,
@@ -1326,6 +1343,9 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		connection.Setup,
 		dataasset.Setup,
 		metastore.Setup,
+		infrastructure.Setup,
+		vmclusternetworkdatacc.Setup,
+		vminstance.Setup,
 		application.Setup,
 		invokerun.Setup,
 		pool.Setup,
@@ -1445,6 +1465,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		oracledbazurevaultassociation.Setup,
 		oracledbgcpidentityconnector.Setup,
 		oracledbgcpkeyring.Setup,
+		instanceddfs.Setup,
 		delegationcontrol.Setup,
 		delegationsubscription.Setup,
 		occdemandsignal.Setup,
@@ -1541,6 +1562,11 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		agenttool.Setup,
 		dedicatedaicluster.Setup,
 		endpointgenerativeai.Setup,
+		generativeaiprivateendpoint.Setup,
+		hostedapplication.Setup,
+		hostedapplicationiam.Setup,
+		hostedapplicationstorage.Setup,
+		hosteddeployment.Setup,
 		importedmodel.Setup,
 		modelgenerativeai.Setup,
 		projectgenerativeai.Setup,
@@ -1733,6 +1759,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		alarmsuppression.Setup,
 		capturefilter.Setup,
 		vtap.Setup,
+		bluegreendeployment.Setup,
 		mysqlbackup.Setup,
 		mysqlchannel.Setup,
 		mysqlconfiguration.Setup,
@@ -1742,6 +1769,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		cpe.Setup,
 		crossconnect.Setup,
 		crossconnectgroup.Setup,
+		defaultdrgroutetable.Setup,
 		drg.Setup,
 		drgattachment.Setup,
 		drgattachmentmanagement.Setup,
@@ -2015,6 +2043,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		visionprivateendpoint.SetupGated,
 		analyticsinstance.SetupGated,
 		analyticsinstanceprivateaccesschannel.SetupGated,
+		analyticsinstanceresourcegroup.SetupGated,
 		analyticsinstancevanityurl.SetupGated,
 		announcementsubscription.SetupGated,
 		announcementsubscriptionsactionschangecompartment.SetupGated,
@@ -2053,9 +2082,11 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		batchtaskprofile.SetupGated,
 		autoscalingconfigurationbds.SetupGated,
 		bdscapacityreport.SetupGated,
+		bdscapacityreservation.SetupGated,
 		bdsclusteradminpasswordresetaction.SetupGated,
 		bdsinstance.SetupGated,
 		bdsinstanceapikey.SetupGated,
+		bdsinstancebdscapacityreservationconfiguration.SetupGated,
 		bdsinstancebdscertificateconfiguration.SetupGated,
 		bdsinstanceexecutebootstrapscriptaction.SetupGated,
 		bdsinstanceidentityconfiguration.SetupGated,
@@ -2322,6 +2353,9 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		connection.SetupGated,
 		dataasset.SetupGated,
 		metastore.SetupGated,
+		infrastructure.SetupGated,
+		vmclusternetworkdatacc.SetupGated,
+		vminstance.SetupGated,
 		application.SetupGated,
 		invokerun.SetupGated,
 		pool.SetupGated,
@@ -2441,6 +2475,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		oracledbazurevaultassociation.SetupGated,
 		oracledbgcpidentityconnector.SetupGated,
 		oracledbgcpkeyring.SetupGated,
+		instanceddfs.SetupGated,
 		delegationcontrol.SetupGated,
 		delegationsubscription.SetupGated,
 		occdemandsignal.SetupGated,
@@ -2537,6 +2572,11 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		agenttool.SetupGated,
 		dedicatedaicluster.SetupGated,
 		endpointgenerativeai.SetupGated,
+		generativeaiprivateendpoint.SetupGated,
+		hostedapplication.SetupGated,
+		hostedapplicationiam.SetupGated,
+		hostedapplicationstorage.SetupGated,
+		hosteddeployment.SetupGated,
 		importedmodel.SetupGated,
 		modelgenerativeai.SetupGated,
 		projectgenerativeai.SetupGated,
@@ -2729,6 +2769,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		alarmsuppression.SetupGated,
 		capturefilter.SetupGated,
 		vtap.SetupGated,
+		bluegreendeployment.SetupGated,
 		mysqlbackup.SetupGated,
 		mysqlchannel.SetupGated,
 		mysqlconfiguration.SetupGated,
@@ -2738,6 +2779,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		cpe.SetupGated,
 		crossconnect.SetupGated,
 		crossconnectgroup.SetupGated,
+		defaultdrgroutetable.SetupGated,
 		drg.SetupGated,
 		drgattachment.SetupGated,
 		drgattachmentmanagement.SetupGated,

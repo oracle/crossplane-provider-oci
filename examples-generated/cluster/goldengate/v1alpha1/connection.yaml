@@ -22,6 +22,19 @@ spec:
     additionalAttributes:
     - name: ${var.connection_additional_attributes_name}
       value: ${var.connection_additional_attributes_value}
+    authDetails:
+    - apiKey: ${var.connection_auth_details_api_key}
+      apiKeySecretIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_secret
+      authType: ${var.connection_auth_details_auth_type}
+      baseUrl: ${var.connection_auth_details_base_url}
+      keyFingerprint: ${var.connection_auth_details_key_fingerprint}
+      region: ${var.connection_auth_details_region}
+      tenancyId: ${oci_identity_tenancy.test_tenancy.id}
+      userIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_user
     authenticationMode: ${var.connection_authentication_mode}
     authenticationType: ${var.connection_authentication_type}
     azureAuthorityHost: ${var.connection_azure_authority_host}
@@ -121,6 +134,8 @@ spec:
     locks:
     - message: ${var.connection_locks_message}
       type: ${var.connection_locks_type}
+    maxInputChars: ${var.connection_max_input_chars}
+    modelKey: ${var.connection_model_key}
     nsgIds: ${var.connection_nsg_ids}
     passwordSecretIdSelector:
       matchLabels:
@@ -145,6 +160,7 @@ spec:
       name: example-secret
       namespace: upbound-system
     producerProperties: ${var.connection_producer_properties}
+    providerType: ${var.connection_provider_type}
     publicKeyFingerprint: ${var.connection_public_key_fingerprint}
     redisClusterIdSelector:
       matchLabels:

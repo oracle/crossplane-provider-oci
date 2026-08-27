@@ -157,6 +157,16 @@ spec:
                         firmwareBundleId:
                           description: (Updatable) The OCID for firmware bundle
                           type: string
+                        quickRecycleSettings:
+                          description: (Updatable) Additional quick recycle settings.
+                          items:
+                            properties:
+                              nvmeWipe:
+                                description: (Updatable) Whether to wipe NVMe data
+                                  during quick recycle.
+                                type: boolean
+                            type: object
+                          type: array
                         recycleLevel:
                           description: (Updatable) Preferred recycle level for hosts
                             associated with the reservation config.
@@ -308,6 +318,16 @@ spec:
                         firmwareBundleId:
                           description: (Updatable) The OCID for firmware bundle
                           type: string
+                        quickRecycleSettings:
+                          description: (Updatable) Additional quick recycle settings.
+                          items:
+                            properties:
+                              nvmeWipe:
+                                description: (Updatable) Whether to wipe NVMe data
+                                  during quick recycle.
+                                type: boolean
+                            type: object
+                          type: array
                         recycleLevel:
                           description: (Updatable) Preferred recycle level for hosts
                             associated with the reservation config.
@@ -443,6 +463,16 @@ spec:
                         firmwareBundleId:
                           description: (Updatable) The OCID for firmware bundle
                           type: string
+                        quickRecycleSettings:
+                          description: (Updatable) Additional quick recycle settings.
+                          items:
+                            properties:
+                              nvmeWipe:
+                                description: (Updatable) Whether to wipe NVMe data
+                                  during quick recycle.
+                                type: boolean
+                            type: object
+                          type: array
                         recycleLevel:
                           description: (Updatable) Preferred recycle level for hosts
                             associated with the reservation config.

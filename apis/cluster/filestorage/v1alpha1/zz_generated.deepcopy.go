@@ -1167,6 +1167,11 @@ func (in *FileSystemObservation) DeepCopyInto(out *FileSystemObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.CompartmentQuotaEnforcementState != nil {
+		in, out := &in.CompartmentQuotaEnforcementState, &out.CompartmentQuotaEnforcementState
+		*out = new(string)
+		**out = **in
+	}
 	if in.DefinedTags != nil {
 		in, out := &in.DefinedTags, &out.DefinedTags
 		*out = make(map[string]*string, len(*in))
@@ -5318,6 +5323,11 @@ func (in *SnapshotObservation) DeepCopyInto(out *SnapshotObservation) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.ExclusiveBytes != nil {
+		in, out := &in.ExclusiveBytes, &out.ExclusiveBytes
+		*out = new(string)
+		**out = **in
 	}
 	if in.ExpirationTime != nil {
 		in, out := &in.ExpirationTime, &out.ExpirationTime

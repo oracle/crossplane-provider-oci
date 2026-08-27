@@ -229,6 +229,9 @@ type InstancePoolsObservation struct {
 	// The placement configurations for the instance pool.
 	PlacementConfigurations []PlacementConfigurationsObservation `json:"placementConfigurations,omitempty" tf:"placement_configurations,omitempty"`
 
+	// The type of resources managed by the pool.
+	PoolType *string `json:"poolType,omitempty" tf:"pool_type,omitempty"`
+
 	// (Updatable) The number of instances that should be in the instance pool.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 

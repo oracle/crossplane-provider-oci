@@ -25,6 +25,15 @@ func (l *BdsCapacityReportList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this BdsCapacityReservationList.
+func (l *BdsCapacityReservationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this BdsClusterAdminPasswordResetActionList.
 func (l *BdsClusterAdminPasswordResetActionList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
@@ -36,6 +45,15 @@ func (l *BdsClusterAdminPasswordResetActionList) GetItems() []resource.Managed {
 
 // GetItems of this BdsInstanceApiKeyList.
 func (l *BdsInstanceApiKeyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this BdsInstanceBdsCapacityReservationConfigurationList.
+func (l *BdsInstanceBdsCapacityReservationConfigurationList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

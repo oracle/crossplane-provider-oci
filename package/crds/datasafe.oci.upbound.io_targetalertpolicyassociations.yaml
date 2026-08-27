@@ -337,6 +337,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  targetType:
+                    description: The resource type that is represented by the alert
+                      policy association. Default is considered as TARGET_DATABASE.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -613,6 +617,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  targetType:
+                    description: The resource type that is represented by the alert
+                      policy association. Default is considered as TARGET_DATABASE.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -768,6 +776,10 @@ spec:
                     x-kubernetes-map-type: granular
                   targetId:
                     description: The OCID of the target or target database group.
+                    type: string
+                  targetType:
+                    description: The resource type that is represented by the alert
+                      policy association. Default is considered as TARGET_DATABASE.
                     type: string
                   timeCreated:
                     description: Creation date and time of the alert policy, in the

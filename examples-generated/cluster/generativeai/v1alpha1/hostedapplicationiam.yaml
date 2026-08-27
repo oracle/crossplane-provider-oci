@@ -1,0 +1,36 @@
+apiVersion: generativeai.oci.upbound.io/v1alpha1
+kind: HostedApplicationIam
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/hostedapplicationiam
+  labels:
+    testing.upbound.io/example-name: test_hosted_application_iam
+  name: test-hosted-application-iam
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.hosted_application_iam_description}
+    displayName: ${var.hosted_application_iam_display_name}
+    environmentVariables:
+    - name: ${var.hosted_application_iam_environment_variables_name}
+      type: ${var.hosted_application_iam_environment_variables_type}
+      value: ${var.hosted_application_iam_environment_variables_value}
+    freeformTags:
+      Department: Finance
+    networkingConfig:
+    - inboundNetworkingConfig:
+      - endpointMode: ${var.hosted_application_iam_networking_config_inbound_networking_config_endpoint_mode}
+      outboundNetworkingConfig:
+      - networkMode: ${var.hosted_application_iam_networking_config_outbound_networking_config_network_mode}
+    scalingConfig:
+    - maxReplica: ${var.hosted_application_iam_scaling_config_max_replica}
+      minReplica: ${var.hosted_application_iam_scaling_config_min_replica}
+      scalingType: ${var.hosted_application_iam_scaling_config_scaling_type}
+      targetConcurrencyThreshold: ${var.hosted_application_iam_scaling_config_target_concurrency_threshold}
+      targetCpuThreshold: ${var.hosted_application_iam_scaling_config_target_cpu_threshold}
+      targetMemoryThreshold: ${var.hosted_application_iam_scaling_config_target_memory_threshold}
+      targetRpsThreshold: ${var.hosted_application_iam_scaling_config_target_rps_threshold}

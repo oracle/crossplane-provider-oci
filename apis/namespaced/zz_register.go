@@ -48,6 +48,7 @@ import (
 	v1alpha1costad "github.com/oracle/provider-oci/apis/namespaced/costad/v1alpha1"
 	v1alpha1database "github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1"
 	v1alpha1datacatalog "github.com/oracle/provider-oci/apis/namespaced/datacatalog/v1alpha1"
+	v1alpha1datacc "github.com/oracle/provider-oci/apis/namespaced/datacc/v1alpha1"
 	v1alpha1dataflow "github.com/oracle/provider-oci/apis/namespaced/dataflow/v1alpha1"
 	v1alpha1dataintegration "github.com/oracle/provider-oci/apis/namespaced/dataintegration/v1alpha1"
 	v1alpha1datalabelingservice "github.com/oracle/provider-oci/apis/namespaced/datalabelingservice/v1alpha1"
@@ -55,6 +56,7 @@ import (
 	v1alpha1datascience "github.com/oracle/provider-oci/apis/namespaced/datascience/v1alpha1"
 	v1alpha1dblm "github.com/oracle/provider-oci/apis/namespaced/dblm/v1alpha1"
 	v1alpha1dbmulticloud "github.com/oracle/provider-oci/apis/namespaced/dbmulticloud/v1alpha1"
+	v1alpha1ddfs "github.com/oracle/provider-oci/apis/namespaced/ddfs/v1alpha1"
 	v1alpha1delegateaccesscontrol "github.com/oracle/provider-oci/apis/namespaced/delegateaccesscontrol/v1alpha1"
 	v1alpha1demandsignal "github.com/oracle/provider-oci/apis/namespaced/demandsignal/v1alpha1"
 	v1alpha1desktops "github.com/oracle/provider-oci/apis/namespaced/desktops/v1alpha1"
@@ -185,6 +187,7 @@ func init() {
 		v1alpha1costad.SchemeBuilder.AddToScheme,
 		v1alpha1database.SchemeBuilder.AddToScheme,
 		v1alpha1datacatalog.SchemeBuilder.AddToScheme,
+		v1alpha1datacc.SchemeBuilder.AddToScheme,
 		v1alpha1dataflow.SchemeBuilder.AddToScheme,
 		v1alpha1dataintegration.SchemeBuilder.AddToScheme,
 		v1alpha1datalabelingservice.SchemeBuilder.AddToScheme,
@@ -192,6 +195,7 @@ func init() {
 		v1alpha1datascience.SchemeBuilder.AddToScheme,
 		v1alpha1dblm.SchemeBuilder.AddToScheme,
 		v1alpha1dbmulticloud.SchemeBuilder.AddToScheme,
+		v1alpha1ddfs.SchemeBuilder.AddToScheme,
 		v1alpha1delegateaccesscontrol.SchemeBuilder.AddToScheme,
 		v1alpha1demandsignal.SchemeBuilder.AddToScheme,
 		v1alpha1desktops.SchemeBuilder.AddToScheme,

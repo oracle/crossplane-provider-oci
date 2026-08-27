@@ -65,6 +65,50 @@ func (mg *Connection) ResolveReferences( // ResolveReferences of this Connection
 	mg.Spec.ForProvider.AccountKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AccountKeySecretIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.AuthDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretIDRef,
+				Selector:     mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretID")
+		}
+		mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.AuthDetails[i3].APIKeySecretIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.AuthDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "User", "UserList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AuthDetails[i3].UserID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.AuthDetails[i3].UserIDRef,
+				Selector:     mg.Spec.ForProvider.AuthDetails[i3].UserIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.AuthDetails[i3].UserID")
+		}
+		mg.Spec.ForProvider.AuthDetails[i3].UserID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.AuthDetails[i3].UserIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Catalog); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")
@@ -879,6 +923,50 @@ func (mg *Connection) ResolveReferences( // ResolveReferences of this Connection
 	mg.Spec.InitProvider.AccountKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.AccountKeySecretIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.AuthDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretIDRef,
+				Selector:     mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretID")
+		}
+		mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.AuthDetails[i3].APIKeySecretIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.AuthDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "User", "UserList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AuthDetails[i3].UserID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.AuthDetails[i3].UserIDRef,
+				Selector:     mg.Spec.InitProvider.AuthDetails[i3].UserIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.AuthDetails[i3].UserID")
+		}
+		mg.Spec.InitProvider.AuthDetails[i3].UserID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.AuthDetails[i3].UserIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Catalog); i3++ {
 		{
 			m, l, err = apisresolver.GetManagedResource("vault.oci.m.upbound.io", "v1alpha1", "Secret", "SecretList")

@@ -126,6 +126,7 @@ func TestServiceGroupings(t *testing.T) {
 		},
 		"networkconnectivity": {
 			"oci_core_drg",
+			"oci_core_default_drg_route_table",
 			"oci_core_drg_attachment",
 			"oci_core_drg_attachment_management",
 			"oci_core_drg_attachments_list",
@@ -254,6 +255,7 @@ func TestSpecificServiceMappings(t *testing.T) {
 		{"oci_core_vcn", "networking", "Vcn"},
 		{"oci_core_volume", "blockstorage", "Volume"},
 		{"oci_core_drg", "networkconnectivity", "Drg"},
+		{"oci_core_default_drg_route_table", "networkconnectivity", "DefaultDrgRouteTable"},
 		{"oci_identity_compartment", "identity", "Compartment"},
 		{"oci_containerengine_cluster", "containerengine", "Cluster"},
 		{"oci_objectstorage_bucket", "objectstorage", "Bucket"},

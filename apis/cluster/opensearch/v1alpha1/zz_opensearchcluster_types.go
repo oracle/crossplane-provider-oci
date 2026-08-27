@@ -281,7 +281,7 @@ type OpensearchClusterInitParameters struct {
 	// The instance type for the cluster's master nodes.
 	MasterNodeHostType *string `json:"masterNodeHostType,omitempty" tf:"master_node_host_type,omitempty"`
 
-	// The OCID of the NSG where the private endpoint vnic will be attached.
+	// (Updatable) The OCID of the NSG where the private endpoint vnic will be attached. Set this value to an empty string to detach the cluster from the NSG. Set this value to null to leave the existing NSG unchanged.
 	NsgID *string `json:"nsgId,omitempty" tf:"nsg_id,omitempty"`
 
 	// (Updatable) The number of OpenSearch Dashboard nodes to configure for the cluster.
@@ -524,7 +524,7 @@ type OpensearchClusterObservation struct {
 	// The instance type for the cluster's master nodes.
 	MasterNodeHostType *string `json:"masterNodeHostType,omitempty" tf:"master_node_host_type,omitempty"`
 
-	// The OCID of the NSG where the private endpoint vnic will be attached.
+	// (Updatable) The OCID of the NSG where the private endpoint vnic will be attached. Set this value to an empty string to detach the cluster from the NSG. Set this value to null to leave the existing NSG unchanged.
 	NsgID *string `json:"nsgId,omitempty" tf:"nsg_id,omitempty"`
 
 	// The fully qualified domain name (FQDN) for the cluster's OpenSearch Dashboard API endpoint.
@@ -774,7 +774,7 @@ type OpensearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	MasterNodeHostType *string `json:"masterNodeHostType,omitempty" tf:"master_node_host_type,omitempty"`
 
-	// The OCID of the NSG where the private endpoint vnic will be attached.
+	// (Updatable) The OCID of the NSG where the private endpoint vnic will be attached. Set this value to an empty string to detach the cluster from the NSG. Set this value to null to leave the existing NSG unchanged.
 	// +kubebuilder:validation:Optional
 	NsgID *string `json:"nsgId,omitempty" tf:"nsg_id,omitempty"`
 

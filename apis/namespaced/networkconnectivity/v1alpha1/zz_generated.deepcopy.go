@@ -607,12 +607,32 @@ func (in *CrossConnectGroupInitParameters) DeepCopyInto(out *CrossConnectGroupIn
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 }
 
@@ -824,12 +844,32 @@ func (in *CrossConnectGroupObservation) DeepCopyInto(out *CrossConnectGroupObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 	if in.OciLogicalDeviceName != nil {
 		in, out := &in.OciLogicalDeviceName, &out.OciLogicalDeviceName
@@ -923,12 +963,32 @@ func (in *CrossConnectGroupParameters) DeepCopyInto(out *CrossConnectGroupParame
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.MacsecProperties != nil {
 		in, out := &in.MacsecProperties, &out.MacsecProperties
 		*out = make([]CrossConnectGroupMacsecPropertiesParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MinimumLinks != nil {
+		in, out := &in.MinimumLinks, &out.MinimumLinks
+		*out = new(float64)
+		**out = **in
 	}
 }
 
@@ -1067,6 +1127,11 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1076,6 +1141,23 @@ func (in *CrossConnectInitParameters) DeepCopyInto(out *CrossConnectInitParamete
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesInitParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -1373,6 +1455,11 @@ func (in *CrossConnectObservation) DeepCopyInto(out *CrossConnectObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1382,6 +1469,23 @@ func (in *CrossConnectObservation) DeepCopyInto(out *CrossConnectObservation) {
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesObservation, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -1532,6 +1636,11 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.InterfaceDownTimerValueInMilliseconds != nil {
+		in, out := &in.InterfaceDownTimerValueInMilliseconds, &out.InterfaceDownTimerValueInMilliseconds
+		*out = new(float64)
+		**out = **in
+	}
 	if in.InterfaceName != nil {
 		in, out := &in.InterfaceName, &out.InterfaceName
 		*out = new(string)
@@ -1541,6 +1650,23 @@ func (in *CrossConnectParameters) DeepCopyInto(out *CrossConnectParameters) {
 		in, out := &in.IsActive, &out.IsActive
 		*out = new(bool)
 		**out = **in
+	}
+	if in.IsInterfaceHoldTimerEnabled != nil {
+		in, out := &in.IsInterfaceHoldTimerEnabled, &out.IsInterfaceHoldTimerEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsQosEnabled != nil {
+		in, out := &in.IsQosEnabled, &out.IsQosEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.LoaProperties != nil {
+		in, out := &in.LoaProperties, &out.LoaProperties
+		*out = make([]LoaPropertiesParameters, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.LocationName != nil {
 		in, out := &in.LocationName, &out.LocationName
@@ -1622,6 +1748,386 @@ func (in *CrossConnectStatus) DeepCopy() *CrossConnectStatus {
 		return nil
 	}
 	out := new(CrossConnectStatus)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTable) DeepCopyInto(out *DefaultDrgRouteTable) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTable.
+func (in *DefaultDrgRouteTable) DeepCopy() *DefaultDrgRouteTable {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTable)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DefaultDrgRouteTable) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableInitParameters) DeepCopyInto(out *DefaultDrgRouteTableInitParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ImportDrgRouteDistributionID != nil {
+		in, out := &in.ImportDrgRouteDistributionID, &out.ImportDrgRouteDistributionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImportDrgRouteDistributionIDRef != nil {
+		in, out := &in.ImportDrgRouteDistributionIDRef, &out.ImportDrgRouteDistributionIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImportDrgRouteDistributionIDSelector != nil {
+		in, out := &in.ImportDrgRouteDistributionIDSelector, &out.ImportDrgRouteDistributionIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IsEcmpEnabled != nil {
+		in, out := &in.IsEcmpEnabled, &out.IsEcmpEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.ManageDefaultResourceID != nil {
+		in, out := &in.ManageDefaultResourceID, &out.ManageDefaultResourceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RemoveImportTrigger != nil {
+		in, out := &in.RemoveImportTrigger, &out.RemoveImportTrigger
+		*out = new(bool)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableInitParameters.
+func (in *DefaultDrgRouteTableInitParameters) DeepCopy() *DefaultDrgRouteTableInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableList) DeepCopyInto(out *DefaultDrgRouteTableList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DefaultDrgRouteTable, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableList.
+func (in *DefaultDrgRouteTableList) DeepCopy() *DefaultDrgRouteTableList {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DefaultDrgRouteTableList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableObservation) DeepCopyInto(out *DefaultDrgRouteTableObservation) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImportDrgRouteDistributionID != nil {
+		in, out := &in.ImportDrgRouteDistributionID, &out.ImportDrgRouteDistributionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.IsEcmpEnabled != nil {
+		in, out := &in.IsEcmpEnabled, &out.IsEcmpEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.ManageDefaultResourceID != nil {
+		in, out := &in.ManageDefaultResourceID, &out.ManageDefaultResourceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RemoveImportTrigger != nil {
+		in, out := &in.RemoveImportTrigger, &out.RemoveImportTrigger
+		*out = new(bool)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.TimeCreated != nil {
+		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableObservation.
+func (in *DefaultDrgRouteTableObservation) DeepCopy() *DefaultDrgRouteTableObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableParameters) DeepCopyInto(out *DefaultDrgRouteTableParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ImportDrgRouteDistributionID != nil {
+		in, out := &in.ImportDrgRouteDistributionID, &out.ImportDrgRouteDistributionID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ImportDrgRouteDistributionIDRef != nil {
+		in, out := &in.ImportDrgRouteDistributionIDRef, &out.ImportDrgRouteDistributionIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ImportDrgRouteDistributionIDSelector != nil {
+		in, out := &in.ImportDrgRouteDistributionIDSelector, &out.ImportDrgRouteDistributionIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.IsEcmpEnabled != nil {
+		in, out := &in.IsEcmpEnabled, &out.IsEcmpEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.ManageDefaultResourceID != nil {
+		in, out := &in.ManageDefaultResourceID, &out.ManageDefaultResourceID
+		*out = new(string)
+		**out = **in
+	}
+	if in.RemoveImportTrigger != nil {
+		in, out := &in.RemoveImportTrigger, &out.RemoveImportTrigger
+		*out = new(bool)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableParameters.
+func (in *DefaultDrgRouteTableParameters) DeepCopy() *DefaultDrgRouteTableParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableSpec) DeepCopyInto(out *DefaultDrgRouteTableSpec) {
+	*out = *in
+	in.ManagedResourceSpec.DeepCopyInto(&out.ManagedResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableSpec.
+func (in *DefaultDrgRouteTableSpec) DeepCopy() *DefaultDrgRouteTableSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DefaultDrgRouteTableStatus) DeepCopyInto(out *DefaultDrgRouteTableStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DefaultDrgRouteTableStatus.
+func (in *DefaultDrgRouteTableStatus) DeepCopy() *DefaultDrgRouteTableStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DefaultDrgRouteTableStatus)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -5587,6 +6093,81 @@ func (in *IpsecStatus) DeepCopy() *IpsecStatus {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesInitParameters) DeepCopyInto(out *LoaPropertiesInitParameters) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesInitParameters.
+func (in *LoaPropertiesInitParameters) DeepCopy() *LoaPropertiesInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesObservation) DeepCopyInto(out *LoaPropertiesObservation) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesObservation.
+func (in *LoaPropertiesObservation) DeepCopy() *LoaPropertiesObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *LoaPropertiesParameters) DeepCopyInto(out *LoaPropertiesParameters) {
+	*out = *in
+	if in.AuthorizedAgent != nil {
+		in, out := &in.AuthorizedAgent, &out.AuthorizedAgent
+		*out = new(string)
+		**out = **in
+	}
+	if in.ExpiryExtensionCount != nil {
+		in, out := &in.ExpiryExtensionCount, &out.ExpiryExtensionCount
+		*out = new(float64)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new LoaPropertiesParameters.
+func (in *LoaPropertiesParameters) DeepCopy() *LoaPropertiesParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(LoaPropertiesParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *MacsecPropertiesInitParameters) DeepCopyInto(out *MacsecPropertiesInitParameters) {
 	*out = *in
 	if in.EncryptionCipher != nil {
@@ -6934,6 +7515,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -6956,6 +7542,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -6966,6 +7557,11 @@ func (in *VirtualCircuitInitParameters) DeepCopyInto(out *VirtualCircuitInitPara
 				**out = **in
 			}
 		}
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
+		*out = new(string)
+		**out = **in
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
@@ -7133,6 +7729,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(float64)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -7165,6 +7766,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -7181,6 +7787,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.SharedConnectionUUID != nil {
+		in, out := &in.SharedConnectionUUID, &out.SharedConnectionUUID
+		*out = new(string)
+		**out = **in
+	}
 	if in.State != nil {
 		in, out := &in.State, &out.State
 		*out = new(string)
@@ -7188,6 +7799,11 @@ func (in *VirtualCircuitObservation) DeepCopyInto(out *VirtualCircuitObservation
 	}
 	if in.TimeCreated != nil {
 		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
 		*out = new(string)
 		**out = **in
 	}
@@ -7317,6 +7933,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ProviderRemoteRegion != nil {
+		in, out := &in.ProviderRemoteRegion, &out.ProviderRemoteRegion
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderServiceID != nil {
 		in, out := &in.ProviderServiceID, &out.ProviderServiceID
 		*out = new(string)
@@ -7339,6 +7960,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.RemoteAccountID != nil {
+		in, out := &in.RemoteAccountID, &out.RemoteAccountID
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = make([]*string, len(*in))
@@ -7349,6 +7975,11 @@ func (in *VirtualCircuitParameters) DeepCopyInto(out *VirtualCircuitParameters) 
 				**out = **in
 			}
 		}
+	}
+	if in.TrafficMode != nil {
+		in, out := &in.TrafficMode, &out.TrafficMode
+		*out = new(string)
+		**out = **in
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type

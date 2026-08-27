@@ -981,6 +981,10 @@ spec:
                     description: (Updatable) The OCID of the compartment to create
                       the file system in.
                     type: string
+                  compartmentQuotaEnforcementState:
+                    description: Displays the compartment-level quota enforcement
+                      state affecting this file system.
+                    type: string
                   definedTags:
                     additionalProperties:
                       type: string

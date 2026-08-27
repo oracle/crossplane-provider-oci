@@ -22,7 +22,7 @@ spec:
     policyIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_policy
-    target_type: ${var.target_alert_policy_association_target_type}
     targetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_target
+    targetType: ${var.target_alert_policy_association_target_type}

@@ -102,6 +102,24 @@ spec:
                           - name
                           - namespace
                           type: object
+                        autoFailoverConfiguration:
+                          description: (Applicable when source=DATAGUARD) The properties
+                            for defining auto failover configuration.
+                          items:
+                            properties:
+                              failoverTargets:
+                                description: (Applicable when source=DATAGUARD) Specifies
+                                  the DB_UNIQUE_NAME of the data guard group member
+                                  databases.
+                                items:
+                                  type: string
+                                type: array
+                              managedAutoFailover:
+                                description: (Applicable when source=DATAGUARD) The
+                                  state of managed auto failover.
+                                type: string
+                            type: object
+                          type: array
                         backupId:
                           description: The backup OCID.
                           type: string
@@ -502,6 +520,98 @@ spec:
                                         information about valid region names, see
                                         Regions and Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE) Backup
+                                        destination for the TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE)
+                                              The OCID of the backup destination.
+                                            type: string
+                                          backupDestinationIdRef:
+                                            description: Reference to a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          backupDestinationIdSelector:
+                                            description: Selector for a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: Type of the database backup destination.
                                       type: string
@@ -1169,6 +1279,26 @@ spec:
                             more information, see Oracle Data Guard Protection Modes
                             in the Oracle Data Guard documentation.
                           type: string
+                        recoveryApplianceVpcPasswordSecretRef:
+                          description: (Applicable when source=DATABASE | DB_BACKUP)
+                            The password for the VPC user that is used to access the
+                            Recovery Appliance, if the given backup is from a backup
+                            destination of type RECOVERY_APPLIANCE.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
                         sidPrefix:
                           description: Specifies a prefix for the Oracle SID of the
                             database to be created.
@@ -1914,6 +2044,24 @@ spec:
                           - name
                           - namespace
                           type: object
+                        autoFailoverConfiguration:
+                          description: (Applicable when source=DATAGUARD) The properties
+                            for defining auto failover configuration.
+                          items:
+                            properties:
+                              failoverTargets:
+                                description: (Applicable when source=DATAGUARD) Specifies
+                                  the DB_UNIQUE_NAME of the data guard group member
+                                  databases.
+                                items:
+                                  type: string
+                                type: array
+                              managedAutoFailover:
+                                description: (Applicable when source=DATAGUARD) The
+                                  state of managed auto failover.
+                                type: string
+                            type: object
+                          type: array
                         backupId:
                           description: The backup OCID.
                           type: string
@@ -2314,6 +2462,98 @@ spec:
                                         information about valid region names, see
                                         Regions and Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE) Backup
+                                        destination for the TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE)
+                                              The OCID of the backup destination.
+                                            type: string
+                                          backupDestinationIdRef:
+                                            description: Reference to a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          backupDestinationIdSelector:
+                                            description: Selector for a BackupDestination
+                                              in database to populate backupDestinationId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: Type of the database backup destination.
                                       type: string
@@ -2981,6 +3221,26 @@ spec:
                             more information, see Oracle Data Guard Protection Modes
                             in the Oracle Data Guard documentation.
                           type: string
+                        recoveryApplianceVpcPasswordSecretRef:
+                          description: (Applicable when source=DATABASE | DB_BACKUP)
+                            The password for the VPC user that is used to access the
+                            Recovery Appliance, if the given backup is from a backup
+                            destination of type RECOVERY_APPLIANCE.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
                         sidPrefix:
                           description: Specifies a prefix for the Oracle SID of the
                             database to be created.
@@ -3824,6 +4084,9 @@ spec:
                       configuration.
                     items:
                       properties:
+                        managedAutoFailOverReadiness:
+                          description: Specifies readiness of Managed Automatic failover.
+                          type: string
                         members:
                           description: List of Data Guard members, representing each
                             database that is part of Data Guard.
@@ -3854,17 +4117,31 @@ spec:
                                 type: string
                               failoverReadiness:
                                 description: The failover readiness status of the
-                                  Data Guard member.
+                                  Data Guard member. HEALTHY_AND_NOT_ROLECHANGE_TARGET
+                                  - Indicates that the respective standby member is
+                                  healthy  but not currently designated to take failover,
+                                  when auto failover is enabled.
                                 type: string
                               failoverReadinessMessage:
                                 description: 'The message explaining failover readiness
                                   status. Example: This standby database is not failover
                                   ready.'
                                 type: string
+                              failoverTargets:
+                                description: (Applicable when source=DATAGUARD) Specifies
+                                  the DB_UNIQUE_NAME of the data guard group member
+                                  databases.
+                                items:
+                                  type: string
+                                type: array
                               isActiveDataGuardEnabled:
                                 description: (Applicable when source=DATAGUARD) True
                                   if active Data Guard is enabled.
                                 type: boolean
+                              managedAutoFailover:
+                                description: (Applicable when source=DATAGUARD) The
+                                  state of managed auto failover.
+                                type: string
                               role:
                                 description: The role of the reporting database in
                                   this Data Guard association.
@@ -3908,6 +4185,24 @@ spec:
                     description: (Updatable) Details for creating a database.
                     items:
                       properties:
+                        autoFailoverConfiguration:
+                          description: (Applicable when source=DATAGUARD) The properties
+                            for defining auto failover configuration.
+                          items:
+                            properties:
+                              failoverTargets:
+                                description: (Applicable when source=DATAGUARD) Specifies
+                                  the DB_UNIQUE_NAME of the data guard group member
+                                  databases.
+                                items:
+                                  type: string
+                                type: array
+                              managedAutoFailover:
+                                description: (Applicable when source=DATAGUARD) The
+                                  state of managed auto failover.
+                                type: string
+                            type: object
+                          type: array
                         backupId:
                           description: The backup OCID.
                           type: string
@@ -4044,6 +4339,21 @@ spec:
                                         information about valid region names, see
                                         Regions and Availability Domains.
                                       type: string
+                                    tdeWalletBackupDestination:
+                                      description: (Applicable when source=NONE) Backup
+                                        destination for the TDE wallet backups.
+                                      items:
+                                        properties:
+                                          backupDestinationId:
+                                            description: (Applicable when source=NONE)
+                                              The OCID of the backup destination.
+                                            type: string
+                                          backupDestinationType:
+                                            description: Destination where TDE Wallet
+                                              backups are to be placed.
+                                            type: string
+                                        type: object
+                                      type: array
                                     type:
                                       description: Type of the database backup destination.
                                       type: string
@@ -4489,6 +4799,21 @@ spec:
                                   information about valid region names, see Regions
                                   and Availability Domains.
                                 type: string
+                              tdeWalletBackupDestination:
+                                description: (Applicable when source=NONE) Backup
+                                  destination for the TDE wallet backups.
+                                items:
+                                  properties:
+                                    backupDestinationId:
+                                      description: (Applicable when source=NONE) The
+                                        OCID of the backup destination.
+                                      type: string
+                                    backupDestinationType:
+                                      description: Destination where TDE Wallet backups
+                                        are to be placed.
+                                      type: string
+                                  type: object
+                                type: array
                               type:
                                 description: Type of the database backup destination.
                                 type: string

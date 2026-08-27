@@ -27,7 +27,9 @@ spec:
     displayName: ${var.endpoint_display_name}
     freeformTags:
       Department: Finance
-    generativeAiPrivateEndpointId: ${oci_generative_ai_generative_ai_private_endpoint.test_generative_ai_private_endpoint.id}
+    generativeAiPrivateEndpointIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_generative_ai_private_endpoint
     modelIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_model

@@ -17,3 +17,9 @@ spec:
     displayName: ${var.compute_cluster_display_name}
     freeformTags:
       Department: Finance
+    placementConstraintDetails:
+    - hpcIslandId: ${oci_core_hpc_island.test_hpc_island.id}
+      logicalPlacementConstraint: ${var.compute_cluster_placement_constraint_details_logical_placement_constraint}
+      targetMemoryFabricIds: ${var.compute_cluster_placement_constraint_details_target_memory_fabric_ids}
+      targetNetworkBlockIds: ${var.compute_cluster_placement_constraint_details_target_network_block_ids}
+      type: COMPUTE_CLUSTER

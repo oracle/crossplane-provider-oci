@@ -1,0 +1,57 @@
+apiVersion: datacc.oci.upbound.io/v1alpha1
+kind: Infrastructure
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datacc/v1alpha1/infrastructure
+  labels:
+    testing.upbound.io/example-name: test_infrastructure
+  name: test-infrastructure
+spec:
+  forProvider:
+    acfsFileSystemStorageInGbs: ${var.infrastructure_acfs_file_system_storage_in_gbs}
+    adminNetworkcidr: ${var.infrastructure_admin_networkcidr}
+    backupNetworkBondingInterface: ${var.infrastructure_backup_network_bonding_interface}
+    backupNetworkBondingMode: ${var.infrastructure_backup_network_bonding_mode}
+    clientNetworkBondingInterface: ${var.infrastructure_client_network_bonding_interface}
+    clientNetworkBondingMode: ${var.infrastructure_client_network_bonding_mode}
+    cloudControlPlaneServer1: ${var.infrastructure_cloud_control_plane_server1}
+    cloudControlPlaneServer2: ${var.infrastructure_cloud_control_plane_server2}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    contacts:
+    - email: ${var.infrastructure_contacts_email}
+      isContactMosValidated: ${var.infrastructure_contacts_is_contact_mos_validated}
+      isPrimary: ${var.infrastructure_contacts_is_primary}
+      name: ${var.infrastructure_contacts_name}
+      phoneNumber: ${var.infrastructure_contacts_phone_number}
+    corporateProxy: ${var.infrastructure_corporate_proxy}
+    cpsNetworkBondingInterface: ${var.infrastructure_cps_network_bonding_interface}
+    cpsNetworkBondingMode: ${var.infrastructure_cps_network_bonding_mode}
+    dataDiskPercentage: ${var.infrastructure_data_disk_percentage}
+    definedTags:
+      foo-namespace.bar-key: value
+    description: ${var.infrastructure_description}
+    displayName: ${var.infrastructure_display_name}
+    dnsServers: ${var.infrastructure_dns_servers}
+    freeformTags:
+      bar-key: value
+    gateway: ${var.infrastructure_gateway}
+    maintenanceWindow:
+    - customActionTimeoutInMins: ${var.infrastructure_maintenance_window_custom_action_timeout_in_mins}
+      daysOfWeek: ${var.infrastructure_maintenance_window_days_of_week}
+      hoursOfDay: ${var.infrastructure_maintenance_window_hours_of_day}
+      isCustomActionTimeoutEnabled: ${var.infrastructure_maintenance_window_is_custom_action_timeout_enabled}
+      isMonthlyPatchingEnabled: ${var.infrastructure_maintenance_window_is_monthly_patching_enabled}
+      leadTimeInWeeks: ${var.infrastructure_maintenance_window_lead_time_in_weeks}
+      months: ${var.infrastructure_maintenance_window_months}
+      patchingMode: ${var.infrastructure_maintenance_window_patching_mode}
+      preference: ${var.infrastructure_maintenance_window_preference}
+      weeksOfMonth: ${var.infrastructure_maintenance_window_weeks_of_month}
+    netmask: ${var.infrastructure_netmask}
+    ntpServers: ${var.infrastructure_ntp_servers}
+    shape: ${var.infrastructure_shape}
+    systemModel: ${var.infrastructure_system_model}
+    vlanIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_vlan

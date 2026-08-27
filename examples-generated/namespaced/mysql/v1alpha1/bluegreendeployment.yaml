@@ -1,0 +1,39 @@
+apiVersion: mysql.oci.m.upbound.io/v1alpha1
+kind: BlueGreenDeployment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql/v1alpha1/bluegreendeployment
+  labels:
+    testing.upbound.io/example-name: test_blue_green_deployment
+  name: test-blue-green-deployment
+  namespace: upbound-system
+spec:
+  forProvider:
+    channelDetails:
+    - applierUsername: ${var.blue_green_deployment_channel_details_applier_username}
+      sourcePasswordSecretRef:
+        key: example-key
+        name: example-secret
+      sourceUsername: ${var.blue_green_deployment_channel_details_source_username}
+      sslCaCertificate:
+      - certificateType: ${var.blue_green_deployment_channel_details_ssl_ca_certificate_certificate_type}
+        contents: ${var.blue_green_deployment_channel_details_ssl_ca_certificate_contents}
+      sslMode: ${var.blue_green_deployment_channel_details_ssl_mode}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      foo-namespace.bar-key: value
+    displayName: ${var.blue_green_deployment_display_name}
+    freeformTags:
+      bar-key: value
+    sourceDbSystemIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_mysql_db_system
+    targetDbSystemDetails:
+    - configurationIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_mysql_configuration
+      dataStorageSizeInGb: ${var.blue_green_deployment_target_db_system_details_data_storage_size_in_gb}
+      mysqlVersion: ${var.blue_green_deployment_target_db_system_details_mysql_version}
+      shapeName: ${oci_mysql_shape.test_shape.name}

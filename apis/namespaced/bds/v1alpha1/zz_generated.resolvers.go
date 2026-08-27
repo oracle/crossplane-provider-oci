@@ -160,8 +160,8 @@ func (mg *BdsCapacityReport) ResolveReferences(ctx context.Context, c client.Rea
 	return nil
 }
 
-// ResolveReferences of this BdsInstance.
-func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this BdsCapacityReservation.
+func (mg *BdsCapacityReservation) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
 	var l xpresource.ManagedList
 	r := reference.NewAPINamespacedResolver(c, mg)
@@ -174,6 +174,80 @@ func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 		}
 
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this BdsInstance.
+func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.BdsCapacityReservationConfigurations); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsCapacityReservation", "BdsCapacityReservationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDRef,
+				Selector:     mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID")
+		}
+		mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDRef = rsp.ResolvedReference
+
+	}
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
 			Extract:      reference.ExternalName(),
@@ -284,7 +358,7 @@ func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 		}
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecretID),
-			Extract:      resource.ExtractResourceID(),
+			Extract:      reference.ExternalName(),
 			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.SecretIDRef,
 			Selector:     mg.Spec.ForProvider.SecretIDSelector,
@@ -339,6 +413,28 @@ func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 		}
 		mg.Spec.ForProvider.WorkerNode[i3].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.WorkerNode[i3].SubnetIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.BdsCapacityReservationConfigurations); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsCapacityReservation", "BdsCapacityReservationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDRef,
+				Selector:     mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID")
+		}
+		mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.BdsCapacityReservationConfigurations[i3].BdsCapacityReservationIDRef = rsp.ResolvedReference
 
 	}
 	{
@@ -456,7 +552,7 @@ func (mg *BdsInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 		}
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecretID),
-			Extract:      resource.ExtractResourceID(),
+			Extract:      reference.ExternalName(),
 			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.InitProvider.SecretIDRef,
 			Selector:     mg.Spec.InitProvider.SecretIDSelector,
@@ -605,6 +701,98 @@ func (mg *BdsInstanceApiKey) ResolveReferences(ctx context.Context, c client.Rea
 	}
 	mg.Spec.InitProvider.UserID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.UserIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this BdsInstanceBdsCapacityReservationConfiguration.
+func (mg *BdsInstanceBdsCapacityReservationConfiguration) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsCapacityReservation", "BdsCapacityReservationList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.BdsCapacityReservationID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.BdsCapacityReservationIDRef,
+			Selector:     mg.Spec.ForProvider.BdsCapacityReservationIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.BdsCapacityReservationID")
+	}
+	mg.Spec.ForProvider.BdsCapacityReservationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BdsCapacityReservationIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsInstance", "BdsInstanceList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.BdsInstanceID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.BdsInstanceIDRef,
+			Selector:     mg.Spec.ForProvider.BdsInstanceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.BdsInstanceID")
+	}
+	mg.Spec.ForProvider.BdsInstanceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.BdsInstanceIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsCapacityReservation", "BdsCapacityReservationList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BdsCapacityReservationID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.BdsCapacityReservationIDRef,
+			Selector:     mg.Spec.InitProvider.BdsCapacityReservationIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BdsCapacityReservationID")
+	}
+	mg.Spec.InitProvider.BdsCapacityReservationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BdsCapacityReservationIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("bds.oci.m.upbound.io", "v1alpha1", "BdsInstance", "BdsInstanceList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BdsInstanceID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.BdsInstanceIDRef,
+			Selector:     mg.Spec.InitProvider.BdsInstanceIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.BdsInstanceID")
+	}
+	mg.Spec.InitProvider.BdsInstanceID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BdsInstanceIDRef = rsp.ResolvedReference
 
 	return nil
 }

@@ -88,6 +88,51 @@ func (l *EndpointList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this GenerativeAiPrivateEndpointList.
+func (l *GenerativeAiPrivateEndpointList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this HostedApplicationIamList.
+func (l *HostedApplicationIamList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this HostedApplicationList.
+func (l *HostedApplicationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this HostedApplicationStorageList.
+func (l *HostedApplicationStorageList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this HostedDeploymentList.
+func (l *HostedDeploymentList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this ImportedModelList.
 func (l *ImportedModelList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

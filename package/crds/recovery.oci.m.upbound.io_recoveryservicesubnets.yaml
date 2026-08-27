@@ -178,6 +178,12 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  securityAttributes:
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: string
                   subnetId:
                     description: Deprecated. One of the subnets associated with the
                       Recovery Service subnet.
@@ -486,6 +492,12 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  securityAttributes:
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: string
                   subnetId:
                     description: Deprecated. One of the subnets associated with the
                       Recovery Service subnet.
@@ -779,6 +791,12 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  securityAttributes:
+                    description: '(Updatable) Security attributes for this resource.
+                      Each key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount":
+                      {"value": "42", "mode": "enforce"}}}'
+                    type: string
                   state:
                     description: The current state of the recovery service subnet.
                     type: string

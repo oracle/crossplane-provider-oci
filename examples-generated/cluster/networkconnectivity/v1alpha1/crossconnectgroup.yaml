@@ -17,6 +17,9 @@ spec:
     displayName: ${var.cross_connect_group_display_name}
     freeformTags:
       Department: Finance
+    interfaceDownTimerValueInMilliseconds: ${var.cross_connect_group_interface_down_timer_value_in_milliseconds}
+    isInterfaceHoldTimerEnabled: ${var.cross_connect_group_is_interface_hold_timer_enabled}
+    isQosEnabled: ${var.cross_connect_group_is_qos_enabled}
     macsecProperties:
     - encryptionCipher: ${var.cross_connect_group_macsec_properties_encryption_cipher}
       isUnprotectedTrafficAllowed: ${var.cross_connect_group_macsec_properties_is_unprotected_traffic_allowed}
@@ -28,3 +31,4 @@ spec:
           matchLabels:
             testing.upbound.io/example-name: test_secret
       state: ${var.cross_connect_group_macsec_properties_state}
+    minimumLinks: ${var.cross_connect_group_minimum_links}

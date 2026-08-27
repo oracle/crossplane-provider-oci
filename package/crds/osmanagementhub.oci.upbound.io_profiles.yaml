@@ -364,8 +364,9 @@ spec:
                     description: The type of instance to register.
                     type: string
                   softwareSourceIds:
-                    description: The list of software source OCIDs that the registration
-                      profile will use.
+                    description: (Applicable when profile_type=SOFTWARESOURCE) The
+                      list of software source OCIDs that the registration profile
+                      will use.
                     items:
                       type: string
                     type: array
@@ -677,8 +678,9 @@ spec:
                     description: The type of instance to register.
                     type: string
                   softwareSourceIds:
-                    description: The list of software source OCIDs that the registration
-                      profile will use.
+                    description: (Applicable when profile_type=SOFTWARESOURCE) The
+                      list of software source OCIDs that the registration profile
+                      will use.
                     items:
                       type: string
                     type: array
@@ -908,8 +910,9 @@ spec:
                     description: The type of instance to register.
                     type: string
                   softwareSourceIds:
-                    description: The list of software source OCIDs that the registration
-                      profile will use.
+                    description: (Applicable when profile_type=SOFTWARESOURCE) The
+                      list of software source OCIDs that the registration profile
+                      will use.
                     items:
                       type: string
                     type: array

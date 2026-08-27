@@ -14,6 +14,50 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type AutoFailoverConfigurationInitParameters struct {
+
+	// (Applicable when source=DATAGUARD) Specifies the DB_UNIQUE_NAME of the data guard group member databases.
+	FailoverTargets []*string `json:"failoverTargets,omitempty" tf:"failover_targets,omitempty"`
+
+	// (Applicable when source=DATAGUARD) The state of managed auto failover.
+	ManagedAutoFailover *string `json:"managedAutoFailover,omitempty" tf:"managed_auto_failover,omitempty"`
+}
+
+type AutoFailoverConfigurationObservation struct {
+
+	// (Applicable when source=DATAGUARD) Specifies the DB_UNIQUE_NAME of the data guard group member databases.
+	FailoverTargets []*string `json:"failoverTargets,omitempty" tf:"failover_targets,omitempty"`
+
+	// (Applicable when source=DATAGUARD) The state of managed auto failover.
+	ManagedAutoFailover *string `json:"managedAutoFailover,omitempty" tf:"managed_auto_failover,omitempty"`
+}
+
+type AutoFailoverConfigurationParameters struct {
+
+	// (Applicable when source=DATAGUARD) Specifies the DB_UNIQUE_NAME of the data guard group member databases.
+	// +kubebuilder:validation:Optional
+	FailoverTargets []*string `json:"failoverTargets,omitempty" tf:"failover_targets,omitempty"`
+
+	// (Applicable when source=DATAGUARD) The state of managed auto failover.
+	// +kubebuilder:validation:Optional
+	ManagedAutoFailover *string `json:"managedAutoFailover,omitempty" tf:"managed_auto_failover,omitempty"`
+}
+
+type BackupDestinationDetailsTdeWalletBackupDestinationInitParameters struct {
+}
+
+type BackupDestinationDetailsTdeWalletBackupDestinationObservation struct {
+
+	// (Applicable when source=NONE) The OCID of the backup destination.
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
+type BackupDestinationDetailsTdeWalletBackupDestinationParameters struct {
+}
+
 type DBBackupConfigBackupDestinationDetailsInitParameters struct {
 
 	// (Applicable when source=NONE) Defines the automatic and manual backup retention policy for the Autonomous Database termination.  The retention policy set on the Autonomous Container Database is not applicable for cross region remote backups and backups hosted on recovery Appliance backup destination. Options are 'RETAIN_PER_RETENTION_WINDOW' or 'RETAIN_FOR_72_HOURS'.The default value is 'RETAIN_FOR_72_HOURS'.
@@ -47,6 +91,9 @@ type DBBackupConfigBackupDestinationDetailsInitParameters struct {
 	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
 
+	// (Applicable when source=NONE) Backup destination for the TDE wallet backups.
+	TdeWalletBackupDestination []TdeWalletBackupDestinationInitParameters `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
+
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -77,6 +124,9 @@ type DBBackupConfigBackupDestinationDetailsObservation struct {
 
 	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
+
+	// (Applicable when source=NONE) Backup destination for the TDE wallet backups.
+	TdeWalletBackupDestination []TdeWalletBackupDestinationObservation `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
 
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -123,6 +173,10 @@ type DBBackupConfigBackupDestinationDetailsParameters struct {
 	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	// +kubebuilder:validation:Optional
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
+
+	// (Applicable when source=NONE) Backup destination for the TDE wallet backups.
+	// +kubebuilder:validation:Optional
+	TdeWalletBackupDestination []TdeWalletBackupDestinationParameters `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
 
 	// Type of the database backup destination.
 	// +kubebuilder:validation:Optional
@@ -229,6 +283,9 @@ type DataGuardGroupInitParameters struct {
 
 type DataGuardGroupObservation struct {
 
+	// Specifies readiness of Managed Automatic failover.
+	ManagedAutoFailOverReadiness *string `json:"managedAutoFailOverReadiness,omitempty" tf:"managed_auto_fail_over_readiness,omitempty"`
+
 	// List of Data Guard members, representing each database that is part of Data Guard.
 	Members []MembersObservation `json:"members,omitempty" tf:"members,omitempty"`
 
@@ -284,6 +341,9 @@ type DatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 	// (Applicable when source=NONE) The name of the remote region where the remote automatic incremental backups will be stored.           For information about valid region names, see Regions and Availability Domains.
 	RemoteRegion *string `json:"remoteRegion,omitempty" tf:"remote_region,omitempty"`
 
+	// (Applicable when source=NONE) Backup destination for the TDE wallet backups.
+	TdeWalletBackupDestination []BackupDestinationDetailsTdeWalletBackupDestinationObservation `json:"tdeWalletBackupDestination,omitempty" tf:"tde_wallet_backup_destination,omitempty"`
+
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -332,6 +392,9 @@ type DatabaseDatabaseInitParameters struct {
 
 	// A strong password for SYS, SYSTEM, PDB Admin and TDE Wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	AdminPasswordSecretRef *v1.LocalSecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
+
+	// (Applicable when source=DATAGUARD) The properties for defining auto failover configuration.
+	AutoFailoverConfiguration []AutoFailoverConfigurationInitParameters `json:"autoFailoverConfiguration,omitempty" tf:"auto_failover_configuration,omitempty"`
 
 	// The backup OCID.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.Backup
@@ -441,6 +504,9 @@ type DatabaseDatabaseInitParameters struct {
 	// The protection mode of this Data Guard. For more information, see Oracle Data Guard Protection Modes in the Oracle Data Guard documentation.
 	ProtectionMode *string `json:"protectionMode,omitempty" tf:"protection_mode,omitempty"`
 
+	// (Applicable when source=DATABASE | DB_BACKUP) The password for the VPC user that is used to access the Recovery Appliance, if the given backup is from a backup destination of type RECOVERY_APPLIANCE.
+	RecoveryApplianceVPCPasswordSecretRef *v1.LocalSecretKeySelector `json:"recoveryApplianceVpcPasswordSecretRef,omitempty" tf:"-"`
+
 	// Specifies a prefix for the Oracle SID of the database to be created.
 	SidPrefix *string `json:"sidPrefix,omitempty" tf:"sid_prefix,omitempty"`
 
@@ -502,6 +568,9 @@ type DatabaseDatabaseInitParameters struct {
 }
 
 type DatabaseDatabaseObservation struct {
+
+	// (Applicable when source=DATAGUARD) The properties for defining auto failover configuration.
+	AutoFailoverConfiguration []AutoFailoverConfigurationObservation `json:"autoFailoverConfiguration,omitempty" tf:"auto_failover_configuration,omitempty"`
 
 	// The backup OCID.
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
@@ -594,6 +663,10 @@ type DatabaseDatabaseParameters struct {
 	// A strong password for SYS, SYSTEM, PDB Admin and TDE Wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.
 	// +kubebuilder:validation:Optional
 	AdminPasswordSecretRef *v1.LocalSecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
+
+	// (Applicable when source=DATAGUARD) The properties for defining auto failover configuration.
+	// +kubebuilder:validation:Optional
+	AutoFailoverConfiguration []AutoFailoverConfigurationParameters `json:"autoFailoverConfiguration,omitempty" tf:"auto_failover_configuration,omitempty"`
 
 	// The backup OCID.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.Backup
@@ -724,6 +797,10 @@ type DatabaseDatabaseParameters struct {
 	// The protection mode of this Data Guard. For more information, see Oracle Data Guard Protection Modes in the Oracle Data Guard documentation.
 	// +kubebuilder:validation:Optional
 	ProtectionMode *string `json:"protectionMode,omitempty" tf:"protection_mode,omitempty"`
+
+	// (Applicable when source=DATABASE | DB_BACKUP) The password for the VPC user that is used to access the Recovery Appliance, if the given backup is from a backup destination of type RECOVERY_APPLIANCE.
+	// +kubebuilder:validation:Optional
+	RecoveryApplianceVPCPasswordSecretRef *v1.LocalSecretKeySelector `json:"recoveryApplianceVpcPasswordSecretRef,omitempty" tf:"-"`
 
 	// Specifies a prefix for the Oracle SID of the database to be created.
 	// +kubebuilder:validation:Optional
@@ -1534,14 +1611,20 @@ type MembersObservation struct {
 	// The OCID of the Database.
 	DatabaseID *string `json:"databaseId,omitempty" tf:"database_id,omitempty"`
 
-	// The failover readiness status of the Data Guard member.
+	// The failover readiness status of the Data Guard member. HEALTHY_AND_NOT_ROLECHANGE_TARGET - Indicates that the respective standby member is healthy  but not currently designated to take failover, when auto failover is enabled.
 	FailoverReadiness *string `json:"failoverReadiness,omitempty" tf:"failover_readiness,omitempty"`
 
 	// The message explaining failover readiness status. Example: This standby database is not failover ready.
 	FailoverReadinessMessage *string `json:"failoverReadinessMessage,omitempty" tf:"failover_readiness_message,omitempty"`
 
+	// (Applicable when source=DATAGUARD) Specifies the DB_UNIQUE_NAME of the data guard group member databases.
+	FailoverTargets []*string `json:"failoverTargets,omitempty" tf:"failover_targets,omitempty"`
+
 	// (Applicable when source=DATAGUARD) True if active Data Guard is enabled.
 	IsActiveDataGuardEnabled *bool `json:"isActiveDataGuardEnabled,omitempty" tf:"is_active_data_guard_enabled,omitempty"`
+
+	// (Applicable when source=DATAGUARD) The state of managed auto failover.
+	ManagedAutoFailover *string `json:"managedAutoFailover,omitempty" tf:"managed_auto_failover,omitempty"`
 
 	// The role of the reporting database in this Data Guard association.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
@@ -1741,6 +1824,55 @@ type StorageSizeDetailsParameters struct {
 	// The RECO storage size, in gigabytes, that is applicable for the database.
 	// +kubebuilder:validation:Optional
 	RecoStorageSizeInGbs *float64 `json:"recoStorageSizeInGbs" tf:"reco_storage_size_in_gbs,omitempty"`
+}
+
+type TdeWalletBackupDestinationInitParameters struct {
+
+	// (Applicable when source=NONE) The OCID of the backup destination.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.BackupDestination
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Reference to a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDRef *v1.NamespacedReference `json:"backupDestinationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDSelector *v1.NamespacedSelector `json:"backupDestinationIdSelector,omitempty" tf:"-"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
+type TdeWalletBackupDestinationObservation struct {
+
+	// (Applicable when source=NONE) The OCID of the backup destination.
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
+}
+
+type TdeWalletBackupDestinationParameters struct {
+
+	// (Applicable when source=NONE) The OCID of the backup destination.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1.BackupDestination
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	BackupDestinationID *string `json:"backupDestinationId,omitempty" tf:"backup_destination_id,omitempty"`
+
+	// Reference to a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDRef *v1.NamespacedReference `json:"backupDestinationIdRef,omitempty" tf:"-"`
+
+	// Selector for a BackupDestination in database to populate backupDestinationId.
+	// +kubebuilder:validation:Optional
+	BackupDestinationIDSelector *v1.NamespacedSelector `json:"backupDestinationIdSelector,omitempty" tf:"-"`
+
+	// Destination where TDE Wallet backups are to be placed.
+	// +kubebuilder:validation:Optional
+	BackupDestinationType *string `json:"backupDestinationType,omitempty" tf:"backup_destination_type,omitempty"`
 }
 
 type VersionSchemeDetailsInitParameters struct {

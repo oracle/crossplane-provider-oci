@@ -40,6 +40,9 @@ type ComputeClusterInitParameters struct {
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) The details for providing placement constraints.
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsInitParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
 }
 
 type ComputeClusterObservation struct {
@@ -64,11 +67,17 @@ type ComputeClusterObservation struct {
 	// The OCID of the compute cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Updatable) The details for providing placement constraints.
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsObservation `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+
 	// The current state of the compute cluster.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
 	// The date and time the compute cluster was created, in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
+
+	// The date and time the compute cluster was updated, in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z
+	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 }
 
 type ComputeClusterParameters struct {
@@ -103,6 +112,69 @@ type ComputeClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) The details for providing placement constraints.
+	// +kubebuilder:validation:Optional
+	PlacementConstraintDetails []ComputeClusterPlacementConstraintDetailsParameters `json:"placementConstraintDetails,omitempty" tf:"placement_constraint_details,omitempty"`
+}
+
+type ComputeClusterPlacementConstraintDetailsInitParameters struct {
+
+	// The OCID of the HPC island for the compute cluster.
+	HpcIslandID *string `json:"hpcIslandId,omitempty" tf:"hpc_island_id,omitempty"`
+
+	// (Updatable) The logical placement strategy to apply. Allowed values are SINGLE_TIER, SINGLE_BLOCK, and PACKED_DISTRIBUTION_MULTI_BLOCK.
+	LogicalPlacementConstraint *string `json:"logicalPlacementConstraint,omitempty" tf:"logical_placement_constraint,omitempty"`
+
+	// (Updatable) The list of target GPU memory fabric OCIDs to constrain placement. Up to 15 items are allowed.
+	TargetMemoryFabricIds []*string `json:"targetMemoryFabricIds,omitempty" tf:"target_memory_fabric_ids,omitempty"`
+
+	// (Updatable) The list of target network block OCIDs to constrain placement. Up to 15 items are allowed.
+	TargetNetworkBlockIds []*string `json:"targetNetworkBlockIds,omitempty" tf:"target_network_block_ids,omitempty"`
+
+	// (Updatable) The type for the placement constraints. Supported value: COMPUTE_CLUSTER.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ComputeClusterPlacementConstraintDetailsObservation struct {
+
+	// The OCID of the HPC island for the compute cluster.
+	HpcIslandID *string `json:"hpcIslandId,omitempty" tf:"hpc_island_id,omitempty"`
+
+	// (Updatable) The logical placement strategy to apply. Allowed values are SINGLE_TIER, SINGLE_BLOCK, and PACKED_DISTRIBUTION_MULTI_BLOCK.
+	LogicalPlacementConstraint *string `json:"logicalPlacementConstraint,omitempty" tf:"logical_placement_constraint,omitempty"`
+
+	// (Updatable) The list of target GPU memory fabric OCIDs to constrain placement. Up to 15 items are allowed.
+	TargetMemoryFabricIds []*string `json:"targetMemoryFabricIds,omitempty" tf:"target_memory_fabric_ids,omitempty"`
+
+	// (Updatable) The list of target network block OCIDs to constrain placement. Up to 15 items are allowed.
+	TargetNetworkBlockIds []*string `json:"targetNetworkBlockIds,omitempty" tf:"target_network_block_ids,omitempty"`
+
+	// (Updatable) The type for the placement constraints. Supported value: COMPUTE_CLUSTER.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type ComputeClusterPlacementConstraintDetailsParameters struct {
+
+	// The OCID of the HPC island for the compute cluster.
+	// +kubebuilder:validation:Optional
+	HpcIslandID *string `json:"hpcIslandId,omitempty" tf:"hpc_island_id,omitempty"`
+
+	// (Updatable) The logical placement strategy to apply. Allowed values are SINGLE_TIER, SINGLE_BLOCK, and PACKED_DISTRIBUTION_MULTI_BLOCK.
+	// +kubebuilder:validation:Optional
+	LogicalPlacementConstraint *string `json:"logicalPlacementConstraint,omitempty" tf:"logical_placement_constraint,omitempty"`
+
+	// (Updatable) The list of target GPU memory fabric OCIDs to constrain placement. Up to 15 items are allowed.
+	// +kubebuilder:validation:Optional
+	TargetMemoryFabricIds []*string `json:"targetMemoryFabricIds,omitempty" tf:"target_memory_fabric_ids,omitempty"`
+
+	// (Updatable) The list of target network block OCIDs to constrain placement. Up to 15 items are allowed.
+	// +kubebuilder:validation:Optional
+	TargetNetworkBlockIds []*string `json:"targetNetworkBlockIds,omitempty" tf:"target_network_block_ids,omitempty"`
+
+	// (Updatable) The type for the placement constraints. Supported value: COMPUTE_CLUSTER.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 // ComputeClusterSpec defines the desired state of ComputeCluster

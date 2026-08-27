@@ -276,6 +276,12 @@ spec:
                       circuit to carry unencrypted traffic. If this is not set, the
                       default is false.
                     type: boolean
+                  providerRemoteRegion:
+                    description: The OCI's FastConnect MultiCloud Provider/Partner
+                      remote region name associated with the Oracle Cloud Infrastructure
+                      region. To get the list of associated provider remote region
+                      use the ListProviderRemoteRegions operation
+                    type: string
                   providerServiceId:
                     description: The OCID of the service offered by the provider (if
                       you're connecting via a provider). To get a list of the available
@@ -303,6 +309,10 @@ spec:
                     description: 'The Oracle Cloud Infrastructure region where this
                       virtual circuit is located. Example: phx'
                     type: string
+                  remoteAccountId:
+                    description: Customer's account on Provider/Partner cloud (AWS,
+                      GCP or any other)
+                    type: string
                   routingPolicy:
                     description: '(Updatable) The routing policy sets how routing
                       information about the Oracle cloud is shared over a public virtual
@@ -313,6 +323,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  trafficMode:
+                    description: (Updatable) The traffic mode to be set with this
+                      Virtual Circuit. This controls whether the traffic is to be
+                      drained for the associated Virtual Circuit or not.
+                    type: string
                   type:
                     description: The type of IP addresses used in this virtual circuit.
                       PRIVATE means RFC 1918 addresses (10.0.0.0/8, 172.16/12, and
@@ -549,6 +564,12 @@ spec:
                       circuit to carry unencrypted traffic. If this is not set, the
                       default is false.
                     type: boolean
+                  providerRemoteRegion:
+                    description: The OCI's FastConnect MultiCloud Provider/Partner
+                      remote region name associated with the Oracle Cloud Infrastructure
+                      region. To get the list of associated provider remote region
+                      use the ListProviderRemoteRegions operation
+                    type: string
                   providerServiceId:
                     description: The OCID of the service offered by the provider (if
                       you're connecting via a provider). To get a list of the available
@@ -576,6 +597,10 @@ spec:
                     description: 'The Oracle Cloud Infrastructure region where this
                       virtual circuit is located. Example: phx'
                     type: string
+                  remoteAccountId:
+                    description: Customer's account on Provider/Partner cloud (AWS,
+                      GCP or any other)
+                    type: string
                   routingPolicy:
                     description: '(Updatable) The routing policy sets how routing
                       information about the Oracle cloud is shared over a public virtual
@@ -586,6 +611,11 @@ spec:
                     items:
                       type: string
                     type: array
+                  trafficMode:
+                    description: (Updatable) The traffic mode to be set with this
+                      Virtual Circuit. This controls whether the traffic is to be
+                      drained for the associated Virtual Circuit or not.
+                    type: string
                   type:
                     description: The type of IP addresses used in this virtual circuit.
                       PRIVATE means RFC 1918 addresses (10.0.0.0/8, 172.16/12, and
@@ -814,6 +844,12 @@ spec:
                   oracleBgpAsn:
                     description: The Oracle BGP ASN.
                     type: number
+                  providerRemoteRegion:
+                    description: The OCI's FastConnect MultiCloud Provider/Partner
+                      remote region name associated with the Oracle Cloud Infrastructure
+                      region. To get the list of associated provider remote region
+                      use the ListProviderRemoteRegions operation
+                    type: string
                   providerServiceId:
                     description: The OCID of the service offered by the provider (if
                       you're connecting via a provider). To get a list of the available
@@ -852,6 +888,10 @@ spec:
                     description: 'The Oracle Cloud Infrastructure region where this
                       virtual circuit is located. Example: phx'
                     type: string
+                  remoteAccountId:
+                    description: Customer's account on Provider/Partner cloud (AWS,
+                      GCP or any other)
+                    type: string
                   routingPolicy:
                     description: '(Updatable) The routing policy sets how routing
                       information about the Oracle cloud is shared over a public virtual
@@ -865,6 +905,10 @@ spec:
                   serviceType:
                     description: Provider service type.
                     type: string
+                  sharedConnectionUuid:
+                    description: The Shared unique identifier for the connection between
+                      the multicloud interconnect providers
+                    type: string
                   state:
                     description: The virtual circuit's current state. For information
                       about the different states, see FastConnect Overview.
@@ -872,6 +916,11 @@ spec:
                   timeCreated:
                     description: 'The date and time the virtual circuit was created,
                       in the format defined by RFC3339.  Example: 2016-08-25T21:10:29.600Z'
+                    type: string
+                  trafficMode:
+                    description: (Updatable) The traffic mode to be set with this
+                      Virtual Circuit. This controls whether the traffic is to be
+                      drained for the associated Virtual Circuit or not.
                     type: string
                   type:
                     description: The type of IP addresses used in this virtual circuit.

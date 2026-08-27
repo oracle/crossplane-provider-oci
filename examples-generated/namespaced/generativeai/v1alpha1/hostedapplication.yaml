@@ -1,0 +1,53 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: HostedApplication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/hostedapplication
+  labels:
+    testing.upbound.io/example-name: test_hosted_application
+  name: test-hosted-application
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.hosted_application_description}
+    displayName: ${var.hosted_application_display_name}
+    environmentVariables:
+    - name: ${var.hosted_application_environment_variables_name}
+      type: ${var.hosted_application_environment_variables_type}
+      value: ${var.hosted_application_environment_variables_value}
+    freeformTags:
+      Department: Finance
+    inboundAuthConfig:
+    - idcsConfig:
+      - audience: ${var.hosted_application_inbound_auth_config_idcs_config_audience}
+        domainUrl: ${var.hosted_application_inbound_auth_config_idcs_config_domain_url}
+        scope: ${var.hosted_application_inbound_auth_config_idcs_config_scope}
+      inboundAuthConfigType: ${var.hosted_application_inbound_auth_config_inbound_auth_config_type}
+    networkingConfig:
+    - inboundNetworkingConfig:
+      - endpointMode: ${var.hosted_application_networking_config_inbound_networking_config_endpoint_mode}
+        privateEndpointIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_generative_ai_private_endpoint
+      outboundNetworkingConfig:
+      - customSubnetIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_subnet
+        networkMode: ${var.hosted_application_networking_config_outbound_networking_config_network_mode}
+        nsgIds: ${var.hosted_application_networking_config_outbound_networking_config_nsg_ids}
+    scalingConfig:
+    - maxReplica: ${var.hosted_application_scaling_config_max_replica}
+      minReplica: ${var.hosted_application_scaling_config_min_replica}
+      scalingType: ${var.hosted_application_scaling_config_scaling_type}
+      targetConcurrencyThreshold: ${var.hosted_application_scaling_config_target_concurrency_threshold}
+      targetCpuThreshold: ${var.hosted_application_scaling_config_target_cpu_threshold}
+      targetMemoryThreshold: ${var.hosted_application_scaling_config_target_memory_threshold}
+      targetRpsThreshold: ${var.hosted_application_scaling_config_target_rps_threshold}
+    storageConfigs:
+    - environmentVariableKey: ${var.hosted_application_storage_configs_environment_variable_key}
+      storageId: ${oci_generative_ai_storage.test_storage.id}

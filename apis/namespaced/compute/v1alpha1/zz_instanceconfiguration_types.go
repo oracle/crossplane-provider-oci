@@ -844,6 +844,160 @@ type CreateDetailsSourceDetailsParameters struct {
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
+type GmcConfigsGpuMemoryClusterScaleConfigInitParameters struct {
+
+	// (Applicable when source=GMC) Enables downsizing towards the target size.
+	IsDownsizeEnabled *bool `json:"isDownsizeEnabled,omitempty" tf:"is_downsize_enabled,omitempty"`
+
+	// Enables upsizing towards the target size.
+	IsUpsizeEnabled *bool `json:"isUpsizeEnabled,omitempty" tf:"is_upsize_enabled,omitempty"`
+
+	// (Applicable when source=GMC) The configured target size for the GPU Memory Cluster.
+	TargetSize *string `json:"targetSize,omitempty" tf:"target_size,omitempty"`
+}
+
+type GmcConfigsGpuMemoryClusterScaleConfigObservation struct {
+
+	// (Applicable when source=GMC) Enables downsizing towards the target size.
+	IsDownsizeEnabled *bool `json:"isDownsizeEnabled,omitempty" tf:"is_downsize_enabled,omitempty"`
+
+	// Enables upsizing towards the target size.
+	IsUpsizeEnabled *bool `json:"isUpsizeEnabled,omitempty" tf:"is_upsize_enabled,omitempty"`
+
+	// (Applicable when source=GMC) The configured target size for the GPU Memory Cluster.
+	TargetSize *string `json:"targetSize,omitempty" tf:"target_size,omitempty"`
+}
+
+type GmcConfigsGpuMemoryClusterScaleConfigParameters struct {
+
+	// (Applicable when source=GMC) Enables downsizing towards the target size.
+	// +kubebuilder:validation:Optional
+	IsDownsizeEnabled *bool `json:"isDownsizeEnabled,omitempty" tf:"is_downsize_enabled,omitempty"`
+
+	// Enables upsizing towards the target size.
+	// +kubebuilder:validation:Optional
+	IsUpsizeEnabled *bool `json:"isUpsizeEnabled" tf:"is_upsize_enabled,omitempty"`
+
+	// (Applicable when source=GMC) The configured target size for the GPU Memory Cluster.
+	// +kubebuilder:validation:Optional
+	TargetSize *string `json:"targetSize,omitempty" tf:"target_size,omitempty"`
+}
+
+type GmcConfigsInitParameters struct {
+
+	// The availability domain of the block volume replica.  Example: Uocm:PHX-AD-1
+	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
+
+	// (Updatable) The OCID of the compartment containing the instance configuration.
+	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
+	// +mapType=granular
+	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
+
+	// (Updatable) A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
+	// +mapType=granular
+	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Applicable when source=GMC) Configuration settings for GPU Memory Cluster scaling.
+	GpuMemoryClusterScaleConfig []GmcConfigsGpuMemoryClusterScaleConfigInitParameters `json:"gpuMemoryClusterScaleConfig,omitempty" tf:"gpu_memory_cluster_scale_config,omitempty"`
+
+	// The OCID of the base compute instance configuration associated with this GMC configuration entry.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.NamespacedReference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.NamespacedSelector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
+
+	// (Applicable when source=GMC) The desired number of instances for this GMC configuration entry.
+	Size *string `json:"size,omitempty" tf:"size,omitempty"`
+}
+
+type GmcConfigsObservation struct {
+
+	// The availability domain of the block volume replica.  Example: Uocm:PHX-AD-1
+	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
+
+	// (Updatable) The OCID of the compartment containing the instance configuration.
+	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
+	// +mapType=granular
+	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
+
+	// (Updatable) A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
+	// +mapType=granular
+	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Applicable when source=GMC) Configuration settings for GPU Memory Cluster scaling.
+	GpuMemoryClusterScaleConfig []GmcConfigsGpuMemoryClusterScaleConfigObservation `json:"gpuMemoryClusterScaleConfig,omitempty" tf:"gpu_memory_cluster_scale_config,omitempty"`
+
+	// The OCID of the base compute instance configuration associated with this GMC configuration entry.
+	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// (Applicable when source=GMC) The desired number of instances for this GMC configuration entry.
+	Size *string `json:"size,omitempty" tf:"size,omitempty"`
+}
+
+type GmcConfigsParameters struct {
+
+	// The availability domain of the block volume replica.  Example: Uocm:PHX-AD-1
+	// +kubebuilder:validation:Optional
+	AvailabilityDomain *string `json:"availabilityDomain" tf:"availability_domain,omitempty"`
+
+	// (Updatable) The OCID of the compartment containing the instance configuration.
+	// +kubebuilder:validation:Optional
+	CompartmentID *string `json:"compartmentId" tf:"compartment_id,omitempty"`
+
+	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Operations.CostCenter": "42"}
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	DefinedTags map[string]*string `json:"definedTags,omitempty" tf:"defined_tags,omitempty"`
+
+	// (Updatable) A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Applicable when source=GMC) Configuration settings for GPU Memory Cluster scaling.
+	// +kubebuilder:validation:Optional
+	GpuMemoryClusterScaleConfig []GmcConfigsGpuMemoryClusterScaleConfigParameters `json:"gpuMemoryClusterScaleConfig,omitempty" tf:"gpu_memory_cluster_scale_config,omitempty"`
+
+	// The OCID of the base compute instance configuration associated with this GMC configuration entry.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/compute/v1alpha1.InstanceConfiguration
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationID *string `json:"instanceConfigurationId,omitempty" tf:"instance_configuration_id,omitempty"`
+
+	// Reference to a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDRef *v1.NamespacedReference `json:"instanceConfigurationIdRef,omitempty" tf:"-"`
+
+	// Selector for a InstanceConfiguration in compute to populate instanceConfigurationId.
+	// +kubebuilder:validation:Optional
+	InstanceConfigurationIDSelector *v1.NamespacedSelector `json:"instanceConfigurationIdSelector,omitempty" tf:"-"`
+
+	// (Applicable when source=GMC) The desired number of instances for this GMC configuration entry.
+	// +kubebuilder:validation:Optional
+	Size *string `json:"size,omitempty" tf:"size,omitempty"`
+}
+
 type InstanceConfigurationInitParameters struct {
 
 	// (Updatable) The OCID of the compartment containing the instance configuration.
@@ -868,6 +1022,9 @@ type InstanceConfigurationInitParameters struct {
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// The GPU Memory Cluster configuration entries for.
+	GmcConfigs []GmcConfigsInitParameters `json:"gmcConfigs,omitempty" tf:"gmc_configs,omitempty"`
 
 	InstanceDetails []InstanceDetailsInitParameters `json:"instanceDetails,omitempty" tf:"instance_details,omitempty"`
 
@@ -906,6 +1063,9 @@ type InstanceConfigurationObservation struct {
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags.  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// The GPU Memory Cluster configuration entries for.
+	GmcConfigs []GmcConfigsObservation `json:"gmcConfigs,omitempty" tf:"gmc_configs,omitempty"`
 
 	// The OCID of the volume backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -950,6 +1110,10 @@ type InstanceConfigurationParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// The GPU Memory Cluster configuration entries for.
+	// +kubebuilder:validation:Optional
+	GmcConfigs []GmcConfigsParameters `json:"gmcConfigs,omitempty" tf:"gmc_configs,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	InstanceDetails []InstanceDetailsParameters `json:"instanceDetails,omitempty" tf:"instance_details,omitempty"`
@@ -1816,7 +1980,7 @@ type LaunchDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.
 	LaunchOptions []LaunchDetailsLaunchOptionsInitParameters `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	LicensingConfigs []LaunchDetailsLicensingConfigsInitParameters `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
@@ -2031,7 +2195,7 @@ type LaunchDetailsObservation struct {
 	// (Applicable when instance_type=compute) Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.
 	LaunchOptions []LaunchDetailsLaunchOptionsObservation `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	LicensingConfigs []LaunchDetailsLicensingConfigsObservation `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
@@ -2179,7 +2343,7 @@ type LaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	LaunchOptions []LaunchDetailsLaunchOptionsParameters `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	// +kubebuilder:validation:Optional
 	LicensingConfigs []LaunchDetailsLicensingConfigsParameters `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 
@@ -3236,7 +3400,7 @@ type OptionsLaunchDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.
 	LaunchOptions []OptionsLaunchDetailsLaunchOptionsInitParameters `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	LicensingConfigs []OptionsLaunchDetailsLicensingConfigsInitParameters `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
@@ -3451,7 +3615,7 @@ type OptionsLaunchDetailsObservation struct {
 	// (Applicable when instance_type=compute) Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.
 	LaunchOptions []OptionsLaunchDetailsLaunchOptionsObservation `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	LicensingConfigs []OptionsLaunchDetailsLicensingConfigsObservation `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 
 	// fields in that these can be nested JSON objects (whereas metadata fields are string/string maps only).
@@ -3599,7 +3763,7 @@ type OptionsLaunchDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	LaunchOptions []OptionsLaunchDetailsLaunchOptionsParameters `json:"launchOptions,omitempty" tf:"launch_options,omitempty"`
 
-	// (Applicable when instance_type=instance_options) List of licensing configurations associated with target launch values.
+	// (Applicable when instance_type=compute) List of licensing configurations associated with target launch values.
 	// +kubebuilder:validation:Optional
 	LicensingConfigs []OptionsLaunchDetailsLicensingConfigsParameters `json:"licensingConfigs,omitempty" tf:"licensing_configs,omitempty"`
 

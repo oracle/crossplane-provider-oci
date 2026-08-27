@@ -117,7 +117,17 @@ type EndpointInitParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the Generative AI private endpoint to which this endpoint is attached to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/generativeai/v1alpha1.GenerativeAiPrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	GenerativeAIPrivateEndpointID *string `json:"generativeAiPrivateEndpointId,omitempty" tf:"generative_ai_private_endpoint_id,omitempty"`
+
+	// Reference to a GenerativeAiPrivateEndpoint in generativeai to populate generativeAiPrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	GenerativeAIPrivateEndpointIDRef *v1.Reference `json:"generativeAiPrivateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a GenerativeAiPrivateEndpoint in generativeai to populate generativeAiPrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	GenerativeAIPrivateEndpointIDSelector *v1.Selector `json:"generativeAiPrivateEndpointIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the model used for the feature.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/generativeai/v1alpha1.Model
@@ -236,8 +246,18 @@ type EndpointParameters struct {
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
 	// (Updatable) The OCID of the Generative AI private endpoint to which this endpoint is attached to.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/generativeai/v1alpha1.GenerativeAiPrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	GenerativeAIPrivateEndpointID *string `json:"generativeAiPrivateEndpointId,omitempty" tf:"generative_ai_private_endpoint_id,omitempty"`
+
+	// Reference to a GenerativeAiPrivateEndpoint in generativeai to populate generativeAiPrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	GenerativeAIPrivateEndpointIDRef *v1.Reference `json:"generativeAiPrivateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a GenerativeAiPrivateEndpoint in generativeai to populate generativeAiPrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	GenerativeAIPrivateEndpointIDSelector *v1.Selector `json:"generativeAiPrivateEndpointIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the model used for the feature.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/generativeai/v1alpha1.Model

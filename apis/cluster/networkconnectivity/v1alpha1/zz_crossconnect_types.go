@@ -67,11 +67,23 @@ type CrossConnectInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
 	// The name of the FastConnect interface where this cross-connect is installed. Option will be provided only on request for select tenancies.
 	InterfaceName *string `json:"interfaceName,omitempty" tf:"interface_name,omitempty"`
 
 	// (Updatable) Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 	IsActive *bool `json:"isActive,omitempty" tf:"is_active,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
+	// (Updatable) Properties used to manage the Letter of Authority associated with this cross-connect.
+	LoaProperties []LoaPropertiesInitParameters `json:"loaProperties,omitempty" tf:"loa_properties,omitempty"`
 
 	// The name of the FastConnect location where this cross-connect will be installed. To get a list of the available locations, see ListCrossConnectLocations.  Example: CyrusOne, Chandler, AZ
 	LocationName *string `json:"locationName,omitempty" tf:"location_name,omitempty"`
@@ -127,11 +139,23 @@ type CrossConnectObservation struct {
 	// The cross-connect's Oracle ID (OCID).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
 	// The name of the FastConnect interface where this cross-connect is installed. Option will be provided only on request for select tenancies.
 	InterfaceName *string `json:"interfaceName,omitempty" tf:"interface_name,omitempty"`
 
 	// (Updatable) Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 	IsActive *bool `json:"isActive,omitempty" tf:"is_active,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
+	// (Updatable) Properties used to manage the Letter of Authority associated with this cross-connect.
+	LoaProperties []LoaPropertiesObservation `json:"loaProperties,omitempty" tf:"loa_properties,omitempty"`
 
 	// The name of the FastConnect location where this cross-connect will be installed. To get a list of the available locations, see ListCrossConnectLocations.  Example: CyrusOne, Chandler, AZ
 	LocationName *string `json:"locationName,omitempty" tf:"location_name,omitempty"`
@@ -222,6 +246,10 @@ type CrossConnectParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) The duration of the interface down timer in milliseconds between 0 and 3000 in multiples of 500.
+	// +kubebuilder:validation:Optional
+	InterfaceDownTimerValueInMilliseconds *float64 `json:"interfaceDownTimerValueInMilliseconds,omitempty" tf:"interface_down_timer_value_in_milliseconds,omitempty"`
+
 	// The name of the FastConnect interface where this cross-connect is installed. Option will be provided only on request for select tenancies.
 	// +kubebuilder:validation:Optional
 	InterfaceName *string `json:"interfaceName,omitempty" tf:"interface_name,omitempty"`
@@ -229,6 +257,18 @@ type CrossConnectParameters struct {
 	// (Updatable) Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 	// +kubebuilder:validation:Optional
 	IsActive *bool `json:"isActive,omitempty" tf:"is_active,omitempty"`
+
+	// (Updatable) The flag to enable or disable the down timer for the interface.
+	// +kubebuilder:validation:Optional
+	IsInterfaceHoldTimerEnabled *bool `json:"isInterfaceHoldTimerEnabled,omitempty" tf:"is_interface_hold_timer_enabled,omitempty"`
+
+	// When true, restricts placement so cross-connects lands only on QoS-capable devices. When false (default), placement may use any supported device. If no QoS-capable devices are available in the selected location, the request fails.
+	// +kubebuilder:validation:Optional
+	IsQosEnabled *bool `json:"isQosEnabled,omitempty" tf:"is_qos_enabled,omitempty"`
+
+	// (Updatable) Properties used to manage the Letter of Authority associated with this cross-connect.
+	// +kubebuilder:validation:Optional
+	LoaProperties []LoaPropertiesParameters `json:"loaProperties,omitempty" tf:"loa_properties,omitempty"`
 
 	// The name of the FastConnect location where this cross-connect will be installed. To get a list of the available locations, see ListCrossConnectLocations.  Example: CyrusOne, Chandler, AZ
 	// +kubebuilder:validation:Optional
@@ -259,6 +299,35 @@ type CrossConnectParameters struct {
 	// The port speed for this cross-connect. To get a list of the available port speeds, see ListCrossConnectPortSpeedShapes.  Example: 10 Gbps
 	// +kubebuilder:validation:Optional
 	PortSpeedShapeName *string `json:"portSpeedShapeName,omitempty" tf:"port_speed_shape_name,omitempty"`
+}
+
+type LoaPropertiesInitParameters struct {
+
+	// (Updatable) Name of a customer authorized agent to append to the LOA as Authorized Agent. Set this to an empty string to remove the current authorized agent.
+	AuthorizedAgent *string `json:"authorizedAgent,omitempty" tf:"authorized_agent,omitempty"`
+
+	// Increase this value by 1 to request one additional expiry extension. This value cannot be decreased or increased by more than 1 in a single update. The service enforces the maximum number of allowed extensions.
+	ExpiryExtensionCount *float64 `json:"expiryExtensionCount,omitempty" tf:"expiry_extension_count,omitempty"`
+}
+
+type LoaPropertiesObservation struct {
+
+	// (Updatable) Name of a customer authorized agent to append to the LOA as Authorized Agent. Set this to an empty string to remove the current authorized agent.
+	AuthorizedAgent *string `json:"authorizedAgent,omitempty" tf:"authorized_agent,omitempty"`
+
+	// Increase this value by 1 to request one additional expiry extension. This value cannot be decreased or increased by more than 1 in a single update. The service enforces the maximum number of allowed extensions.
+	ExpiryExtensionCount *float64 `json:"expiryExtensionCount,omitempty" tf:"expiry_extension_count,omitempty"`
+}
+
+type LoaPropertiesParameters struct {
+
+	// (Updatable) Name of a customer authorized agent to append to the LOA as Authorized Agent. Set this to an empty string to remove the current authorized agent.
+	// +kubebuilder:validation:Optional
+	AuthorizedAgent *string `json:"authorizedAgent,omitempty" tf:"authorized_agent,omitempty"`
+
+	// Increase this value by 1 to request one additional expiry extension. This value cannot be decreased or increased by more than 1 in a single update. The service enforces the maximum number of allowed extensions.
+	// +kubebuilder:validation:Optional
+	ExpiryExtensionCount *float64 `json:"expiryExtensionCount,omitempty" tf:"expiry_extension_count,omitempty"`
 }
 
 type MacsecPropertiesInitParameters struct {
