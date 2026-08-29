@@ -21,7 +21,7 @@ func (mg *DatabaseUpgrade) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this DatabaseUpgrade
 func (tr *DatabaseUpgrade) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"db_backup_config[*].backup_destination_details[*].vpc_password": "status.atProvider.dbBackupConfig[*].backupDestinationDetails[*].vpcPassword"}
 }
 
 // GetObservation of this DatabaseUpgrade

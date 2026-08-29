@@ -202,9 +202,6 @@ type Oauth2clientCredentialObservation struct {
 	// Scopes
 	Scopes []Oauth2clientCredentialScopesObservation `json:"scopes,omitempty" tf:"scopes,omitempty"`
 
-	// (Updatable) Secret
-	Secret *string `json:"secret,omitempty" tf:"secret,omitempty"`
-
 	// The user's credential status.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 

@@ -21,7 +21,7 @@ func (mg *ManagementCloudDbSystemDiscovery) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this ManagementCloudDbSystemDiscovery
 func (tr *ManagementCloudDbSystemDiscovery) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"discovered_components[*].cluster_instances[*].connector[*].connection_info[*].connection_credentials[*].credential_type": "status.atProvider.discoveredComponents[*].clusterInstances[*].connector[*].connectionInfo[*].connectionCredentials[*].credentialType", "discovered_components[*].connector[*].connection_info[*].connection_credentials[*].credential_type": "status.atProvider.discoveredComponents[*].connector[*].connectionInfo[*].connectionCredentials[*].credentialType", "discovered_components[*].pluggable_databases[*].connector[*].connection_info[*].connection_credentials[*].credential_type": "status.atProvider.discoveredComponents[*].pluggableDatabases[*].connector[*].connectionInfo[*].connectionCredentials[*].credentialType"}
 }
 
 // GetObservation of this ManagementCloudDbSystemDiscovery

@@ -432,10 +432,6 @@ spec:
                                         or corrupt the credential that is already
                                         using the name.
                                       type: string
-                                    credentialType:
-                                      description: The type of credential used to
-                                        connect to the database.
-                                      type: string
                                     namedCredentialId:
                                       description: The OCID of the Named Credential
                                         where the database password metadata is stored.

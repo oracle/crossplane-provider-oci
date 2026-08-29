@@ -106,9 +106,6 @@ type VolumeAttachmentObservation struct {
 	// The availability domain of an instance.  Example: Uocm:PHX-AD-1
 	AvailabilityDomain *string `json:"availabilityDomain,omitempty" tf:"availability_domain,omitempty"`
 
-	// The Challenge-Handshake-Authentication-Protocol (CHAP) secret valid for the associated CHAP user name. (Also called the "CHAP password".)
-	ChapSecret *string `json:"chapSecret,omitempty" tf:"chap_secret,omitempty"`
-
 	// The volume's system-generated Challenge-Handshake-Authentication-Protocol (CHAP) user name. See RFC 1994 for more on CHAP.  Example: ocid1.volume.oc1.phx.<unique_ID>
 	ChapUsername *string `json:"chapUsername,omitempty" tf:"chap_username,omitempty"`
 

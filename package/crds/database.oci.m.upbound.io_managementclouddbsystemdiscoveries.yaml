@@ -984,10 +984,6 @@ spec:
                                                     the credential that is already
                                                     using the name.
                                                   type: string
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
-                                                  type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named
                                                     Credential where the database
@@ -1138,10 +1134,6 @@ spec:
                                               region, you may overwrite or corrupt
                                               the credential that is already using
                                               the name.
-                                            type: string
-                                          credentialType:
-                                            description: The type of credential used
-                                              to connect to the ASM instance.
                                             type: string
                                           namedCredentialId:
                                             description: The OCID of the Named Credential
@@ -1457,10 +1449,6 @@ spec:
                                                     region, you may overwrite or corrupt
                                                     the credential that is already
                                                     using the name.
-                                                  type: string
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
                                                   type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named

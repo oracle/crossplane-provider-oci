@@ -169,9 +169,6 @@ type MyUserDbCredentialObservation struct {
 	// (Updatable) A complex attribute that contains resource metadata. All sub-attributes are OPTIONAL.
 	Meta []MyUserDbCredentialMetaObservation `json:"meta,omitempty" tf:"meta,omitempty"`
 
-	// (Updatable) The user's database password with mixed salt.
-	MixedDBPassword *string `json:"mixedDbPassword,omitempty" tf:"mixed_db_password,omitempty"`
-
 	// (Updatable) The mixed salt of the password.
 	MixedSalt *string `json:"mixedSalt,omitempty" tf:"mixed_salt,omitempty"`
 

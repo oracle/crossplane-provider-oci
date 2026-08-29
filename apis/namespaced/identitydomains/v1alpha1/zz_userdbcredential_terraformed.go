@@ -21,7 +21,7 @@ func (mg *UserDbCredential) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this UserDbCredential
 func (tr *UserDbCredential) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"db_password": "dbPasswordSecretRef"}
+	return map[string]string{"db_password": "dbPasswordSecretRef", "mixed_db_password": "status.atProvider.mixedDbPassword"}
 }
 
 // GetObservation of this UserDbCredential

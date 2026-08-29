@@ -4959,11 +4959,6 @@ func (in *SmtpCredentialObservation) DeepCopyInto(out *SmtpCredentialObservation
 		*out = new(string)
 		**out = **in
 	}
-	if in.Password != nil {
-		in, out := &in.Password, &out.Password
-		*out = new(string)
-		**out = **in
-	}
 	if in.State != nil {
 		in, out := &in.State, &out.State
 		*out = new(string)
@@ -6130,11 +6125,6 @@ func (in *UiPasswordObservation) DeepCopyInto(out *UiPasswordObservation) {
 	}
 	if in.InactiveStatus != nil {
 		in, out := &in.InactiveStatus, &out.InactiveStatus
-		*out = new(string)
-		**out = **in
-	}
-	if in.Password != nil {
-		in, out := &in.Password, &out.Password
 		*out = new(string)
 		**out = **in
 	}

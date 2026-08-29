@@ -3396,11 +3396,6 @@ spec:
                         type:
                           description: (Updatable) Type of the database backup destination.
                           type: string
-                        vpcPassword:
-                          description: (Updatable) For a RECOVERY_APPLIANCE backup
-                            destination, the password for the VPC user that is used
-                            to access the Recovery Appliance.
-                          type: string
                         vpcUser:
                           description: (Updatable) For a RECOVERY_APPLIANCE backup
                             destination, the Virtual Private Catalog (VPC) user that

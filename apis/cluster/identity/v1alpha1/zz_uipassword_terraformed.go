@@ -21,7 +21,7 @@ func (mg *UiPassword) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this UiPassword
 func (tr *UiPassword) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"password": "status.atProvider.password"}
 }
 
 // GetObservation of this UiPassword

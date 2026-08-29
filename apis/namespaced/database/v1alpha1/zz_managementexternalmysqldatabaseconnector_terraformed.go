@@ -21,7 +21,7 @@ func (mg *ManagementExternalMySqlDatabaseConnector) GetTerraformResourceType() s
 
 // GetConnectionDetailsMapping for this ManagementExternalMySqlDatabaseConnector
 func (tr *ManagementExternalMySqlDatabaseConnector) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"credential_type": "status.atProvider.credentialType"}
 }
 
 // GetObservation of this ManagementExternalMySqlDatabaseConnector

@@ -3187,12 +3187,6 @@ spec:
                   hcxFqdn:
                     description: 'The FQDN for HCX Manager.  Example: hcx-my-sddc.sddc.us-phoenix-1.oraclecloud.com'
                     type: string
-                  hcxInitialPassword:
-                    description: (Deprecated) The SDDC includes an administrator username
-                      and initial password for HCX Manager. Make sure to change this
-                      initial HCX Manager password to a different value. Deprecated.
-                      Please use the oci_ocvp_retrieve_password data source instead.
-                    type: string
                   hcxMode:
                     description: HCX configuration of the SDDC.
                     type: string
@@ -3486,12 +3480,6 @@ spec:
                   nsxManagerFqdn:
                     description: 'The FQDN for NSX Manager.  Example: nsx-my-sddc.sddc.us-phoenix-1.oraclecloud.com'
                     type: string
-                  nsxManagerInitialPassword:
-                    description: (Deprecated) The SDDC includes an administrator username
-                      and initial password for NSX Manager. Make sure to change this
-                      initial NSX Manager password to a different value. Deprecated.
-                      Please use the oci_ocvp_retrieve_password data source instead.
-                    type: string
                   nsxManagerPrivateIpId:
                     description: The OCID of the PrivateIp object that is the virtual
                       IP (VIP) for NSX Manager. For information about PrivateIp objects,
@@ -3601,12 +3589,6 @@ spec:
                     type: array
                   vcenterFqdn:
                     description: 'The FQDN for vCenter.  Example: vcenter-my-sddc.sddc.us-phoenix-1.oraclecloud.com'
-                    type: string
-                  vcenterInitialPassword:
-                    description: (Deprecated) The SDDC includes an administrator username
-                      and initial password for vCenter. Make sure to change this initial
-                      vCenter password to a different value. Deprecated. Please use
-                      the oci_ocvp_retrieve_password data source instead.
                     type: string
                   vcenterPrivateIpId:
                     description: The OCID of the PrivateIp object that is the virtual

@@ -882,9 +882,6 @@ type SddcObservation struct {
 	// The FQDN for HCX Manager.  Example: hcx-my-sddc.sddc.us-phoenix-1.oraclecloud.com
 	HcxFqdn *string `json:"hcxFqdn,omitempty" tf:"hcx_fqdn,omitempty"`
 
-	// (Deprecated) The SDDC includes an administrator username and initial password for HCX Manager. Make sure to change this initial HCX Manager password to a different value. Deprecated. Please use the oci_ocvp_retrieve_password data source instead.
-	HcxInitialPassword *string `json:"hcxInitialPassword,omitempty" tf:"hcx_initial_password,omitempty"`
-
 	// HCX configuration of the SDDC.
 	HcxMode *string `json:"hcxMode,omitempty" tf:"hcx_mode,omitempty"`
 
@@ -948,9 +945,6 @@ type SddcObservation struct {
 	// The FQDN for NSX Manager.  Example: nsx-my-sddc.sddc.us-phoenix-1.oraclecloud.com
 	NsxManagerFqdn *string `json:"nsxManagerFqdn,omitempty" tf:"nsx_manager_fqdn,omitempty"`
 
-	// (Deprecated) The SDDC includes an administrator username and initial password for NSX Manager. Make sure to change this initial NSX Manager password to a different value. Deprecated. Please use the oci_ocvp_retrieve_password data source instead.
-	NsxManagerInitialPassword *string `json:"nsxManagerInitialPassword,omitempty" tf:"nsx_manager_initial_password,omitempty"`
-
 	// The OCID of the PrivateIp object that is the virtual IP (VIP) for NSX Manager. For information about PrivateIp objects, see the Core Services API.
 	NsxManagerPrivateIPID *string `json:"nsxManagerPrivateIpId,omitempty" tf:"nsx_manager_private_ip_id,omitempty"`
 
@@ -1008,9 +1002,6 @@ type SddcObservation struct {
 
 	// The FQDN for vCenter.  Example: vcenter-my-sddc.sddc.us-phoenix-1.oraclecloud.com
 	VcenterFqdn *string `json:"vcenterFqdn,omitempty" tf:"vcenter_fqdn,omitempty"`
-
-	// (Deprecated) The SDDC includes an administrator username and initial password for vCenter. Make sure to change this initial vCenter password to a different value. Deprecated. Please use the oci_ocvp_retrieve_password data source instead.
-	VcenterInitialPassword *string `json:"vcenterInitialPassword,omitempty" tf:"vcenter_initial_password,omitempty"`
 
 	// The OCID of the PrivateIp object that is the virtual IP (VIP) for vCenter. For information about PrivateIp objects, see the Core Services API.
 	VcenterPrivateIPID *string `json:"vcenterPrivateIpId,omitempty" tf:"vcenter_private_ip_id,omitempty"`

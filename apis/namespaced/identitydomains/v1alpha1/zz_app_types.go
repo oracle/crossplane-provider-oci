@@ -620,9 +620,6 @@ type AppObservation struct {
 	// (Updatable) Network Perimeters checking mode
 	ClientIPChecking *string `json:"clientIpChecking,omitempty" tf:"client_ip_checking,omitempty"`
 
-	// (Updatable) This value is the credential of this App, which this App supplies as a password when this App authenticates to the Oracle Public Cloud infrastructure. This value is also the client secret of this App when it acts as an OAuthClient.
-	ClientSecret *string `json:"clientSecret,omitempty" tf:"client_secret,omitempty"`
-
 	// (Updatable) Specifies the type of access that this App has when it acts as an OAuthClient.
 	ClientType *string `json:"clientType,omitempty" tf:"client_type,omitempty"`
 
@@ -668,9 +665,6 @@ type AppObservation struct {
 
 	// (Updatable) Grants assigned to the app
 	Grants []GrantsObservation `json:"grants,omitempty" tf:"grants,omitempty"`
-
-	// (Updatable) Hashed Client Secret. This hash-value is used to verify the 'clientSecret' credential of this App
-	HashedClientSecret *string `json:"hashedClientSecret,omitempty" tf:"hashed_client_secret,omitempty"`
 
 	// (Updatable) Home Page URL
 	HomePageURL *string `json:"homePageUrl,omitempty" tf:"home_page_url,omitempty"`

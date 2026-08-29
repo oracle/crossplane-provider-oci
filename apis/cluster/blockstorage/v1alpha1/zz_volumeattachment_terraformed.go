@@ -21,7 +21,7 @@ func (mg *VolumeAttachment) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this VolumeAttachment
 func (tr *VolumeAttachment) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"chap_secret": "status.atProvider.chapSecret"}
 }
 
 // GetObservation of this VolumeAttachment

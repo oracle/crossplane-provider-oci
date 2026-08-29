@@ -34,9 +34,6 @@ type UiPasswordObservation struct {
 	// The detailed status of INACTIVE lifecycleState.
 	InactiveStatus *string `json:"inactiveStatus,omitempty" tf:"inactive_status,omitempty"`
 
-	// The user's password for the Console.
-	Password *string `json:"password,omitempty" tf:"password,omitempty"`
-
 	// The password's current state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 

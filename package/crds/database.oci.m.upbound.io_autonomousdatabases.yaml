@@ -4220,8 +4220,6 @@ spec:
                         azureEncryptionKeyId:
                           description: The OCID of the Autonomous AI Database.
                           type: string
-                        hsmPassword:
-                          type: string
                         providerType:
                           description: Use 'AWS' for creating a new database.
                           type: string

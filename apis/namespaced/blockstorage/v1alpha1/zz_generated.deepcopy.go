@@ -2093,11 +2093,6 @@ func (in *VolumeAttachmentObservation) DeepCopyInto(out *VolumeAttachmentObserva
 		*out = new(string)
 		**out = **in
 	}
-	if in.ChapSecret != nil {
-		in, out := &in.ChapSecret, &out.ChapSecret
-		*out = new(string)
-		**out = **in
-	}
 	if in.ChapUsername != nil {
 		in, out := &in.ChapUsername, &out.ChapUsername
 		*out = new(string)

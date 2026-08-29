@@ -21,7 +21,7 @@ func (mg *AutonomousContainerDatabaseAddStandby) GetTerraformResourceType() stri
 
 // GetConnectionDetailsMapping for this AutonomousContainerDatabaseAddStandby
 func (tr *AutonomousContainerDatabaseAddStandby) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"peer_autonomous_container_database_backup_config[*].backup_destination_details[*].vpc_password": "peerAutonomousContainerDatabaseBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef"}
+	return map[string]string{"backup_config[*].backup_destination_details[*].vpc_password": "status.atProvider.backupConfig[*].backupDestinationDetails[*].vpcPassword", "encryption_key_location_details[*].hsm_password": "status.atProvider.encryptionKeyLocationDetails[*].hsmPassword", "peer_autonomous_container_database_backup_config[*].backup_destination_details[*].vpc_password": "peerAutonomousContainerDatabaseBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef"}
 }
 
 // GetObservation of this AutonomousContainerDatabaseAddStandby

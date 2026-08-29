@@ -21,7 +21,7 @@ func (mg *Sddc) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Sddc
 func (tr *Sddc) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"hcx_initial_password": "status.atProvider.hcxInitialPassword", "nsx_manager_initial_password": "status.atProvider.nsxManagerInitialPassword", "vcenter_initial_password": "status.atProvider.vcenterInitialPassword"}
 }
 
 // GetObservation of this Sddc

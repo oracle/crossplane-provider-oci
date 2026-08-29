@@ -21,7 +21,7 @@ func (mg *Backup) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Backup
 func (tr *Backup) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"encryption_key_location_details[*].hsm_password": "status.atProvider.encryptionKeyLocationDetails[*].hsmPassword"}
 }
 
 // GetObservation of this Backup

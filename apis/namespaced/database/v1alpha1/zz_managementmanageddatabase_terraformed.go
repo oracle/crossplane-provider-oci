@@ -21,7 +21,7 @@ func (mg *ManagementManagedDatabase) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this ManagementManagedDatabase
 func (tr *ManagementManagedDatabase) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"dbmgmt_feature_configs[*].database_connection_details[*].connection_credentials[*].credential_type": "status.atProvider.dbmgmtFeatureConfigs[*].databaseConnectionDetails[*].connectionCredentials[*].credentialType"}
 }
 
 // GetObservation of this ManagementManagedDatabase

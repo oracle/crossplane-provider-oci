@@ -2111,10 +2111,6 @@ spec:
                         timeCreated:
                           description: The time the cluster was created.
                           type: string
-                        timeCredentialExpiration:
-                          description: The time until which the cluster credential
-                            is valid.
-                          type: string
                         timeDeleted:
                           description: The time the cluster was deleted.
                           type: string

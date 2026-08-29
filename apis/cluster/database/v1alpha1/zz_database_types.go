@@ -286,8 +286,6 @@ type DatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	VPCPassword *string `json:"vpcPassword,omitempty" tf:"vpc_password,omitempty"`
-
 	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
 }
 

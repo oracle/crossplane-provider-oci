@@ -710,9 +710,6 @@ type PeerTargetDatabasesTLSConfigObservation struct {
 	// Status to represent whether the database connection is TLS enabled or not.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// The password to read the trust store and key store files, if they are password protected.
-	StorePassword *string `json:"storePassword,omitempty" tf:"store_password,omitempty"`
-
 	// Base64 encoded string of trust store file content.
 	TrustStoreContent *string `json:"trustStoreContent,omitempty" tf:"trust_store_content,omitempty"`
 }

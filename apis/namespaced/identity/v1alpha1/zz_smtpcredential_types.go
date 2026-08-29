@@ -43,9 +43,6 @@ type SmtpCredentialObservation struct {
 	// The detailed status of INACTIVE lifecycleState.
 	InactiveState *string `json:"inactiveState,omitempty" tf:"inactive_state,omitempty"`
 
-	// The SMTP password.
-	Password *string `json:"password,omitempty" tf:"password,omitempty"`
-
 	// The credential's current state.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 

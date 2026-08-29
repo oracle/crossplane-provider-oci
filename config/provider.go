@@ -81,7 +81,7 @@ func newProvider(rootGroup string, register func(*ujconfig.Provider)) *ujconfig.
 			GroupKindOverrides(),
 			ExternalNameConfigurations(),
 			AutoExternalNameConfiguration(), // Automatic external name for unconfigured resources
-
+			AutoSensitiveFieldConfiguration(),
 		),
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{
 			reference.NewInjector(modulePath),

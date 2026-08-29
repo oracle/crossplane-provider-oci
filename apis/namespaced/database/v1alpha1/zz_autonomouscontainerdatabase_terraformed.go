@@ -21,7 +21,7 @@ func (mg *AutonomousContainerDatabase) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this AutonomousContainerDatabase
 func (tr *AutonomousContainerDatabase) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"backup_config[*].backup_destination_details[*].vpc_password": "backupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef", "encryption_key_location_details[*].hsm_password": "encryptionKeyLocationDetails[*].hsmPasswordSecretRef", "peer_autonomous_container_database_backup_config[*].backup_destination_details[*].vpc_password": "peerAutonomousContainerDatabaseBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef"}
+	return map[string]string{"associated_backup_configuration_details[*].vpc_password": "status.atProvider.associatedBackupConfigurationDetails[*].vpcPassword", "backup_config[*].backup_destination_details[*].vpc_password": "backupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef", "encryption_key_location_details[*].hsm_password": "encryptionKeyLocationDetails[*].hsmPasswordSecretRef", "peer_autonomous_container_database_backup_config[*].backup_destination_details[*].vpc_password": "peerAutonomousContainerDatabaseBackupConfig[*].backupDestinationDetails[*].vpcPasswordSecretRef"}
 }
 
 // GetObservation of this AutonomousContainerDatabase

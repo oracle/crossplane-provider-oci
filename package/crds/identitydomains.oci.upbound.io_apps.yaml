@@ -3300,12 +3300,6 @@ spec:
                   clientIpChecking:
                     description: (Updatable) Network Perimeters checking mode
                     type: string
-                  clientSecret:
-                    description: (Updatable) This value is the credential of this
-                      App, which this App supplies as a password when this App authenticates
-                      to the Oracle Public Cloud infrastructure. This value is also
-                      the client secret of this App when it acts as an OAuthClient.
-                    type: string
                   clientType:
                     description: (Updatable) Specifies the type of access that this
                       App has when it acts as an OAuthClient.
@@ -3456,10 +3450,6 @@ spec:
                           type: string
                       type: object
                     type: array
-                  hashedClientSecret:
-                    description: (Updatable) Hashed Client Secret. This hash-value
-                      is used to verify the 'clientSecret' credential of this App
-                    type: string
                   homePageUrl:
                     description: (Updatable) Home Page URL
                     type: string

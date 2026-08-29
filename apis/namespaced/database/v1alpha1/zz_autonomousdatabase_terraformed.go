@@ -21,7 +21,7 @@ func (mg *AutonomousDatabase) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this AutonomousDatabase
 func (tr *AutonomousDatabase) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"admin_password": "adminPasswordSecretRef"}
+	return map[string]string{"admin_password": "adminPasswordSecretRef", "encryption_key_location_details[*].hsm_password": "status.atProvider.encryptionKeyLocationDetails[*].hsmPassword"}
 }
 
 // GetObservation of this AutonomousDatabase

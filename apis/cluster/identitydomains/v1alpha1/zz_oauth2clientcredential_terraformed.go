@@ -21,7 +21,7 @@ func (mg *Oauth2clientCredential) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Oauth2clientCredential
 func (tr *Oauth2clientCredential) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"secret": "status.atProvider.secret"}
 }
 
 // GetObservation of this Oauth2clientCredential

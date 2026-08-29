@@ -21,7 +21,7 @@ func (mg *DatabaseSnapshotStandby) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this DatabaseSnapshotStandby
 func (tr *DatabaseSnapshotStandby) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"database_admin_password": "databaseAdminPasswordSecretRef"}
+	return map[string]string{"database_admin_password": "databaseAdminPasswordSecretRef", "db_backup_config[*].backup_destination_details[*].vpc_password": "status.atProvider.dbBackupConfig[*].backupDestinationDetails[*].vpcPassword"}
 }
 
 // GetObservation of this DatabaseSnapshotStandby

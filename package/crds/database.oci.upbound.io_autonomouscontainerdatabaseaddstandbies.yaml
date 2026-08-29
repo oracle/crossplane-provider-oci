@@ -1259,11 +1259,6 @@ spec:
                               type:
                                 description: Type of the database backup destination.
                                 type: string
-                              vpcPassword:
-                                description: For a RECOVERY_APPLIANCE backup destination,
-                                  the password for the VPC user that is used to access
-                                  the Recovery Appliance.
-                                type: string
                               vpcUser:
                                 description: For a RECOVERY_APPLIANCE backup destination,
                                   the Virtual Private Catalog (VPC) user that is used
@@ -1507,8 +1502,6 @@ spec:
                           type: string
                         azureEncryptionKeyId:
                           description: The OCID of the backup destination.
-                          type: string
-                        hsmPassword:
                           type: string
                         providerType:
                           description: Use 'AWS' for creating a new database.

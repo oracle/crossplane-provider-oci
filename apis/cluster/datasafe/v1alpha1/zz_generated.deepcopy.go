@@ -17335,11 +17335,6 @@ func (in *PeerTargetDatabasesTLSConfigObservation) DeepCopyInto(out *PeerTargetD
 		*out = new(string)
 		**out = **in
 	}
-	if in.StorePassword != nil {
-		in, out := &in.StorePassword, &out.StorePassword
-		*out = new(string)
-		**out = **in
-	}
 	if in.TrustStoreContent != nil {
 		in, out := &in.TrustStoreContent, &out.TrustStoreContent
 		*out = new(string)

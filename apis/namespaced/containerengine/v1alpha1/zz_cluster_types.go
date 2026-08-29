@@ -528,9 +528,6 @@ type MetadataObservation struct {
 	// The time the cluster was created.
 	TimeCreated *string `json:"timeCreated,omitempty" tf:"time_created,omitempty"`
 
-	// The time until which the cluster credential is valid.
-	TimeCredentialExpiration *string `json:"timeCredentialExpiration,omitempty" tf:"time_credential_expiration,omitempty"`
-
 	// The time the cluster was deleted.
 	TimeDeleted *string `json:"timeDeleted,omitempty" tf:"time_deleted,omitempty"`
 

@@ -186,9 +186,6 @@ type ManagementExternalMySqlDatabaseConnectorObservation struct {
 	// Connector Type.
 	ConnectorType *string `json:"connectorType,omitempty" tf:"connector_type,omitempty"`
 
-	// (Updatable) Type of the credential.
-	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
-
 	// (Updatable) OCID of MySQL Database resource.
 	ExternalDatabaseID *string `json:"externalDatabaseId,omitempty" tf:"external_database_id,omitempty"`
 

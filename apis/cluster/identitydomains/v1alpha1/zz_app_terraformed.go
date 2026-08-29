@@ -21,7 +21,7 @@ func (mg *App) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this App
 func (tr *App) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"client_secret": "status.atProvider.clientSecret", "hashed_client_secret": "status.atProvider.hashedClientSecret"}
 }
 
 // GetObservation of this App

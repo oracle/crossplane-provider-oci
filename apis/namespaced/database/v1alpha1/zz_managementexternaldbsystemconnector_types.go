@@ -19,14 +19,8 @@ type DatabaseCredentialInitParameters struct {
 
 type DatabaseCredentialObservation struct {
 
-	// The type of credential used to connect to the ASM instance.
-	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
-
 	// The OCID of the Named Credential where the database password metadata is stored.
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
-
-	// The database user's password encoded using BASE64 scheme.
-	Password *string `json:"password,omitempty" tf:"password,omitempty"`
 
 	// The OCID of the secret containing the user password.
 	PasswordSecretID *string `json:"passwordSecretId,omitempty" tf:"password_secret_id,omitempty"`

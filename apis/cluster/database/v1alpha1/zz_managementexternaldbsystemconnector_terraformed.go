@@ -21,7 +21,7 @@ func (mg *ManagementExternalDbSystemConnector) GetTerraformResourceType() string
 
 // GetConnectionDetailsMapping for this ManagementExternalDbSystemConnector
 func (tr *ManagementExternalDbSystemConnector) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"connection_info[*].database_credential[*].credential_type": "status.atProvider.connectionInfo[*].databaseCredential[*].credentialType", "connection_info[*].database_credential[*].password": "status.atProvider.connectionInfo[*].databaseCredential[*].password"}
 }
 
 // GetObservation of this ManagementExternalDbSystemConnector

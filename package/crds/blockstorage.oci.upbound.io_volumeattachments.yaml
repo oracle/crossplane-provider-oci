@@ -753,11 +753,6 @@ spec:
                     description: 'The availability domain of an instance.  Example:
                       Uocm:PHX-AD-1'
                     type: string
-                  chapSecret:
-                    description: The Challenge-Handshake-Authentication-Protocol (CHAP)
-                      secret valid for the associated CHAP user name. (Also called
-                      the "CHAP password".)
-                    type: string
                   chapUsername:
                     description: 'The volume''s system-generated Challenge-Handshake-Authentication-Protocol
                       (CHAP) user name. See RFC 1994 for more on CHAP.  Example: ocid1.volume.oc1.phx.<unique_ID>'

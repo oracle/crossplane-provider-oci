@@ -797,9 +797,6 @@ spec:
                   connectorType:
                     description: Connector Type.
                     type: string
-                  credentialType:
-                    description: (Updatable) Type of the credential.
-                    type: string
                   externalDatabaseId:
                     description: (Updatable) OCID of MySQL Database resource.
                     type: string

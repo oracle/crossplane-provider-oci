@@ -21,7 +21,7 @@ func (mg *SmtpCredential) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this SmtpCredential
 func (tr *SmtpCredential) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"password": "status.atProvider.password"}
 }
 
 // GetObservation of this SmtpCredential

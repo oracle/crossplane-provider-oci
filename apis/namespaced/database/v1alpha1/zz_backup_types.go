@@ -28,9 +28,6 @@ type BackupEncryptionKeyLocationDetailsObservation struct {
 	// Provide the key OCID of a registered GCP key.
 	GoogleCloudProviderEncryptionKeyID *string `json:"googleCloudProviderEncryptionKeyId,omitempty" tf:"google_cloud_provider_encryption_key_id,omitempty"`
 
-	// Provide the HSM password as you would in RDBMS for External HSM.
-	HSMPassword *string `json:"hsmPassword,omitempty" tf:"hsm_password,omitempty"`
-
 	// Use 'EXTERNAL' for creating a new database or migrating a database key to an External HSM. Use 'AZURE' for creating a new database or migrating a database key to Azure. Use 'AWS' for creating a new database or migrating a database key to Aws. Use 'GCP' for creating a new database or migrating a database key to Gcp.
 	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
 }

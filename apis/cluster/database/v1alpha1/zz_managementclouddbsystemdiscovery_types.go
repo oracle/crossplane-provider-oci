@@ -84,9 +84,6 @@ type ConnectorConnectionInfoConnectionCredentialsObservation struct {
 	// The name of the credential information that used to connect to the DB system resource. The name should be in "x.y" format, where the length of "x" has a maximum of 64 characters, and length of "y" has a maximum of 199 characters. The name strings can contain letters, numbers and the underscore character only. Other characters are not valid, except for the "." character that separates the "x" and "y" portions of the name. IMPORTANT - The name must be unique within the Oracle Cloud Infrastructure region the credential is being created in. If you specify a name that duplicates the name of another credential within the same Oracle Cloud Infrastructure region, you may overwrite or corrupt the credential that is already using the name.
 	CredentialName *string `json:"credentialName,omitempty" tf:"credential_name,omitempty"`
 
-	// The type of credential used to connect to the ASM instance.
-	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
-
 	// The OCID of the Named Credential where the database password metadata is stored.
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
 
@@ -209,9 +206,6 @@ type DiscoveredComponentsConnectorConnectionInfoConnectionCredentialsObservation
 
 	// The name of the credential information that used to connect to the DB system resource. The name should be in "x.y" format, where the length of "x" has a maximum of 64 characters, and length of "y" has a maximum of 199 characters. The name strings can contain letters, numbers and the underscore character only. Other characters are not valid, except for the "." character that separates the "x" and "y" portions of the name. IMPORTANT - The name must be unique within the Oracle Cloud Infrastructure region the credential is being created in. If you specify a name that duplicates the name of another credential within the same Oracle Cloud Infrastructure region, you may overwrite or corrupt the credential that is already using the name.
 	CredentialName *string `json:"credentialName,omitempty" tf:"credential_name,omitempty"`
-
-	// The type of credential used to connect to the ASM instance.
-	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
 
 	// The OCID of the Named Credential where the database password metadata is stored.
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`
@@ -759,9 +753,6 @@ type PluggableDatabasesConnectorConnectionInfoConnectionCredentialsObservation s
 
 	// The name of the credential information that used to connect to the DB system resource. The name should be in "x.y" format, where the length of "x" has a maximum of 64 characters, and length of "y" has a maximum of 199 characters. The name strings can contain letters, numbers and the underscore character only. Other characters are not valid, except for the "." character that separates the "x" and "y" portions of the name. IMPORTANT - The name must be unique within the Oracle Cloud Infrastructure region the credential is being created in. If you specify a name that duplicates the name of another credential within the same Oracle Cloud Infrastructure region, you may overwrite or corrupt the credential that is already using the name.
 	CredentialName *string `json:"credentialName,omitempty" tf:"credential_name,omitempty"`
-
-	// The type of credential used to connect to the ASM instance.
-	CredentialType *string `json:"credentialType,omitempty" tf:"credential_type,omitempty"`
 
 	// The OCID of the Named Credential where the database password metadata is stored.
 	NamedCredentialID *string `json:"namedCredentialId,omitempty" tf:"named_credential_id,omitempty"`

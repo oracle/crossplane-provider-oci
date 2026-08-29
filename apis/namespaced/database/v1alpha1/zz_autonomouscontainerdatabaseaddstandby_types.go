@@ -160,8 +160,6 @@ type AutonomousContainerDatabaseAddStandbyEncryptionKeyLocationDetailsObservatio
 	// The OCID of the backup destination.
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
-	HSMPassword *string `json:"hsmPassword,omitempty" tf:"hsm_password,omitempty"`
-
 	// Use 'AWS' for creating a new database.
 	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
 }
@@ -758,9 +756,6 @@ type BackupConfigBackupDestinationDetailsObservation struct {
 
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-
-	// For a RECOVERY_APPLIANCE backup destination, the password for the VPC user that is used to access the Recovery Appliance.
-	VPCPassword *string `json:"vpcPassword,omitempty" tf:"vpc_password,omitempty"`
 
 	// For a RECOVERY_APPLIANCE backup destination, the Virtual Private Catalog (VPC) user that is used to access the Recovery Appliance.
 	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`

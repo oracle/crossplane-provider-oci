@@ -397,10 +397,6 @@ spec:
                         googleCloudProviderEncryptionKeyId:
                           description: Provide the key OCID of a registered GCP key.
                           type: string
-                        hsmPassword:
-                          description: Provide the HSM password as you would in RDBMS
-                            for External HSM.
-                          type: string
                         providerType:
                           description: Use 'EXTERNAL' for creating a new database
                             or migrating a database key to an External HSM. Use 'AZURE'

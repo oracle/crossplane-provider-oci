@@ -21,7 +21,7 @@ func (mg *TargetDatabase) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this TargetDatabase
 func (tr *TargetDatabase) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"credentials[*].password": "credentials[*].passwordSecretRef", "peer_target_database_details[*].tls_config[*].store_password": "peerTargetDatabaseDetails[*].tlsConfig[*].storePasswordSecretRef", "tls_config[*].store_password": "tlsConfig[*].storePasswordSecretRef"}
+	return map[string]string{"credentials[*].password": "credentials[*].passwordSecretRef", "peer_target_database_details[*].tls_config[*].store_password": "peerTargetDatabaseDetails[*].tlsConfig[*].storePasswordSecretRef", "peer_target_databases[*].tls_config[*].store_password": "status.atProvider.peerTargetDatabases[*].tlsConfig[*].storePassword", "tls_config[*].store_password": "tlsConfig[*].storePasswordSecretRef"}
 }
 
 // GetObservation of this TargetDatabase

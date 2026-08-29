@@ -3286,11 +3286,6 @@ func (in *MetadataObservation) DeepCopyInto(out *MetadataObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.TimeCredentialExpiration != nil {
-		in, out := &in.TimeCredentialExpiration, &out.TimeCredentialExpiration
-		*out = new(string)
-		**out = **in
-	}
 	if in.TimeDeleted != nil {
 		in, out := &in.TimeDeleted, &out.TimeDeleted
 		*out = new(string)

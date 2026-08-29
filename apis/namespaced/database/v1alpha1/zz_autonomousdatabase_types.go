@@ -74,8 +74,6 @@ type AutonomousDatabaseEncryptionKeyLocationDetailsObservation struct {
 	// The OCID of the Autonomous AI Database.
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
-	HSMPassword *string `json:"hsmPassword,omitempty" tf:"hsm_password,omitempty"`
-
 	// Use 'AWS' for creating a new database.
 	ProviderType *string `json:"providerType,omitempty" tf:"provider_type,omitempty"`
 }

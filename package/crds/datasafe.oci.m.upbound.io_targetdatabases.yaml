@@ -3313,10 +3313,6 @@ spec:
                                 description: Status to represent whether the database
                                   connection is TLS enabled or not.
                                 type: string
-                              storePassword:
-                                description: The password to read the trust store
-                                  and key store files, if they are password protected.
-                                type: string
                               trustStoreContent:
                                 description: Base64 encoded string of trust store
                                   file content.

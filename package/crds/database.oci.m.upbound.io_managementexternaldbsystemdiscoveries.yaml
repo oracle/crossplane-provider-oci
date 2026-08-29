@@ -945,10 +945,6 @@ spec:
                                                     the credential that is already
                                                     using the name.
                                                   type: string
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
-                                                  type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named
                                                     Credential where the database
@@ -1008,19 +1004,10 @@ spec:
                                               administration tasks.
                                             items:
                                               properties:
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
-                                                  type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named
                                                     Credential where the database
                                                     password metadata is stored.
-                                                  type: string
-                                                password:
-                                                  description: The database user's
-                                                    password encoded using BASE64
-                                                    scheme.
                                                   type: string
                                                 passwordSecretId:
                                                   description: The OCID of the secret
@@ -1134,10 +1121,6 @@ spec:
                                               the credential that is already using
                                               the name.
                                             type: string
-                                          credentialType:
-                                            description: The type of credential used
-                                              to connect to the ASM instance.
-                                            type: string
                                           namedCredentialId:
                                             description: The OCID of the Named Credential
                                               where the database password metadata
@@ -1196,18 +1179,10 @@ spec:
                                         tasks.
                                       items:
                                         properties:
-                                          credentialType:
-                                            description: The type of credential used
-                                              to connect to the ASM instance.
-                                            type: string
                                           namedCredentialId:
                                             description: The OCID of the Named Credential
                                               where the database password metadata
                                               is stored.
-                                            type: string
-                                          password:
-                                            description: The database user's password
-                                              encoded using BASE64 scheme.
                                             type: string
                                           passwordSecretId:
                                             description: The OCID of the secret containing
@@ -1481,10 +1456,6 @@ spec:
                                                     the credential that is already
                                                     using the name.
                                                   type: string
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
-                                                  type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named
                                                     Credential where the database
@@ -1544,19 +1515,10 @@ spec:
                                               administration tasks.
                                             items:
                                               properties:
-                                                credentialType:
-                                                  description: The type of credential
-                                                    used to connect to the ASM instance.
-                                                  type: string
                                                 namedCredentialId:
                                                   description: The OCID of the Named
                                                     Credential where the database
                                                     password metadata is stored.
-                                                  type: string
-                                                password:
-                                                  description: The database user's
-                                                    password encoded using BASE64
-                                                    scheme.
                                                   type: string
                                                 passwordSecretId:
                                                   description: The OCID of the secret
