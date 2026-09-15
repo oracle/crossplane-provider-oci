@@ -59,6 +59,29 @@ func TestExtractMetadataFromForProvider(t *testing.T) {
 	}
 }
 
+func TestExtractMetadataFromForProviderDeduplicatesPrerequisites(t *testing.T) {
+	selector := func() map[string]interface{} {
+		return map[string]interface{}{
+			"matchLabels": map[string]interface{}{exampleNameLabel: "sub-a"},
+		}
+	}
+	forProvider := map[string]interface{}{
+		"vnics": []interface{}{
+			map[string]interface{}{"subnetIdSelector": selector()},
+			map[string]interface{}{"subnetIdSelector": selector()},
+		},
+	}
+
+	prereqs, _ := extractMetadataFromForProvider(forProvider, "nodepool")
+	if len(prereqs) != 1 {
+		t.Fatalf("extractMetadataFromForProvider() prereqs = %#v, want one unique prerequisite", prereqs)
+	}
+	want := Prerequisite{Kind: "subnet", SelectorId: "sub-a"}
+	if prereqs[0] != want {
+		t.Fatalf("extractMetadataFromForProvider() prerequisite = %+v, want %+v", prereqs[0], want)
+	}
+}
+
 func TestResolveEnvVarsDeterministicOrdering(t *testing.T) {
 	envVars := map[string]string{
 		"C": "third",

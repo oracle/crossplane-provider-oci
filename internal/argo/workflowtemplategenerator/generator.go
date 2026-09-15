@@ -760,6 +760,7 @@ func getForProvider(yamlData map[string]interface{}) map[string]interface{} {
 // extractMetadataFromForProvider walks forProvider to collect selectors and env vars.
 func extractMetadataFromForProvider(forProvider map[string]interface{}, kind string) ([]Prerequisite, map[string]string) {
 	prerequisites := make([]Prerequisite, 0)
+	prerequisiteSet := make(map[Prerequisite]struct{})
 	envVars := make(map[string]string)
 
 	if forProvider == nil {
@@ -774,7 +775,10 @@ func extractMetadataFromForProvider(forProvider map[string]interface{}, kind str
 			if matchLabels, ok := typed["matchLabels"].(map[string]interface{}); ok {
 				if selectorID, ok := matchLabels[exampleNameLabel].(string); ok {
 					if prerequisite, ok := resolvePrerequisite(key, kind, selectorID); ok {
-						prerequisites = append(prerequisites, prerequisite)
+						if _, exists := prerequisiteSet[prerequisite]; !exists {
+							prerequisiteSet[prerequisite] = struct{}{}
+							prerequisites = append(prerequisites, prerequisite)
+						}
 					}
 				}
 			}
