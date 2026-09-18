@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: provider-oci-nofork
+  namespace: crossplane-system
+spec:
+  namespaceSelector:
+    matchNames:
+      - crossplane-system
+  selector:
+    matchLabels:
+      metrics.provider-oci/enabled: "true"
+  podMetricsEndpoints:
+    - port: metrics
+      interval: 10s

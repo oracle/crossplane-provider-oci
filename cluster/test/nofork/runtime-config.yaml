@@ -1,0 +1,26 @@
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: oci-nofork-metrics
+spec:
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        metadata:
+          labels:
+            metrics.provider-oci/enabled: "true"
+        spec:
+          containers:
+            - name: package-runtime
+              env:
+                - name: METRICS_BIND_ADDRESS
+                  value: ":8080"
+                - name: METRICS_STATE_POLL
+                  value: "10s"
+                - name: PROVIDER_META_CACHE_SIZE
+                  value: "32"
+              ports:
+                - name: metrics
+                  containerPort: 8080
+                  protocol: TCP

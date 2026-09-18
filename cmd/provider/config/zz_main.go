@@ -3,86 +3,71 @@
 package main
 
 import (
-	"context"
 	"io"
 	"os"
 	"path/filepath"
 	"time"
 
 	"github.com/alecthomas/kingpin/v2"
-	changelogsv1alpha1 "github.com/crossplane/crossplane-runtime/v2/apis/changelogs/proto/v1alpha1"
-	authorizationv1 "k8s.io/api/authorization/v1"
-	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
 	xpcontroller "github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/feature"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
-	"github.com/crossplane/upjet/v2/pkg/terraform"
 
-	"github.com/oracle/provider-oci/apis"
-	"github.com/oracle/provider-oci/config"
-	resolverapis "github.com/oracle/provider-oci/internal/apis"
-	"github.com/oracle/provider-oci/internal/clients"
-	clustercontroller "github.com/oracle/provider-oci/internal/controller/cluster"
+	clusterv1beta1 "github.com/oracle/provider-oci/apis/cluster/v1beta1"
+	namespacedv1beta1 "github.com/oracle/provider-oci/apis/namespaced/v1beta1"
+	clusterproviderconfig "github.com/oracle/provider-oci/internal/controller/cluster/providerconfig"
+	namespacedproviderconfig "github.com/oracle/provider-oci/internal/controller/namespaced/providerconfig"
 	"github.com/oracle/provider-oci/internal/features"
-	namespacedcontroller "github.com/oracle/provider-oci/internal/controller/namespaced"
 )
 
 func main() {
 	var (
-		app              = kingpin.New(filepath.Base(os.Args[0]), "OCI support for Crossplane - config Service.").DefaultEnvars()
-		debug            = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
-		syncPeriod       = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
-		pollInterval     = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
-		leaderElection   = app.Flag("leader-election", "Use leader election for the controller manager.").Short('l').Default("false").Envar("LEADER_ELECTION").Bool()
-		terraformVersion = app.Flag("terraform-version", "Terraform version.").Required().Envar("TERRAFORM_VERSION").String()
-		providerSource   = app.Flag("terraform-provider-source", "Terraform provider source.").Required().Envar("TERRAFORM_PROVIDER_SOURCE").String()
-		providerVersion  = app.Flag("terraform-provider-version", "Terraform provider version.").Required().Envar("TERRAFORM_PROVIDER_VERSION").String()
-		maxReconcileRate = app.Flag("max-reconcile-rate", "The global maximum rate per second at which resources may checked for drift from the desired state.").Default("10").Int()
-		changelogsSocketPath = app.Flag("changelogs-socket-path", "Path for changelogs socket (if enabled).").Default("/var/run/changelogs/changelogs.sock").Envar("CHANGELOGS_SOCKET_PATH").String()
+		app                      = kingpin.New(filepath.Base(os.Args[0]), "OCI ProviderConfig support for Crossplane.").DefaultEnvars()
+		debug                    = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
+		syncPeriod               = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
+		metricsBindAddress       = app.Flag("metrics-bind-address", "Address the controller manager metrics endpoint binds to. Use 0 to disable metrics.").Default(":8080").Envar("METRICS_BIND_ADDRESS").String()
+		leaderElection           = app.Flag("leader-election", "Run with leader election.").Short('l').Default("false").Envar("LEADER_ELECTION").Bool()
+		maxReconcileRate         = app.Flag("max-reconcile-rate", "The global maximum reconciliation rate per second.").Default("10").Int()
 		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for ManagementPolicies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
-		enableChangeLogs = app.Flag("enable-changelogs", "Enable support for capturing change logs during reconciliation.").Default("false").Envar("ENABLE_CHANGE_LOGS").Bool()
 	)
+
+	// Retain managed-provider flags as accepted no-ops so an existing common
+	// DeploymentRuntimeConfig remains compatible with the lightweight family.
+	app.Flag("poll", "Unused by the ProviderConfig-only family runtime.").Default("10m").Duration()
+	app.Flag("metrics-state-poll", "Unused by the ProviderConfig-only family runtime.").Default("30s").Envar("METRICS_STATE_POLL").Duration()
+	app.Flag("provider-meta-cache-size", "Unused by the ProviderConfig-only family runtime.").Default("32").Envar("PROVIDER_META_CACHE_SIZE").Int()
+	app.Flag("provider-version", "Unused by the ProviderConfig-only family runtime.").Default("provider-oci").Envar("PROVIDER_VERSION").String()
+	app.Flag("changelogs-socket-path", "Unused by the ProviderConfig-only family runtime.").Default("/var/run/changelogs/changelogs.sock").Envar("CHANGELOGS_SOCKET_PATH").String()
+	app.Flag("enable-changelogs", "Unused by the ProviderConfig-only family runtime.").Default("false").Envar("ENABLE_CHANGE_LOGS").Bool()
+	app.Flag("terraform-version", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
+	app.Flag("terraform-provider-source", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
+	app.Flag("terraform-provider-version", "Deprecated no-op. Terraform CLI is not used by the no-fork runtime.").Hidden().String()
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	debugValue := *debug
 	zl := zap.New(zap.UseDevMode(debugValue))
-	log := logging.NewLogrLogger(zl.WithName("provider-oci-config"))
+	log := logging.NewLogrLogger(zl.WithName("provider-family-oci"))
 	if debugValue {
-		// The controller-runtime runs with a no-op logger by default. It is
-		// *very* verbose even at info level, so we only provide it a real
-		// logger when we're running in debug mode.
 		ctrl.SetLogger(zl)
 	} else {
-		// explicitly provide a no-op logger by default, otherwise controller-runtime gives a warning
 		ctrl.SetLogger(zap.New(zap.WriteTo(io.Discard)))
 	}
-
-	log.Debug("Starting", "sync-period", syncPeriod.String(), "poll-interval", pollInterval.String())
 
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
-		Cache: cache.Options{
-			SyncPeriod: syncPeriod,
-		},
+		Cache:                      cache.Options{SyncPeriod: syncPeriod},
+		Metrics:                    metricsserver.Options{BindAddress: *metricsBindAddress},
 		LeaderElection:             *leaderElection,
 		LeaderElectionID:           "crossplane-leader-election-provider-oci-config",
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
@@ -90,93 +75,20 @@ func main() {
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
-	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Oci APIs to scheme")
-	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot add apiextensions APIs to scheme")
-	kingpin.FatalIfError(resolverapis.BuildScheme(apis.AddToSchemes), "Cannot register the OCI APIs with the API resolver's runtime scheme")
-	o := tjcontroller.Options{
-		Options: xpcontroller.Options{
-			Logger:                  log,
-			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
-			PollInterval:            *pollInterval,
-			MaxConcurrentReconciles: *maxReconcileRate,
-			Features:                &feature.Flags{},
-		},
-		Provider: config.GetProvider(),
-		// use the following WorkspaceStoreOption to enable the shared gRPC mode
-		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		WorkspaceStore: terraform.NewWorkspaceStore(log),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion),
-	}
+	kingpin.FatalIfError(clusterv1beta1.SchemeBuilder.AddToScheme(mgr.GetScheme()), "Cannot add cluster ProviderConfig APIs to scheme")
+	kingpin.FatalIfError(namespacedv1beta1.SchemeBuilder.AddToScheme(mgr.GetScheme()), "Cannot add namespaced ProviderConfig APIs to scheme")
 
+	o := tjcontroller.Options{Options: xpcontroller.Options{
+		Logger:                  log,
+		GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
+		MaxConcurrentReconciles: *maxReconcileRate,
+		Features:                &feature.Flags{},
+	}}
 	if *enableManagementPolicies {
 		o.Features.Enable(features.EnableBetaManagementPolicies)
-		log.Info("Beta feature enabled", "flag", features.EnableBetaManagementPolicies)
-	}
-	if *enableChangeLogs {
-		o.Features.Enable(features.EnableAlphaChangeLogs)
-		log.Info("Alpha feature enabled", "flag", features.EnableAlphaChangeLogs)
-
-		conn, err := grpc.NewClient("unix://"+*changelogsSocketPath, grpc.WithTransportCredentials(insecure.NewCredentials()))
-		kingpin.FatalIfError(err, "failed to create change logs client connection at %s", *changelogsSocketPath)
-
-		o.ChangeLogOptions = &xpcontroller.ChangeLogOptions{
-			ChangeLogger: managed.NewGRPCChangeLogger(
-				changelogsv1alpha1.NewChangeLogServiceClient(conn),
-				managed.WithProviderVersion(*providerSource+":"+*providerVersion)),
-		}
 	}
 
-	if canWatchCRD(context.Background(), cfg, log) {
-		log.Info("SafeStart enabled", "service", "config")
-		o.Gate = &gate.Gate[schema.GroupVersionKind]{}
-
-		kingpin.FatalIfError(setupGatedControllers(mgr, o), "Cannot setup gated config controllers")
-		kingpin.FatalIfError(customresourcesgate.Setup(mgr, o.Options), "Cannot setup custom resource gate controller")
-	} else {
-		log.Info("SafeStart disabled; falling back to eager controller setup", "service", "config")
-		kingpin.FatalIfError(setupControllers(mgr, o), "Cannot setup config controllers")
-	}
+	kingpin.FatalIfError(clusterproviderconfig.Setup(mgr, o), "Cannot setup cluster ProviderConfig controller")
+	kingpin.FatalIfError(namespacedproviderconfig.Setup(mgr, o), "Cannot setup namespaced ProviderConfig controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
-}
-
-func setupControllers(mgr ctrl.Manager, o tjcontroller.Options) error {
-	if err := clustercontroller.Setup_config(mgr, o); err != nil {
-		return err
-	}
-	return namespacedcontroller.Setup_config(mgr, o)
-}
-
-func setupGatedControllers(mgr ctrl.Manager, o tjcontroller.Options) error {
-	if err := clustercontroller.SetupGated_config(mgr, o); err != nil {
-		return err
-	}
-	return namespacedcontroller.SetupGated_config(mgr, o)
-}
-
-func canWatchCRD(ctx context.Context, cfg *rest.Config, log logging.Logger) bool {
-	cs, err := kubernetes.NewForConfig(cfg)
-	if err != nil {
-		log.Info("SafeStart disabled; failed to create Kubernetes client", "error", err)
-		return false
-	}
-
-	resp, err := cs.AuthorizationV1().SelfSubjectAccessReviews().Create(ctx, &authorizationv1.SelfSubjectAccessReview{
-		Spec: authorizationv1.SelfSubjectAccessReviewSpec{
-			ResourceAttributes: &authorizationv1.ResourceAttributes{
-				Group:    "apiextensions.k8s.io",
-				Resource: "customresourcedefinitions",
-				Verb:     "watch",
-			},
-		},
-	}, metav1.CreateOptions{})
-	if err != nil {
-		log.Info("SafeStart disabled; CRD watch capability check failed", "error", err)
-		return false
-	}
-
-	if !resp.Status.Allowed {
-		log.Info("SafeStart disabled; CRD watch access denied", "reason", resp.Status.Reason, "evaluationError", resp.Status.EvaluationError)
-		return false
-	}
-	return true
 }

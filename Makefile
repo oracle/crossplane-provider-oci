@@ -47,10 +47,10 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.25
+GO_REQUIRED_VERSION ?= 1.26
 GOLANGCILINT_VERSION ?= 1.50.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider/monolith $(GO_PROJECT)/cmd/generator
-GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
+GO_LDFLAGS += -X main.terraformProviderVersion=$(TERRAFORM_PROVIDER_VERSION)
 GO_SUBDIRS += cmd internal apis
 -include build/makelib/golang.mk
 
@@ -86,23 +86,6 @@ monolith.binary.alias: go.build
 	fi
 
 .PHONY: monolith.binary.alias
-endif
-
-# ====================================================================================
-# Override build target for sub-packages
-# This overrides the default build target from golang.mk when SUBPACKAGES is set
-
-ifneq ($(SUBPACKAGES),monolith)
-# Override the build target for sub-package builds
-build: $(UP)
-	@$(INFO) Building sub-packages: $(SUBPACKAGES)
-	@for pkg in $(SUBPACKAGE_LIST); do \
-		$(MAKE) build.subpackage.$$pkg PLATFORMS="$(PLATFORMS)" || exit 1; \
-	done
-	@$(OK) Built sub-packages: $(SUBPACKAGES)
-
-# Also override go.build for consistency
-go.build: build
 endif
 
 # ====================================================================================
@@ -225,6 +208,7 @@ generate.clean:
 	@find apis -type d -empty -delete
 	@find internal/controller -iname 'zz_*' -delete
 	@find internal/controller -type d -empty -delete
+	@rm -rf internal/apis/runtime
 	@find cmd/provider -name 'zz_*' -type f -delete
 	@find cmd/provider -type d -maxdepth 1 -mindepth 1 -empty -delete
 	@rm -rf examples-generated
@@ -245,6 +229,51 @@ build.complete: generate.resolve build
 	@$(OK) complete build workflow finished
 
 .PHONY: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs generate.clean generate.resolve build.complete
+
+NOFORK_GOCACHE ?= $(CURDIR)/.cache/nofork-go-build
+NOFORK_GOMODCACHE ?= $(CURDIR)/.cache/nofork-go-mod
+NOFORK_GOPATH ?= $(CURDIR)/.work/nofork-gopath
+NOFORK_WARM_PACKAGES ?= ./cmd/provider/...
+NOFORK_WARM_PLATFORMS ?= linux_amd64 linux_arm64
+
+build:
+ifneq ($(SUBPACKAGES),monolith)
+	@set -e; \
+	$(INFO) Building sub-packages: $(SUBPACKAGES); \
+	for pkg in $(SUBPACKAGE_LIST); do \
+		$(MAKE) build.subpackage.$$pkg PLATFORMS="$(PLATFORMS)" GOCACHE="$(NOFORK_GOCACHE)" GOMODCACHE="$(NOFORK_GOMODCACHE)" GOPATH="$(NOFORK_GOPATH)" || exit 1; \
+	done; \
+	$(OK) Built sub-packages: $(SUBPACKAGES)
+else
+ifneq ($(BUILD_PLATFORMS),)
+	@$(MAKE) build.all PLATFORMS="$(BUILD_PLATFORMS)" GOCACHE="$(NOFORK_GOCACHE)" GOMODCACHE="$(NOFORK_GOMODCACHE)" GOPATH="$(NOFORK_GOPATH)"
+else
+	@:
+endif
+endif
+
+ifneq ($(SUBPACKAGES),monolith)
+go.build: build
+endif
+
+warm-nofork-cache:
+	@set -e; \
+	$(INFO) Warming no-fork build cache for platforms: $(NOFORK_WARM_PLATFORMS); \
+	for platform in $(NOFORK_WARM_PLATFORMS); do \
+		GOOS=$$(echo $$platform | cut -d_ -f1); \
+		GOARCH=$$(echo $$platform | cut -d_ -f2); \
+		started=$$(date +%s); \
+		echo "  Warming for $$GOOS/$$GOARCH..."; \
+		CGO_ENABLED=0 GOOS=$$GOOS GOARCH=$$GOARCH \
+			GOCACHE="$(NOFORK_GOCACHE)" \
+			GOMODCACHE="$(NOFORK_GOMODCACHE)" \
+			GOPATH="$(NOFORK_GOPATH)" \
+			$(GO) list -deps -export $(NOFORK_WARM_PACKAGES) >/dev/null; \
+		echo "  Warmed $$GOOS/$$GOARCH in $$(( $$(date +%s) - $$started ))s"; \
+	done; \
+	$(OK) Warmed no-fork build cache
+
+.PHONY: warm-nofork-cache
 # ====================================================================================
 # Targets
 
@@ -333,7 +362,7 @@ build.subpackage.%:
 		echo "  Building for $$GOOS/$$GOARCH..."; \
 		output_name="$*"; \
 		mkdir -p $(OUTPUT_DIR)/bin/$${GOOS}_$${GOARCH}; \
-		CGO_ENABLED=0 GOOS=$$GOOS GOARCH=$$GOARCH $(GO) build -ldflags '$(GO_LDFLAGS)' \
+		CGO_ENABLED=0 GOOS=$$GOOS GOARCH=$$GOARCH $(GO) build $(GO_BUILDFLAGS) -ldflags '$(GO_LDFLAGS)' \
 			-o $(OUTPUT_DIR)/bin/$${GOOS}_$${GOARCH}/$$output_name$(BINARY_EXT) \
 			$(GO_PROJECT)/cmd/provider/$*/ || exit 1; \
 	done

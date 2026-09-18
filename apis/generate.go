@@ -23,6 +23,7 @@ Copyright 2021 Upbound Inc.
 // Transform generated resolvers to use runtime resolution (removes cross-package imports)
 //go:generate go run github.com/crossplane/upjet/v2/cmd/resolver -g oci.upbound.io -a github.com/oracle/provider-oci/internal/apis -s -p ./cluster/...
 //go:generate go run github.com/crossplane/upjet/v2/cmd/resolver -g oci.m.upbound.io -a github.com/oracle/provider-oci/internal/apis -s -p ./namespaced/...
+//go:generate go run ../cmd/generator/main.go .. runtime-schemes
 
 package apis
 
