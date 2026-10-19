@@ -1,6 +1,6 @@
 module github.com/oracle/provider-oci
 
-go 1.26.5
+go 1.26.6
 
 require (
 	dario.cat/mergo v1.0.2
@@ -112,7 +112,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/muvaf/typewriter v0.0.0-20240614220100-70f9d4a54ea0 // indirect
 	github.com/oklog/run v1.2.0 // indirect
-	github.com/oracle/oci-go-sdk/v65 v65.124.1 // indirect
+	github.com/oracle/oci-go-sdk/v65 v65.127.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.66.1 // indirect
@@ -137,7 +137,7 @@ require (
 	go.uber.org/zap v1.27.1 // indirect
 	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/crypto v0.55.0 // indirect
+	golang.org/x/crypto v0.56.0 // indirect
 	golang.org/x/mod v0.38.0 // indirect
 	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
@@ -165,3 +165,5 @@ require (
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
+
+replace github.com/oracle/terraform-provider-oci => github.com/HaoyL666/terraform-provider-oci v1.0.19-0.20261018170853-cb2ce0f7ba58
