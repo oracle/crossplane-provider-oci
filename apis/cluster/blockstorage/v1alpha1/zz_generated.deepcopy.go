@@ -2435,6 +2435,11 @@ func (in *VolumeAttachmentObservation) DeepCopyInto(out *VolumeAttachmentObserva
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsMultipath != nil {
 		in, out := &in.IsMultipath, &out.IsMultipath
 		*out = new(bool)

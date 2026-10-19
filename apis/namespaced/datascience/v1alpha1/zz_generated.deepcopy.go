@@ -20504,6 +20504,11 @@ func (in *NotebookSessionConfigDetailsInitParameters) DeepCopyInto(out *Notebook
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
+		**out = **in
+	}
 	if in.NotebookSessionShapeConfigDetails != nil {
 		in, out := &in.NotebookSessionShapeConfigDetails, &out.NotebookSessionShapeConfigDetails
 		*out = make([]NotebookSessionShapeConfigDetailsInitParameters, len(*in))
@@ -20566,6 +20571,11 @@ func (in *NotebookSessionConfigDetailsObservation) DeepCopyInto(out *NotebookSes
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
+		**out = **in
+	}
 	if in.NotebookSessionShapeConfigDetails != nil {
 		in, out := &in.NotebookSessionShapeConfigDetails, &out.NotebookSessionShapeConfigDetails
 		*out = make([]NotebookSessionShapeConfigDetailsObservation, len(*in))
@@ -20606,6 +20616,11 @@ func (in *NotebookSessionConfigDetailsParameters) DeepCopyInto(out *NotebookSess
 	if in.BlockStorageSizeInGbs != nil {
 		in, out := &in.BlockStorageSizeInGbs, &out.BlockStorageSizeInGbs
 		*out = new(float64)
+		**out = **in
+	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
 		**out = **in
 	}
 	if in.NotebookSessionShapeConfigDetails != nil {
@@ -20668,6 +20683,11 @@ func (in *NotebookSessionConfigurationDetailsInitParameters) DeepCopyInto(out *N
 	if in.BlockStorageSizeInGbs != nil {
 		in, out := &in.BlockStorageSizeInGbs, &out.BlockStorageSizeInGbs
 		*out = new(float64)
+		**out = **in
+	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
 		**out = **in
 	}
 	if in.NotebookSessionShapeConfigDetails != nil {
@@ -20822,6 +20842,11 @@ func (in *NotebookSessionConfigurationDetailsObservation) DeepCopyInto(out *Note
 		*out = new(float64)
 		**out = **in
 	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
+		**out = **in
+	}
 	if in.NotebookSessionShapeConfigDetails != nil {
 		in, out := &in.NotebookSessionShapeConfigDetails, &out.NotebookSessionShapeConfigDetails
 		*out = make([]NotebookSessionConfigurationDetailsNotebookSessionShapeConfigDetailsObservation, len(*in))
@@ -20862,6 +20887,11 @@ func (in *NotebookSessionConfigurationDetailsParameters) DeepCopyInto(out *Noteb
 	if in.BlockStorageSizeInGbs != nil {
 		in, out := &in.BlockStorageSizeInGbs, &out.BlockStorageSizeInGbs
 		*out = new(float64)
+		**out = **in
+	}
+	if in.CapacityReservationID != nil {
+		in, out := &in.CapacityReservationID, &out.CapacityReservationID
+		*out = new(string)
 		**out = **in
 	}
 	if in.NotebookSessionShapeConfigDetails != nil {

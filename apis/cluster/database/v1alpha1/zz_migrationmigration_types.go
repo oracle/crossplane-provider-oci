@@ -721,7 +721,7 @@ type InitialLoadSettingsParameters struct {
 
 	// (Updatable) Oracle Job Mode
 	// +kubebuilder:validation:Optional
-	JobMode *string `json:"jobMode" tf:"job_mode,omitempty"`
+	JobMode *string `json:"jobMode,omitempty" tf:"job_mode,omitempty"`
 
 	// (Applicable when database_combination=ORACLE) (Updatable) Defines remapping to be applied to objects as they are processed.
 	// +kubebuilder:validation:Optional

@@ -215,16 +215,16 @@ type OracleDbAzureVaultReplicationMetadataInitParameters struct {
 type OracleDbAzureVaultReplicationMetadataObservation struct {
 
 	// List of all regions and their respective resource ID.
-	ReplicationDetails []ReplicationMetadataReplicationDetailsObservation `json:"replicationDetails,omitempty" tf:"replication_details,omitempty"`
+	ReplicationDetails []OracleDbAzureVaultReplicationMetadataReplicationDetailsObservation `json:"replicationDetails,omitempty" tf:"replication_details,omitempty"`
 }
 
 type OracleDbAzureVaultReplicationMetadataParameters struct {
 }
 
-type ReplicationMetadataReplicationDetailsInitParameters struct {
+type OracleDbAzureVaultReplicationMetadataReplicationDetailsInitParameters struct {
 }
 
-type ReplicationMetadataReplicationDetailsObservation struct {
+type OracleDbAzureVaultReplicationMetadataReplicationDetailsObservation struct {
 
 	// The lifecycle state of the Oracle DB Azure Vault resource.
 	ReplicationState *string `json:"replicationState,omitempty" tf:"replication_state,omitempty"`
@@ -239,7 +239,7 @@ type ReplicationMetadataReplicationDetailsObservation struct {
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 }
 
-type ReplicationMetadataReplicationDetailsParameters struct {
+type OracleDbAzureVaultReplicationMetadataReplicationDetailsParameters struct {
 }
 
 // OracleDbAzureVaultSpec defines the desired state of OracleDbAzureVault

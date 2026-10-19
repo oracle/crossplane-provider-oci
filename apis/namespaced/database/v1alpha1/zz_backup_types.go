@@ -22,6 +22,9 @@ type BackupEncryptionKeyLocationDetailsObservation struct {
 	// Provide the key OCID of a registered AWS key.
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
+	// Provide the key pool OCID of a registered AWS key.
+	AwsEncryptionKeyPoolID *string `json:"awsEncryptionKeyPoolId,omitempty" tf:"aws_encryption_key_pool_id,omitempty"`
+
 	// Provide the key OCID of a registered Azure key.
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 

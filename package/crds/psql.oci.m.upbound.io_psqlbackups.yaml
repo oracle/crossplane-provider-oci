@@ -628,6 +628,9 @@ spec:
                   id:
                     description: The OCID of the backup.
                     type: string
+                  kmsKeyId:
+                    description: The OCID of the master encryption key for the backup.
+                    type: string
                   lastAcceptedRequestToken:
                     description: lastAcceptedRequestToken from MP.
                     type: string

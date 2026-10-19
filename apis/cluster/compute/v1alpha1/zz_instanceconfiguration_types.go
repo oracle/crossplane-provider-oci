@@ -59,7 +59,7 @@ type AttachDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -83,7 +83,7 @@ type AttachDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -112,7 +112,7 @@ type AttachDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -196,7 +196,7 @@ type BlockVolumesAttachDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -220,7 +220,7 @@ type BlockVolumesAttachDetailsObservation struct {
 	// (Applicable when instance_type=compute) Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -249,7 +249,7 @@ type BlockVolumesAttachDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsShareable *bool `json:"isShareable,omitempty" tf:"is_shareable,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -291,6 +291,9 @@ type BlockVolumesCreateDetailsInitParameters struct {
 
 	// (Applicable when instance_type=compute) Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the InstanceConfigurationDetachedVolumeAutotunePolicy instead to enable the volume for detached autotune.
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
+
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
 
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
@@ -362,6 +365,9 @@ type BlockVolumesCreateDetailsObservation struct {
 	// (Applicable when instance_type=compute) Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the InstanceConfigurationDetachedVolumeAutotunePolicy instead to enable the volume for detached autotune.
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
@@ -422,6 +428,10 @@ type BlockVolumesCreateDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	// +kubebuilder:validation:Optional
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -468,7 +478,7 @@ type BlockVolumesCreateDetailsSourceDetailsInitParameters struct {
 	// The OCID of the volume backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -477,7 +487,7 @@ type BlockVolumesCreateDetailsSourceDetailsObservation struct {
 	// The OCID of the volume backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -487,7 +497,7 @@ type BlockVolumesCreateDetailsSourceDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -643,6 +653,9 @@ type CreateDetailsInitParameters struct {
 	// (Applicable when instance_type=compute) Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the InstanceConfigurationDetachedVolumeAutotunePolicy instead to enable the volume for detached autotune.
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -713,6 +726,9 @@ type CreateDetailsObservation struct {
 	// (Applicable when instance_type=compute) Specifies whether the auto-tune performance is enabled for this boot volume. This field is deprecated. Use the InstanceConfigurationDetachedVolumeAutotunePolicy instead to enable the volume for detached autotune.
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
@@ -773,6 +789,10 @@ type CreateDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsAutoTuneEnabled *bool `json:"isAutoTuneEnabled,omitempty" tf:"is_auto_tune_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Reservations-enabled is a boolean field that allows to enable PR (Persistent Reservation) on a volume.
+	// +kubebuilder:validation:Optional
+	IsReservationsEnabled *bool `json:"isReservationsEnabled,omitempty" tf:"is_reservations_enabled,omitempty"`
+
 	// (Applicable when instance_type=compute) The OCID of the Vault service key to assign as the master encryption key for the volume.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
@@ -819,7 +839,7 @@ type CreateDetailsSourceDetailsInitParameters struct {
 	// The OCID of the volume backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -828,7 +848,7 @@ type CreateDetailsSourceDetailsObservation struct {
 	// The OCID of the volume backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -838,7 +858,7 @@ type CreateDetailsSourceDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -2042,6 +2062,9 @@ type LaunchDetailsLaunchOptionsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -2062,6 +2085,9 @@ type LaunchDetailsLaunchOptionsObservation struct {
 
 	// (Applicable when instance_type=compute) Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
+
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
 
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -2087,6 +2113,10 @@ type LaunchDetailsLaunchOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	// +kubebuilder:validation:Optional
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	// +kubebuilder:validation:Optional
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -2105,7 +2135,7 @@ type LaunchDetailsLicensingConfigsInitParameters struct {
 	// License Type for the OS license.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2114,7 +2144,7 @@ type LaunchDetailsLicensingConfigsObservation struct {
 	// License Type for the OS license.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2124,7 +2154,7 @@ type LaunchDetailsLicensingConfigsParameters struct {
 	// +kubebuilder:validation:Optional
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -2400,7 +2430,7 @@ type LaunchDetailsPlacementConstraintDetailsInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2409,7 +2439,7 @@ type LaunchDetailsPlacementConstraintDetailsObservation struct {
 	// The OCID of the compute host group. This is only available for dedicated capacity customers.
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2429,7 +2459,7 @@ type LaunchDetailsPlacementConstraintDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -2470,7 +2500,7 @@ type LaunchDetailsPlatformConfigInitParameters struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2510,7 +2540,7 @@ type LaunchDetailsPlatformConfigObservation struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2561,7 +2591,7 @@ type LaunchDetailsPlatformConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -2590,7 +2620,7 @@ type LaunchDetailsPreemptibleInstanceConfigPreemptionActionInitParameters struct
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2599,7 +2629,7 @@ type LaunchDetailsPreemptibleInstanceConfigPreemptionActionObservation struct {
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -2609,7 +2639,7 @@ type LaunchDetailsPreemptibleInstanceConfigPreemptionActionParameters struct {
 	// +kubebuilder:validation:Optional
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -3462,6 +3492,9 @@ type OptionsLaunchDetailsLaunchOptionsInitParameters struct {
 	// (Applicable when instance_type=compute) Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -3482,6 +3515,9 @@ type OptionsLaunchDetailsLaunchOptionsObservation struct {
 
 	// (Applicable when instance_type=compute) Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
+
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
 
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -3507,6 +3543,10 @@ type OptionsLaunchDetailsLaunchOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
+	// (Applicable when instance_type=compute) Whether in-transit encryption for the data volume's attachment is enabled or not.
+	// +kubebuilder:validation:Optional
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// (Applicable when type=paravirtualized) Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.
 	// +kubebuilder:validation:Optional
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -3525,7 +3565,7 @@ type OptionsLaunchDetailsLicensingConfigsInitParameters struct {
 	// License Type for the OS license.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3534,7 +3574,7 @@ type OptionsLaunchDetailsLicensingConfigsObservation struct {
 	// License Type for the OS license.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3544,7 +3584,7 @@ type OptionsLaunchDetailsLicensingConfigsParameters struct {
 	// +kubebuilder:validation:Optional
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -3820,7 +3860,7 @@ type OptionsLaunchDetailsPlacementConstraintDetailsInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3829,7 +3869,7 @@ type OptionsLaunchDetailsPlacementConstraintDetailsObservation struct {
 	// The OCID of the compute host group. This is only available for dedicated capacity customers.
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3849,7 +3889,7 @@ type OptionsLaunchDetailsPlacementConstraintDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.Selector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -3859,6 +3899,10 @@ type OptionsLaunchDetailsPlatformConfigInitParameters struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM) Whether virtualization instructions are available. For example, Secure Virtual Machine for AMD shapes or VT-x for Intel shapes.
 	AreVirtualInstructionsEnabled *bool `json:"areVirtualInstructionsEnabled,omitempty" tf:"are_virtual_instructions_enabled,omitempty"`
 
+	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) Instance Platform Configuration Configuration Map for flexible setting input.
+	// +mapType=granular
+	ConfigMap map[string]*string `json:"configMap,omitempty" tf:"config_map,omitempty"`
+
 	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM) Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.
 	IsAccessControlServiceEnabled *bool `json:"isAccessControlServiceEnabled,omitempty" tf:"is_access_control_service_enabled,omitempty"`
 
@@ -3886,7 +3930,7 @@ type OptionsLaunchDetailsPlatformConfigInitParameters struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3895,6 +3939,10 @@ type OptionsLaunchDetailsPlatformConfigObservation struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM) Whether virtualization instructions are available. For example, Secure Virtual Machine for AMD shapes or VT-x for Intel shapes.
 	AreVirtualInstructionsEnabled *bool `json:"areVirtualInstructionsEnabled,omitempty" tf:"are_virtual_instructions_enabled,omitempty"`
 
+	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) Instance Platform Configuration Configuration Map for flexible setting input.
+	// +mapType=granular
+	ConfigMap map[string]*string `json:"configMap,omitempty" tf:"config_map,omitempty"`
+
 	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM) Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.
 	IsAccessControlServiceEnabled *bool `json:"isAccessControlServiceEnabled,omitempty" tf:"is_access_control_service_enabled,omitempty"`
 
@@ -3922,7 +3970,7 @@ type OptionsLaunchDetailsPlatformConfigObservation struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -3932,6 +3980,11 @@ type OptionsLaunchDetailsPlatformConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	AreVirtualInstructionsEnabled *bool `json:"areVirtualInstructionsEnabled,omitempty" tf:"are_virtual_instructions_enabled,omitempty"`
 
+	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) Instance Platform Configuration Configuration Map for flexible setting input.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	ConfigMap map[string]*string `json:"configMap,omitempty" tf:"config_map,omitempty"`
+
 	// (Applicable when type=AMD_MILAN_BM | AMD_MILAN_BM_GPU | AMD_ROME_BM | AMD_ROME_BM_GPU | GENERIC_BM) Whether the Access Control Service is enabled on the instance. When enabled, the platform can enforce PCIe device isolation, required for VFIO device pass-through.
 	// +kubebuilder:validation:Optional
 	IsAccessControlServiceEnabled *bool `json:"isAccessControlServiceEnabled,omitempty" tf:"is_access_control_service_enabled,omitempty"`
@@ -3968,7 +4021,7 @@ type OptionsLaunchDetailsPlatformConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -4224,7 +4277,7 @@ type PreemptibleInstanceConfigPreemptionActionInitParameters struct {
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -4233,7 +4286,7 @@ type PreemptibleInstanceConfigPreemptionActionObservation struct {
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -4243,7 +4296,7 @@ type PreemptibleInstanceConfigPreemptionActionParameters struct {
 	// +kubebuilder:validation:Optional
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized"
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }

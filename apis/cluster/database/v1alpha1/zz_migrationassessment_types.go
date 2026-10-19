@@ -183,6 +183,9 @@ type MigrationAssessmentInitParameters struct {
 	// Database objects to include from migration, cannot be specified alongside 'excludeObjects'
 	IncludeObjects []IncludeObjectsInitParameters `json:"includeObjects,omitempty" tf:"include_objects,omitempty"`
 
+	// (Updatable) Assessment migration scope. Defaults to SCHEMA.
+	MigrationScope *string `json:"migrationScope,omitempty" tf:"migration_scope,omitempty"`
+
 	// (Updatable) A network speed in Megabits per second.
 	NetworkSpeedMegabitPerSecond *string `json:"networkSpeedMegabitPerSecond,omitempty" tf:"network_speed_megabit_per_second,omitempty"`
 
@@ -247,6 +250,9 @@ type MigrationAssessmentObservation struct {
 
 	// The OCID of the resource being referenced.
 	MigrationID *string `json:"migrationId,omitempty" tf:"migration_id,omitempty"`
+
+	// (Updatable) Assessment migration scope. Defaults to SCHEMA.
+	MigrationScope *string `json:"migrationScope,omitempty" tf:"migration_scope,omitempty"`
 
 	// (Updatable) A network speed in Megabits per second.
 	NetworkSpeedMegabitPerSecond *string `json:"networkSpeedMegabitPerSecond,omitempty" tf:"network_speed_megabit_per_second,omitempty"`
@@ -335,6 +341,10 @@ type MigrationAssessmentParameters struct {
 	// Database objects to include from migration, cannot be specified alongside 'excludeObjects'
 	// +kubebuilder:validation:Optional
 	IncludeObjects []IncludeObjectsParameters `json:"includeObjects,omitempty" tf:"include_objects,omitempty"`
+
+	// (Updatable) Assessment migration scope. Defaults to SCHEMA.
+	// +kubebuilder:validation:Optional
+	MigrationScope *string `json:"migrationScope,omitempty" tf:"migration_scope,omitempty"`
 
 	// (Updatable) A network speed in Megabits per second.
 	// +kubebuilder:validation:Optional

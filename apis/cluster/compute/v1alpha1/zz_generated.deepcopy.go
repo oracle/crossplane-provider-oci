@@ -1346,6 +1346,11 @@ func (in *BlockVolumesCreateDetailsInitParameters) DeepCopyInto(out *BlockVolume
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -1484,6 +1489,11 @@ func (in *BlockVolumesCreateDetailsObservation) DeepCopyInto(out *BlockVolumesCr
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -1599,6 +1609,11 @@ func (in *BlockVolumesCreateDetailsParameters) DeepCopyInto(out *BlockVolumesCre
 	}
 	if in.IsAutoTuneEnabled != nil {
 		in, out := &in.IsAutoTuneEnabled, &out.IsAutoTuneEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -6900,6 +6915,11 @@ func (in *CreateDetailsInitParameters) DeepCopyInto(out *CreateDetailsInitParame
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -7038,6 +7058,11 @@ func (in *CreateDetailsObservation) DeepCopyInto(out *CreateDetailsObservation) 
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.KMSKeyID != nil {
 		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
@@ -7153,6 +7178,11 @@ func (in *CreateDetailsParameters) DeepCopyInto(out *CreateDetailsParameters) {
 	}
 	if in.IsAutoTuneEnabled != nil {
 		in, out := &in.IsAutoTuneEnabled, &out.IsAutoTuneEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsReservationsEnabled != nil {
+		in, out := &in.IsReservationsEnabled, &out.IsReservationsEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -11232,6 +11262,11 @@ func (in *InstanceLaunchOptionsInitParameters) DeepCopyInto(out *InstanceLaunchO
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -11277,6 +11312,11 @@ func (in *InstanceLaunchOptionsObservation) DeepCopyInto(out *InstanceLaunchOpti
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -11319,6 +11359,11 @@ func (in *InstanceLaunchOptionsParameters) DeepCopyInto(out *InstanceLaunchOptio
 	}
 	if in.IsConsistentVolumeNamingEnabled != nil {
 		in, out := &in.IsConsistentVolumeNamingEnabled, &out.IsConsistentVolumeNamingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -15965,6 +16010,11 @@ func (in *LaunchDetailsLaunchOptionsInitParameters) DeepCopyInto(out *LaunchDeta
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -16010,6 +16060,11 @@ func (in *LaunchDetailsLaunchOptionsObservation) DeepCopyInto(out *LaunchDetails
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -16052,6 +16107,11 @@ func (in *LaunchDetailsLaunchOptionsParameters) DeepCopyInto(out *LaunchDetailsL
 	}
 	if in.IsConsistentVolumeNamingEnabled != nil {
 		in, out := &in.IsConsistentVolumeNamingEnabled, &out.IsConsistentVolumeNamingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -19729,6 +19789,11 @@ func (in *OptionsLaunchDetailsLaunchOptionsInitParameters) DeepCopyInto(out *Opt
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -19774,6 +19839,11 @@ func (in *OptionsLaunchDetailsLaunchOptionsObservation) DeepCopyInto(out *Option
 		*out = new(bool)
 		**out = **in
 	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
+		*out = new(bool)
+		**out = **in
+	}
 	if in.IsPvEncryptionInTransitEnabled != nil {
 		in, out := &in.IsPvEncryptionInTransitEnabled, &out.IsPvEncryptionInTransitEnabled
 		*out = new(bool)
@@ -19816,6 +19886,11 @@ func (in *OptionsLaunchDetailsLaunchOptionsParameters) DeepCopyInto(out *Options
 	}
 	if in.IsConsistentVolumeNamingEnabled != nil {
 		in, out := &in.IsConsistentVolumeNamingEnabled, &out.IsConsistentVolumeNamingEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.IsEncryptionInTransitEnabled != nil {
+		in, out := &in.IsEncryptionInTransitEnabled, &out.IsEncryptionInTransitEnabled
 		*out = new(bool)
 		**out = **in
 	}
@@ -20538,6 +20613,22 @@ func (in *OptionsLaunchDetailsPlatformConfigInitParameters) DeepCopyInto(out *Op
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ConfigMap != nil {
+		in, out := &in.ConfigMap, &out.ConfigMap
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.IsAccessControlServiceEnabled != nil {
 		in, out := &in.IsAccessControlServiceEnabled, &out.IsAccessControlServiceEnabled
 		*out = new(bool)
@@ -20608,6 +20699,22 @@ func (in *OptionsLaunchDetailsPlatformConfigObservation) DeepCopyInto(out *Optio
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ConfigMap != nil {
+		in, out := &in.ConfigMap, &out.ConfigMap
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.IsAccessControlServiceEnabled != nil {
 		in, out := &in.IsAccessControlServiceEnabled, &out.IsAccessControlServiceEnabled
 		*out = new(bool)
@@ -20677,6 +20784,22 @@ func (in *OptionsLaunchDetailsPlatformConfigParameters) DeepCopyInto(out *Option
 		in, out := &in.AreVirtualInstructionsEnabled, &out.AreVirtualInstructionsEnabled
 		*out = new(bool)
 		**out = **in
+	}
+	if in.ConfigMap != nil {
+		in, out := &in.ConfigMap, &out.ConfigMap
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
 	}
 	if in.IsAccessControlServiceEnabled != nil {
 		in, out := &in.IsAccessControlServiceEnabled, &out.IsAccessControlServiceEnabled

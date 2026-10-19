@@ -76,7 +76,8 @@ spec:
                 properties:
                   attachmentType:
                     description: The type of volume. The only supported values are
-                      "iscsi" and "paravirtualized".
+                      "iscsi", "paravirtualized", "nvme" and "service_determined"
+                      .
                     type: string
                   compartmentId:
                     description: The OCID of the compartment.
@@ -369,7 +370,8 @@ spec:
                 properties:
                   attachmentType:
                     description: The type of volume. The only supported values are
-                      "iscsi" and "paravirtualized".
+                      "iscsi", "paravirtualized", "nvme" and "service_determined"
+                      .
                     type: string
                   compartmentId:
                     description: The OCID of the compartment.
@@ -747,7 +749,8 @@ spec:
                 properties:
                   attachmentType:
                     description: The type of volume. The only supported values are
-                      "iscsi" and "paravirtualized".
+                      "iscsi", "paravirtualized", "nvme" and "service_determined"
+                      .
                     type: string
                   availabilityDomain:
                     description: 'The availability domain of an instance.  Example:
@@ -799,6 +802,10 @@ spec:
                       enable Oracle Cloud Agent to perform the iSCSI login and logout
                       commands after the volume attach or detach operations for non
                       multipath-enabled iSCSI attachments.
+                    type: boolean
+                  isEncryptionInTransitEnabled:
+                    description: Whether in-transit encryption for the data volume's
+                      attachment is enabled or not.
                     type: boolean
                   isMultipath:
                     description: Whether the Iscsi or Paravirtualized attachment is

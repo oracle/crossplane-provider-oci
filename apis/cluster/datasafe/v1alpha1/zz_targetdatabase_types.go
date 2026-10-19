@@ -13,85 +13,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type ConnectionOptionInitParameters struct {
-
-	// (Updatable) The connection type used to connect to the database. Allowed values:
-	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
-
-	// (Updatable) The OCID of the Data Safe private endpoint.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.PrivateEndpoint
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
-	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
-
-	// Reference to a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
-	// +kubebuilder:validation:Optional
-	DatasafePrivateEndpointIDRef *v1.Reference `json:"datasafePrivateEndpointIdRef,omitempty" tf:"-"`
-
-	// Selector for a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
-	// +kubebuilder:validation:Optional
-	DatasafePrivateEndpointIDSelector *v1.Selector `json:"datasafePrivateEndpointIdSelector,omitempty" tf:"-"`
-
-	// (Updatable) The OCID of the on-premises connector.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/datasafe/v1alpha1.OnPremConnector
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
-	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
-
-	// Reference to a OnPremConnector in datasafe to populate onPremConnectorId.
-	// +kubebuilder:validation:Optional
-	OnPremConnectorIDRef *v1.Reference `json:"onPremConnectorIdRef,omitempty" tf:"-"`
-
-	// Selector for a OnPremConnector in datasafe to populate onPremConnectorId.
-	// +kubebuilder:validation:Optional
-	OnPremConnectorIDSelector *v1.Selector `json:"onPremConnectorIdSelector,omitempty" tf:"-"`
-}
-
-type ConnectionOptionObservation struct {
-
-	// (Updatable) The connection type used to connect to the database. Allowed values:
-	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
-
-	// (Updatable) The OCID of the Data Safe private endpoint.
-	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
-
-	// (Updatable) The OCID of the on-premises connector.
-	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
-}
-
-type ConnectionOptionParameters struct {
-
-	// (Updatable) The connection type used to connect to the database. Allowed values:
-	// +kubebuilder:validation:Optional
-	ConnectionType *string `json:"connectionType" tf:"connection_type,omitempty"`
-
-	// (Updatable) The OCID of the Data Safe private endpoint.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.PrivateEndpoint
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
-
-	// Reference to a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
-	// +kubebuilder:validation:Optional
-	DatasafePrivateEndpointIDRef *v1.Reference `json:"datasafePrivateEndpointIdRef,omitempty" tf:"-"`
-
-	// Selector for a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
-	// +kubebuilder:validation:Optional
-	DatasafePrivateEndpointIDSelector *v1.Selector `json:"datasafePrivateEndpointIdSelector,omitempty" tf:"-"`
-
-	// (Updatable) The OCID of the on-premises connector.
-	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/datasafe/v1alpha1.OnPremConnector
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
-	// +kubebuilder:validation:Optional
-	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
-
-	// Reference to a OnPremConnector in datasafe to populate onPremConnectorId.
-	// +kubebuilder:validation:Optional
-	OnPremConnectorIDRef *v1.Reference `json:"onPremConnectorIdRef,omitempty" tf:"-"`
-
-	// Selector for a OnPremConnector in datasafe to populate onPremConnectorId.
-	// +kubebuilder:validation:Optional
-	OnPremConnectorIDSelector *v1.Selector `json:"onPremConnectorIdSelector,omitempty" tf:"-"`
-}
-
 type CredentialsInitParameters struct {
 
 	// (Updatable) The password of the database user.
@@ -776,6 +697,85 @@ type TLSConfigParameters struct {
 	TrustStoreContent *string `json:"trustStoreContent,omitempty" tf:"trust_store_content,omitempty"`
 }
 
+type TargetDatabaseConnectionOptionInitParameters struct {
+
+	// (Updatable) The connection type used to connect to the database. Allowed values:
+	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
+
+	// (Updatable) The OCID of the Data Safe private endpoint.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.PrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
+
+	// Reference to a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	DatasafePrivateEndpointIDRef *v1.Reference `json:"datasafePrivateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	DatasafePrivateEndpointIDSelector *v1.Selector `json:"datasafePrivateEndpointIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) The OCID of the on-premises connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/datasafe/v1alpha1.OnPremConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
+
+	// Reference to a OnPremConnector in datasafe to populate onPremConnectorId.
+	// +kubebuilder:validation:Optional
+	OnPremConnectorIDRef *v1.Reference `json:"onPremConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a OnPremConnector in datasafe to populate onPremConnectorId.
+	// +kubebuilder:validation:Optional
+	OnPremConnectorIDSelector *v1.Selector `json:"onPremConnectorIdSelector,omitempty" tf:"-"`
+}
+
+type TargetDatabaseConnectionOptionObservation struct {
+
+	// (Updatable) The connection type used to connect to the database. Allowed values:
+	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
+
+	// (Updatable) The OCID of the Data Safe private endpoint.
+	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
+
+	// (Updatable) The OCID of the on-premises connector.
+	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
+}
+
+type TargetDatabaseConnectionOptionParameters struct {
+
+	// (Updatable) The connection type used to connect to the database. Allowed values:
+	// +kubebuilder:validation:Optional
+	ConnectionType *string `json:"connectionType" tf:"connection_type,omitempty"`
+
+	// (Updatable) The OCID of the Data Safe private endpoint.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.PrivateEndpoint
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	DatasafePrivateEndpointID *string `json:"datasafePrivateEndpointId,omitempty" tf:"datasafe_private_endpoint_id,omitempty"`
+
+	// Reference to a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	DatasafePrivateEndpointIDRef *v1.Reference `json:"datasafePrivateEndpointIdRef,omitempty" tf:"-"`
+
+	// Selector for a PrivateEndpoint in dataflow to populate datasafePrivateEndpointId.
+	// +kubebuilder:validation:Optional
+	DatasafePrivateEndpointIDSelector *v1.Selector `json:"datasafePrivateEndpointIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) The OCID of the on-premises connector.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/datasafe/v1alpha1.OnPremConnector
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	OnPremConnectorID *string `json:"onPremConnectorId,omitempty" tf:"on_prem_connector_id,omitempty"`
+
+	// Reference to a OnPremConnector in datasafe to populate onPremConnectorId.
+	// +kubebuilder:validation:Optional
+	OnPremConnectorIDRef *v1.Reference `json:"onPremConnectorIdRef,omitempty" tf:"-"`
+
+	// Selector for a OnPremConnector in datasafe to populate onPremConnectorId.
+	// +kubebuilder:validation:Optional
+	OnPremConnectorIDSelector *v1.Selector `json:"onPremConnectorIdSelector,omitempty" tf:"-"`
+}
+
 type TargetDatabaseInitParameters struct {
 
 	// (Updatable) The OCID of the compartment in which to create the Data Safe target database.
@@ -791,7 +791,7 @@ type TargetDatabaseInitParameters struct {
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Types of connection supported by Data Safe.
-	ConnectionOption []ConnectionOptionInitParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []TargetDatabaseConnectionOptionInitParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) The database credentials required for Data Safe to connect to the database.
 	Credentials []CredentialsInitParameters `json:"credentials,omitempty" tf:"credentials,omitempty"`
@@ -813,6 +813,9 @@ type TargetDatabaseInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
+
 	// The details of the database to be registered as a peer target database.
 	PeerTargetDatabaseDetails []PeerTargetDatabaseDetailsInitParameters `json:"peerTargetDatabaseDetails,omitempty" tf:"peer_target_database_details,omitempty"`
 
@@ -829,7 +832,7 @@ type TargetDatabaseObservation struct {
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
 	// (Updatable) Types of connection supported by Data Safe.
-	ConnectionOption []ConnectionOptionObservation `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []TargetDatabaseConnectionOptionObservation `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) The database credentials required for Data Safe to connect to the database.
 	Credentials []CredentialsObservation `json:"credentials,omitempty" tf:"credentials,omitempty"`
@@ -847,6 +850,9 @@ type TargetDatabaseObservation struct {
 	// (Updatable) The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// List of enabled features based on granted ORA_DSCS_* roles in target database
+	Features []*string `json:"features,omitempty" tf:"features,omitempty"`
+
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
@@ -856,6 +862,9 @@ type TargetDatabaseObservation struct {
 
 	// Details about the current state of the target database in Data Safe.
 	LifecycleDetails *string `json:"lifecycleDetails,omitempty" tf:"lifecycle_details,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
 
 	// The details of the database to be registered as a peer target database.
 	PeerTargetDatabaseDetails []PeerTargetDatabaseDetailsObservation `json:"peerTargetDatabaseDetails,omitempty" tf:"peer_target_database_details,omitempty"`
@@ -897,7 +906,7 @@ type TargetDatabaseParameters struct {
 
 	// (Updatable) Types of connection supported by Data Safe.
 	// +kubebuilder:validation:Optional
-	ConnectionOption []ConnectionOptionParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []TargetDatabaseConnectionOptionParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) The database credentials required for Data Safe to connect to the database.
 	// +kubebuilder:validation:Optional
@@ -924,6 +933,10 @@ type TargetDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	// +kubebuilder:validation:Optional
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
 
 	// The details of the database to be registered as a peer target database.
 	// +kubebuilder:validation:Optional

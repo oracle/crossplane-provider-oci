@@ -848,13 +848,13 @@ spec:
                       enable action and when set to false calls disable action.
                     type: boolean
                   id:
-                    description: The OCID of the ResourceAnalyticsInstance.
                     type: string
                   resourceAnalyticsInstanceId:
                     description: The OCID of the ResourceAnalyticsInstance.
                     type: string
                   state:
-                    description: The current state of the ResourceAnalyticsInstance.
+                    description: The current state of the Resource Analytics Instance
+                      OAC management operation.
                     type: string
                 type: object
               conditions:

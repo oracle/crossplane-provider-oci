@@ -628,6 +628,114 @@ spec:
                           type: array
                       type: object
                     type: array
+                  remoteReindexTrustConfig:
+                    description: (Updatable) Configuration that allows this OpenSearch
+                      cluster to trust a remote cluster for reindexing.
+                    items:
+                      properties:
+                        remoteSources:
+                          description: (Updatable) Remote cluster sources to trust
+                            for reindexing.
+                          items:
+                            properties:
+                              certificateId:
+                                description: (Updatable) OCID of the certificate or
+                                  CA chain used to verify the remote cluster's HTTPS
+                                  certificate.
+                                type: string
+                              certificateIdRef:
+                                description: Reference to a Certificate in apigateway
+                                  to populate certificateId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              certificateIdSelector:
+                                description: Selector for a Certificate in apigateway
+                                  to populate certificateId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              endpoint:
+                                description: (Updatable) HTTPS endpoint of the remote
+                                  Elasticsearch or OpenSearch cluster. The hostname
+                                  and port are used to allow remote reindexing. Use
+                                  a DNS hostname, rather than an IP address, when
+                                  endpointResolutionIp is specified.
+                                type: string
+                              endpointResolutionIp:
+                                description: (Updatable) Optional IP address to which
+                                  the endpoint hostname is resolved from within the
+                                  OpenSearch cluster. The original hostname remains
+                                  in the connection URL and is used for TLS verification.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   reverseConnectionEndpointCustomerIps:
                     description: (Updatable) The customer IP addresses of the endpoint
                       in customer VCN
@@ -666,6 +774,135 @@ spec:
                       {"value": "42", "mode": "enforce"}}}'
                     type: object
                     x-kubernetes-map-type: granular
+                  securityMasterUserAuthDetails:
+                    description: (Updatable) Details for authenticating the OpenSearch
+                      security master user. This object cannot be used with securityMasterUserName
+                      or securityMasterUserPasswordHash.
+                    items:
+                      properties:
+                        userDetails:
+                          description: (Updatable) The username and password source
+                            details for the security master user.
+                          items:
+                            properties:
+                              passwordDetails:
+                                description: (Updatable) Base password-source details
+                                  for the OpenSearch security master user.
+                                items:
+                                  properties:
+                                    plainPasswordSecretRef:
+                                      description: (Updatable) The plaintext password
+                                        for the master user.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    sourceType:
+                                      description: (Updatable) The source of the master-user
+                                        plaintext password.
+                                      type: string
+                                    vaultSecretId:
+                                      description: (Updatable) The OCID of a Vault
+                                        secret containing the plaintext master-user
+                                        password.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) The name of the master user
+                                  that is used to manage security config.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   securityMasterUserName:
                     description: (Updatable) The name of the master user that are
                       used to manage security config
@@ -1697,6 +1934,114 @@ spec:
                           type: array
                       type: object
                     type: array
+                  remoteReindexTrustConfig:
+                    description: (Updatable) Configuration that allows this OpenSearch
+                      cluster to trust a remote cluster for reindexing.
+                    items:
+                      properties:
+                        remoteSources:
+                          description: (Updatable) Remote cluster sources to trust
+                            for reindexing.
+                          items:
+                            properties:
+                              certificateId:
+                                description: (Updatable) OCID of the certificate or
+                                  CA chain used to verify the remote cluster's HTTPS
+                                  certificate.
+                                type: string
+                              certificateIdRef:
+                                description: Reference to a Certificate in apigateway
+                                  to populate certificateId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              certificateIdSelector:
+                                description: Selector for a Certificate in apigateway
+                                  to populate certificateId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              endpoint:
+                                description: (Updatable) HTTPS endpoint of the remote
+                                  Elasticsearch or OpenSearch cluster. The hostname
+                                  and port are used to allow remote reindexing. Use
+                                  a DNS hostname, rather than an IP address, when
+                                  endpointResolutionIp is specified.
+                                type: string
+                              endpointResolutionIp:
+                                description: (Updatable) Optional IP address to which
+                                  the endpoint hostname is resolved from within the
+                                  OpenSearch cluster. The original hostname remains
+                                  in the connection URL and is used for TLS verification.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   reverseConnectionEndpointCustomerIps:
                     description: (Updatable) The customer IP addresses of the endpoint
                       in customer VCN
@@ -1735,6 +2080,135 @@ spec:
                       {"value": "42", "mode": "enforce"}}}'
                     type: object
                     x-kubernetes-map-type: granular
+                  securityMasterUserAuthDetails:
+                    description: (Updatable) Details for authenticating the OpenSearch
+                      security master user. This object cannot be used with securityMasterUserName
+                      or securityMasterUserPasswordHash.
+                    items:
+                      properties:
+                        userDetails:
+                          description: (Updatable) The username and password source
+                            details for the security master user.
+                          items:
+                            properties:
+                              passwordDetails:
+                                description: (Updatable) Base password-source details
+                                  for the OpenSearch security master user.
+                                items:
+                                  properties:
+                                    plainPasswordSecretRef:
+                                      description: (Updatable) The plaintext password
+                                        for the master user.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    sourceType:
+                                      description: (Updatable) The source of the master-user
+                                        plaintext password.
+                                      type: string
+                                    vaultSecretId:
+                                      description: (Updatable) The OCID of a Vault
+                                        secret containing the plaintext master-user
+                                        password.
+                                      type: string
+                                    vaultSecretIdRef:
+                                      description: Reference to a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    vaultSecretIdSelector:
+                                      description: Selector for a Secret in vault
+                                        to populate vaultSecretId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) The name of the master user
+                                  that is used to manage security config.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   securityMasterUserName:
                     description: (Updatable) The name of the master user that are
                       used to manage security config
@@ -2642,6 +3116,38 @@ spec:
                           type: array
                       type: object
                     type: array
+                  remoteReindexTrustConfig:
+                    description: (Updatable) Configuration that allows this OpenSearch
+                      cluster to trust a remote cluster for reindexing.
+                    items:
+                      properties:
+                        remoteSources:
+                          description: (Updatable) Remote cluster sources to trust
+                            for reindexing.
+                          items:
+                            properties:
+                              certificateId:
+                                description: (Updatable) OCID of the certificate or
+                                  CA chain used to verify the remote cluster's HTTPS
+                                  certificate.
+                                type: string
+                              endpoint:
+                                description: (Updatable) HTTPS endpoint of the remote
+                                  Elasticsearch or OpenSearch cluster. The hostname
+                                  and port are used to allow remote reindexing. Use
+                                  a DNS hostname, rather than an IP address, when
+                                  endpointResolutionIp is specified.
+                                type: string
+                              endpointResolutionIp:
+                                description: (Updatable) Optional IP address to which
+                                  the endpoint hostname is resolved from within the
+                                  OpenSearch cluster. The original hostname remains
+                                  in the connection URL and is used for TLS verification.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   reverseConnectionEndpointCustomerIps:
                     description: (Updatable) The customer IP addresses of the endpoint
                       in customer VCN
@@ -2694,6 +3200,41 @@ spec:
                       {"value": "42", "mode": "enforce"}}}'
                     type: object
                     x-kubernetes-map-type: granular
+                  securityMasterUserAuthDetails:
+                    description: (Updatable) Details for authenticating the OpenSearch
+                      security master user. This object cannot be used with securityMasterUserName
+                      or securityMasterUserPasswordHash.
+                    items:
+                      properties:
+                        userDetails:
+                          description: (Updatable) The username and password source
+                            details for the security master user.
+                          items:
+                            properties:
+                              passwordDetails:
+                                description: (Updatable) Base password-source details
+                                  for the OpenSearch security master user.
+                                items:
+                                  properties:
+                                    sourceType:
+                                      description: (Updatable) The source of the master-user
+                                        plaintext password.
+                                      type: string
+                                    vaultSecretId:
+                                      description: (Updatable) The OCID of a Vault
+                                        secret containing the plaintext master-user
+                                        password.
+                                      type: string
+                                  type: object
+                                type: array
+                              username:
+                                description: (Updatable) The name of the master user
+                                  that is used to manage security config.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   securityMasterUserName:
                     description: (Updatable) The name of the master user that are
                       used to manage security config

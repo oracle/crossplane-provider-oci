@@ -16,6 +16,9 @@ func (tr *OracleDbAwsIdentityConnector) Hub() {}
 func (tr *OracleDbAwsKey) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *OracleDbAwsKeyPool) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *OracleDbAzureBlobContainer) Hub() {}
 
 // Hub marks this type as a conversion hub.

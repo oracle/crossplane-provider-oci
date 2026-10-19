@@ -291,7 +291,30 @@ type DbHomeDatabaseDBBackupConfigParameters struct {
 type DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters struct {
 
 	// Provide the key OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDRef *v1.Reference `json:"awsEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDSelector *v1.Selector `json:"awsEncryptionKeyIdSelector,omitempty" tf:"-"`
+
+	// (Applicable when provider_type=AWS) Provide the key pool OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.Pool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	AwsEncryptionKeyPoolID *string `json:"awsEncryptionKeyPoolId,omitempty" tf:"aws_encryption_key_pool_id,omitempty"`
+
+	// Reference to a Pool in dataflow to populate awsEncryptionKeyPoolId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyPoolIDRef *v1.Reference `json:"awsEncryptionKeyPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a Pool in dataflow to populate awsEncryptionKeyPoolId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyPoolIDSelector *v1.Selector `json:"awsEncryptionKeyPoolIdSelector,omitempty" tf:"-"`
 
 	// Provide the key OCID of a registered Azure key.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
@@ -321,6 +344,9 @@ type DbHomeDatabaseEncryptionKeyLocationDetailsObservation struct {
 	// Provide the key OCID of a registered AWS key.
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
 
+	// (Applicable when provider_type=AWS) Provide the key pool OCID of a registered AWS key.
+	AwsEncryptionKeyPoolID *string `json:"awsEncryptionKeyPoolId,omitempty" tf:"aws_encryption_key_pool_id,omitempty"`
+
 	// Provide the key OCID of a registered Azure key.
 	AzureEncryptionKeyID *string `json:"azureEncryptionKeyId,omitempty" tf:"azure_encryption_key_id,omitempty"`
 
@@ -334,8 +360,32 @@ type DbHomeDatabaseEncryptionKeyLocationDetailsObservation struct {
 type DbHomeDatabaseEncryptionKeyLocationDetailsParameters struct {
 
 	// Provide the key OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	AwsEncryptionKeyID *string `json:"awsEncryptionKeyId,omitempty" tf:"aws_encryption_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDRef *v1.Reference `json:"awsEncryptionKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate awsEncryptionKeyId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyIDSelector *v1.Selector `json:"awsEncryptionKeyIdSelector,omitempty" tf:"-"`
+
+	// (Applicable when provider_type=AWS) Provide the key pool OCID of a registered AWS key.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dataflow/v1alpha1.Pool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyPoolID *string `json:"awsEncryptionKeyPoolId,omitempty" tf:"aws_encryption_key_pool_id,omitempty"`
+
+	// Reference to a Pool in dataflow to populate awsEncryptionKeyPoolId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyPoolIDRef *v1.Reference `json:"awsEncryptionKeyPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a Pool in dataflow to populate awsEncryptionKeyPoolId.
+	// +kubebuilder:validation:Optional
+	AwsEncryptionKeyPoolIDSelector *v1.Selector `json:"awsEncryptionKeyPoolIdSelector,omitempty" tf:"-"`
 
 	// Provide the key OCID of a registered Azure key.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key

@@ -44,6 +44,9 @@ type AdditionalDetailsParameters struct {
 
 type BillingDetailsInitParameters struct {
 
+	// The billing model this billing detail applies to.
+	BillingModel *string `json:"billingModel,omitempty" tf:"billing_model,omitempty"`
+
 	// Whether this sku is assign to gov product.
 	HasGovSku *bool `json:"hasGovSku,omitempty" tf:"has_gov_sku,omitempty"`
 
@@ -52,6 +55,9 @@ type BillingDetailsInitParameters struct {
 
 	// The part's metric.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
+
+	// Unique key used to map this SKU to the pricing plan.
+	PricingPlanKey *string `json:"pricingPlanKey,omitempty" tf:"pricing_plan_key,omitempty"`
 
 	// Tha rate of this sku meter.
 	RateAllocation *float64 `json:"rateAllocation,omitempty" tf:"rate_allocation,omitempty"`
@@ -62,6 +68,9 @@ type BillingDetailsInitParameters struct {
 
 type BillingDetailsObservation struct {
 
+	// The billing model this billing detail applies to.
+	BillingModel *string `json:"billingModel,omitempty" tf:"billing_model,omitempty"`
+
 	// Whether this sku is assign to gov product.
 	HasGovSku *bool `json:"hasGovSku,omitempty" tf:"has_gov_sku,omitempty"`
 
@@ -71,6 +80,9 @@ type BillingDetailsObservation struct {
 	// The part's metric.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
+	// Unique key used to map this SKU to the pricing plan.
+	PricingPlanKey *string `json:"pricingPlanKey,omitempty" tf:"pricing_plan_key,omitempty"`
+
 	// Tha rate of this sku meter.
 	RateAllocation *float64 `json:"rateAllocation,omitempty" tf:"rate_allocation,omitempty"`
 
@@ -79,6 +91,10 @@ type BillingDetailsObservation struct {
 }
 
 type BillingDetailsParameters struct {
+
+	// The billing model this billing detail applies to.
+	// +kubebuilder:validation:Optional
+	BillingModel *string `json:"billingModel" tf:"billing_model,omitempty"`
 
 	// Whether this sku is assign to gov product.
 	// +kubebuilder:validation:Optional
@@ -92,6 +108,10 @@ type BillingDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
 
+	// Unique key used to map this SKU to the pricing plan.
+	// +kubebuilder:validation:Optional
+	PricingPlanKey *string `json:"pricingPlanKey" tf:"pricing_plan_key,omitempty"`
+
 	// Tha rate of this sku meter.
 	// +kubebuilder:validation:Optional
 	RateAllocation *float64 `json:"rateAllocation" tf:"rate_allocation,omitempty"`
@@ -99,6 +119,85 @@ type BillingDetailsParameters struct {
 	// Sku for service.
 	// +kubebuilder:validation:Optional
 	Sku *string `json:"sku" tf:"sku,omitempty"`
+}
+
+type DimensionsInitParameters struct {
+
+	// Specifies the interval at which the usage dimension is billed.
+	DimensionBillingFrequency *string `json:"dimensionBillingFrequency,omitempty" tf:"dimension_billing_frequency,omitempty"`
+
+	// A detailed explanation of the usage dimension.
+	DimensionDescription *string `json:"dimensionDescription,omitempty" tf:"dimension_description,omitempty"`
+
+	// The stable key used internally to map this usage dimension to billing details.
+	DimensionKey *string `json:"dimensionKey,omitempty" tf:"dimension_key,omitempty"`
+
+	// The name of the usage dimension.
+	DimensionName *string `json:"dimensionName,omitempty" tf:"dimension_name,omitempty"`
+
+	// Quantity included in the base fee for hybrid plans.
+	IncludedQuantity *float64 `json:"includedQuantity,omitempty" tf:"included_quantity,omitempty"`
+
+	// The part's metric.
+	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
+
+	// Dimension-level rates in various supported currencies.
+	Rates []RatesInitParameters `json:"rates,omitempty" tf:"rates,omitempty"`
+}
+
+type DimensionsObservation struct {
+
+	// Specifies the interval at which the usage dimension is billed.
+	DimensionBillingFrequency *string `json:"dimensionBillingFrequency,omitempty" tf:"dimension_billing_frequency,omitempty"`
+
+	// A detailed explanation of the usage dimension.
+	DimensionDescription *string `json:"dimensionDescription,omitempty" tf:"dimension_description,omitempty"`
+
+	// The stable key used internally to map this usage dimension to billing details.
+	DimensionKey *string `json:"dimensionKey,omitempty" tf:"dimension_key,omitempty"`
+
+	// The name of the usage dimension.
+	DimensionName *string `json:"dimensionName,omitempty" tf:"dimension_name,omitempty"`
+
+	// Quantity included in the base fee for hybrid plans.
+	IncludedQuantity *float64 `json:"includedQuantity,omitempty" tf:"included_quantity,omitempty"`
+
+	// The part's metric.
+	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
+
+	// Dimension-level rates in various supported currencies.
+	Rates []RatesObservation `json:"rates,omitempty" tf:"rates,omitempty"`
+}
+
+type DimensionsParameters struct {
+
+	// Specifies the interval at which the usage dimension is billed.
+	// +kubebuilder:validation:Optional
+	DimensionBillingFrequency *string `json:"dimensionBillingFrequency" tf:"dimension_billing_frequency,omitempty"`
+
+	// A detailed explanation of the usage dimension.
+	// +kubebuilder:validation:Optional
+	DimensionDescription *string `json:"dimensionDescription" tf:"dimension_description,omitempty"`
+
+	// The stable key used internally to map this usage dimension to billing details.
+	// +kubebuilder:validation:Optional
+	DimensionKey *string `json:"dimensionKey" tf:"dimension_key,omitempty"`
+
+	// The name of the usage dimension.
+	// +kubebuilder:validation:Optional
+	DimensionName *string `json:"dimensionName" tf:"dimension_name,omitempty"`
+
+	// Quantity included in the base fee for hybrid plans.
+	// +kubebuilder:validation:Optional
+	IncludedQuantity *float64 `json:"includedQuantity,omitempty" tf:"included_quantity,omitempty"`
+
+	// The part's metric.
+	// +kubebuilder:validation:Optional
+	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
+
+	// Dimension-level rates in various supported currencies.
+	// +kubebuilder:validation:Optional
+	Rates []RatesParameters `json:"rates" tf:"rates,omitempty"`
 }
 
 type ExtendedMetadataInitParameters struct {
@@ -171,13 +270,16 @@ type MetersParameters struct {
 
 type PricingPlanInitParameters struct {
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the interval at which billing occurs for the subscription plan or usage dimension.
 	BillingFrequency *string `json:"billingFrequency,omitempty" tf:"billing_frequency,omitempty"`
+
+	// Metered usage dimensions associated with the pricing plan.
+	Dimensions []DimensionsInitParameters `json:"dimensions,omitempty" tf:"dimensions,omitempty"`
 
 	// A detailed explanation of the subscription plan.
 	PlanDescription *string `json:"planDescription,omitempty" tf:"plan_description,omitempty"`
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the duration of the subscription plan.
 	PlanDuration *string `json:"planDuration,omitempty" tf:"plan_duration,omitempty"`
 
 	// The name of the subscription plan used to identify the plan.
@@ -186,19 +288,22 @@ type PricingPlanInitParameters struct {
 	// The type of the subscription plan.
 	PlanType *string `json:"planType,omitempty" tf:"plan_type,omitempty"`
 
-	// The pricing details of the subscription plan in various supported currencies.
-	Rates []RatesInitParameters `json:"rates,omitempty" tf:"rates,omitempty"`
+	// Dimension-level rates in various supported currencies.
+	Rates []PricingPlanRatesInitParameters `json:"rates,omitempty" tf:"rates,omitempty"`
 }
 
 type PricingPlanObservation struct {
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the interval at which billing occurs for the subscription plan or usage dimension.
 	BillingFrequency *string `json:"billingFrequency,omitempty" tf:"billing_frequency,omitempty"`
+
+	// Metered usage dimensions associated with the pricing plan.
+	Dimensions []DimensionsObservation `json:"dimensions,omitempty" tf:"dimensions,omitempty"`
 
 	// A detailed explanation of the subscription plan.
 	PlanDescription *string `json:"planDescription,omitempty" tf:"plan_description,omitempty"`
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the duration of the subscription plan.
 	PlanDuration *string `json:"planDuration,omitempty" tf:"plan_duration,omitempty"`
 
 	// The name of the subscription plan used to identify the plan.
@@ -207,21 +312,25 @@ type PricingPlanObservation struct {
 	// The type of the subscription plan.
 	PlanType *string `json:"planType,omitempty" tf:"plan_type,omitempty"`
 
-	// The pricing details of the subscription plan in various supported currencies.
-	Rates []RatesObservation `json:"rates,omitempty" tf:"rates,omitempty"`
+	// Dimension-level rates in various supported currencies.
+	Rates []PricingPlanRatesObservation `json:"rates,omitempty" tf:"rates,omitempty"`
 }
 
 type PricingPlanParameters struct {
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the interval at which billing occurs for the subscription plan or usage dimension.
 	// +kubebuilder:validation:Optional
 	BillingFrequency *string `json:"billingFrequency" tf:"billing_frequency,omitempty"`
+
+	// Metered usage dimensions associated with the pricing plan.
+	// +kubebuilder:validation:Optional
+	Dimensions []DimensionsParameters `json:"dimensions,omitempty" tf:"dimensions,omitempty"`
 
 	// A detailed explanation of the subscription plan.
 	// +kubebuilder:validation:Optional
 	PlanDescription *string `json:"planDescription,omitempty" tf:"plan_description,omitempty"`
 
-	// Specifies the interval at which billing occurs for the subscription plan.
+	// Specifies the duration of the subscription plan.
 	// +kubebuilder:validation:Optional
 	PlanDuration *string `json:"planDuration,omitempty" tf:"plan_duration,omitempty"`
 
@@ -233,9 +342,38 @@ type PricingPlanParameters struct {
 	// +kubebuilder:validation:Optional
 	PlanType *string `json:"planType" tf:"plan_type,omitempty"`
 
-	// The pricing details of the subscription plan in various supported currencies.
+	// Dimension-level rates in various supported currencies.
 	// +kubebuilder:validation:Optional
-	Rates []RatesParameters `json:"rates" tf:"rates,omitempty"`
+	Rates []PricingPlanRatesParameters `json:"rates" tf:"rates,omitempty"`
+}
+
+type PricingPlanRatesInitParameters struct {
+
+	// The currency supported, in the format specified by ISO-4217
+	Currency *string `json:"currency,omitempty" tf:"currency,omitempty"`
+
+	// The amount charged for the plan in the specified currency.
+	Rate *float64 `json:"rate,omitempty" tf:"rate,omitempty"`
+}
+
+type PricingPlanRatesObservation struct {
+
+	// The currency supported, in the format specified by ISO-4217
+	Currency *string `json:"currency,omitempty" tf:"currency,omitempty"`
+
+	// The amount charged for the plan in the specified currency.
+	Rate *float64 `json:"rate,omitempty" tf:"rate,omitempty"`
+}
+
+type PricingPlanRatesParameters struct {
+
+	// The currency supported, in the format specified by ISO-4217
+	// +kubebuilder:validation:Optional
+	Currency *string `json:"currency" tf:"currency,omitempty"`
+
+	// The amount charged for the plan in the specified currency.
+	// +kubebuilder:validation:Optional
+	Rate *float64 `json:"rate" tf:"rate,omitempty"`
 }
 
 type RatesInitParameters struct {
@@ -272,7 +410,7 @@ type SubscriptionDetailsInitParameters struct {
 	// Tha amount for the currency type.
 	Amount *float64 `json:"amount,omitempty" tf:"amount,omitempty"`
 
-	// Sku details for billing subscription.
+	// Billing details associated with the subscription plan and its usage dimensions.
 	BillingDetails []BillingDetailsInitParameters `json:"billingDetails,omitempty" tf:"billing_details,omitempty"`
 
 	// The currency supported, in the format specified by ISO-4217
@@ -293,7 +431,7 @@ type SubscriptionDetailsObservation struct {
 	// Tha amount for the currency type.
 	Amount *float64 `json:"amount,omitempty" tf:"amount,omitempty"`
 
-	// Sku details for billing subscription.
+	// Billing details associated with the subscription plan and its usage dimensions.
 	BillingDetails []BillingDetailsObservation `json:"billingDetails,omitempty" tf:"billing_details,omitempty"`
 
 	// The currency supported, in the format specified by ISO-4217
@@ -315,7 +453,7 @@ type SubscriptionDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	Amount *float64 `json:"amount,omitempty" tf:"amount,omitempty"`
 
-	// Sku details for billing subscription.
+	// Billing details associated with the subscription plan and its usage dimensions.
 	// +kubebuilder:validation:Optional
 	BillingDetails []BillingDetailsParameters `json:"billingDetails" tf:"billing_details,omitempty"`
 

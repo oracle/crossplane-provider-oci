@@ -58,8 +58,8 @@ spec:
           displayName: ${var.instance_configuration_instance_details_block_volumes_create_details_display_name}
           freeformTags:
             Department: Finance
-          is_reservations_enabled: ${var.instance_configuration_instance_details_block_volumes_create_details_is_reservations_enabled}
           isAutoTuneEnabled: ${var.instance_configuration_instance_details_block_volumes_create_details_is_auto_tune_enabled}
+          isReservationsEnabled: ${var.instance_configuration_instance_details_block_volumes_create_details_is_reservations_enabled}
           kmsKeyIdSelector:
             matchLabels:
               testing.upbound.io/example-name: test_key
@@ -142,6 +142,7 @@ spec:
         - bootVolumeType: ${var.instance_configuration_instance_details_launch_details_launch_options_boot_volume_type}
           firmware: ${var.instance_configuration_instance_details_launch_details_launch_options_firmware}
           isConsistentVolumeNamingEnabled: ${var.instance_configuration_instance_details_launch_details_launch_options_is_consistent_volume_naming_enabled}
+          isEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_launch_details_launch_options_is_encryption_in_transit_enabled}
           isPvEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_launch_details_launch_options_is_pv_encryption_in_transit_enabled}
           networkType: ${var.instance_configuration_instance_details_launch_details_launch_options_network_type}
           remoteDataVolumeType: ${var.instance_configuration_instance_details_launch_details_launch_options_remote_data_volume_type}
@@ -223,8 +224,8 @@ spec:
             displayName: ${var.instance_configuration_instance_details_options_block_volumes_create_details_display_name}
             freeformTags:
               Department: Finance
-            is_reservations_enabled: ${var.instance_configuration_instance_details_options_block_volumes_create_details_is_reservations_enabled}
             isAutoTuneEnabled: ${var.instance_configuration_instance_details_options_block_volumes_create_details_is_auto_tune_enabled}
+            isReservationsEnabled: ${var.instance_configuration_instance_details_options_block_volumes_create_details_is_reservations_enabled}
             kmsKeyIdSelector:
               matchLabels:
                 testing.upbound.io/example-name: test_key
@@ -305,6 +306,7 @@ spec:
           - bootVolumeType: ${var.instance_configuration_instance_details_options_launch_details_launch_options_boot_volume_type}
             firmware: ${var.instance_configuration_instance_details_options_launch_details_launch_options_firmware}
             isConsistentVolumeNamingEnabled: ${var.instance_configuration_instance_details_options_launch_details_launch_options_is_consistent_volume_naming_enabled}
+            isEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_options_launch_details_launch_options_is_encryption_in_transit_enabled}
             isPvEncryptionInTransitEnabled: ${var.instance_configuration_instance_details_options_launch_details_launch_options_is_pv_encryption_in_transit_enabled}
             networkType: ${var.instance_configuration_instance_details_options_launch_details_launch_options_network_type}
             remoteDataVolumeType: ${var.instance_configuration_instance_details_options_launch_details_launch_options_remote_data_volume_type}

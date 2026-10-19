@@ -25,12 +25,15 @@ import (
 	calculateauditvolumecollected "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/calculateauditvolumecollected"
 	comparesecurityassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/comparesecurityassessment"
 	compareuserassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/compareuserassessment"
+	cryptoassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/cryptoassessment"
+	cryptoassessmentmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/cryptoassessmentmanagement"
 	databasesecurityconfig "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/databasesecurityconfig"
 	databasesecurityconfigmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/databasesecurityconfigmanagement"
 	datasafeconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/datasafeconfiguration"
 	datasafeprivateendpoint "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/datasafeprivateendpoint"
 	discoveryjob "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/discoveryjob"
 	discoveryjobsresult "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/discoveryjobsresult"
+	estimatetablesizes "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/estimatetablesizes"
 	generateonpremconnectorconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/generateonpremconnectorconfiguration"
 	librarymaskingformat "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/librarymaskingformat"
 	maskdata "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskdata"
@@ -40,6 +43,7 @@ import (
 	maskingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskingpolicyhealthreportmanagement"
 	maskingreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskingreportmanagement"
 	onpremconnector "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/onpremconnector"
+	registrationpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/registrationpolicy"
 	report "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/report"
 	reportdefinition "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/reportdefinition"
 	sdmmaskingpolicydifference "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sdmmaskingpolicydifference"
@@ -66,6 +70,13 @@ import (
 	sqlcollection "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlcollection"
 	sqlfirewallpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlfirewallpolicy"
 	sqlfirewallpolicymanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlfirewallpolicymanagement"
+	subsetdata "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsetdata"
+	subsettingpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicy"
+	subsettingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicyhealthreportmanagement"
+	subsettingpolicysubsettingrule "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingrule"
+	subsettingpolicysubsettingruleprocessingchainobject "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingruleprocessingchainobject"
+	subsettingpolicysubsettingschemarelation "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingschemarelation"
+	subsettingreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingreportmanagement"
 	targetalertpolicyassociation "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetalertpolicyassociation"
 	targetdatabase "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetdatabase"
 	targetdatabasegroup "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetdatabasegroup"
@@ -99,12 +110,15 @@ func Setup_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		calculateauditvolumecollected.Setup,
 		comparesecurityassessment.Setup,
 		compareuserassessment.Setup,
+		cryptoassessment.Setup,
+		cryptoassessmentmanagement.Setup,
 		databasesecurityconfig.Setup,
 		databasesecurityconfigmanagement.Setup,
 		datasafeconfiguration.Setup,
 		datasafeprivateendpoint.Setup,
 		discoveryjob.Setup,
 		discoveryjobsresult.Setup,
+		estimatetablesizes.Setup,
 		generateonpremconnectorconfiguration.Setup,
 		librarymaskingformat.Setup,
 		maskdata.Setup,
@@ -114,6 +128,7 @@ func Setup_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		maskingpolicyhealthreportmanagement.Setup,
 		maskingreportmanagement.Setup,
 		onpremconnector.Setup,
+		registrationpolicy.Setup,
 		report.Setup,
 		reportdefinition.Setup,
 		sdmmaskingpolicydifference.Setup,
@@ -140,6 +155,13 @@ func Setup_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		sqlcollection.Setup,
 		sqlfirewallpolicy.Setup,
 		sqlfirewallpolicymanagement.Setup,
+		subsetdata.Setup,
+		subsettingpolicy.Setup,
+		subsettingpolicyhealthreportmanagement.Setup,
+		subsettingpolicysubsettingrule.Setup,
+		subsettingpolicysubsettingruleprocessingchainobject.Setup,
+		subsettingpolicysubsettingschemarelation.Setup,
+		subsettingreportmanagement.Setup,
 		targetalertpolicyassociation.Setup,
 		targetdatabase.Setup,
 		targetdatabasegroup.Setup,
@@ -179,12 +201,15 @@ func SetupGated_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		calculateauditvolumecollected.SetupGated,
 		comparesecurityassessment.SetupGated,
 		compareuserassessment.SetupGated,
+		cryptoassessment.SetupGated,
+		cryptoassessmentmanagement.SetupGated,
 		databasesecurityconfig.SetupGated,
 		databasesecurityconfigmanagement.SetupGated,
 		datasafeconfiguration.SetupGated,
 		datasafeprivateendpoint.SetupGated,
 		discoveryjob.SetupGated,
 		discoveryjobsresult.SetupGated,
+		estimatetablesizes.SetupGated,
 		generateonpremconnectorconfiguration.SetupGated,
 		librarymaskingformat.SetupGated,
 		maskdata.SetupGated,
@@ -194,6 +219,7 @@ func SetupGated_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		maskingpolicyhealthreportmanagement.SetupGated,
 		maskingreportmanagement.SetupGated,
 		onpremconnector.SetupGated,
+		registrationpolicy.SetupGated,
 		report.SetupGated,
 		reportdefinition.SetupGated,
 		sdmmaskingpolicydifference.SetupGated,
@@ -220,6 +246,13 @@ func SetupGated_datasafe(mgr ctrl.Manager, o controller.Options) error {
 		sqlcollection.SetupGated,
 		sqlfirewallpolicy.SetupGated,
 		sqlfirewallpolicymanagement.SetupGated,
+		subsetdata.SetupGated,
+		subsettingpolicy.SetupGated,
+		subsettingpolicyhealthreportmanagement.SetupGated,
+		subsettingpolicysubsettingrule.SetupGated,
+		subsettingpolicysubsettingruleprocessingchainobject.SetupGated,
+		subsettingpolicysubsettingschemarelation.SetupGated,
+		subsettingreportmanagement.SetupGated,
 		targetalertpolicyassociation.SetupGated,
 		targetdatabase.SetupGated,
 		targetdatabasegroup.SetupGated,

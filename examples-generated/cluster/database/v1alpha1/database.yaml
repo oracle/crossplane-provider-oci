@@ -63,6 +63,9 @@ spec:
       - awsEncryptionKeyIdSelector:
           matchLabels:
             testing.upbound.io/example-name: test_key
+        awsEncryptionKeyPoolIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_pool
         azureEncryptionKeyIdSelector:
           matchLabels:
             testing.upbound.io/example-name: test_key
@@ -109,9 +112,18 @@ spec:
         matchLabels:
           testing.upbound.io/example-name: test_database
       sourceEncryptionKeyLocationDetails:
-      - aws_encryption_key_id: ${oci_kms_key.test_key.id}
-        azure_encryption_key_id: ${oci_kms_key.test_key.id}
-        google_cloud_provider_encryption_key_id: ${oci_kms_key.test_key.id}
+      - awsEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        awsEncryptionKeyPoolIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_pool
+        azureEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
+        googleCloudProviderEncryptionKeyIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_key
         hsmPasswordSecretRef:
           key: example-key
           name: example-secret

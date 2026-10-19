@@ -34,6 +34,7 @@ spec:
       owner: ${var.assessment_include_objects_owner}
       schema: ${var.assessment_include_objects_schema}
       type: ${var.assessment_include_objects_type}
+    migrationScope: ${var.assessment_migration_scope}
     networkSpeedMegabitPerSecond: ${var.assessment_network_speed_megabit_per_second}
     sourceDatabaseConnection:
     - id: ${var.assessment_source_database_connection_id}

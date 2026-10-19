@@ -114,7 +114,9 @@ spec:
     isRunNow: ${var.monitor_is_run_now}
     isRunOnce: ${var.monitor_is_run_once}
     maintenanceWindowSchedule:
-    - timeEnded: ${var.monitor_maintenance_window_schedule_time_ended}
+    - recurrenceType: ${var.monitor_maintenance_window_schedule_recurrence_type}
+      scheduleType: RECURRING
+      timeEnded: ${var.monitor_maintenance_window_schedule_time_ended}
       timeStarted: ${var.monitor_maintenance_window_schedule_time_started}
     monitorType: ${var.monitor_monitor_type}
     repeatIntervalInSeconds: ${var.monitor_repeat_interval_in_seconds}

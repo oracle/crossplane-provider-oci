@@ -72,6 +72,13 @@ spec:
         seedClusterIdSelector:
           matchLabels:
             testing.upbound.io/example-name: test_opensearch_cluster
+    remoteReindexTrustConfig:
+    - remoteSources:
+      - certificateIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: test_certificate
+        endpoint: ${var.opensearch_cluster_remote_reindex_trust_config_remote_sources_endpoint}
+        endpointResolutionIp: ${var.opensearch_cluster_remote_reindex_trust_config_remote_sources_endpoint_resolution_ip}
     reverseConnectionEndpointCustomerIps: ${var.opensearch_cluster_reverse_connection_endpoint_customer_ips}
     searchNodeCount: ${var.opensearch_cluster_search_node_count}
     searchNodeHostMemoryGb: ${var.opensearch_cluster_search_node_host_memory_gb}
@@ -80,6 +87,17 @@ spec:
     searchNodeHostType: ${var.opensearch_cluster_search_node_host_type}
     searchNodeStorageGb: ${var.opensearch_cluster_search_node_storage_gb}
     securityAttributes: ${var.opensearch_cluster_security_attributes}
+    securityMasterUserAuthDetails:
+    - userDetails:
+      - passwordDetails:
+        - plainPasswordSecretRef:
+            key: example-key
+            name: example-secret
+          sourceType: ${var.opensearch_cluster_security_master_user_auth_details_user_details_password_details_source_type}
+          vaultSecretIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: test_secret
+        username: ${var.opensearch_cluster_security_master_user_auth_details_user_details_username}
     securityMasterUserNameSelector:
       matchLabels:
         testing.upbound.io/example-name: test_user

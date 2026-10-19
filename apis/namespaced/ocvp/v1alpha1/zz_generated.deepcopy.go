@@ -1221,6 +1221,11 @@ func (in *ClusterInitParameters) DeepCopyInto(out *ClusterInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
+		*out = new(string)
+		**out = **in
+	}
 	if in.InitialHostOcpuCount != nil {
 		in, out := &in.InitialHostOcpuCount, &out.InitialHostOcpuCount
 		*out = new(float64)
@@ -1459,6 +1464,11 @@ func (in *ClusterObservation) DeepCopyInto(out *ClusterObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
+		*out = new(string)
+		**out = **in
+	}
 	if in.InitialHostOcpuCount != nil {
 		in, out := &in.InitialHostOcpuCount, &out.InitialHostOcpuCount
 		*out = new(float64)
@@ -1677,6 +1687,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	}
 	if in.InitialCommitment != nil {
 		in, out := &in.InitialCommitment, &out.InitialCommitment
+		*out = new(string)
+		**out = **in
+	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
 		*out = new(string)
 		**out = **in
 	}
@@ -3150,6 +3165,11 @@ func (in *EsxiHostInitParameters) DeepCopyInto(out *EsxiHostInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
+		*out = new(string)
+		**out = **in
+	}
 	if in.IsVsanByolEnabled != nil {
 		in, out := &in.IsVsanByolEnabled, &out.IsVsanByolEnabled
 		*out = new(bool)
@@ -3294,6 +3314,11 @@ func (in *EsxiHostObservation) DeepCopyInto(out *EsxiHostObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ComputeFaultDomain != nil {
+		in, out := &in.ComputeFaultDomain, &out.ComputeFaultDomain
+		*out = new(string)
+		**out = **in
+	}
 	if in.ComputeInstanceID != nil {
 		in, out := &in.ComputeInstanceID, &out.ComputeInstanceID
 		*out = new(string)
@@ -3402,6 +3427,11 @@ func (in *EsxiHostObservation) DeepCopyInto(out *EsxiHostObservation) {
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
 		*out = new(string)
 		**out = **in
 	}
@@ -3632,6 +3662,11 @@ func (in *EsxiHostParameters) DeepCopyInto(out *EsxiHostParameters) {
 	}
 	if in.HostShapeName != nil {
 		in, out := &in.HostShapeName, &out.HostShapeName
+		*out = new(string)
+		**out = **in
+	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
 		*out = new(string)
 		**out = **in
 	}
@@ -4116,6 +4151,11 @@ func (in *InitialClusterConfigurationsInitParameters) DeepCopyInto(out *InitialC
 	}
 	if in.InitialCommitment != nil {
 		in, out := &in.InitialCommitment, &out.InitialCommitment
+		*out = new(string)
+		**out = **in
+	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
 		*out = new(string)
 		**out = **in
 	}
@@ -4631,6 +4671,11 @@ func (in *InitialClusterConfigurationsObservation) DeepCopyInto(out *InitialClus
 		*out = new(string)
 		**out = **in
 	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
+		*out = new(string)
+		**out = **in
+	}
 	if in.InitialHostOcpuCount != nil {
 		in, out := &in.InitialHostOcpuCount, &out.InitialHostOcpuCount
 		*out = new(float64)
@@ -4735,6 +4780,11 @@ func (in *InitialClusterConfigurationsParameters) DeepCopyInto(out *InitialClust
 	}
 	if in.InitialCommitment != nil {
 		in, out := &in.InitialCommitment, &out.InitialCommitment
+		*out = new(string)
+		**out = **in
+	}
+	if in.InitialFaultDomainHostDistribution != nil {
+		in, out := &in.InitialFaultDomainHostDistribution, &out.InitialFaultDomainHostDistribution
 		*out = new(string)
 		**out = **in
 	}

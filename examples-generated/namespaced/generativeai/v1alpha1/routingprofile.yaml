@@ -1,0 +1,24 @@
+apiVersion: generativeai.oci.m.upbound.io/v1alpha1
+kind: RoutingProfile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: generativeai/v1alpha1/routingprofile
+  labels:
+    testing.upbound.io/example-name: test_routing_profile
+  name: test-routing-profile
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.routing_profile_description}
+    displayName: ${var.routing_profile_display_name}
+    freeformTags:
+      Department: Finance
+    modelRoutingPolicy:
+    - allowedModels: ${var.routing_profile_model_routing_policy_allowed_models}
+    regionRoutingPolicy:
+    - allowedRegions: ${var.routing_profile_region_routing_policy_allowed_regions}

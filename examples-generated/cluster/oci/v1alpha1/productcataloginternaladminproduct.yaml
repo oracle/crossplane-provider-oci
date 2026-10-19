@@ -1,0 +1,23 @@
+apiVersion: oci.oci.upbound.io/v1alpha1
+kind: ProductCatalogInternalAdminProduct
+metadata:
+  annotations:
+    meta.upbound.io/example-id: oci/v1alpha1/productcataloginternaladminproduct
+  labels:
+    testing.upbound.io/example-name: test_internal_admin_product
+  name: test-internal-admin-product
+spec:
+  forProvider:
+    backfillEligibility: ${var.internal_admin_product_backfill_eligibility}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: ${var.internal_admin_product_description}
+    isExcluded: ${var.internal_admin_product_is_excluded}
+    limits:
+    - publicLimitName: ${var.internal_admin_product_limits_public_limit_name}
+      publicServiceName: ${oci_announcements_service_service.test_service.name}
+    meters:
+    - name: ${var.internal_admin_product_meters_name}
+    name: ${var.internal_admin_product_name}
+    serviceName: ${oci_announcements_service_service.test_service.name}
