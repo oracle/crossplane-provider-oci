@@ -106,7 +106,7 @@ import (
 	v1alpha1nosql "github.com/oracle/provider-oci/apis/cluster/nosql/v1alpha1"
 	v1alpha1objectstorage "github.com/oracle/provider-oci/apis/cluster/objectstorage/v1alpha1"
 	v1alpha1oce "github.com/oracle/provider-oci/apis/cluster/oce/v1alpha1"
-	v1alpha1oci "github.com/oracle/provider-oci/apis/cluster/oci/v1alpha1"
+	v1alpha1ociproductcatalog "github.com/oracle/provider-oci/apis/cluster/ociproductcatalog/v1alpha1"
 	v1alpha1ocvp "github.com/oracle/provider-oci/apis/cluster/ocvp/v1alpha1"
 	v1alpha1oda "github.com/oracle/provider-oci/apis/cluster/oda/v1alpha1"
 	v1alpha1ons "github.com/oracle/provider-oci/apis/cluster/ons/v1alpha1"
@@ -245,7 +245,7 @@ func init() {
 		v1alpha1nosql.SchemeBuilder.AddToScheme,
 		v1alpha1objectstorage.SchemeBuilder.AddToScheme,
 		v1alpha1oce.SchemeBuilder.AddToScheme,
-		v1alpha1oci.SchemeBuilder.AddToScheme,
+		v1alpha1ociproductcatalog.SchemeBuilder.AddToScheme,
 		v1alpha1ocvp.SchemeBuilder.AddToScheme,
 		v1alpha1oda.SchemeBuilder.AddToScheme,
 		v1alpha1ons.SchemeBuilder.AddToScheme,

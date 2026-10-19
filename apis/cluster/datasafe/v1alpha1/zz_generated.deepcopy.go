@@ -8234,16 +8234,35 @@ func (in *ConnectionOptionInitParameters) DeepCopyInto(out *ConnectionOptionInit
 		*out = new(string)
 		**out = **in
 	}
-	if in.Identifiers != nil {
-		in, out := &in.Identifiers, &out.Identifiers
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
+	if in.DatasafePrivateEndpointID != nil {
+		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatasafePrivateEndpointIDRef != nil {
+		in, out := &in.DatasafePrivateEndpointIDRef, &out.DatasafePrivateEndpointIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DatasafePrivateEndpointIDSelector != nil {
+		in, out := &in.DatasafePrivateEndpointIDSelector, &out.DatasafePrivateEndpointIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OnPremConnectorID != nil {
+		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OnPremConnectorIDRef != nil {
+		in, out := &in.OnPremConnectorIDRef, &out.OnPremConnectorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OnPremConnectorIDSelector != nil {
+		in, out := &in.OnPremConnectorIDSelector, &out.OnPremConnectorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -8265,16 +8284,15 @@ func (in *ConnectionOptionObservation) DeepCopyInto(out *ConnectionOptionObserva
 		*out = new(string)
 		**out = **in
 	}
-	if in.Identifiers != nil {
-		in, out := &in.Identifiers, &out.Identifiers
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
+	if in.DatasafePrivateEndpointID != nil {
+		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OnPremConnectorID != nil {
+		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
+		*out = new(string)
+		**out = **in
 	}
 }
 
@@ -8296,16 +8314,35 @@ func (in *ConnectionOptionParameters) DeepCopyInto(out *ConnectionOptionParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.Identifiers != nil {
-		in, out := &in.Identifiers, &out.Identifiers
-		*out = make([]*string, len(*in))
-		for i := range *in {
-			if (*in)[i] != nil {
-				in, out := &(*in)[i], &(*out)[i]
-				*out = new(string)
-				**out = **in
-			}
-		}
+	if in.DatasafePrivateEndpointID != nil {
+		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DatasafePrivateEndpointIDRef != nil {
+		in, out := &in.DatasafePrivateEndpointIDRef, &out.DatasafePrivateEndpointIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DatasafePrivateEndpointIDSelector != nil {
+		in, out := &in.DatasafePrivateEndpointIDSelector, &out.DatasafePrivateEndpointIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OnPremConnectorID != nil {
+		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OnPremConnectorIDRef != nil {
+		in, out := &in.OnPremConnectorIDRef, &out.OnPremConnectorIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.OnPremConnectorIDSelector != nil {
+		in, out := &in.OnPremConnectorIDSelector, &out.OnPremConnectorIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -12961,7 +12998,7 @@ func (in *EstimateTableSizesInitParameters) DeepCopyInto(out *EstimateTableSizes
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]TargetCredentialsInitParameters, len(*in))
+		*out = make([]EstimateTableSizesTargetCredentialsInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -13030,7 +13067,7 @@ func (in *EstimateTableSizesObservation) DeepCopyInto(out *EstimateTableSizesObs
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]TargetCredentialsObservation, len(*in))
+		*out = make([]EstimateTableSizesTargetCredentialsObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -13072,7 +13109,7 @@ func (in *EstimateTableSizesParameters) DeepCopyInto(out *EstimateTableSizesPara
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]TargetCredentialsParameters, len(*in))
+		*out = make([]EstimateTableSizesTargetCredentialsParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -13125,6 +13162,68 @@ func (in *EstimateTableSizesStatus) DeepCopy() *EstimateTableSizesStatus {
 		return nil
 	}
 	out := new(EstimateTableSizesStatus)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *EstimateTableSizesTargetCredentialsInitParameters) DeepCopyInto(out *EstimateTableSizesTargetCredentialsInitParameters) {
+	*out = *in
+	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
+	if in.UserName != nil {
+		in, out := &in.UserName, &out.UserName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new EstimateTableSizesTargetCredentialsInitParameters.
+func (in *EstimateTableSizesTargetCredentialsInitParameters) DeepCopy() *EstimateTableSizesTargetCredentialsInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(EstimateTableSizesTargetCredentialsInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *EstimateTableSizesTargetCredentialsObservation) DeepCopyInto(out *EstimateTableSizesTargetCredentialsObservation) {
+	*out = *in
+	if in.UserName != nil {
+		in, out := &in.UserName, &out.UserName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new EstimateTableSizesTargetCredentialsObservation.
+func (in *EstimateTableSizesTargetCredentialsObservation) DeepCopy() *EstimateTableSizesTargetCredentialsObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(EstimateTableSizesTargetCredentialsObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *EstimateTableSizesTargetCredentialsParameters) DeepCopyInto(out *EstimateTableSizesTargetCredentialsParameters) {
+	*out = *in
+	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
+	if in.UserName != nil {
+		in, out := &in.UserName, &out.UserName
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new EstimateTableSizesTargetCredentialsParameters.
+func (in *EstimateTableSizesTargetCredentialsParameters) DeepCopy() *EstimateTableSizesTargetCredentialsParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(EstimateTableSizesTargetCredentialsParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -15132,7 +15231,7 @@ func (in *MaskDataInitParameters) DeepCopyInto(out *MaskDataInitParameters) {
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]MaskDataTargetCredentialsInitParameters, len(*in))
+		*out = make([]TargetCredentialsInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -15201,7 +15300,7 @@ func (in *MaskDataObservation) DeepCopyInto(out *MaskDataObservation) {
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]MaskDataTargetCredentialsObservation, len(*in))
+		*out = make([]TargetCredentialsObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -15233,7 +15332,7 @@ func (in *MaskDataParameters) DeepCopyInto(out *MaskDataParameters) {
 	}
 	if in.TargetCredentials != nil {
 		in, out := &in.TargetCredentials, &out.TargetCredentials
-		*out = make([]MaskDataTargetCredentialsParameters, len(*in))
+		*out = make([]TargetCredentialsParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -15286,68 +15385,6 @@ func (in *MaskDataStatus) DeepCopy() *MaskDataStatus {
 		return nil
 	}
 	out := new(MaskDataStatus)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MaskDataTargetCredentialsInitParameters) DeepCopyInto(out *MaskDataTargetCredentialsInitParameters) {
-	*out = *in
-	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
-	if in.UserName != nil {
-		in, out := &in.UserName, &out.UserName
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MaskDataTargetCredentialsInitParameters.
-func (in *MaskDataTargetCredentialsInitParameters) DeepCopy() *MaskDataTargetCredentialsInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(MaskDataTargetCredentialsInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MaskDataTargetCredentialsObservation) DeepCopyInto(out *MaskDataTargetCredentialsObservation) {
-	*out = *in
-	if in.UserName != nil {
-		in, out := &in.UserName, &out.UserName
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MaskDataTargetCredentialsObservation.
-func (in *MaskDataTargetCredentialsObservation) DeepCopy() *MaskDataTargetCredentialsObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(MaskDataTargetCredentialsObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *MaskDataTargetCredentialsParameters) DeepCopyInto(out *MaskDataTargetCredentialsParameters) {
-	*out = *in
-	in.PasswordSecretRef.DeepCopyInto(&out.PasswordSecretRef)
-	if in.UserName != nil {
-		in, out := &in.UserName, &out.UserName
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new MaskDataTargetCredentialsParameters.
-func (in *MaskDataTargetCredentialsParameters) DeepCopy() *MaskDataTargetCredentialsParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(MaskDataTargetCredentialsParameters)
 	in.DeepCopyInto(out)
 	return out
 }
@@ -19465,6 +19502,99 @@ func (in *RegistrationPolicy) DeepCopyObject() runtime.Object {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *RegistrationPolicyConnectionOptionInitParameters) DeepCopyInto(out *RegistrationPolicyConnectionOptionInitParameters) {
+	*out = *in
+	if in.ConnectionType != nil {
+		in, out := &in.ConnectionType, &out.ConnectionType
+		*out = new(string)
+		**out = **in
+	}
+	if in.Identifiers != nil {
+		in, out := &in.Identifiers, &out.Identifiers
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new RegistrationPolicyConnectionOptionInitParameters.
+func (in *RegistrationPolicyConnectionOptionInitParameters) DeepCopy() *RegistrationPolicyConnectionOptionInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(RegistrationPolicyConnectionOptionInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *RegistrationPolicyConnectionOptionObservation) DeepCopyInto(out *RegistrationPolicyConnectionOptionObservation) {
+	*out = *in
+	if in.ConnectionType != nil {
+		in, out := &in.ConnectionType, &out.ConnectionType
+		*out = new(string)
+		**out = **in
+	}
+	if in.Identifiers != nil {
+		in, out := &in.Identifiers, &out.Identifiers
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new RegistrationPolicyConnectionOptionObservation.
+func (in *RegistrationPolicyConnectionOptionObservation) DeepCopy() *RegistrationPolicyConnectionOptionObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(RegistrationPolicyConnectionOptionObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *RegistrationPolicyConnectionOptionParameters) DeepCopyInto(out *RegistrationPolicyConnectionOptionParameters) {
+	*out = *in
+	if in.ConnectionType != nil {
+		in, out := &in.ConnectionType, &out.ConnectionType
+		*out = new(string)
+		**out = **in
+	}
+	if in.Identifiers != nil {
+		in, out := &in.Identifiers, &out.Identifiers
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new RegistrationPolicyConnectionOptionParameters.
+func (in *RegistrationPolicyConnectionOptionParameters) DeepCopy() *RegistrationPolicyConnectionOptionParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(RegistrationPolicyConnectionOptionParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *RegistrationPolicyInitParameters) DeepCopyInto(out *RegistrationPolicyInitParameters) {
 	*out = *in
 	if in.CanOverrideFeatures != nil {
@@ -19489,7 +19619,7 @@ func (in *RegistrationPolicyInitParameters) DeepCopyInto(out *RegistrationPolicy
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]ConnectionOptionInitParameters, len(*in))
+		*out = make([]RegistrationPolicyConnectionOptionInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -19621,7 +19751,7 @@ func (in *RegistrationPolicyObservation) DeepCopyInto(out *RegistrationPolicyObs
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]ConnectionOptionObservation, len(*in))
+		*out = make([]RegistrationPolicyConnectionOptionObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -19777,7 +19907,7 @@ func (in *RegistrationPolicyParameters) DeepCopyInto(out *RegistrationPolicyPara
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]ConnectionOptionParameters, len(*in))
+		*out = make([]RegistrationPolicyConnectionOptionParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -35020,136 +35150,6 @@ func (in *TargetDatabase) DeepCopyObject() runtime.Object {
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *TargetDatabaseConnectionOptionInitParameters) DeepCopyInto(out *TargetDatabaseConnectionOptionInitParameters) {
-	*out = *in
-	if in.ConnectionType != nil {
-		in, out := &in.ConnectionType, &out.ConnectionType
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatasafePrivateEndpointID != nil {
-		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatasafePrivateEndpointIDRef != nil {
-		in, out := &in.DatasafePrivateEndpointIDRef, &out.DatasafePrivateEndpointIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatasafePrivateEndpointIDSelector != nil {
-		in, out := &in.DatasafePrivateEndpointIDSelector, &out.DatasafePrivateEndpointIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.OnPremConnectorID != nil {
-		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
-		*out = new(string)
-		**out = **in
-	}
-	if in.OnPremConnectorIDRef != nil {
-		in, out := &in.OnPremConnectorIDRef, &out.OnPremConnectorIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.OnPremConnectorIDSelector != nil {
-		in, out := &in.OnPremConnectorIDSelector, &out.OnPremConnectorIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new TargetDatabaseConnectionOptionInitParameters.
-func (in *TargetDatabaseConnectionOptionInitParameters) DeepCopy() *TargetDatabaseConnectionOptionInitParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(TargetDatabaseConnectionOptionInitParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *TargetDatabaseConnectionOptionObservation) DeepCopyInto(out *TargetDatabaseConnectionOptionObservation) {
-	*out = *in
-	if in.ConnectionType != nil {
-		in, out := &in.ConnectionType, &out.ConnectionType
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatasafePrivateEndpointID != nil {
-		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
-		*out = new(string)
-		**out = **in
-	}
-	if in.OnPremConnectorID != nil {
-		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
-		*out = new(string)
-		**out = **in
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new TargetDatabaseConnectionOptionObservation.
-func (in *TargetDatabaseConnectionOptionObservation) DeepCopy() *TargetDatabaseConnectionOptionObservation {
-	if in == nil {
-		return nil
-	}
-	out := new(TargetDatabaseConnectionOptionObservation)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
-func (in *TargetDatabaseConnectionOptionParameters) DeepCopyInto(out *TargetDatabaseConnectionOptionParameters) {
-	*out = *in
-	if in.ConnectionType != nil {
-		in, out := &in.ConnectionType, &out.ConnectionType
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatasafePrivateEndpointID != nil {
-		in, out := &in.DatasafePrivateEndpointID, &out.DatasafePrivateEndpointID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DatasafePrivateEndpointIDRef != nil {
-		in, out := &in.DatasafePrivateEndpointIDRef, &out.DatasafePrivateEndpointIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.DatasafePrivateEndpointIDSelector != nil {
-		in, out := &in.DatasafePrivateEndpointIDSelector, &out.DatasafePrivateEndpointIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.OnPremConnectorID != nil {
-		in, out := &in.OnPremConnectorID, &out.OnPremConnectorID
-		*out = new(string)
-		**out = **in
-	}
-	if in.OnPremConnectorIDRef != nil {
-		in, out := &in.OnPremConnectorIDRef, &out.OnPremConnectorIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.OnPremConnectorIDSelector != nil {
-		in, out := &in.OnPremConnectorIDSelector, &out.OnPremConnectorIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-}
-
-// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new TargetDatabaseConnectionOptionParameters.
-func (in *TargetDatabaseConnectionOptionParameters) DeepCopy() *TargetDatabaseConnectionOptionParameters {
-	if in == nil {
-		return nil
-	}
-	out := new(TargetDatabaseConnectionOptionParameters)
-	in.DeepCopyInto(out)
-	return out
-}
-
-// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *TargetDatabaseGroup) DeepCopyInto(out *TargetDatabaseGroup) {
 	*out = *in
 	out.TypeMeta = in.TypeMeta
@@ -35541,7 +35541,7 @@ func (in *TargetDatabaseInitParameters) DeepCopyInto(out *TargetDatabaseInitPara
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]TargetDatabaseConnectionOptionInitParameters, len(*in))
+		*out = make([]ConnectionOptionInitParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -35686,7 +35686,7 @@ func (in *TargetDatabaseObservation) DeepCopyInto(out *TargetDatabaseObservation
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]TargetDatabaseConnectionOptionObservation, len(*in))
+		*out = make([]ConnectionOptionObservation, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
@@ -35857,7 +35857,7 @@ func (in *TargetDatabaseParameters) DeepCopyInto(out *TargetDatabaseParameters) 
 	}
 	if in.ConnectionOption != nil {
 		in, out := &in.ConnectionOption, &out.ConnectionOption
-		*out = make([]TargetDatabaseConnectionOptionParameters, len(*in))
+		*out = make([]ConnectionOptionParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}

@@ -29,7 +29,7 @@ type EstimateTableSizesInitParameters struct {
 	SubsettingPolicyIDSelector *v1.Selector `json:"subsettingPolicyIdSelector,omitempty" tf:"-"`
 
 	// Credentials for connecting to the target database.
-	TargetCredentials []TargetCredentialsInitParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []EstimateTableSizesTargetCredentialsInitParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	// The OCID of the target database. If omitted, the target is resolved from the subsetting policy.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
@@ -42,7 +42,7 @@ type EstimateTableSizesObservation struct {
 	SubsettingPolicyID *string `json:"subsettingPolicyId,omitempty" tf:"subsetting_policy_id,omitempty"`
 
 	// Credentials for connecting to the target database.
-	TargetCredentials []TargetCredentialsObservation `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []EstimateTableSizesTargetCredentialsObservation `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	// The OCID of the target database. If omitted, the target is resolved from the subsetting policy.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
@@ -66,14 +66,14 @@ type EstimateTableSizesParameters struct {
 
 	// Credentials for connecting to the target database.
 	// +kubebuilder:validation:Optional
-	TargetCredentials []TargetCredentialsParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []EstimateTableSizesTargetCredentialsParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	// The OCID of the target database. If omitted, the target is resolved from the subsetting policy.
 	// +kubebuilder:validation:Optional
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 }
 
-type TargetCredentialsInitParameters struct {
+type EstimateTableSizesTargetCredentialsInitParameters struct {
 
 	// The password for the target database user.
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
@@ -82,13 +82,13 @@ type TargetCredentialsInitParameters struct {
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
 
-type TargetCredentialsObservation struct {
+type EstimateTableSizesTargetCredentialsObservation struct {
 
 	// The user name for the target database.
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
 
-type TargetCredentialsParameters struct {
+type EstimateTableSizesTargetCredentialsParameters struct {
 
 	// The password for the target database user.
 	// +kubebuilder:validation:Optional

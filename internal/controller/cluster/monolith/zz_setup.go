@@ -845,8 +845,8 @@ import (
 	privateendpointobjectstorage "github.com/oracle/provider-oci/internal/controller/cluster/objectstorage/privateendpoint"
 	replicationpolicy "github.com/oracle/provider-oci/internal/controller/cluster/objectstorage/replicationpolicy"
 	oceinstance "github.com/oracle/provider-oci/internal/controller/cluster/oce/oceinstance"
-	productcataloginternaladminproduct "github.com/oracle/provider-oci/internal/controller/cluster/oci/productcataloginternaladminproduct"
-	productcataloginternalproduct "github.com/oracle/provider-oci/internal/controller/cluster/oci/productcataloginternalproduct"
+	internaladminproduct "github.com/oracle/provider-oci/internal/controller/cluster/ociproductcatalog/internaladminproduct"
+	internalproduct "github.com/oracle/provider-oci/internal/controller/cluster/ociproductcatalog/internalproduct"
 	byol "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/byol"
 	byolallocation "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/byolallocation"
 	clusterocvp "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/cluster"
@@ -1868,8 +1868,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		privateendpointobjectstorage.Setup,
 		replicationpolicy.Setup,
 		oceinstance.Setup,
-		productcataloginternaladminproduct.Setup,
-		productcataloginternalproduct.Setup,
+		internaladminproduct.Setup,
+		internalproduct.Setup,
 		byol.Setup,
 		byolallocation.Setup,
 		clusterocvp.Setup,
@@ -2897,8 +2897,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		privateendpointobjectstorage.SetupGated,
 		replicationpolicy.SetupGated,
 		oceinstance.SetupGated,
-		productcataloginternaladminproduct.SetupGated,
-		productcataloginternalproduct.SetupGated,
+		internaladminproduct.SetupGated,
+		internalproduct.SetupGated,
 		byol.SetupGated,
 		byolallocation.SetupGated,
 		clusterocvp.SetupGated,

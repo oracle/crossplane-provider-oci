@@ -2051,7 +2051,7 @@ var runtimeTerraformResources = map[string][]string{
 	"oce": {
 		"oci_oce_oce_instance",
 	},
-	"oci": {
+	"ociproductcatalog": {
 		"oci_oci_product_catalog_internal_admin_product",
 		"oci_oci_product_catalog_internal_product",
 	},

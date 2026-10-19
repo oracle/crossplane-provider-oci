@@ -14,7 +14,7 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
-type ConnectionOptionInitParameters struct {
+type RegistrationPolicyConnectionOptionInitParameters struct {
 
 	// (Updatable) The connection type used to connect to the database. Allowed values:
 	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
@@ -23,7 +23,7 @@ type ConnectionOptionInitParameters struct {
 	Identifiers []*string `json:"identifiers,omitempty" tf:"identifiers,omitempty"`
 }
 
-type ConnectionOptionObservation struct {
+type RegistrationPolicyConnectionOptionObservation struct {
 
 	// (Updatable) The connection type used to connect to the database. Allowed values:
 	ConnectionType *string `json:"connectionType,omitempty" tf:"connection_type,omitempty"`
@@ -32,7 +32,7 @@ type ConnectionOptionObservation struct {
 	Identifiers []*string `json:"identifiers,omitempty" tf:"identifiers,omitempty"`
 }
 
-type ConnectionOptionParameters struct {
+type RegistrationPolicyConnectionOptionParameters struct {
 
 	// (Updatable) The connection type used to connect to the database. Allowed values:
 	// +kubebuilder:validation:Optional
@@ -61,7 +61,7 @@ type RegistrationPolicyInitParameters struct {
 	CompartmentIDSelector *v1.NamespacedSelector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) Types of connection supported by Data Safe.
-	ConnectionOption []ConnectionOptionInitParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []RegistrationPolicyConnectionOptionInitParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -99,7 +99,7 @@ type RegistrationPolicyObservation struct {
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
 	// (Updatable) Types of connection supported by Data Safe.
-	ConnectionOption []ConnectionOptionObservation `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []RegistrationPolicyConnectionOptionObservation `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags Example: {"Operations.CostCenter": "42"}
 	// +mapType=granular
@@ -171,7 +171,7 @@ type RegistrationPolicyParameters struct {
 
 	// (Updatable) Types of connection supported by Data Safe.
 	// +kubebuilder:validation:Optional
-	ConnectionOption []ConnectionOptionParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
+	ConnectionOption []RegistrationPolicyConnectionOptionParameters `json:"connectionOption,omitempty" tf:"connection_option,omitempty"`
 
 	// (Updatable) Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags Example: {"Operations.CostCenter": "42"}
 	// +kubebuilder:validation:Optional

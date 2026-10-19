@@ -17,7 +17,7 @@ import (
 type MaskDataInitParameters struct {
 	MaskingPolicyID *string `json:"maskingPolicyId,omitempty" tf:"masking_policy_id,omitempty"`
 
-	TargetCredentials []MaskDataTargetCredentialsInitParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []TargetCredentialsInitParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 }
@@ -27,7 +27,7 @@ type MaskDataObservation struct {
 
 	MaskingPolicyID *string `json:"maskingPolicyId,omitempty" tf:"masking_policy_id,omitempty"`
 
-	TargetCredentials []MaskDataTargetCredentialsObservation `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []TargetCredentialsObservation `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 }
@@ -38,23 +38,23 @@ type MaskDataParameters struct {
 	MaskingPolicyID *string `json:"maskingPolicyId,omitempty" tf:"masking_policy_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	TargetCredentials []MaskDataTargetCredentialsParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
+	TargetCredentials []TargetCredentialsParameters `json:"targetCredentials,omitempty" tf:"target_credentials,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 }
 
-type MaskDataTargetCredentialsInitParameters struct {
+type TargetCredentialsInitParameters struct {
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
 
-type MaskDataTargetCredentialsObservation struct {
+type TargetCredentialsObservation struct {
 	UserName *string `json:"userName,omitempty" tf:"user_name,omitempty"`
 }
 
-type MaskDataTargetCredentialsParameters struct {
+type TargetCredentialsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`

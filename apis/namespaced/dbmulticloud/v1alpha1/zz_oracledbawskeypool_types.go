@@ -135,16 +135,16 @@ type OracleDbAwsKeyPoolReplicationMetadataInitParameters struct {
 type OracleDbAwsKeyPoolReplicationMetadataObservation struct {
 
 	// List of all regions and their respective resource ID.
-	ReplicationDetails []ReplicationMetadataReplicationDetailsObservation `json:"replicationDetails,omitempty" tf:"replication_details,omitempty"`
+	ReplicationDetails []OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsObservation `json:"replicationDetails,omitempty" tf:"replication_details,omitempty"`
 }
 
 type OracleDbAwsKeyPoolReplicationMetadataParameters struct {
 }
 
-type ReplicationMetadataReplicationDetailsInitParameters struct {
+type OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsInitParameters struct {
 }
 
-type ReplicationMetadataReplicationDetailsObservation struct {
+type OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsObservation struct {
 
 	// The lifecycle state of the Oracle DB Azure Vault resource.
 	ReplicationState *string `json:"replicationState,omitempty" tf:"replication_state,omitempty"`
@@ -159,7 +159,7 @@ type ReplicationMetadataReplicationDetailsObservation struct {
 	TimeUpdated *string `json:"timeUpdated,omitempty" tf:"time_updated,omitempty"`
 }
 
-type ReplicationMetadataReplicationDetailsParameters struct {
+type OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsParameters struct {
 }
 
 // OracleDbAwsKeyPoolSpec defines the desired state of OracleDbAwsKeyPool
