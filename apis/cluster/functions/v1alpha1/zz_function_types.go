@@ -13,6 +13,75 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
+type ArchiveSourceDetailsInitParameters struct {
+
+	// (Updatable) The base64-encoded archive file of the function code. The archive file must contain all the files for the function. Please refer to functions documentation for maximum allowed size and supported archive formats.
+	ArchiveFile *string `json:"archiveFile,omitempty" tf:"archive_file,omitempty"`
+
+	// (Updatable) Type of the Archive Source. Possible values: OBJECT_STORAGE_ARCHIVE and DIRECT_ARCHIVE.
+	ArchiveSourceType *string `json:"archiveSourceType,omitempty" tf:"archive_source_type,omitempty"`
+
+	// (Updatable) The name of the Object Storage bucket.
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// (Updatable) The Object Storage namespace.
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// (Updatable) The name of the Object Storage object.
+	Object *string `json:"object,omitempty" tf:"object,omitempty"`
+
+	// (Applicable when archive_source_type=OBJECT_STORAGE_ARCHIVE) (Updatable) VersionId used to identify a particular version of the object. If not specified, the latest version of the object is used.
+	ObjectVersionID *string `json:"objectVersionId,omitempty" tf:"object_version_id,omitempty"`
+}
+
+type ArchiveSourceDetailsObservation struct {
+
+	// (Updatable) The base64-encoded archive file of the function code. The archive file must contain all the files for the function. Please refer to functions documentation for maximum allowed size and supported archive formats.
+	ArchiveFile *string `json:"archiveFile,omitempty" tf:"archive_file,omitempty"`
+
+	// (Updatable) Type of the Archive Source. Possible values: OBJECT_STORAGE_ARCHIVE and DIRECT_ARCHIVE.
+	ArchiveSourceType *string `json:"archiveSourceType,omitempty" tf:"archive_source_type,omitempty"`
+
+	// (Updatable) The name of the Object Storage bucket.
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// (Updatable) The Object Storage namespace.
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// (Updatable) The name of the Object Storage object.
+	Object *string `json:"object,omitempty" tf:"object,omitempty"`
+
+	// (Applicable when archive_source_type=OBJECT_STORAGE_ARCHIVE) (Updatable) VersionId used to identify a particular version of the object. If not specified, the latest version of the object is used.
+	ObjectVersionID *string `json:"objectVersionId,omitempty" tf:"object_version_id,omitempty"`
+}
+
+type ArchiveSourceDetailsParameters struct {
+
+	// (Updatable) The base64-encoded archive file of the function code. The archive file must contain all the files for the function. Please refer to functions documentation for maximum allowed size and supported archive formats.
+	// +kubebuilder:validation:Optional
+	ArchiveFile *string `json:"archiveFile,omitempty" tf:"archive_file,omitempty"`
+
+	// (Updatable) Type of the Archive Source. Possible values: OBJECT_STORAGE_ARCHIVE and DIRECT_ARCHIVE.
+	// +kubebuilder:validation:Optional
+	ArchiveSourceType *string `json:"archiveSourceType" tf:"archive_source_type,omitempty"`
+
+	// (Updatable) The name of the Object Storage bucket.
+	// +kubebuilder:validation:Optional
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// (Updatable) The Object Storage namespace.
+	// +kubebuilder:validation:Optional
+	Namespace *string `json:"namespace,omitempty" tf:"namespace,omitempty"`
+
+	// (Updatable) The name of the Object Storage object.
+	// +kubebuilder:validation:Optional
+	Object *string `json:"object,omitempty" tf:"object,omitempty"`
+
+	// (Applicable when archive_source_type=OBJECT_STORAGE_ARCHIVE) (Updatable) VersionId used to identify a particular version of the object. If not specified, the latest version of the object is used.
+	// +kubebuilder:validation:Optional
+	ObjectVersionID *string `json:"objectVersionId,omitempty" tf:"object_version_id,omitempty"`
+}
+
 type FailureDestinationInitParameters struct {
 
 	// (Applicable when kind=QUEUE) (Updatable) The ID of the channel in the queue.
@@ -188,10 +257,10 @@ type FunctionInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// (Updatable) The qualified name of the Docker image to use in the function, including the image tag. The image should be in the Oracle Cloud Infrastructure Registry that is in the same region as the function itself. This field must be updated if image_digest is updated. Example: phx.ocir.io/ten/functions/function:0.0.1
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
 	Image *string `json:"image,omitempty" tf:"image,omitempty"`
 
-	// (Updatable) The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the Oracle Cloud Infrastructure Registry will be used. This field must be updated if image is updated. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
 	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
 
 	// (Updatable) Maximum usable memory for the function (MiB).
@@ -200,7 +269,7 @@ type FunctionInitParameters struct {
 	// (Updatable) Define the strategy for provisioned concurrency for the function.
 	ProvisionedConcurrencyConfig []ProvisionedConcurrencyConfigInitParameters `json:"provisionedConcurrencyConfig,omitempty" tf:"provisioned_concurrency_config,omitempty"`
 
-	// The source details for the Function. The function can be created from various sources.
+	// (Updatable) The source details for creating the Function. The function can be created from various sources.
 	SourceDetails []SourceDetailsInitParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
 
 	// (Updatable) An object that represents the destination to which Oracle Functions will send an invocation record with the details of the successful detached function invocation. A stream is an example of a success destination.  Example: {"kind": "STREAM", "streamId": "stream_OCID"}
@@ -245,10 +314,10 @@ type FunctionObservation struct {
 	// The OCID of the function.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Updatable) The qualified name of the Docker image to use in the function, including the image tag. The image should be in the Oracle Cloud Infrastructure Registry that is in the same region as the function itself. This field must be updated if image_digest is updated. Example: phx.ocir.io/ten/functions/function:0.0.1
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
 	Image *string `json:"image,omitempty" tf:"image,omitempty"`
 
-	// (Updatable) The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the Oracle Cloud Infrastructure Registry will be used. This field must be updated if image is updated. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
 	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
 
 	// The base https invoke URL to set on a client in order to invoke a function. This URL will never change over the lifetime of the function and can be cached.
@@ -263,7 +332,7 @@ type FunctionObservation struct {
 	// The processor shape (GENERIC_X86/GENERIC_ARM) on which to run functions in the application, extracted from the image manifest.
 	Shape *string `json:"shape,omitempty" tf:"shape,omitempty"`
 
-	// The source details for the Function. The function can be created from various sources.
+	// (Updatable) The source details for creating the Function. The function can be created from various sources.
 	SourceDetails []SourceDetailsObservation `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
 
 	// The current state of the function.
@@ -328,11 +397,11 @@ type FunctionParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
-	// (Updatable) The qualified name of the Docker image to use in the function, including the image tag. The image should be in the Oracle Cloud Infrastructure Registry that is in the same region as the function itself. This field must be updated if image_digest is updated. Example: phx.ocir.io/ten/functions/function:0.0.1
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
 	// +kubebuilder:validation:Optional
 	Image *string `json:"image,omitempty" tf:"image,omitempty"`
 
-	// (Updatable) The image digest for the version of the image that will be pulled when invoking this function. If no value is specified, the digest currently associated with the image in the Oracle Cloud Infrastructure Registry will be used. This field must be updated if image is updated. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
 	// +kubebuilder:validation:Optional
 	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
 
@@ -344,7 +413,7 @@ type FunctionParameters struct {
 	// +kubebuilder:validation:Optional
 	ProvisionedConcurrencyConfig []ProvisionedConcurrencyConfigParameters `json:"provisionedConcurrencyConfig,omitempty" tf:"provisioned_concurrency_config,omitempty"`
 
-	// The source details for the Function. The function can be created from various sources.
+	// (Updatable) The source details for creating the Function. The function can be created from various sources.
 	// +kubebuilder:validation:Optional
 	SourceDetails []SourceDetailsParameters `json:"sourceDetails,omitempty" tf:"source_details,omitempty"`
 
@@ -409,31 +478,123 @@ type ProvisionedConcurrencyConfigParameters struct {
 	Strategy *string `json:"strategy" tf:"strategy,omitempty"`
 }
 
+type RuntimeConfigInitParameters struct {
+
+	// (Updatable) The name of the FunctionsRuntime this function is to be associated with.
+	FunctionsRuntimeName *string `json:"functionsRuntimeName,omitempty" tf:"functions_runtime_name,omitempty"`
+
+	// (Updatable) The OCID of the FunctionsRuntimeVersion to use for the Function in manual mode.
+	FunctionsRuntimeVersionID *string `json:"functionsRuntimeVersionId,omitempty" tf:"functions_runtime_version_id,omitempty"`
+
+	// (Updatable) Type of the FunctionsRuntime Config. Possible values: FUNCTION_UPDATE and MANUAL.
+	RuntimeConfigType *string `json:"runtimeConfigType,omitempty" tf:"runtime_config_type,omitempty"`
+}
+
+type RuntimeConfigObservation struct {
+
+	// (Updatable) The name of the FunctionsRuntime this function is to be associated with.
+	FunctionsRuntimeName *string `json:"functionsRuntimeName,omitempty" tf:"functions_runtime_name,omitempty"`
+
+	// (Updatable) The OCID of the FunctionsRuntimeVersion to use for the Function in manual mode.
+	FunctionsRuntimeVersionID *string `json:"functionsRuntimeVersionId,omitempty" tf:"functions_runtime_version_id,omitempty"`
+
+	// (Updatable) Type of the FunctionsRuntime Config. Possible values: FUNCTION_UPDATE and MANUAL.
+	RuntimeConfigType *string `json:"runtimeConfigType,omitempty" tf:"runtime_config_type,omitempty"`
+}
+
+type RuntimeConfigParameters struct {
+
+	// (Updatable) The name of the FunctionsRuntime this function is to be associated with.
+	// +kubebuilder:validation:Optional
+	FunctionsRuntimeName *string `json:"functionsRuntimeName" tf:"functions_runtime_name,omitempty"`
+
+	// (Updatable) The OCID of the FunctionsRuntimeVersion to use for the Function in manual mode.
+	// +kubebuilder:validation:Optional
+	FunctionsRuntimeVersionID *string `json:"functionsRuntimeVersionId,omitempty" tf:"functions_runtime_version_id,omitempty"`
+
+	// (Updatable) Type of the FunctionsRuntime Config. Possible values: FUNCTION_UPDATE and MANUAL.
+	// +kubebuilder:validation:Optional
+	RuntimeConfigType *string `json:"runtimeConfigType" tf:"runtime_config_type,omitempty"`
+}
+
 type SourceDetailsInitParameters struct {
+
+	// (Updatable) The details required to create an Archive-based function source.  This mode is used when the function code is provided as an archive, either from Object Storage or directly uploaded by the API caller.  It is suitable for scenarios where the function code is packaged as a single archive file.
+	ArchiveSourceDetails []ArchiveSourceDetailsInitParameters `json:"archiveSourceDetails,omitempty" tf:"archive_source_details,omitempty"`
+
+	// (Applicable when source_type=ARCHIVE) (Updatable) The function handler that is executed when the function is invoked. The value of this field depends on the runtime used
+	Handler *string `json:"handler,omitempty" tf:"handler,omitempty"`
+
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
+	Image *string `json:"image,omitempty" tf:"image,omitempty"`
+
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
 
 	// The OCID of the PbfListing this function is sourced from.
 	PbfListingID *string `json:"pbfListingId,omitempty" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PBF.
+	// (Updatable) FunctionsRuntime configuration used to create a function.
+	RuntimeConfig []RuntimeConfigInitParameters `json:"runtimeConfig,omitempty" tf:"runtime_config,omitempty"`
+
+	// (Updatable) Type of the Function Source. Possible values: CONTAINER_IMAGE, PRE_BUILT_FUNCTIONS and ARCHIVE.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 }
 
 type SourceDetailsObservation struct {
 
+	// (Updatable) The details required to create an Archive-based function source.  This mode is used when the function code is provided as an archive, either from Object Storage or directly uploaded by the API caller.  It is suitable for scenarios where the function code is packaged as a single archive file.
+	ArchiveSourceDetails []ArchiveSourceDetailsObservation `json:"archiveSourceDetails,omitempty" tf:"archive_source_details,omitempty"`
+
+	// (Applicable when source_type=ARCHIVE) (Updatable) The function handler that is executed when the function is invoked. The value of this field depends on the runtime used
+	Handler *string `json:"handler,omitempty" tf:"handler,omitempty"`
+
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
+	Image *string `json:"image,omitempty" tf:"image,omitempty"`
+
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
+
 	// The OCID of the PbfListing this function is sourced from.
 	PbfListingID *string `json:"pbfListingId,omitempty" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PBF.
+	// (Updatable) FunctionsRuntime configuration used to create a function.
+	RuntimeConfig []RuntimeConfigObservation `json:"runtimeConfig,omitempty" tf:"runtime_config,omitempty"`
+
+	// The SHA256 hash of the function source code archive, base64-encoded.
+	SourceCodeSha256 *string `json:"sourceCodeSha256,omitempty" tf:"source_code_sha256,omitempty"`
+
+	// (Updatable) Type of the Function Source. Possible values: CONTAINER_IMAGE, PRE_BUILT_FUNCTIONS and ARCHIVE.
 	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
 }
 
 type SourceDetailsParameters struct {
 
+	// (Updatable) The details required to create an Archive-based function source.  This mode is used when the function code is provided as an archive, either from Object Storage or directly uploaded by the API caller.  It is suitable for scenarios where the function code is packaged as a single archive file.
+	// +kubebuilder:validation:Optional
+	ArchiveSourceDetails []ArchiveSourceDetailsParameters `json:"archiveSourceDetails,omitempty" tf:"archive_source_details,omitempty"`
+
+	// (Applicable when source_type=ARCHIVE) (Updatable) The function handler that is executed when the function is invoked. The value of this field depends on the runtime used
+	// +kubebuilder:validation:Optional
+	Handler *string `json:"handler,omitempty" tf:"handler,omitempty"`
+
+	// (Updatable) Deprecated. The 'image' field has been deprecated. Use source_details.image in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image' will be used. Example: phx.ocir.io/ten/functions/function:0.0.1
+	// +kubebuilder:validation:Optional
+	Image *string `json:"image,omitempty" tf:"image,omitempty"`
+
+	// (Updatable) Deprecated. The 'image_digest' field has been deprecated. Use source_details.image_digest in a CONTAINER_IMAGE source_details block instead. If both fields are specified, then 'source_details.image_digest' will be used. Example: sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7
+	// +kubebuilder:validation:Optional
+	ImageDigest *string `json:"imageDigest,omitempty" tf:"image_digest,omitempty"`
+
 	// The OCID of the PbfListing this function is sourced from.
 	// +kubebuilder:validation:Optional
-	PbfListingID *string `json:"pbfListingId" tf:"pbf_listing_id,omitempty"`
+	PbfListingID *string `json:"pbfListingId,omitempty" tf:"pbf_listing_id,omitempty"`
 
-	// Type of the Function Source. Possible values: PBF.
+	// (Updatable) FunctionsRuntime configuration used to create a function.
+	// +kubebuilder:validation:Optional
+	RuntimeConfig []RuntimeConfigParameters `json:"runtimeConfig,omitempty" tf:"runtime_config,omitempty"`
+
+	// (Updatable) Type of the Function Source. Possible values: CONTAINER_IMAGE, PRE_BUILT_FUNCTIONS and ARCHIVE.
 	// +kubebuilder:validation:Optional
 	SourceType *string `json:"sourceType" tf:"source_type,omitempty"`
 }

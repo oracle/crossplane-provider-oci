@@ -80,7 +80,7 @@ type CloudAutonomousVmClusterInitParameters struct {
 	// (Updatable) The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
 	MaintenanceWindowDetails []CloudAutonomousVmClusterMaintenanceWindowDetailsInitParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
 	// (Updatable) The list of OCIDs for the network security groups (NSGs) to which this resource belongs. Setting this to an empty list removes all resources from all NSGs. For more information about NSGs, see Security Rules. NsgIds restrictions:
@@ -103,7 +103,7 @@ type CloudAutonomousVmClusterInitParameters struct {
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 
 	// The OCID of the subnet the cloud Autonomous VM Cluster is associated with.
@@ -198,6 +198,7 @@ type CloudAutonomousVmClusterMaintenanceWindowDetailsInitParameters struct {
 	SkipRu []*bool `json:"skipRu,omitempty" tf:"skip_ru,omitempty"`
 
 	// (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+	// <<<<<<< ours
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
@@ -253,6 +254,7 @@ type CloudAutonomousVmClusterMaintenanceWindowDetailsObservation struct {
 	SkipRu []*bool `json:"skipRu,omitempty" tf:"skip_ru,omitempty"`
 
 	// (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+	// <<<<<<< ours
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
@@ -299,6 +301,7 @@ type CloudAutonomousVmClusterMaintenanceWindowDetailsParameters struct {
 	SkipRu []*bool `json:"skipRu,omitempty" tf:"skip_ru,omitempty"`
 
 	// (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+	// <<<<<<< ours
 	// +kubebuilder:validation:Optional
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
@@ -351,6 +354,7 @@ type CloudAutonomousVmClusterMaintenanceWindowObservation struct {
 	SkipRu []*bool `json:"skipRu,omitempty" tf:"skip_ru,omitempty"`
 
 	// (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+	// <<<<<<< ours
 	WeeksOfMonth []*float64 `json:"weeksOfMonth,omitempty" tf:"weeks_of_month,omitempty"`
 }
 
@@ -466,7 +470,7 @@ type CloudAutonomousVmClusterObservation struct {
 	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerComputeUnitInGbs *float64 `json:"memoryPerComputeUnitInGbs,omitempty" tf:"memory_per_compute_unit_in_gbs,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
 	// The memory allocated in GBs.
@@ -525,7 +529,7 @@ type CloudAutonomousVmClusterObservation struct {
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 
 	// The model name of the Exadata hardware running the cloud Autonomous VM cluster.
@@ -654,7 +658,7 @@ type CloudAutonomousVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	MaintenanceWindowDetails []CloudAutonomousVmClusterMaintenanceWindowDetailsParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	// +kubebuilder:validation:Optional
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
@@ -684,7 +688,7 @@ type CloudAutonomousVmClusterParameters struct {
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	// +kubebuilder:validation:Optional
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 

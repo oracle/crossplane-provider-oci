@@ -262,6 +262,10 @@ spec:
                           type: string
                       type: object
                     type: array
+                  migrationScope:
+                    description: (Updatable) Assessment migration scope. Defaults
+                      to SCHEMA.
+                    type: string
                   networkSpeedMegabitPerSecond:
                     description: (Updatable) A network speed in Megabits per second.
                     type: string
@@ -501,6 +505,10 @@ spec:
                           type: string
                       type: object
                     type: array
+                  migrationScope:
+                    description: (Updatable) Assessment migration scope. Defaults
+                      to SCHEMA.
+                    type: string
                   networkSpeedMegabitPerSecond:
                     description: (Updatable) A network speed in Megabits per second.
                     type: string
@@ -785,6 +793,10 @@ spec:
                     type: boolean
                   migrationId:
                     description: The OCID of the resource being referenced.
+                    type: string
+                  migrationScope:
+                    description: (Updatable) Assessment migration scope. Defaults
+                      to SCHEMA.
                     type: string
                   networkSpeedMegabitPerSecond:
                     description: (Updatable) A network speed in Megabits per second.

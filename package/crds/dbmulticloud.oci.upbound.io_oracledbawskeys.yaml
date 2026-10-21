@@ -189,6 +189,86 @@ spec:
                   location:
                     description: AWS Key resource Location.
                     type: string
+                  oracleDbAwsKeyPoolId:
+                    description: (Updatable) The OCID of the Oracle DB AWS Key Pool
+                      resource.
+                    type: string
+                  oracleDbAwsKeyPoolIdRef:
+                    description: Reference to a OracleDbAwsKeyPool in dbmulticloud
+                      to populate oracleDbAwsKeyPoolId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  oracleDbAwsKeyPoolIdSelector:
+                    description: Selector for a OracleDbAwsKeyPool in dbmulticloud
+                      to populate oracleDbAwsKeyPoolId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   oracleDbConnectorId:
                     description: The OCID of the Oracle DB Connector resource.
                     type: string
@@ -333,6 +413,86 @@ spec:
                   location:
                     description: AWS Key resource Location.
                     type: string
+                  oracleDbAwsKeyPoolId:
+                    description: (Updatable) The OCID of the Oracle DB AWS Key Pool
+                      resource.
+                    type: string
+                  oracleDbAwsKeyPoolIdRef:
+                    description: Reference to a OracleDbAwsKeyPool in dbmulticloud
+                      to populate oracleDbAwsKeyPoolId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  oracleDbAwsKeyPoolIdSelector:
+                    description: Selector for a OracleDbAwsKeyPool in dbmulticloud
+                      to populate oracleDbAwsKeyPoolId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   oracleDbConnectorId:
                     description: The OCID of the Oracle DB Connector resource.
                     type: string
@@ -490,12 +650,20 @@ spec:
                     description: The Oracle AWS Key resource is enabled or disabled
                       at AWS.
                     type: boolean
+                  isOracleAwsKeyUsed:
+                    description: Indicates whether the Oracle AWS Key resource is
+                      currently in use.
+                    type: boolean
                   lifecycleStateDetails:
                     description: Description of the current lifecycle state in more
                       detail.
                     type: string
                   location:
                     description: AWS Key resource Location.
+                    type: string
+                  oracleDbAwsKeyPoolId:
+                    description: (Updatable) The OCID of the Oracle DB AWS Key Pool
+                      resource.
                     type: string
                   oracleDbConnectorId:
                     description: The OCID of the Oracle DB Connector resource.
@@ -506,6 +674,10 @@ spec:
                     description: AWS Key resource's properties.
                     type: object
                     x-kubernetes-map-type: granular
+                  refCount:
+                    description: The number of active references to the Oracle AWS
+                      Key resource.
+                    type: number
                   replicationMetadata:
                     description: Replication metadata, it has information about replication
                       and target region.

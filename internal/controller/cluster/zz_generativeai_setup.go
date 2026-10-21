@@ -26,6 +26,7 @@ import (
 	importedmodel "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/importedmodel"
 	model "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/model"
 	project "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/project"
+	routingprofile "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/routingprofile"
 	semanticstore "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/semanticstore"
 )
 
@@ -50,6 +51,7 @@ func Setup_generativeai(mgr ctrl.Manager, o controller.Options) error {
 		importedmodel.Setup,
 		model.Setup,
 		project.Setup,
+		routingprofile.Setup,
 		semanticstore.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
@@ -80,6 +82,7 @@ func SetupGated_generativeai(mgr ctrl.Manager, o controller.Options) error {
 		importedmodel.SetupGated,
 		model.SetupGated,
 		project.SetupGated,
+		routingprofile.SetupGated,
 		semanticstore.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {

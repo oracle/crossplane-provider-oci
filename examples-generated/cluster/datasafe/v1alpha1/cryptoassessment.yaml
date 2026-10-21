@@ -1,0 +1,20 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: CryptoAssessment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/cryptoassessment
+  labels:
+    testing.upbound.io/example-name: test_crypto_assessment
+  name: test-crypto-assessment
+spec:
+  forProvider:
+    cryptoAssessmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_crypto_assessment
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.crypto_assessment_display_name}
+    freeformTags:
+      Department: Finance
+    isAssessmentScheduled: ${var.crypto_assessment_is_assessment_scheduled}
+    schedule: ${var.crypto_assessment_schedule}

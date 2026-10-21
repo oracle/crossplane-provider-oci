@@ -8,11 +8,13 @@ import (
 	api3 "github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1"
 	api4 "github.com/oracle/provider-oci/apis/cluster/opensearch/v1alpha1"
 	api0 "github.com/oracle/provider-oci/apis/cluster/v1beta1"
-	api6 "github.com/oracle/provider-oci/apis/namespaced/apigateway/v1alpha1"
-	api7 "github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1"
-	api8 "github.com/oracle/provider-oci/apis/namespaced/networking/v1alpha1"
-	api9 "github.com/oracle/provider-oci/apis/namespaced/opensearch/v1alpha1"
-	api5 "github.com/oracle/provider-oci/apis/namespaced/v1beta1"
+	api5 "github.com/oracle/provider-oci/apis/cluster/vault/v1alpha1"
+	api7 "github.com/oracle/provider-oci/apis/namespaced/apigateway/v1alpha1"
+	api8 "github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1"
+	api9 "github.com/oracle/provider-oci/apis/namespaced/networking/v1alpha1"
+	api10 "github.com/oracle/provider-oci/apis/namespaced/opensearch/v1alpha1"
+	api6 "github.com/oracle/provider-oci/apis/namespaced/v1beta1"
+	api11 "github.com/oracle/provider-oci/apis/namespaced/vault/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -28,4 +30,6 @@ var AddToSchemes = runtime.SchemeBuilder{
 	api7.SchemeBuilder.AddToScheme,
 	api8.SchemeBuilder.AddToScheme,
 	api9.SchemeBuilder.AddToScheme,
+	api10.SchemeBuilder.AddToScheme,
+	api11.SchemeBuilder.AddToScheme,
 }

@@ -33,7 +33,7 @@ type MultipathDevicesParameters struct {
 
 type VolumeAttachmentInitParameters struct {
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized".
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", "nvme" and "service_determined" .
 	AttachmentType *string `json:"attachmentType,omitempty" tf:"attachment_type,omitempty"`
 
 	// The OCID of the compartment.
@@ -99,7 +99,7 @@ type VolumeAttachmentInitParameters struct {
 
 type VolumeAttachmentObservation struct {
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized".
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", "nvme" and "service_determined" .
 	AttachmentType *string `json:"attachmentType,omitempty" tf:"attachment_type,omitempty"`
 
 	// The availability domain of an instance.  Example: Uocm:PHX-AD-1
@@ -144,6 +144,9 @@ type VolumeAttachmentObservation struct {
 	// (Applicable when attachment_type=iscsi) Whether to enable Oracle Cloud Agent to perform the iSCSI login and logout commands after the volume attach or detach operations for non multipath-enabled iSCSI attachments.
 	IsAgentAutoISCSILoginEnabled *bool `json:"isAgentAutoIscsiLoginEnabled,omitempty" tf:"is_agent_auto_iscsi_login_enabled,omitempty"`
 
+	// Whether in-transit encryption for the data volume's attachment is enabled or not.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// Whether the Iscsi or Paravirtualized attachment is multipath or not, it is not applicable to NVMe attachment.
 	IsMultipath *bool `json:"isMultipath,omitempty" tf:"is_multipath,omitempty"`
 
@@ -180,7 +183,7 @@ type VolumeAttachmentObservation struct {
 
 type VolumeAttachmentParameters struct {
 
-	// The type of volume. The only supported values are "iscsi" and "paravirtualized".
+	// The type of volume. The only supported values are "iscsi", "paravirtualized", "nvme" and "service_determined" .
 	// +kubebuilder:validation:Optional
 	AttachmentType *string `json:"attachmentType,omitempty" tf:"attachment_type,omitempty"`
 

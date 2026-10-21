@@ -1,0 +1,28 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SubsettingPolicySubsettingRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/subsettingpolicysubsettingrule
+  labels:
+    testing.upbound.io/example-name: test_subsetting_policy_subsetting_rule
+  name: test-subsetting-policy-subsetting-rule
+spec:
+  forProvider:
+    description: ${var.subsetting_policy_subsetting_rule_description}
+    displayName: ${var.subsetting_policy_subsetting_rule_display_name}
+    peerTablesAction: ${var.subsetting_policy_subsetting_rule_peer_tables_action}
+    relatedTablesPropagation: ${var.subsetting_policy_subsetting_rule_related_tables_propagation}
+    ruleCombinationMode: ${var.subsetting_policy_subsetting_rule_rule_combination_mode}
+    scope:
+    - object: ${var.subsetting_policy_subsetting_rule_scope_object}
+      schemaName: ${var.subsetting_policy_subsetting_rule_scope_schema_name}
+      scopeType: ${var.subsetting_policy_subsetting_rule_scope_scope_type}
+    subsetRuleEntry:
+    - condition: ${var.subsetting_policy_subsetting_rule_subset_rule_entry_condition}
+      partitionsList: ${var.subsetting_policy_subsetting_rule_subset_rule_entry_partitions_list}
+      percent: ${var.subsetting_policy_subsetting_rule_subset_rule_entry_percent}
+      ruleType: ${var.subsetting_policy_subsetting_rule_subset_rule_entry_rule_type}
+      subPartitionsList: ${var.subsetting_policy_subsetting_rule_subset_rule_entry_sub_partitions_list}
+    subsettingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subsetting_policy

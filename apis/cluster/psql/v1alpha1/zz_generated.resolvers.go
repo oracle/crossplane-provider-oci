@@ -321,6 +321,28 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 		mg.Spec.ForProvider.Source[i3].PrimaryDBSystemIDRef = rsp.ResolvedReference
 
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.StorageDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.StorageDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.StorageDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.ForProvider.StorageDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.StorageDetails[i3].KMSKeyID")
+		}
+		mg.Spec.ForProvider.StorageDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.StorageDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
+
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
 		if err != nil {
@@ -471,6 +493,28 @@ func (mg *PsqlDbSystem) ResolveReferences(ctx context.Context, c client.Reader) 
 		}
 		mg.Spec.InitProvider.Source[i3].PrimaryDBSystemID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.Source[i3].PrimaryDBSystemIDRef = rsp.ResolvedReference
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.StorageDetails); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("kms.oci.upbound.io", "v1alpha1", "Key", "KeyList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.StorageDetails[i3].KMSKeyID),
+				Extract:      resource.ExtractResourceID(),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.StorageDetails[i3].KMSKeyIDRef,
+				Selector:     mg.Spec.InitProvider.StorageDetails[i3].KMSKeyIDSelector,
+				To:           reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.StorageDetails[i3].KMSKeyID")
+		}
+		mg.Spec.InitProvider.StorageDetails[i3].KMSKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.StorageDetails[i3].KMSKeyIDRef = rsp.ResolvedReference
 
 	}
 

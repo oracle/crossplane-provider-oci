@@ -17,6 +17,9 @@ spec:
     drgIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_drg
+    drgNatPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_drg_nat_policy
     drgRouteTableIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_drg_route_table

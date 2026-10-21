@@ -285,6 +285,9 @@ type ProgressObservation struct {
 	// Current status of the job.
 	CurrentStatus *string `json:"currentStatus,omitempty" tf:"current_status,omitempty"`
 
+	// Progress details of a Migration Job.
+	JobProgress *float64 `json:"jobProgress,omitempty" tf:"job_progress,omitempty"`
+
 	// List of phase status for the job.
 	Phases []PhasesObservation `json:"phases,omitempty" tf:"phases,omitempty"`
 }

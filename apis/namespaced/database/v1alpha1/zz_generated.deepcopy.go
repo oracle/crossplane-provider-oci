@@ -15482,6 +15482,11 @@ func (in *BackupEncryptionKeyLocationDetailsObservation) DeepCopyInto(out *Backu
 		*out = new(string)
 		**out = **in
 	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
 		*out = new(string)
@@ -23374,6 +23379,11 @@ func (in *ConnectionUrlsObservation) DeepCopyInto(out *ConnectionUrlsObservation
 		*out = new(string)
 		**out = **in
 	}
+	if in.EssbaseURL != nil {
+		in, out := &in.EssbaseURL, &out.EssbaseURL
+		*out = new(string)
+		**out = **in
+	}
 	if in.GraphStudioURL != nil {
 		in, out := &in.GraphStudioURL, &out.GraphStudioURL
 		*out = new(string)
@@ -25379,6 +25389,11 @@ func (in *DBHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation) DeepC
 	}
 	if in.Type != nil {
 		in, out := &in.Type, &out.Type
+		*out = new(string)
+		**out = **in
+	}
+	if in.VPCUser != nil {
+		in, out := &in.VPCUser, &out.VPCUser
 		*out = new(string)
 		**out = **in
 	}
@@ -30771,6 +30786,21 @@ func (in *DatabaseEncryptionKeyLocationDetailsInitParameters) DeepCopyInto(out *
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
 		*out = new(string)
@@ -30831,6 +30861,11 @@ func (in *DatabaseEncryptionKeyLocationDetailsObservation) DeepCopyInto(out *Dat
 		*out = new(string)
 		**out = **in
 	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
 		*out = new(string)
@@ -30873,6 +30908,21 @@ func (in *DatabaseEncryptionKeyLocationDetailsParameters) DeepCopyInto(out *Data
 	}
 	if in.AwsEncryptionKeyIDSelector != nil {
 		in, out := &in.AwsEncryptionKeyIDSelector, &out.AwsEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
 		*out = new(v1.NamespacedSelector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -35096,6 +35146,31 @@ func (in *DbHomeDatabaseEncryptionKeyLocationDetailsInitParameters) DeepCopyInto
 		*out = new(string)
 		**out = **in
 	}
+	if in.AwsEncryptionKeyIDRef != nil {
+		in, out := &in.AwsEncryptionKeyIDRef, &out.AwsEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyIDSelector, &out.AwsEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
 		*out = new(string)
@@ -35146,6 +35221,11 @@ func (in *DbHomeDatabaseEncryptionKeyLocationDetailsObservation) DeepCopyInto(ou
 		*out = new(string)
 		**out = **in
 	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
 		*out = new(string)
@@ -35180,6 +35260,31 @@ func (in *DbHomeDatabaseEncryptionKeyLocationDetailsParameters) DeepCopyInto(out
 		in, out := &in.AwsEncryptionKeyID, &out.AwsEncryptionKeyID
 		*out = new(string)
 		**out = **in
+	}
+	if in.AwsEncryptionKeyIDRef != nil {
+		in, out := &in.AwsEncryptionKeyIDRef, &out.AwsEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyIDSelector, &out.AwsEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.AzureEncryptionKeyID != nil {
 		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
@@ -83557,6 +83662,11 @@ func (in *MigrationAssessmentInitParameters) DeepCopyInto(out *MigrationAssessme
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.MigrationScope != nil {
+		in, out := &in.MigrationScope, &out.MigrationScope
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkSpeedMegabitPerSecond != nil {
 		in, out := &in.NetworkSpeedMegabitPerSecond, &out.NetworkSpeedMegabitPerSecond
 		*out = new(string)
@@ -83734,6 +83844,11 @@ func (in *MigrationAssessmentObservation) DeepCopyInto(out *MigrationAssessmentO
 		*out = new(string)
 		**out = **in
 	}
+	if in.MigrationScope != nil {
+		in, out := &in.MigrationScope, &out.MigrationScope
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkSpeedMegabitPerSecond != nil {
 		in, out := &in.NetworkSpeedMegabitPerSecond, &out.NetworkSpeedMegabitPerSecond
 		*out = new(string)
@@ -83899,6 +84014,11 @@ func (in *MigrationAssessmentParameters) DeepCopyInto(out *MigrationAssessmentPa
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.MigrationScope != nil {
+		in, out := &in.MigrationScope, &out.MigrationScope
+		*out = new(string)
+		**out = **in
 	}
 	if in.NetworkSpeedMegabitPerSecond != nil {
 		in, out := &in.NetworkSpeedMegabitPerSecond, &out.NetworkSpeedMegabitPerSecond
@@ -93184,6 +93304,11 @@ func (in *ProgressObservation) DeepCopyInto(out *ProgressObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.JobProgress != nil {
+		in, out := &in.JobProgress, &out.JobProgress
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Phases != nil {
 		in, out := &in.Phases, &out.Phases
 		*out = make([]PhasesObservation, len(*in))
@@ -93392,6 +93517,11 @@ func (in *PublicConnectionUrlsObservation) DeepCopyInto(out *PublicConnectionUrl
 	}
 	if in.DatabaseTransformsURL != nil {
 		in, out := &in.DatabaseTransformsURL, &out.DatabaseTransformsURL
+		*out = new(string)
+		**out = **in
+	}
+	if in.EssbaseURL != nil {
+		in, out := &in.EssbaseURL, &out.EssbaseURL
 		*out = new(string)
 		**out = **in
 	}
@@ -97042,6 +97172,66 @@ func (in *SourceDatabaseDetailsParameters) DeepCopy() *SourceDatabaseDetailsPara
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *SourceEncryptionKeyLocationDetailsInitParameters) DeepCopyInto(out *SourceEncryptionKeyLocationDetailsInitParameters) {
 	*out = *in
+	if in.AwsEncryptionKeyID != nil {
+		in, out := &in.AwsEncryptionKeyID, &out.AwsEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyIDRef != nil {
+		in, out := &in.AwsEncryptionKeyIDRef, &out.AwsEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyIDSelector, &out.AwsEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AzureEncryptionKeyID != nil {
+		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AzureEncryptionKeyIDRef != nil {
+		in, out := &in.AzureEncryptionKeyIDRef, &out.AzureEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AzureEncryptionKeyIDSelector != nil {
+		in, out := &in.AzureEncryptionKeyIDSelector, &out.AzureEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GoogleCloudProviderEncryptionKeyID != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyID, &out.GoogleCloudProviderEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.GoogleCloudProviderEncryptionKeyIDRef != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyIDRef, &out.GoogleCloudProviderEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GoogleCloudProviderEncryptionKeyIDSelector != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyIDSelector, &out.GoogleCloudProviderEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.HSMPasswordSecretRef != nil {
 		in, out := &in.HSMPasswordSecretRef, &out.HSMPasswordSecretRef
 		*out = new(v1.LocalSecretKeySelector)
@@ -97067,6 +97257,26 @@ func (in *SourceEncryptionKeyLocationDetailsInitParameters) DeepCopy() *SourceEn
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *SourceEncryptionKeyLocationDetailsObservation) DeepCopyInto(out *SourceEncryptionKeyLocationDetailsObservation) {
 	*out = *in
+	if in.AwsEncryptionKeyID != nil {
+		in, out := &in.AwsEncryptionKeyID, &out.AwsEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AzureEncryptionKeyID != nil {
+		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.GoogleCloudProviderEncryptionKeyID != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyID, &out.GoogleCloudProviderEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProviderType != nil {
 		in, out := &in.ProviderType, &out.ProviderType
 		*out = new(string)
@@ -97087,6 +97297,66 @@ func (in *SourceEncryptionKeyLocationDetailsObservation) DeepCopy() *SourceEncry
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
 func (in *SourceEncryptionKeyLocationDetailsParameters) DeepCopyInto(out *SourceEncryptionKeyLocationDetailsParameters) {
 	*out = *in
+	if in.AwsEncryptionKeyID != nil {
+		in, out := &in.AwsEncryptionKeyID, &out.AwsEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyIDRef != nil {
+		in, out := &in.AwsEncryptionKeyIDRef, &out.AwsEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyIDSelector, &out.AwsEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolID != nil {
+		in, out := &in.AwsEncryptionKeyPoolID, &out.AwsEncryptionKeyPoolID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AwsEncryptionKeyPoolIDRef != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDRef, &out.AwsEncryptionKeyPoolIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AwsEncryptionKeyPoolIDSelector != nil {
+		in, out := &in.AwsEncryptionKeyPoolIDSelector, &out.AwsEncryptionKeyPoolIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AzureEncryptionKeyID != nil {
+		in, out := &in.AzureEncryptionKeyID, &out.AzureEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.AzureEncryptionKeyIDRef != nil {
+		in, out := &in.AzureEncryptionKeyIDRef, &out.AzureEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.AzureEncryptionKeyIDSelector != nil {
+		in, out := &in.AzureEncryptionKeyIDSelector, &out.AzureEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GoogleCloudProviderEncryptionKeyID != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyID, &out.GoogleCloudProviderEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.GoogleCloudProviderEncryptionKeyIDRef != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyIDRef, &out.GoogleCloudProviderEncryptionKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GoogleCloudProviderEncryptionKeyIDSelector != nil {
+		in, out := &in.GoogleCloudProviderEncryptionKeyIDSelector, &out.GoogleCloudProviderEncryptionKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.HSMPasswordSecretRef != nil {
 		in, out := &in.HSMPasswordSecretRef, &out.HSMPasswordSecretRef
 		*out = new(v1.LocalSecretKeySelector)
@@ -107295,6 +107565,11 @@ func (in *VanityConnectionUrlsObservation) DeepCopyInto(out *VanityConnectionUrl
 	}
 	if in.DatabaseTransformsURL != nil {
 		in, out := &in.DatabaseTransformsURL, &out.DatabaseTransformsURL
+		*out = new(string)
+		**out = **in
+	}
+	if in.EssbaseURL != nil {
+		in, out := &in.EssbaseURL, &out.EssbaseURL
 		*out = new(string)
 		**out = **in
 	}

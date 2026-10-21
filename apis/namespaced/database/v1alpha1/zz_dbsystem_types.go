@@ -90,6 +90,8 @@ type DBHomeDatabaseDBBackupConfigBackupDestinationDetailsObservation struct {
 
 	// Type of the database backup destination.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	VPCUser *string `json:"vpcUser,omitempty" tf:"vpc_user,omitempty"`
 }
 
 type DBHomeDatabaseDBBackupConfigBackupDestinationDetailsParameters struct {

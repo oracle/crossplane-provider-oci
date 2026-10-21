@@ -185,12 +185,14 @@ spec:
                     items:
                       properties:
                         validatorType:
-                          description: '(Updatable) Specifies the type of validation:
-                            a static value (no validation) or a list.'
+                          description: (Updatable) Specifies the type of validation.
+                            Use ENUM to restrict a tag to a list of allowed values,
+                            or DEFAULT for no value validation.
                           type: string
                         values:
-                          description: (Applicable when validator_type=ENUM) (Updatable)
-                            The list of allowed values for a definedTag value.
+                          description: (Updatable) The list of allowed values for
+                            a definedTag value. Omit this property when validator_type
+                            is DEFAULT; it is not used for default validation.
                           items:
                             type: string
                           type: array
@@ -336,12 +338,14 @@ spec:
                     items:
                       properties:
                         validatorType:
-                          description: '(Updatable) Specifies the type of validation:
-                            a static value (no validation) or a list.'
+                          description: (Updatable) Specifies the type of validation.
+                            Use ENUM to restrict a tag to a list of allowed values,
+                            or DEFAULT for no value validation.
                           type: string
                         values:
-                          description: (Applicable when validator_type=ENUM) (Updatable)
-                            The list of allowed values for a definedTag value.
+                          description: (Updatable) The list of allowed values for
+                            a definedTag value. Omit this property when validator_type
+                            is DEFAULT; it is not used for default validation.
                           items:
                             type: string
                           type: array
@@ -480,12 +484,14 @@ spec:
                     items:
                       properties:
                         validatorType:
-                          description: '(Updatable) Specifies the type of validation:
-                            a static value (no validation) or a list.'
+                          description: (Updatable) Specifies the type of validation.
+                            Use ENUM to restrict a tag to a list of allowed values,
+                            or DEFAULT for no value validation.
                           type: string
                         values:
-                          description: (Applicable when validator_type=ENUM) (Updatable)
-                            The list of allowed values for a definedTag value.
+                          description: (Updatable) The list of allowed values for
+                            a definedTag value. Omit this property when validator_type
+                            is DEFAULT; it is not used for default validation.
                           items:
                             type: string
                           type: array

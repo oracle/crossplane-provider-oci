@@ -921,6 +921,10 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  managePrivilegesTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Manage Privileges. Could be set to any integer value.
+                    type: number
                   peerTargetDatabaseDetails:
                     description: The details of the database to be registered as a
                       peer target database.
@@ -2352,6 +2356,10 @@ spec:
                       {"Department": "Finance"}'
                     type: object
                     x-kubernetes-map-type: granular
+                  managePrivilegesTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Manage Privileges. Could be set to any integer value.
+                    type: number
                   peerTargetDatabaseDetails:
                     description: The details of the database to be registered as a
                       peer target database.
@@ -3085,6 +3093,12 @@ spec:
                       in Data Safe. The name is modifiable and does not need to be
                       unique.
                     type: string
+                  features:
+                    description: List of enabled features based on granted ORA_DSCS_*
+                      roles in target database
+                    items:
+                      type: string
+                    type: array
                   freeformTags:
                     additionalProperties:
                       type: string
@@ -3101,6 +3115,10 @@ spec:
                     description: Details about the current state of the target database
                       in Data Safe.
                     type: string
+                  managePrivilegesTrigger:
+                    description: (Updatable) An optional property when incremented
+                      triggers Manage Privileges. Could be set to any integer value.
+                    type: number
                   peerTargetDatabaseDetails:
                     description: The details of the database to be registered as a
                       peer target database.

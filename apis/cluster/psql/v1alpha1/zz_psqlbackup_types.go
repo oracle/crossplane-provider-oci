@@ -133,6 +133,9 @@ type PsqlBackupObservation struct {
 	// The OCID of the backup.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The OCID of the master encryption key for the backup.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
 	// lastAcceptedRequestToken from MP.
 	LastAcceptedRequestToken *string `json:"lastAcceptedRequestToken,omitempty" tf:"last_accepted_request_token,omitempty"`
 

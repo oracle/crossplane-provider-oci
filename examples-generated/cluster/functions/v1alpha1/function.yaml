@@ -32,14 +32,26 @@ spec:
           testing.upbound.io/example-name: test_notification_topic
     freeformTags:
       Department: Finance
-    image: ${var.function_image}
-    imageDigest: ${var.function_image_digest}
     memoryInMbs: ${var.function_memory_in_mbs}
     provisionedConcurrencyConfig:
     - count: ${var.function_provisioned_concurrency_config_count}
       strategy: ${var.function_provisioned_concurrency_config_strategy}
     sourceDetails:
-    - pbfListingId: ${oci_functions_pbf_listing.test_pbf_listing.id}
+    - archiveSourceDetails:
+      - archiveFile: ${var.function_source_details_archive_source_details_archive_file}
+        archiveSourceType: ${var.function_source_details_archive_source_details_archive_source_type}
+        bucket: ${var.function_source_details_archive_source_details_bucket}
+        namespace: ${var.function_source_details_archive_source_details_namespace}
+        object: ${var.function_source_details_archive_source_details_object}
+        objectVersionId: ${oci_objectstorage_object_version.test_object_version.id}
+      handler: ${var.function_source_details_handler}
+      image: ${var.function_source_details_image}
+      imageDigest: ${var.function_source_details_image_digest}
+      pbfListingId: ${oci_functions_pbf_listing.test_pbf_listing.id}
+      runtimeConfig:
+      - functionsRuntimeName: ${var.functions_runtime_name}
+        functionsRuntimeVersionId: ${var.functions_runtime_version_id}
+        runtimeConfigType: ${var.function_source_details_runtime_config_runtime_config_type}
       sourceType: ${var.function_source_details_source_type}
     successDestination:
     - channelIdSelector:

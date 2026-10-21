@@ -11,16 +11,18 @@ import (
 	api6 "github.com/oracle/provider-oci/apis/cluster/identity/v1alpha1"
 	api7 "github.com/oracle/provider-oci/apis/cluster/networking/v1alpha1"
 	api8 "github.com/oracle/provider-oci/apis/cluster/nosql/v1alpha1"
+	api9 "github.com/oracle/provider-oci/apis/cluster/objectstorage/v1alpha1"
 	api0 "github.com/oracle/provider-oci/apis/cluster/v1beta1"
-	api10 "github.com/oracle/provider-oci/apis/namespaced/cloudguard/v1alpha1"
-	api11 "github.com/oracle/provider-oci/apis/namespaced/compute/v1alpha1"
-	api12 "github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1"
-	api13 "github.com/oracle/provider-oci/apis/namespaced/dataflow/v1alpha1"
-	api14 "github.com/oracle/provider-oci/apis/namespaced/datasafe/v1alpha1"
-	api15 "github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1"
-	api16 "github.com/oracle/provider-oci/apis/namespaced/networking/v1alpha1"
-	api17 "github.com/oracle/provider-oci/apis/namespaced/nosql/v1alpha1"
-	api9 "github.com/oracle/provider-oci/apis/namespaced/v1beta1"
+	api11 "github.com/oracle/provider-oci/apis/namespaced/cloudguard/v1alpha1"
+	api12 "github.com/oracle/provider-oci/apis/namespaced/compute/v1alpha1"
+	api13 "github.com/oracle/provider-oci/apis/namespaced/database/v1alpha1"
+	api14 "github.com/oracle/provider-oci/apis/namespaced/dataflow/v1alpha1"
+	api15 "github.com/oracle/provider-oci/apis/namespaced/datasafe/v1alpha1"
+	api16 "github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1"
+	api17 "github.com/oracle/provider-oci/apis/namespaced/networking/v1alpha1"
+	api18 "github.com/oracle/provider-oci/apis/namespaced/nosql/v1alpha1"
+	api19 "github.com/oracle/provider-oci/apis/namespaced/objectstorage/v1alpha1"
+	api10 "github.com/oracle/provider-oci/apis/namespaced/v1beta1"
 	"k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -44,4 +46,6 @@ var AddToSchemes = runtime.SchemeBuilder{
 	api15.SchemeBuilder.AddToScheme,
 	api16.SchemeBuilder.AddToScheme,
 	api17.SchemeBuilder.AddToScheme,
+	api18.SchemeBuilder.AddToScheme,
+	api19.SchemeBuilder.AddToScheme,
 }

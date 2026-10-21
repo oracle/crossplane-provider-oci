@@ -588,6 +588,9 @@ type InstanceLaunchOptionsInitParameters struct {
 	// Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
+	// Specifies whether in-transit encryption is enabled for the data volume's attachment.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
+
 	// Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false. Use this field only during create. To update use is_pv_encryption_in_transit_enabled under launch_options instead.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
@@ -608,6 +611,9 @@ type InstanceLaunchOptionsObservation struct {
 
 	// Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
+
+	// Specifies whether in-transit encryption is enabled for the data volume's attachment.
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
 
 	// Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false. Use this field only during create. To update use is_pv_encryption_in_transit_enabled under launch_options instead.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
@@ -632,6 +638,10 @@ type InstanceLaunchOptionsParameters struct {
 	// Whether to enable consistent volume naming feature. Defaults to false.
 	// +kubebuilder:validation:Optional
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
+
+	// Specifies whether in-transit encryption is enabled for the data volume's attachment.
+	// +kubebuilder:validation:Optional
+	IsEncryptionInTransitEnabled *bool `json:"isEncryptionInTransitEnabled,omitempty" tf:"is_encryption_in_transit_enabled,omitempty"`
 
 	// Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false. Use this field only during create. To update use is_pv_encryption_in_transit_enabled under launch_options instead.
 	// +kubebuilder:validation:Optional
@@ -1043,7 +1053,7 @@ type InstancePlacementConstraintDetailsInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.NamespacedSelector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1055,7 +1065,7 @@ type InstancePlacementConstraintDetailsObservation struct {
 	// The OCID of the compute host group attached to the host where the bare metal instance will be launched.
 	ComputeHostGroupID *string `json:"computeHostGroupId,omitempty" tf:"compute_host_group_id,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1079,7 +1089,7 @@ type InstancePlacementConstraintDetailsParameters struct {
 	// +kubebuilder:validation:Optional
 	ComputeHostGroupIDSelector *v1.NamespacedSelector `json:"computeHostGroupIdSelector,omitempty" tf:"-"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -1251,7 +1261,7 @@ type LaunchVolumeAttachmentsInitParameters struct {
 	// Define a volume that will be created and attached or attached to an instance on creation.
 	LaunchCreateVolumeDetails []LaunchCreateVolumeDetailsInitParameters `json:"launchCreateVolumeDetails,omitempty" tf:"launch_create_volume_details,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -1297,7 +1307,7 @@ type LaunchVolumeAttachmentsObservation struct {
 	// Define a volume that will be created and attached or attached to an instance on creation.
 	LaunchCreateVolumeDetails []LaunchCreateVolumeDetailsObservation `json:"launchCreateVolumeDetails,omitempty" tf:"launch_create_volume_details,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// (Applicable when type=iscsi) Whether to use CHAP authentication for the volume attachment. Defaults to false.
@@ -1341,7 +1351,7 @@ type LaunchVolumeAttachmentsParameters struct {
 	// +kubebuilder:validation:Optional
 	LaunchCreateVolumeDetails []LaunchCreateVolumeDetailsParameters `json:"launchCreateVolumeDetails,omitempty" tf:"launch_create_volume_details,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
@@ -1369,7 +1379,7 @@ type LicensingConfigsInitParameters struct {
 	// (Updatable) License Type for the OS license.
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1381,7 +1391,7 @@ type LicensingConfigsObservation struct {
 	// The Operating System version of the license config.
 	OsVersion *string `json:"osVersion,omitempty" tf:"os_version,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1391,7 +1401,7 @@ type LicensingConfigsParameters struct {
 	// +kubebuilder:validation:Optional
 	LicenseType *string `json:"licenseType,omitempty" tf:"license_type,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -1432,7 +1442,7 @@ type PlatformConfigInitParameters struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1472,7 +1482,7 @@ type PlatformConfigObservation struct {
 	// (Applicable when type=AMD_MILAN_BM | AMD_ROME_BM | GENERIC_BM | INTEL_ICELAKE_BM | INTEL_SKYLAKE_BM) The percentage of cores enabled. Value must be a multiple of 25%. If the requested percentage results in a fractional number of cores, the system rounds up the number of cores across processors and provisions an instance with a whole number of cores.
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1523,7 +1533,7 @@ type PlatformConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	PercentageOfCoresEnabled *float64 `json:"percentageOfCoresEnabled,omitempty" tf:"percentage_of_cores_enabled,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
@@ -1581,7 +1591,7 @@ type PreemptionActionInitParameters struct {
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1590,7 +1600,7 @@ type PreemptionActionObservation struct {
 	// Whether to preserve the boot volume that was used to launch the preemptible instance when the instance is terminated. Defaults to false if not specified.
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -1600,7 +1610,7 @@ type PreemptionActionParameters struct {
 	// +kubebuilder:validation:Optional
 	PreserveBootVolume *bool `json:"preserveBootVolume,omitempty" tf:"preserve_boot_volume,omitempty"`
 
-	// The type of volume attachment. Currently, the only supported values are "iscsi" and "paravirtualized".
+	// The type of volume attachment. Currently, the only supported values are "iscsi", "paravirtualized", and "nvme".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }

@@ -23,6 +23,7 @@ spec:
       Department: Finance
     hostOcpuCount: ${var.esxi_host_host_ocpu_count}
     hostShapeName: ${oci_core_shape.test_shape.name}
+    initialFaultDomainHostDistribution: ${var.esxi_host_initial_fault_domain_host_distribution}
     isVsanByolEnabled: ${var.esxi_host_is_vsan_byol_enabled}
     nextCommitment: ${var.esxi_host_next_commitment}
     vcfByolAllocationIdSelector:

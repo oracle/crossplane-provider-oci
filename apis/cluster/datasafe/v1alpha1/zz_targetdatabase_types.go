@@ -813,6 +813,9 @@ type TargetDatabaseInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
+
 	// The details of the database to be registered as a peer target database.
 	PeerTargetDatabaseDetails []PeerTargetDatabaseDetailsInitParameters `json:"peerTargetDatabaseDetails,omitempty" tf:"peer_target_database_details,omitempty"`
 
@@ -847,6 +850,9 @@ type TargetDatabaseObservation struct {
 	// (Updatable) The display name of the target database in Data Safe. The name is modifiable and does not need to be unique.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// List of enabled features based on granted ORA_DSCS_* roles in target database
+	Features []*string `json:"features,omitempty" tf:"features,omitempty"`
+
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
@@ -856,6 +862,9 @@ type TargetDatabaseObservation struct {
 
 	// Details about the current state of the target database in Data Safe.
 	LifecycleDetails *string `json:"lifecycleDetails,omitempty" tf:"lifecycle_details,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
 
 	// The details of the database to be registered as a peer target database.
 	PeerTargetDatabaseDetails []PeerTargetDatabaseDetailsObservation `json:"peerTargetDatabaseDetails,omitempty" tf:"peer_target_database_details,omitempty"`
@@ -924,6 +933,10 @@ type TargetDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) An optional property when incremented triggers Manage Privileges. Could be set to any integer value.
+	// +kubebuilder:validation:Optional
+	ManagePrivilegesTrigger *float64 `json:"managePrivilegesTrigger,omitempty" tf:"manage_privileges_trigger,omitempty"`
 
 	// The details of the database to be registered as a peer target database.
 	// +kubebuilder:validation:Optional

@@ -27,7 +27,8 @@ spec:
     subscriptionDetails:
     - amount: ${var.subscription_subscription_details_amount}
       billingDetails:
-      - hasGovSku: ${var.subscription_subscription_details_billing_details_has_gov_sku}
+      - billingModel: ${var.subscription_subscription_details_billing_details_billing_model}
+        hasGovSku: ${var.subscription_subscription_details_billing_details_has_gov_sku}
         meters:
         - extendedMetadata:
           - key: ${var.subscription_subscription_details_billing_details_meters_extended_metadata_key}
@@ -35,6 +36,7 @@ spec:
           name: ${var.subscription_subscription_details_billing_details_meters_name}
           rateAllocation: ${var.subscription_subscription_details_billing_details_meters_rate_allocation}
         metricType: ${var.subscription_subscription_details_billing_details_metric_type}
+        pricingPlanKey: ${var.subscription_subscription_details_billing_details_pricing_plan_key}
         rateAllocation: ${var.subscription_subscription_details_billing_details_rate_allocation}
         sku: ${var.subscription_subscription_details_billing_details_sku}
       currency: ${var.subscription_subscription_details_currency}
@@ -42,6 +44,16 @@ spec:
       partnerRegistrationUrl: ${var.subscription_subscription_details_partner_registration_url}
       pricingPlan:
       - billingFrequency: ${var.subscription_subscription_details_pricing_plan_billing_frequency}
+        dimensions:
+        - dimensionBillingFrequency: ${var.subscription_subscription_details_pricing_plan_dimensions_dimension_billing_frequency}
+          dimensionDescription: ${var.subscription_subscription_details_pricing_plan_dimensions_dimension_description}
+          dimensionKey: ${var.subscription_subscription_details_pricing_plan_dimensions_dimension_key}
+          dimensionName: ${var.subscription_subscription_details_pricing_plan_dimensions_dimension_name}
+          includedQuantity: ${var.subscription_subscription_details_pricing_plan_dimensions_included_quantity}
+          metricType: ${var.subscription_subscription_details_pricing_plan_dimensions_metric_type}
+          rates:
+          - currency: ${var.subscription_subscription_details_pricing_plan_dimensions_rates_currency}
+            rate: ${var.subscription_subscription_details_pricing_plan_dimensions_rates_rate}
         planDescription: ${var.subscription_subscription_details_pricing_plan_plan_description}
         planDuration: ${var.subscription_subscription_details_pricing_plan_plan_duration}
         planName: ${var.subscription_subscription_details_pricing_plan_plan_name}

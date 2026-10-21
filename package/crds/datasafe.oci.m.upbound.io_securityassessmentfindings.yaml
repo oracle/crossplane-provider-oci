@@ -361,6 +361,8 @@ spec:
                     items:
                       type: string
                     type: array
+                  doclink:
+                    type: string
                   hasTargetDbRiskLevelChanged:
                     description: Determines if this risk level has changed on the
                       target database since the last time 'severity' was modified
@@ -427,6 +429,8 @@ spec:
                           type: string
                         obp:
                           description: Relevant section from OBP.
+                          type: string
+                        orp:
                           type: string
                         stig:
                           description: Relevant section from STIG.

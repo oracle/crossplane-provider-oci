@@ -47,6 +47,7 @@ spec:
       - backupStart: ${var.db_system_management_policy_backup_policy_backup_start}
         copyPolicy:
         - compartmentId: ${var.compartment_id}
+          kmsKeyIds: ${var.db_system_management_policy_backup_policy_copy_policy_kms_key_ids}
           regions: ${var.db_system_management_policy_backup_policy_copy_policy_regions}
           retentionPeriod: ${var.db_system_management_policy_backup_policy_copy_policy_retention_period}
         daysOfTheMonth: ${var.db_system_management_policy_backup_policy_days_of_the_month}
@@ -94,5 +95,8 @@ spec:
     - availabilityDomain: ${var.db_system_storage_details_availability_domain}
       iops: ${var.db_system_storage_details_iops}
       isRegionallyDurable: ${var.db_system_storage_details_is_regionally_durable}
+      kmsKeyIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_key
       systemType: ${var.db_system_storage_details_system_type}
     systemType: ${var.db_system_system_type}

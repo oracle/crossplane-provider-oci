@@ -1,0 +1,20 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SubsettingReportManagement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/subsettingreportmanagement
+  labels:
+    testing.upbound.io/example-name: test_subsetting_report_management
+  name: test-subsetting-report-management
+spec:
+  forProvider:
+    subsettingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subsetting_policy
+    targetCredentials:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      userName: ${var.target_database_user_name}
+    targetId: ${var.target_id}

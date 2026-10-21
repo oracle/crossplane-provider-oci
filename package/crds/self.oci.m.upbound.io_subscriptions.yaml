@@ -203,9 +203,14 @@ spec:
                           description: Tha amount for the currency type.
                           type: number
                         billingDetails:
-                          description: Sku details for billing subscription.
+                          description: Billing details associated with the subscription
+                            plan and its usage dimensions.
                           items:
                             properties:
+                              billingModel:
+                                description: The billing model this billing detail
+                                  applies to.
+                                type: string
                               hasGovSku:
                                 description: Whether this sku is assign to gov product.
                                 type: boolean
@@ -238,6 +243,10 @@ spec:
                               metricType:
                                 description: The part's metric.
                                 type: string
+                              pricingPlanKey:
+                                description: Unique key used to map this SKU to the
+                                  pricing plan.
+                                type: string
                               rateAllocation:
                                 description: Tha rate of this sku meter.
                                 type: number
@@ -263,15 +272,59 @@ spec:
                             properties:
                               billingFrequency:
                                 description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                  occurs for the subscription plan or usage dimension.
                                 type: string
+                              dimensions:
+                                description: Metered usage dimensions associated with
+                                  the pricing plan.
+                                items:
+                                  properties:
+                                    dimensionBillingFrequency:
+                                      description: Specifies the interval at which
+                                        the usage dimension is billed.
+                                      type: string
+                                    dimensionDescription:
+                                      description: A detailed explanation of the usage
+                                        dimension.
+                                      type: string
+                                    dimensionKey:
+                                      description: The stable key used internally
+                                        to map this usage dimension to billing details.
+                                      type: string
+                                    dimensionName:
+                                      description: The name of the usage dimension.
+                                      type: string
+                                    includedQuantity:
+                                      description: Quantity included in the base fee
+                                        for hybrid plans.
+                                      type: number
+                                    metricType:
+                                      description: The part's metric.
+                                      type: string
+                                    rates:
+                                      description: Dimension-level rates in various
+                                        supported currencies.
+                                      items:
+                                        properties:
+                                          currency:
+                                            description: The currency supported, in
+                                              the format specified by ISO-4217
+                                            type: string
+                                          rate:
+                                            description: The amount charged for the
+                                              plan in the specified currency.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               planDescription:
                                 description: A detailed explanation of the subscription
                                   plan.
                                 type: string
                               planDuration:
-                                description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                description: Specifies the duration of the subscription
+                                  plan.
                                 type: string
                               planName:
                                 description: The name of the subscription plan used
@@ -281,8 +334,8 @@ spec:
                                 description: The type of the subscription plan.
                                 type: string
                               rates:
-                                description: The pricing details of the subscription
-                                  plan in various supported currencies.
+                                description: Dimension-level rates in various supported
+                                  currencies.
                                 items:
                                   properties:
                                     currency:
@@ -461,9 +514,14 @@ spec:
                           description: Tha amount for the currency type.
                           type: number
                         billingDetails:
-                          description: Sku details for billing subscription.
+                          description: Billing details associated with the subscription
+                            plan and its usage dimensions.
                           items:
                             properties:
+                              billingModel:
+                                description: The billing model this billing detail
+                                  applies to.
+                                type: string
                               hasGovSku:
                                 description: Whether this sku is assign to gov product.
                                 type: boolean
@@ -496,6 +554,10 @@ spec:
                               metricType:
                                 description: The part's metric.
                                 type: string
+                              pricingPlanKey:
+                                description: Unique key used to map this SKU to the
+                                  pricing plan.
+                                type: string
                               rateAllocation:
                                 description: Tha rate of this sku meter.
                                 type: number
@@ -521,15 +583,59 @@ spec:
                             properties:
                               billingFrequency:
                                 description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                  occurs for the subscription plan or usage dimension.
                                 type: string
+                              dimensions:
+                                description: Metered usage dimensions associated with
+                                  the pricing plan.
+                                items:
+                                  properties:
+                                    dimensionBillingFrequency:
+                                      description: Specifies the interval at which
+                                        the usage dimension is billed.
+                                      type: string
+                                    dimensionDescription:
+                                      description: A detailed explanation of the usage
+                                        dimension.
+                                      type: string
+                                    dimensionKey:
+                                      description: The stable key used internally
+                                        to map this usage dimension to billing details.
+                                      type: string
+                                    dimensionName:
+                                      description: The name of the usage dimension.
+                                      type: string
+                                    includedQuantity:
+                                      description: Quantity included in the base fee
+                                        for hybrid plans.
+                                      type: number
+                                    metricType:
+                                      description: The part's metric.
+                                      type: string
+                                    rates:
+                                      description: Dimension-level rates in various
+                                        supported currencies.
+                                      items:
+                                        properties:
+                                          currency:
+                                            description: The currency supported, in
+                                              the format specified by ISO-4217
+                                            type: string
+                                          rate:
+                                            description: The amount charged for the
+                                              plan in the specified currency.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               planDescription:
                                 description: A detailed explanation of the subscription
                                   plan.
                                 type: string
                               planDuration:
-                                description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                description: Specifies the duration of the subscription
+                                  plan.
                                 type: string
                               planName:
                                 description: The name of the subscription plan used
@@ -539,8 +645,8 @@ spec:
                                 description: The type of the subscription plan.
                                 type: string
                               rates:
-                                description: The pricing details of the subscription
-                                  plan in various supported currencies.
+                                description: Dimension-level rates in various supported
+                                  currencies.
                                 items:
                                   properties:
                                     currency:
@@ -718,9 +824,14 @@ spec:
                           description: Tha amount for the currency type.
                           type: number
                         billingDetails:
-                          description: Sku details for billing subscription.
+                          description: Billing details associated with the subscription
+                            plan and its usage dimensions.
                           items:
                             properties:
+                              billingModel:
+                                description: The billing model this billing detail
+                                  applies to.
+                                type: string
                               hasGovSku:
                                 description: Whether this sku is assign to gov product.
                                 type: boolean
@@ -753,6 +864,10 @@ spec:
                               metricType:
                                 description: The part's metric.
                                 type: string
+                              pricingPlanKey:
+                                description: Unique key used to map this SKU to the
+                                  pricing plan.
+                                type: string
                               rateAllocation:
                                 description: Tha rate of this sku meter.
                                 type: number
@@ -778,15 +893,59 @@ spec:
                             properties:
                               billingFrequency:
                                 description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                  occurs for the subscription plan or usage dimension.
                                 type: string
+                              dimensions:
+                                description: Metered usage dimensions associated with
+                                  the pricing plan.
+                                items:
+                                  properties:
+                                    dimensionBillingFrequency:
+                                      description: Specifies the interval at which
+                                        the usage dimension is billed.
+                                      type: string
+                                    dimensionDescription:
+                                      description: A detailed explanation of the usage
+                                        dimension.
+                                      type: string
+                                    dimensionKey:
+                                      description: The stable key used internally
+                                        to map this usage dimension to billing details.
+                                      type: string
+                                    dimensionName:
+                                      description: The name of the usage dimension.
+                                      type: string
+                                    includedQuantity:
+                                      description: Quantity included in the base fee
+                                        for hybrid plans.
+                                      type: number
+                                    metricType:
+                                      description: The part's metric.
+                                      type: string
+                                    rates:
+                                      description: Dimension-level rates in various
+                                        supported currencies.
+                                      items:
+                                        properties:
+                                          currency:
+                                            description: The currency supported, in
+                                              the format specified by ISO-4217
+                                            type: string
+                                          rate:
+                                            description: The amount charged for the
+                                              plan in the specified currency.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
                               planDescription:
                                 description: A detailed explanation of the subscription
                                   plan.
                                 type: string
                               planDuration:
-                                description: Specifies the interval at which billing
-                                  occurs for the subscription plan.
+                                description: Specifies the duration of the subscription
+                                  plan.
                                 type: string
                               planName:
                                 description: The name of the subscription plan used
@@ -796,8 +955,8 @@ spec:
                                 description: The type of the subscription plan.
                                 type: string
                               rates:
-                                description: The pricing details of the subscription
-                                  plan in various supported currencies.
+                                description: Dimension-level rates in various supported
+                                  currencies.
                                 items:
                                   properties:
                                     currency:

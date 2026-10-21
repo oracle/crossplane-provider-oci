@@ -156,6 +156,9 @@ type InitialClusterConfigurationsInitParameters struct {
 	// The billing option selected during Cluster creation. ListSupportedCommitments.
 	InitialCommitment *string `json:"initialCommitment,omitempty" tf:"initial_commitment,omitempty"`
 
+	// Initial Fault Domain Host distribution mode for the Cluster.
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
+
 	// The initial OCPU count of the Cluster's ESXi hosts.
 	InitialHostOcpuCount *float64 `json:"initialHostOcpuCount,omitempty" tf:"initial_host_ocpu_count,omitempty"`
 
@@ -519,6 +522,9 @@ type InitialClusterConfigurationsObservation struct {
 	// The billing option selected during Cluster creation. ListSupportedCommitments.
 	InitialCommitment *string `json:"initialCommitment,omitempty" tf:"initial_commitment,omitempty"`
 
+	// Initial Fault Domain Host distribution mode for the Cluster.
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
+
 	// The initial OCPU count of the Cluster's ESXi hosts.
 	InitialHostOcpuCount *float64 `json:"initialHostOcpuCount,omitempty" tf:"initial_host_ocpu_count,omitempty"`
 
@@ -577,6 +583,10 @@ type InitialClusterConfigurationsParameters struct {
 	// The billing option selected during Cluster creation. ListSupportedCommitments.
 	// +kubebuilder:validation:Optional
 	InitialCommitment *string `json:"initialCommitment,omitempty" tf:"initial_commitment,omitempty"`
+
+	// Initial Fault Domain Host distribution mode for the Cluster.
+	// +kubebuilder:validation:Optional
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
 
 	// The initial OCPU count of the Cluster's ESXi hosts.
 	// +kubebuilder:validation:Optional

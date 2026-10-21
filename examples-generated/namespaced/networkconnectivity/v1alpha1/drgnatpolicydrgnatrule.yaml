@@ -1,0 +1,19 @@
+apiVersion: networkconnectivity.oci.m.upbound.io/v1alpha1
+kind: DrgNatPolicyDrgNatRule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/drgnatpolicydrgnatrule
+  labels:
+    testing.upbound.io/example-name: test_drg_nat_rule
+  name: test-drg-nat-rule
+  namespace: upbound-system
+spec:
+  forProvider:
+    drgNatPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_drg_nat_policy
+    drgNatRulePriority: 100
+    originalDestination: 172.16.1.0/24
+    originalSource: 10.0.0.0/24
+    translatedDestination: 10.1.1.0/24
+    translatedSource: 192.168.0.0/24

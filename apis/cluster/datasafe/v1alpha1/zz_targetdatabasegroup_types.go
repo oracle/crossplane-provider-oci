@@ -74,6 +74,12 @@ type IncludeInitParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) Map of freeform tag filters. Each key maps to an array of strings. Target database matches the key if it's tag value equals any of the values in the array.
+	FreeformTagsIn map[string][]*string `json:"freeformTagsIn,omitempty" tf:"freeform_tags_in,omitempty"`
+
+	// (Updatable) Map of system tag filters. Target database matches when for each specified namespace.key and the tag value equals any of the values in the array.
+	SystemTags map[string][]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
+
 	// (Updatable) The list of target database OCIDS, that should be excluded from the target database group (even if they match some of the other criteria).
 	TargetDatabaseIds []*string `json:"targetDatabaseIds,omitempty" tf:"target_database_ids,omitempty"`
 }
@@ -90,6 +96,12 @@ type IncludeObservation struct {
 	// (Updatable) Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see Resource Tags  Example: {"Department": "Finance"}
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
+
+	// (Updatable) Map of freeform tag filters. Each key maps to an array of strings. Target database matches the key if it's tag value equals any of the values in the array.
+	FreeformTagsIn map[string][]*string `json:"freeformTagsIn,omitempty" tf:"freeform_tags_in,omitempty"`
+
+	// (Updatable) Map of system tag filters. Target database matches when for each specified namespace.key and the tag value equals any of the values in the array.
+	SystemTags map[string][]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
 
 	// (Updatable) The list of target database OCIDS, that should be excluded from the target database group (even if they match some of the other criteria).
 	TargetDatabaseIds []*string `json:"targetDatabaseIds,omitempty" tf:"target_database_ids,omitempty"`
@@ -111,6 +123,14 @@ type IncludeParameters struct {
 	// +mapType=granular
 	FreeformTags map[string]*string `json:"freeformTags,omitempty" tf:"freeform_tags,omitempty"`
 
+	// (Updatable) Map of freeform tag filters. Each key maps to an array of strings. Target database matches the key if it's tag value equals any of the values in the array.
+	// +kubebuilder:validation:Optional
+	FreeformTagsIn map[string][]*string `json:"freeformTagsIn,omitempty" tf:"freeform_tags_in,omitempty"`
+
+	// (Updatable) Map of system tag filters. Target database matches when for each specified namespace.key and the tag value equals any of the values in the array.
+	// +kubebuilder:validation:Optional
+	SystemTags map[string][]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
+
 	// (Updatable) The list of target database OCIDS, that should be excluded from the target database group (even if they match some of the other criteria).
 	// +kubebuilder:validation:Optional
 	TargetDatabaseIds []*string `json:"targetDatabaseIds,omitempty" tf:"target_database_ids,omitempty"`
@@ -121,7 +141,7 @@ type MatchingCriteriaInitParameters struct {
 	// (Updatable) Criteria to exclude certain target databases from the target database group.
 	Exclude []ExcludeInitParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
 
-	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, or definedTags criteria, it qualifies for inclusion in the target database group
+	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, definedTags, freeformTagsIn or systemTags criteria then it qualifies for inclusion in the target database group.
 	Include []IncludeInitParameters `json:"include,omitempty" tf:"include,omitempty"`
 }
 
@@ -130,7 +150,7 @@ type MatchingCriteriaObservation struct {
 	// (Updatable) Criteria to exclude certain target databases from the target database group.
 	Exclude []ExcludeObservation `json:"exclude,omitempty" tf:"exclude,omitempty"`
 
-	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, or definedTags criteria, it qualifies for inclusion in the target database group
+	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, definedTags, freeformTagsIn or systemTags criteria then it qualifies for inclusion in the target database group.
 	Include []IncludeObservation `json:"include,omitempty" tf:"include,omitempty"`
 }
 
@@ -140,7 +160,7 @@ type MatchingCriteriaParameters struct {
 	// +kubebuilder:validation:Optional
 	Exclude []ExcludeParameters `json:"exclude,omitempty" tf:"exclude,omitempty"`
 
-	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, or definedTags criteria, it qualifies for inclusion in the target database group
+	// (Updatable) Criteria to determine whether a target database should be included in the target database group. If the database satisfies any of compartments, targetDatabaseIds, freeformTags, definedTags, freeformTagsIn or systemTags criteria then it qualifies for inclusion in the target database group.
 	// +kubebuilder:validation:Optional
 	Include []IncludeParameters `json:"include" tf:"include,omitempty"`
 }
@@ -214,7 +234,7 @@ type TargetDatabaseGroupObservation struct {
 	// The lifecycle status of the target database group.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 
-	// System tags for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags. Example: {"orcl-cloud.free-tier-retained": "true"}
+	// (Updatable) Map of system tag filters. Target database matches when for each specified namespace.key and the tag value equals any of the values in the array.
 	// +mapType=granular
 	SystemTags map[string]*string `json:"systemTags,omitempty" tf:"system_tags,omitempty"`
 

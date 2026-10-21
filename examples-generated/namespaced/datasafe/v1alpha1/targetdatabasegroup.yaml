@@ -29,4 +29,6 @@ spec:
           Operations.CostCenter: "42"
         freeformTags:
           Department: Finance
+        freeformTagsIn: ${var.target_database_group_matching_criteria_include_freeform_tags_in}
+        systemTags: ${var.target_database_group_matching_criteria_include_system_tags}
         targetDatabaseIds: ${var.target_database_group_matching_criteria_include_target_database_ids}

@@ -376,12 +376,15 @@ import (
 	calculateauditvolumecollected "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/calculateauditvolumecollected"
 	comparesecurityassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/comparesecurityassessment"
 	compareuserassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/compareuserassessment"
+	cryptoassessment "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/cryptoassessment"
+	cryptoassessmentmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/cryptoassessmentmanagement"
 	databasesecurityconfig "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/databasesecurityconfig"
 	databasesecurityconfigmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/databasesecurityconfigmanagement"
 	datasafeconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/datasafeconfiguration"
 	datasafeprivateendpoint "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/datasafeprivateendpoint"
 	discoveryjob "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/discoveryjob"
 	discoveryjobsresult "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/discoveryjobsresult"
+	estimatetablesizes "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/estimatetablesizes"
 	generateonpremconnectorconfiguration "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/generateonpremconnectorconfiguration"
 	librarymaskingformat "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/librarymaskingformat"
 	maskdata "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskdata"
@@ -391,6 +394,7 @@ import (
 	maskingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskingpolicyhealthreportmanagement"
 	maskingreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/maskingreportmanagement"
 	onpremconnector "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/onpremconnector"
+	registrationpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/registrationpolicy"
 	report "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/report"
 	reportdefinition "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/reportdefinition"
 	sdmmaskingpolicydifference "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sdmmaskingpolicydifference"
@@ -417,6 +421,13 @@ import (
 	sqlcollection "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlcollection"
 	sqlfirewallpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlfirewallpolicy"
 	sqlfirewallpolicymanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/sqlfirewallpolicymanagement"
+	subsetdata "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsetdata"
+	subsettingpolicy "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicy"
+	subsettingpolicyhealthreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicyhealthreportmanagement"
+	subsettingpolicysubsettingrule "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingrule"
+	subsettingpolicysubsettingruleprocessingchainobject "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingruleprocessingchainobject"
+	subsettingpolicysubsettingschemarelation "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingpolicysubsettingschemarelation"
+	subsettingreportmanagement "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/subsettingreportmanagement"
 	targetalertpolicyassociation "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetalertpolicyassociation"
 	targetdatabase "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetdatabase"
 	targetdatabasegroup "github.com/oracle/provider-oci/internal/controller/cluster/datasafe/targetdatabasegroup"
@@ -455,6 +466,7 @@ import (
 	multicloudresourcediscovery "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/multicloudresourcediscovery"
 	oracledbawsidentityconnector "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbawsidentityconnector"
 	oracledbawskey "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbawskey"
+	oracledbawskeypool "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbawskeypool"
 	oracledbazureblobcontainer "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbazureblobcontainer"
 	oracledbazureblobmount "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbazureblobmount"
 	oracledbazureconnector "github.com/oracle/provider-oci/internal/controller/cluster/dbmulticloud/oracledbazureconnector"
@@ -564,6 +576,7 @@ import (
 	importedmodel "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/importedmodel"
 	modelgenerativeai "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/model"
 	projectgenerativeai "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/project"
+	routingprofile "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/routingprofile"
 	semanticstore "github.com/oracle/provider-oci/internal/controller/cluster/generativeai/semanticstore"
 	artifactbypath "github.com/oracle/provider-oci/internal/controller/cluster/genericartifactscontent/artifactbypath"
 	connectiongoldengate "github.com/oracle/provider-oci/internal/controller/cluster/goldengate/connection"
@@ -772,6 +785,8 @@ import (
 	drgattachment "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachment"
 	drgattachmentmanagement "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachmentmanagement"
 	drgattachmentslist "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachmentslist"
+	drgnatpolicy "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgnatpolicy"
+	drgnatpolicydrgnatrule "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgnatpolicydrgnatrule"
 	drgroutedistribution "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutedistribution"
 	drgroutedistributionstatement "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutedistributionstatement"
 	drgroutetable "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutetable"
@@ -830,6 +845,8 @@ import (
 	privateendpointobjectstorage "github.com/oracle/provider-oci/internal/controller/cluster/objectstorage/privateendpoint"
 	replicationpolicy "github.com/oracle/provider-oci/internal/controller/cluster/objectstorage/replicationpolicy"
 	oceinstance "github.com/oracle/provider-oci/internal/controller/cluster/oce/oceinstance"
+	internaladminproduct "github.com/oracle/provider-oci/internal/controller/cluster/ociproductcatalog/internaladminproduct"
+	internalproduct "github.com/oracle/provider-oci/internal/controller/cluster/ociproductcatalog/internalproduct"
 	byol "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/byol"
 	byolallocation "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/byolallocation"
 	clusterocvp "github.com/oracle/provider-oci/internal/controller/cluster/ocvp/cluster"
@@ -1382,12 +1399,15 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		calculateauditvolumecollected.Setup,
 		comparesecurityassessment.Setup,
 		compareuserassessment.Setup,
+		cryptoassessment.Setup,
+		cryptoassessmentmanagement.Setup,
 		databasesecurityconfig.Setup,
 		databasesecurityconfigmanagement.Setup,
 		datasafeconfiguration.Setup,
 		datasafeprivateendpoint.Setup,
 		discoveryjob.Setup,
 		discoveryjobsresult.Setup,
+		estimatetablesizes.Setup,
 		generateonpremconnectorconfiguration.Setup,
 		librarymaskingformat.Setup,
 		maskdata.Setup,
@@ -1397,6 +1417,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		maskingpolicyhealthreportmanagement.Setup,
 		maskingreportmanagement.Setup,
 		onpremconnector.Setup,
+		registrationpolicy.Setup,
 		report.Setup,
 		reportdefinition.Setup,
 		sdmmaskingpolicydifference.Setup,
@@ -1423,6 +1444,13 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		sqlcollection.Setup,
 		sqlfirewallpolicy.Setup,
 		sqlfirewallpolicymanagement.Setup,
+		subsetdata.Setup,
+		subsettingpolicy.Setup,
+		subsettingpolicyhealthreportmanagement.Setup,
+		subsettingpolicysubsettingrule.Setup,
+		subsettingpolicysubsettingruleprocessingchainobject.Setup,
+		subsettingpolicysubsettingschemarelation.Setup,
+		subsettingreportmanagement.Setup,
 		targetalertpolicyassociation.Setup,
 		targetdatabase.Setup,
 		targetdatabasegroup.Setup,
@@ -1461,6 +1489,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		multicloudresourcediscovery.Setup,
 		oracledbawsidentityconnector.Setup,
 		oracledbawskey.Setup,
+		oracledbawskeypool.Setup,
 		oracledbazureblobcontainer.Setup,
 		oracledbazureblobmount.Setup,
 		oracledbazureconnector.Setup,
@@ -1570,6 +1599,7 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		importedmodel.Setup,
 		modelgenerativeai.Setup,
 		projectgenerativeai.Setup,
+		routingprofile.Setup,
 		semanticstore.Setup,
 		artifactbypath.Setup,
 		connectiongoldengate.Setup,
@@ -1778,6 +1808,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		drgattachment.Setup,
 		drgattachmentmanagement.Setup,
 		drgattachmentslist.Setup,
+		drgnatpolicy.Setup,
+		drgnatpolicydrgnatrule.Setup,
 		drgroutedistribution.Setup,
 		drgroutedistributionstatement.Setup,
 		drgroutetable.Setup,
@@ -1836,6 +1868,8 @@ func Setup_monolith(mgr ctrl.Manager, o controller.Options) error {
 		privateendpointobjectstorage.Setup,
 		replicationpolicy.Setup,
 		oceinstance.Setup,
+		internaladminproduct.Setup,
+		internalproduct.Setup,
 		byol.Setup,
 		byolallocation.Setup,
 		clusterocvp.Setup,
@@ -2394,12 +2428,15 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		calculateauditvolumecollected.SetupGated,
 		comparesecurityassessment.SetupGated,
 		compareuserassessment.SetupGated,
+		cryptoassessment.SetupGated,
+		cryptoassessmentmanagement.SetupGated,
 		databasesecurityconfig.SetupGated,
 		databasesecurityconfigmanagement.SetupGated,
 		datasafeconfiguration.SetupGated,
 		datasafeprivateendpoint.SetupGated,
 		discoveryjob.SetupGated,
 		discoveryjobsresult.SetupGated,
+		estimatetablesizes.SetupGated,
 		generateonpremconnectorconfiguration.SetupGated,
 		librarymaskingformat.SetupGated,
 		maskdata.SetupGated,
@@ -2409,6 +2446,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		maskingpolicyhealthreportmanagement.SetupGated,
 		maskingreportmanagement.SetupGated,
 		onpremconnector.SetupGated,
+		registrationpolicy.SetupGated,
 		report.SetupGated,
 		reportdefinition.SetupGated,
 		sdmmaskingpolicydifference.SetupGated,
@@ -2435,6 +2473,13 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		sqlcollection.SetupGated,
 		sqlfirewallpolicy.SetupGated,
 		sqlfirewallpolicymanagement.SetupGated,
+		subsetdata.SetupGated,
+		subsettingpolicy.SetupGated,
+		subsettingpolicyhealthreportmanagement.SetupGated,
+		subsettingpolicysubsettingrule.SetupGated,
+		subsettingpolicysubsettingruleprocessingchainobject.SetupGated,
+		subsettingpolicysubsettingschemarelation.SetupGated,
+		subsettingreportmanagement.SetupGated,
 		targetalertpolicyassociation.SetupGated,
 		targetdatabase.SetupGated,
 		targetdatabasegroup.SetupGated,
@@ -2473,6 +2518,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		multicloudresourcediscovery.SetupGated,
 		oracledbawsidentityconnector.SetupGated,
 		oracledbawskey.SetupGated,
+		oracledbawskeypool.SetupGated,
 		oracledbazureblobcontainer.SetupGated,
 		oracledbazureblobmount.SetupGated,
 		oracledbazureconnector.SetupGated,
@@ -2582,6 +2628,7 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		importedmodel.SetupGated,
 		modelgenerativeai.SetupGated,
 		projectgenerativeai.SetupGated,
+		routingprofile.SetupGated,
 		semanticstore.SetupGated,
 		artifactbypath.SetupGated,
 		connectiongoldengate.SetupGated,
@@ -2790,6 +2837,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		drgattachment.SetupGated,
 		drgattachmentmanagement.SetupGated,
 		drgattachmentslist.SetupGated,
+		drgnatpolicy.SetupGated,
+		drgnatpolicydrgnatrule.SetupGated,
 		drgroutedistribution.SetupGated,
 		drgroutedistributionstatement.SetupGated,
 		drgroutetable.SetupGated,
@@ -2848,6 +2897,8 @@ func SetupGated_monolith(mgr ctrl.Manager, o controller.Options) error {
 		privateendpointobjectstorage.SetupGated,
 		replicationpolicy.SetupGated,
 		oceinstance.SetupGated,
+		internaladminproduct.SetupGated,
+		internalproduct.SetupGated,
 		byol.SetupGated,
 		byolallocation.SetupGated,
 		clusterocvp.SetupGated,

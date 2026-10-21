@@ -78,7 +78,7 @@ type AutonomousVmClusterInitParameters struct {
 	// (Updatable) The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.
 	MaintenanceWindowDetails []AutonomousVmClusterMaintenanceWindowDetailsInitParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
 	// (Updatable) The SCAN Listener Non TLS port number. Default value is 1521.
@@ -87,7 +87,7 @@ type AutonomousVmClusterInitParameters struct {
 	// (Updatable) The SCAN Listener TLS port number. Default value is 2484.
 	ScanListenerPortTLS *float64 `json:"scanListenerPortTls,omitempty" tf:"scan_listener_port_tls,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 
 	// (Updatable) The time zone to use for the Autonomous VM cluster. For details, see DB System Time Zones.
@@ -409,7 +409,7 @@ type AutonomousVmClusterObservation struct {
 	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerComputeUnitInGbs *float64 `json:"memoryPerComputeUnitInGbs,omitempty" tf:"memory_per_compute_unit_in_gbs,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
 	// The memory allocated in GBs.
@@ -448,7 +448,7 @@ type AutonomousVmClusterObservation struct {
 	// (Updatable) The SCAN Listener TLS port number. Default value is 2484.
 	ScanListenerPortTLS *float64 `json:"scanListenerPortTls,omitempty" tf:"scan_listener_port_tls,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 
 	// The current state of the Autonomous VM cluster.
@@ -558,7 +558,7 @@ type AutonomousVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	MaintenanceWindowDetails []AutonomousVmClusterMaintenanceWindowDetailsParameters `json:"maintenanceWindowDetails,omitempty" tf:"maintenance_window_details,omitempty"`
 
-	// The amount of memory (in GBs) to be enabled per OCPU or ECPU.
+	// (Updatable) The amount of memory (in GBs) to be enabled per OCPU or ECPU.
 	// +kubebuilder:validation:Optional
 	MemoryPerOracleComputeUnitInGbs *float64 `json:"memoryPerOracleComputeUnitInGbs,omitempty" tf:"memory_per_oracle_compute_unit_in_gbs,omitempty"`
 
@@ -570,7 +570,7 @@ type AutonomousVmClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ScanListenerPortTLS *float64 `json:"scanListenerPortTls,omitempty" tf:"scan_listener_port_tls,omitempty"`
 
-	// Percentage of ECPU memory allocated for SGA(System Global Area).
+	// (Updatable) Percentage of ECPU memory allocated for SGA(System Global Area).
 	// +kubebuilder:validation:Optional
 	SgaPercentage *float64 `json:"sgaPercentage,omitempty" tf:"sga_percentage,omitempty"`
 

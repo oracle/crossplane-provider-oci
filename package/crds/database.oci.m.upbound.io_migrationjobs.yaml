@@ -476,6 +476,9 @@ spec:
                         currentStatus:
                           description: Current status of the job.
                           type: string
+                        jobProgress:
+                          description: Progress details of a Migration Job.
+                          type: number
                         phases:
                           description: List of phase status for the job.
                           items:
