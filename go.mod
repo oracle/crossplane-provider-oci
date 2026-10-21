@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/terraform-json v0.27.2
 	github.com/hashicorp/terraform-plugin-framework v1.16.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
-	github.com/oracle/terraform-provider-oci v1.0.19-0.20260923175910-917abba4b805
+	github.com/oracle/terraform-provider-oci v1.0.19-0.20261020203927-2c52feb19a76
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.23.2
 	golang.org/x/text v0.41.0
@@ -165,5 +165,3 @@ require (
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.0 // indirect
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
-
-replace github.com/oracle/terraform-provider-oci => github.com/HaoyL666/terraform-provider-oci v1.0.19-0.20261018170853-cb2ce0f7ba58

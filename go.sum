@@ -1,7 +1,5 @@
 dario.cat/mergo v1.0.2 h1:85+piFYR1tMbRrLcDwR18y4UKJ3aH1Tbzi24VRW1TK8=
 dario.cat/mergo v1.0.2/go.mod h1:E/hbnu0NxMFBjpMIE34DRGLWqDy0g5FuKDhCb31ngxA=
-github.com/HaoyL666/terraform-provider-oci v1.0.19-0.20261018170853-cb2ce0f7ba58 h1:AGA3eJ/W22xkunkPp+IXHXQSmcRd9Af1/NSascVANlg=
-github.com/HaoyL666/terraform-provider-oci v1.0.19-0.20261018170853-cb2ce0f7ba58/go.mod h1:3nxFFzkYXTGl1JbjEMhfdqhbWoGjVFNhNXIU0CLodTQ=
 github.com/Microsoft/go-winio v0.6.2 h1:F2VQgta7ecxGYO8k3ZZz3RS8fVIXVxONVUPlNERoyfY=
 github.com/Microsoft/go-winio v0.6.2/go.mod h1:yd8OoFMLzJbo9gZq8j5qaps8bJ9aShtEA8Ipt1oGCvU=
 github.com/ProtonMail/go-crypto v1.3.0 h1:ILq8+Sf5If5DCpHQp4PbZdS1J7HDFRXz/+xKBiRGFrw=
@@ -265,6 +263,8 @@ github.com/onsi/gomega v1.37.0 h1:CdEG8g0S133B4OswTDC/5XPSzE1OeP29QOioj2PID2Y=
 github.com/onsi/gomega v1.37.0/go.mod h1:8D9+Txp43QWKhM24yyOBEdpkzN8FvJyAwecBgsU4KU0=
 github.com/oracle/oci-go-sdk/v65 v65.127.0 h1:EfV88zZjJtsIdyALgAYJYL6Pj7Iw11Q2LNtnaGZf+sk=
 github.com/oracle/oci-go-sdk/v65 v65.127.0/go.mod h1:YmvgbsnUfrsiJ410XAGQ1BRsrUYJJ7W3O5wUikmeI8w=
+github.com/oracle/terraform-provider-oci v1.0.19-0.20261020203927-2c52feb19a76 h1:x52Ng3GkmKH270E7HxSPv4jZ2pWfNtRlSMfHY0sqP9Q=
+github.com/oracle/terraform-provider-oci v1.0.19-0.20261020203927-2c52feb19a76/go.mod h1:3nxFFzkYXTGl1JbjEMhfdqhbWoGjVFNhNXIU0CLodTQ=
 github.com/pjbgf/sha1cd v0.3.2 h1:a9wb0bp1oC2TGwStyn0Umc/IGKQnEgF0vVaZ8QF8eo4=
 github.com/pjbgf/sha1cd v0.3.2/go.mod h1:zQWigSxVmsHEZow5qaLtPYxpcKMMQpa09ixqBxuCS6A=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
