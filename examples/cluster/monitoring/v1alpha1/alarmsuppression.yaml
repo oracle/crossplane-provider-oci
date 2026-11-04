@@ -11,8 +11,9 @@ spec:
           matchLabels:
             testing.upbound.io/example-name: alarm_label_1
       targetType: ALARM
+    # Supply current UTC RFC3339 timestamps at execution time.
     # timeSuppressFrom cannot be older than 5 min from current time.
-    timeSuppressFrom: "2026-02-22T20:43:40Z"
-    timeSuppressUntil: "2026-02-22T20:53:30Z"
+    timeSuppressFrom: "${TIME_SUPPRESS_FROM}"
+    timeSuppressUntil: "${TIME_SUPPRESS_UNTIL}"
     displayName: alarmsuppression1
     dimensions: {'availabilityDomain': 'phx-ad-1'}
