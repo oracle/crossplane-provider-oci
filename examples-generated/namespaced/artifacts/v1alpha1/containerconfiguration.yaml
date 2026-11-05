@@ -8,4 +8,8 @@ metadata:
   name: test-container-configuration
   namespace: upbound-system
 spec:
-  forProvider: {}
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    isRepositoryCreatedOnFirstPush: ${var.container_configuration_is_repository_created_on_first_push}

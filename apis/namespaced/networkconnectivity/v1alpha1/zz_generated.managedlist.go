@@ -79,6 +79,24 @@ func (l *DrgList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this DrgNatPolicyDrgNatRuleList.
+func (l *DrgNatPolicyDrgNatRuleList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this DrgNatPolicyList.
+func (l *DrgNatPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this DrgRouteDistributionList.
 func (l *DrgRouteDistributionList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

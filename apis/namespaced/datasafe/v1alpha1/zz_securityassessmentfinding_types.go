@@ -43,6 +43,8 @@ type SecurityAssessmentFindingObservation struct {
 	// The details of the finding. Provides detailed information to explain the finding summary, typically results from the assessed database, followed by any recommendations for changes.
 	Details []*string `json:"details,omitempty" tf:"details,omitempty"`
 
+	Doclink *string `json:"doclink,omitempty" tf:"doclink,omitempty"`
+
 	// Determines if this risk level has changed on the target database since the last time 'severity' was modified by user.
 	HasTargetDBRiskLevelChanged *bool `json:"hasTargetDbRiskLevelChanged,omitempty" tf:"has_target_db_risk_level_changed,omitempty"`
 
@@ -177,6 +179,8 @@ type SecurityAssessmentFindingReferencesObservation struct {
 
 	// Relevant section from OBP.
 	Obp *string `json:"obp,omitempty" tf:"obp,omitempty"`
+
+	Orp *string `json:"orp,omitempty" tf:"orp,omitempty"`
 
 	// Relevant section from STIG.
 	Stig *string `json:"stig,omitempty" tf:"stig,omitempty"`

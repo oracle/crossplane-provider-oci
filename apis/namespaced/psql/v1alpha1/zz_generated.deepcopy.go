@@ -340,6 +340,17 @@ func (in *CopyPolicyInitParameters) DeepCopyInto(out *CopyPolicyInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIds != nil {
+		in, out := &in.KMSKeyIds, &out.KMSKeyIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Regions != nil {
 		in, out := &in.Regions, &out.Regions
 		*out = make([]*string, len(*in))
@@ -376,6 +387,17 @@ func (in *CopyPolicyObservation) DeepCopyInto(out *CopyPolicyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.KMSKeyIds != nil {
+		in, out := &in.KMSKeyIds, &out.KMSKeyIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.Regions != nil {
 		in, out := &in.Regions, &out.Regions
 		*out = make([]*string, len(*in))
@@ -411,6 +433,17 @@ func (in *CopyPolicyParameters) DeepCopyInto(out *CopyPolicyParameters) {
 		in, out := &in.CompartmentID, &out.CompartmentID
 		*out = new(string)
 		**out = **in
+	}
+	if in.KMSKeyIds != nil {
+		in, out := &in.KMSKeyIds, &out.KMSKeyIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.Regions != nil {
 		in, out := &in.Regions, &out.Regions
@@ -2224,6 +2257,11 @@ func (in *PsqlBackupObservation) DeepCopyInto(out *PsqlBackupObservation) {
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
 		*out = new(string)
 		**out = **in
 	}
@@ -4051,6 +4089,21 @@ func (in *StorageDetailsInitParameters) DeepCopyInto(out *StorageDetailsInitPara
 		*out = new(bool)
 		**out = **in
 	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SystemType != nil {
 		in, out := &in.SystemType, &out.SystemType
 		*out = new(string)
@@ -4084,6 +4137,11 @@ func (in *StorageDetailsObservation) DeepCopyInto(out *StorageDetailsObservation
 	if in.IsRegionallyDurable != nil {
 		in, out := &in.IsRegionallyDurable, &out.IsRegionallyDurable
 		*out = new(bool)
+		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
 		**out = **in
 	}
 	if in.SystemType != nil {
@@ -4120,6 +4178,21 @@ func (in *StorageDetailsParameters) DeepCopyInto(out *StorageDetailsParameters) 
 		in, out := &in.IsRegionallyDurable, &out.IsRegionallyDurable
 		*out = new(bool)
 		**out = **in
+	}
+	if in.KMSKeyID != nil {
+		in, out := &in.KMSKeyID, &out.KMSKeyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.KMSKeyIDRef != nil {
+		in, out := &in.KMSKeyIDRef, &out.KMSKeyIDRef
+		*out = new(v1.NamespacedReference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.KMSKeyIDSelector != nil {
+		in, out := &in.KMSKeyIDSelector, &out.KMSKeyIDSelector
+		*out = new(v1.NamespacedSelector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SystemType != nil {
 		in, out := &in.SystemType, &out.SystemType

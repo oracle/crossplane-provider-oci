@@ -1171,6 +1171,10 @@ spec:
                           description: Whether to enable consistent volume naming
                             feature. Defaults to false.
                           type: boolean
+                        isEncryptionInTransitEnabled:
+                          description: Specifies whether in-transit encryption is
+                            enabled for the data volume's attachment.
+                          type: boolean
                         isPvEncryptionInTransitEnabled:
                           description: Whether to enable in-transit encryption for
                             the data volume's paravirtualized attachment. The default
@@ -1341,7 +1345,8 @@ spec:
                           type: array
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                         useChap:
                           description: (Applicable when type=iscsi) Whether to use
@@ -1440,7 +1445,8 @@ spec:
                           type: string
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -1542,7 +1548,8 @@ spec:
                           type: object
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -1622,7 +1629,8 @@ spec:
                           type: number
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -1643,7 +1651,8 @@ spec:
                                 type: boolean
                               type:
                                 description: The type of volume attachment. Currently,
-                                  the only supported values are "iscsi" and "paravirtualized".
+                                  the only supported values are "iscsi", "paravirtualized",
+                                  and "nvme".
                                 type: string
                             type: object
                           type: array
@@ -3055,6 +3064,10 @@ spec:
                           description: Whether to enable consistent volume naming
                             feature. Defaults to false.
                           type: boolean
+                        isEncryptionInTransitEnabled:
+                          description: Specifies whether in-transit encryption is
+                            enabled for the data volume's attachment.
+                          type: boolean
                         isPvEncryptionInTransitEnabled:
                           description: Whether to enable in-transit encryption for
                             the data volume's paravirtualized attachment. The default
@@ -3225,7 +3238,8 @@ spec:
                           type: array
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                         useChap:
                           description: (Applicable when type=iscsi) Whether to use
@@ -3324,7 +3338,8 @@ spec:
                           type: string
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -3426,7 +3441,8 @@ spec:
                           type: object
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -3506,7 +3522,8 @@ spec:
                           type: number
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -3527,7 +3544,8 @@ spec:
                                 type: boolean
                               type:
                                 description: The type of volume attachment. Currently,
-                                  the only supported values are "iscsi" and "paravirtualized".
+                                  the only supported values are "iscsi", "paravirtualized",
+                                  and "nvme".
                                 type: string
                             type: object
                           type: array
@@ -4278,6 +4296,10 @@ spec:
                           description: Whether to enable consistent volume naming
                             feature. Defaults to false.
                           type: boolean
+                        isEncryptionInTransitEnabled:
+                          description: Specifies whether in-transit encryption is
+                            enabled for the data volume's attachment.
+                          type: boolean
                         isPvEncryptionInTransitEnabled:
                           description: Whether to enable in-transit encryption for
                             the data volume's paravirtualized attachment. The default
@@ -4372,7 +4394,8 @@ spec:
                           type: array
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                         useChap:
                           description: (Applicable when type=iscsi) Whether to use
@@ -4399,7 +4422,8 @@ spec:
                           type: string
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -4425,7 +4449,8 @@ spec:
                           type: string
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -4505,7 +4530,8 @@ spec:
                           type: number
                         type:
                           description: The type of volume attachment. Currently, the
-                            only supported values are "iscsi" and "paravirtualized".
+                            only supported values are "iscsi", "paravirtualized",
+                            and "nvme".
                           type: string
                       type: object
                     type: array
@@ -4526,7 +4552,8 @@ spec:
                                 type: boolean
                               type:
                                 description: The type of volume attachment. Currently,
-                                  the only supported values are "iscsi" and "paravirtualized".
+                                  the only supported values are "iscsi", "paravirtualized",
+                                  and "nvme".
                                 type: string
                             type: object
                           type: array

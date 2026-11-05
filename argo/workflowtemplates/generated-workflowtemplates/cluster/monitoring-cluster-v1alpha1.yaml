@@ -13,6 +13,8 @@ spec:
   arguments:
     parameters:
     - name: compartment_ocid
+    - name: time_suppress_from
+    - name: time_suppress_until
     - name: create_compartment
       value: "true"
     - name: create_notificationtopic
@@ -66,6 +68,8 @@ spec:
             parameters:
               - name: resourceFile
                 value: "examples/cluster/monitoring/v1alpha1/alarmsuppression.yaml"
+              - name: envVars
+                value: "TIME_SUPPRESS_FROM={{workflow.parameters.time_suppress_from}},TIME_SUPPRESS_UNTIL={{workflow.parameters.time_suppress_until}}"
         - name: delete-alarm
           templateRef:
             name: test-template

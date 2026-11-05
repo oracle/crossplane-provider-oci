@@ -86,6 +86,7 @@ spec:
     - bootVolumeType: ${var.instance_launch_options_boot_volume_type}
       firmware: ${var.instance_launch_options_firmware}
       isConsistentVolumeNamingEnabled: ${var.instance_launch_options_is_consistent_volume_naming_enabled}
+      isEncryptionInTransitEnabled: ${var.instance_launch_options_is_encryption_in_transit_enabled}
       isPvEncryptionInTransitEnabled: ${var.instance_launch_options_is_pv_encryption_in_transit_enabled}
       networkType: ${var.instance_launch_options_network_type}
       remoteDataVolumeType: ${var.instance_launch_options_remote_data_volume_type}

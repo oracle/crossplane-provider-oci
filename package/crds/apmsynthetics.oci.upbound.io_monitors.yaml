@@ -315,8 +315,8 @@ spec:
                                 type: boolean
                               overrideDnsIp:
                                 description: (Updatable) Attribute to override the
-                                  DNS IP value. This value will be honored only if
-                                  isOverrideDns is set to true.
+                                  DNS IP value. This value is required only if isOverrideDns
+                                  is set to true.
                                 type: string
                             type: object
                           type: array
@@ -807,6 +807,15 @@ spec:
                       window.
                     items:
                       properties:
+                        recurrenceType:
+                          description: (Updatable) Type of recurrence for a recurring
+                            maintenance window.
+                          type: string
+                        scheduleType:
+                          description: (Updatable) Type of maintenance window schedule.
+                            If not provided, a schedule with timeStarted and timeEnded
+                            is treated as ONE_TIME.
+                          type: string
                         timeEnded:
                           description: '(Updatable) End time of the maintenance window,
                             expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
@@ -1224,8 +1233,8 @@ spec:
                                 type: boolean
                               overrideDnsIp:
                                 description: (Updatable) Attribute to override the
-                                  DNS IP value. This value will be honored only if
-                                  isOverrideDns is set to true.
+                                  DNS IP value. This value is required only if isOverrideDns
+                                  is set to true.
                                 type: string
                             type: object
                           type: array
@@ -1716,6 +1725,15 @@ spec:
                       window.
                     items:
                       properties:
+                        recurrenceType:
+                          description: (Updatable) Type of recurrence for a recurring
+                            maintenance window.
+                          type: string
+                        scheduleType:
+                          description: (Updatable) Type of maintenance window schedule.
+                            If not provided, a schedule with timeStarted and timeEnded
+                            is treated as ONE_TIME.
+                          type: string
                         timeEnded:
                           description: '(Updatable) End time of the maintenance window,
                             expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'
@@ -2123,8 +2141,8 @@ spec:
                                 type: boolean
                               overrideDnsIp:
                                 description: (Updatable) Attribute to override the
-                                  DNS IP value. This value will be honored only if
-                                  isOverrideDns is set to true.
+                                  DNS IP value. This value is required only if isOverrideDns
+                                  is set to true.
                                 type: string
                             type: object
                           type: array
@@ -2422,6 +2440,15 @@ spec:
                       window.
                     items:
                       properties:
+                        recurrenceType:
+                          description: (Updatable) Type of recurrence for a recurring
+                            maintenance window.
+                          type: string
+                        scheduleType:
+                          description: (Updatable) Type of maintenance window schedule.
+                            If not provided, a schedule with timeStarted and timeEnded
+                            is treated as ONE_TIME.
+                          type: string
                         timeEnded:
                           description: '(Updatable) End time of the maintenance window,
                             expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z'

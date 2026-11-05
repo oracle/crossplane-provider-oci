@@ -96,6 +96,9 @@ type EsxiHostInitParameters struct {
 	// The compute shape name of the ESXi host. ListSupportedHostShapes.
 	HostShapeName *string `json:"hostShapeName,omitempty" tf:"host_shape_name,omitempty"`
 
+	// (Updatable) The initial fault domain host distribution mode for the ESXi host.
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
+
 	// (Updatable) Indicates whether this host embedded VMware vSAN with BYOL Allocation.
 	IsVsanByolEnabled *bool `json:"isVsanByolEnabled,omitempty" tf:"is_vsan_byol_enabled,omitempty"`
 
@@ -152,6 +155,9 @@ type EsxiHostObservation struct {
 	// The availability domain to create the ESXi host in. If keep empty, for AD-specific Cluster, new ESXi host will be created in the same availability domain; for multi-AD Cluster, new ESXi host will be auto assigned to the next availability domain following evenly distribution strategy.
 	ComputeAvailabilityDomain *string `json:"computeAvailabilityDomain,omitempty" tf:"compute_availability_domain,omitempty"`
 
+	// The fault domain of the ESXi host.
+	ComputeFaultDomain *string `json:"computeFaultDomain,omitempty" tf:"compute_fault_domain,omitempty"`
+
 	// In terms of implementation, an ESXi host is a Compute instance that is configured with the chosen bundle of VMware software. The computeInstanceId is the OCID of that Compute instance.
 	ComputeInstanceID *string `json:"computeInstanceId,omitempty" tf:"compute_instance_id,omitempty"`
 
@@ -198,6 +204,9 @@ type EsxiHostObservation struct {
 
 	// The OCID of the ESXi host.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// (Updatable) The initial fault domain host distribution mode for the ESXi host.
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
 
 	// Indicates whether this host is in the progress of billing continuation.
 	IsBillingContinuationInProgress *bool `json:"isBillingContinuationInProgress,omitempty" tf:"is_billing_continuation_in_progress,omitempty"`
@@ -324,6 +333,10 @@ type EsxiHostParameters struct {
 	// The compute shape name of the ESXi host. ListSupportedHostShapes.
 	// +kubebuilder:validation:Optional
 	HostShapeName *string `json:"hostShapeName,omitempty" tf:"host_shape_name,omitempty"`
+
+	// (Updatable) The initial fault domain host distribution mode for the ESXi host.
+	// +kubebuilder:validation:Optional
+	InitialFaultDomainHostDistribution *string `json:"initialFaultDomainHostDistribution,omitempty" tf:"initial_fault_domain_host_distribution,omitempty"`
 
 	// (Updatable) Indicates whether this host embedded VMware vSAN with BYOL Allocation.
 	// +kubebuilder:validation:Optional

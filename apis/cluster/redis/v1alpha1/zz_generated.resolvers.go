@@ -477,6 +477,26 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.OciCacheConfigSetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.OciCacheConfigSetIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("redis.oci.upbound.io", "v1alpha1", "RedisCluster", "RedisClusterList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrimaryClusterID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.PrimaryClusterIDRef,
+			Selector:     mg.Spec.ForProvider.PrimaryClusterIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.PrimaryClusterID")
+	}
+	mg.Spec.ForProvider.PrimaryClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PrimaryClusterIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -556,6 +576,26 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.InitProvider.OciCacheConfigSetID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.OciCacheConfigSetIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("redis.oci.upbound.io", "v1alpha1", "RedisCluster", "RedisClusterList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrimaryClusterID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.PrimaryClusterIDRef,
+			Selector:     mg.Spec.InitProvider.PrimaryClusterIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PrimaryClusterID")
+	}
+	mg.Spec.InitProvider.PrimaryClusterID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PrimaryClusterIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networking.oci.upbound.io", "v1alpha1", "Subnet", "SubnetList")
 		if err != nil {

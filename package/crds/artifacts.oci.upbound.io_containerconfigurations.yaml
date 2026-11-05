@@ -75,6 +75,7 @@ spec:
               forProvider:
                 properties:
                   compartmentId:
+                    description: (Updatable) The OCID of the compartment.
                     type: string
                   compartmentIdRef:
                     description: Reference to a Compartment in identity to populate
@@ -153,8 +154,8 @@ spec:
                         type: object
                     type: object
                   isRepositoryCreatedOnFirstPush:
-                    description: Whether to create a new container repository when
-                      a container is pushed to a new repository path. Repositories
+                    description: (Updatable) Whether to create a new container repository
+                      when a container image is pushed to a new repository path. Repositories
                       created in this way belong to the root compartment.
                     type: boolean
                 type: object
@@ -172,6 +173,7 @@ spec:
                   autoscaler.
                 properties:
                   compartmentId:
+                    description: (Updatable) The OCID of the compartment.
                     type: string
                   compartmentIdRef:
                     description: Reference to a Compartment in identity to populate
@@ -250,8 +252,8 @@ spec:
                         type: object
                     type: object
                   isRepositoryCreatedOnFirstPush:
-                    description: Whether to create a new container repository when
-                      a container is pushed to a new repository path. Repositories
+                    description: (Updatable) Whether to create a new container repository
+                      when a container image is pushed to a new repository path. Repositories
                       created in this way belong to the root compartment.
                     type: boolean
                 type: object
@@ -356,12 +358,13 @@ spec:
               atProvider:
                 properties:
                   compartmentId:
+                    description: (Updatable) The OCID of the compartment.
                     type: string
                   id:
                     type: string
                   isRepositoryCreatedOnFirstPush:
-                    description: Whether to create a new container repository when
-                      a container is pushed to a new repository path. Repositories
+                    description: (Updatable) Whether to create a new container repository
+                      when a container image is pushed to a new repository path. Repositories
                       created in this way belong to the root compartment.
                     type: boolean
                   namespace:

@@ -1,0 +1,16 @@
+apiVersion: datasafe.oci.upbound.io/v1alpha1
+kind: SubsettingPolicySubsettingRuleProcessingChainObject
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/subsettingpolicysubsettingruleprocessingchainobject
+  labels:
+    testing.upbound.io/example-name: test_subsetting_policy_subsetting_rule_processing_chain_object
+  name: test-subsetting-policy-subsetting-rule-processing-chain-object
+spec:
+  forProvider:
+    isEnabledForProcessing: ${var.subsetting_policy_subsetting_rule_processing_chain_object_is_enabled_for_processing}
+    processingChainObjectKey: ${var.subsetting_policy_subsetting_rule_processing_chain_object_processing_chain_object_key}
+    subsettingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_subsetting_policy
+    subsettingRuleKey: ${var.subsetting_policy_subsetting_rule_processing_chain_object_subsetting_rule_key}

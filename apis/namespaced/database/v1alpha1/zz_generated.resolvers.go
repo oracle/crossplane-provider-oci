@@ -3971,6 +3971,30 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
 			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
 				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
 				if err != nil {
 					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -4081,6 +4105,102 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 		mg.Spec.ForProvider.Database[i3].SourceDatabaseID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.ForProvider.Database[i3].SourceDatabaseIDRef = rsp.ResolvedReference
 
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID")
+			}
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID")
+			}
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID")
+			}
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
 		{
@@ -4311,6 +4431,30 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
 			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
 				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
 				if err != nil {
 					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -4421,6 +4565,102 @@ func (mg *Database) ResolveReferences(ctx context.Context, c client.Reader) erro
 		mg.Spec.InitProvider.Database[i3].SourceDatabaseID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.Database[i3].SourceDatabaseIDRef = rsp.ResolvedReference
 
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID")
+			}
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID")
+			}
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].AzureEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID")
+			}
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].SourceEncryptionKeyLocationDetails[i4].GoogleCloudProviderEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
 		{
@@ -4959,6 +5199,54 @@ func (mg *DbHome) ResolveReferences(ctx context.Context, c client.Reader) error 
 					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
 				}
 				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID")
+			}
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Database[i3].EncryptionKeyLocationDetails[i4].AzureEncryptionKeyID),
 					Extract:      resource.ExtractResourceID(),
 					Namespace:    mg.GetNamespace(),
@@ -5304,6 +5592,54 @@ func (mg *DbHome) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mg.Spec.InitProvider.Database[i3].DatabaseSoftwareImageID = reference.ToPtrValue(rsp.ResolvedValue)
 		mg.Spec.InitProvider.Database[i3].DatabaseSoftwareImageIDRef = rsp.ResolvedReference
 
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("kms.oci.m.upbound.io", "v1alpha1", "Key", "KeyList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID")
+			}
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("dataflow.oci.m.upbound.io", "v1alpha1", "Pool", "PoolList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef,
+					Selector:     mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID")
+			}
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails[i4].AwsEncryptionKeyPoolIDRef = rsp.ResolvedReference
+
+		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Database); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.InitProvider.Database[i3].EncryptionKeyLocationDetails); i4++ {

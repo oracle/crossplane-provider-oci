@@ -285,7 +285,7 @@ type LaunchOptionsObservation struct {
 	// Whether to enable consistent volume naming feature. Defaults to false.
 	IsConsistentVolumeNamingEnabled *bool `json:"isConsistentVolumeNamingEnabled,omitempty" tf:"is_consistent_volume_naming_enabled,omitempty"`
 
-	// Deprecated. Instead use isPvEncryptionInTransitEnabled in LaunchInstanceDetails.
+	// Deprecated. Use isEncryptionInTransitEnabled instead.
 	IsPvEncryptionInTransitEnabled *bool `json:"isPvEncryptionInTransitEnabled,omitempty" tf:"is_pv_encryption_in_transit_enabled,omitempty"`
 
 	// Emulation type for the physical network interface card (NIC).

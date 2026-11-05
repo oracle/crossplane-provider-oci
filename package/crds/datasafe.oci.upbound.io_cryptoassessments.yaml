@@ -1,0 +1,916 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: cryptoassessments.datasafe.oci.upbound.io
+spec:
+  group: datasafe.oci.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: CryptoAssessment
+    listKind: CryptoAssessmentList
+    plural: cryptoassessments
+    singular: cryptoassessment
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: CryptoAssessment is the Schema for the CryptoAssessments API.
+          Provides the Crypto Assessment resource in Oracle Cloud Infrastructure Data
+          Safe service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: CryptoAssessmentSpec defines the desired state of CryptoAssessment
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the crypto assessment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  cryptoAssessmentId:
+                    description: The OCID of the crypto assessment.
+                    type: string
+                  cryptoAssessmentIdRef:
+                    description: Reference to a CryptoAssessment in datasafe to populate
+                      cryptoAssessmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  cryptoAssessmentIdSelector:
+                    description: Selector for a CryptoAssessment in datasafe to populate
+                      cryptoAssessmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) The display name of the crypto assessment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isAssessmentScheduled:
+                    description: (Updatable) Indicates whether scheduled execution
+                      is active for this latest crypto assessment. When set to true,
+                      the existing schedule is used unless a new schedule is provided.
+                      When set to false, the schedule value is retained but scheduled
+                      execution is paused. Schedule state updates are supported only
+                      for assessments of type LATEST.
+                    type: boolean
+                  schedule:
+                    description: '(Updatable) Updates the schedule associated with
+                      this latest crypto assessment. The schedule uses the format:
+                      ;'
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the crypto assessment.
+                    type: string
+                  compartmentIdRef:
+                    description: Reference to a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  compartmentIdSelector:
+                    description: Selector for a Compartment in identity to populate
+                      compartmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  cryptoAssessmentId:
+                    description: The OCID of the crypto assessment.
+                    type: string
+                  cryptoAssessmentIdRef:
+                    description: Reference to a CryptoAssessment in datasafe to populate
+                      cryptoAssessmentId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  cryptoAssessmentIdSelector:
+                    description: Selector for a CryptoAssessment in datasafe to populate
+                      cryptoAssessmentId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  displayName:
+                    description: (Updatable) The display name of the crypto assessment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  isAssessmentScheduled:
+                    description: (Updatable) Indicates whether scheduled execution
+                      is active for this latest crypto assessment. When set to true,
+                      the existing schedule is used unless a new schedule is provided.
+                      When set to false, the schedule value is retained but scheduled
+                      execution is paused. Schedule state updates are supported only
+                      for assessments of type LATEST.
+                    type: boolean
+                  schedule:
+                    description: '(Updatable) Updates the schedule associated with
+                      this latest crypto assessment. The schedule uses the format:
+                      ;'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  - MustCreate
+                  - Orphan
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: CryptoAssessmentStatus defines the observed state of CryptoAssessment.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: (Updatable) The OCID of the compartment that contains
+                      the crypto assessment.
+                    type: string
+                  cryptoAssessmentId:
+                    description: The OCID of the crypto assessment.
+                    type: string
+                  cryptoPosture:
+                    description: Cryptographic posture details captured by the assessment.
+                    items:
+                      properties:
+                        backupStatus:
+                          description: Backup encryption status observed for the assessment.
+                          type: string
+                        encryptedBackupPiecesCount:
+                          description: Number of encrypted backup pieces.
+                          type: number
+                        fipsModeConfigured:
+                          description: Common FIPS mode configured for the assessment
+                            when the target uses common FIPS configuration.
+                          type: string
+                        fipsStatus:
+                          description: Overall FIPS status for the assessment when
+                            the target uses common FIPS configuration.
+                          type: string
+                        networkEncryption:
+                          description: Network encryption details.
+                          items:
+                            type: string
+                          type: array
+                        nne:
+                          description: Native network encryption posture details.
+                          items:
+                            properties:
+                              areWeakOptionsAllowed:
+                                description: Indicates if weak NNE options are allowed.
+                                type: string
+                              encryptionConfigured:
+                                description: Configured network encryption algorithm.
+                                items:
+                                  type: string
+                                type: array
+                              fipsModeConfigured:
+                                description: Common FIPS mode configured for the assessment
+                                  when the target uses common FIPS configuration.
+                                type: string
+                              integrity:
+                                description: NNE integrity algorithm(s).
+                                items:
+                                  type: string
+                                type: array
+                              keyExchange:
+                                description: Observed NNE key exchange setting.
+                                type: string
+                              quantumReadiness:
+                                description: Quantum-readiness classification for
+                                  NNE posture.
+                                type: string
+                              serverEncryption:
+                                description: Observed server-side encryption requirement.
+                                type: string
+                              serverIntegrity:
+                                description: NNE server integrity algorithm(s).
+                                items:
+                                  type: string
+                                type: array
+                              status:
+                                description: NNE enablement status.
+                                type: string
+                            type: object
+                          type: array
+                        tde:
+                          description: Transparent data encryption posture details.
+                          items:
+                            properties:
+                              dbCredentialsEncryptionObserved:
+                                description: Observed DB credentials encryption algorithm.
+                                type: string
+                              encryptedTablespacesCount:
+                                description: Number of encrypted tablespaces detected.
+                                type: number
+                              encryptionConfigured:
+                                description: Configured network encryption algorithm.
+                                items:
+                                  type: string
+                                type: array
+                              fipsModeConfigured:
+                                description: Common FIPS mode configured for the assessment
+                                  when the target uses common FIPS configuration.
+                                type: string
+                              integrityConfigured:
+                                description: Configured TDE integrity-related setting.
+                                items:
+                                  type: string
+                                type: array
+                              keyCacheStatus:
+                                description: The observed TDE key cache status.
+                                type: string
+                              keyStoreType:
+                                description: The observed TDE key store type.
+                                type: string
+                              masterKeyEncryptionAlgorithm:
+                                description: The observed encryption algorithm used
+                                  by the master key.
+                                type: string
+                              masterKeyId:
+                                description: The observed TDE master key identifier.
+                                type: string
+                              quantumReadiness:
+                                description: Quantum-readiness classification for
+                                  NNE posture.
+                                type: string
+                              redoEncryptionObserved:
+                                description: Observed redo log encryption algorithm.
+                                type: string
+                              status:
+                                description: NNE enablement status.
+                                type: string
+                              timeMasterKeyLastRotation:
+                                description: The last observed rotation time for the
+                                  TDE master key, in RFC3339 format.
+                                type: string
+                              unencryptedTablespacesCount:
+                                description: Number of unencrypted tablespaces detected.
+                                type: number
+                              walletLocation:
+                                description: The observed wallet location for TDE
+                                  keys.
+                                type: string
+                            type: object
+                          type: array
+                        tls:
+                          description: TLS posture details.
+                          items:
+                            properties:
+                              areWeakCipherSuitesAllowed:
+                                description: Indicates if weak TLS cipher suites are
+                                  allowed.
+                                type: string
+                              cipherSuitesConfigured:
+                                description: TLS cipher suites configured on target.
+                                items:
+                                  type: string
+                                type: array
+                              fipsModeConfigured:
+                                description: Common FIPS mode configured for the assessment
+                                  when the target uses common FIPS configuration.
+                                type: string
+                              isMtlsConfigured:
+                                description: Whether TLS client authentication is
+                                  configured.
+                                type: string
+                              quantumReadiness:
+                                description: Quantum-readiness classification for
+                                  NNE posture.
+                                type: string
+                              revocationMode:
+                                description: Certificate revocation checking mode.
+                                type: string
+                              status:
+                                description: NNE enablement status.
+                                type: string
+                              versions:
+                                description: TLS versions configured on target.
+                                items:
+                                  type: string
+                                type: array
+                              walletLocation:
+                                description: The observed wallet location for TDE
+                                  keys.
+                                type: string
+                            type: object
+                          type: array
+                        unencryptedBackupPiecesCount:
+                          description: Number of unencrypted backup pieces.
+                          type: number
+                      type: object
+                    type: array
+                  cryptoProvider:
+                    description: Cryptographic provider and version information observed
+                      on the target.
+                    type: string
+                  databaseArchitecture:
+                    description: The architecture of the assessed target database.
+                    type: string
+                  databaseName:
+                    description: The name of the assessed target database.
+                    type: string
+                  databaseVersion:
+                    description: The version of the assessed target database.
+                    type: string
+                  definedTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Defined tags for this resource. Each
+                      key is predefined and scoped to a namespace. For more information,
+                      see Resource Tags Example: {"Operations.CostCenter": "42"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  description:
+                    description: The description of the crypto assessment.
+                    type: string
+                  displayName:
+                    description: (Updatable) The display name of the crypto assessment.
+                    type: string
+                  freeformTags:
+                    additionalProperties:
+                      type: string
+                    description: '(Updatable) Free-form tags for this resource. Each
+                      tag is a simple key-value pair with no predefined name, type,
+                      or namespace. For more information, see Resource Tags  Example:
+                      {"Department": "Finance"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  id:
+                    description: The OCID of the crypto assessment.
+                    type: string
+                  isAssessmentScheduled:
+                    description: (Updatable) Indicates whether scheduled execution
+                      is active for this latest crypto assessment. When set to true,
+                      the existing schedule is used unless a new schedule is provided.
+                      When set to false, the schedule value is retained but scheduled
+                      execution is paused. Schedule state updates are supported only
+                      for assessments of type LATEST.
+                    type: boolean
+                  issueCount:
+                    description: Number of crypto issues detected in this assessment.
+                    type: number
+                  lifecycleDetails:
+                    description: Details about the current lifecycle state of the
+                      crypto assessment.
+                    type: string
+                  postureCategory:
+                    description: Overall posture category for the crypto assessment.
+                    type: string
+                  schedule:
+                    description: '(Updatable) Updates the schedule associated with
+                      this latest crypto assessment. The schedule uses the format:
+                      ;'
+                    type: string
+                  state:
+                    description: The current lifecycle state of the crypto assessment.
+                    type: string
+                  systemTags:
+                    additionalProperties:
+                      type: string
+                    description: 'System tags for this resource. Each key is predefined
+                      and scoped to a namespace. For more information, see Resource
+                      Tags. Example: {"orcl-cloud.free-tier-retained": "true"}'
+                    type: object
+                    x-kubernetes-map-type: granular
+                  targetDatabaseGroupId:
+                    description: The OCID of the target database group. This is returned
+                      when targetType is TARGET_DATABASE_GROUP.
+                    type: string
+                  targetId:
+                    description: The OCID of the target database.
+                    type: string
+                  targetType:
+                    description: The target type of the crypto assessment.
+                    type: string
+                  targetsWithIssuesCount:
+                    description: Number of assessed targets with one or more crypto
+                      issues. For a target database assessment, this value is 1 when
+                      the target has issues and 0 otherwise. For a target database
+                      group assessment, this value is the number of targets in the
+                      group that have issues.
+                    type: number
+                  timeCreated:
+                    description: The date and time the crypto assessment was created,
+                      in RFC3339 format.
+                    type: string
+                  timeLastAssessed:
+                    description: The date and time the crypto posture was last assessed,
+                      in RFC3339 format.
+                    type: string
+                  timeUpdated:
+                    description: The date and time the crypto assessment was last
+                      updated, in RFC3339 format.
+                    type: string
+                  triggeredBy:
+                    description: The actor that created the assessment.
+                    type: string
+                  type:
+                    description: The type of this crypto assessment.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

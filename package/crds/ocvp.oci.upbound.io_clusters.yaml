@@ -316,6 +316,10 @@ spec:
                     description: The billing option selected during Cluster creation.
                       ListSupportedCommitments.
                     type: string
+                  initialFaultDomainHostDistribution:
+                    description: The initial fault domain host distribution mode for
+                      the Cluster.
+                    type: string
                   initialHostOcpuCount:
                     description: The initial OCPU count of the Cluster's ESXi hosts.
                     type: number
@@ -1499,6 +1503,10 @@ spec:
                     description: The billing option selected during Cluster creation.
                       ListSupportedCommitments.
                     type: string
+                  initialFaultDomainHostDistribution:
+                    description: The initial fault domain host distribution mode for
+                      the Cluster.
+                    type: string
                   initialHostOcpuCount:
                     description: The initial OCPU count of the Cluster's ESXi hosts.
                     type: number
@@ -2635,6 +2643,10 @@ spec:
                   initialCommitment:
                     description: The billing option selected during Cluster creation.
                       ListSupportedCommitments.
+                    type: string
+                  initialFaultDomainHostDistribution:
+                    description: The initial fault domain host distribution mode for
+                      the Cluster.
                     type: string
                   initialHostOcpuCount:
                     description: The initial OCPU count of the Cluster's ESXi hosts.

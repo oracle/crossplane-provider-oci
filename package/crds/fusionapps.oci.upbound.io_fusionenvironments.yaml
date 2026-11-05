@@ -320,7 +320,12 @@ spec:
                       The default value is false.
                     type: boolean
                   kmsKeyId:
-                    description: (Updatable) byok kms keyId
+                    description: (Deprecated) The BYOK KMS key OCID. Starting November
+                      23, 2026, kmsKeyId will no longer be supported when updating
+                      a Fusion Application environment. Use the Oracle Cloud Console
+                      to add customer-managed keys to existing environments. It remains
+                      supported for initial BYOK enablement when creating a Fusion
+                      Environment.
                     type: string
                   kmsKeyIdRef:
                     description: Reference to a Key in kms to populate kmsKeyId.
@@ -705,7 +710,12 @@ spec:
                       The default value is false.
                     type: boolean
                   kmsKeyId:
-                    description: (Updatable) byok kms keyId
+                    description: (Deprecated) The BYOK KMS key OCID. Starting November
+                      23, 2026, kmsKeyId will no longer be supported when updating
+                      a Fusion Application environment. Use the Oracle Cloud Console
+                      to add customer-managed keys to existing environments. It remains
+                      supported for initial BYOK enablement when creating a Fusion
+                      Environment.
                     type: string
                   kmsKeyIdRef:
                     description: Reference to a Key in kms to populate kmsKeyId.
@@ -1049,7 +1059,12 @@ spec:
                       The default value is false.
                     type: boolean
                   kmsKeyId:
-                    description: (Updatable) byok kms keyId
+                    description: (Deprecated) The BYOK KMS key OCID. Starting November
+                      23, 2026, kmsKeyId will no longer be supported when updating
+                      a Fusion Application environment. Use the Oracle Cloud Console
+                      to add customer-managed keys to existing environments. It remains
+                      supported for initial BYOK enablement when creating a Fusion
+                      Environment.
                     type: string
                   kmsKeyInfo:
                     description: BYOK key info

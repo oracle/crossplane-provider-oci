@@ -375,26 +375,17 @@ spec:
                             type: boolean
                           type: array
                         weeksOfMonth:
-                          description: (Updatable) Weeks during the month when maintenance
-                            should be performed. Weeks start on the 1st, 8th, 15th,
-                            and 22nd days of the month, and have a duration of 7 days.
-                            Weeks start and end based on calendar dates, not days
-                            of the week. For example, to allow maintenance during
-                            the 2nd week of the month (from the 8th day to the 14th
-                            day of the month), use the value 2. Maintenance cannot
-                            be scheduled for the fifth week of months that contain
-                            more than 28 days. Note that this parameter works in conjunction
-                            with the  daysOfWeek and hoursOfDay parameters to allow
-                            you to specify specific days of the week and hours that
-                            maintenance will be performed.
+                          description: |-
+                            (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+                            <<<<<<< ours
                           items:
                             type: number
                           type: array
                       type: object
                     type: array
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   nsgIds:
                     description: '(Updatable) The list of OCIDs for the network security
@@ -433,8 +424,8 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   subnetId:
                     description: The OCID of the subnet the cloud Autonomous VM Cluster
@@ -867,26 +858,17 @@ spec:
                             type: boolean
                           type: array
                         weeksOfMonth:
-                          description: (Updatable) Weeks during the month when maintenance
-                            should be performed. Weeks start on the 1st, 8th, 15th,
-                            and 22nd days of the month, and have a duration of 7 days.
-                            Weeks start and end based on calendar dates, not days
-                            of the week. For example, to allow maintenance during
-                            the 2nd week of the month (from the 8th day to the 14th
-                            day of the month), use the value 2. Maintenance cannot
-                            be scheduled for the fifth week of months that contain
-                            more than 28 days. Note that this parameter works in conjunction
-                            with the  daysOfWeek and hoursOfDay parameters to allow
-                            you to specify specific days of the week and hours that
-                            maintenance will be performed.
+                          description: |-
+                            (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+                            <<<<<<< ours
                           items:
                             type: number
                           type: array
                       type: object
                     type: array
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   nsgIds:
                     description: '(Updatable) The list of OCIDs for the network security
@@ -925,8 +907,8 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   subnetId:
                     description: The OCID of the subnet the cloud Autonomous VM Cluster
@@ -1314,18 +1296,9 @@ spec:
                             type: boolean
                           type: array
                         weeksOfMonth:
-                          description: (Updatable) Weeks during the month when maintenance
-                            should be performed. Weeks start on the 1st, 8th, 15th,
-                            and 22nd days of the month, and have a duration of 7 days.
-                            Weeks start and end based on calendar dates, not days
-                            of the week. For example, to allow maintenance during
-                            the 2nd week of the month (from the 8th day to the 14th
-                            day of the month), use the value 2. Maintenance cannot
-                            be scheduled for the fifth week of months that contain
-                            more than 28 days. Note that this parameter works in conjunction
-                            with the  daysOfWeek and hoursOfDay parameters to allow
-                            you to specify specific days of the week and hours that
-                            maintenance will be performed.
+                          description: |-
+                            (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+                            <<<<<<< ours
                           items:
                             type: number
                           type: array
@@ -1403,18 +1376,9 @@ spec:
                             type: boolean
                           type: array
                         weeksOfMonth:
-                          description: (Updatable) Weeks during the month when maintenance
-                            should be performed. Weeks start on the 1st, 8th, 15th,
-                            and 22nd days of the month, and have a duration of 7 days.
-                            Weeks start and end based on calendar dates, not days
-                            of the week. For example, to allow maintenance during
-                            the 2nd week of the month (from the 8th day to the 14th
-                            day of the month), use the value 2. Maintenance cannot
-                            be scheduled for the fifth week of months that contain
-                            more than 28 days. Note that this parameter works in conjunction
-                            with the  daysOfWeek and hoursOfDay parameters to allow
-                            you to specify specific days of the week and hours that
-                            maintenance will be performed.
+                          description: |-
+                            (Updatable) Weeks during the month when maintenance should be performed. Weeks start on the 1st, 8th, 15th, and 22nd days of the month, and have a duration of 7 days. Weeks start and end based on calendar dates, not days of the week. For example, to allow maintenance during the 2nd week of the month (from the 8th day to the 14th day of the month), use the value 2. Maintenance cannot be scheduled for the fifth week of months that contain more than 28 days. Note that this parameter works in conjunction with the  daysOfWeek and hoursOfDay parameters to allow you to specify specific days of the week and hours that maintenance will be performed.
+                            <<<<<<< ours
                           items:
                             type: number
                           type: array
@@ -1429,8 +1393,8 @@ spec:
                       or ECPU.
                     type: number
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   memorySizeInGbs:
                     description: The memory allocated in GBs.
@@ -1525,8 +1489,8 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   shape:
                     description: The model name of the Exadata hardware running the

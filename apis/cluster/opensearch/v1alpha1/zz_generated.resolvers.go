@@ -113,6 +113,56 @@ func (mg *OpensearchCluster) ResolveReferences( // ResolveReferences of this Ope
 
 		}
 	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.RemoteReindexTrustConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("apigateway.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDRef,
+					Selector:     mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID")
+			}
+			mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.SecurityMasterUserAuthDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID),
+						Extract:      resource.ExtractResourceID(),
+						Namespace:    mg.GetNamespace(),
+						Reference:    mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDRef,
+						Selector:     mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID")
+				}
+				mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
 	{
 		m, l, err = apisresolver.GetManagedResource("identity.oci.upbound.io", "v1alpha1", "User", "UserList")
 		if err != nil {
@@ -299,6 +349,56 @@ func (mg *OpensearchCluster) ResolveReferences( // ResolveReferences of this Ope
 			mg.Spec.InitProvider.OutboundClusterConfig[i3].OutboundClusters[i4].SeedClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 			mg.Spec.InitProvider.OutboundClusterConfig[i3].OutboundClusters[i4].SeedClusterIDRef = rsp.ResolvedReference
 
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.RemoteReindexTrustConfig); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources); i4++ {
+			{
+				m, l, err = apisresolver.GetManagedResource("apigateway.oci.upbound.io", "v1alpha1", "Certificate", "CertificateList")
+				if err != nil {
+					return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+				}
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID),
+					Extract:      resource.ExtractResourceID(),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDRef,
+					Selector:     mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDSelector,
+					To:           reference.To{List: l, Managed: m},
+				})
+			}
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID")
+			}
+			mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.RemoteReindexTrustConfig[i3].RemoteSources[i4].CertificateIDRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.SecurityMasterUserAuthDetails); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails); i5++ {
+				{
+					m, l, err = apisresolver.GetManagedResource("vault.oci.upbound.io", "v1alpha1", "Secret", "SecretList")
+					if err != nil {
+						return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+					}
+					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+						CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID),
+						Extract:      resource.ExtractResourceID(),
+						Namespace:    mg.GetNamespace(),
+						Reference:    mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDRef,
+						Selector:     mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDSelector,
+						To:           reference.To{List: l, Managed: m},
+					})
+				}
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID")
+				}
+				mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.SecurityMasterUserAuthDetails[i3].UserDetails[i4].PasswordDetails[i5].VaultSecretIDRef = rsp.ResolvedReference
+
+			}
 		}
 	}
 	{

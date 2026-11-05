@@ -17,6 +17,8 @@ import (
 	drgattachment "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachment"
 	drgattachmentmanagement "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachmentmanagement"
 	drgattachmentslist "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgattachmentslist"
+	drgnatpolicy "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgnatpolicy"
+	drgnatpolicydrgnatrule "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgnatpolicydrgnatrule"
 	drgroutedistribution "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutedistribution"
 	drgroutedistributionstatement "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutedistributionstatement"
 	drgroutetable "github.com/oracle/provider-oci/internal/controller/cluster/networkconnectivity/drgroutetable"
@@ -38,6 +40,8 @@ func Setup_networkconnectivity(mgr ctrl.Manager, o controller.Options) error {
 		drgattachment.Setup,
 		drgattachmentmanagement.Setup,
 		drgattachmentslist.Setup,
+		drgnatpolicy.Setup,
+		drgnatpolicydrgnatrule.Setup,
 		drgroutedistribution.Setup,
 		drgroutedistributionstatement.Setup,
 		drgroutetable.Setup,
@@ -65,6 +69,8 @@ func SetupGated_networkconnectivity(mgr ctrl.Manager, o controller.Options) erro
 		drgattachment.SetupGated,
 		drgattachmentmanagement.SetupGated,
 		drgattachmentslist.SetupGated,
+		drgnatpolicy.SetupGated,
+		drgnatpolicydrgnatrule.SetupGated,
 		drgroutedistribution.SetupGated,
 		drgroutedistributionstatement.SetupGated,
 		drgroutetable.SetupGated,

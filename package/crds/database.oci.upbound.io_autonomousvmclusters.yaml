@@ -365,8 +365,8 @@ spec:
                       type: object
                     type: array
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   scanListenerPortNonTls:
                     description: (Updatable) The SCAN Listener Non TLS port number.
@@ -377,8 +377,8 @@ spec:
                       value is 2484.
                     type: number
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   timeZone:
                     description: (Updatable) The time zone to use for the Autonomous
@@ -772,8 +772,8 @@ spec:
                       type: object
                     type: array
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   scanListenerPortNonTls:
                     description: (Updatable) The SCAN Listener Non TLS port number.
@@ -784,8 +784,8 @@ spec:
                       value is 2484.
                     type: number
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   timeZone:
                     description: (Updatable) The time zone to use for the Autonomous
@@ -1241,8 +1241,8 @@ spec:
                       or ECPU.
                     type: number
                   memoryPerOracleComputeUnitInGbs:
-                    description: The amount of memory (in GBs) to be enabled per OCPU
-                      or ECPU.
+                    description: (Updatable) The amount of memory (in GBs) to be enabled
+                      per OCPU or ECPU.
                     type: number
                   memorySizeInGbs:
                     description: The memory allocated in GBs.
@@ -1285,8 +1285,8 @@ spec:
                       value is 2484.
                     type: number
                   sgaPercentage:
-                    description: Percentage of ECPU memory allocated for SGA(System
-                      Global Area).
+                    description: (Updatable) Percentage of ECPU memory allocated for
+                      SGA(System Global Area).
                     type: number
                   state:
                     description: The current state of the Autonomous VM cluster.

@@ -157,6 +157,10 @@ spec:
       value: ""
     - name: tenancy_ocid
       value: ""
+    - name: time_suppress_from
+      value: ""
+    - name: time_suppress_until
+      value: ""
     - name: usageplan_ocid
       value: ""
     - name: vault_crypto_endpoint
@@ -767,6 +771,10 @@ spec:
                 value: "{{workflow.parameters.create_resources}}"
               - name: delete_resources
                 value: "{{workflow.parameters.delete_resources}}"
+              - name: time_suppress_from
+                value: "{{workflow.parameters.time_suppress_from}}"
+              - name: time_suppress_until
+                value: "{{workflow.parameters.time_suppress_until}}"
         - name: mysql-namespaced-tests
           templateRef:
             name: oci-mysql-namespaced-v1alpha1-tests-template

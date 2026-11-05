@@ -300,6 +300,9 @@ type OpensearchClusterInitParameters struct {
 	// (Updatable) This configuration is used for passing request details to connect outbound cluster(s) to the inbound cluster (coordinating cluster)
 	OutboundClusterConfig []OutboundClusterConfigInitParameters `json:"outboundClusterConfig,omitempty" tf:"outbound_cluster_config,omitempty"`
 
+	// (Updatable) Configuration that allows this OpenSearch cluster to trust a remote cluster for reindexing.
+	RemoteReindexTrustConfig []RemoteReindexTrustConfigInitParameters `json:"remoteReindexTrustConfig,omitempty" tf:"remote_reindex_trust_config,omitempty"`
+
 	// (Updatable) The customer IP addresses of the endpoint in customer VCN
 	ReverseConnectionEndpointCustomerIps []*string `json:"reverseConnectionEndpointCustomerIps,omitempty" tf:"reverse_connection_endpoint_customer_ips,omitempty"`
 
@@ -324,6 +327,9 @@ type OpensearchClusterInitParameters struct {
 	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
+	// (Updatable) Details for authenticating the OpenSearch security master user. This object cannot be used with securityMasterUserName or securityMasterUserPasswordHash.
+	SecurityMasterUserAuthDetails []SecurityMasterUserAuthDetailsInitParameters `json:"securityMasterUserAuthDetails,omitempty" tf:"security_master_user_auth_details,omitempty"`
 
 	// (Updatable) The name of the master user that are used to manage security config
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.User
@@ -555,6 +561,9 @@ type OpensearchClusterObservation struct {
 	// (Updatable) This configuration is used for passing request details to connect outbound cluster(s) to the inbound cluster (coordinating cluster)
 	OutboundClusterConfig []OutboundClusterConfigObservation `json:"outboundClusterConfig,omitempty" tf:"outbound_cluster_config,omitempty"`
 
+	// (Updatable) Configuration that allows this OpenSearch cluster to trust a remote cluster for reindexing.
+	RemoteReindexTrustConfig []RemoteReindexTrustConfigObservation `json:"remoteReindexTrustConfig,omitempty" tf:"remote_reindex_trust_config,omitempty"`
+
 	// (Updatable) The customer IP addresses of the endpoint in customer VCN
 	ReverseConnectionEndpointCustomerIps []*string `json:"reverseConnectionEndpointCustomerIps,omitempty" tf:"reverse_connection_endpoint_customer_ips,omitempty"`
 
@@ -582,6 +591,9 @@ type OpensearchClusterObservation struct {
 	// (Updatable) Security attributes for this resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
+	// (Updatable) Details for authenticating the OpenSearch security master user. This object cannot be used with securityMasterUserName or securityMasterUserPasswordHash.
+	SecurityMasterUserAuthDetails []SecurityMasterUserAuthDetailsObservation `json:"securityMasterUserAuthDetails,omitempty" tf:"security_master_user_auth_details,omitempty"`
 
 	// (Updatable) The name of the master user that are used to manage security config
 	SecurityMasterUserName *string `json:"securityMasterUserName,omitempty" tf:"security_master_user_name,omitempty"`
@@ -799,6 +811,10 @@ type OpensearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	OutboundClusterConfig []OutboundClusterConfigParameters `json:"outboundClusterConfig,omitempty" tf:"outbound_cluster_config,omitempty"`
 
+	// (Updatable) Configuration that allows this OpenSearch cluster to trust a remote cluster for reindexing.
+	// +kubebuilder:validation:Optional
+	RemoteReindexTrustConfig []RemoteReindexTrustConfigParameters `json:"remoteReindexTrustConfig,omitempty" tf:"remote_reindex_trust_config,omitempty"`
+
 	// (Updatable) The customer IP addresses of the endpoint in customer VCN
 	// +kubebuilder:validation:Optional
 	ReverseConnectionEndpointCustomerIps []*string `json:"reverseConnectionEndpointCustomerIps,omitempty" tf:"reverse_connection_endpoint_customer_ips,omitempty"`
@@ -831,6 +847,10 @@ type OpensearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
+
+	// (Updatable) Details for authenticating the OpenSearch security master user. This object cannot be used with securityMasterUserName or securityMasterUserPasswordHash.
+	// +kubebuilder:validation:Optional
+	SecurityMasterUserAuthDetails []SecurityMasterUserAuthDetailsParameters `json:"securityMasterUserAuthDetails,omitempty" tf:"security_master_user_auth_details,omitempty"`
 
 	// (Updatable) The name of the master user that are used to manage security config
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/identity/v1alpha1.User
@@ -1036,6 +1056,140 @@ type OutboundClustersParameters struct {
 	SeedClusterIDSelector *v1.NamespacedSelector `json:"seedClusterIdSelector,omitempty" tf:"-"`
 }
 
+type PasswordDetailsInitParameters struct {
+
+	// (Updatable) The plaintext password for the master user.
+	PlainPasswordSecretRef *v1.LocalSecretKeySelector `json:"plainPasswordSecretRef,omitempty" tf:"-"`
+
+	// (Updatable) The source of the master-user plaintext password.
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// (Updatable) The OCID of a Vault secret containing the plaintext master-user password.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	VaultSecretID *string `json:"vaultSecretId,omitempty" tf:"vault_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate vaultSecretId.
+	// +kubebuilder:validation:Optional
+	VaultSecretIDRef *v1.NamespacedReference `json:"vaultSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate vaultSecretId.
+	// +kubebuilder:validation:Optional
+	VaultSecretIDSelector *v1.NamespacedSelector `json:"vaultSecretIdSelector,omitempty" tf:"-"`
+}
+
+type PasswordDetailsObservation struct {
+
+	// (Updatable) The source of the master-user plaintext password.
+	SourceType *string `json:"sourceType,omitempty" tf:"source_type,omitempty"`
+
+	// (Updatable) The OCID of a Vault secret containing the plaintext master-user password.
+	VaultSecretID *string `json:"vaultSecretId,omitempty" tf:"vault_secret_id,omitempty"`
+}
+
+type PasswordDetailsParameters struct {
+
+	// (Updatable) The plaintext password for the master user.
+	// +kubebuilder:validation:Optional
+	PlainPasswordSecretRef *v1.LocalSecretKeySelector `json:"plainPasswordSecretRef,omitempty" tf:"-"`
+
+	// (Updatable) The source of the master-user plaintext password.
+	// +kubebuilder:validation:Optional
+	SourceType *string `json:"sourceType" tf:"source_type,omitempty"`
+
+	// (Updatable) The OCID of a Vault secret containing the plaintext master-user password.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/vault/v1alpha1.Secret
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	VaultSecretID *string `json:"vaultSecretId,omitempty" tf:"vault_secret_id,omitempty"`
+
+	// Reference to a Secret in vault to populate vaultSecretId.
+	// +kubebuilder:validation:Optional
+	VaultSecretIDRef *v1.NamespacedReference `json:"vaultSecretIdRef,omitempty" tf:"-"`
+
+	// Selector for a Secret in vault to populate vaultSecretId.
+	// +kubebuilder:validation:Optional
+	VaultSecretIDSelector *v1.NamespacedSelector `json:"vaultSecretIdSelector,omitempty" tf:"-"`
+}
+
+type RemoteReindexTrustConfigInitParameters struct {
+
+	// (Updatable) Remote cluster sources to trust for reindexing.
+	RemoteSources []RemoteSourcesInitParameters `json:"remoteSources,omitempty" tf:"remote_sources,omitempty"`
+}
+
+type RemoteReindexTrustConfigObservation struct {
+
+	// (Updatable) Remote cluster sources to trust for reindexing.
+	RemoteSources []RemoteSourcesObservation `json:"remoteSources,omitempty" tf:"remote_sources,omitempty"`
+}
+
+type RemoteReindexTrustConfigParameters struct {
+
+	// (Updatable) Remote cluster sources to trust for reindexing.
+	// +kubebuilder:validation:Optional
+	RemoteSources []RemoteSourcesParameters `json:"remoteSources" tf:"remote_sources,omitempty"`
+}
+
+type RemoteSourcesInitParameters struct {
+
+	// (Updatable) OCID of the certificate or CA chain used to verify the remote cluster's HTTPS certificate.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.NamespacedReference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.NamespacedSelector `json:"certificateIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) HTTPS endpoint of the remote Elasticsearch or OpenSearch cluster. The hostname and port are used to allow remote reindexing. Use a DNS hostname, rather than an IP address, when endpointResolutionIp is specified.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// (Updatable) Optional IP address to which the endpoint hostname is resolved from within the OpenSearch cluster. The original hostname remains in the connection URL and is used for TLS verification.
+	EndpointResolutionIP *string `json:"endpointResolutionIp,omitempty" tf:"endpoint_resolution_ip,omitempty"`
+}
+
+type RemoteSourcesObservation struct {
+
+	// (Updatable) OCID of the certificate or CA chain used to verify the remote cluster's HTTPS certificate.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// (Updatable) HTTPS endpoint of the remote Elasticsearch or OpenSearch cluster. The hostname and port are used to allow remote reindexing. Use a DNS hostname, rather than an IP address, when endpointResolutionIp is specified.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// (Updatable) Optional IP address to which the endpoint hostname is resolved from within the OpenSearch cluster. The original hostname remains in the connection URL and is used for TLS verification.
+	EndpointResolutionIP *string `json:"endpointResolutionIp,omitempty" tf:"endpoint_resolution_ip,omitempty"`
+}
+
+type RemoteSourcesParameters struct {
+
+	// (Updatable) OCID of the certificate or CA chain used to verify the remote cluster's HTTPS certificate.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/apigateway/v1alpha1.Certificate
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+
+	// Reference to a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDRef *v1.NamespacedReference `json:"certificateIdRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in apigateway to populate certificateId.
+	// +kubebuilder:validation:Optional
+	CertificateIDSelector *v1.NamespacedSelector `json:"certificateIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) HTTPS endpoint of the remote Elasticsearch or OpenSearch cluster. The hostname and port are used to allow remote reindexing. Use a DNS hostname, rather than an IP address, when endpointResolutionIp is specified.
+	// +kubebuilder:validation:Optional
+	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
+
+	// (Updatable) Optional IP address to which the endpoint hostname is resolved from within the OpenSearch cluster. The original hostname remains in the connection URL and is used for TLS verification.
+	// +kubebuilder:validation:Optional
+	EndpointResolutionIP *string `json:"endpointResolutionIp,omitempty" tf:"endpoint_resolution_ip,omitempty"`
+}
+
 type ReverseConnectionEndpointsInitParameters struct {
 }
 
@@ -1049,6 +1203,25 @@ type ReverseConnectionEndpointsObservation struct {
 }
 
 type ReverseConnectionEndpointsParameters struct {
+}
+
+type SecurityMasterUserAuthDetailsInitParameters struct {
+
+	// (Updatable) The username and password source details for the security master user.
+	UserDetails []UserDetailsInitParameters `json:"userDetails,omitempty" tf:"user_details,omitempty"`
+}
+
+type SecurityMasterUserAuthDetailsObservation struct {
+
+	// (Updatable) The username and password source details for the security master user.
+	UserDetails []UserDetailsObservation `json:"userDetails,omitempty" tf:"user_details,omitempty"`
+}
+
+type SecurityMasterUserAuthDetailsParameters struct {
+
+	// (Updatable) The username and password source details for the security master user.
+	// +kubebuilder:validation:Optional
+	UserDetails []UserDetailsParameters `json:"userDetails" tf:"user_details,omitempty"`
 }
 
 type SecuritySAMLConfigInitParameters struct {
@@ -1128,6 +1301,35 @@ type SecuritySAMLConfigParameters struct {
 	// The subject key is used to get username from SAML assertion. By default, it is NameID
 	// +kubebuilder:validation:Optional
 	SubjectKey *string `json:"subjectKey,omitempty" tf:"subject_key,omitempty"`
+}
+
+type UserDetailsInitParameters struct {
+
+	// (Updatable) Base password-source details for the OpenSearch security master user.
+	PasswordDetails []PasswordDetailsInitParameters `json:"passwordDetails,omitempty" tf:"password_details,omitempty"`
+
+	// (Updatable) The name of the master user that is used to manage security config.
+	Username *string `json:"username,omitempty" tf:"username,omitempty"`
+}
+
+type UserDetailsObservation struct {
+
+	// (Updatable) Base password-source details for the OpenSearch security master user.
+	PasswordDetails []PasswordDetailsObservation `json:"passwordDetails,omitempty" tf:"password_details,omitempty"`
+
+	// (Updatable) The name of the master user that is used to manage security config.
+	Username *string `json:"username,omitempty" tf:"username,omitempty"`
+}
+
+type UserDetailsParameters struct {
+
+	// (Updatable) Base password-source details for the OpenSearch security master user.
+	// +kubebuilder:validation:Optional
+	PasswordDetails []PasswordDetailsParameters `json:"passwordDetails" tf:"password_details,omitempty"`
+
+	// (Updatable) The name of the master user that is used to manage security config.
+	// +kubebuilder:validation:Optional
+	Username *string `json:"username" tf:"username,omitempty"`
 }
 
 // OpensearchClusterSpec defines the desired state of OpensearchCluster

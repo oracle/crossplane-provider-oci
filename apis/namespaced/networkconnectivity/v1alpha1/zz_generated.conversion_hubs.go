@@ -31,6 +31,12 @@ func (tr *DrgAttachmentManagement) Hub() {}
 func (tr *DrgAttachmentsList) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DrgNatPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *DrgNatPolicyDrgNatRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DrgRouteDistribution) Hub() {}
 
 // Hub marks this type as a conversion hub.

@@ -1,0 +1,28 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: RegistrationPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/registrationpolicy
+  labels:
+    testing.upbound.io/example-name: test_registration_policy
+  name: test-registration-policy
+  namespace: upbound-system
+spec:
+  forProvider:
+    canOverrideFeatures: ${var.registration_policy_can_override_features}
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    connectionOption:
+    - connectionType: ${var.registration_policy_connection_option_connection_type}
+      identifiers: ${var.registration_policy_connection_option_identifiers}
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.registration_policy_description}
+    displayName: ${var.registration_policy_display_name}
+    features: ${var.registration_policy_features}
+    freeformTags:
+      Department: Finance
+    opcDryRun: ${var.registration_policy_opc_dry_run}
+    resourceId: ${oci_cloud_guard_resource.test_resource.id}
+    xClusterId: ${var.registration_policy_x_cluster_id}

@@ -12,6 +12,7 @@ import (
 	multicloudresourcediscovery "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/multicloudresourcediscovery"
 	oracledbawsidentityconnector "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbawsidentityconnector"
 	oracledbawskey "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbawskey"
+	oracledbawskeypool "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbawskeypool"
 	oracledbazureblobcontainer "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbazureblobcontainer"
 	oracledbazureblobmount "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbazureblobmount"
 	oracledbazureconnector "github.com/oracle/provider-oci/internal/controller/namespaced/dbmulticloud/oracledbazureconnector"
@@ -28,6 +29,7 @@ func Setup_dbmulticloud(mgr ctrl.Manager, o controller.Options) error {
 		multicloudresourcediscovery.Setup,
 		oracledbawsidentityconnector.Setup,
 		oracledbawskey.Setup,
+		oracledbawskeypool.Setup,
 		oracledbazureblobcontainer.Setup,
 		oracledbazureblobmount.Setup,
 		oracledbazureconnector.Setup,
@@ -50,6 +52,7 @@ func SetupGated_dbmulticloud(mgr ctrl.Manager, o controller.Options) error {
 		multicloudresourcediscovery.SetupGated,
 		oracledbawsidentityconnector.SetupGated,
 		oracledbawskey.SetupGated,
+		oracledbawskeypool.SetupGated,
 		oracledbazureblobcontainer.SetupGated,
 		oracledbazureblobmount.SetupGated,
 		oracledbazureconnector.SetupGated,

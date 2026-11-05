@@ -220,6 +220,10 @@ spec:
                   hostShapeName:
                     description: The compute shape name of the ESXi host. ListSupportedHostShapes.
                     type: string
+                  initialFaultDomainHostDistribution:
+                    description: (Updatable) The initial fault domain host distribution
+                      mode for the ESXi host.
+                    type: string
                   isVsanByolEnabled:
                     description: (Updatable) Indicates whether this host embedded
                       VMware vSAN with BYOL Allocation.
@@ -519,6 +523,10 @@ spec:
                   hostShapeName:
                     description: The compute shape name of the ESXi host. ListSupportedHostShapes.
                     type: string
+                  initialFaultDomainHostDistribution:
+                    description: (Updatable) The initial fault domain host distribution
+                      mode for the ESXi host.
+                    type: string
                   isVsanByolEnabled:
                     description: (Updatable) Indicates whether this host embedded
                       VMware vSAN with BYOL Allocation.
@@ -741,6 +749,9 @@ spec:
                       new ESXi host will be auto assigned to the next availability
                       domain following evenly distribution strategy.
                     type: string
+                  computeFaultDomain:
+                    description: The fault domain of the ESXi host.
+                    type: string
                   computeInstanceId:
                     description: In terms of implementation, an ESXi host is a Compute
                       instance that is configured with the chosen bundle of VMware
@@ -840,6 +851,10 @@ spec:
                     type: string
                   id:
                     description: The OCID of the ESXi host.
+                    type: string
+                  initialFaultDomainHostDistribution:
+                    description: (Updatable) The initial fault domain host distribution
+                      mode for the ESXi host.
                     type: string
                   isBillingContinuationInProgress:
                     description: Indicates whether this host is in the progress of

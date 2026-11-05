@@ -1587,6 +1587,9 @@ type ConnectionUrlsObservation struct {
 	// The URL of the Database Transforms for the Autonomous AI Database.
 	DatabaseTransformsURL *string `json:"databaseTransformsUrl,omitempty" tf:"database_transforms_url,omitempty"`
 
+	// Essbase URL for the Autonomous AI Database.
+	EssbaseURL *string `json:"essbaseUrl,omitempty" tf:"essbase_url,omitempty"`
+
 	// The URL of the Graph Studio for the Autonomous AI Database.
 	GraphStudioURL *string `json:"graphStudioUrl,omitempty" tf:"graph_studio_url,omitempty"`
 
@@ -2160,6 +2163,9 @@ type PublicConnectionUrlsObservation struct {
 	// The URL of the Database Transforms for the Autonomous AI Database.
 	DatabaseTransformsURL *string `json:"databaseTransformsUrl,omitempty" tf:"database_transforms_url,omitempty"`
 
+	// Essbase URL for the Autonomous AI Database.
+	EssbaseURL *string `json:"essbaseUrl,omitempty" tf:"essbase_url,omitempty"`
+
 	// The URL of the Graph Studio for the Autonomous AI Database.
 	GraphStudioURL *string `json:"graphStudioUrl,omitempty" tf:"graph_studio_url,omitempty"`
 
@@ -2465,6 +2471,9 @@ type VanityConnectionUrlsObservation struct {
 
 	// The URL of the Database Transforms for the Autonomous AI Database.
 	DatabaseTransformsURL *string `json:"databaseTransformsUrl,omitempty" tf:"database_transforms_url,omitempty"`
+
+	// Essbase URL for the Autonomous AI Database.
+	EssbaseURL *string `json:"essbaseUrl,omitempty" tf:"essbase_url,omitempty"`
 
 	// The URL of the Graph Studio for the Autonomous AI Database.
 	GraphStudioURL *string `json:"graphStudioUrl,omitempty" tf:"graph_studio_url,omitempty"`

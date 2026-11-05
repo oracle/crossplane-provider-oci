@@ -1,0 +1,20 @@
+apiVersion: dbmulticloud.oci.upbound.io/v1alpha1
+kind: OracleDbAwsKeyPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: dbmulticloud/v1alpha1/oracledbawskeypool
+  labels:
+    testing.upbound.io/example-name: test_oracle_db_aws_key_pool
+  name: test-oracle-db-aws-key-pool
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.oracle_db_aws_key_pool_display_name}
+    freeformTags:
+      Department: Finance
+    isMultiRegionKeyPool: ${var.oracle_db_aws_key_pool_is_multi_region_key_pool}
+    isReuseAllowed: ${var.oracle_db_aws_key_pool_is_reuse_allowed}

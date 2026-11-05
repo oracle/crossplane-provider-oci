@@ -30,6 +30,7 @@ spec:
     freeformTags:
       Department: Finance
     initialCommitment: ${var.cluster_initial_commitment}
+    initialFaultDomainHostDistribution: ${var.cluster_initial_fault_domain_host_distribution}
     initialHostOcpuCount: ${var.cluster_initial_host_ocpu_count}
     initialHostShapeName: ${oci_core_shape.test_shape.name}
     initialVcfByolAllocationIdSelector:

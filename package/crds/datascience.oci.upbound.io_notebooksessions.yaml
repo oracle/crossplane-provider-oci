@@ -184,6 +184,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:
@@ -386,6 +391,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:
@@ -1002,6 +1012,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:
@@ -1204,6 +1219,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:
@@ -1833,6 +1853,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:
@@ -1883,6 +1908,11 @@ spec:
                             a block storage volume. This specifies the size of the
                             volume in GBs.
                           type: number
+                        capacityReservationId:
+                          description: This specifies the OCID of the customer-managed
+                            compute capacity reservation to be used for launching
+                            notebook sessions.
+                          type: string
                         notebookSessionShapeConfigDetails:
                           description: Details for the notebook session shape configuration.
                           items:

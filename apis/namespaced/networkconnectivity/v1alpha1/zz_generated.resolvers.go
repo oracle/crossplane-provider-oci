@@ -658,6 +658,26 @@ func (mg *DrgAttachment) ResolveReferences(ctx context.Context, c client.Reader)
 	mg.Spec.ForProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DrgIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.ForProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DrgNATPolicyID")
+	}
+	mg.Spec.ForProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -741,6 +761,26 @@ func (mg *DrgAttachment) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.InitProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DrgIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.InitProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DrgNATPolicyID")
+	}
+	mg.Spec.InitProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
 		if err != nil {
@@ -859,6 +899,26 @@ func (mg *DrgAttachmentManagement) ResolveReferences(ctx context.Context, c clie
 	mg.Spec.ForProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.DrgIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.ForProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DrgNATPolicyID")
+	}
+	mg.Spec.ForProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -938,6 +998,26 @@ func (mg *DrgAttachmentManagement) ResolveReferences(ctx context.Context, c clie
 	}
 	mg.Spec.InitProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DrgIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.InitProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DrgNATPolicyID")
+	}
+	mg.Spec.InitProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgRouteTable", "DrgRouteTableList")
 		if err != nil {
@@ -1030,6 +1110,110 @@ func (mg *DrgAttachmentsList) ResolveReferences(ctx context.Context, c client.Re
 	}
 	mg.Spec.InitProvider.DrgID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.DrgIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this DrgNatPolicy.
+func (mg *DrgNatPolicy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.CompartmentIDRef,
+			Selector:     mg.Spec.ForProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CompartmentID")
+	}
+	mg.Spec.ForProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CompartmentIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("identity.oci.m.upbound.io", "v1alpha1", "Compartment", "CompartmentList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CompartmentID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.CompartmentIDRef,
+			Selector:     mg.Spec.InitProvider.CompartmentIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CompartmentID")
+	}
+	mg.Spec.InitProvider.CompartmentID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CompartmentIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this DrgNatPolicyDrgNatRule.
+func (mg *DrgNatPolicyDrgNatRule) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.ForProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.DrgNATPolicyID")
+	}
+	mg.Spec.ForProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("networkconnectivity.oci.m.upbound.io", "v1alpha1", "DrgNatPolicy", "DrgNatPolicyList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.DrgNATPolicyID),
+			Extract:      resource.ExtractResourceID(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.DrgNATPolicyIDRef,
+			Selector:     mg.Spec.InitProvider.DrgNATPolicyIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.DrgNATPolicyID")
+	}
+	mg.Spec.InitProvider.DrgNATPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.DrgNATPolicyIDRef = rsp.ResolvedReference
 
 	return nil
 }

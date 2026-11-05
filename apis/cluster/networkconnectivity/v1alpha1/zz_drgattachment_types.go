@@ -22,6 +22,8 @@ type DrgAttachmentInitParameters struct {
 	// (Updatable) A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	DoesPreserveOriginalRoutesWithNAT *bool `json:"doesPreserveOriginalRoutesWithNat,omitempty" tf:"does_preserve_original_routes_with_nat,omitempty"`
+
 	// The OCID of the DRG.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.Drg
 	DrgID *string `json:"drgId,omitempty" tf:"drg_id,omitempty"`
@@ -33,6 +35,19 @@ type DrgAttachmentInitParameters struct {
 	// Selector for a Drg in networkconnectivity to populate drgId.
 	// +kubebuilder:validation:Optional
 	DrgIDSelector *v1.Selector `json:"drgIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) The OCID of the DRG attachment's DRG NAT policy.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.DrgNatPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	DrgNATPolicyID *string `json:"drgNatPolicyId,omitempty" tf:"drg_nat_policy_id,omitempty"`
+
+	// Reference to a DrgNatPolicy in networkconnectivity to populate drgNatPolicyId.
+	// +kubebuilder:validation:Optional
+	DrgNATPolicyIDRef *v1.Reference `json:"drgNatPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgNatPolicy in networkconnectivity to populate drgNatPolicyId.
+	// +kubebuilder:validation:Optional
+	DrgNATPolicyIDSelector *v1.Selector `json:"drgNatPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the DRG route table that is assigned to this attachment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.DrgRouteTable
@@ -57,6 +72,9 @@ type DrgAttachmentInitParameters struct {
 	// (Updatable)
 	NetworkDetails []NetworkDetailsInitParameters `json:"networkDetails,omitempty" tf:"network_details,omitempty"`
 
+	// (Updatable) An optional property that, when set or updated, dissociates the DRG NAT policy from the DRG attachment so no DRG NAT rules are advertised to it.
+	RemoveDrgNATPolicyTrigger *bool `json:"removeDrgNatPolicyTrigger,omitempty" tf:"remove_drg_nat_policy_trigger,omitempty"`
+
 	// (Updatable) An optional property when set to true during update disables the export of route Distribution by setting export_drg_route_distribution_id to null.
 	RemoveExportDrgRouteDistributionTrigger *bool `json:"removeExportDrgRouteDistributionTrigger,omitempty" tf:"remove_export_drg_route_distribution_trigger,omitempty"`
 
@@ -79,8 +97,13 @@ type DrgAttachmentObservation struct {
 	// (Updatable) A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	DoesPreserveOriginalRoutesWithNAT *bool `json:"doesPreserveOriginalRoutesWithNat,omitempty" tf:"does_preserve_original_routes_with_nat,omitempty"`
+
 	// The OCID of the DRG.
 	DrgID *string `json:"drgId,omitempty" tf:"drg_id,omitempty"`
+
+	// (Updatable) The OCID of the DRG attachment's DRG NAT policy.
+	DrgNATPolicyID *string `json:"drgNatPolicyId,omitempty" tf:"drg_nat_policy_id,omitempty"`
 
 	// (Updatable) The OCID of the DRG route table that is assigned to this attachment.
 	DrgRouteTableID *string `json:"drgRouteTableId,omitempty" tf:"drg_route_table_id,omitempty"`
@@ -101,6 +124,9 @@ type DrgAttachmentObservation struct {
 
 	// (Updatable)
 	NetworkDetails []NetworkDetailsObservation `json:"networkDetails,omitempty" tf:"network_details,omitempty"`
+
+	// (Updatable) An optional property that, when set or updated, dissociates the DRG NAT policy from the DRG attachment so no DRG NAT rules are advertised to it.
+	RemoveDrgNATPolicyTrigger *bool `json:"removeDrgNatPolicyTrigger,omitempty" tf:"remove_drg_nat_policy_trigger,omitempty"`
 
 	// (Updatable) An optional property when set to true during update disables the export of route Distribution by setting export_drg_route_distribution_id to null.
 	RemoveExportDrgRouteDistributionTrigger *bool `json:"removeExportDrgRouteDistributionTrigger,omitempty" tf:"remove_export_drg_route_distribution_trigger,omitempty"`
@@ -129,6 +155,9 @@ type DrgAttachmentParameters struct {
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	DoesPreserveOriginalRoutesWithNAT *bool `json:"doesPreserveOriginalRoutesWithNat,omitempty" tf:"does_preserve_original_routes_with_nat,omitempty"`
+
 	// The OCID of the DRG.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.Drg
 	// +kubebuilder:validation:Optional
@@ -141,6 +170,20 @@ type DrgAttachmentParameters struct {
 	// Selector for a Drg in networkconnectivity to populate drgId.
 	// +kubebuilder:validation:Optional
 	DrgIDSelector *v1.Selector `json:"drgIdSelector,omitempty" tf:"-"`
+
+	// (Updatable) The OCID of the DRG attachment's DRG NAT policy.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.DrgNatPolicy
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	DrgNATPolicyID *string `json:"drgNatPolicyId,omitempty" tf:"drg_nat_policy_id,omitempty"`
+
+	// Reference to a DrgNatPolicy in networkconnectivity to populate drgNatPolicyId.
+	// +kubebuilder:validation:Optional
+	DrgNATPolicyIDRef *v1.Reference `json:"drgNatPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a DrgNatPolicy in networkconnectivity to populate drgNatPolicyId.
+	// +kubebuilder:validation:Optional
+	DrgNATPolicyIDSelector *v1.Selector `json:"drgNatPolicyIdSelector,omitempty" tf:"-"`
 
 	// (Updatable) The OCID of the DRG route table that is assigned to this attachment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/networkconnectivity/v1alpha1.DrgRouteTable
@@ -168,6 +211,10 @@ type DrgAttachmentParameters struct {
 	// (Updatable)
 	// +kubebuilder:validation:Optional
 	NetworkDetails []NetworkDetailsParameters `json:"networkDetails,omitempty" tf:"network_details,omitempty"`
+
+	// (Updatable) An optional property that, when set or updated, dissociates the DRG NAT policy from the DRG attachment so no DRG NAT rules are advertised to it.
+	// +kubebuilder:validation:Optional
+	RemoveDrgNATPolicyTrigger *bool `json:"removeDrgNatPolicyTrigger,omitempty" tf:"remove_drg_nat_policy_trigger,omitempty"`
 
 	// (Updatable) An optional property when set to true during update disables the export of route Distribution by setting export_drg_route_distribution_id to null.
 	// +kubebuilder:validation:Optional

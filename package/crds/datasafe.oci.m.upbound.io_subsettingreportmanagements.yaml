@@ -1,0 +1,608 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: subsettingreportmanagements.datasafe.oci.m.upbound.io
+spec:
+  group: datasafe.oci.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - oci
+    kind: SubsettingReportManagement
+    listKind: SubsettingReportManagementList
+    plural: subsettingreportmanagements
+    singular: subsettingreportmanagement
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: SubsettingReportManagement is the Schema for the SubsettingReportManagements
+          API. Provides the Subsetting Report Management resource in Oracle Cloud
+          Infrastructure Data Safe service
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: SubsettingReportManagementSpec defines the desired state
+              of SubsettingReportManagement
+            properties:
+              forProvider:
+                properties:
+                  isRedoLoggingEnabled:
+                    description: Whether redo logging is enabled during the subsetting
+                      operation.
+                    type: boolean
+                  isRefreshStatsEnabled:
+                    description: Whether statistics gathering is enabled after the
+                      subsetting operation.
+                    type: boolean
+                  isRerun:
+                    description: Whether to rerun a previously started subsetting
+                      operation.
+                    type: boolean
+                  masking:
+                    description: Whether masking is enabled during subsetting. Allowed
+                      values are ENABLED and DISABLED.
+                    type: string
+                  parallelDegree:
+                    description: The degree of parallel execution used during subsetting.
+                      Use NONE, DEFAULT, or an integer value.
+                    type: string
+                  reRunFromStep:
+                    description: The step from which to rerun the operation. Allowed
+                      values are PRE_SUBSETTING_SCRIPT and POST_SUBSETTING_SCRIPT.
+                    type: string
+                  recompile:
+                    description: How invalid objects are recompiled after subsetting.
+                      Allowed values are SERIAL, PARALLEL, and NONE.
+                    type: string
+                  subsettingPolicyId:
+                    description: The OCID of the subsetting policy.
+                    type: string
+                  subsettingPolicyIdRef:
+                    description: Reference to a SubsettingPolicy in datasafe to populate
+                      subsettingPolicyId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subsettingPolicyIdSelector:
+                    description: Selector for a SubsettingPolicy in datasafe to populate
+                      subsettingPolicyId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  tablespace:
+                    description: The tablespace used for the subsetting operation.
+                    type: string
+                  targetCredentials:
+                    description: Credentials for connecting to the target database.
+                    items:
+                      properties:
+                        passwordSecretRef:
+                          description: The password for the target database user.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        userName:
+                          description: The user name for the target database.
+                          type: string
+                      type: object
+                    type: array
+                  targetId:
+                    description: The OCID of the target database. If omitted, the
+                      target is resolved from the subsetting policy.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  isRedoLoggingEnabled:
+                    description: Whether redo logging is enabled during the subsetting
+                      operation.
+                    type: boolean
+                  isRefreshStatsEnabled:
+                    description: Whether statistics gathering is enabled after the
+                      subsetting operation.
+                    type: boolean
+                  isRerun:
+                    description: Whether to rerun a previously started subsetting
+                      operation.
+                    type: boolean
+                  masking:
+                    description: Whether masking is enabled during subsetting. Allowed
+                      values are ENABLED and DISABLED.
+                    type: string
+                  parallelDegree:
+                    description: The degree of parallel execution used during subsetting.
+                      Use NONE, DEFAULT, or an integer value.
+                    type: string
+                  reRunFromStep:
+                    description: The step from which to rerun the operation. Allowed
+                      values are PRE_SUBSETTING_SCRIPT and POST_SUBSETTING_SCRIPT.
+                    type: string
+                  recompile:
+                    description: How invalid objects are recompiled after subsetting.
+                      Allowed values are SERIAL, PARALLEL, and NONE.
+                    type: string
+                  subsettingPolicyId:
+                    description: The OCID of the subsetting policy.
+                    type: string
+                  subsettingPolicyIdRef:
+                    description: Reference to a SubsettingPolicy in datasafe to populate
+                      subsettingPolicyId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  subsettingPolicyIdSelector:
+                    description: Selector for a SubsettingPolicy in datasafe to populate
+                      subsettingPolicyId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  tablespace:
+                    description: The tablespace used for the subsetting operation.
+                    type: string
+                  targetCredentials:
+                    description: Credentials for connecting to the target database.
+                    items:
+                      properties:
+                        passwordSecretRef:
+                          description: The password for the target database user.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        userName:
+                          description: The user name for the target database.
+                          type: string
+                      required:
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                  targetId:
+                    description: The OCID of the target database. If omitted, the
+                      target is resolved from the subsetting policy.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  - MustCreate
+                  - Orphan
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.targetCredentials is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.targetCredentials)
+                || (has(self.initProvider) && has(self.initProvider.targetCredentials))'
+          status:
+            description: SubsettingReportManagementStatus defines the observed state
+              of SubsettingReportManagement.
+            properties:
+              atProvider:
+                properties:
+                  compartmentId:
+                    description: The OCID of the compartment that contains the subsetting
+                      report.
+                    type: string
+                  databaseSizeAfterSubsettingInKbs:
+                    description: The size of the target database after subsetting
+                      in KBs.
+                    type: string
+                  databaseSizeBeforeSubsettingInKbs:
+                    description: The size of the target database before subsetting
+                      in KBs.
+                    type: string
+                  id:
+                    description: The OCID of the subsetting report.
+                    type: string
+                  isRedoLoggingEnabled:
+                    description: Whether redo logging is enabled during the subsetting
+                      operation.
+                    type: boolean
+                  isRefreshStatsEnabled:
+                    description: Whether statistics gathering is enabled after the
+                      subsetting operation.
+                    type: boolean
+                  isRerun:
+                    description: Whether to rerun a previously started subsetting
+                      operation.
+                    type: boolean
+                  masking:
+                    description: Whether masking is enabled during subsetting. Allowed
+                      values are ENABLED and DISABLED.
+                    type: string
+                  maskingPolicyId:
+                    description: The OCID of the masking policy associated with the
+                      subsetting report.
+                    type: string
+                  maskingReportId:
+                    description: The OCID of the masking report associated with the
+                      subsetting report.
+                    type: string
+                  maskingWorkRequestId:
+                    description: The OCID of the masking work request triggered after
+                      the subsetting job.
+                    type: string
+                  parallelDegree:
+                    description: The degree of parallel execution used during subsetting.
+                      Use NONE, DEFAULT, or an integer value.
+                    type: string
+                  reRunFromStep:
+                    description: The step from which to rerun the operation. Allowed
+                      values are PRE_SUBSETTING_SCRIPT and POST_SUBSETTING_SCRIPT.
+                    type: string
+                  recompile:
+                    description: How invalid objects are recompiled after subsetting.
+                      Allowed values are SERIAL, PARALLEL, and NONE.
+                    type: string
+                  state:
+                    description: The current state of the subsetting report.
+                    type: string
+                  subsettingPolicyId:
+                    description: The OCID of the subsetting policy.
+                    type: string
+                  subsettingStatus:
+                    description: The status of the subsetting job.
+                    type: string
+                  subsettingWorkRequestId:
+                    description: The OCID of the work request that resulted in this
+                      subsetting report.
+                    type: string
+                  tablespace:
+                    description: The tablespace used for the subsetting operation.
+                    type: string
+                  targetCredentials:
+                    description: Credentials for connecting to the target database.
+                    items:
+                      properties:
+                        userName:
+                          description: The user name for the target database.
+                          type: string
+                      type: object
+                    type: array
+                  targetId:
+                    description: The OCID of the target database. If omitted, the
+                      target is resolved from the subsetting policy.
+                    type: string
+                  timeCreated:
+                    description: The date and time the subsetting report was created,
+                      in the format defined by RFC3339.
+                    type: string
+                  timeSubsettingFinished:
+                    description: The date and time data subsetting finished, in the
+                      format defined by RFC3339.
+                    type: string
+                  timeSubsettingStarted:
+                    description: The date and time data subsetting started, in the
+                      format defined by RFC3339.
+                    type: string
+                  totalPostSubsettingScriptErrors:
+                    description: The total number of errors in the post-subsetting
+                      script.
+                    type: string
+                  totalPreSubsettingScriptErrors:
+                    description: The total number of errors in the pre-subsetting
+                      script.
+                    type: string
+                  totalSubsettedObjects:
+                    description: The total number of subsetted objects.
+                    type: string
+                  totalSubsettedRows:
+                    description: The count of rows reduced in the subsetting job.
+                    type: string
+                  totalSubsettedSchemas:
+                    description: The total number of subsetted schemas.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

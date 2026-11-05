@@ -807,6 +807,106 @@ func (mg *CompareUserAssessment) SetWriteConnectionSecretToReference(r *xpv1.Sec
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this CryptoAssessment.
+func (mg *CryptoAssessment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this CryptoAssessment.
+func (mg *CryptoAssessment) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this CryptoAssessment.
+func (mg *CryptoAssessment) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this CryptoAssessment.
+func (mg *CryptoAssessment) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this CryptoAssessment.
+func (mg *CryptoAssessment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this CryptoAssessment.
+func (mg *CryptoAssessment) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this CryptoAssessment.
+func (mg *CryptoAssessment) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this CryptoAssessment.
+func (mg *CryptoAssessment) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this CryptoAssessment.
+func (mg *CryptoAssessment) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this CryptoAssessment.
+func (mg *CryptoAssessment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this CryptoAssessmentManagement.
+func (mg *CryptoAssessmentManagement) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this DataSafeConfiguration.
 func (mg *DataSafeConfiguration) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -1104,6 +1204,56 @@ func (mg *DiscoveryJobsResult) SetProviderConfigReference(r *xpv1.Reference) {
 
 // SetWriteConnectionSecretToReference of this DiscoveryJobsResult.
 func (mg *DiscoveryJobsResult) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this EstimateTableSizes.
+func (mg *EstimateTableSizes) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this EstimateTableSizes.
+func (mg *EstimateTableSizes) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this EstimateTableSizes.
+func (mg *EstimateTableSizes) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this EstimateTableSizes.
+func (mg *EstimateTableSizes) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this EstimateTableSizes.
+func (mg *EstimateTableSizes) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this EstimateTableSizes.
+func (mg *EstimateTableSizes) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this EstimateTableSizes.
+func (mg *EstimateTableSizes) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this EstimateTableSizes.
+func (mg *EstimateTableSizes) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this EstimateTableSizes.
+func (mg *EstimateTableSizes) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this EstimateTableSizes.
+func (mg *EstimateTableSizes) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -1554,6 +1704,56 @@ func (mg *OnPremConnector) SetProviderConfigReference(r *xpv1.Reference) {
 
 // SetWriteConnectionSecretToReference of this OnPremConnector.
 func (mg *OnPremConnector) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this RegistrationPolicy.
+func (mg *RegistrationPolicy) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this RegistrationPolicy.
+func (mg *RegistrationPolicy) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this RegistrationPolicy.
+func (mg *RegistrationPolicy) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this RegistrationPolicy.
+func (mg *RegistrationPolicy) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this RegistrationPolicy.
+func (mg *RegistrationPolicy) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this RegistrationPolicy.
+func (mg *RegistrationPolicy) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this RegistrationPolicy.
+func (mg *RegistrationPolicy) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this RegistrationPolicy.
+func (mg *RegistrationPolicy) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this RegistrationPolicy.
+func (mg *RegistrationPolicy) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this RegistrationPolicy.
+func (mg *RegistrationPolicy) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
@@ -2854,6 +3054,356 @@ func (mg *SqlFirewallPolicyManagement) SetProviderConfigReference(r *xpv1.Refere
 
 // SetWriteConnectionSecretToReference of this SqlFirewallPolicyManagement.
 func (mg *SqlFirewallPolicyManagement) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsetData.
+func (mg *SubsetData) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsetData.
+func (mg *SubsetData) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsetData.
+func (mg *SubsetData) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsetData.
+func (mg *SubsetData) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsetData.
+func (mg *SubsetData) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsetData.
+func (mg *SubsetData) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsetData.
+func (mg *SubsetData) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsetData.
+func (mg *SubsetData) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsetData.
+func (mg *SubsetData) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsetData.
+func (mg *SubsetData) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingPolicy.
+func (mg *SubsettingPolicy) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingPolicy.
+func (mg *SubsettingPolicy) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingPolicy.
+func (mg *SubsettingPolicy) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingPolicy.
+func (mg *SubsettingPolicy) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingPolicy.
+func (mg *SubsettingPolicy) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingPolicy.
+func (mg *SubsettingPolicy) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingPolicy.
+func (mg *SubsettingPolicy) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingPolicy.
+func (mg *SubsettingPolicy) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingPolicy.
+func (mg *SubsettingPolicy) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingPolicy.
+func (mg *SubsettingPolicy) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingPolicyHealthReportManagement.
+func (mg *SubsettingPolicyHealthReportManagement) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingPolicySubsettingRule.
+func (mg *SubsettingPolicySubsettingRule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingPolicySubsettingRuleProcessingChainObject.
+func (mg *SubsettingPolicySubsettingRuleProcessingChainObject) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingPolicySubsettingSchemaRelation.
+func (mg *SubsettingPolicySubsettingSchemaRelation) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this SubsettingReportManagement.
+func (mg *SubsettingReportManagement) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

@@ -3922,6 +3922,9 @@ spec:
                           description: The URL of the Database Transforms for the
                             Autonomous AI Database.
                           type: string
+                        essbaseUrl:
+                          description: Essbase URL for the Autonomous AI Database.
+                          type: string
                         graphStudioUrl:
                           description: The URL of the Graph Studio for the Autonomous
                             AI Database.
@@ -4673,6 +4676,9 @@ spec:
                           description: The URL of the Database Transforms for the
                             Autonomous AI Database.
                           type: string
+                        essbaseUrl:
+                          description: Essbase URL for the Autonomous AI Database.
+                          type: string
                         graphStudioUrl:
                           description: The URL of the Graph Studio for the Autonomous
                             AI Database.
@@ -5144,6 +5150,9 @@ spec:
                         databaseTransformsUrl:
                           description: The URL of the Database Transforms for the
                             Autonomous AI Database.
+                          type: string
+                        essbaseUrl:
+                          description: Essbase URL for the Autonomous AI Database.
                           type: string
                         graphStudioUrl:
                           description: The URL of the Graph Studio for the Autonomous

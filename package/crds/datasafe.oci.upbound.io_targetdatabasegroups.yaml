@@ -207,8 +207,9 @@ spec:
                           description: (Updatable) Criteria to determine whether a
                             target database should be included in the target database
                             group. If the database satisfies any of compartments,
-                            targetDatabaseIds, freeformTags, or definedTags criteria,
-                            it qualifies for inclusion in the target database group
+                            targetDatabaseIds, freeformTags, definedTags, freeformTagsIn
+                            or systemTags criteria then it qualifies for inclusion
+                            in the target database group.
                           items:
                             properties:
                               compartments:
@@ -253,6 +254,26 @@ spec:
                                   "Finance"}'
                                 type: object
                                 x-kubernetes-map-type: granular
+                              freeformTagsIn:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of freeform tag filters.
+                                  Each key maps to an array of strings. Target database
+                                  matches the key if it's tag value equals any of
+                                  the values in the array.
+                                type: object
+                              systemTags:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of system tag filters.
+                                  Target database matches when for each specified
+                                  namespace.key and the tag value equals any of the
+                                  values in the array.
+                                type: object
                               targetDatabaseIds:
                                 description: (Updatable) The list of target database
                                   OCIDS, that should be excluded from the target database
@@ -411,8 +432,9 @@ spec:
                           description: (Updatable) Criteria to determine whether a
                             target database should be included in the target database
                             group. If the database satisfies any of compartments,
-                            targetDatabaseIds, freeformTags, or definedTags criteria,
-                            it qualifies for inclusion in the target database group
+                            targetDatabaseIds, freeformTags, definedTags, freeformTagsIn
+                            or systemTags criteria then it qualifies for inclusion
+                            in the target database group.
                           items:
                             properties:
                               compartments:
@@ -457,6 +479,26 @@ spec:
                                   "Finance"}'
                                 type: object
                                 x-kubernetes-map-type: granular
+                              freeformTagsIn:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of freeform tag filters.
+                                  Each key maps to an array of strings. Target database
+                                  matches the key if it's tag value equals any of
+                                  the values in the array.
+                                type: object
+                              systemTags:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of system tag filters.
+                                  Target database matches when for each specified
+                                  namespace.key and the tag value equals any of the
+                                  values in the array.
+                                type: object
                               targetDatabaseIds:
                                 description: (Updatable) The list of target database
                                   OCIDS, that should be excluded from the target database
@@ -637,8 +679,9 @@ spec:
                           description: (Updatable) Criteria to determine whether a
                             target database should be included in the target database
                             group. If the database satisfies any of compartments,
-                            targetDatabaseIds, freeformTags, or definedTags criteria,
-                            it qualifies for inclusion in the target database group
+                            targetDatabaseIds, freeformTags, definedTags, freeformTagsIn
+                            or systemTags criteria then it qualifies for inclusion
+                            in the target database group.
                           items:
                             properties:
                               compartments:
@@ -683,6 +726,26 @@ spec:
                                   "Finance"}'
                                 type: object
                                 x-kubernetes-map-type: granular
+                              freeformTagsIn:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of freeform tag filters.
+                                  Each key maps to an array of strings. Target database
+                                  matches the key if it's tag value equals any of
+                                  the values in the array.
+                                type: object
+                              systemTags:
+                                additionalProperties:
+                                  items:
+                                    type: string
+                                  type: array
+                                description: (Updatable) Map of system tag filters.
+                                  Target database matches when for each specified
+                                  namespace.key and the tag value equals any of the
+                                  values in the array.
+                                type: object
                               targetDatabaseIds:
                                 description: (Updatable) The list of target database
                                   OCIDS, that should be excluded from the target database
@@ -709,9 +772,9 @@ spec:
                   systemTags:
                     additionalProperties:
                       type: string
-                    description: 'System tags for this resource. Each key is predefined
-                      and scoped to a namespace. For more information, see Resource
-                      Tags. Example: {"orcl-cloud.free-tier-retained": "true"}'
+                    description: (Updatable) Map of system tag filters. Target database
+                      matches when for each specified namespace.key and the tag value
+                      equals any of the values in the array.
                     type: object
                     x-kubernetes-map-type: granular
                   timeCreated:

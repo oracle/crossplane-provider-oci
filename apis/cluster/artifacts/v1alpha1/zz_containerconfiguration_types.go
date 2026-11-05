@@ -15,6 +15,7 @@ import (
 
 type ContainerConfigurationInitParameters struct {
 
+	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/identity/v1alpha1.Compartment
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
@@ -26,16 +27,18 @@ type ContainerConfigurationInitParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
-	// Whether to create a new container repository when a container is pushed to a new repository path. Repositories created in this way belong to the root compartment.
+	// (Updatable) Whether to create a new container repository when a container image is pushed to a new repository path. Repositories created in this way belong to the root compartment.
 	IsRepositoryCreatedOnFirstPush *bool `json:"isRepositoryCreatedOnFirstPush,omitempty" tf:"is_repository_created_on_first_push,omitempty"`
 }
 
 type ContainerConfigurationObservation struct {
+
+	// (Updatable) The OCID of the compartment.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Whether to create a new container repository when a container is pushed to a new repository path. Repositories created in this way belong to the root compartment.
+	// (Updatable) Whether to create a new container repository when a container image is pushed to a new repository path. Repositories created in this way belong to the root compartment.
 	IsRepositoryCreatedOnFirstPush *bool `json:"isRepositoryCreatedOnFirstPush,omitempty" tf:"is_repository_created_on_first_push,omitempty"`
 
 	// The tenancy namespace used in the container repository path.
@@ -44,6 +47,7 @@ type ContainerConfigurationObservation struct {
 
 type ContainerConfigurationParameters struct {
 
+	// (Updatable) The OCID of the compartment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/identity/v1alpha1.Compartment
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -56,7 +60,7 @@ type ContainerConfigurationParameters struct {
 	// +kubebuilder:validation:Optional
 	CompartmentIDSelector *v1.Selector `json:"compartmentIdSelector,omitempty" tf:"-"`
 
-	// Whether to create a new container repository when a container is pushed to a new repository path. Repositories created in this way belong to the root compartment.
+	// (Updatable) Whether to create a new container repository when a container image is pushed to a new repository path. Repositories created in this way belong to the root compartment.
 	// +kubebuilder:validation:Optional
 	IsRepositoryCreatedOnFirstPush *bool `json:"isRepositoryCreatedOnFirstPush,omitempty" tf:"is_repository_created_on_first_push,omitempty"`
 }

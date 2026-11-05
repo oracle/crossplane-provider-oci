@@ -55,6 +55,12 @@ func (tr *CompareSecurityAssessment) Hub() {}
 func (tr *CompareUserAssessment) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *CryptoAssessment) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *CryptoAssessmentManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DatabaseSecurityConfig) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -71,6 +77,9 @@ func (tr *DiscoveryJob) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *DiscoveryJobsResult) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *EstimateTableSizes) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *GenerateOnPremConnectorConfiguration) Hub() {}
@@ -98,6 +107,9 @@ func (tr *MaskingReportManagement) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *OnPremConnector) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *RegistrationPolicy) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *Report) Hub() {}
@@ -176,6 +188,27 @@ func (tr *SqlFirewallPolicy) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *SqlFirewallPolicyManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsetData) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingPolicyHealthReportManagement) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingPolicySubsettingRule) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingPolicySubsettingRuleProcessingChainObject) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingPolicySubsettingSchemaRelation) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *SubsettingReportManagement) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *TargetAlertPolicyAssociation) Hub() {}

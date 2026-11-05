@@ -18,6 +18,9 @@ type NotebookSessionConfigDetailsInitParameters struct {
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
 
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
+
 	// Details for the notebook session shape configuration.
 	NotebookSessionShapeConfigDetails []NotebookSessionShapeConfigDetailsInitParameters `json:"notebookSessionShapeConfigDetails,omitempty" tf:"notebook_session_shape_config_details,omitempty"`
 
@@ -56,6 +59,9 @@ type NotebookSessionConfigDetailsObservation struct {
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
 
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
+
 	// Details for the notebook session shape configuration.
 	NotebookSessionShapeConfigDetails []NotebookSessionShapeConfigDetailsObservation `json:"notebookSessionShapeConfigDetails,omitempty" tf:"notebook_session_shape_config_details,omitempty"`
 
@@ -74,6 +80,10 @@ type NotebookSessionConfigDetailsParameters struct {
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	// +kubebuilder:validation:Optional
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
+
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	// +kubebuilder:validation:Optional
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
 
 	// Details for the notebook session shape configuration.
 	// +kubebuilder:validation:Optional
@@ -116,6 +126,9 @@ type NotebookSessionConfigurationDetailsInitParameters struct {
 
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
+
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
 
 	// Details for the notebook session shape configuration.
 	NotebookSessionShapeConfigDetails []NotebookSessionConfigurationDetailsNotebookSessionShapeConfigDetailsInitParameters `json:"notebookSessionShapeConfigDetails,omitempty" tf:"notebook_session_shape_config_details,omitempty"`
@@ -194,6 +207,9 @@ type NotebookSessionConfigurationDetailsObservation struct {
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
 
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
+
 	// Details for the notebook session shape configuration.
 	NotebookSessionShapeConfigDetails []NotebookSessionConfigurationDetailsNotebookSessionShapeConfigDetailsObservation `json:"notebookSessionShapeConfigDetails,omitempty" tf:"notebook_session_shape_config_details,omitempty"`
 
@@ -212,6 +228,10 @@ type NotebookSessionConfigurationDetailsParameters struct {
 	// A notebook session instance is provided with a block storage volume. This specifies the size of the volume in GBs.
 	// +kubebuilder:validation:Optional
 	BlockStorageSizeInGbs *float64 `json:"blockStorageSizeInGbs,omitempty" tf:"block_storage_size_in_gbs,omitempty"`
+
+	// This specifies the OCID of the customer-managed compute capacity reservation to be used for launching notebook sessions.
+	// +kubebuilder:validation:Optional
+	CapacityReservationID *string `json:"capacityReservationId,omitempty" tf:"capacity_reservation_id,omitempty"`
 
 	// Details for the notebook session shape configuration.
 	// +kubebuilder:validation:Optional

@@ -196,7 +196,7 @@ type FusionEnvironmentInitParameters struct {
 	// (Updatable) Enable IPv4/IPv6 dual stack support for the environment (where available). Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address. The default value is false.
 	IsIpv6DualStackEnabled *bool `json:"isIpv6DualStackEnabled,omitempty" tf:"is_ipv6dual_stack_enabled,omitempty"`
 
-	// (Updatable) byok kms keyId
+	// (Deprecated) The BYOK KMS key OCID. Starting November 23, 2026, kmsKeyId will no longer be supported when updating a Fusion Application environment. Use the Oracle Cloud Console to add customer-managed keys to existing environments. It remains supported for initial BYOK enablement when creating a Fusion Environment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
@@ -268,7 +268,7 @@ type FusionEnvironmentObservation struct {
 	// (Updatable) Enable IPv4/IPv6 dual stack support for the environment (where available). Setting to true will assign an IPv6 address to the environment in addition to an IPv4 address. The default value is false.
 	IsIpv6DualStackEnabled *bool `json:"isIpv6DualStackEnabled,omitempty" tf:"is_ipv6dual_stack_enabled,omitempty"`
 
-	// (Updatable) byok kms keyId
+	// (Deprecated) The BYOK KMS key OCID. Starting November 23, 2026, kmsKeyId will no longer be supported when updating a Fusion Application environment. Use the Oracle Cloud Console to add customer-managed keys to existing environments. It remains supported for initial BYOK enablement when creating a Fusion Environment.
 	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// BYOK key info
@@ -381,7 +381,7 @@ type FusionEnvironmentParameters struct {
 	// +kubebuilder:validation:Optional
 	IsIpv6DualStackEnabled *bool `json:"isIpv6DualStackEnabled,omitempty" tf:"is_ipv6dual_stack_enabled,omitempty"`
 
-	// (Updatable) byok kms keyId
+	// (Deprecated) The BYOK KMS key OCID. Starting November 23, 2026, kmsKeyId will no longer be supported when updating a Fusion Application environment. Use the Oracle Cloud Console to add customer-managed keys to existing environments. It remains supported for initial BYOK enablement when creating a Fusion Environment.
 	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/kms/v1alpha1.Key
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional

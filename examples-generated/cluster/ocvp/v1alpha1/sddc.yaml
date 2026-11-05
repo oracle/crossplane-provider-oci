@@ -35,6 +35,7 @@ spec:
         displayName: ${var.sddc_initial_configuration_initial_cluster_configurations_display_name}
         esxiHostsCount: ${var.sddc_initial_configuration_initial_cluster_configurations_esxi_hosts_count}
         initialCommitment: ${var.sddc_initial_configuration_initial_cluster_configurations_initial_commitment}
+        initialFaultDomainHostDistribution: ${var.sddc_initial_configuration_initial_cluster_configurations_initial_fault_domain_host_distribution}
         initialHostOcpuCount: ${var.sddc_initial_configuration_initial_cluster_configurations_initial_host_ocpu_count}
         initialHostShapeName: ${oci_core_shape.test_shape.name}
         initialVcfByolAllocationIdSelector:

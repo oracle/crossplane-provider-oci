@@ -4659,6 +4659,8 @@ spec:
                                             description: Type of the database backup
                                               destination.
                                             type: string
+                                          vpcUser:
+                                            type: string
                                         type: object
                                       type: array
                                     recoveryWindowInDays:

@@ -2400,6 +2400,11 @@ func (in *DrgAttachmentInitParameters) DeepCopyInto(out *DrgAttachmentInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
 		*out = new(string)
@@ -2412,6 +2417,21 @@ func (in *DrgAttachmentInitParameters) DeepCopyInto(out *DrgAttachmentInitParame
 	}
 	if in.DrgIDSelector != nil {
 		in, out := &in.DrgIDSelector, &out.DrgIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -2457,6 +2477,11 @@ func (in *DrgAttachmentInitParameters) DeepCopyInto(out *DrgAttachmentInitParame
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
+		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
 		in, out := &in.RemoveExportDrgRouteDistributionTrigger, &out.RemoveExportDrgRouteDistributionTrigger
@@ -2588,6 +2613,11 @@ func (in *DrgAttachmentManagementInitParameters) DeepCopyInto(out *DrgAttachment
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
 		*out = new(string)
@@ -2600,6 +2630,21 @@ func (in *DrgAttachmentManagementInitParameters) DeepCopyInto(out *DrgAttachment
 	}
 	if in.DrgIDSelector != nil {
 		in, out := &in.DrgIDSelector, &out.DrgIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -2660,6 +2705,11 @@ func (in *DrgAttachmentManagementInitParameters) DeepCopyInto(out *DrgAttachment
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
+		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
 		in, out := &in.RemoveExportDrgRouteDistributionTrigger, &out.RemoveExportDrgRouteDistributionTrigger
@@ -2849,8 +2899,18 @@ func (in *DrgAttachmentManagementObservation) DeepCopyInto(out *DrgAttachmentMan
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
 		*out = new(string)
 		**out = **in
 	}
@@ -2900,6 +2960,11 @@ func (in *DrgAttachmentManagementObservation) DeepCopyInto(out *DrgAttachmentMan
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
+		**out = **in
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
 		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
@@ -2983,6 +3048,11 @@ func (in *DrgAttachmentManagementParameters) DeepCopyInto(out *DrgAttachmentMana
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
 		*out = new(string)
@@ -2995,6 +3065,21 @@ func (in *DrgAttachmentManagementParameters) DeepCopyInto(out *DrgAttachmentMana
 	}
 	if in.DrgIDSelector != nil {
 		in, out := &in.DrgIDSelector, &out.DrgIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -3055,6 +3140,11 @@ func (in *DrgAttachmentManagementParameters) DeepCopyInto(out *DrgAttachmentMana
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
+		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
 		in, out := &in.RemoveExportDrgRouteDistributionTrigger, &out.RemoveExportDrgRouteDistributionTrigger
@@ -3147,8 +3237,18 @@ func (in *DrgAttachmentObservation) DeepCopyInto(out *DrgAttachmentObservation) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
 		*out = new(string)
 		**out = **in
 	}
@@ -3194,6 +3294,11 @@ func (in *DrgAttachmentObservation) DeepCopyInto(out *DrgAttachmentObservation) 
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
+		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
 		in, out := &in.RemoveExportDrgRouteDistributionTrigger, &out.RemoveExportDrgRouteDistributionTrigger
@@ -3256,6 +3361,11 @@ func (in *DrgAttachmentParameters) DeepCopyInto(out *DrgAttachmentParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DoesPreserveOriginalRoutesWithNAT != nil {
+		in, out := &in.DoesPreserveOriginalRoutesWithNAT, &out.DoesPreserveOriginalRoutesWithNAT
+		*out = new(bool)
+		**out = **in
+	}
 	if in.DrgID != nil {
 		in, out := &in.DrgID, &out.DrgID
 		*out = new(string)
@@ -3268,6 +3378,21 @@ func (in *DrgAttachmentParameters) DeepCopyInto(out *DrgAttachmentParameters) {
 	}
 	if in.DrgIDSelector != nil {
 		in, out := &in.DrgIDSelector, &out.DrgIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -3313,6 +3438,11 @@ func (in *DrgAttachmentParameters) DeepCopyInto(out *DrgAttachmentParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.RemoveDrgNATPolicyTrigger != nil {
+		in, out := &in.RemoveDrgNATPolicyTrigger, &out.RemoveDrgNATPolicyTrigger
+		*out = new(bool)
+		**out = **in
 	}
 	if in.RemoveExportDrgRouteDistributionTrigger != nil {
 		in, out := &in.RemoveExportDrgRouteDistributionTrigger, &out.RemoveExportDrgRouteDistributionTrigger
@@ -3689,6 +3819,576 @@ func (in *DrgList) DeepCopyObject() runtime.Object {
 		return c
 	}
 	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicy) DeepCopyInto(out *DrgNatPolicy) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicy.
+func (in *DrgNatPolicy) DeepCopy() *DrgNatPolicy {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicy)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DrgNatPolicy) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRule) DeepCopyInto(out *DrgNatPolicyDrgNatRule) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ObjectMeta.DeepCopyInto(&out.ObjectMeta)
+	in.Spec.DeepCopyInto(&out.Spec)
+	in.Status.DeepCopyInto(&out.Status)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRule.
+func (in *DrgNatPolicyDrgNatRule) DeepCopy() *DrgNatPolicyDrgNatRule {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRule)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DrgNatPolicyDrgNatRule) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleInitParameters) DeepCopyInto(out *DrgNatPolicyDrgNatRuleInitParameters) {
+	*out = *in
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATRulePriority != nil {
+		in, out := &in.DrgNATRulePriority, &out.DrgNATRulePriority
+		*out = new(float64)
+		**out = **in
+	}
+	if in.OriginalDestination != nil {
+		in, out := &in.OriginalDestination, &out.OriginalDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.OriginalSource != nil {
+		in, out := &in.OriginalSource, &out.OriginalSource
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedDestination != nil {
+		in, out := &in.TranslatedDestination, &out.TranslatedDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedSource != nil {
+		in, out := &in.TranslatedSource, &out.TranslatedSource
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleInitParameters.
+func (in *DrgNatPolicyDrgNatRuleInitParameters) DeepCopy() *DrgNatPolicyDrgNatRuleInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleList) DeepCopyInto(out *DrgNatPolicyDrgNatRuleList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DrgNatPolicyDrgNatRule, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleList.
+func (in *DrgNatPolicyDrgNatRuleList) DeepCopy() *DrgNatPolicyDrgNatRuleList {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DrgNatPolicyDrgNatRuleList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleObservation) DeepCopyInto(out *DrgNatPolicyDrgNatRuleObservation) {
+	*out = *in
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATRulePriority != nil {
+		in, out := &in.DrgNATRulePriority, &out.DrgNATRulePriority
+		*out = new(float64)
+		**out = **in
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OriginalDestination != nil {
+		in, out := &in.OriginalDestination, &out.OriginalDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.OriginalSource != nil {
+		in, out := &in.OriginalSource, &out.OriginalSource
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedDestination != nil {
+		in, out := &in.TranslatedDestination, &out.TranslatedDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedSource != nil {
+		in, out := &in.TranslatedSource, &out.TranslatedSource
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleObservation.
+func (in *DrgNatPolicyDrgNatRuleObservation) DeepCopy() *DrgNatPolicyDrgNatRuleObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleParameters) DeepCopyInto(out *DrgNatPolicyDrgNatRuleParameters) {
+	*out = *in
+	if in.DrgNATPolicyID != nil {
+		in, out := &in.DrgNATPolicyID, &out.DrgNATPolicyID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DrgNATPolicyIDRef != nil {
+		in, out := &in.DrgNATPolicyIDRef, &out.DrgNATPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATPolicyIDSelector != nil {
+		in, out := &in.DrgNATPolicyIDSelector, &out.DrgNATPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DrgNATRulePriority != nil {
+		in, out := &in.DrgNATRulePriority, &out.DrgNATRulePriority
+		*out = new(float64)
+		**out = **in
+	}
+	if in.OriginalDestination != nil {
+		in, out := &in.OriginalDestination, &out.OriginalDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.OriginalSource != nil {
+		in, out := &in.OriginalSource, &out.OriginalSource
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedDestination != nil {
+		in, out := &in.TranslatedDestination, &out.TranslatedDestination
+		*out = new(string)
+		**out = **in
+	}
+	if in.TranslatedSource != nil {
+		in, out := &in.TranslatedSource, &out.TranslatedSource
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleParameters.
+func (in *DrgNatPolicyDrgNatRuleParameters) DeepCopy() *DrgNatPolicyDrgNatRuleParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleSpec) DeepCopyInto(out *DrgNatPolicyDrgNatRuleSpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleSpec.
+func (in *DrgNatPolicyDrgNatRuleSpec) DeepCopy() *DrgNatPolicyDrgNatRuleSpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleSpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyDrgNatRuleStatus) DeepCopyInto(out *DrgNatPolicyDrgNatRuleStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyDrgNatRuleStatus.
+func (in *DrgNatPolicyDrgNatRuleStatus) DeepCopy() *DrgNatPolicyDrgNatRuleStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyDrgNatRuleStatus)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyInitParameters) DeepCopyInto(out *DrgNatPolicyInitParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyInitParameters.
+func (in *DrgNatPolicyInitParameters) DeepCopy() *DrgNatPolicyInitParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyInitParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyList) DeepCopyInto(out *DrgNatPolicyList) {
+	*out = *in
+	out.TypeMeta = in.TypeMeta
+	in.ListMeta.DeepCopyInto(&out.ListMeta)
+	if in.Items != nil {
+		in, out := &in.Items, &out.Items
+		*out = make([]DrgNatPolicy, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyList.
+func (in *DrgNatPolicyList) DeepCopy() *DrgNatPolicyList {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyList)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyObject is an autogenerated deepcopy function, copying the receiver, creating a new runtime.Object.
+func (in *DrgNatPolicyList) DeepCopyObject() runtime.Object {
+	if c := in.DeepCopy(); c != nil {
+		return c
+	}
+	return nil
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyObservation) DeepCopyInto(out *DrgNatPolicyObservation) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.SystemTags != nil {
+		in, out := &in.SystemTags, &out.SystemTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.TimeCreated != nil {
+		in, out := &in.TimeCreated, &out.TimeCreated
+		*out = new(string)
+		**out = **in
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyObservation.
+func (in *DrgNatPolicyObservation) DeepCopy() *DrgNatPolicyObservation {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyObservation)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyParameters) DeepCopyInto(out *DrgNatPolicyParameters) {
+	*out = *in
+	if in.CompartmentID != nil {
+		in, out := &in.CompartmentID, &out.CompartmentID
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompartmentIDRef != nil {
+		in, out := &in.CompartmentIDRef, &out.CompartmentIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.CompartmentIDSelector != nil {
+		in, out := &in.CompartmentIDSelector, &out.CompartmentIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.DefinedTags != nil {
+		in, out := &in.DefinedTags, &out.DefinedTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.FreeformTags != nil {
+		in, out := &in.FreeformTags, &out.FreeformTags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyParameters.
+func (in *DrgNatPolicyParameters) DeepCopy() *DrgNatPolicyParameters {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyParameters)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicySpec) DeepCopyInto(out *DrgNatPolicySpec) {
+	*out = *in
+	in.ResourceSpec.DeepCopyInto(&out.ResourceSpec)
+	in.ForProvider.DeepCopyInto(&out.ForProvider)
+	in.InitProvider.DeepCopyInto(&out.InitProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicySpec.
+func (in *DrgNatPolicySpec) DeepCopy() *DrgNatPolicySpec {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicySpec)
+	in.DeepCopyInto(out)
+	return out
+}
+
+// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
+func (in *DrgNatPolicyStatus) DeepCopyInto(out *DrgNatPolicyStatus) {
+	*out = *in
+	in.ResourceStatus.DeepCopyInto(&out.ResourceStatus)
+	in.AtProvider.DeepCopyInto(&out.AtProvider)
+}
+
+// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DrgNatPolicyStatus.
+func (in *DrgNatPolicyStatus) DeepCopy() *DrgNatPolicyStatus {
+	if in == nil {
+		return nil
+	}
+	out := new(DrgNatPolicyStatus)
+	in.DeepCopyInto(out)
+	return out
 }
 
 // DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.

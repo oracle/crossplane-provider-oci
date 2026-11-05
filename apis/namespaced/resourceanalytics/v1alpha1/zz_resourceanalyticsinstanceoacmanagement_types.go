@@ -204,13 +204,12 @@ type ResourceAnalyticsInstanceOacManagementObservation struct {
 	// (Updatable) A required field when set to true calls enable action and when set to false calls disable action.
 	EnableOac *bool `json:"enableOac,omitempty" tf:"enable_oac,omitempty"`
 
-	// The OCID of the ResourceAnalyticsInstance.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The OCID of the ResourceAnalyticsInstance.
 	ResourceAnalyticsInstanceID *string `json:"resourceAnalyticsInstanceId,omitempty" tf:"resource_analytics_instance_id,omitempty"`
 
-	// The current state of the ResourceAnalyticsInstance.
+	// The current state of the Resource Analytics Instance OAC management operation.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 

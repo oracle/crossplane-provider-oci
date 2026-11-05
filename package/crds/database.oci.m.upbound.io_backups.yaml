@@ -360,6 +360,10 @@ spec:
                         awsEncryptionKeyId:
                           description: Provide the key OCID of a registered AWS key.
                           type: string
+                        awsEncryptionKeyPoolId:
+                          description: Provide the key pool OCID of a registered AWS
+                            key.
+                          type: string
                         azureEncryptionKeyId:
                           description: Provide the key OCID of a registered Azure
                             key.

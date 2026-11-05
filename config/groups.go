@@ -29,13 +29,21 @@ const (
 	maxGeneratedKindNameLength = maxKubernetesNameLength - len("List")
 )
 
-
 // GroupKindCalculator returns the correct service group and kind for a resource
 type GroupKindCalculator func(resource string) (group string, kind string)
 
 // GroupMap remaps OCI Terraform resources to service-based groups
 // This solves the API group vs service mismatch (e.g., oci_core_* → appropriate services)
 var GroupMap = map[string]GroupKindCalculator{
+	// OCI Product Catalog Service - the repeated oci token prevents reliable
+	// automatic service detection.
+	"oci_oci_product_catalog_internal_admin_product": func(name string) (string, string) {
+		return "ociproductcatalog", "InternalAdminProduct"
+	},
+	"oci_oci_product_catalog_internal_product": func(name string) (string, string) {
+		return "ociproductcatalog", "InternalProduct"
+	},
+
 	// Compute Service - Instance and compute-related resources from oci_core_*
 	"oci_core_instance": func(name string) (string, string) {
 		return "compute", "Instance"
@@ -895,6 +903,7 @@ func generateKindName(resourceName, group string) string {
 	}
 	return kindName
 }
+
 // removeLongestDuplicateSubstring shortens long generated kinds by removing the
 // latest duplicated token window whose normalized form already appears earlier
 // in the same name. This keeps the logic generic for overlong kinds without

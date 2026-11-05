@@ -140,31 +140,31 @@ type TagParameters struct {
 
 type ValidatorInitParameters struct {
 
-	// (Updatable) Specifies the type of validation: a static value (no validation) or a list.
+	// (Updatable) Specifies the type of validation. Use ENUM to restrict a tag to a list of allowed values, or DEFAULT for no value validation.
 	ValidatorType *string `json:"validatorType,omitempty" tf:"validator_type,omitempty"`
 
-	// (Applicable when validator_type=ENUM) (Updatable) The list of allowed values for a definedTag value.
+	// (Updatable) The list of allowed values for a definedTag value. Omit this property when validator_type is DEFAULT; it is not used for default validation.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ValidatorObservation struct {
 
-	// (Updatable) Specifies the type of validation: a static value (no validation) or a list.
+	// (Updatable) Specifies the type of validation. Use ENUM to restrict a tag to a list of allowed values, or DEFAULT for no value validation.
 	ValidatorType *string `json:"validatorType,omitempty" tf:"validator_type,omitempty"`
 
-	// (Applicable when validator_type=ENUM) (Updatable) The list of allowed values for a definedTag value.
+	// (Updatable) The list of allowed values for a definedTag value. Omit this property when validator_type is DEFAULT; it is not used for default validation.
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type ValidatorParameters struct {
 
-	// (Updatable) Specifies the type of validation: a static value (no validation) or a list.
+	// (Updatable) Specifies the type of validation. Use ENUM to restrict a tag to a list of allowed values, or DEFAULT for no value validation.
 	// +kubebuilder:validation:Optional
 	ValidatorType *string `json:"validatorType" tf:"validator_type,omitempty"`
 
-	// (Applicable when validator_type=ENUM) (Updatable) The list of allowed values for a definedTag value.
+	// (Updatable) The list of allowed values for a definedTag value. Omit this property when validator_type is DEFAULT; it is not used for default validation.
 	// +kubebuilder:validation:Optional
-	Values []*string `json:"values" tf:"values,omitempty"`
+	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 // TagSpec defines the desired state of Tag

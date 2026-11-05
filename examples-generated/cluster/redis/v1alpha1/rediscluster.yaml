@@ -31,6 +31,9 @@ spec:
     ociCacheConfigSetIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test_oci_cache_config_set
+    primaryClusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_redis_cluster
     securityAttributes: ${var.redis_cluster_security_attributes}
     shardCount: ${var.redis_cluster_shard_count}
     softwareVersion: ${var.redis_cluster_software_version}

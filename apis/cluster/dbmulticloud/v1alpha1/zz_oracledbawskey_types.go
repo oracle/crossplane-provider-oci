@@ -51,6 +51,19 @@ type OracleDbAwsKeyInitParameters struct {
 	// AWS Key resource Location.
 	Location *string `json:"location,omitempty" tf:"location,omitempty"`
 
+	// (Updatable) The OCID of the Oracle DB AWS Key Pool resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dbmulticloud/v1alpha1.OracleDbAwsKeyPool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	OracleDBAwsKeyPoolID *string `json:"oracleDbAwsKeyPoolId,omitempty" tf:"oracle_db_aws_key_pool_id,omitempty"`
+
+	// Reference to a OracleDbAwsKeyPool in dbmulticloud to populate oracleDbAwsKeyPoolId.
+	// +kubebuilder:validation:Optional
+	OracleDBAwsKeyPoolIDRef *v1.Reference `json:"oracleDbAwsKeyPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a OracleDbAwsKeyPool in dbmulticloud to populate oracleDbAwsKeyPoolId.
+	// +kubebuilder:validation:Optional
+	OracleDBAwsKeyPoolIDSelector *v1.Selector `json:"oracleDbAwsKeyPoolIdSelector,omitempty" tf:"-"`
+
 	// The OCID of the Oracle DB Connector resource.
 	OracleDBConnectorID *string `json:"oracleDbConnectorId,omitempty" tf:"oracle_db_connector_id,omitempty"`
 
@@ -94,11 +107,17 @@ type OracleDbAwsKeyObservation struct {
 	// The Oracle AWS Key resource is enabled or disabled at AWS.
 	IsAwsKeyEnabled *bool `json:"isAwsKeyEnabled,omitempty" tf:"is_aws_key_enabled,omitempty"`
 
+	// Indicates whether the Oracle AWS Key resource is currently in use.
+	IsOracleAwsKeyUsed *bool `json:"isOracleAwsKeyUsed,omitempty" tf:"is_oracle_aws_key_used,omitempty"`
+
 	// Description of the current lifecycle state in more detail.
 	LifecycleStateDetails *string `json:"lifecycleStateDetails,omitempty" tf:"lifecycle_state_details,omitempty"`
 
 	// AWS Key resource Location.
 	Location *string `json:"location,omitempty" tf:"location,omitempty"`
+
+	// (Updatable) The OCID of the Oracle DB AWS Key Pool resource.
+	OracleDBAwsKeyPoolID *string `json:"oracleDbAwsKeyPoolId,omitempty" tf:"oracle_db_aws_key_pool_id,omitempty"`
 
 	// The OCID of the Oracle DB Connector resource.
 	OracleDBConnectorID *string `json:"oracleDbConnectorId,omitempty" tf:"oracle_db_connector_id,omitempty"`
@@ -106,6 +125,9 @@ type OracleDbAwsKeyObservation struct {
 	// AWS Key resource's properties.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
+
+	// The number of active references to the Oracle AWS Key resource.
+	RefCount *float64 `json:"refCount,omitempty" tf:"ref_count,omitempty"`
 
 	// Replication metadata, it has information about replication and target region.
 	ReplicationMetadata []ReplicationMetadataObservation `json:"replicationMetadata,omitempty" tf:"replication_metadata,omitempty"`
@@ -177,6 +199,20 @@ type OracleDbAwsKeyParameters struct {
 	// AWS Key resource Location.
 	// +kubebuilder:validation:Optional
 	Location *string `json:"location,omitempty" tf:"location,omitempty"`
+
+	// (Updatable) The OCID of the Oracle DB AWS Key Pool resource.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/dbmulticloud/v1alpha1.OracleDbAwsKeyPool
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	OracleDBAwsKeyPoolID *string `json:"oracleDbAwsKeyPoolId,omitempty" tf:"oracle_db_aws_key_pool_id,omitempty"`
+
+	// Reference to a OracleDbAwsKeyPool in dbmulticloud to populate oracleDbAwsKeyPoolId.
+	// +kubebuilder:validation:Optional
+	OracleDBAwsKeyPoolIDRef *v1.Reference `json:"oracleDbAwsKeyPoolIdRef,omitempty" tf:"-"`
+
+	// Selector for a OracleDbAwsKeyPool in dbmulticloud to populate oracleDbAwsKeyPoolId.
+	// +kubebuilder:validation:Optional
+	OracleDBAwsKeyPoolIDSelector *v1.Selector `json:"oracleDbAwsKeyPoolIdSelector,omitempty" tf:"-"`
 
 	// The OCID of the Oracle DB Connector resource.
 	// +kubebuilder:validation:Optional

@@ -723,8 +723,8 @@ spec:
                             feature. Defaults to false.
                           type: boolean
                         isPvEncryptionInTransitEnabled:
-                          description: Deprecated. Instead use isPvEncryptionInTransitEnabled
-                            in LaunchInstanceDetails.
+                          description: Deprecated. Use isEncryptionInTransitEnabled
+                            instead.
                           type: boolean
                         networkType:
                           description: Emulation type for the physical network interface

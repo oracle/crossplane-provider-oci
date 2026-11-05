@@ -1,0 +1,19 @@
+apiVersion: networkconnectivity.oci.m.upbound.io/v1alpha1
+kind: DrgNatPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: networkconnectivity/v1alpha1/drgnatpolicy
+  labels:
+    testing.upbound.io/example-name: test_drg_nat_policy
+  name: test-drg-nat-policy
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    displayName: ${var.drg_nat_policy_display_name}
+    freeformTags:
+      Department: Finance

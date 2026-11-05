@@ -13,6 +13,21 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
+type ClusterReplicationTopologyInitParameters struct {
+}
+
+type ClusterReplicationTopologyObservation struct {
+
+	// The details of a cluster participating in the replication setup.
+	PrimaryCluster []PrimaryClusterObservation `json:"primaryCluster,omitempty" tf:"primary_cluster,omitempty"`
+
+	// The list of secondary clusters that replicate data from the primary cluster.
+	SecondaryClusters []SecondaryClustersObservation `json:"secondaryClusters,omitempty" tf:"secondary_clusters,omitempty"`
+}
+
+type ClusterReplicationTopologyParameters struct {
+}
+
 type ImportFromObjectStorageDetailsInitParameters struct {
 
 	// The Object Storage bucket name.
@@ -101,6 +116,21 @@ type ObjectsParameters struct {
 	Object *string `json:"object" tf:"object,omitempty"`
 }
 
+type PrimaryClusterInitParameters struct {
+}
+
+type PrimaryClusterObservation struct {
+
+	// The OCID of the Oracle Cloud Infrastructure Cache cluster.
+	OciCacheClusterID *string `json:"ociCacheClusterId,omitempty" tf:"oci_cache_cluster_id,omitempty"`
+
+	// The Oracle Cloud Infrastructure region to which the cluster belongs.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
+type PrimaryClusterParameters struct {
+}
+
 type RedisClusterInitParameters struct {
 
 	// The ID of the Oracle Cloud Infrastructure Cache Backup from which this cluster was created.Mutually exclusive with 'importFromObjectStorageDetails'.
@@ -168,6 +198,19 @@ type RedisClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	OciCacheConfigSetIDSelector *v1.Selector `json:"ociCacheConfigSetIdSelector,omitempty" tf:"-"`
 
+	// (Updatable) The OCID of the primary cluster from which data will be replicated. Setting it on a standalone cluster converts that cluster to a secondary cluster; removing it from a secondary cluster converts that cluster to standalone. Changing directly from one primary cluster to another is not supported: remove it and apply before setting a different primary cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/redis/v1alpha1.RedisCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	PrimaryClusterID *string `json:"primaryClusterId,omitempty" tf:"primary_cluster_id,omitempty"`
+
+	// Reference to a RedisCluster in redis to populate primaryClusterId.
+	// +kubebuilder:validation:Optional
+	PrimaryClusterIDRef *v1.Reference `json:"primaryClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a RedisCluster in redis to populate primaryClusterId.
+	// +kubebuilder:validation:Optional
+	PrimaryClusterIDSelector *v1.Selector `json:"primaryClusterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) Security attributes for redis cluster resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +mapType=granular
 	SecurityAttributes map[string]*string `json:"securityAttributes,omitempty" tf:"security_attributes,omitempty"`
@@ -198,6 +241,12 @@ type RedisClusterObservation struct {
 
 	// Specifies whether the cluster is sharded or non-sharded.
 	ClusterMode *string `json:"clusterMode,omitempty" tf:"cluster_mode,omitempty"`
+
+	// Defines the replication topology of an Oracle Cloud Infrastructure cache cluster, including the primary cluster and associated secondary clusters participating in replication.
+	ClusterReplicationTopology []ClusterReplicationTopologyObservation `json:"clusterReplicationTopology,omitempty" tf:"cluster_replication_topology,omitempty"`
+
+	// The current role of the cluster.
+	ClusterRole *string `json:"clusterRole,omitempty" tf:"cluster_role,omitempty"`
 
 	// (Updatable) The OCID of the compartment that contains the cluster.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
@@ -243,6 +292,9 @@ type RedisClusterObservation struct {
 
 	// (Updatable) The ID of the corresponding Oracle Cloud Infrastructure Cache Config Set for the cluster.
 	OciCacheConfigSetID *string `json:"ociCacheConfigSetId,omitempty" tf:"oci_cache_config_set_id,omitempty"`
+
+	// (Updatable) The OCID of the primary cluster from which data will be replicated. Setting it on a standalone cluster converts that cluster to a secondary cluster; removing it from a secondary cluster converts that cluster to standalone. Changing directly from one primary cluster to another is not supported: remove it and apply before setting a different primary cluster.
+	PrimaryClusterID *string `json:"primaryClusterId,omitempty" tf:"primary_cluster_id,omitempty"`
 
 	// The private IP address of the API endpoint for the cluster's primary node.
 	PrimaryEndpointIPAddress *string `json:"primaryEndpointIpAddress,omitempty" tf:"primary_endpoint_ip_address,omitempty"`
@@ -361,6 +413,20 @@ type RedisClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	OciCacheConfigSetIDSelector *v1.Selector `json:"ociCacheConfigSetIdSelector,omitempty" tf:"-"`
 
+	// (Updatable) The OCID of the primary cluster from which data will be replicated. Setting it on a standalone cluster converts that cluster to a secondary cluster; removing it from a secondary cluster converts that cluster to standalone. Changing directly from one primary cluster to another is not supported: remove it and apply before setting a different primary cluster.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/cluster/redis/v1alpha1.RedisCluster
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	PrimaryClusterID *string `json:"primaryClusterId,omitempty" tf:"primary_cluster_id,omitempty"`
+
+	// Reference to a RedisCluster in redis to populate primaryClusterId.
+	// +kubebuilder:validation:Optional
+	PrimaryClusterIDRef *v1.Reference `json:"primaryClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a RedisCluster in redis to populate primaryClusterId.
+	// +kubebuilder:validation:Optional
+	PrimaryClusterIDSelector *v1.Selector `json:"primaryClusterIdSelector,omitempty" tf:"-"`
+
 	// (Updatable) Security attributes for redis cluster resource. Each key is predefined and scoped to a namespace. For more information, see Resource Tags.  Example: {"Oracle-ZPR": {"MaxEgressCount": {"value": "42", "mode": "enforce"}}}
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -386,6 +452,21 @@ type RedisClusterParameters struct {
 	// Selector for a Subnet in networking to populate subnetId.
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+}
+
+type SecondaryClustersInitParameters struct {
+}
+
+type SecondaryClustersObservation struct {
+
+	// The OCID of the Oracle Cloud Infrastructure Cache cluster.
+	OciCacheClusterID *string `json:"ociCacheClusterId,omitempty" tf:"oci_cache_cluster_id,omitempty"`
+
+	// The Oracle Cloud Infrastructure region to which the cluster belongs.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
+type SecondaryClustersParameters struct {
 }
 
 // RedisClusterSpec defines the desired state of RedisCluster

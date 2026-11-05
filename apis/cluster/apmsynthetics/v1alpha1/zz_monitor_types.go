@@ -483,7 +483,7 @@ type DNSConfigurationInitParameters struct {
 	// (Updatable) If isOverrideDns is true, then DNS settings will be overridden.
 	IsOverrideDNS *bool `json:"isOverrideDns,omitempty" tf:"is_override_dns,omitempty"`
 
-	// (Updatable) Attribute to override the DNS IP value. This value will be honored only if isOverrideDns is set to true.
+	// (Updatable) Attribute to override the DNS IP value. This value is required only if isOverrideDns is set to true.
 	OverrideDNSIP *string `json:"overrideDnsIp,omitempty" tf:"override_dns_ip,omitempty"`
 }
 
@@ -492,7 +492,7 @@ type DNSConfigurationObservation struct {
 	// (Updatable) If isOverrideDns is true, then DNS settings will be overridden.
 	IsOverrideDNS *bool `json:"isOverrideDns,omitempty" tf:"is_override_dns,omitempty"`
 
-	// (Updatable) Attribute to override the DNS IP value. This value will be honored only if isOverrideDns is set to true.
+	// (Updatable) Attribute to override the DNS IP value. This value is required only if isOverrideDns is set to true.
 	OverrideDNSIP *string `json:"overrideDnsIp,omitempty" tf:"override_dns_ip,omitempty"`
 }
 
@@ -502,7 +502,7 @@ type DNSConfigurationParameters struct {
 	// +kubebuilder:validation:Optional
 	IsOverrideDNS *bool `json:"isOverrideDns,omitempty" tf:"is_override_dns,omitempty"`
 
-	// (Updatable) Attribute to override the DNS IP value. This value will be honored only if isOverrideDns is set to true.
+	// (Updatable) Attribute to override the DNS IP value. This value is required only if isOverrideDns is set to true.
 	// +kubebuilder:validation:Optional
 	OverrideDNSIP *string `json:"overrideDnsIp,omitempty" tf:"override_dns_ip,omitempty"`
 }
@@ -649,6 +649,12 @@ type FtpBasicAuthenticationDetailsPasswordParameters struct {
 
 type MaintenanceWindowScheduleInitParameters struct {
 
+	// (Updatable) Type of recurrence for a recurring maintenance window.
+	RecurrenceType *string `json:"recurrenceType,omitempty" tf:"recurrence_type,omitempty"`
+
+	// (Updatable) Type of maintenance window schedule. If not provided, a schedule with timeStarted and timeEnded is treated as ONE_TIME.
+	ScheduleType *string `json:"scheduleType,omitempty" tf:"schedule_type,omitempty"`
+
 	// (Updatable) End time of the maintenance window, expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z
 	TimeEnded *string `json:"timeEnded,omitempty" tf:"time_ended,omitempty"`
 
@@ -658,6 +664,12 @@ type MaintenanceWindowScheduleInitParameters struct {
 
 type MaintenanceWindowScheduleObservation struct {
 
+	// (Updatable) Type of recurrence for a recurring maintenance window.
+	RecurrenceType *string `json:"recurrenceType,omitempty" tf:"recurrence_type,omitempty"`
+
+	// (Updatable) Type of maintenance window schedule. If not provided, a schedule with timeStarted and timeEnded is treated as ONE_TIME.
+	ScheduleType *string `json:"scheduleType,omitempty" tf:"schedule_type,omitempty"`
+
 	// (Updatable) End time of the maintenance window, expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z
 	TimeEnded *string `json:"timeEnded,omitempty" tf:"time_ended,omitempty"`
 
@@ -666,6 +678,14 @@ type MaintenanceWindowScheduleObservation struct {
 }
 
 type MaintenanceWindowScheduleParameters struct {
+
+	// (Updatable) Type of recurrence for a recurring maintenance window.
+	// +kubebuilder:validation:Optional
+	RecurrenceType *string `json:"recurrenceType,omitempty" tf:"recurrence_type,omitempty"`
+
+	// (Updatable) Type of maintenance window schedule. If not provided, a schedule with timeStarted and timeEnded is treated as ONE_TIME.
+	// +kubebuilder:validation:Optional
+	ScheduleType *string `json:"scheduleType,omitempty" tf:"schedule_type,omitempty"`
 
 	// (Updatable) End time of the maintenance window, expressed in RFC 3339 timestamp format. Example: 2020-02-12T22:47:12.613Z
 	// +kubebuilder:validation:Optional

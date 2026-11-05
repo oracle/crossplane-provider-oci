@@ -1,0 +1,39 @@
+apiVersion: datasafe.oci.m.upbound.io/v1alpha1
+kind: SubsettingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datasafe/v1alpha1/subsettingpolicy
+  labels:
+    testing.upbound.io/example-name: test_subsetting_policy
+  name: test-subsetting-policy
+  namespace: upbound-system
+spec:
+  forProvider:
+    compartmentIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    definedTags:
+      Operations.CostCenter: "42"
+    description: ${var.subsetting_policy_description}
+    displayName: ${var.subsetting_policy_display_name}
+    freeformTags:
+      Department: Finance
+    isRedoLoggingEnabled: ${var.subsetting_policy_is_redo_logging_enabled}
+    isRefreshStatsEnabled: ${var.subsetting_policy_is_refresh_stats_enabled}
+    maskingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: test_masking_policy
+    parallelDegree: ${var.subsetting_policy_parallel_degree}
+    postSubsettingScript: ${var.subsetting_policy_post_subsetting_script}
+    preSubsettingScript: ${var.subsetting_policy_pre_subsetting_script}
+    recompile: ${var.subsetting_policy_recompile}
+    schemaSource:
+    - schemaSource: ${var.subsetting_policy_schema_source_schema_source}
+      schemasForSubsetting: ${var.subsetting_policy_schema_source_schemas_for_subsetting}
+      sensitiveDataModelIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_sensitive_data_model
+      targetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: test_target
+    unrelatedTablesAction: ${var.subsetting_policy_unrelated_tables_action}

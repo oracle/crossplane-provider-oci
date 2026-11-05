@@ -88,6 +88,38 @@ func TestTerraformUpgradeRemediationConfiguration(t *testing.T) {
 		"SSLCACertificateObservation":    "BlueGreenDeploymentSSLCACertificateObservation",
 		"SSLCACertificateParameters":     "BlueGreenDeploymentSSLCACertificateParameters",
 	}
+	dataSafeEstimateTableSizesOverrides := map[string]string{
+		"TargetCredentialsInitParameters":         "EstimateTableSizesTargetCredentialsInitParameters",
+		"TargetCredentialsObservation":            "EstimateTableSizesTargetCredentialsObservation",
+		"TargetCredentialsParameters":             "EstimateTableSizesTargetCredentialsParameters",
+		"MaskDataTargetCredentialsInitParameters": "TargetCredentialsInitParameters",
+		"MaskDataTargetCredentialsObservation":    "TargetCredentialsObservation",
+		"MaskDataTargetCredentialsParameters":     "TargetCredentialsParameters",
+	}
+	dataSafeRegistrationPolicyOverrides := map[string]string{
+		"ConnectionOptionInitParameters":               "RegistrationPolicyConnectionOptionInitParameters",
+		"ConnectionOptionObservation":                  "RegistrationPolicyConnectionOptionObservation",
+		"ConnectionOptionParameters":                   "RegistrationPolicyConnectionOptionParameters",
+		"TargetDatabaseConnectionOptionInitParameters": "ConnectionOptionInitParameters",
+		"TargetDatabaseConnectionOptionObservation":    "ConnectionOptionObservation",
+		"TargetDatabaseConnectionOptionParameters":     "ConnectionOptionParameters",
+	}
+	dbMulticloudOverrides := map[string]string{
+		"ReplicationMetadataReplicationDetailsInitParameters":                   "OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsInitParameters",
+		"ReplicationMetadataReplicationDetailsObservation":                      "OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsObservation",
+		"ReplicationMetadataReplicationDetailsParameters":                       "OracleDbAwsKeyPoolReplicationMetadataReplicationDetailsParameters",
+		"OracleDbAzureVaultReplicationMetadataReplicationDetailsInitParameters": "ReplicationMetadataReplicationDetailsInitParameters",
+		"OracleDbAzureVaultReplicationMetadataReplicationDetailsObservation":    "ReplicationMetadataReplicationDetailsObservation",
+		"OracleDbAzureVaultReplicationMetadataReplicationDetailsParameters":     "ReplicationMetadataReplicationDetailsParameters",
+	}
+	selfSubscriptionOverrides := map[string]string{
+		"RatesInitParameters":            "DimensionsRatesInitParameters",
+		"RatesObservation":               "DimensionsRatesObservation",
+		"RatesParameters":                "DimensionsRatesParameters",
+		"PricingPlanRatesInitParameters": "RatesInitParameters",
+		"PricingPlanRatesObservation":    "RatesObservation",
+		"PricingPlanRatesParameters":     "RatesParameters",
+	}
 
 	for scope, provider := range tests {
 		t.Run(scope, func(t *testing.T) {
@@ -96,6 +128,18 @@ func TestTerraformUpgradeRemediationConfiguration(t *testing.T) {
 			}
 			if got := provider.Resources["oci_mysql_blue_green_deployment"].OverrideFieldNames; !reflect.DeepEqual(got, mysqlOverrides) {
 				t.Errorf("unexpected MySQL Blue/Green field-name overrides: %#v", got)
+			}
+			if got := provider.Resources["oci_data_safe_estimate_table_sizes"].OverrideFieldNames; !reflect.DeepEqual(got, dataSafeEstimateTableSizesOverrides) {
+				t.Errorf("unexpected Data Safe Estimate Table Sizes field-name overrides: %#v", got)
+			}
+			if got := provider.Resources["oci_data_safe_registration_policy"].OverrideFieldNames; !reflect.DeepEqual(got, dataSafeRegistrationPolicyOverrides) {
+				t.Errorf("unexpected Data Safe Registration Policy field-name overrides: %#v", got)
+			}
+			if got := provider.Resources["oci_dbmulticloud_oracle_db_aws_key_pool"].OverrideFieldNames; !reflect.DeepEqual(got, dbMulticloudOverrides) {
+				t.Errorf("unexpected DB Multicloud Oracle DB AWS Key Pool field-name overrides: %#v", got)
+			}
+			if got := provider.Resources["oci_self_subscription"].OverrideFieldNames; !reflect.DeepEqual(got, selfSubscriptionOverrides) {
+				t.Errorf("unexpected Self Subscription field-name overrides: %#v", got)
 			}
 
 			secretReference, ok := provider.Resources["oci_bds_bds_instance"].References["secret_id"]
@@ -310,6 +354,8 @@ func TestSpecificServiceMappings(t *testing.T) {
 		{"oci_dns_zone", "dns", "Zone"},
 		{"oci_load_balancer_load_balancer", "loadbalancer", "LoadBalancer"},
 		{"oci_network_load_balancer_network_load_balancer", "networkloadbalancer", "NetworkLoadBalancer"},
+		{"oci_oci_product_catalog_internal_admin_product", "ociproductcatalog", "InternalAdminProduct"},
+		{"oci_oci_product_catalog_internal_product", "ociproductcatalog", "InternalProduct"},
 	}
 
 	for _, tc := range testCases {

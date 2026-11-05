@@ -58,4 +58,7 @@ func (tr *Model) Hub() {}
 func (tr *Project) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *RoutingProfile) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *SemanticStore) Hub() {}

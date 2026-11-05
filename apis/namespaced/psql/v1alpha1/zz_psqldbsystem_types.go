@@ -127,6 +127,9 @@ type CopyPolicyInitParameters struct {
 	// (Updatable) The OCID of the compartment that contains the database system.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
 
+	// (Updatable) List of key ids of the remote regions
+	KMSKeyIds []*string `json:"kmsKeyIds,omitempty" tf:"kms_key_ids,omitempty"`
+
 	// (Updatable) List of region names of the remote region
 	Regions []*string `json:"regions,omitempty" tf:"regions,omitempty"`
 
@@ -138,6 +141,9 @@ type CopyPolicyObservation struct {
 
 	// (Updatable) The OCID of the compartment that contains the database system.
 	CompartmentID *string `json:"compartmentId,omitempty" tf:"compartment_id,omitempty"`
+
+	// (Updatable) List of key ids of the remote regions
+	KMSKeyIds []*string `json:"kmsKeyIds,omitempty" tf:"kms_key_ids,omitempty"`
 
 	// (Updatable) List of region names of the remote region
 	Regions []*string `json:"regions,omitempty" tf:"regions,omitempty"`
@@ -151,6 +157,10 @@ type CopyPolicyParameters struct {
 	// (Updatable) The OCID of the compartment that contains the database system.
 	// +kubebuilder:validation:Optional
 	CompartmentID *string `json:"compartmentId" tf:"compartment_id,omitempty"`
+
+	// (Updatable) List of key ids of the remote regions
+	// +kubebuilder:validation:Optional
+	KMSKeyIds []*string `json:"kmsKeyIds,omitempty" tf:"kms_key_ids,omitempty"`
 
 	// (Updatable) List of region names of the remote region
 	// +kubebuilder:validation:Optional
@@ -1157,6 +1167,19 @@ type StorageDetailsInitParameters struct {
 	// Specifies if the block volume used for the database system is regional or AD-local. If not specified, it will be set to false. If isRegionallyDurable is set to true, availabilityDomain should not be specified. If isRegionallyDurable is set to false, availabilityDomain must be specified.
 	IsRegionallyDurable *bool `json:"isRegionallyDurable,omitempty" tf:"is_regionally_durable,omitempty"`
 
+	// (Updatable) The OCID of the Vault service key to assign as the master encryption key for the database system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.NamespacedReference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.NamespacedSelector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
+
 	// Type of the database system.
 	SystemType *string `json:"systemType,omitempty" tf:"system_type,omitempty"`
 }
@@ -1171,6 +1194,9 @@ type StorageDetailsObservation struct {
 
 	// Specifies if the block volume used for the database system is regional or AD-local. If not specified, it will be set to false. If isRegionallyDurable is set to true, availabilityDomain should not be specified. If isRegionallyDurable is set to false, availabilityDomain must be specified.
 	IsRegionallyDurable *bool `json:"isRegionallyDurable,omitempty" tf:"is_regionally_durable,omitempty"`
+
+	// (Updatable) The OCID of the Vault service key to assign as the master encryption key for the database system.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
 
 	// Type of the database system.
 	SystemType *string `json:"systemType,omitempty" tf:"system_type,omitempty"`
@@ -1189,6 +1215,20 @@ type StorageDetailsParameters struct {
 	// Specifies if the block volume used for the database system is regional or AD-local. If not specified, it will be set to false. If isRegionallyDurable is set to true, availabilityDomain should not be specified. If isRegionallyDurable is set to false, availabilityDomain must be specified.
 	// +kubebuilder:validation:Optional
 	IsRegionallyDurable *bool `json:"isRegionallyDurable" tf:"is_regionally_durable,omitempty"`
+
+	// (Updatable) The OCID of the Vault service key to assign as the master encryption key for the database system.
+	// +crossplane:generate:reference:type=github.com/oracle/provider-oci/apis/namespaced/kms/v1alpha1.Key
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// Reference to a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDRef *v1.NamespacedReference `json:"kmsKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a Key in kms to populate kmsKeyId.
+	// +kubebuilder:validation:Optional
+	KMSKeyIDSelector *v1.NamespacedSelector `json:"kmsKeyIdSelector,omitempty" tf:"-"`
 
 	// Type of the database system.
 	// +kubebuilder:validation:Optional
