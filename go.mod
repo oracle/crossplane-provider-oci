@@ -1,6 +1,6 @@
 module github.com/oracle/provider-oci
 
-go 1.26.6
+go 1.26.10
 
 require (
 	dario.cat/mergo v1.0.2
@@ -11,6 +11,7 @@ require (
 	github.com/hashicorp/terraform-json v0.27.2
 	github.com/hashicorp/terraform-plugin-framework v1.16.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
+	github.com/oracle/oci-go-sdk/v65 v65.127.0
 	github.com/oracle/terraform-provider-oci v1.0.19-0.20261020203927-2c52feb19a76
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.23.2
@@ -112,7 +113,6 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/muvaf/typewriter v0.0.0-20240614220100-70f9d4a54ea0 // indirect
 	github.com/oklog/run v1.2.0 // indirect
-	github.com/oracle/oci-go-sdk/v65 v65.127.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.66.1 // indirect

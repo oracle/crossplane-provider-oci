@@ -9,7 +9,7 @@ Upjet creates XRM-conformant managed resources for the OCI APIs based on [OCI Te
 ### Software and Tools
 - [Git](https://git-scm.com/downloads) 2.25 (recommended)
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) 1.4.6 (recommended)
-- [Go](https://go.dev/doc/install) 1.25.x (required)
+- [Go](https://go.dev/doc/install) 1.26.10 (required build baseline)
 - [Goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/) 5.0.1 (recommended)
 - [Helm](https://helm.sh/docs/helm/helm_install/) 3.11.2 (recommended)
