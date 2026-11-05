@@ -7,7 +7,7 @@ This guide instructs on how to build `crossplane-provider-oci` through running K
 Before building the provider, ensure the following items are already set up in your system:
 - The $PATH environment variable contains paths for the preceding software binaries.
 - Use Go 1.26.10 for the provider build. The minimum patch version is recorded in `go.mod`; the publishing workflow uses the same baseline.
-- Go's default GOPATH is `~/go`; set a custom GOPATH only if your development environment requires it.
+- The GOPATH variable is set properly. (Example: `export GOPATH=~/go/19.1.6`)
 - A Kubernetes cluster is running locally (Rancher Desktop recommended), and the correct Kubernetes context is selected.
 
 ## Install the Crossplane CLI
@@ -125,43 +125,3 @@ For the provider to communicate with the Oracle Cloud Infrastructure, we need to
    **Note:** Modify the `examples/providerconfig/providerconfig.yaml` file, if the secret name registered is different than what is provided in the template.
 
 At this stage, we have our OCI Crossplane provider configured to work with your tenancy.
-
-## TLS and post-quantum key exchange
-
-The provider embeds Terraform Provider OCI and its OCI Go SDK in the same Go
-binary. Both monolithic and service providers use in-process connectors for OCI
-reconciliation. Terraform CLI is used for build-time schema generation; it is
-not the runtime TLS client for these OCI requests.
-
-Build with Go 1.26.10, the patched Go 1.26 baseline used by the module and
-publishing workflow. The existing runtime image uses Oracle Linux 9. OCI requests use Go's
-native HTTP/TLS implementation, with TLS 1.2 as the minimum and TLS 1.3 enabled.
-Keep Go's default TLS groups enabled so compatible peers can negotiate the
-hybrid `X25519MLKEM768` group. `GODEBUG=tlsmlkem=0` disables these default hybrid
-groups. See the [Go 1.26 TLS release notes](https://go.dev/doc/go1.26#crypto/tls).
-
-Run the credential-free local handshake checks with:
-
-```shell
-go test ./internal/clients -run '^TestInProcessProviderTLSNegotiation$' -count=1 -v
-```
-
-The checks configure the embedded Terraform provider through Crossplane's
-provider-meta cache and make signed OCI SDK requests to loopback TLS servers.
-They verify the negotiated protocol and group, including hybrid TLS 1.3 and
-classical compatibility, using both the default trust configuration and
-Terraform Provider OCI's `custom_cert_location` trust-bundle setting. A custom
-bundle must include all public and private roots required by your endpoints;
-certificate verification should remain enabled.
-
-Rebuild and publish both architecture-specific provider packages after changing
-the Go baseline. Deployment owners must also inventory and validate the actual
-OCI service/authentication endpoints, Kubernetes API connections, and any TLS
-termination in proxies, gateways, load balancers, or service meshes. Record the
-image, client/server versions, endpoint and termination path, timestamp, TLS
-version, and negotiated group from a fresh full handshake. TLS 1.3 alone does
-not establish that PQC key exchange was negotiated; classical TLS 1.3 and TLS
-1.2 peers remain supported for compatibility.
-
-FIPS 140-3 applicability and enablement are separate deployment requirements;
-this PQC baseline and these local checks do not attest FIPS compliance.
