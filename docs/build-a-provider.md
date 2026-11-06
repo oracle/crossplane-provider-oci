@@ -6,6 +6,7 @@ This guide instructs on how to build `crossplane-provider-oci` through running K
 
 Before building the provider, ensure the following items are already set up in your system:
 - The $PATH environment variable contains paths for the preceding software binaries.
+- Use Go 1.26.10 for the provider build. The minimum patch version is recorded in `go.mod`; the publishing workflow uses the same baseline.
 - The GOPATH variable is set properly. (Example: `export GOPATH=~/go/19.1.6`)
 - A Kubernetes cluster is running locally (Rancher Desktop recommended), and the correct Kubernetes context is selected.
 

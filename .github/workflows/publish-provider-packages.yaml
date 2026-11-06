@@ -23,7 +23,7 @@ on:
         required: true
       go-version:
         description: 'Go version to use if building needs to be done'
-        default: '1.26'
+        default: '1.26.10'
         required: false
       size:
         description: "Number of smaller provider packages to build and push with each build job"
